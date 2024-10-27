@@ -1,0 +1,86 @@
+---
+title: "An Overview of Database"
+categories: [개념 정리]
+date: "2024-09-03"
+description: '테스트 게시글'
+---
+
+![](/img/db-thumb.jpg){.post-thumbnail}
+
+## The Importance of DBs Today
+- Depend upon `database`: `Internet`, `Web 2.0`, `IOT`
+
+## Why and How Databases are Used?
+- The purpose of a database is to `keep track of thing`
+- db store information that is more complicated than a simple spread sheet
+
+## Problems with Lists (spread sheet)
+1. `Redundancy`
+
+![필요없는 column들이 중복됨](/img/redundancy.png)
+
+2. `Multiple Themes`
+- 그 결과로, list에 나타날 때만 존재하는 informartion이 생김
+
+3. `List Modification Issues`
+
+![`deletion` problems, `update` problems, `insertion` problems](/img/list-modification.png)
+
+## Relational Databases
+- `Relationa Model` is methodology used as a solution for database design
+- A `relational database` stores information in tables
+  - Each `informational topic` is stored in its own table
+- `Each theme` in the list can be stored in a table
+
+`Table` = `file` = `relation`  
+`column` = `fields` = `attribute`  
+`row` = `record` = `tuple`
+
+## SQL (`Structured Query Language`)
+- international standard for `creating`, `processing`, `querying` databases and their tables
+- db applications use SQL to `retrieve`, format, report, `insert`, `delete`, `modify` data for users
+- can combine table by `join` operation
+
+```sql
+SELECT  CUSTOMER.CustomerLastName, 
+        CUSTOMER.CustomerFirstName, 
+        CUSTOMER.Phone,
+        COURSE.CourseDate, 
+        ENROLLMENT.AmountPaid,
+        COURSE.Course, 
+        COURSE.Fee
+FROM    CUSTOMER, ENROLLMENT, COURSE
+WHERE   CUSTOMER.CustomerNumber = ENROLLMENT.CustomerNumber -- join condition
+        AND  COURSE.CourseNumber = ENROLLMENT.CourseNumber; -- join condition
+```
+
+## Database System (DBS)
+
+![The four components of database system](/img/component.png)
+
+- `User`: Employ database application to `keep track of things`  
+  Use forms to `read`, `enter`, `query` data  
+  produce reports
+- `Database Application`: `web/mobile database applications`, `Forms`, `Reports`
+- `DBMS`: used to `create`, `process`, `administer` the database
+- `Database`: `self-describing` collection of `related` tables  
+  `user data`, `metadata`, `index` and other `overhead data`, `application metadata`(form, reports) are stored in db  
+  `metadata` = about the structure of the database. <-> user data
+
+### Function of DBMS
+- `DB administration`
+  - Control concurrency
+  - Provide security
+  - Perform backup and recovery
+
+### `Referential Integrity` Constraints
+
+## Personal vs Enterprise-class Database Systems
+- Personal: Access
+- `Enterprise-class`(Organizational): Microsoft SQL server
+
+## NoSQL databases
+- NoSQL database = `non-relational` database
+
+## Cloud databases
+Main frame -> Client/server -> Cloud
