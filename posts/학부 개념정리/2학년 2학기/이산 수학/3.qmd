@@ -1,0 +1,133 @@
+---
+title: 'Algorithm'
+date: 2024-10-08
+description: '알고리즘에 대해 알아봅니다.'
+categories: ['이산수학', '개념 정리']
+---
+
+![](/img/discrete.jpg){.post-thumbnail}
+
+## Algorithms
+
+algorithm: `finite sequence of precise instructions` for performing a computation or for `solving a problem.`  
+
+### Pseudo code
+
+완전히 정해진 문법은 없는듯. 이산수학에서 사용하는 형태는 다음과 같다.  
+
+
+### Properties of Algorithms
+
+- Input
+- Output: solution to the problem
+- Definiteness. The steps of an algorithm must be defined precisely.
+- Correctness
+- Finiteness: 무한루프 돌면 안된다.
+- Effectiveness
+- Generality
+
+### Example of Algorithms
+
+- 유한한 정수 집단에서 가장 큰 수 찾기
+- 검색 알고리즘
+  - 선형 검색
+    ```
+    procedure linear search(x: integer, a_1, a_2, ..., a_n: distinct integers)
+    i := 1
+    while i <= n and x != a_i
+      i := i + 1
+    if i <= n then position := i
+    else position := 0
+    return position {position is subscript of the term that equals x, or 0 if not found}
+    ```
+  - 이진 검색
+    ```
+    procedure binary search(x: integer, a_1, a_2, ..., a_n: increasing integers)
+    i := 1
+    j := n
+    while i < j
+      m := (i + j) / 2
+      if x > a_m then i := m + 1
+      else j := m
+    if x = a_i then position := i
+    else position := 0
+    return position
+    ```
+- 정렬
+  - 버블 정렬
+    ```
+    procedure bubble sort(a_1, a_2, ..., a_n: real number with n >= 2)
+    for i := 1 to n-1
+      for j:= 1 to n-i
+        if a_j > a_j+1 then swap a_j and a_j+1
+    ```
+  - 선택 정렬
+    ```
+    procedure insertion sort (a_1, a_2, ..., a_n: real numbers with n >= 2)
+    for j := 2 to n
+      i := 1
+      while a_j > a_i
+      i := i + 1
+      m := a_j
+      for k := 0 to j - i - 1
+      a_{j-k} := a_{j-k-1}
+      a_i := m
+    ```
+- 그리디 알고리즘
+
+## The Growth of Functions
+
+### Big-O Notation
+
+- $f(x)$ is $O(g(x))$ if there exists a constant $c > 0$ and $x_0$ such that $|f(x)| ≤ c|g(x)|$ for all $x ≥ x_0$
+- $f(x)$ is $O(g(x))$ if $f(x) grows no faster than g(x)$
+- 당연히 여러개일 수 있다.
+- $f(x) = O(g(x))$가 아니라 $f(x) ∈ O(g(x))$
+
+#### Example
+
+- $f(x) = a_nx^n + a_{n-1}x^{n-1} + ... + a_1x + a_0$  
+  $f(x)$ is $O(x^n)$
+- $f(x) = 1 + 2 + ... + n$  
+  $f(x)$ is $O(n^2)$
+- $f(n) = n!$  
+  $f(n) is $O(n^n)$
+- $f_1(x)$ is $O(g_1(x))$ and $f_2(x)$ is $O(g_2(x))$  
+  $(f_1 + f_2)(x)$ is $O(max(|g_1(x)|, |g_2(x)|))$  
+  $(f_1 f_2)(x)$ is $O(max(g_1(x) g_2(x)))$
+- $f_1(x)$ and $f_2(x)$ both $O(g(x))$  
+  $(f_1 + f_2)(x)$ is $O(g(x))$
+
+![Growth of Functins](/img/growth-bigo.png)
+
+### Big-Ω Notation
+
+- $|f(x)| ≥ C|g(x)|$ when $x > k$
+
+### Big-θ Notation
+
+- $f(x)$ is $Ω(g(x))$ and $f(x)$ is $O(g(x))$
+- $C_1 g(x) < f(x) < C_2 g(x), x > k$
+
+## Complexity of Algorithms
+
+
+## combination of funciton
+
+if $f_1(x) is O(g_1(x))$ and $f_2(x) is O(g_2(x))$, then $f_1(x) + f_2(x) is O(max(|g_1(x)|, |g_2(x)|))$  
+$|f_1(x) + f_2(x)| ≤ |f_1(x)| + |f_2(x)|$  
+$≤ c_1|g_1(x)| + c_2|g_2(x)|$  
+$≤ (c_1 + c_2)max(|g_1(x)|, |g_2(x)|)$
+
+## ordering functions by order of growth
+
+## big-omega
+
+lowerbound: $f(x) is Ω(g(x))$ if there exists a constant $c > 0$ and $x_0$ such that $|f(x)| >= c|g(x)|$ for all $x >= x_0$
+
+## big-theta
+
+$f(x) is Θ(g(x))$ if $f(x) is O(g(x))$ and $f(x) is Ω(g(x))$
+
+## complexity
+

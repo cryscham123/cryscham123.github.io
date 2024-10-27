@@ -1,0 +1,34 @@
+---
+title: '확률변수의 기댓값'
+date: 2024-10-16
+categories: ["개념 정리"]
+description: '확률변수의 기댓값과 모멘트 생성 함수에 대해 알아봅니다.'
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 확률변수의 기댓값
+
+- $μ = E(x)$로 가정. (모집단)
+
+- covariance는 선형관계를 보여준다.  
+  `x와 y는 독립이다 -> cov(x, y) = 0`
+
+
+## Moment Generationg Functions
+
+- 평균과 분산만으로 확률분포를 설명하기에는 부족하다.  
+- moment: $μ_k′ = E(X^k), k ∈ ℤ+$
+- Var(x) = $μ_2′ - μ_1′^2$
+- E(x) = $μ_1′$
+- 모든 k에 대해 검증 불가 => mgf(moment generating function)
+- mgf: $M_X(t) = E(e^{tx})$
+1. $M_X(t) = 1 + tμ_1′ + \frac{t^2}{2!}μ_2′ + \frac{t^3}{3!}μ_3′ + ...$
+
+2. $M′(t) = μ_1′ + \frac{2t}{2!}μ_2′ + \frac{3t^2}{3!}μ_3′ + ...$
+
+3. $M′(0) = μ_1′$
+
+4. $M′′(0) = μ_2′$
+
+5. $M^{(k)}(0) = μ_k′$
