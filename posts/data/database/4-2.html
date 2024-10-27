@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>전체 게시글 – 김형훈의 학습 블로그</title>
+<title>SQL – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,24 +20,58 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<link href="./favicon" rel="icon">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../../posts/블로그 소식/1.html" rel="next">
+<link href="../../../posts/data/database/4-1.html" rel="prev">
+<link href="../../../favicon" rel="icon">
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "일치 없음",
@@ -53,68 +87,10 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "검색"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-title','listing-image','listing-date','listing-categories','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="김형훈의 학습 블로그" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../../styles.css">
+</head>
 
 <body class="nav-sidebar floating nav-fixed">
 
@@ -123,7 +99,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">김형훈의 학습 블로그</span>
     </a>
   </div>
@@ -153,57 +129,57 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">전체 게시글</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Data</li><li class="breadcrumb-item"><a href="../../../posts/data/database/1-2.html">Database</a></li><li class="breadcrumb-item"><a href="../../../posts/data/database/4-2.html">SQL</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Data</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Database</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/data/database/1-2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../posts/data/database/1-2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">An Overview of Database</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/data/database/3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../posts/data/database/3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Relational Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/data/database/4-1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../posts/data/database/4-1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Database Normalization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/data/database/4-2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../posts/data/database/4-2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">SQL</span></a>
   </div>
 </li>
@@ -222,7 +198,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/블로그 소식/1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../posts/블로그 소식/1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">아직 준비중입니다.</span></a>
   </div>
 </li>
@@ -233,53 +209,42 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
-<div id="mc_embed_shell">
-      <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
-  <style type="text/css">
-        #mc_embed_signup{background:#fff; false;clear:left; font:14px Helvetica,Arial,sans-serif; width: 600px;}
-        /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
-           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-</style>
-<div id="mc_embed_signup" style="width: 100%; margin-bottom: 20px;">
-    <form action="https://42seoul.us11.list-manage.com/subscribe/post?u=4e780820b1c671b7cd7a97e9a&amp;id=39e91d7337&amp;f_id=0069fee0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-        <div id="mc_embed_signup_scroll"><h2>블로그 소식 받기</h2>
-            <div class="mc-field-group"><label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value="" style="margin: 0;"></div>
-        <div id="mce-responses" class="clear foot">
-            <div class="response" id="mce-error-response" style="display: none;"></div>
-            <div class="response" id="mce-success-response" style="display: none;"></div>
-        </div>
-    <div aria-hidden="true" style="position: absolute; left: -5000px;">
-        /* real people should not fill this in and expect good things - do not remove this or risk form bot signups */
-        <input type="text" name="b_4e780820b1c671b7cd7a97e9a_39e91d7337" tabindex="-1" value="">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#ddl-data-definition-language" id="toc-ddl-data-definition-language" class="nav-link active" data-scroll-target="#ddl-data-definition-language">DDL (<code>Data Definition Language</code>)</a>
+  <ul class="collapse">
+  <li><a href="#dml-data-manipulation-language" id="toc-dml-data-manipulation-language" class="nav-link" data-scroll-target="#dml-data-manipulation-language">DML (<code>Data Manipulation Language</code>)</a></li>
+  <li><a href="#dql-data-query-language" id="toc-dql-data-query-language" class="nav-link" data-scroll-target="#dql-data-query-language">DQL (Data Query Language)</a></li>
+  <li><a href="#join" id="toc-join" class="nav-link" data-scroll-target="#join">JOIN</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
-        <div class="optionalParent">
-            <div class="clear foot">
-                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
-            </div>
-        </div>
-    </div>
-</form>
-</div>
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';fnames[6]='COMPANY';ftypes[6]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script></div>
-
-
-</div></div>
-        
-    <h5 class="quarto-listing-category-title">분류</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">전체 <span class="quarto-category-count">(5)</span></div><div class="category" data-category="blog">blog <span class="quarto-category-count">(1)</span></div><div class="category" data-category="개념 정리">개념 정리 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="소식">소식 <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Data</li><li class="breadcrumb-item"><a href="../../../posts/data/database/1-2.html">Database</a></li><li class="breadcrumb-item"><a href="../../../posts/data/database/4-2.html">SQL</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">전체 게시글</h1>
-</div>
+<h1 class="title">SQL</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">개념 정리</div>
+  </div>
+  </div>
 
 
 
-<div class="quarto-title-meta column-body">
+<div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">공개</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2024년 9월 27일</p>
+    </div>
+  </div>
   
     
   </div>
@@ -289,175 +254,81 @@ window.Quarto = {
 </header>
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="정렬" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">정렬</option>
-       <option value="index" data-direction="asc">디폴트</option>
-         <option value="listing-date-sort" data-direction="asc">
-          날짜 - 날짜(오름차순)
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          날짜 - 날짜(내림차순)
-        </option>
-         <option value="listing-title" data-direction="asc">
-          제목
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="필터">
-    </div>
-</div>
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="소식,blog" data-listing-date-sort="1729900800000" data-listing-file-modified-sort="1729988805528" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="5">
-<a href="./posts/블로그 소식/1.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="img/2024-10-27-1.jpg" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-아직 준비중입니다.
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('소식'); return false;">
-소식
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('blog'); return false;">
-blog
-</div>
-</div>
-<div class="card-text listing-description">
-우리 블로그 아직 영업 안합니다.
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-2024-10-26
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="개념 정리" data-listing-date-sort="1727395200000" data-listing-file-modified-sort="1729988805528" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="346">
-<a href="./posts/data/database/4-2.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="img/db-thumb.jpg" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-SQL
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('개념 정리'); return false;">
-개념 정리
-</div>
-</div>
-<div class="card-text listing-description">
-A query create temporarily a new table.<br>
-this allows a query to <code>create a new relation</code> and feed information to another query as a <code>subquery</code>
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-2024-09-27
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="개념 정리" data-listing-date-sort="1727136000000" data-listing-file-modified-sort="1729988805528" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="156">
-<a href="./posts/data/database/4-1.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="img/db-thumb.jpg" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Database Normalization
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('개념 정리'); return false;">
-개념 정리
-</div>
-</div>
-<div class="card-text listing-description">
-
-
+<p><img src="../../../img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <ul>
-<li>process of organizing a database to reduce <code>redundancy problem</code> and improve data integrity</li>
+<li>SQL is not programming language but a <code>data sublanguage</code></li>
+<li>MS Access 89에서는 <code>UNIQUE, CHECK, DEFAULT</code>,<code>NUMERIC(m,n)</code>, <code>LIKE</code>, <code>on update casacade, on delete casacade</code> 제약조건을 지원하지 않음</li>
+<li>MS Access에서는 <code>AutoNumber</code>를 지원하지 않음. 대신 <code>Identity</code>를 사용</li>
+<li>MS Access에서는 database 생성을 지원하지 않음</li>
+</ul>
+<section id="ddl-data-definition-language" class="level2">
+<h2 class="anchored" data-anchor-id="ddl-data-definition-language">DDL (<code>Data Definition Language</code>)</h2>
+<ol type="1">
+<li>CREATE (database, tables, views, indexes)</li>
+<li>ALTER: modify columns / constraints</li>
+<li>DROP (database, tables, views, indexes)</li>
+<li>TRUNCATE: delete table data while keeping structure.<br>
+<code>MS Access에서는 지원하지 않음</code> =&gt; <code>DELETE FROM table</code></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> student (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span> <span class="dt">INT</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    CourseID <span class="dt">INT</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    Name <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">UNIQUE</span>, # unique는 자동으로 <span class="kw">index</span> 생성</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    Age <span class="dt">INT</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> STUDENT_PK <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">id</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    COURSE_FK <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (CourseID) </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">REFERENCES</span> Course(CourseID) </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> <span class="kw">UPDATE</span> CASACADE </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">NO</span> ACTION</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> student <span class="kw">ADD</span> <span class="kw">COLUMN</span> major <span class="dt">VARCHAR</span>(<span class="dv">100</span>);</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> student <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> STUDENT_FK <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (CourseID) <span class="kw">REFERENCES</span> Course(CourseID) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> student <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> AGE_CHECK <span class="kw">CHECK</span> (Age <span class="op">&gt;</span> <span class="dv">0</span>);</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> student <span class="kw">DROP</span> <span class="kw">CONSTRAINT</span> AGE_CHECK;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> student;</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">TRUNCATE</span> <span class="kw">TABLE</span> student;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> [<span class="kw">view</span> name] <span class="kw">AS</span> <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> student;</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="dml-data-manipulation-language" class="level3">
+<h3 class="anchored" data-anchor-id="dml-data-manipulation-language">DML (<code>Data Manipulation Language</code>)</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> student <span class="kw">VALUES</span> (<span class="dv">1</span>, <span class="st">'Alice'</span>, <span class="dv">20</span>);</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> student <span class="kw">SET</span> age <span class="op">=</span> <span class="dv">21</span>, Name <span class="op">=</span> <span class="st">'babo'</span> <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> student <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>;</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="dql-data-query-language" class="level3">
+<h3 class="anchored" data-anchor-id="dql-data-query-language">DQL (Data Query Language)</h3>
+<p>A query create temporarily a new table.<br>
+this allows a query to <code>create a new relation</code> and feed information to another query as a <code>subquery</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> student;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> student </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> age <span class="op">&gt;</span> <span class="dv">20</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> name <span class="kw">DESC</span>, age <span class="kw">ASC</span>;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> name <span class="kw">FROM</span> student;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name, age <span class="kw">FROM</span> student <span class="kw">WHERE</span> Age <span class="op">&gt;</span> (<span class="kw">SELECT</span> <span class="fu">AVG</span>(Age) <span class="kw">FROM</span> student);</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="join" class="level3">
+<h3 class="anchored" data-anchor-id="join">JOIN</h3>
+<ul>
+<li>inner join(equijoin)
+<ul>
+<li>explicit join: <code>FROM table1 INNER JOIN table2 ON table1.id = table2.id</code><br>
+(MS Access에서는 INNER를 명시해야됨)</li>
+<li>implicit join: <code>FROM table1, table2 WHERE table1.id = table2.id</code></li>
+</ul></li>
+<li>outer join
+<ul>
+<li>left outer join: <code>FROM table1 LEFT JOIN table2 ON table1.id = table2.id</code></li>
+<li>right outer join: <code>FROM table1 RIGHT JOIN table2 ON table1.id = table2.id</code></li>
+</ul></li>
 </ul>
 
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-2024-09-24
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="3" data-categories="개념 정리" data-listing-date-sort="1726531200000" data-listing-file-modified-sort="1729988805528" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="134">
-<a href="./posts/data/database/3.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="img/db-thumb.jpg" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-The Relational Model
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('개념 정리'); return false;">
-개념 정리
-</div>
-</div>
-<div class="card-text listing-description">
-a formal name for a thing that is being tracked one theme or <code>topic</code> (just single table)
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-2024-09-17
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="개념 정리" data-listing-date-sort="1725321600000" data-listing-file-modified-sort="1729988805528" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="370">
-<a href="./posts/data/database/1-2.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="img/db-thumb.jpg" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-An Overview of Database
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('개념 정리'); return false;">
-개념 정리
-</div>
-</div>
-<div class="card-text listing-description">
-<code>Table</code> = <code>file</code> = <code>relation</code><br>
-<code>column</code> = <code>fields</code> = <code>attribute</code><br>
-<code>row</code> = <code>record</code> = <code>tuple</code>
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-2024-09-03
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-일치 없음
-</div>
-</div></main> <!-- /main -->
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -878,6 +749,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://giscus.app/client.js" data-repo="cryscham123/cryscham123.github.io" data-repo-id="R_kgDONGE9Rw" data-category="Announcements" data-category-id="DIC_kwDONGE9R84CjtIQ" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="light">
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../posts/data/database/4-1.html" class="pagination-link" aria-label="Database Normalization">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Database Normalization</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../posts/블로그 소식/1.html" class="pagination-link" aria-label="아직 준비중입니다.">
+        <span class="nav-page-text">아직 준비중입니다.</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
