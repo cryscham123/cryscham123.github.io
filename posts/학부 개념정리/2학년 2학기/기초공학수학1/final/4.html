@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="인간의 청각과 촉각 감각 시스템에 대해 알아봅니다.">
 
-<title>Auditory Haptic – 김형훈의 학습 블로그</title>
+<title>삼각함수 정리 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,21 +23,21 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/5_signal_detction.html" rel="next">
-<link href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/3_sensory_system.html" rel="prev">
-<link href="../../../../favicon" rel="icon">
-<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/5.html" rel="next">
+<link href="../../../../../posts/기타/블로그 소식/1.html" rel="prev">
+<link href="../../../../../favicon" rel="icon">
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "일치 없음",
@@ -55,8 +54,37 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../../../../styles.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../../../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -66,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../../../index.html">
+    <a class="navbar-brand" href="../../../../../index.html">
     <span class="navbar-title">김형훈의 학습 블로그</span>
     </a>
   </div>
@@ -81,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html">인간 공학</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/4_Auditory_Haptic.html">Auditory Haptic</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item">기초공학수학1</li><li class="breadcrumb-item"><a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html">Final</a></li><li class="breadcrumb-item"><a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html">삼각함수 정리</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -113,7 +141,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/기타/블로그 소식/1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/기타/블로그 소식/1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">아직 준비중입니다.</span></a>
   </div>
 </li>
@@ -141,49 +169,49 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">기초공학수학1</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth3 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Final</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">삼각함수 정리</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/5.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/5.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">지수함수</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/final.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/final.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">final</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/spot.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/spot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">눈여겨볼 문제</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/triangle_func1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/triangle_func1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">삼각함수 정리</span></a>
   </div>
 </li>
@@ -202,31 +230,31 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/1-2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/1-2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">An Overview of Database</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Relational Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Database Normalization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/7.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/7.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Modeling and the Entity-Relationship Model</span></a>
   </div>
 </li>
@@ -243,19 +271,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/0.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/이산 수학/0.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">진도 나갈거 예상</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/이산 수학/1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logic and Proofs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/이산 수학/3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Algorithm</span></a>
   </div>
 </li>
@@ -263,46 +291,46 @@ ul.task-list li input[type="checkbox"] {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
  <span class="menu-text">인간 공학</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction to Human Factors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/1_reaserch_method.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/인간 공학/1_reaserch_method.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Research Method in Human Factors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/2_human_information_processing_model.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/인간 공학/2_human_information_processing_model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Human Information Processing Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/3_sensory_system.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/인간 공학/3_sensory_system.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sensor System (Visual)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/4_Auditory_Haptic.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/인간 공학/4_Auditory_Haptic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Auditory Haptic</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/5_signal_detction.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/인간 공학/5_signal_detction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Signal Detection Theory</span></a>
   </div>
 </li>
@@ -319,19 +347,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/1-통계학의-개념.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/1-통계학의-개념.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률과 통계의 정의</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/2-확률변수와-분포.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/2-확률변수와-분포.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률변수와 확률분포</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/3-확률변수의-기댓값.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/3-확률변수의-기댓값.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률변수의 기댓값</span></a>
   </div>
 </li>
@@ -346,40 +374,20 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of Contents</h2>
-   
-  <ul>
-  <li><a href="#alarms" id="toc-alarms" class="nav-link active" data-scroll-target="#alarms">Alarms</a>
-  <ul class="collapse">
-  <li><a href="#non-speech-alarm" id="toc-non-speech-alarm" class="nav-link" data-scroll-target="#non-speech-alarm">Non-speech Alarm</a></li>
-  <li><a href="#voice-alarm" id="toc-voice-alarm" class="nav-link" data-scroll-target="#voice-alarm">Voice Alarm</a></li>
-  </ul></li>
-  <li><a href="#voice-recognition" id="toc-voice-recognition" class="nav-link" data-scroll-target="#voice-recognition">voice recognition</a></li>
-  <li><a href="#tactile-perception" id="toc-tactile-perception" class="nav-link" data-scroll-target="#tactile-perception">Tactile Perception</a></li>
-  <li><a href="#force-feedback" id="toc-force-feedback" class="nav-link" data-scroll-target="#force-feedback">Force feedback</a></li>
-  <li><a href="#vibration-feedback" id="toc-vibration-feedback" class="nav-link" data-scroll-target="#vibration-feedback">vibration feedback</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html">인간 공학</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/4_Auditory_Haptic.html">Auditory Haptic</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item">기초공학수학1</li><li class="breadcrumb-item"><a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html">Final</a></li><li class="breadcrumb-item"><a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html">삼각함수 정리</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Auditory Haptic</h1>
+<h1 class="title">삼각함수 정리</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">인간 공학</div>
-    <div class="quarto-category">개념 정리</div>
+    <div class="quarto-category">기초공학수학</div>
   </div>
   </div>
 
-<div>
-  <div class="description">
-    인간의 청각과 촉각 감각 시스템에 대해 알아봅니다.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -388,7 +396,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024년 10월 15일</p>
+      <p class="date">2024년 10월 5일</p>
     </div>
   </div>
   
@@ -400,107 +408,24 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="alarms" class="level2">
-<h2 class="anchored" data-anchor-id="alarms">Alarms</h2>
 <ul>
-<li><p>Conspicuous from ambient noise<br>
-15~30dB required</p></li>
-<li><p>Remain within the safe range<br>
-below 85 to 90 dB<br>
-masking 위협때문에 여러 소리를 혼합해서 냄</p></li>
-<li><p>Not disruptive with other signals</p></li>
-<li><p>Informative and distinctive</p>
-<ol type="1">
-<li>stereotypic: 어디서 소리가 오는지</li>
-<li>pitch physical dimension(pitch(4), duration(4), magnification(4)) &lt;= 4</li>
-</ol></li>
-</ul>
-<section id="non-speech-alarm" class="level3">
-<h3 class="anchored" data-anchor-id="non-speech-alarm">Non-speech Alarm</h3>
-<ul>
-<li><p>language independent<br>
-글로벌하게 가고 싶다면</p></li>
-<li><p>Evidence to show they are useful<br>
-fewer mistakes with key click<br>
-video games harder without sound</p></li>
-<li><p>Especially good for transient/background status info</p></li>
-<li><p>use of stereo allow positional information<br>
-비쥬얼로는 3d 표현하기 어려움</p></li>
-</ul>
-</section>
-<section id="voice-alarm" class="level3">
-<h3 class="anchored" data-anchor-id="voice-alarm">Voice Alarm</h3>
-<ul>
-<li>voice is beign accepted as a natural way to interact with devices</li>
-<li>Able to give more meanings than symbolic alarm<br>
-symbolic alarm은 학습을 해야한다는 단점이 있음</li>
-<li>Limitations
-<ol type="1">
-<li>more confusable with a background sound and communication: 소리가 섞이면 헷갈림</li>
-<li>more susceptible to frequency-specific masking<br>
-사람의 voice는 정해진 주파수가 있다.<br>
-</li>
-<li>need to consider the multilingual environment</li>
-<li>Sound Transmission Problem</li>
-</ol></li>
-</ul>
-</section>
-</section>
-<section id="voice-recognition" class="level2">
-<h2 class="anchored" data-anchor-id="voice-recognition">voice recognition</h2>
-<ul>
-<li><p>Articulation index: pure bottom-up approach<br>
-physical 품질<br>
-0.1: 10% of speech is understood<br>
-0.9: 90% of speech is understood<br>
-1.0: 100% of speech is understood<br>
-0.3: 30% of speech is understood<br>
-0.5: 50% of speech is understood<br>
-0.7: 70% of speech is understood</p></li>
-<li><p>Speech intelligibility measure poor signal quality is compensated by top-down processing<br>
-restricting message set size, redundant carrier sentence</p></li>
-</ul>
-</section>
-<section id="tactile-perception" class="level2">
-<h2 class="anchored" data-anchor-id="tactile-perception">Tactile Perception</h2>
-<ul>
-<li>Touch is complex</li>
-<li>Only bi-directional communication channel</li>
-<li>Mechanoreceptor detect skin deformation</li>
-<li>Tactile acuity is determined by the density of mechanoreceptor</li>
-<li>Tactile information
-<ol type="1">
-<li>feedback by force: 저항감</li>
-<li>feedback by vibration</li>
-<li>electrical stimulation: 위험해서 적극적으로 쓰이진 않지만 종종 쓰인다. (저주파 마사지)</li>
-</ol></li>
-<li>중요한 정보는 시각, 나머지 feedback은 촉각, 청각으로 받아들임.</li>
-</ul>
-</section>
-<section id="force-feedback" class="level2">
-<h2 class="anchored" data-anchor-id="force-feedback">Force feedback</h2>
-<ul>
-<li>Kinesthetic information is poduced: 뭘 누를 때 반력 / 저항을 느낌.
-<ul>
-<li>큰 물체는 움직이기 어렵게 함 =&gt; 더 세밀하게 조종 가능</li>
-<li>게임에서 많이 사용됨</li>
-</ul></li>
-</ul>
-</section>
-<section id="vibration-feedback" class="level2">
-<h2 class="anchored" data-anchor-id="vibration-feedback">vibration feedback</h2>
-<ul>
-<li>using vibration for information transfer</li>
-<li>similar physical characteristics to auditory signal
-<ul>
-<li>amplitude, frequency, duration, wave pattern</li>
-</ul></li>
-<li>used for navigation aid</li>
+<li><span class="math inline">\(lim{θ→0} \frac{sin θ}{θ} = 1\)</span></li>
+<li><span class="math inline">\((sin x)' = cos x\)</span></li>
+<li><span class="math inline">\((cos x)' = -sin x\)</span></li>
+<li><span class="math inline">\((tan x)' = sec^2 x\)</span></li>
+<li><span class="math inline">\((cot x)' = -csc^2 x\)</span></li>
+<li><span class="math inline">\((sec x)' = sec x tan x\)</span></li>
+<li><span class="math inline">\((csc x)' = -csc x cot x\)</span></li>
+<li><span class="math inline">\(1 + tan^2 x = sec^2 x\)</span></li>
+<li><span class="math inline">\(1 + cot^2 x = csc^2 x\)</span></li>
+<li><span class="math inline">\(sin 2θ = 2 sin θ cos θ\)</span></li>
+<li><span class="math inline">\(sin^2 θ = \frac{1 - cos 2θ}{2}\)</span></li>
+<li><span class="math inline">\(cos^2 θ = \frac{1 + cos 2θ}{2}\)</span></li>
+<li><span class="math inline">\(cos 2θ = cos^2 θ - sin^2 θ = 2cos^2 θ - 1 = 1 - 2sin^2 θ\)</span></li>
+<li><span class="math inline">\(tan 2θ = \frac{2tan θ}{1 - tan^2 θ}\)</span></li>
 </ul>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -929,13 +854,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/3_sensory_system.html" class="pagination-link" aria-label="Sensor System (Visual)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Sensor System (Visual)</span>
+      <a href="../../../../../posts/기타/블로그 소식/1.html" class="pagination-link" aria-label="아직 준비중입니다.">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">아직 준비중입니다.</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/5_signal_detction.html" class="pagination-link" aria-label="Signal Detection Theory">
-        <span class="nav-page-text">Signal Detection Theory</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/5.html" class="pagination-link" aria-label="지수함수">
+        <span class="nav-page-text">지수함수</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
