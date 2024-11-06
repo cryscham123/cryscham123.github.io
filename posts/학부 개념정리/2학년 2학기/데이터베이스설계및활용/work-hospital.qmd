@@ -1,0 +1,95 @@
+---
+title: '데이터베이스설계및활용 주제 개요-HOSPITAL ERP'
+author: ["20192208 김형훈"]
+categories: ["work"]
+format: 
+  pdf:
+    documentclass: report
+    papersize: a4
+    number-sections: true
+    number-depth: 3
+    top-level-division: chapter
+    fontsize: 17pt
+    geometry:
+      - top=20mm
+include-in-header: 
+  text: |
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{}{0pt}{\huge}
+    \titleformat{\section}[block]{\normalfont\Large\bfseries}{}{0pt}{}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{-3pt}{0pt}{10pt}
+    \titlespacing*{\section}{0pt}{20pt}{10pt}
+    \newcommand{\sectionbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{2}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## System Definition
+
+### 과제 이름
+
+HOSPITAL ERP
+
+### 과제 목표
+
+1. 환자 진료와 병원 운영을 효율적으로 관리할 수 있는 통합 시스템 구축
+2. 의료진 간의 원활한 의사소통
+3. 병원 자원의 효율적 배분과 운영
+
+### 예상 사용자
+
+1. 간호사
+2. 의사
+3. 약사
+4. 행정 직원
+
+### 과제 범위
+
+1. **간호사**는 입원실 예약 관리, 환자 정보 확인, 진료 기록 확인, 처방전 확인 기능을 사용할 수 있다
+2. **의사**는 환자 정보 확인, 개인 진료 일정 관리, 진료 기록 작성, 처방전 작성 기능을 사용할 수 있다
+3. **약사**는 의약품 재고 관리, 처방전 확인 기능을 사용할 수 있다
+4. **행정 직원**은 환자 정보 관리, 의사 정보 관리, 입원실 관리, 진료실 관리 기능을 사용할 수 있다
+
+### 추진 일정
+
+회의 진행 필요
+
+### 팀원별 역할
+
+회의 진행 필요
+
+## Requirement Analysis
+
+### ER diagram
+
+![](img/2024-11-02-20-36-19.png)
+[링크](https://app.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=HOSPITAL.drawio#R%3Cmxfile%3E%3Cdiagram%20id%3D%22R2lEEEUBdFMjLlhIrx00%22%20name%3D%22Page-1%22%3E7Z1bc%2BK4Esc%2FTR4z5Ss2jwmXWWqTkIXsnj3nZUqDFfCssVhjZsJ8%2BiODLxAZkMZ2LCRVTdUEYYzpbv8stf5q3Zi95dvnCKwWj8iDwY2heW83Zv%2FGMAzXtfF%2FScs2bdG72r5lHvnevk0vGqb%2BT5g2ZodtfA%2Bujw6MEQpif3XcOENhCGfxURuIIvTj%2BLBXFBx%2F6wrMIdEwnYGAbP2P78WLfatra0X7b9CfL7Jv1rX0nSXIDk4b1gvgoR9HTfAtHqIwTi%2FxGUZLEMIwxu88gugfGN3Yg0UcJ7%2F07sYY4n%2BvydGf5gjNAwhW%2FvrTDC1x82yNDxm%2BgqUfJHY%2BONF9eiL8debgxuxFCMX7v5ZvPRgkzsrcsL%2Bm4Yl3cztEyXkpPjC6hY7xefT8okHf%2FLaK%2Fvj7bXibneY7CDapgR8H%2FVFv9DRIjRRvM8tje62SP2PwNWm6X8cgitMAMTXcgF0eAz%2FEv87s67vXQQBWa393%2BL5l4QfeA9iiTZydKHt1%2F%2Bq%2FQW%2Byj4%2FkWBwqD%2Fhkycvk5Imlp%2BnFJG%2BDwJ%2BH%2BO8Z%2FvnJN95HcI2v5QGs4%2FQI0kDZj4VRDN8OmlKDfYZoCeNoiw%2FJ7hcnDYz0brntWGnDjyL2jCz2FgdxZ2QHgjSY5vnJCx%2FhP1I3sbjMIFx20lX4x8c%2BCCb4RgThfOe1Y6cklvUitHoB0RzGacMK%2BYlNB9%2Fh%2FlbYmd8Pgh4KUOLbEIUwO2z36%2Bx7%2FA%2F%2F3p72yb6x8QX08Gu9eI3%2FJYdHcQ%2BF6zjCMZJ8FcSu%2BgETd93HaJV%2BTwBfs8uIUmsmf39FcYzvrFOOPR%2Fbl92dutekdK7ZmG9NwrfPv7N4F%2BEf%2BxrsqLbwPQ%2BG%2B9syITEoPF7izFIP5FZ%2F7473NyOtRwxqjxy4wGT0QHqywizMZwMBDv8QxPAebUJvTbg1v84KnrZI8ELPn2HijfocejzD7f7Y%2B%2FUK4EudP%2Bw%2F2XkXEnYjIfF2%2BiY1ag0RqtN9RIy4MpNea5L0ndZJ363k2w%2B662nt71LbX3SuZ1954NcnsIQc%2BvYi0et3vnQEN8nhlSJ4PQTvtk1ws9o4jC%2BCm%2FT2F57g5BjsEYSbVzCLN9E%2Bc8OZj%2BsiOUMQyEdycrymSF4PyXWjdZTbIqHconaA8CjvEH7tw%2FUs8lexj0IOXVwbyeljQD6SO4rkTZHcbp3k1VJmnJHcoXaA8CQn02XTGM3%2B4dC5tTGc3vsiM%2FwpdL8BaP7vr9Xqz3%2F%2F%2BGv8%2B%2Bu377eqM94Ywt0PRHipb6%2B0L342TqUCeKklyJ74c%2BTPBMmLV%2FS9dPhWPfCm8J3L9FrD95V2wM%2FGqcI32f0evK38aNvH38qhf%2BtiuOqCn2STSyFggN4cZpogzM4FmqMQBIOi9T5Krg96qduKYx7Qzt%2BJtuwbjONtKjMFmxjhpkW8DNJ3dyLUu0RXjBsGkyUIvfEuYHZvDP3kR%2B3ODUOvOOwnjNALegThdv%2FOwXFkZKQQXqNNNINnLGKl6IuzJ9FJ06UzTIl5zgZVBAMQ%2B9%2Fh0XWcDBn888D24ID06Vac%2BTlpKGK1m%2Fa0M22r3nknIH53fC5p%2FeUPONq7SNxfcq1xaZEPoOe7l9Hg6eXLZDx%2BPAkriVTNuUgl84ulUfYa8u5F7Yk7q5oe6sr7hAwaWotebsOLqjn7MkFVzXnoStVNLPc0qXeaILR82iy%2FXqdy4hdVzQwhIV3H0TZkJj3D6J%2Bd9K2rmm1SO8XhXU9p%2FzxQFddtcsJlGCB0lUiv3%2FvyIbzaHI1COMeyZpucqeHwLqe9iW1q%2BwuPcHLS5WW7EiR5W9X58hFcLS1siuDty5ltkdYW2mptYWaKbHh34NceSOgYbzn0b20YV%2BsLT0eEEsI1hvHWtcydK1XCnY9UhfEOOcLqbaLEfuPZbLMC4UxknDMEgnQ4d6uNvRXOOdE1lzu3muqRL5znkapw7pJD6T7wg%2B0QipxcYQgA6TDeIe%2F0RHr05a7%2FOJpOR%2BOnk3FxLSKkQrbXlCRJt2w6XjcnSepInSNjEMB06GWyvEiSOmSKTCRJUkclzTJTZBVcZZckMYSEdA9st5psRZGeY0mSS6ZIRSJ9HrqK9C6ZL30GsY%2FtJ1VFXYaIkA70jqrH2BToWxcuOUYl3%2FKVX3PoR9CiY90hO2d33tJfr30UirP8tGoUyIdyNfXdFMrbVzA5Ik19O2rqOzdFSUFGfz1bJLed6CxX896nbaMKwjTG8tZlTM6VVoQ5H6mK5Q45hdKHMfADDr1bG8RVQZjkbKW1crJ5WAXx%2BiHeelFGvVrijK%2ByXnmkSgXxclOQSbNpDOLNmkPv1lXUi8H9IkO8lE16SUAQoSBXWa8ssX2xrFfWOeCrrFf66KCt0cV4%2BPGew81U9OqSHYu0otdJSF2Lju5kVP66ck6nruXl1NBZKHeY1LNsDJP3XfonES%2FCuS75fBBJTtFV8265KUr2opZQTsEQEdL1FrtqDq4p0Leum%2BuKNAXXVVNwuSnIKTjBNyhmcL58BFczb00RvHVBXFekibeumnjLTVGydmmBTX%2B9S1rqjwHpQJ6nfRTJayd5%2B3o4XbvS%2BbcLsapgrmtkQu3O8yK4FmQKrnIEiIzy8vlJBfKmQP6RYrhS35I3O4d3OWn%2Fs3EqFcRLLVGyQmUuSEaloudFhveJJ5vUa8mbxXfrNbx0rdqMB2%2F9cLV4vLAFOd%2FxGYae0AkVlgCQkOSqGmNTJP%2FQbYpPeFekcoxFrCqS6xo573EfIOQJvt0FSwxICPNqeyIomJ%2BBudU6zCuuPeIN5vS7RwoP85KFR3dBAKO5D8VOkNPHgHww18kcS3%2FcexlPTkaERAsC7EzXn5fSpc16N1dKV9elVooyCNCL2L6eNQG6XlJ5T6BFAUX0qgeyrpeUcEGzGEVSrQpgCQkJn89KVdoY7VtfGKDrIulKi1hVbNd1Mkki%2BNoAFvfLx%2FHsOhTH6%2Bd468sDdKOa0IwzjuexqjiuZ448Ks2VuHCZGJE%2FH9dGc4YgkJDmSpnUGM05WCJgCCVNMpQ0qbAFmV6bruAMO9D%2FCWIfhRz6uT6kK4nSGeMoiVJzSG%2B9cq5uCKVRMpRGqbAFmUN78GcwXIu%2FipclDuQjulmt7IoiOt%2FrB8xqD2zOiJ4HqyK6bpLP6sHbCkY%2BDGdCZ9AZgkA%2BnFsl8rXn5%2FHo6eVRhPqlte8DbrwTLxm0eZU8AVM%2Fsy0ymyrRI5lFJ2PR%2B5sb7ZJVUuZSJO1SHr3qGa1bJXsBS1jSlCUmpHtkGyViRoX7mnDfunjJKJEvioT7InoV7o0SGeJ0toDeJoBS8Z4lKKTjvW5JzXuWdA8779sXOVlCJdwsRffCFiV0F2jrqsoBIB%2FJOxQk%2F%2Fi9q442pTq7fVWxy1Vde1flI72Lm1flpWDq272qWkfdpsi6ybURmZ5tHHnRmUY2zcSJM%2FMrP3Dm46A%2F6t09fJkMeuPJ6d74tWTCT7r113PftDVy8mnNBvxWbanPlfeNWXIh7Ju6tp%2F67pQUkhcoF1JEr%2Bot6xlbDnyNrxhFnlSZEJaQkK%2F%2F7KjK043RvvXMt%2B5QdKjbv%2FNpPeDQd6%2FEZzs5hd2LIP5O707o1V4MMSAdzPOibArm9cO89bS2UaIr4%2FBOp%2FRAEasK5kaJ2uwJxUIXu2Pxv3Qg1x2pS6c1C3IOlu06Iu2zWwSrIrnulFRK88E8RGtfZJqzxICENFel0Zqjefsrdh2haqM5qjZaYQtysuQlSbKIXlKHIQbko3nJVsxELHyASIFKRcIiS%2FHAenF5WddlxUI2M31ZfpKtIuRFsZBdOVFi%2FMu099ug%2F%2BfD4ORNL5Fk4X2tcZ02M9agZsGVehaLZX48j%2FEr0iy4ZHpMKM2Cq%2Ba1CluQ81pSrt9gCQr5%2BmCuyo82xvv2VQuuUOlRV6VHC1uQ6dHpbogi9HCaIQIkRLlKjjaG8tY1C7orVG7UVbnRwhZkGmwQCi4%2BY%2FC%2FdCDPr0OBvH6Qt69ZKBKFIpC8CFZFciNz5IFnh1Dk8oUs3peP46o2RoMcb12tYAhVHMNQxTEObCFhcQyWAJAP5RpFl%2FyjpQp7DQKFWOFc2QVsl7%2Fzk%2BMX%2F03e%2BWRnL%2Ftvh0f2tyehQi9qSI%2B8LGrItPyciBoMjey39x5GT6Pel8l4%2FHgSDRIJGtzsOc4qaOg29pDWyC65RH0wltqHGr27edEzGBo5xy2SnqGIXtUpMzRypnqC0PJ6d3z51XqUDEEhYUdNjbkb433regZDE2rIrakhd2ELcsg9DBC6SrA34H%2F5QK5TCNPaGXGXFiakHnLXtDggD57L4%2BhsrpWXcbRNMf8lV6FRI9um9aIzzdp9ufso%2FnFge3BA2nkpzvycNBxwqJtGX9ozuDXTkf%2FwxAdsS6v4AaurvQu9%2FUXXPINXMqCcDKa9CT5wNH46%2BTS6liRP41tO3ZoWZS8xr1vRwAy71KJmlgQDw%2F7Q3CR9Sjb0FirpYyiZc2ELcsAnYeFNlpCQb6RgqTLLjdG%2B%2FZSPJXaZ5SJ6Fe3zyDosdA89H0NUriWLLEEhH%2B8Ntc6lMd63vs7FMERa51LEqqI7Di7CszIUWmaJAflgbpKPfAXzmmDOwVoXU6i1LnmwKpobpkF4to%2FWYC70cheGAJAQ5eTciUJ5XShvf7mLWW1ShTeU07tAfJSTEyr9TQRiH4Ucerg%2BmNOHgIQwr6a0UzA%2FB3O3fZhXy6HxBvMOtQvEhzmZPxtG8N8NDGdbDl1cH83pY0A%2Bmtuqa94Yzal3Gm6O5rZQXXNbdc0LW5Bd81FyO2xmSe9c6PXoDGEgH9AtCqB%2FvIb63EJzOhl9Ter4LvUic4czcbzF4bIHnvZEyLag5mhPBPwyQig%2BvMMjsFo8Ig8mR%2Fwf%3C%2Fdiagram%3E%3C%2Fmxfile%3E)
+
+### Business Rule
+
+1. Medicine Stock은 0보다 작을 수 없다
+2. Floor는 3,4,5층이 존재한다 (고 가정한다)
+3. PATIENT_ROOM의 Type은 VIP, General, ICU로 구분된다
+4. PATIENT_ROOM의 CurrentOccupancy는 Capacity보다 작거나 같아야 한다
+5. ROOM_ADMISSION의 AdmissionDate는 DischargeDate보다 작아야 한다
+6. ROOM_ADMISSION의 STATUS는 'Admitted', 'Discharged'로 구분된다
+7. PATIENT의 GENDER는 'M', 'F'로 구분된다
+8. PATIENT의 BLOODType은 'A', 'B', 'AB', 'O'로 구분된다
+9. APPOINTMENT의 STATUS는 'Completed', 'NotCompleted', 'Cancelled'로 구분된다
+10. DOCTOR_SCHEDULE의 STATUS는 'Scheduled', 'NotScheduled'로 구분된다
+11. CLINIC_ROOM의 FLOOR는 1층과 2층이 존재한다 (고 가정한다)
+
+### 이 주제를 선택했을 때 장단점
+
+- 단점: application 만들 때 시간이 조금 걸릴 것 같음

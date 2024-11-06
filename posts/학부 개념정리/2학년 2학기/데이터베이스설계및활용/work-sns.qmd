@@ -1,0 +1,47 @@
+---
+title: '데이터베이스설계및활용 주제 개요-SNS'
+author: ["20192208 김형훈"]
+categories: ["work"]
+format: 
+  pdf:
+    documentclass: report
+    papersize: a4
+    number-sections: true
+    number-depth: 3
+    top-level-division: chapter
+    fontsize: 17pt
+    geometry:
+      - top=20mm
+include-in-header: 
+  text: |
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{}{0pt}{\huge}
+    \titleformat{\section}[block]{\normalfont\Large\bfseries}{}{0pt}{}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{-3pt}{0pt}{10pt}
+    \titlespacing*{\section}{0pt}{20pt}{10pt}
+    \newcommand{\sectionbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{2}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+이건 만들다 보니까 application level에서 구현하는데 시간이 더 걸릴것 같아서 별로 좋은 아이디어는 아닌것 같다는 생각이 들었습니다.  
+일단은 도움이 될 수 있으니까 ER diagram 구현한 부분 올립니다.
+
+## requirement analysis
+
+### ER diagram
+
+![](img/2024-11-03-08-37-11.png)
+[링크](https://app.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=SNS-CRM.drawio#R%3Cmxfile%3E%3Cdiagram%20id%3D%22R2lEEEUBdFMjLlhIrx00%22%20name%3D%22Page-1%22%3E7V1bc5u6Fv41fmwGcfdjLm7a3bjJ2Ok%2Bu%2BelQ4NiM8Xgg0ni7F9%2FhI2wkbCRbLCJpE5mamQsQOtbn8S6aPWM69nyNvHm02Hsw7Cna%2F6yZ9z0dB24jov%2By1re8xZNs9ctkyTw87ZNwzj4F%2BIT89aXwIeL0olpHIdpMC83PsVRBJ%2FSUpuXJPFb%2BbTnOCxfde5NINUwfvJCuvU%2FgZ9O162upW3av8BgMsVXRg%2B4%2Fmbm4ZPzhsXU8%2BO3UhNcpp%2FjKM1v8QEmMy%2BCUYq%2BGXrJH5j0rME0TbMnvezpn9Hfc3b2xSSOJyH05sHi4imeoeanBTrl87M3C8JsnLc6uso7QpczBj3jOonjdP1ptryGYSYsLIb1PX3e8W0xDknWL8MPrj%2B9vt%2F90dLoy5vxdzocTh6c3590Y93Nqxe%2B5AP8YzwY5QOUvuNRR2M1zz6m3u%2Bs6WqRekmag8PQUAMSd%2BoFEXoy4wasjsPQmy%2BC1enrlmkQ%2Bnfee%2FyS4o7w0dVzsIT%2BaI2N7FwEkzvUWXaYdZ6N8ji%2FmexrLwwmEfr8hB49u%2BJVAhfoXu68RZqfQQ9OPl6vMEnhcqspH6xbGM9gmryjU%2FJvDQypXFNsOz9%2B28BOx%2BdMtyBXqIqX42hS9L0RD%2FqQS4hHWiYlrZ2SQs%2BeBl44QjroRZOV0MoyyQbWT%2BL5o5dMYJo3zOMgG9LBK1xrwWr0gzC8jsM4E20URxCftno66wr9oee91i6snoVu4Bodg80x%2BstOT9LrOFqkCYJIdimIJPUGM2ldpfE8v04In%2FFtJPloZp9%2Fx2mKlGqXXPfDul7auXQNRuEarcnWomT78I1HujF62OdwRWjTwPdhtNbKjIS9jcQrhFkpgWLUSXGQusgqEZNZIlsiMDglkHe2GRbu3rwQwT%2FyUngVv0T%2BghJrcZ9HSNqmOXcBk683HZQ2Ztr1uVeLufcURJO79S9tAg5WK3BY9nYqqN4oPJi6OwU%2BHJlZXmuT5Vmn8PZY3j1KtifSetbxd5jHX3hO71dy%2BndvBjso31pWbx4AIrP42z%2Fjn%2BFyFP%2B2%2FzbHT3%2Bel%2F%2BzXj65mmLxlli8f0IWr5YtOEq2Z2Px%2FUCVisWrh0Kn5PrgLRZvceJ3UL4HsPixAJCPxWn7mGLxZlgc6Gen8ePMaR2jcXYBCE%2FjtCltMPOCsIPCbYzD2aUvH4fT9jbF4Q1xuHV2Dj%2FOWNYxDreZBSA8h9OGsusEokv6l2kHBdwYj7MjQD4ep21siscb4nH33DyObTpi8HifWQCi83ifNpVlYRp38SSIOijgxnicHQHS8XifwaYC%2FQnEbmU00kH6PoKhlwZxNNh8s3Y%2Br4OQAHr6q2k6C3vrsAQY%2BZdZtBk6HIz%2BhUn8GA%2B96L2Xhy6R392vsJJkzwz9HAtwGaT%2F4O7Q559Z%2B4VtO%2FnxzXLrxJv3rYMHmARolFbBUKu2CI1Y0VV2sO4LGAZu2HS2OnrfPiK7873FdHWXB0TELOKX5AnuOzFfUKd4YqxbqmSiYqW4IhhvG4JFY7IS8et2b3tx%2FpDNwxsN0omALZOA9vrR8x9tYF3bT%2FGSgztaDw3VEcKU9751Wr5M2H2%2F%2BN0lv46j7b8t4nS3dDr6sL5%2Bo6pKk%2FfD%2FfhxJ29LHB1oGBbbCopCU2NLKNp5IdHyuFqse0HdydjAyjumJ8wPGhq4F7dqsUz7Ix7iRSpqYOCRYJBu3Ux7NSTid463b25%2BP2VUYOUdH%2Beg6Jbtw2IefdHZnPZMIDVIYSSy%2FZpd%2BvLRtwrrbom%2Fzx4PaH3QqO79OFUMbtEeJxmckBwIkI7F8VpRsXjTLH7%2BeEBbpLDuAqiKxm3aMvpj7gtP4xwIkI7GK6KL7ofDwXfl20DfONhzljOz5TAyc3u%2BDalDfzhs6S6zrLvi2wD0gkok54aKBCoETa%2BuruPZDA2fVA4OFRi0GyH0Ok0ilueJL%2BRl%2BbN7OMBxeXTderUqcKpIHdAua%2FGdHBzyl47DHcXhLXH42b0cjkgc7igOL4aigsMl8HJwIEA%2BFlexRi2x%2BPm9HI5I0UaOCjcqhoKOL5HBy8GBAOloHNgMO5x0ItWqSJC60DS3V0qS0ltJktrH5rWpTxhzHUp9yuWKc4Pscg%2FMqU%2FY01PMVma5o4ZSnwytnMtk7k99Ik%2B3TpD6hDVlS3VuR%2Fc%2FHnZSqUQOQjL5qc%2FqRSpWP80nP0m9URdPtg37a09XXIQV296L5CLk2K5B9DVsxSb4t2ilMPelchFyAEK6JW3F5vkS8TzHmzE%2Fz5%2FdSXjkxvfdskzoai%2BvYijoaDtxNkY%2FVvjSMTg4MltGUXiHfYSgImWmg3rOKIANVBWJg4rMFxnchDwYkI7LDXo1fvN1NLh%2B%2FDUcjMeXt4OdwJDJWlY2ljmsHsD2oukNqVOROUwzBvs6rivGMoNeXYlkLDNUdnIxFPRSawgXC28CpbKWcSBCuvnZpNdsEhE9x0qfn%2BjPbi0zRcpWLoCqaN3UKbmKH1LPIX%2FpSLwv9Wq9VRI%2Fu72sL9LOQX21Ni%2BGQs6dgzgQIB2NF7F%2Biscb5%2FHzR9UDTaTl%2BAarisqBRi%2FIvy5G0PM7KN%2FGvB4cAJCOyU061vTu67eP7%2BvYxOQ35PnA8sJR3i5rjYTWwoTN40q%2BfvA5mMPObrLHIHbF82HSwaMieT4K6Kop2aTdztIVSuCAg8gT9ONs8vrXwv15%2BW38X%2BPn8vvQgbHclRJaJflTej0qRVuh%2BR%2BT4%2FcCVyqKrxyJimTmBUxEZfgjwSAywVdvbSv1fqA8flVuhj%2B7SwSnIAthSCuAKhWjV8u1Yv9PCVwiHAiQjsYdBu%2Fn9vYUiD2n8SSOvLDprSlmXuTvqwH8ScMbUxSFgJ0mCwGv%2B%2BLd4wKGv1f3n2ErePLCfVa77cK%2F%2B0o31W5%2BgaeUzmx%2BYYAcRtgQhe%2Fw2MK%2FxVxYs%2FtFY%2BrAsKrphjqAC23V90YbgHm4MmS6ZRIKYR6iDzV7vrBqAmDUBLdjiuCaxoVVVgXNvjAtbfPPOkwzHNsmerYAuhbRW8vq0dc7rx476N2x6tC80SvNLOuV4XIrFr8a7C0ZX6sHoGN6YBM8brvGBXbi8iKf7MtsqRg8fc99vvsyXULn2igHr9Gezy%2BX4y%2B%2FHi9vKVX8aN7PnYpycKYXYLWWkuuMBqNSlL%2BT7TVtA%2B2P4%2FAEmtgezw16lfUEaLTn4wua5x%2B9iahG8aMxIZ09BWgqVaA1uj97whfQREoW2GBVkTvQaMuP4Dsk8YhfPh4HNB5Wm8%2F%2BGg6GV4PRTlx8lHetxiNNbbv86uW6jGzd3iYbRRCrnJMxzzofsPvIOvPupdPuTKHevQr0qukZYMWVe1taHkjIN2VbytLWGtuf%2F9XLEtzSZilL22YsaEubyLGnRwNCPq6Xu9gEj5GHn%2BvPHn9a1LwRw8ymqktsjQU9i4%2FiEIpualP1JPYNjioo0RqXd2BbDqFqSgBVVGJrLGhv2F9IhQRPJ%2BCBgHxkjq%2FJXO8yC6A%2FRy4BET2t9a1eU7kEtcGmNNIajwjtXo4AsRWJ7RDoPLRCpmUSHbUcBA0Mhn2mTlfStTZRoATzGpAX%2BQBlQNfhualwZ5MR3J2r%2FmprBCadA8P8bYfIpCG1pKFgZws4RDqBo4G8Zee96X3iN7Zp1%2FzGMcnr2Bbxm5YCpQ39I2mpdtHv2yVNPSq5rSqf57AENyZtrs7N6TNqc%2FFa0xl1NslYBnDgXGWTlUdaUmfDIdWsb9SppumS6uy6tRSgkddx%2B%2BA06sxg8O2OOpcnXb2dWfdw1cRjV6%2BaeNHWGdW0%2BuUJ0sHH3KpJ6jj5ttSYapKJe2go6vTMdF1Sn2unWlsjL9Q%2F1VRbUR36fvz4S5jEpMaD5Yhpgdnl0l6akqF27GI0%2FxjsftnOhMpVVIkTKnjCkHLbrh1jQdvbpUxT4sCEfGZaTD%2BK7pun%2Bw7EygkeGV2gV9E9sGg7l3Q78fIAQj6uZylT141NjfDntf3DNYzDLaCES65FW0qP0ZRidM1poeMMLfyaYhPgZDWlGLhgHu4I7xN0Ko9cRcG%2BvQgXytZPIF0%2FGOoMEDY7DmFdawjCusEGYW6%2FG2nXMzWjxq4HHI3cU8x0a36jU%2FZDw3JPYgusqMxydX%2F%2FbXg52r0AldcMSGwhZTEXpm%2BtPAtQ9VlYF50fsEALELxCC1AlWrbGQtVo4QKEfG%2BG9nEVExXXd9oKaFdYhkTiept9vSU819v0slu%2BjFkOQMjH9abamK41rj9%2Fxqwp1MZ0ptqYbjMW9EZkMhRt4cGAfGRuM0Rrnd5hwxjmusq%2BsstWa%2BAaNWZr1vIre5PLaPCxunnwcr7eSN69zCsi0tU81EhezHOFHZqt%2FAR3yCwRHmnl4fftWq5thjT0bha3YK5tUdJWzQH79bXK6XRguaMjq1uYXfM72aCM0IOTGS1CpSzbaUWlyEQU26kJJidV0G7WeVRZbpM3xeOUqcOlFMfK6Y9fmQp1rsjWAgfNh4fPby6rMuJQ4s7oomE5Jai6GqFCzNMb4Uy2XUKpmwtjqIQ%2Fg%2BOtW%2FD%2FpNHFkj64FnQO3Pj1j9xV%2BVhwuwbbRFMPbnSYxHG6fXrizafD2IfZGf8H%3C%2Fdiagram%3E%3C%2Fmxfile%3E)
+

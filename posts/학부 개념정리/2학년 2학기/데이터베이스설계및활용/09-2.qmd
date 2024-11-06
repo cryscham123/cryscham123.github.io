@@ -1,0 +1,46 @@
+---
+title: "Database Design"
+categories: [개념 정리]
+date: 2024-10-31
+description: "Database Design"
+---
+
+![](/img/db-thumb.jpg){.post-thumbnail}
+
+## Purpose of a Database Design
+
+set of database specifications that can be implemented as a database in a DBMS
+
+- `conceptual design`: non-DBMS specific
+- `logical design`: DBMS specific
+- `physical design`: DBMS specific but not implemented directly by humans
+
+## Logical Design(`Relational` Design)
+
+1. Create a table(relation) for each entity
+  - specify primary key
+  - specify `properties` for each column  
+    - data type
+    - constraints
+    - default value
+    - null status
+  - verify `normalization`
+
+2. Create relationships by placing foreign keys:
+  - Strong entity relationships
+  - ID-dependent / non-ID-dependent weak entity relationships
+  - Subtypes
+  - Recursive
+
+## `Denormalization`
+
+- Normalization 반대로 함
+- 조회시 성능 향성, 조인 불필요 감소 목적
+
+## Representing Relationships
+
+`Maximum cardinality`의 유형에 따라 관계 표현 방법이 달라짐
+
+- `1:1`: `foreign key`를 어디에 두어도 상관 없음
+- `1:N`: many 쪽에 `foreign key`를 두는 것이 일반적  
+  1 side is called `parent`, many side is called `child`

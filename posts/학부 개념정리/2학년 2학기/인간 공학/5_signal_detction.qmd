@@ -7,16 +7,31 @@ description: "신호 탐지 이론에 대해 알아봅니다."
 
 ![](/img/human-thumb.jpg){.post-thumbnail}
 
+## Overview
+
+- 인간의 정보 처리 과정 중 `perception`에 관련된 것
+- 인공지능 분야에서 중요성이 대두되고 있음
+- siganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표
+- 여러가지 신호 중 무엇이 중요한지 판단하는 것
+
+## Example
+
+- Quality control inspector  
+  빵이나 과자가 찌그러졌는지 검사, 반도체 품질 검사. 요즘에는 기계가 대부분 담당
+- Detection of a flashing warning light (cctv)  
+  거수자 탐지
+- Airport security guard
+- Detecting peculiar patterns in medical imaging (x-ray)  
+  종양, 암세포 탐지
+- Mobile phone rings  
+  phantoms vibration
+- Morning alarm is active or not
+
 주변의 제품, 서비스 문제 파악, 해결 디자인 제시, 검증
-- Detection of signals is crucial to the performance of many tasks  
-  - quality-control inspector
-  - flash warning light (cctv)
-  - airport security guard (이상한 물건 있는지)
-  - x-ray
 
 ## What does it mean to detect?
 
-- signal is digital (exist / not exist)
+- signal is `digital (exist / not exist)`
 - Absolute threshold is exist => `where the threshold?`
 
 - signal vs noise
@@ -28,23 +43,58 @@ description: "신호 탐지 이론에 대해 알아봅니다."
   - Noise case: target이 없음
 
 - Response
+  - Yes
+  - No
+
+![](/img/signal-detection.png)
+
+- **Hit rate**: P(Hit) = Number of Hits / Number of Signal Trials
+- **False alarm rate**: P(FA) = Number of False Alarms / Number of Noise Trials
+- **Miss rate**: P(Miss) = 1 - P(Hit)
+- **Correct rejection rate**: P(CR) = 1 - P(FA)
 
 ### Assumptions
 
-- 사용자가 관찰할 수 있는 근거는 숫자나 변수로 표현할 수 있어야함
-- evidence는 random variation이 있어야함
+- 사용자가 관찰할 수 있는 근거는 숫자나 변수로 표현할 수 있어야함 (`유사도`)
+- evidence는 random variation이 있다
 - simple decision criterion으로 결정할 수 있어야함
 
+### Distribution of signal and noise
+
+![](/img/distribution.png)  
 
 - sensitivity index (d')  
   - 값이 작으면 분간 힘듦
   - 값이 크면 분간 쉬움
 - response bias (β)  
-  - yes라고 대답하는 비중과 no라고 대답하는 비중
+  - criterion에 따라 yes라고 대답하는 비중과 no라고 대답하는 비중
 
 - d′이 0, β가 50%면 그냥 랜덤으로 대답한 것과 같음
 - d′을 넓게 하는게 objective  
   1. 분포의 mean 차이를 높임
   2. 각각의 분포의 variability를 줄임. (specificity)
 
-d′ lambda 구하고, 어떤 성향인지 이런거 시험 나온단다
+### d′ 계산
+
+d′ lambda 구하고, 어떤 성향인지 이런거 시험 나온단다  
+
+### β 계산
+
+- d′과 관계 없이 조절  
+
+### $λ_{center}$ 계산
+
+$λ_{center} = -\frac{1}{2}(Z(FA)+Z(H))$
+
+
+- $λ_{center}$ = 0: `ideal observer`
+- $λ_{center}$ < 0: `liberal`. yes라고 대답하는 비중이 늘어, hit rate가 높아지지만 false alarm rate도 높아짐  
+  ex) 용의자를 찾는 경찰, 암세포 탐지
+- $λ_{center}$ > 0: `conservative`. no라고 대답하는 비중이 늘어, correct rejection rate가 높아지지만 miss rate도 높아짐  
+  ex) 억울한 죄인을 만들지 않으려는 범원 판결
+
+## Optimal Response Criterion
+
+- Influenced by `Signal Probability` and `payoffs`
+- Signal Probability: P(signal)
+
