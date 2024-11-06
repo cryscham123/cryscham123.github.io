@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="SQL에 대해 알아봅니다.">
 
-<title>SQL – 김형훈의 학습 블로그</title>
+<title>Number Theory and Cryptography – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,47 +20,13 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/7.html" rel="next">
-<link href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-1.html" rel="prev">
+<link href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/5.html" rel="next">
+<link href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/3.html" rel="prev">
 <link href="../../../../favicon" rel="icon">
 <script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../site_libs/quarto-html/quarto.js"></script>
@@ -89,6 +54,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
@@ -115,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/1-2.html">데이터베이스설계및활용</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-2.html">SQL</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/0.html">이산 수학</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/4.html">Number Theory and Cryptography</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -176,44 +170,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
- <span class="menu-text">공연예술의이해</span></a>
+ <span class="menu-text">기초공학수학1</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth3 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/공연예술의이해/0.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">일상적 사실주의</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/공연예술의이해/1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">반사실주의</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
- <span class="menu-text">기초공학수학1</span></a>
+ <span class="menu-text">Final</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
- <span class="menu-text">Final</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html" class="sidebar-item-text sidebar-link">
@@ -250,60 +221,96 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">데이터베이스설계및활용</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/1-2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/01-2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">An Overview of Database</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Relational Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/04-1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Database Normalization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-2.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/04-2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/7.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Modeling and the Entity-Relationship Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Modeling &amp; Prototyping</span></a>
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/mail.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mail</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work-hospital.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">데이터베이스설계및활용 주제 개요-HOSPITAL ERP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work-restaurant.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">데이터베이스설계및활용 주제 개요-RESTAURANT SCM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work-sns.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">데이터베이스설계및활용 주제 개요-SNS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work1.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">데이터베이스설계및활용 개인과제 #2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work2.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">회의1</span></a>
   </div>
 </li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
  <span class="menu-text">이산 수학</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/0.html" class="sidebar-item-text sidebar-link">
@@ -322,17 +329,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Algorithm</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Number Theory and Cryptography</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mathematical Induction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Counting Techniques</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
  <span class="menu-text">인간 공학</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html" class="sidebar-item-text sidebar-link">
@@ -369,17 +394,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Signal Detection Theory</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/6_attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/meeting1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">회의1</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
  <span class="menu-text">확률과 통계</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/1-통계학의-개념.html" class="sidebar-item-text sidebar-link">
@@ -404,6 +441,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">이산형 확률분포</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/5-연속형-확률분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">연속형 확률분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/r-05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R05</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -420,11 +469,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#ddl-data-definition-language" id="toc-ddl-data-definition-language" class="nav-link active" data-scroll-target="#ddl-data-definition-language">DDL (<code>Data Definition Language</code>)</a>
+  <li><a href="#solving-congruences" id="toc-solving-congruences" class="nav-link active" data-scroll-target="#solving-congruences">Solving Congruences</a>
   <ul class="collapse">
-  <li><a href="#dml-data-manipulation-language" id="toc-dml-data-manipulation-language" class="nav-link" data-scroll-target="#dml-data-manipulation-language">DML (<code>Data Manipulation Language</code>)</a></li>
-  <li><a href="#dql-data-query-language" id="toc-dql-data-query-language" class="nav-link" data-scroll-target="#dql-data-query-language">DQL (Data Query Language)</a></li>
-  <li><a href="#join" id="toc-join" class="nav-link" data-scroll-target="#join">JOIN</a></li>
+  <li><a href="#linear-congruences" id="toc-linear-congruences" class="nav-link" data-scroll-target="#linear-congruences">Linear Congruences</a></li>
+  <li><a href="#inverse-of-a-modulo-m" id="toc-inverse-of-a-modulo-m" class="nav-link" data-scroll-target="#inverse-of-a-modulo-m">Inverse of a modulo m</a></li>
+  <li><a href="#finding-inverses1" id="toc-finding-inverses1" class="nav-link" data-scroll-target="#finding-inverses1">Finding Inverses1</a></li>
+  <li><a href="#fermats-little-theorem" id="toc-fermats-little-theorem" class="nav-link" data-scroll-target="#fermats-little-theorem">Fermat’s Little Theorem</a></li>
+  </ul></li>
+  <li><a href="#cryptography" id="toc-cryptography" class="nav-link" data-scroll-target="#cryptography">Cryptography</a>
+  <ul class="collapse">
+  <li><a href="#caesar-cipher" id="toc-caesar-cipher" class="nav-link" data-scroll-target="#caesar-cipher">Caesar Cipher</a></li>
+  <li><a href="#the-rsa-cryptosystem" id="toc-the-rsa-cryptosystem" class="nav-link" data-scroll-target="#the-rsa-cryptosystem">The RSA Cryptosystem</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -432,20 +487,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/1-2.html">데이터베이스설계및활용</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-2.html">SQL</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/0.html">이산 수학</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/4.html">Number Theory and Cryptography</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">SQL</h1>
+<h1 class="title">Number Theory and Cryptography</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">이산수학</div>
     <div class="quarto-category">개념 정리</div>
-    <div class="quarto-category">database</div>
   </div>
   </div>
 
-<div>
-  <div class="description">
-    SQL에 대해 알아봅니다.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -454,7 +504,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024년 9월 27일</p>
+      <p class="date">2024년 10월 8일</p>
     </div>
   </div>
   
@@ -466,75 +516,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><img src="../../../../img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<ul>
-<li>SQL is not programming language but a <code>data sublanguage</code></li>
-<li>MS Access 89에서는 <code>UNIQUE, CHECK, DEFAULT</code>,<code>NUMERIC(m,n)</code>, <code>LIKE</code>, <code>on update casacade, on delete casacade</code> 제약조건을 지원하지 않음</li>
-<li>MS Access에서는 <code>AutoNumber</code>를 지원하지 않음. 대신 <code>Identity</code>를 사용</li>
-<li>MS Access에서는 database 생성을 지원하지 않음</li>
-</ul>
-<section id="ddl-data-definition-language" class="level2">
-<h2 class="anchored" data-anchor-id="ddl-data-definition-language">DDL (<code>Data Definition Language</code>)</h2>
-<ol type="1">
-<li>CREATE (database, tables, views, indexes)</li>
-<li>ALTER: modify columns / constraints</li>
-<li>DROP (database, tables, views, indexes)</li>
-<li>TRUNCATE: delete table data while keeping structure.<br>
-<code>MS Access에서는 지원하지 않음</code> =&gt; <code>DELETE FROM table</code></li>
-</ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> student (</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span> <span class="dt">INT</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    CourseID <span class="dt">INT</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    Name <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">UNIQUE</span>, # unique는 자동으로 <span class="kw">index</span> 생성</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    Age <span class="dt">INT</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> STUDENT_PK <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">id</span>),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    COURSE_FK <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (CourseID) </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">REFERENCES</span> Course(CourseID) </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> <span class="kw">UPDATE</span> CASACADE </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">NO</span> ACTION</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>);</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> student <span class="kw">ADD</span> <span class="kw">COLUMN</span> major <span class="dt">VARCHAR</span>(<span class="dv">100</span>);</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> student <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> STUDENT_FK <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (CourseID) <span class="kw">REFERENCES</span> Course(CourseID) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>;</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> student <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> AGE_CHECK <span class="kw">CHECK</span> (Age <span class="op">&gt;</span> <span class="dv">0</span>);</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> student <span class="kw">DROP</span> <span class="kw">CONSTRAINT</span> AGE_CHECK;</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> student;</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">TRUNCATE</span> <span class="kw">TABLE</span> student;</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> [<span class="kw">view</span> name] <span class="kw">AS</span> <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> student;</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="dml-data-manipulation-language" class="level3">
-<h3 class="anchored" data-anchor-id="dml-data-manipulation-language">DML (<code>Data Manipulation Language</code>)</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> student <span class="kw">VALUES</span> (<span class="dv">1</span>, <span class="st">'Alice'</span>, <span class="dv">20</span>);</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> student <span class="kw">SET</span> age <span class="op">=</span> <span class="dv">21</span>, Name <span class="op">=</span> <span class="st">'babo'</span> <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>;</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> student <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>;</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../../../../img/discrete.jpg" class="post-thumbnail img-fluid"></p>
+<section id="solving-congruences" class="level2">
+<h2 class="anchored" data-anchor-id="solving-congruences">Solving Congruences</h2>
+<p>RS Encryption</p>
+<section id="linear-congruences" class="level3">
+<h3 class="anchored" data-anchor-id="linear-congruences">Linear Congruences</h3>
 </section>
-<section id="dql-data-query-language" class="level3">
-<h3 class="anchored" data-anchor-id="dql-data-query-language">DQL (Data Query Language)</h3>
-<p>A query create temporarily a new table.<br>
-this allows a query to <code>create a new relation</code> and feed information to another query as a <code>subquery</code></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> student;</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> student </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> age <span class="op">&gt;</span> <span class="dv">20</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> name <span class="kw">DESC</span>, age <span class="kw">ASC</span>;</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> name <span class="kw">FROM</span> student;</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name, age <span class="kw">FROM</span> student <span class="kw">WHERE</span> Age <span class="op">&gt;</span> (<span class="kw">SELECT</span> <span class="fu">AVG</span>(Age) <span class="kw">FROM</span> student);</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="inverse-of-a-modulo-m" class="level3">
+<h3 class="anchored" data-anchor-id="inverse-of-a-modulo-m">Inverse of a modulo m</h3>
 </section>
-<section id="join" class="level3">
-<h3 class="anchored" data-anchor-id="join">JOIN</h3>
-<ul>
-<li>inner join(equijoin)
-<ul>
-<li>explicit join: <code>FROM table1 INNER JOIN table2 ON table1.id = table2.id</code><br>
-(MS Access에서는 INNER를 명시해야됨)</li>
-<li>implicit join: <code>FROM table1, table2 WHERE table1.id = table2.id</code></li>
-</ul></li>
-<li>outer join
-<ul>
-<li>left outer join: <code>FROM table1 LEFT JOIN table2 ON table1.id = table2.id</code></li>
-<li>right outer join: <code>FROM table1 RIGHT JOIN table2 ON table1.id = table2.id</code></li>
-</ul></li>
-</ul>
+<section id="finding-inverses1" class="level3">
+<h3 class="anchored" data-anchor-id="finding-inverses1">Finding Inverses1</h3>
+</section>
+<section id="fermats-little-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="fermats-little-theorem">Fermat’s Little Theorem</h3>
+</section>
+</section>
+<section id="cryptography" class="level2">
+<h2 class="anchored" data-anchor-id="cryptography">Cryptography</h2>
+<section id="caesar-cipher" class="level3">
+<h3 class="anchored" data-anchor-id="caesar-cipher">Caesar Cipher</h3>
+</section>
+<section id="the-rsa-cryptosystem" class="level3">
+<h3 class="anchored" data-anchor-id="the-rsa-cryptosystem">The RSA Cryptosystem</h3>
+<p>euiler function: <span class="math inline">\(ϕ(p,q) = (p-1)(q-1)\)</span><br>
+euiler’s theorem: if a is invertible mod k, then <span class="math inline">\(a^{ϕ(n)} = 1 mod k\)</span><br>
+n = pq<br>
+select e such that gcd(e,ϕ(p,q)) = 1<br>
+m: message, c = m^e mod n<br>
+publock key: (e,m)<br>
+d: inverse of e mod ϕ(p,q)<br>
+ed = 1 + kϕ(p,q) for some integer k<br>
+<span class="math inline">\(m^{ed} = m^{1+kϕ(p,q)} = m(m^{ϕ(p,q)})^k = m mod n\)</span><br>
+(<span class="math inline">\(m^{ϕ(p,q)} = 1 mod n\)</span>)</p>
 
 
 </section>
@@ -967,13 +982,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/4-1.html" class="pagination-link" aria-label="Database Normalization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Database Normalization</span>
+      <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/3.html" class="pagination-link" aria-label="Algorithm">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Algorithm</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/7.html" class="pagination-link" aria-label="Data Modeling and the Entity-Relationship Model">
-        <span class="nav-page-text">Data Modeling and the Entity-Relationship Model</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/5.html" class="pagination-link" aria-label="Mathematical Induction">
+        <span class="nav-page-text">Mathematical Induction</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
