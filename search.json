@@ -1145,7 +1145,7 @@
     "href": "posts/학부 개념정리/2학년 2학기/확률과 통계/r-05.html#확률분포-관련-함수",
     "title": "R05",
     "section": "확률분포 관련 함수",
-    "text": "확률분포 관련 함수\n\nd-function\n확률분포함수 f(x)를 계산\n\n# 이항 분포 (x, size, prob)\ndbinom(5, 8, 1/6)\n\n[1] 0.004167619\n\nx.prob &lt;- dbinom(0:8, 8, 1/6)\nround(x.prob, 3)\n\n[1] 0.233 0.372 0.260 0.104 0.026 0.004 0.000 0.000 0.000\n\nsum(x.prob)\n\n[1] 1\n\nplot(0:8, x.prob, type=\"h\", lwd=2, col=\"blue\", ylab=\"f(x)\", xlab=\"x\", main=\"X~B(8, 1/6)\")\n\n\n\n\n\n\n\n# 초기하 분포 (성공횟수, 실패횟수, 표본 갯수)\nhg &lt;- dhyper(0:10, m=15, n=25, k=10)\nround(hg, 3)\n\n [1] 0.004 0.036 0.134 0.258 0.285 0.188 0.075 0.017 0.002 0.000 0.000\n\n\n\n\np-function\n누적분포함수 F(x)를 계산\n연속확률분포에서 자주 쓰임\n\npbinom(q=3, 8, 1/6) # P(X&lt;=3)\n\n[1] 0.9693436\n\nsum(dbinom(0:3, 8, 1/6))\n\n[1] 0.9693436\n\n1 - pbinom(q=3, 8, 1/6) # P(X&gt;3)\n\n[1] 0.03065641\n\n\n\n\nq-function\n분위수를 계산 (F(x)의 역함수)\n연속확률분포에서 자주 쓰임\n\nqbinom(0.5, 8, 1/6)\n\n[1] 1\n\n\n\n\nr-function\n주어진 확률분포로부터 난수를 생성\n\nrbinom(10, 8, 1/6)\n\n [1] 2 1 2 0 0 1 0 0 2 1",
+    "text": "확률분포 관련 함수\n\nd-function\n확률분포함수 f(x)를 계산\n\n# 이항 분포 (x, size, prob)\ndbinom(5, 8, 1/6)\nx.prob &lt;- dbinom(0:8, 8, 1/6)\nround(x.prob, 3)\nsum(x.prob)\nplot(0:8, x.prob, type=\"h\", lwd=2, col=\"blue\", ylab=\"f(x)\", xlab=\"x\", main=\"X~B(8, 1/6)\")\n\n# 초기하 분포 (성공횟수, 실패횟수, 표본 갯수)\nhg &lt;- dhyper(0:10, m=15, n=25, k=10)\nround(hg, 3)\nplot(0:10, hg, type=\"h\", lwd=2, col=\"blue\", ylab=\"f(x)\", xlab=\"x\", main=\"X~HG(10, 40, 15)\")\nhg40 &lt;- dhyper(0:10, m=15, n=25, k=10)\nhg80 &lt;- dhyper(0:10, m=30, n=50, k=10)\nhg400 &lt;- dhyper(0:10, m=150, n=250, k=10)\nbinom &lt;- dbinom(0:10, 10, 3/8)\nplot(1:10, hg40, type=\"h\", lwd=2, col=\"lightblue\", ylab=\"f(x)\", xlab=\"x\", main=\"X~HG(10, 40, 15)\")\nlines(1:10+0.2, hg80, type=\"h\", lwd=2, col=\"mistyrose\")\nlines(1:10+0.4, hg400, type=\"h\", lwd=2, col=\"lightgreen\")\nlines(1:10-0.6, binom, type=\"h\", lwd=2, col=\"pink\")\n\n# 포아송 분포 (x, lambda)\ndpois(3, 3.5)\nround(dpois(0:10, 3.5), 3)\n\n# 기하 분포 (x, prob)\ndgeom(4, 0.3)\n\n\n\np-function\n누적분포함수 F(x)를 계산\n연속확률분포에서 자주 쓰임\n\npbinom(q=3, 8, 1/6) # P(X&lt;=3)\nsum(dbinom(0:3, 8, 1/6))\n1 - pbinom(q=3, 8, 1/6) # P(X&gt;3)\n\nppois(3, 3.5) # P(X&lt;=3)\n\n\n\nq-function\n분위수를 계산 (F(x)의 역함수)\n연속확률분포에서 자주 쓰임\n\nqbinom(0.5, 8, 1/6)\n\n\n\nr-function\n주어진 확률분포로부터 난수를 생성\n\nrbinom(10, 8, 1/6)\nrpois(10, 3.5)\n\n\npar(mfrow=c(2,2))\nfor (i in c(3,5,7,9)) {\nplot(0:20, dpois(0:20, i), type=\"h\", lwd=2, col=i, ylab=\"f(x)\", xlab=\"x\", main=paste(\"X~Pois(\", i, \")\"), ylim=c(0, 0.25))\n}",
     "crumbs": [
       "학부 개념정리",
       "2학년 2학기",
@@ -1554,19 +1554,6 @@
       "2학년 2학기",
       "인간 공학",
       "Attention"
-    ]
-  },
-  {
-    "objectID": "posts/학부 개념정리/2학년 2학기/인간 공학/meeting1.html",
-    "href": "posts/학부 개념정리/2학년 2학기/인간 공학/meeting1.html",
-    "title": "회의1",
-    "section": "",
-    "text": "주제 (얼마나 중요한지, 해결할 수 있는지)\n버스 노선 보여주는거 1\n창의성이 조금 떨어짐\n산공라운지 미팅룸 예약 서비스 1\n창의성이 떨어짐\nATM 키오스크, 화면 색상 재구성 (맥도날드 키오스크) 3\n따릉이 깜빡이 2\n교내 혜택 공지해주는 사이트 2\n버스 문 앞에 비 가림막 1\n헬스장 기구 사용 시간 인터페이스 1\n악세서리 관리 제품 1\n선정한 이유 3~5분\n다음 미팅 날짜\n\n11월 12일\n\n\n\n 맨 위로",
-    "crumbs": [
-      "학부 개념정리",
-      "2학년 2학기",
-      "인간 공학",
-      "회의1"
     ]
   },
   {
