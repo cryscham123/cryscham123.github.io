@@ -1,0 +1,119 @@
+---
+title: 'Discrete Mathematics #3'
+author: "20192208 김형훈"
+categories: ["과제"]
+format: 
+  pdf:
+    documentclass: report
+    papersize: a4
+    number-sections: true
+    number-depth: 3
+    top-level-division: section
+    fontsize: 17pt
+    geometry:
+      - top=20mm
+include-in-header: 
+  text: |
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{}{0pt}{\huge}
+    \titleformat{\section}[block]{\normalfont\Large\bfseries}{}{0pt}{}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{-3pt}{0pt}{10pt}
+    \titlespacing*{\section}{0pt}{20pt}{10pt}
+    \newcommand{\sectionbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{2}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# 8.3
+In Exercises 29–33, assume that f is an increasing function satisfying the recurrence relation $f(n) = af (\frac{n}{b}) + cn^d$ , where $a≥1, b$ is an integer greater than 1, and $c$ and $d$ are positive real numbers. These exercises supply a proof of Theorem 2.
+
+## Problem 29
+Let's prove this by induction on $k$ where $n = b^k$.
+
+Base case: When $k = 0$, $n = 1$
+$f(1) = f(1)$ which satisfies the equation since $\log_b 1 = 0$
+
+Inductive step: Assume the formula holds for some $k ≥ 0$
+For $n = b^{k+1}$:
+
+$f(b^{k+1}) = af(\frac{b^{k+1}}{b}) + c(b^{k+1})^d$
+
+$= b^d f(b^k) + cb^{(k+1)d}$ (since $a = b^d$)
+
+$= b^d[f(1)(b^k)^d + c(b^k)^d \log_b b^k] + cb^{(k+1)d}$ (by inductive hypothesis)
+
+$= f(1)b^{(k+1)d} + cb^{(k+1)d}k + cb^{(k+1)d}$
+
+$= f(1)b^{(k+1)d} + cb^{(k+1)d}(k+1)$
+
+$= f(1)(b^{k+1})^d + c(b^{k+1})^d \log_b b^{k+1}$
+
+Therefore, the formula holds for all powers of $b$.
+
+## Problem 30
+
+From Problem 29, we know that for powers of $b$:
+$f(n) = f(1)n^d + cn^d \log_b n$
+
+Since $f(1)$ and $c$ are constants:
+$f(n) = O(n^d) + O(n^d \log_b n) = O(n^d \log n)$
+
+For values of $n$ that are not powers of $b$, since $f$ is increasing:
+$f(n) ≤ f(b^{\lceil \log_b n \rceil}) = O((b^{\lceil \log_b n \rceil})^d \log b^{\lceil \log_b n \rceil})$
+$= O(n^d \log n)$
+
+Therefore, $f(n)$ is $O(n^d \log n)$ for all positive integers $n$.
+
+## Problem 31
+
+Let's verify this solution satisfies the recurrence relation.
+Substitute $n/b$ for $n$:
+
+$f(n) = af(\frac{n}{b}) + cn^d$
+
+$= a[C_1(\frac{n}{b})^d + C_2(\frac{n}{b})^{log_b a}] + cn^d$
+
+$= aC_1\frac{n^d}{b^d} + aC_2\frac{n^{log_b a}}{b^{log_b a}} + cn^d$
+
+$= \frac{aC_1}{b^d}n^d + C_2n^{log_b a} + cn^d$
+
+For this to match our proposed solution:
+$C_1 = \frac{aC_1}{b^d} + c$
+
+Solving for $C_1$:
+$C_1(1 - \frac{a}{b^d}) = c$
+$C_1 = \frac{b^dc}{b^d - a}$
+
+And $C_2$ can be determined from the initial condition $f(1) = C_1 + C_2$.
+
+## Problem 32
+
+From Problem 31, we have:
+$f(n) = C_1n^d + C_2n^{log_b a}$
+
+When $a < b^d$, we have $log_b a < d$
+
+Therefore, $n^{log_b a}$ grows slower than $n^d$
+
+Thus, $f(n) = C_1n^d + C_2n^{log_b a} = O(n^d)$
+
+## Problem 33
+
+From Problem 31, we have:
+$f(n) = C_1n^d + C_2n^{log_b a}$
+
+When $a > b^d$, we have $log_b a > d$
+
+Therefore, $n^{log_b a}$ grows faster than $n^d$
+
+Thus, $f(n) = C_1n^d + C_2n^{log_b a} = O(n^{log_b a})$
