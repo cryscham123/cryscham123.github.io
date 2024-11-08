@@ -37,6 +37,15 @@ include-in-header:
     \setstretch{2}
     \usepackage{tabularx}
     \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
 
 execute:
   echo: false
@@ -51,7 +60,9 @@ execute:
 
 ### 주제 선정 배경
 
-매일 수천 명의 학생들에게 식사를 제공하고 있는 숭실대학교 학생식당은 효율적인 식자재 관리가 필수적이다. 재고 관리와 발주 과정을 시스템화하여 식자재 낭비를 줄이고, 신선도 관리를 강화하며, 이해관계자 간의 원활한 소통을 실현하고자 한다. 또한 실제 운영되는 시스템을 가상으로 구현해봄으로써 데이터베이스 설계부터 구현까지의 전반적인 개발 과정을 학습하고, SCM(Supply Chain Management)의 실무적 이해를 높이고자 한다.
+매일 수천 명의 학생들에게 식사를 제공하고 있는 숭실대학교 학생식당은 효율적인 식자재 관리가 필수적이다.[^1] 재고 관리와 발주 과정을 시스템화하여 식자재 낭비를 줄이고, 신선도 관리를 강화하며, 이해관계자 간의 원활한 소통을 실현하고자 한다. 또한 실제 운영되는 시스템을 가상으로 구현해봄으로써 데이터베이스 설계부터 구현까지의 전반적인 개발 과정을 학습하고, SCM(Supply Chain Management)의 실무적 이해를 높이고자 한다.
+
+[^1]: Oracle의 [Symphony POS](https://www.oracle.com/kr/food-beverage/restaurant-pos-systems/restaurant-inventory-management-software/?er=228062#cost-reports)와 같은 전문 시스템은 재고 및 메뉴 관리, 레스토랑 데이터 분석 등의 기능을 제공하여 대형 프랜차이즈의 운영 효율성을 크게 향상시켰다. 특히 아웃백 스테이크하우스는 해당 시스템을 도입한 이후 고객 만족도 측면에서 큰 성과를 달성했다.
 
 ### 과제 목표
 
