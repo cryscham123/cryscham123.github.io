@@ -1,0 +1,66 @@
+---
+title: '8장 정리'
+date: 2024-11-09
+description: ''
+categories: ['이산수학', '개념 정리']
+---
+
+![](/img/discrete.jpg){.post-thumbnail}
+
+## Divide-and-Conquer Algorithms and Recurrence Relations
+
+### Divide-and-Conquer Algorithms Paradigm
+
+Divide-and-Conquer Algorithm은 큰 문제를 작은 문제로 나누어 해결하는 방법이다.  
+이 방법은 다음과 같은 세 단계로 이루어진다.  
+
+1. **Divide**: 문제를 작은 문제로 나눈다.
+2. **Conquer**: 작은 문제를 해결한다.
+3. **Combine**: 작은 문제의 해답을 결합하여 원래 문제의 해답을 구한다.
+
+
+### Dividing-and-Conquer Recurrence Relations
+
+재귀 알고리즘이 크기 n의 문제를 a개의 하위 문제로 나눈다고 가정.  
+각 하위 문제의 크기는 n/b. (n은 b의 배수)  
+하위 문제의 해결책을 원래 문제의 해결책으로 결합하는 알고리즘의 정복 단계에서 총 g(n)개의 추가 연산이 필요하다고 가정  
+문제의 크기가 n일 때의 추가 연산 수를 f(n)이라고 정의  
+수식: f(n) = af(n/b) + g(n)
+
+![대충 이런 느낌](/img/divide-conquer.png)
+
+#### Example: Binary Search
+
+f(n) = f(n/2) + 2
+
+#### Example: Merge Sort
+
+f(n) = 2f(n/2) + n
+
+#### Example: Fast Multiplication of Integers
+
+f(n) = 3f(n/2) + n
+
+#### Theorem 1
+
+$n = b^k\text{이고}, a ≥ 1, b > 1, c ∈ R+$인 증가함수 f(n)에 대하여  
+$f(n) = \begin{cases}
+      O(n^{\log_b a}) & \text{if } a > 1, \\
+      O(\log n) & \text{if } a = 1 \\
+     \end{cases}$
+
+##### Proof
+
+$f(n) = af(\frac{n}{b}) + c$  
+$f(\frac{n}{b}) = a(\frac{n}{b^2}) + c$  
+$f(\frac{n}{b^2}) = a(\frac{n}{b^3}) + c$  
+...  
+$f(n) = a^kf(1) + c\sum_{i=0}^{k-1}a^i$  
+$f(n) = a^kf(1) + c\frac{a^k - 1}{a - 1}$  
+$n = b^k$이므로  $a^k = n^{\log_b a}$  
+따라서 $f(n) = C_1n^{\log_b a} + C_2$  
+$C_1 = f(1) + \frac{c}{a - 1}$  
+$C_2 = -\frac{c}{a - 1}$  
+나머지는 귀찮으니까 생략
+
+
