@@ -15,7 +15,83 @@
 <link>https://cryscham123.github.io/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Mon, 04 Nov 2024 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 08 Nov 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>8장 정리</title>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/8-own.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/discrete.jpg" class="post-thumbnail img-fluid"></p>
+<section id="divide-and-conquer-algorithms-and-recurrence-relations" class="level2">
+<h2 class="anchored" data-anchor-id="divide-and-conquer-algorithms-and-recurrence-relations">Divide-and-Conquer Algorithms and Recurrence Relations</h2>
+<section id="divide-and-conquer-algorithms-paradigm" class="level3">
+<h3 class="anchored" data-anchor-id="divide-and-conquer-algorithms-paradigm">Divide-and-Conquer Algorithms Paradigm</h3>
+<p>Divide-and-Conquer Algorithm은 큰 문제를 작은 문제로 나누어 해결하는 방법이다.<br>
+이 방법은 다음과 같은 세 단계로 이루어진다.</p>
+<ol type="1">
+<li><strong>Divide</strong>: 문제를 작은 문제로 나눈다.</li>
+<li><strong>Conquer</strong>: 작은 문제를 해결한다.</li>
+<li><strong>Combine</strong>: 작은 문제의 해답을 결합하여 원래 문제의 해답을 구한다.</li>
+</ol>
+</section>
+<section id="dividing-and-conquer-recurrence-relations" class="level3">
+<h3 class="anchored" data-anchor-id="dividing-and-conquer-recurrence-relations">Dividing-and-Conquer Recurrence Relations</h3>
+<p>재귀 알고리즘이 크기 n의 문제를 a개의 하위 문제로 나눈다고 가정.<br>
+각 하위 문제의 크기는 n/b. (n은 b의 배수)<br>
+하위 문제의 해결책을 원래 문제의 해결책으로 결합하는 알고리즘의 정복 단계에서 총 g(n)개의 추가 연산이 필요하다고 가정<br>
+문제의 크기가 n일 때의 추가 연산 수를 f(n)이라고 정의<br>
+수식: f(n) = af(n/b) + g(n)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/img/divide-conquer.png" class="img-fluid figure-img"></p>
+<figcaption>대충 이런 느낌</figcaption>
+</figure>
+</div>
+<section id="example-binary-search" class="level4">
+<h4 class="anchored" data-anchor-id="example-binary-search">Example: Binary Search</h4>
+<p>f(n) = f(n/2) + 2</p>
+</section>
+<section id="example-merge-sort" class="level4">
+<h4 class="anchored" data-anchor-id="example-merge-sort">Example: Merge Sort</h4>
+<p>f(n) = 2f(n/2) + n</p>
+</section>
+<section id="example-fast-multiplication-of-integers" class="level4">
+<h4 class="anchored" data-anchor-id="example-fast-multiplication-of-integers">Example: Fast Multiplication of Integers</h4>
+<p>f(n) = 3f(n/2) + n</p>
+</section>
+<section id="theorem-1" class="level4">
+<h4 class="anchored" data-anchor-id="theorem-1">Theorem 1</h4>
+<p><img src="https://latex.codecogs.com/png.latex?n%20=%20b%5Ek%5Ctext%7B%EC%9D%B4%EA%B3%A0%7D,%20a%20%E2%89%A5%201,%20b%20%3E%201,%20c%20%E2%88%88%20R+">인 증가함수 f(n)에 대하여<br>
+<img src="https://latex.codecogs.com/png.latex?f(n)%20=%20%5Cbegin%7Bcases%7D%0A%20%20%20%20%20%20O(n%5E%7B%5Clog_b%20a%7D)%20&amp;%20%5Ctext%7Bif%20%7D%20a%20%3E%201,%20%5C%5C%0A%20%20%20%20%20%20O(%5Clog%20n)%20&amp;%20%5Ctext%7Bif%20%7D%20a%20=%201%20%5C%5C%0A%20%20%20%20%20%5Cend%7Bcases%7D"></p>
+<section id="proof" class="level5">
+<h5 class="anchored" data-anchor-id="proof">Proof</h5>
+<p><img src="https://latex.codecogs.com/png.latex?f(n)%20=%20af(%5Cfrac%7Bn%7D%7Bb%7D)%20+%20c"><br>
+<img src="https://latex.codecogs.com/png.latex?f(%5Cfrac%7Bn%7D%7Bb%7D)%20=%20a(%5Cfrac%7Bn%7D%7Bb%5E2%7D)%20+%20c"><br>
+<img src="https://latex.codecogs.com/png.latex?f(%5Cfrac%7Bn%7D%7Bb%5E2%7D)%20=%20a(%5Cfrac%7Bn%7D%7Bb%5E3%7D)%20+%20c"><br>
+…<br>
+<img src="https://latex.codecogs.com/png.latex?f(n)%20=%20a%5Ekf(1)%20+%20c%5Csum_%7Bi=0%7D%5E%7Bk-1%7Da%5Ei"><br>
+<img src="https://latex.codecogs.com/png.latex?f(n)%20=%20a%5Ekf(1)%20+%20c%5Cfrac%7Ba%5Ek%20-%201%7D%7Ba%20-%201%7D"><br>
+<img src="https://latex.codecogs.com/png.latex?n%20=%20b%5Ek">이므로 <img src="https://latex.codecogs.com/png.latex?a%5Ek%20=%20n%5E%7B%5Clog_b%20a%7D"><br>
+따라서 <img src="https://latex.codecogs.com/png.latex?f(n)%20=%20C_1n%5E%7B%5Clog_b%20a%7D%20+%20C_2"><br>
+<img src="https://latex.codecogs.com/png.latex?C_1%20=%20f(1)%20+%20%5Cfrac%7Bc%7D%7Ba%20-%201%7D"><br>
+<img src="https://latex.codecogs.com/png.latex?C_2%20=%20-%5Cfrac%7Bc%7D%7Ba%20-%201%7D"><br>
+나머지는 귀찮으니까 생략</p>
+
+
+</section>
+</section>
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>이산수학</category>
+  <category>개념 정리</category>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/8-own.html</guid>
+  <pubDate>Fri, 08 Nov 2024 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>연속형 확률분포</title>
   <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/확률과 통계/5-연속형-확률분포.html</link>
@@ -278,8 +354,11 @@ font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">6</span>)</span>
-<span id="cb1-3">x.prob <span class="ot" style="color: #003B4F;
+font-style: inherit;">6</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.004167619</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">x.prob <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -298,15 +377,21 @@ background-color: null;
 font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">6</span>)</span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">round</span>(x.prob, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span>
-<span id="cb1-5"><span class="fu" style="color: #4758AB;
+font-style: inherit;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.233 0.372 0.260 0.104 0.026 0.004 0.000 0.000 0.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">sum</span>(x.prob)</span>
-<span id="cb1-6"><span class="fu" style="color: #4758AB;
+font-style: inherit;">sum</span>(x.prob)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">plot</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -338,12 +423,18 @@ font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">main=</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"X~B(8, 1/6)"</span>)</span>
-<span id="cb1-7"></span>
-<span id="cb1-8"><span class="co" style="color: #5E5E5E;
+font-style: inherit;">"X~B(8, 1/6)"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/확률과 통계/r-05_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 초기하 분포 (성공횟수, 실패횟수, 표본 갯수)</span></span>
-<span id="cb1-9">hg <span class="ot" style="color: #003B4F;
+<span id="cb8-2">hg <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -366,271 +457,14 @@ background-color: null;
 font-style: inherit;">k=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10</span>)</span>
-<span id="cb1-10"><span class="fu" style="color: #4758AB;
+<span id="cb8-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">round</span>(hg, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span>
-<span id="cb1-11"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">plot</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, hg, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">type=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"h"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">lwd=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"blue"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ylab=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"f(x)"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xlab=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">main=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"X~HG(10, 40, 15)"</span>)</span>
-<span id="cb1-12">hg40 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dhyper</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">m=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">15</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">n=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">25</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">k=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>)</span>
-<span id="cb1-13">hg80 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dhyper</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">m=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">30</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">n=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">50</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">k=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>)</span>
-<span id="cb1-14">hg400 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dhyper</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">m=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">150</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">n=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">250</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">k=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>)</span>
-<span id="cb1-15">binom <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dbinom</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>)</span>
-<span id="cb1-16"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">plot</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, hg40, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">type=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"h"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">lwd=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"lightblue"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ylab=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"f(x)"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xlab=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">main=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"X~HG(10, 40, 15)"</span>)</span>
-<span id="cb1-17"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">lines</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">+0.2</span>, hg80, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">type=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"h"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">lwd=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"mistyrose"</span>)</span>
-<span id="cb1-18"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">lines</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">+0.4</span>, hg400, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">type=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"h"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">lwd=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"lightgreen"</span>)</span>
-<span id="cb1-19"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">lines</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">-0.6</span>, binom, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">type=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"h"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">lwd=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"pink"</span>)</span>
-<span id="cb1-20"></span>
-<span id="cb1-21"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 포아송 분포 (x, lambda)</span></span>
-<span id="cb1-22"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dpois</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3.5</span>)</span>
-<span id="cb1-23"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dpois</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3.5</span>), <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>)</span>
-<span id="cb1-24"></span>
-<span id="cb1-25"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 기하 분포 (x, prob)</span></span>
-<span id="cb1-26"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dgeom</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.004 0.036 0.134 0.258 0.285 0.188 0.075 0.017 0.002 0.000 0.000</code></pre>
+</div>
 </div>
 </section>
 <section id="p-function" class="level3">
@@ -638,7 +472,7 @@ font-style: inherit;">0.3</span>)</span></code></pre></div>
 <p>누적분포함수 F(x)를 계산<br>
 연속확률분포에서 자주 쓰임</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">pbinom</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -654,8 +488,11 @@ font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">6</span>) <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># P(X&lt;=3)</span></span>
-<span id="cb2-2"><span class="fu" style="color: #4758AB;
+font-style: inherit;"># P(X&lt;=3)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9693436</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">sum</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -673,8 +510,11 @@ font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">6</span>))</span>
-<span id="cb2-3"><span class="dv" style="color: #AD0000;
+font-style: inherit;">6</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9693436</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span> <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -694,17 +534,10 @@ font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">6</span>) <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># P(X&gt;3)</span></span>
-<span id="cb2-4"></span>
-<span id="cb2-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ppois</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3.5</span>) <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># P(X&lt;=3)</span></span></code></pre></div>
+font-style: inherit;"># P(X&gt;3)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03065641</code></pre>
+</div>
 </div>
 </section>
 <section id="q-function" class="level3">
@@ -712,7 +545,7 @@ font-style: inherit;"># P(X&lt;=3)</span></span></code></pre></div>
 <p>분위수를 계산 (F(x)의 역함수)<br>
 연속확률분포에서 자주 쓰임</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">qbinom</span>(<span class="fl" style="color: #AD0000;
 background-color: null;
@@ -725,13 +558,16 @@ background-color: null;
 font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">6</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
 </div>
 </section>
 <section id="r-function" class="level3">
 <h3 class="anchored" data-anchor-id="r-function">r-function</h3>
 <p>주어진 확률분포로부터 난수를 생성</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rbinom</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -743,96 +579,10 @@ font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">6</span>)</span>
-<span id="cb4-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rpois</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3.5</span>)</span></code></pre></div>
+font-style: inherit;">6</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2 1 2 0 0 1 0 0 2 1</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">par</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mfrow=</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>))</span>
-<span id="cb5-2"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> (i <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">9</span>)) {</span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">plot</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>, <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dpois</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>, i), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">type=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"h"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">lwd=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col=</span>i, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ylab=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"f(x)"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xlab=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">main=</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">paste</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"X~Pois("</span>, i, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">")"</span>), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ylim=</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.25</span>))</span>
-<span id="cb5-4">}</span></code></pre></div>
 </div>
 
 
@@ -1076,7 +826,7 @@ intersection table에는 두 entity의 primary key를 포함하는 composite key
 <li>성공 확률은 p, 실패 확률은 1-p</li>
 <li>각 시행은 서로 독립적</li>
 </ol>
-<p>∴ S = {A,B}, f(1) = P(X=1) = p, f(0) = P(X=0) = 1-p)</p>
+<p>∴ S = {A,B}, f(1) = P(X=1) = p, f(0) = P(X=0) = 1-p</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://cryscham123.github.io/img/bernui.jpg" class="img-fluid figure-img"></p>
@@ -1964,38 +1714,6 @@ ed = 1 + kϕ(p,q) for some integer k<br>
   <category>기초공학수학</category>
   <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/기초공학수학1/final/5.html</guid>
   <pubDate>Sat, 05 Oct 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>삼각함수 정리</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?lim%7B%CE%B8%E2%86%920%7D%20%5Cfrac%7Bsin%20%CE%B8%7D%7B%CE%B8%7D%20=%201"></li>
-<li><img src="https://latex.codecogs.com/png.latex?(sin%20x)'%20=%20cos%20x"></li>
-<li><img src="https://latex.codecogs.com/png.latex?(cos%20x)'%20=%20-sin%20x"></li>
-<li><img src="https://latex.codecogs.com/png.latex?(tan%20x)'%20=%20sec%5E2%20x"></li>
-<li><img src="https://latex.codecogs.com/png.latex?(cot%20x)'%20=%20-csc%5E2%20x"></li>
-<li><img src="https://latex.codecogs.com/png.latex?(sec%20x)'%20=%20sec%20x%20tan%20x"></li>
-<li><img src="https://latex.codecogs.com/png.latex?(csc%20x)'%20=%20-csc%20x%20cot%20x"></li>
-<li><img src="https://latex.codecogs.com/png.latex?1%20+%20tan%5E2%20x%20=%20sec%5E2%20x"></li>
-<li><img src="https://latex.codecogs.com/png.latex?1%20+%20cot%5E2%20x%20=%20csc%5E2%20x"></li>
-<li><img src="https://latex.codecogs.com/png.latex?sin%202%CE%B8%20=%202%20sin%20%CE%B8%20cos%20%CE%B8"></li>
-<li><img src="https://latex.codecogs.com/png.latex?sin%5E2%20%CE%B8%20=%20%5Cfrac%7B1%20-%20cos%202%CE%B8%7D%7B2%7D"></li>
-<li><img src="https://latex.codecogs.com/png.latex?cos%5E2%20%CE%B8%20=%20%5Cfrac%7B1%20+%20cos%202%CE%B8%7D%7B2%7D"></li>
-<li><img src="https://latex.codecogs.com/png.latex?cos%202%CE%B8%20=%20cos%5E2%20%CE%B8%20-%20sin%5E2%20%CE%B8%20=%202cos%5E2%20%CE%B8%20-%201%20=%201%20-%202sin%5E2%20%CE%B8"></li>
-<li><img src="https://latex.codecogs.com/png.latex?tan%202%CE%B8%20=%20%5Cfrac%7B2tan%20%CE%B8%7D%7B1%20-%20tan%5E2%20%CE%B8%7D"></li>
-</ul>
-
-
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>기초공학수학</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/기초공학수학1/final/4.html</guid>
-  <pubDate>Fri, 04 Oct 2024 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
