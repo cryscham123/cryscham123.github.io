@@ -10,22 +10,23 @@ description: "신호 탐지 이론에 대해 알아봅니다."
 ## Overview
 
 - 인간의 정보 처리 과정 중 `perception`에 관련된 것
-- 인공지능 분야에서 중요성이 대두되고 있음
-- siganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표
+- perception 단계에서 자극 뿐 아니라 노이즈도 같이 들어옴
 - 여러가지 신호 중 무엇이 중요한지 판단하는 것
+- siganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표
+- 인공지능 분야에서 중요성이 대두되고 있음
 
 ## Example
 
 - Quality control inspector  
   빵이나 과자가 찌그러졌는지 검사, 반도체 품질 검사. 요즘에는 기계가 대부분 담당
-- Detection of a flashing warning light (cctv)  
+- Detection of a flashing warning light (or cctv)  
   거수자 탐지
 - Airport security guard
 - Detecting peculiar patterns in medical imaging (x-ray)  
   종양, 암세포 탐지
-- Mobile phone rings  
+- Mobile phone rings (sound)  
   phantoms vibration
-- Morning alarm is active or not
+- Morning alarm is active or not (visual)
 
 주변의 제품, 서비스 문제 파악, 해결 디자인 제시, 검증
 
@@ -40,7 +41,7 @@ description: "신호 탐지 이론에 대해 알아봅니다."
 
 - Trials  
   - Signal case(signal + noise): target이 존재
-  - Noise case: target이 없음
+  - Noise case(noise only): target이 없음
 
 - Response
   - Yes
@@ -68,6 +69,7 @@ description: "신호 탐지 이론에 대해 알아봅니다."
   - 값이 크면 분간 쉬움
 - response bias (β)  
   - criterion에 따라 yes라고 대답하는 비중과 no라고 대답하는 비중
+  - 분포가 아니라 평가자에 따라 다름
 
 - d′이 0, β가 50%면 그냥 랜덤으로 대답한 것과 같음
 - d′을 넓게 하는게 objective  
@@ -81,6 +83,10 @@ d′ lambda 구하고, 어떤 성향인지 이런거 시험 나온단다
 ### β 계산
 
 - d′과 관계 없이 조절  
+- $β = \frac{P(X/(S+N))}{P(X/N)}$
+- $β = \frac{f_s(λ)}{f_n(λ)}$  
+  $\ln β = d′(λ - \frac{1}{2}d′) = d′λ_{center}$
+- β ~ 1: neutral
 
 ### $λ_{center}$ 계산
 
@@ -97,4 +103,4 @@ $λ_{center} = -\frac{1}{2}(Z(FA)+Z(H))$
 
 - Influenced by `Signal Probability` and `payoffs`
 - Signal Probability: P(signal)
-
+- $β_{opt} = \frac{P(N)}{P(S)} * \frac{V(CR) + C(FA)}{V(H) + C(M)}$
