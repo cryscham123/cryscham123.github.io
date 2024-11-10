@@ -503,9 +503,10 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <ul>
 <li>인간의 정보 처리 과정 중 <code>perception</code>에 관련된 것</li>
-<li>인공지능 분야에서 중요성이 대두되고 있음</li>
-<li>siganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표</li>
+<li>perception 단계에서 자극 뿐 아니라 노이즈도 같이 들어옴</li>
 <li>여러가지 신호 중 무엇이 중요한지 판단하는 것</li>
+<li>siganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표</li>
+<li>인공지능 분야에서 중요성이 대두되고 있음</li>
 </ul>
 </section>
 <section id="example" class="level2">
@@ -513,14 +514,14 @@ window.Quarto = {
 <ul>
 <li>Quality control inspector<br>
 빵이나 과자가 찌그러졌는지 검사, 반도체 품질 검사. 요즘에는 기계가 대부분 담당</li>
-<li>Detection of a flashing warning light (cctv)<br>
+<li>Detection of a flashing warning light (or cctv)<br>
 거수자 탐지</li>
 <li>Airport security guard</li>
 <li>Detecting peculiar patterns in medical imaging (x-ray)<br>
 종양, 암세포 탐지</li>
-<li>Mobile phone rings<br>
+<li>Mobile phone rings (sound)<br>
 phantoms vibration</li>
-<li>Morning alarm is active or not</li>
+<li>Morning alarm is active or not (visual)</li>
 </ul>
 <p>주변의 제품, 서비스 문제 파악, 해결 디자인 제시, 검증</p>
 </section>
@@ -538,7 +539,7 @@ phantoms vibration</li>
 <li>Trials
 <ul>
 <li>Signal case(signal + noise): target이 존재</li>
-<li>Noise case: target이 없음</li>
+<li>Noise case(noise only): target이 없음</li>
 </ul></li>
 <li>Response
 <ul>
@@ -573,6 +574,7 @@ phantoms vibration</li>
 <li>response bias (β)
 <ul>
 <li>criterion에 따라 yes라고 대답하는 비중과 no라고 대답하는 비중</li>
+<li>분포가 아니라 평가자에 따라 다름</li>
 </ul></li>
 <li>d′이 0, β가 50%면 그냥 랜덤으로 대답한 것과 같음</li>
 <li>d′을 넓게 하는게 objective
@@ -589,7 +591,12 @@ phantoms vibration</li>
 <section id="β-계산" class="level3">
 <h3 class="anchored" data-anchor-id="β-계산">β 계산</h3>
 <ul>
-<li>d′과 관계 없이 조절</li>
+<li>d′과 관계 없이 조절<br>
+</li>
+<li><span class="math inline">\(β = \frac{P(X/(S+N))}{P(X/N)}\)</span></li>
+<li><span class="math inline">\(β = \frac{f_s(λ)}{f_n(λ)}\)</span><br>
+<span class="math inline">\(\ln β = d′(λ - \frac{1}{2}d′) = d′λ_{center}\)</span></li>
+<li>β ~ 1: neutral</li>
 </ul>
 </section>
 <section id="λ_center-계산" class="level3">
@@ -609,6 +616,7 @@ ex) 억울한 죄인을 만들지 않으려는 범원 판결</li>
 <ul>
 <li>Influenced by <code>Signal Probability</code> and <code>payoffs</code></li>
 <li>Signal Probability: P(signal)</li>
+<li><span class="math inline">\(β_{opt} = \frac{P(N)}{P(S)} * \frac{V(CR) + C(FA)}{V(H) + C(M)}\)</span></li>
 </ul>
 
 

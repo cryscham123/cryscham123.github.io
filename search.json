@@ -11,7 +11,7 @@
     "href": "posts/학부 개념정리/2학년 2학기/인간 공학/5_signal_detction.html#overview",
     "title": "Signal Detection Theory",
     "section": "Overview",
-    "text": "Overview\n\n인간의 정보 처리 과정 중 perception에 관련된 것\n인공지능 분야에서 중요성이 대두되고 있음\nsiganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표\n여러가지 신호 중 무엇이 중요한지 판단하는 것",
+    "text": "Overview\n\n인간의 정보 처리 과정 중 perception에 관련된 것\nperception 단계에서 자극 뿐 아니라 노이즈도 같이 들어옴\n여러가지 신호 중 무엇이 중요한지 판단하는 것\nsiganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표\n인공지능 분야에서 중요성이 대두되고 있음",
     "crumbs": [
       "학부 개념정리",
       "2학년 2학기",
@@ -24,7 +24,7 @@
     "href": "posts/학부 개념정리/2학년 2학기/인간 공학/5_signal_detction.html#example",
     "title": "Signal Detection Theory",
     "section": "Example",
-    "text": "Example\n\nQuality control inspector\n빵이나 과자가 찌그러졌는지 검사, 반도체 품질 검사. 요즘에는 기계가 대부분 담당\nDetection of a flashing warning light (cctv)\n거수자 탐지\nAirport security guard\nDetecting peculiar patterns in medical imaging (x-ray)\n종양, 암세포 탐지\nMobile phone rings\nphantoms vibration\nMorning alarm is active or not\n\n주변의 제품, 서비스 문제 파악, 해결 디자인 제시, 검증",
+    "text": "Example\n\nQuality control inspector\n빵이나 과자가 찌그러졌는지 검사, 반도체 품질 검사. 요즘에는 기계가 대부분 담당\nDetection of a flashing warning light (or cctv)\n거수자 탐지\nAirport security guard\nDetecting peculiar patterns in medical imaging (x-ray)\n종양, 암세포 탐지\nMobile phone rings (sound)\nphantoms vibration\nMorning alarm is active or not (visual)\n\n주변의 제품, 서비스 문제 파악, 해결 디자인 제시, 검증",
     "crumbs": [
       "학부 개념정리",
       "2학년 2학기",
@@ -50,7 +50,7 @@
     "href": "posts/학부 개념정리/2학년 2학기/인간 공학/5_signal_detction.html#signal-detection-theory",
     "title": "Signal Detection Theory",
     "section": "Signal Detection Theory",
-    "text": "Signal Detection Theory\n\nTrials\n\nSignal case(signal + noise): target이 존재\nNoise case: target이 없음\n\nResponse\n\nYes\nNo\n\n\n\n\nHit rate: P(Hit) = Number of Hits / Number of Signal Trials\nFalse alarm rate: P(FA) = Number of False Alarms / Number of Noise Trials\nMiss rate: P(Miss) = 1 - P(Hit)\nCorrect rejection rate: P(CR) = 1 - P(FA)\n\n\nAssumptions\n\n사용자가 관찰할 수 있는 근거는 숫자나 변수로 표현할 수 있어야함 (유사도)\nevidence는 random variation이 있다\nsimple decision criterion으로 결정할 수 있어야함\n\n\n\nDistribution of signal and noise\n\n\nsensitivity index (d’)\n\n값이 작으면 분간 힘듦\n값이 크면 분간 쉬움\n\nresponse bias (β)\n\ncriterion에 따라 yes라고 대답하는 비중과 no라고 대답하는 비중\n\nd′이 0, β가 50%면 그냥 랜덤으로 대답한 것과 같음\nd′을 넓게 하는게 objective\n\n분포의 mean 차이를 높임\n각각의 분포의 variability를 줄임. (specificity)\n\n\n\n\nd′ 계산\nd′ lambda 구하고, 어떤 성향인지 이런거 시험 나온단다\n\n\nβ 계산\n\nd′과 관계 없이 조절\n\n\n\n\\(λ_{center}\\) 계산\n\\(λ_{center} = -\\frac{1}{2}(Z(FA)+Z(H))\\)\n\n\\(λ_{center}\\) = 0: ideal observer\n\\(λ_{center}\\) &lt; 0: liberal. yes라고 대답하는 비중이 늘어, hit rate가 높아지지만 false alarm rate도 높아짐\nex) 용의자를 찾는 경찰, 암세포 탐지\n\\(λ_{center}\\) &gt; 0: conservative. no라고 대답하는 비중이 늘어, correct rejection rate가 높아지지만 miss rate도 높아짐\nex) 억울한 죄인을 만들지 않으려는 범원 판결",
+    "text": "Signal Detection Theory\n\nTrials\n\nSignal case(signal + noise): target이 존재\nNoise case(noise only): target이 없음\n\nResponse\n\nYes\nNo\n\n\n\n\nHit rate: P(Hit) = Number of Hits / Number of Signal Trials\nFalse alarm rate: P(FA) = Number of False Alarms / Number of Noise Trials\nMiss rate: P(Miss) = 1 - P(Hit)\nCorrect rejection rate: P(CR) = 1 - P(FA)\n\n\nAssumptions\n\n사용자가 관찰할 수 있는 근거는 숫자나 변수로 표현할 수 있어야함 (유사도)\nevidence는 random variation이 있다\nsimple decision criterion으로 결정할 수 있어야함\n\n\n\nDistribution of signal and noise\n\n\nsensitivity index (d’)\n\n값이 작으면 분간 힘듦\n값이 크면 분간 쉬움\n\nresponse bias (β)\n\ncriterion에 따라 yes라고 대답하는 비중과 no라고 대답하는 비중\n분포가 아니라 평가자에 따라 다름\n\nd′이 0, β가 50%면 그냥 랜덤으로 대답한 것과 같음\nd′을 넓게 하는게 objective\n\n분포의 mean 차이를 높임\n각각의 분포의 variability를 줄임. (specificity)\n\n\n\n\nd′ 계산\nd′ lambda 구하고, 어떤 성향인지 이런거 시험 나온단다\n\n\nβ 계산\n\nd′과 관계 없이 조절\n\n\\(β = \\frac{P(X/(S+N))}{P(X/N)}\\)\n\\(β = \\frac{f_s(λ)}{f_n(λ)}\\)\n\\(\\ln β = d′(λ - \\frac{1}{2}d′) = d′λ_{center}\\)\nβ ~ 1: neutral\n\n\n\n\\(λ_{center}\\) 계산\n\\(λ_{center} = -\\frac{1}{2}(Z(FA)+Z(H))\\)\n\n\\(λ_{center}\\) = 0: ideal observer\n\\(λ_{center}\\) &lt; 0: liberal. yes라고 대답하는 비중이 늘어, hit rate가 높아지지만 false alarm rate도 높아짐\nex) 용의자를 찾는 경찰, 암세포 탐지\n\\(λ_{center}\\) &gt; 0: conservative. no라고 대답하는 비중이 늘어, correct rejection rate가 높아지지만 miss rate도 높아짐\nex) 억울한 죄인을 만들지 않으려는 범원 판결",
     "crumbs": [
       "학부 개념정리",
       "2학년 2학기",
@@ -63,7 +63,7 @@
     "href": "posts/학부 개념정리/2학년 2학기/인간 공학/5_signal_detction.html#optimal-response-criterion",
     "title": "Signal Detection Theory",
     "section": "Optimal Response Criterion",
-    "text": "Optimal Response Criterion\n\nInfluenced by Signal Probability and payoffs\nSignal Probability: P(signal)",
+    "text": "Optimal Response Criterion\n\nInfluenced by Signal Probability and payoffs\nSignal Probability: P(signal)\n\\(β_{opt} = \\frac{P(N)}{P(S)} * \\frac{V(CR) + C(FA)}{V(H) + C(M)}\\)",
     "crumbs": [
       "학부 개념정리",
       "2학년 2학기",
@@ -1184,7 +1184,7 @@
     "href": "posts/학부 개념정리/2학년 2학기/확률과 통계/4-이산형 확률분포.html#포아송-분포",
     "title": "이산형 확률분포",
     "section": "포아송 분포",
-    "text": "포아송 분포\n\n평균을 알 때\nn이 매우 크고 p가 매우 작을 때 이항분포를 포아송분포로 근사할 수 있다",
+    "text": "포아송 분포\n\n평균을 알 때\nn이 매우 크고 p가 매우 작을 때 이항분포를 포아송분포로 근사할 수 있다\n표기: \\(X \\sim P(\\lambda)\\)\n\\(f(x) = \\frac{e^{-\\lambda}\\lambda^x}{x!}, x = 0, 1, 2, ...\\)\nE(x) = \\(\\lambda\\)\nVar(x) = \\(\\lambda\\)",
     "crumbs": [
       "학부 개념정리",
       "2학년 2학기",
