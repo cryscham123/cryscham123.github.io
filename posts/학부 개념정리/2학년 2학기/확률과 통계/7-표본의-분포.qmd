@@ -1,0 +1,39 @@
+---
+title: '표본의 분포'
+date: 2024-11-18
+categories: ["개념 정리"]
+description: '정규 분포대해 알아봅니다.'
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 확률 표본
+
+- 독립적이고 동일한 확률분포를 가진 확률변수들의 집합
+- 통계량: 확률변수들의 함수
+- 추정량: 표본을 이용해 모수를 추정하는 통계량
+
+```
+SELECT 
+    i.*,
+    st.*,
+    (
+      SELECT NAME
+      FROM SUPPLIER s
+      WHERE s.SupplierID = i.SupplierID
+    ) AS SupplierName,
+    CASE
+        WHEN EXISTS (
+          SELECT SupplierID
+          FROM SUPPLIER_CONTRACT sc
+          WHERE i.SupplierID = sc.SupplierID
+          AND NOW() BETWEEN sc.StartDate AND sc.EndDate
+        )
+        THEN 'Available'
+        ELSE 'Not Available'
+    END AS PurchaseStatus
+FROM INGREDIENT i
+JOIN STOCK st 
+ON i.IngredientID = st.IngredientID
+ORDER BY PurchaseStatus;
+```

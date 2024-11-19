@@ -15,10 +15,368 @@
 <link>https://cryscham123.github.io/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Fri, 08 Nov 2024 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 18 Nov 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>Trees</title>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/11.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/discrete.jpg" class="post-thumbnail img-fluid"></p>
+<section id="introduction-to-trees" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-trees">Introduction to Trees</h2>
+<section id="trees" class="level3">
+<h3 class="anchored" data-anchor-id="trees">Trees</h3>
+<ul>
+<li>tree: node: n -&gt; edge: n-1, connected acyclic graph</li>
+<li>forest: no cycle, disjoint tree</li>
+</ul>
+</section>
+<section id="rooted-trees" class="level3">
+<h3 class="anchored" data-anchor-id="rooted-trees">Rooted Trees</h3>
+</section>
+<section id="rooted-trees-terminology" class="level3">
+<h3 class="anchored" data-anchor-id="rooted-trees-terminology">Rooted Trees Terminology</h3>
+</section>
+<section id="terminology-for-rooted-trees" class="level3">
+<h3 class="anchored" data-anchor-id="terminology-for-rooted-trees">Terminology for Rooted Trees</h3>
+<p>여기서부터</p>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>이산수학</category>
+  <category>개념 정리</category>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/11.html</guid>
+  <pubDate>Mon, 18 Nov 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>정규 분포</title>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/확률과 통계/6-정규분포.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="linear-transformation" class="level2">
+<h2 class="anchored" data-anchor-id="linear-transformation">Linear Transformation</h2>
+<section id="정규-분포의-합" class="level3">
+<h3 class="anchored" data-anchor-id="정규-분포의-합">정규 분포의 합</h3>
+<ul>
+<li>두 분포의 합이 같은 분포가 되는 경우는 흔치 않다 (uniform distribution도 같지 않다)</li>
+<li>두 정규분포의 합은 정규분포가 된다</li>
+<li><img src="https://latex.codecogs.com/png.latex?X%20+%20Y%20%5Csim%20N(%CE%BC_1%20+%20%CE%BC_2,%20%CF%83_1%5E2%20+%20%CF%83_2%5E2)"></li>
+</ul>
+</section>
+<section id="chi-square-분포" class="level3">
+<h3 class="anchored" data-anchor-id="chi-square-분포">Chi-square 분포</h3>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?Z%20%5Csim%20N(0,1)">일 때, <img src="https://latex.codecogs.com/png.latex?Z%5E2%20%5Csim%20%CF%87%5E2(1)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?Z_i%20%5Csim%20N(0,1)">일 때, <img src="https://latex.codecogs.com/png.latex?Z_1%5E2%20+%20Z_2%5E2%20+%20...%20%20+%20Z_n%5E2%20%5Csim%20%CF%87%5E2(n)"></li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>개념 정리</category>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/확률과 통계/6-정규분포.html</guid>
+  <pubDate>Sun, 17 Nov 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>표본의 분포</title>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/확률과 통계/7-표본의-분포.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="확률-표본" class="level2">
+<h2 class="anchored" data-anchor-id="확률-표본">확률 표본</h2>
+<ul>
+<li>독립적이고 동일한 확률분포를 가진 확률변수들의 집합</li>
+<li>통계량: 확률변수들의 함수</li>
+<li>추정량: 표본을 이용해 모수를 추정하는 통계량</li>
+</ul>
+<pre><code>SELECT 
+    i.*,
+    st.*,
+    (
+      SELECT NAME
+      FROM SUPPLIER s
+      WHERE s.SupplierID = i.SupplierID
+    ) AS SupplierName,
+    CASE
+        WHEN EXISTS (
+          SELECT SupplierID
+          FROM SUPPLIER_CONTRACT sc
+          WHERE i.SupplierID = sc.SupplierID
+          AND NOW() BETWEEN sc.StartDate AND sc.EndDate
+        )
+        THEN 'Available'
+        ELSE 'Not Available'
+    END AS PurchaseStatus
+FROM INGREDIENT i
+JOIN STOCK st 
+ON i.IngredientID = st.IngredientID
+ORDER BY PurchaseStatus;</code></pre>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>개념 정리</category>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/확률과 통계/7-표본의-분포.html</guid>
+  <pubDate>Sun, 17 Nov 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Display</title>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/인간 공학/7_display.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="display-rules" class="level2">
+<h2 class="anchored" data-anchor-id="display-rules">Display Rules</h2>
+<section id="four-cardinal-rules" class="level3">
+<h3 class="anchored" data-anchor-id="four-cardinal-rules">Four Cardinal Rules</h3>
+<ul>
+<li>꼭 필요한 정보만 제공해라</li>
+<li>필요한 수준의 정확도만 제공하라</li>
+<li>direct, simple, understandable, and usable하게 제공하라</li>
+<li>고장이나 작업 실패의 경우 바로 알아차리게 제공하라<br>
+첫번째 원칙을 위반할 수도 있다(alarm flooding)</li>
+</ul>
+</section>
+<section id="types-of-displays" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-displays">Types of Displays</h3>
+<ul>
+<li>visual</li>
+<li>Auditory
+<ul>
+<li>Detectable</li>
+<li>Discrmination</li>
+<li>Meaningful</li>
+<li>Main problem: hearing ability depends on environments / background noise (auditory spatial coding 인지하기 힘듦)</li>
+</ul></li>
+<li>Tactual(Haptic)
+<ul>
+<li>Detectable: 손처럼 민감한 부분은 가능하지만, 둔감한 부분은 어렵다</li>
+<li>Discrimination: nomal job이랑 구분되어야 한다</li>
+<li>Meaningful: tactual display에서는 어려운 부분. convention이 없음</li>
+<li>Main problem: 잘 안쓰이고, 손 이외에는 사용하기 어렵다</li>
+</ul></li>
+<li>Olfactory Displays - smell
+<ul>
+<li>Detectable: lng 가스에 주변에서 흔한 냄새를 넣지 않는다</li>
+<li>Discrimination: 브랜드 이미지로써 쓰기도 함</li>
+<li>Meaningful</li>
+<li>Main problem: 냄새에 대한 민감도가 사람마다 다르다. regenerate 하기가 어렵다. 후각이 금방 마비된다. 전쟁에서 후각을 이용한 의사전달을 시도하기도 함</li>
+</ul></li>
+</ul>
+</section>
+<section id="visual-displays" class="level3">
+<h3 class="anchored" data-anchor-id="visual-displays">Visual Displays</h3>
+<ul>
+<li>Appropriate if:
+<ul>
+<li>Noisy environment</li>
+<li>한 자리에 머무는 경우(traditional. 옛날엔 들고 다니기 어려웠음)</li>
+<li>message가 길거나 복잡한 경우, spatial coding이 필요한 경우</li>
+</ul></li>
+<li>Guiding principles for design:
+<ul>
+<li>눈에 잘 띄어야함(배경과 전경의 차이가 구분되어야함)</li>
+<li>처음에 눈에 띄어야함</li>
+<li>Understandable</li>
+<li>main problem: 시각이 overload됨. 정보가 너무 많음</li>
+</ul></li>
+</ul>
+</section>
+<section id="dynamic-information" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-information">Dynamic Information</h3>
+<ul>
+<li>Quantitative readings
+<ul>
+<li>고정 스케일의 움직이는 초점 (generally best)</li>
+<li>움직이는 스케일의 고정 초점</li>
+<li>digital display</li>
+</ul></li>
+<li>Qualitative readings</li>
+<li>Check readings</li>
+<li>Situation awareness</li>
+</ul>
+</section>
+<section id="design-of-analog-scales" class="level3">
+<h3 class="anchored" data-anchor-id="design-of-analog-scales">Design of Analog Scales</h3>
+<ul>
+<li>control, display가 혼합된경우 pointer로 움직여라</li>
+<li>작은 변화는 moving pointer가 더 좋다</li>
+</ul>
+</section>
+</section>
+<section id="qualitiative-visual-display" class="level2">
+<h2 class="anchored" data-anchor-id="qualitiative-visual-display">Qualitiative Visual Display</h2>
+<ul>
+<li>정확한 값보다 변화, 현재의 계략적인 상태를 알려주는게 중요</li>
+<li>주유계</li>
+</ul>
+<section id="scale" class="level3">
+<h3 class="anchored" data-anchor-id="scale">Scale</h3>
+<ul>
+<li>continuous data converted to range</li>
+<li>Shape coding</li>
+</ul>
+</section>
+<section id="design-principles" class="level3">
+<h3 class="anchored" data-anchor-id="design-principles">Design Principles</h3>
+<section id="quantitative" class="level4">
+<h4 class="anchored" data-anchor-id="quantitative">Quantitative</h4>
+<ul>
+<li>Fixed scale, moving pointer is preferred,</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="design-principle" class="level2">
+<h2 class="anchored" data-anchor-id="design-principle">Design Principle</h2>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>인간 공학</category>
+  <category>개념 정리</category>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/인간 공학/7_display.html</guid>
+  <pubDate>Wed, 13 Nov 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Graph</title>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/10.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/discrete.jpg" class="post-thumbnail img-fluid"></p>
+<section id="special-types-of-simple-graphs-n-cubes" class="level3">
+<h3 class="anchored" data-anchor-id="special-types-of-simple-graphs-n-cubes">Special Types of Simple Graphs: n-Cubes</h3>
+</section>
+<section id="bipartite-graphs" class="level3">
+<h3 class="anchored" data-anchor-id="bipartite-graphs">Bipartite Graphs</h3>
+</section>
+<section id="complete-bipartite-graphs" class="level3">
+<h3 class="anchored" data-anchor-id="complete-bipartite-graphs">Complete Bipartite Graphs</h3>
+</section>
+<section id="new-graphs-from-old" class="level3">
+<h3 class="anchored" data-anchor-id="new-graphs-from-old">New Graphs from Old</h3>
+<ul>
+<li>subgraph: edge가 있으면 node도 있어야 한다</li>
+<li>induced by W = {1, 2, 3}: 1, 2, 3에 의한 edge가 포함되어야 한다</li>
+</ul>
+</section>
+<section id="bipartite-graphs-and-matchings" class="level3">
+<h3 class="anchored" data-anchor-id="bipartite-graphs-and-matchings">Bipartite Graphs and Matchings</h3>
+</section>
+<section id="new-graphs-from-old-1" class="level3">
+<h3 class="anchored" data-anchor-id="new-graphs-from-old-1">New Graphs from Old</h3>
+<ul>
+<li>union: 합집합</li>
+</ul>
+</section>
+<section id="reperesenting-graphs-and-graph-isomorphism" class="level2">
+<h2 class="anchored" data-anchor-id="reperesenting-graphs-and-graph-isomorphism">Reperesenting Graphs and Graph Isomorphism</h2>
+<section id="reperesenting-graohs-adjacency-lists" class="level3">
+<h3 class="anchored" data-anchor-id="reperesenting-graohs-adjacency-lists">Reperesenting Graohs: Adjacency Lists</h3>
+</section>
+<section id="reperesenting-graohs-adjacency-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="reperesenting-graohs-adjacency-matrices">Reperesenting Graohs: Adjacency Matrices</h3>
+<ul>
+<li>sparse matrix: 대부분의 값이 0인 행렬 adjacency list가 유리</li>
+<li>dense matrix: 대부분의 값이 0이 아닌 행렬 adjacency matrix가 유리</li>
+</ul>
+</section>
+<section id="reperesenting-graohs-incidence-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="reperesenting-graohs-incidence-matrices">Reperesenting Graohs: Incidence Matrices</h3>
+<ul>
+<li>col에 edge를 적음</li>
+<li>directed graph에서는 -1, 1로 표현 (node arc incidence matrix)</li>
+</ul>
+</section>
+<section id="isomorphism-of-graphs1-2" class="level3">
+<h3 class="anchored" data-anchor-id="isomorphism-of-graphs1-2">Isomorphism of Graphs(1, 2)</h3>
+</section>
+</section>
+<section id="connectivity" class="level2">
+<h2 class="anchored" data-anchor-id="connectivity">Connectivity</h2>
+<section id="paths" class="level3">
+<h3 class="anchored" data-anchor-id="paths">Paths</h3>
+<ul>
+<li>circuit(= cycle): 시작점과 끝점이 같은 path</li>
+</ul>
+</section>
+<section id="degrees-of-separation" class="level3">
+<h3 class="anchored" data-anchor-id="degrees-of-separation">Degrees of Separation</h3>
+</section>
+<section id="connectedness-in-undirected-graphs" class="level3">
+<h3 class="anchored" data-anchor-id="connectedness-in-undirected-graphs">Connectedness in Undirected Graphs</h3>
+<ul>
+<li>길이 연결된 것: component</li>
+</ul>
+</section>
+<section id="connected-components" class="level3">
+<h3 class="anchored" data-anchor-id="connected-components">Connected Components</h3>
+</section>
+<section id="connectedness-in-directed-graphs" class="level3">
+<h3 class="anchored" data-anchor-id="connectedness-in-directed-graphs">Connectedness in directed Graphs</h3>
+<ul>
+<li>strongly connected: 모든 node에서 모든 node로 가는 path가 존재</li>
+<li>weakly connected: directed graph에서 undirected graph로 바꿔서 connected인 경우</li>
+</ul>
+</section>
+<section id="counting-paths-between-vertices" class="level3">
+<h3 class="anchored" data-anchor-id="counting-paths-between-vertices">Counting Paths between Vertices</h3>
+</section>
+</section>
+<section id="euler-and-hammiltonian-graphs" class="level2">
+<h2 class="anchored" data-anchor-id="euler-and-hammiltonian-graphs">Euler and Hammiltonian Graphs</h2>
+<section id="euler-paths-and-circuits" class="level3">
+<h3 class="anchored" data-anchor-id="euler-paths-and-circuits">Euler Paths and Circuits</h3>
+</section>
+<section id="algoritym-for-constructing-euler-circuits" class="level3">
+<h3 class="anchored" data-anchor-id="algoritym-for-constructing-euler-circuits">Algoritym for Constructing Euler Circuits</h3>
+</section>
+<section id="applications-of-euler-paths-and-circuits" class="level3">
+<h3 class="anchored" data-anchor-id="applications-of-euler-paths-and-circuits">Applications of Euler Paths and Circuits</h3>
+</section>
+<section id="hamilton-paths-and-circuits" class="level3">
+<h3 class="anchored" data-anchor-id="hamilton-paths-and-circuits">Hamilton Paths and Circuits</h3>
+</section>
+<section id="necessary-coditions-for-hamilton-circuits" class="level3">
+<h3 class="anchored" data-anchor-id="necessary-coditions-for-hamilton-circuits">Necessary Coditions for Hamilton Circuits</h3>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>이산수학</category>
+  <category>개념 정리</category>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/10.html</guid>
+  <pubDate>Tue, 12 Nov 2024 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>8장 정리</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/8-own.html</link>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/08-own.html</link>
   <description><![CDATA[ 
 
 
@@ -89,7 +447,7 @@
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>이산수학</category>
   <category>개념 정리</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/8-own.html</guid>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/08-own.html</guid>
   <pubDate>Fri, 08 Nov 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
@@ -124,6 +482,37 @@
 <ul>
 <li>μ = 0, σ = 1인 정규분포</li>
 </ul>
+</section>
+</section>
+<section id="gamma-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="gamma-distribution">Gamma Distribution</h2>
+<ul>
+<li>포아송분포의 사건 발생 사이의 시간</li>
+<li><img src="https://latex.codecogs.com/png.latex?m(t)%20=%20%5Cfrac%7B1%7D%7B(1-%5Ctheta%20t)%5E%5Calpha%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?E(x)%20=%20%CE%B1%CE%B8"></li>
+<li><img src="https://latex.codecogs.com/png.latex?Var(x)%20=%20%CE%B1%CE%B8%5E2"></li>
+</ul>
+<section id="chi-square-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="chi-square-distribution">Chi-square Distribution</h3>
+<ul>
+<li>α = ν/2, θ = 2인 감마분포</li>
+<li>자유도 ν에 따라 모양이 변함</li>
+<li>표기: <img src="https://latex.codecogs.com/png.latex?X%20%5Csim%20%CF%87%5E2(%CE%BD)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?E(x)%20=%20%CE%BD"></li>
+<li><img src="https://latex.codecogs.com/png.latex?Var(x)%20=%202%CE%BD"></li>
+</ul>
+</section>
+<section id="exponential-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="exponential-distribution">Exponential Distribution</h3>
+<ul>
+<li>α = 1인 감마분포</li>
+<li>Poisson 분포에서 사건 발생 사이의 시간을 나타낼 수 있음</li>
+<li>표기: <img src="https://latex.codecogs.com/png.latex?X%20%5Csim%20Exp(%CE%BB)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?f(x)%20=%20%CE%BBe%5E%7B-%CE%BBx%7D,%20x%20%5Cgeq%200"></li>
+<li><img src="https://latex.codecogs.com/png.latex?E(x)%20=%20%5Cfrac%7B1%7D%7B%CE%BB%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?Var(x)%20=%20%5Cfrac%7B1%7D%7B%CE%BB%5E2%7D"></li>
+<li>포아송분포에서의 λ와 동일</li>
+</ul>
 
 
 </section>
@@ -136,7 +525,7 @@
 </item>
 <item>
   <title>Advanced Counting Techniques</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/8.html</link>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/08.html</link>
   <description><![CDATA[ 
 
 
@@ -233,7 +622,7 @@
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>이산수학</category>
   <category>개념 정리</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/8.html</guid>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/08.html</guid>
   <pubDate>Mon, 04 Nov 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
@@ -314,6 +703,7 @@
 </section>
 <section id="attention-as-capacity" class="level2">
 <h2 class="anchored" data-anchor-id="attention-as-capacity">Attention as Capacity</h2>
+<p>Multiple Resource Theory 1문제</p>
 
 
 </section>
@@ -603,6 +993,13 @@ font-style: inherit;">6</span>)</span></code></pre></div>
 
 
 <p><img src="https://cryscham123.github.io/img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<ul>
+<li><p><code>Lost Update</code> Problem</p></li>
+<li><p><code>Atomic</code>, Consistent, <code>Isolated</code>, Durable</p></li>
+<li><p>concurrency control</p></li>
+<li><p>backup / recovery</p></li>
+<li><p>security</p></li>
+</ul>
 
 
 
@@ -683,7 +1080,7 @@ intersection table에는 두 entity의 primary key를 포함하는 composite key
 </item>
 <item>
   <title>Mathematical Induction</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/5.html</link>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/05.html</link>
   <description><![CDATA[ 
 
 
@@ -796,7 +1193,7 @@ intersection table에는 두 entity의 primary key를 포함하는 composite key
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>이산수학</category>
   <category>개념 정리</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/5.html</guid>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/05.html</guid>
   <pubDate>Tue, 29 Oct 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
@@ -1325,407 +1722,6 @@ restricting message set size, redundant carrier sentence</p></li>
   <category>개념 정리</category>
   <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/인간 공학/4_Auditory_Haptic.html</guid>
   <pubDate>Mon, 14 Oct 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Data Modeling and the Entity-Relationship Model</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/07.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="data-and-information" class="level2">
-<h2 class="anchored" data-anchor-id="data-and-information">Data and information</h2>
-<ul>
-<li>Data: raw facts. <code>recorded facts</code></li>
-<li>Information: <code>meaningful context</code></li>
-<li>Knowledge: information + 가치</li>
-</ul>
-</section>
-<section id="what-is-information-system" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-information-system">What is information system?</h2>
-<ul>
-<li>System: a <code>set of components</code> that interact to achieve some <code>purpose</code> or <code>goal</code></li>
-<li>Information System: composed of <code>hardware</code>, <code>software</code>, <code>data</code>, <code>procedures</code>, <code>people</code></li>
-</ul>
-<p><img src="https://cryscham123.github.io/img/system-work.png" class="img-fluid"></p>
-</section>
-<section id="system-analysis-and-design" class="level2">
-<h2 class="anchored" data-anchor-id="system-analysis-and-design">System Analysis and Design</h2>
-<ul>
-<li><code>System analysis and design</code>: process of creating and maintaining <code>information systems</code></li>
-<li>classic methodology: <code>SDLC</code></li>
-</ul>
-<section id="sdlc-system-development-life-cycle" class="level3">
-<h3 class="anchored" data-anchor-id="sdlc-system-development-life-cycle"><code>SDLC</code> (System Development Life Cycle)</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/img/system-use.png" class="img-fluid figure-img"></p>
-<figcaption>SDLC</figcaption>
-</figure>
-</div>
-<ol type="1">
-<li>System definitions: 예산 편상, 위험 분석, …</li>
-<li><code>Requirements</code> analysis</li>
-<li>Component design</li>
-<li>Implementation</li>
-<li>System maintenance</li>
-</ol>
-<section id="database-development-process" class="level4">
-<h4 class="anchored" data-anchor-id="database-development-process">database development process</h4>
-<ol type="1">
-<li><code>Requirements</code> analysis<br>
-input: the project plan<br>
-output: a set of approved requirements -&gt; <code>data model</code> (<code>ER model</code>로 <code>conceptual design</code>)<br>
-source: <code>Use cases</code>, <code>Business rules</code></li>
-<li>Component Design: Relational Database Design (상세 설계)</li>
-<li>Implementation</li>
-</ol>
-</section>
-</section>
-</section>
-<section id="er-model" class="level2">
-<h2 class="anchored" data-anchor-id="er-model">ER model</h2>
-<ul>
-<li><code>Entities</code>
-<ul>
-<li><code>Entity class</code></li>
-<li><code>Entity instance</code></li>
-</ul></li>
-<li>Attributes: <code>Data type</code>, <code>Properties</code>(default, constraints)</li>
-<li>Identifiers
-<ul>
-<li><code>unique</code></li>
-<li><code>Nonunique</code>: identifies a set of instances</li>
-</ul></li>
-<li><code>Relationships</code>
-<ul>
-<li><code>binary relationship</code>
-<ul>
-<li>Maximum cardinality: <code>1:1</code>(A has a B), <code>1:N</code>(A has a set of B), <code>M:N</code></li>
-<li>Minimum cardinality: <code>0</code>, <code>1</code></li>
-</ul></li>
-<li><code>ternary relationship</code></li>
-</ul></li>
-</ul>
-<p><img src="https://cryscham123.github.io/img/entity.jpg" class="img-fluid"></p>
-</section>
-<section id="entit-relationship-diagram" class="level2">
-<h2 class="anchored" data-anchor-id="entit-relationship-diagram"><code>Entit-Relationship Diagram</code></h2>
-<ul>
-<li><p><code>Entity classes</code>: rectangle</p></li>
-<li><p><code>Relationships</code>: diamond</p></li>
-<li><p><code>maximum cardinality</code>: inside the diamond</p></li>
-<li><p><code>minimum cardinality</code>: oval or hash mark next to diamond</p></li>
-<li><p><code>strong entity</code>: 독자적으로 존재 가능. 강한개체 관계는 점선<br>
-<code>Non-ID-dependent</code>: identifier에 다른 entity의 identifier가 포함되어 있지 않음. 점선으로 표기(<code>non-identifying relationship</code>)</p></li>
-<li><p><code>weak entity</code>: 약, 강 관계는 실선. IS: rounded square, traditional: 2 layer square<br>
-<code>ID-dependent</code>: identifier에 다른 entity의 identifier가 포함되어 있음. 실선으로 표기(<code>identifying relationship</code>)</p></li>
-<li><p><code>associative entity</code>: <code>relationship</code>이 <code>entity</code>로 변환된 것.<br>
-<code>Many-to-many</code> relationship을 2개의 <code>1:N</code>으로 변환</p></li>
-<li><p><code>super type</code>, <code>sub type</code>: 상속관계. <code>sub type</code> is a <code>super type</code></p>
-<ul>
-<li>exclusive: <code>Discriminator attribute</code>가 필요함</li>
-<li>inclusive</li>
-</ul></li>
-<li><p><code>recursive relationship</code></p></li>
-<li><p>Business rule: build-in constraints, trigger, stored procedure, application code로 구현 가능</p></li>
-<li><p>data model validation: form, report를 이용한 prototyping</p></li>
-</ul>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>개념 정리</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/07.html</guid>
-  <pubDate>Sun, 13 Oct 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>진도 나갈거 예상</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/0.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/discrete.jpg" class="post-thumbnail img-fluid"></p>
-<ol start="4" type="1">
-<li>Number theory and cryptography</li>
-</ol>
-<ul>
-<li>Number Theory: Properties of integers, divisibility, prime numbers, and modular arithmetic.</li>
-<li>Cryptography: Techniques for secure communication, including encryption and decryption methods.</li>
-</ul>
-<ol start="5" type="1">
-<li>Induction and recursion</li>
-</ol>
-<ul>
-<li>Mathematical Induction: Proof technique used to prove statements about natural numbers.</li>
-<li>Recursion: Defining functions or sequences where the next term is derived from previous terms.</li>
-</ul>
-<ol start="6" type="1">
-<li>Counting</li>
-</ol>
-<ul>
-<li>Combinatorics: Study of counting, arrangement, and combination of objects.</li>
-<li>Permutations and Combinations: Methods to count arrangements and selections.</li>
-</ul>
-<ol start="10" type="1">
-<li>Graphs</li>
-</ol>
-<ul>
-<li>Graph Theory: Study of graphs, which are mathematical structures used to model pairwise relations between objects.</li>
-<li>Applications: Network analysis, shortest path problems, and graph coloring.</li>
-</ul>
-
-
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>이산수학</category>
-  <category>개념 정리</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/0.html</guid>
-  <pubDate>Thu, 10 Oct 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Algorithm</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/3.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/discrete.jpg" class="post-thumbnail img-fluid"></p>
-<section id="algorithms" class="level2">
-<h2 class="anchored" data-anchor-id="algorithms">Algorithms</h2>
-<p>algorithm: <code>finite sequence of precise instructions</code> for performing a computation or for <code>solving a problem.</code></p>
-<section id="pseudo-code" class="level3">
-<h3 class="anchored" data-anchor-id="pseudo-code">Pseudo code</h3>
-<p>완전히 정해진 문법은 없는듯. 이산수학에서 사용하는 형태는 다음과 같다.</p>
-</section>
-<section id="properties-of-algorithms" class="level3">
-<h3 class="anchored" data-anchor-id="properties-of-algorithms">Properties of Algorithms</h3>
-<ul>
-<li>Input</li>
-<li>Output: solution to the problem</li>
-<li>Definiteness. The steps of an algorithm must be defined precisely.</li>
-<li>Correctness</li>
-<li>Finiteness: 무한루프 돌면 안된다.</li>
-<li>Effectiveness</li>
-<li>Generality</li>
-</ul>
-</section>
-<section id="example-of-algorithms" class="level3">
-<h3 class="anchored" data-anchor-id="example-of-algorithms">Example of Algorithms</h3>
-<ul>
-<li>유한한 정수 집단에서 가장 큰 수 찾기</li>
-<li>검색 알고리즘
-<ul>
-<li><p>선형 검색</p>
-<pre><code>procedure linear search(x: integer, a_1, a_2, ..., a_n: distinct integers)
-i := 1
-while i &lt;= n and x != a_i
-  i := i + 1
-if i &lt;= n then position := i
-else position := 0
-return position {position is subscript of the term that equals x, or 0 if not found}</code></pre></li>
-<li><p>이진 검색</p>
-<pre><code>procedure binary search(x: integer, a_1, a_2, ..., a_n: increasing integers)
-i := 1
-j := n
-while i &lt; j
-  m := (i + j) / 2
-  if x &gt; a_m then i := m + 1
-  else j := m
-if x = a_i then position := i
-else position := 0
-return position</code></pre></li>
-</ul></li>
-<li>정렬
-<ul>
-<li><p>버블 정렬</p>
-<pre><code>procedure bubble sort(a_1, a_2, ..., a_n: real number with n &gt;= 2)
-for i := 1 to n-1
-  for j:= 1 to n-i
-    if a_j &gt; a_j+1 then swap a_j and a_j+1</code></pre></li>
-<li><p>선택 정렬</p>
-<pre><code>procedure insertion sort (a_1, a_2, ..., a_n: real numbers with n &gt;= 2)
-for j := 2 to n
-  i := 1
-  while a_j &gt; a_i
-  i := i + 1
-  m := a_j
-  for k := 0 to j - i - 1
-  a_{j-k} := a_{j-k-1}
-  a_i := m</code></pre></li>
-</ul></li>
-<li>그리디 알고리즘</li>
-</ul>
-</section>
-</section>
-<section id="the-growth-of-functions" class="level2">
-<h2 class="anchored" data-anchor-id="the-growth-of-functions">The Growth of Functions</h2>
-<section id="big-o-notation" class="level3">
-<h3 class="anchored" data-anchor-id="big-o-notation">Big-O Notation</h3>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?f(x)"> is <img src="https://latex.codecogs.com/png.latex?O(g(x))"> if there exists a constant <img src="https://latex.codecogs.com/png.latex?c%20%3E%200"> and <img src="https://latex.codecogs.com/png.latex?x_0"> such that <img src="https://latex.codecogs.com/png.latex?%7Cf(x)%7C%20%E2%89%A4%20c%7Cg(x)%7C"> for all <img src="https://latex.codecogs.com/png.latex?x%20%E2%89%A5%20x_0"></li>
-<li><img src="https://latex.codecogs.com/png.latex?f(x)"> is <img src="https://latex.codecogs.com/png.latex?O(g(x))"> if <img src="https://latex.codecogs.com/png.latex?f(x)%20grows%20no%20faster%20than%20g(x)"></li>
-<li>당연히 여러개일 수 있다.</li>
-<li><img src="https://latex.codecogs.com/png.latex?f(x)%20=%20O(g(x))">가 아니라 <img src="https://latex.codecogs.com/png.latex?f(x)%20%E2%88%88%20O(g(x))"></li>
-</ul>
-<section id="example" class="level4">
-<h4 class="anchored" data-anchor-id="example">Example</h4>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?f(x)%20=%20a_nx%5En%20+%20a_%7Bn-1%7Dx%5E%7Bn-1%7D%20+%20...%20+%20a_1x%20+%20a_0"><br>
-<img src="https://latex.codecogs.com/png.latex?f(x)"> is <img src="https://latex.codecogs.com/png.latex?O(x%5En)"></li>
-<li><img src="https://latex.codecogs.com/png.latex?f(x)%20=%201%20+%202%20+%20...%20+%20n"><br>
-<img src="https://latex.codecogs.com/png.latex?f(x)"> is <img src="https://latex.codecogs.com/png.latex?O(n%5E2)"></li>
-<li><img src="https://latex.codecogs.com/png.latex?f(n)%20=%20n!"><br>
-$f(n) is <img src="https://latex.codecogs.com/png.latex?O(n%5En)"></li>
-<li><img src="https://latex.codecogs.com/png.latex?f_1(x)"> is <img src="https://latex.codecogs.com/png.latex?O(g_1(x))"> and <img src="https://latex.codecogs.com/png.latex?f_2(x)"> is <img src="https://latex.codecogs.com/png.latex?O(g_2(x))"><br>
-<img src="https://latex.codecogs.com/png.latex?(f_1%20+%20f_2)(x)"> is <img src="https://latex.codecogs.com/png.latex?O(max(%7Cg_1(x)%7C,%20%7Cg_2(x)%7C))"><br>
-<img src="https://latex.codecogs.com/png.latex?(f_1%20f_2)(x)"> is <img src="https://latex.codecogs.com/png.latex?O(max(g_1(x)%20g_2(x)))"></li>
-<li><img src="https://latex.codecogs.com/png.latex?f_1(x)"> and <img src="https://latex.codecogs.com/png.latex?f_2(x)"> both <img src="https://latex.codecogs.com/png.latex?O(g(x))"><br>
-<img src="https://latex.codecogs.com/png.latex?(f_1%20+%20f_2)(x)"> is <img src="https://latex.codecogs.com/png.latex?O(g(x))"></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/img/growth-bigo.png" class="img-fluid figure-img"></p>
-<figcaption>Growth of Functins</figcaption>
-</figure>
-</div>
-</section>
-</section>
-<section id="big-ω-notation" class="level3">
-<h3 class="anchored" data-anchor-id="big-ω-notation">Big-Ω Notation</h3>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?%7Cf(x)%7C%20%E2%89%A5%20C%7Cg(x)%7C"> when <img src="https://latex.codecogs.com/png.latex?x%20%3E%20k"></li>
-</ul>
-</section>
-<section id="big-θ-notation" class="level3">
-<h3 class="anchored" data-anchor-id="big-θ-notation">Big-θ Notation</h3>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?f(x)"> is <img src="https://latex.codecogs.com/png.latex?%CE%A9(g(x))"> and <img src="https://latex.codecogs.com/png.latex?f(x)"> is <img src="https://latex.codecogs.com/png.latex?O(g(x))"></li>
-<li><img src="https://latex.codecogs.com/png.latex?C_1%20g(x)%20%3C%20f(x)%20%3C%20C_2%20g(x),%20x%20%3E%20k"></li>
-</ul>
-</section>
-</section>
-<section id="complexity-of-algorithms" class="level2">
-<h2 class="anchored" data-anchor-id="complexity-of-algorithms">Complexity of Algorithms</h2>
-</section>
-<section id="combination-of-funciton" class="level2">
-<h2 class="anchored" data-anchor-id="combination-of-funciton">combination of funciton</h2>
-<p>if <img src="https://latex.codecogs.com/png.latex?f_1(x)%20is%20O(g_1(x))"> and <img src="https://latex.codecogs.com/png.latex?f_2(x)%20is%20O(g_2(x))">, then <img src="https://latex.codecogs.com/png.latex?f_1(x)%20+%20f_2(x)%20is%20O(max(%7Cg_1(x)%7C,%20%7Cg_2(x)%7C))"><br>
-<img src="https://latex.codecogs.com/png.latex?%7Cf_1(x)%20+%20f_2(x)%7C%20%E2%89%A4%20%7Cf_1(x)%7C%20+%20%7Cf_2(x)%7C"><br>
-<img src="https://latex.codecogs.com/png.latex?%E2%89%A4%20c_1%7Cg_1(x)%7C%20+%20c_2%7Cg_2(x)%7C"><br>
-<img src="https://latex.codecogs.com/png.latex?%E2%89%A4%20(c_1%20+%20c_2)max(%7Cg_1(x)%7C,%20%7Cg_2(x)%7C)"></p>
-</section>
-<section id="ordering-functions-by-order-of-growth" class="level2">
-<h2 class="anchored" data-anchor-id="ordering-functions-by-order-of-growth">ordering functions by order of growth</h2>
-</section>
-<section id="big-omega" class="level2">
-<h2 class="anchored" data-anchor-id="big-omega">big-omega</h2>
-<p>lowerbound: <img src="https://latex.codecogs.com/png.latex?f(x)%20is%20%CE%A9(g(x))"> if there exists a constant <img src="https://latex.codecogs.com/png.latex?c%20%3E%200"> and <img src="https://latex.codecogs.com/png.latex?x_0"> such that <img src="https://latex.codecogs.com/png.latex?%7Cf(x)%7C%20%3E=%20c%7Cg(x)%7C"> for all <img src="https://latex.codecogs.com/png.latex?x%20%3E=%20x_0"></p>
-</section>
-<section id="big-theta" class="level2">
-<h2 class="anchored" data-anchor-id="big-theta">big-theta</h2>
-<p><img src="https://latex.codecogs.com/png.latex?f(x)%20is%20%CE%98(g(x))"> if <img src="https://latex.codecogs.com/png.latex?f(x)%20is%20O(g(x))"> and <img src="https://latex.codecogs.com/png.latex?f(x)%20is%20%CE%A9(g(x))"></p>
-</section>
-<section id="complexity" class="level2">
-<h2 class="anchored" data-anchor-id="complexity">complexity</h2>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>이산수학</category>
-  <category>개념 정리</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/3.html</guid>
-  <pubDate>Mon, 07 Oct 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Number Theory and Cryptography</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/4.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/discrete.jpg" class="post-thumbnail img-fluid"></p>
-<section id="solving-congruences" class="level2">
-<h2 class="anchored" data-anchor-id="solving-congruences">Solving Congruences</h2>
-<p>RS Encryption</p>
-<section id="linear-congruences" class="level3">
-<h3 class="anchored" data-anchor-id="linear-congruences">Linear Congruences</h3>
-</section>
-<section id="inverse-of-a-modulo-m" class="level3">
-<h3 class="anchored" data-anchor-id="inverse-of-a-modulo-m">Inverse of a modulo m</h3>
-</section>
-<section id="finding-inverses1" class="level3">
-<h3 class="anchored" data-anchor-id="finding-inverses1">Finding Inverses1</h3>
-</section>
-<section id="fermats-little-theorem" class="level3">
-<h3 class="anchored" data-anchor-id="fermats-little-theorem">Fermat’s Little Theorem</h3>
-</section>
-</section>
-<section id="cryptography" class="level2">
-<h2 class="anchored" data-anchor-id="cryptography">Cryptography</h2>
-<section id="caesar-cipher" class="level3">
-<h3 class="anchored" data-anchor-id="caesar-cipher">Caesar Cipher</h3>
-</section>
-<section id="the-rsa-cryptosystem" class="level3">
-<h3 class="anchored" data-anchor-id="the-rsa-cryptosystem">The RSA Cryptosystem</h3>
-<p>euiler function: <img src="https://latex.codecogs.com/png.latex?%CF%95(p,q)%20=%20(p-1)(q-1)"><br>
-euiler’s theorem: if a is invertible mod k, then <img src="https://latex.codecogs.com/png.latex?a%5E%7B%CF%95(n)%7D%20=%201%20mod%20k"><br>
-n = pq<br>
-select e such that gcd(e,ϕ(p,q)) = 1<br>
-m: message, c = m^e mod n<br>
-publock key: (e,m)<br>
-d: inverse of e mod ϕ(p,q)<br>
-ed = 1 + kϕ(p,q) for some integer k<br>
-<img src="https://latex.codecogs.com/png.latex?m%5E%7Bed%7D%20=%20m%5E%7B1+k%CF%95(p,q)%7D%20=%20m(m%5E%7B%CF%95(p,q)%7D)%5Ek%20=%20m%20mod%20n"><br>
-(<img src="https://latex.codecogs.com/png.latex?m%5E%7B%CF%95(p,q)%7D%20=%201%20mod%20n">)</p>
-
-
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>이산수학</category>
-  <category>개념 정리</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/이산 수학/4.html</guid>
-  <pubDate>Mon, 07 Oct 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>지수함수</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/기초공학수학1/final/5.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="지수함수" class="level2">
-
-<ul>
-<li>a &gt; 0, a ≠ 1</li>
-<li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdx%7Da%5Ex%20=%20a%5Ex%20%5Cln%20a"></li>
-<li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdx%7De%5Ex%20=%20e%5Ex"></li>
-<li>로그미분법: <img src="https://latex.codecogs.com/png.latex?y=f(x)"> =&gt; <img src="https://latex.codecogs.com/png.latex?%5Cln%20y%20=%20%5Cln%20f(x)">로 변환 후 음함수 미분
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdx%7D(%5Cln%20y)%20=%20%5Cfrac%7B1%7D%7By%7D%20%5Ccdot%20%5Cfrac%7Bdy%7D%7Bdx%7D"></li>
-<li>예시: <img src="https://latex.codecogs.com/png.latex?y%20=%20x%5En">일 때, <img src="https://latex.codecogs.com/png.latex?%5Cln%20y%20=%20%5Cln(x%5En)%20=%20n%5Cln%20x"> <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdx%7D(%5Cln%20y)%20=%20%5Cfrac%7Bd%7D%7Bdx%7D(n%5Cln%20x)%20=%20%5Cfrac%7Bn%7D%7Bx%7D"> <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7By%7D%20%5Ccdot%20%5Cfrac%7Bdy%7D%7Bdx%7D%20=%20%5Cfrac%7Bn%7D%7Bx%7D"> <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdy%7D%7Bdx%7D%20=%20y%20%5Ccdot%20%5Cfrac%7Bn%7D%7Bx%7D%20=%20nx%5E%7Bn-1%7D"></li>
-</ul></li>
-<li><img src="https://latex.codecogs.com/png.latex?f%E2%80%B2(t)%20=%20kf(t)"> =&gt; <img src="https://latex.codecogs.com/png.latex?f(t)%20=%20Ce%5E%7Bkt%7D"> (k: 지수성장률 / 지수감쇠율, C: 초기값)</li>
-</ul>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>기초공학수학</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/기초공학수학1/final/5.html</guid>
-  <pubDate>Sat, 05 Oct 2024 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

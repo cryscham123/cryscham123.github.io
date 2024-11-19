@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="인간 공학의 개요와 중요성에 대해 알아봅니다.">
+<meta name="description" content="정규 분포대해 알아봅니다.">
 
-<title>Introduction to Human Factors – 김형훈의 학습 블로그</title>
+<title>정규 분포 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,8 +26,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/1_reaserch_method.html" rel="next">
-<link href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/work2.pdf" rel="prev">
+<link href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/7-표본의-분포.html" rel="next">
+<link href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/5-연속형-확률분포.html" rel="prev">
 <link href="../../../../favicon" rel="icon">
 <script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../site_libs/quarto-html/quarto.js"></script>
@@ -55,6 +55,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
@@ -81,7 +110,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html">인간 공학</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html">Introduction to Human Factors</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/1-통계학의-개념.html">확률과 통계</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/6-정규분포.html">정규 분포</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -323,16 +352,16 @@ ul.task-list li input[type="checkbox"] {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
  <span class="menu-text">인간 공학</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction to Human Factors</span></a>
   </div>
 </li>
@@ -388,13 +417,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
  <span class="menu-text">확률과 통계</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/1-통계학의-개념.html" class="sidebar-item-text sidebar-link">
@@ -427,7 +456,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/6-정규분포.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/6-정규분포.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">정규 분포</span></a>
   </div>
 </li>
@@ -459,27 +488,28 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#what-is-human-factors" id="toc-what-is-human-factors" class="nav-link active" data-scroll-target="#what-is-human-factors">what is human factors</a></li>
-  <li><a href="#component-of-human-factors" id="toc-component-of-human-factors" class="nav-link" data-scroll-target="#component-of-human-factors">component of human factors</a></li>
-  <li><a href="#goal-of-human-factors" id="toc-goal-of-human-factors" class="nav-link" data-scroll-target="#goal-of-human-factors">Goal of human factors</a></li>
+  <li><a href="#linear-transformation" id="toc-linear-transformation" class="nav-link active" data-scroll-target="#linear-transformation">Linear Transformation</a>
+  <ul class="collapse">
+  <li><a href="#정규-분포의-합" id="toc-정규-분포의-합" class="nav-link" data-scroll-target="#정규-분포의-합">정규 분포의 합</a></li>
+  <li><a href="#chi-square-분포" id="toc-chi-square-분포" class="nav-link" data-scroll-target="#chi-square-분포">Chi-square 분포</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html">인간 공학</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html">Introduction to Human Factors</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/1-통계학의-개념.html">확률과 통계</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/6-정규분포.html">정규 분포</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Introduction to Human Factors</h1>
+<h1 class="title">정규 분포</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">인간 공학</div>
     <div class="quarto-category">개념 정리</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    인간 공학의 개요와 중요성에 대해 알아봅니다.
+    정규 분포대해 알아봅니다.
   </div>
 </div>
 
@@ -490,7 +520,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024년 9월 3일</p>
+      <p class="date">2024년 11월 18일</p>
     </div>
   </div>
   
@@ -502,32 +532,26 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="what-is-human-factors" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-human-factors">what is human factors</h2>
+<p><img src="../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="linear-transformation" class="level2">
+<h2 class="anchored" data-anchor-id="linear-transformation">Linear Transformation</h2>
+<section id="정규-분포의-합" class="level3">
+<h3 class="anchored" data-anchor-id="정규-분포의-합">정규 분포의 합</h3>
 <ul>
-<li>human factors = Ergonomics</li>
-<li>a human-centered design philosophy &lt;-&gt; technology-centered design</li>
+<li>두 분포의 합이 같은 분포가 되는 경우는 흔치 않다 (uniform distribution도 같지 않다)</li>
+<li>두 정규분포의 합은 정규분포가 된다</li>
+<li><span class="math inline">\(X + Y \sim N(μ_1 + μ_2, σ_1^2 + σ_2^2)\)</span></li>
 </ul>
 </section>
-<section id="component-of-human-factors" class="level2">
-<h2 class="anchored" data-anchor-id="component-of-human-factors">component of human factors</h2>
+<section id="chi-square-분포" class="level3">
+<h3 class="anchored" data-anchor-id="chi-square-분포">Chi-square 분포</h3>
 <ul>
-<li>human: physical, cognitive, group</li>
-<li>task: physical + cognitive + group</li>
-<li>envirnment: working environment, systems</li>
-</ul>
-</section>
-<section id="goal-of-human-factors" class="level2">
-<h2 class="anchored" data-anchor-id="goal-of-human-factors">Goal of human factors</h2>
-<ul>
-<li>Reduce errors</li>
-<li>Increase productivity</li>
-<li>Enhance safety</li>
-<li>Enhance comfort</li>
+<li><span class="math inline">\(Z \sim N(0,1)\)</span>일 때, <span class="math inline">\(Z^2 \sim χ^2(1)\)</span></li>
+<li><span class="math inline">\(Z_i \sim N(0,1)\)</span>일 때, <span class="math inline">\(Z_1^2 + Z_2^2 + ...  + Z_n^2 \sim χ^2(n)\)</span></li>
 </ul>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
@@ -957,13 +981,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/이산 수학/work2.pdf" class="pagination-link" aria-label="Discrete Mathematics #4">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Discrete Mathematics #4</span>
+      <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/5-연속형-확률분포.html" class="pagination-link" aria-label="연속형 확률분포">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">연속형 확률분포</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/1_reaserch_method.html" class="pagination-link" aria-label="Research Method in Human Factors">
-        <span class="nav-page-text">Research Method in Human Factors</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../posts/학부 개념정리/2학년 2학기/확률과 통계/7-표본의-분포.html" class="pagination-link" aria-label="표본의 분포">
+        <span class="nav-page-text">표본의 분포</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

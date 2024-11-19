@@ -1,0 +1,137 @@
+---
+title: 인간공학 보고서
+subtitle: |
+  \vspace{0.5cm}
+
+  \normalsize eyetracking을 이용한 키오스크 UI 개선 실험 파트 \par
+  (조금씩 생각나는대로 계속 추가하는 중입니다)
+author: 
+  - 20192208 김형훈
+  - 20222748 채대영
+header-includes:
+- |
+  \usepackage{authblk}
+  \renewcommand\Authfont{\normalsize}
+categories: ["work"]
+format: 
+  pdf:
+    documentclass: report
+    papersize: a4
+    number-sections: true
+    number-depth: 3
+    top-level-division: chapter
+    fontsize: 17pt
+    geometry:
+      - top=20mm
+include-in-header: 
+  text: |
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{}{0pt}{\huge}
+    \titleformat{\section}[block]{\normalfont\Large\bfseries}{}{0pt}{}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{-3pt}{0pt}{10pt}
+    \titlespacing*{\section}{0pt}{20pt}{10pt}
+    \newcommand{\sectionbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{1.5}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+---
+
+## 실험 설계
+
+### 측정 지표
+
+- 시각적 탐색 시간: 사용자가 특정 정보를 찾는 데 걸리는 시간
+- 응시 지속 시간: 중요한 UI 요소(버튼, 메뉴 등)에 머무는 시선 시간
+- 시선 이동 패턴: 불필요한 시선 이동 감소 여부
+- 사용자 만족도: 사후 설문조사를 통해 평가
+
+### Control Variables
+
+- 모든 참가자가 동일한 과업(메뉴 주문)을 수행
+- 동일한 시간 안에 과업을 수행하도록 제한
+- 화면의 밝기, 크기, 해상도
+- 학습 효과: 참가자가 하나의 UI만 사용하도록 함
+
+### Random Variables
+
+- 나이, 성별, 기술 숙련도, 키오스크 사용 경험
+- 참가자의 피로도
+- 실험이 진행되는 장소
+
+### 피험자 모집 및 그룹화
+
+우리가 직접 실험하면 bias가 생깁니다.  
+그래서 피험자는 에브리타임으로 모집해서 다른 변수들을 radomize하면 좋아 보입니다.
+
+
+1. 에타에 실험 방법을 올리고 관심있으면 쪽지를 달라고 한다.
+2. 쪽지를 보낸 사람 중 절반은 original, 나머지 절반은 개선된 UI로 코드를 알려준다.
+3. 실험에 참여하면 추첨을 통해 bbq 황금올리브 기프티콘을 준다고 한다. (저 안쓰는거 있습니다)
+
+
+- 기대 샘플 크기: 15명 이상
+
+### 과업
+
+우리가 사용하는 시소랩스 툴은 사용자가 직접 선택하는게 아니고 일정시간 이미지를 보여주는거라서 **이미지의 순서를 특정 시나리오를 가정**해서 배치하면 좋지 않을까 생각합니다(피험자가 실험에 참가하기 전에 시나리오에 대해 설명할 예정)
+
+
+- 쉬운 과업: 단순 메뉴 선택
+- 복잡한 과업: 결제 등
+
+
+### 데이터 수집 / 분석
+
+#### 정량적 분석
+
+- Heatmap 비교: 시각적 주의 집중 패턴 확인
+- Gaze plot: 시선 이동 경로의 복잡성 분석
+
+#### 정성적 분석
+
+- 사용자 피드백 및 만족도 조사
+- 개선된 UI가 더 직관적이고 사용하기 쉬운지 확인
+
+### 사후 설문 문항
+
+객관식
+
+
+1. 광고가 주문에 방해가 되지 않았다
+2. 메뉴와 가격의 글자 크기가 읽기 적당했다
+3. 메뉴 사진과 텍스트의 배치가 보기 편했다
+4. 화면 구성이 전반적으로 깔끔했다
+5. 한 화면에 표시되는 메뉴의 수가 적절했다
+6. 원하는 메뉴를 쉽게 찾을 수 있었다
+7. 결제 단계가 명확하다
+8. 추천 메뉴가 메뉴 선택에 도움이 되었다
+9. 실수 없이 정확하게 주문할 수 있다
+10. 전반적인 주문 경험에 만족한다
+
+
+주관식
+
+
+1. 키오스크 UI에서 가장 만족스러웠던 점은 무엇인가요?
+2. 키오스크 UI에서 개선이 필요하다고 생각되는 부분이 있다면 무엇인가요?
+3. email을 알려주시면 추첨을 통해 bbq 황금올리브 기프티콘을 보내드립니다.
