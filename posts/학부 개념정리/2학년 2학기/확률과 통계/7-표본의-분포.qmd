@@ -7,33 +7,43 @@ description: '정규 분포대해 알아봅니다.'
 
 ![](/img/stat-thumb.jpg){.post-thumbnail}
 
-## 확률 표본
+## 확률 표본 (random sample)
 
-- 독립적이고 동일한 확률분포를 가진 확률변수들의 집합
-- 통계량: 확률변수들의 함수
+- 독립적이고 동일한 확률분포(iid)를 가진 확률변수들의 집합
+- 통계량: 확률변수들의 함수 (표본 평균, 표본 분산)
 - 추정량: 표본을 이용해 모수를 추정하는 통계량
 
-```
-SELECT 
-    i.*,
-    st.*,
-    (
-      SELECT NAME
-      FROM SUPPLIER s
-      WHERE s.SupplierID = i.SupplierID
-    ) AS SupplierName,
-    CASE
-        WHEN EXISTS (
-          SELECT SupplierID
-          FROM SUPPLIER_CONTRACT sc
-          WHERE i.SupplierID = sc.SupplierID
-          AND NOW() BETWEEN sc.StartDate AND sc.EndDate
-        )
-        THEN 'Available'
-        ELSE 'Not Available'
-    END AS PurchaseStatus
-FROM INGREDIENT i
-JOIN STOCK st 
-ON i.IngredientID = st.IngredientID
-ORDER BY PurchaseStatus;
-```
+### 좋은 추정량이 되기 위한 조건
+
+1. 불편성 (Unbiasedness) - 기본 조건  
+    추정량의 기대값이 추정하려는 모수와 같아야 함
+    $$
+    E(\hat{X}) = \mu
+    $$
+
+2. 최소분산 (Minimum Variance)  
+    추정량의 분산이 가능한 작아야 함.  
+    표본의 갯수를 늘릴수록 분산이 줄어듦
+    $$
+    Var(\hat{X}) = \sigma^2
+    $$
+
+## 모집단의 분포를 알 때
+
+### 정규분포의 표본의 분포
+
+- 자연 발생 데이터나 관측 데이터는 정규분포에 의해 모델링 가능
+
+#### 분산
+
+표준 정규분포를 따름
+
+## 모집단의 분포를 모를 때
+
+#### 분산
+
+- $\frac{\hat{X} - μ}{s/\sqrt{n}}$ t-분포를 따름
+
+- T분포: 표준 정규분포 Z, 자유도가 n인 카이제곱분포가 서로 독립일 때 $T=\frac{Z}{\sqrt{Y/n}}$
+
+

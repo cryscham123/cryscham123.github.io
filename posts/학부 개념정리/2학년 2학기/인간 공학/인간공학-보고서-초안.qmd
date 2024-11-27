@@ -1,13 +1,15 @@
 ---
-title: 인간공학 보고서
+title: 인간공학 기말 4조 보고서
 subtitle: |
   \vspace{0.5cm}
 
-  \normalsize eyetracking을 이용한 키오스크 UI 개선 실험 파트 \par
-  (조금씩 생각나는대로 계속 추가하는 중입니다)
+  \normalsize 맥도날드 키오스크 UI 개선을 위한\par 아이트래킹 실험 보고서
 author: 
   - 20192208 김형훈
   - 20222748 채대영
+  - 20200139 유혜림
+  - 20231358 이다희
+  - 20232797 김두현
 header-includes:
 - |
   \usepackage{authblk}
@@ -15,11 +17,16 @@ header-includes:
 categories: ["work"]
 format: 
   pdf:
+    fig-pos: 'H'
+    fig-width: 6
+    fig-height: 4
+    css: styles.css
     documentclass: report
     papersize: a4
     number-sections: true
     number-depth: 3
     top-level-division: chapter
+    toc: true
     fontsize: 17pt
     geometry:
       - top=20mm
@@ -32,9 +39,9 @@ include-in-header:
     \titleformat{\section}[block]{\normalfont\Large\bfseries}{}{0pt}{}
     \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
     \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
-    \titlespacing*{\chapter}{-3pt}{0pt}{10pt}
-    \titlespacing*{\section}{0pt}{20pt}{10pt}
-    \newcommand{\sectionbreak}{\clearpage}
+    \titlespacing*{\chapter}{-3pt}{-20pt}{5pt}
+    \titlespacing*{\section}{0pt}{10pt}{10pt}
+    \newcommand{\chapterbreak}{\clearpage}
     \usepackage{setspace}
     \setstretch{1.5}
     \usepackage{tabularx}
@@ -48,6 +55,7 @@ include-in-header:
     \makeatletter
     \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
     \makeatother
+    \usepackage{float}
 
 execute:
   echo: false
@@ -56,82 +64,375 @@ execute:
 
 ---
 
+# 요약
+
+본 실험은 맥도날드 키오스크의 사용성 개선을 위한 UI 재설계와 그 효과성 검증을 목적으로 수행되었습니다. 기존 UI의 주요 문제점인 복잡한 메뉴 구조, 가독성 저하, 광고로 인한 주의 분산 등을 개선한 새로운 UI를 제안하고, 아이트래킹 소프트웨어 [eyedid.ai](https://eyedid.ai/)를 활용하여 두 버전의 효과성을 비교 분석했습니다.
+
+실험은 20-30대 대학생 14명을 대상으로 진행되었으며, between-subjects design 방식을 통해 학습 효과를 통제했습니다. 시선 추적 데이터를 통한 시각적 주의도 분석과 5점 척도 설문 조사를 통한 사용자 만족도 평가 결과, 개선된 UI가 사용자의 시선 집중도와 전반적인 사용성 측면에서 유의미한 향상을 보이는 것을 확인했습니다.
+
+# 서론
+
+## 주제 선정 배경
+
+ 맥도날드는 고객의 대기 시간 단축과 매장 운영의 생산성 향상을 위해 키오스크를 도입했습니다. 그러나 많은 고객들이 키오스크 사용 과정에서 불편함을 호소하고 있으며, 특히 복잡한 메뉴 인터페이스, 불명확한 옵션 선택 과정, 작은 텍스트 크기 등이 주요 문제점으로 지적되고 있습니다.
+
+
+ 키오스크는 매장 내 비대면 주문의 핵심 수단으로 자리잡았지만, 사용자 경험(UX) 측면에서 여전히 개선이 필요한 상황입니다. 해당 문제점들은 맥도날드의 서비스 품질과 브랜드 이미지에 부정적인 영향을 미칠 수 있다는 점에서, 본 실험에서는 키오스크 UI 개선을 주제로 선정하게 되었습니다.
+
+## 중요성
+
+### 문제점 식별
+
+맥도날드 키오스크는 신속하고 효율적인 주문 처리를 목표로 도입되었으나, 실제 사용 과정에서 다음과 같은 주요 문제점들이 확인되었습니다:
+
+1. **복잡한 메뉴 구성**
+   - 직관적이지 않은 메뉴 탐색 구조
+   - 불명확한 카테고리 구분으로 인한 사용자 혼란
+
+2. **옵션 선택의 어려움**
+   - 음료 변경, 사이즈 업그레이드 등 추가 옵션 선택 과정의 복잡성
+   - 사용자 실수 가능성 증가
+
+3. **가독성 문제**
+   - 작은 텍스트 크기로 인한 정보 인지의 어려움
+
+### 재설계의 중요성 및 의미
+
+1. **고객 경험 향상**
+   
+   키오스크는 고객이 매장에서 처음 마주하는 핵심 서비스 접점입니다. 직관적이고 사용하기 쉬운 인터페이스는 고객의 주문 경험을 향상시켜 브랜드 충성도를 높이고 긍정적인 구전효과를 창출할 수 있습니다. 반면, 불편한 사용자 경험은 고객 만족도 저하와 재방문율 감소로 이어질 수 있습니다.
+
+2. **접근성 강화와 포용적 서비스 제공**
+   
+   맥도날드는 전 연령대와 다양한 디지털 활용 능력을 가진 고객층을 보유한 글로벌 브랜드입니다. 텍스트 크기 확대, 단순화된 인터페이스 제공 등을 통한 접근성 강화는 노년층, 장애인 등 디지털 취약계층을 포함한 모든 고객이 서비스를 평등하게 이용할 수 있게 합니다. 이는 기업의 사회적 책임(CSR) 실현과 포용적 서비스 이미지 구축에 기여할 수 있습니다.
+
+3. **매장 운영 효율성 증대**
+   
+   키오스크의 사용성이 개선될수록 고객들은 더 신속하고 정확하게 주문을 완료할 수 있으며, 이는 매장 직원의 개입 필요성을 줄입니다. 결과적으로 대기 시간 단축, 운영 효율성 향상, 원활한 고객 흐름 관리가 가능해집니다.
+
+# 분석
+
+## 실험 대상
+
+맥도날드 키오스크의 주요 사용자층인 20~30대 젊은 층을 대상으로 실험을 진행했습니다. 특히 디지털 기기 활용도가 높고 키오스크 사용 빈도가 많은 대학생 그룹을 중심으로 실험 참가자를 모집했습니다. 대학교 온라인 커뮤니티(에브리타임)를 통해 모집된 14명의 참가자들은 다음과 같은 특성을 가지고 있습니다:
+
+- **연령대**: 20~30대 대학생
+- **디지털 리터러시**: 높은 수준의 디지털 기기 활용능력 보유
+
+실험의 신뢰도를 높이기 위해 **between-subjects design** 방식을 채택했습니다. 이는 학습 효과(intra person variability)로 인한 결과 왜곡을 방지하기 위함으로, 각 참가자는 기존 UI 또는 개선된 UI 중 하나만을 체험하도록 설계했습니다.
+
+# 설계
+
+## 대안 설계
+
+기존 UI의 주요 문제점들을 개선하여 다음과 같은 측면에서 새로운 UI를 디자인했습니다:
+
+1. **메뉴 구조 단순화**
+   - 카테고리 구분 명확화
+   - 한 화면에 보이는 메뉴 갯수 감소
+
+2. **사용자 경험 개선**
+   - 주요 버튼 크기 확대
+   - 진행 단계 간소화
+   - 직관적인 옵션 선택 구조
+   - 텍스트 크기 확대
+
+3. **광고 영역 최적화**
+    - 주문 과정에서의 광고 크기를 축소하여 핵심 UI 요소의 가시성 향상
+
+각 개선 사항에 대한 구체적인 디자인은 [부록](#fig:improved_ui)에서 확인할 수 있습니다.
+
 ## 실험 설계
 
-### 측정 지표
+### 수집 데이터
 
-- 시각적 탐색 시간: 사용자가 특정 정보를 찾는 데 걸리는 시간
-- 응시 지속 시간: 중요한 UI 요소(버튼, 메뉴 등)에 머무는 시선 시간
-- 시선 이동 패턴: 불필요한 시선 이동 감소 여부
-- 사용자 만족도: 사후 설문조사를 통해 평가
+\begin{itemize}
+\item[] \textbf{1. 정량적 데이터}
+\begin{itemize}
+\item[] \textbf{시선 추적 데이터}: 사용자의 시선 이동 패턴을 Heatmap으로 시각화하여 UI 요소들의 주목도를 분석
+\end{itemize}
+\end{itemize}
 
-### Control Variables
+\begin{itemize}
+\item[] \textbf{2. 정성적 데이터}
+\begin{itemize}
+\item[] \textbf{사용자 설문조사}: 5점 척도의 UI 만족도 평가
+\end{itemize}
+\end{itemize}
 
-- 모든 참가자가 동일한 과업(메뉴 주문)을 수행
-- 동일한 시간 안에 과업을 수행하도록 제한
-- 화면의 밝기, 크기, 해상도
-- 학습 효과: 참가자가 하나의 UI만 사용하도록 함
+### 변수 정의
 
-### Random Variables
+\begin{itemize}
+\item[] \textbf{1. 독립변수}
+\begin{itemize}
+\item[] \textbf{UI 유형} \\
+a. 기존 UI \\
+b. 개선된 UI
+\end{itemize}
+\end{itemize}
 
-- 나이, 성별, 기술 숙련도, 키오스크 사용 경험
-- 참가자의 피로도
-- 실험이 진행되는 장소
+\begin{itemize}
+\item[] \textbf{2. 종속변수}
+\begin{itemize}
+\item[] a. 시각적 주의 집중도
+\item[] b. 사용자 만족도
+\end{itemize}
+\end{itemize}
 
-### 피험자 모집 및 그룹화
+\begin{itemize}
+\item[] \textbf{3. 통제변수}
+\begin{itemize}
+\item[] \textbf{과업}: 모든 참가자는 동일한 메뉴를 주문한다
+\item[] \textbf{시간 제한}: 노출되는 이미지의 시간을 동일하게 제한한다
+\item[] \textbf{UI 크기}를 동일하게 설정한다
+\end{itemize}
+\end{itemize}
 
-우리가 직접 실험하면 bias가 생깁니다.  
-그래서 피험자는 에브리타임으로 모집해서 다른 변수들을 radomize하면 좋아 보입니다.
+\begin{itemize}
+\item[] \textbf{4. 랜덤변수}
+\begin{itemize}
+\item[] \textbf{참가자 특성}: 성별, 기술 숙련도, 키오스크 사용 경험
+\item[] \textbf{상황적 요인}: 피로도, 실험 장소, 시간
+\end{itemize}
+\end{itemize}
+
+\newpage
+
+## 실험 방법
+
+실험 참가자 모집을 위해 대학교 온라인 커뮤니티 에브리타임에 [Figure 1](#fig:recruitment)과 같이 공고를 게시했습니다. 
+참가 신청자들에게는 무작위로 오리지널 UI 또는 개선된 UI 중 하나의 실험 링크를 전달했습니다.
+참가자들은 [Figure 7.1](#fig:app_access)와 같이 eyetracking 앱에 접속하여 전달받은 링크를 입력함으로써 실험을 시작할 수 있습니다.
+실험은 [Figure 7.2](#fig:example)와 같이 각 단계마다 특정 과업을 안내한 후, 5초간 참가자의 시선을 추적하는 방식으로 진행됩니다.
+
+\begin{figure}[H]
+\includegraphics{img/2024-11-21-08-08-44.png}
+\caption{실험 참가 공고}
+\label{fig:recruitment}
+\end{figure}
+
+# 실험 결과
+
+## Heatmap 분석
+
+실험 참가자들의 시선 추적 데이터를 Heatmap으로 시각화하여 분석했습니다. Heatmap에서 빨간색 영역은 시선이 집중된 부분을, 파란색 영역은 상대적으로 시선이 덜 머문 부분을 나타냅니다. 각 단계별로 기존 UI와 개선된 UI에서의 사용자 시선 패턴을 비교 분석했습니다. 참가자들에게 **빅맥 미디엄 세트를 주문하고, 사이드 메뉴를 코올슬로로 변경한 후 포장 주문하기**라는 과업이 주어졌습니다. 이 과정은 [포장 여부 선택](#fig:takeout), [버거 카테고리 선택](#fig:category), [빅맥 찾기](#fig:bigmac), [세트 옵션 변경](#fig:set), [사이드 메뉴 변경](#fig:side)의 총 5단계로 구성되었습니다.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=7cm]{img/2024-11-23-21-12-37.png}
+\hspace{1cm}
+\includegraphics[height=7cm]{img/2024-11-23-21-13-40.png}
+\caption{Original - 포장하기 화면의 시선 추적 결과}
+\label{fig:takeout}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=7cm]{img/2024-11-23-21-07-50.png}
+\caption{Improved - 포장하기 화면의 시선 추적 결과}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=6.5cm]{img/2024-11-23-21-14-31.png}
+\hspace{1cm}
+\includegraphics[height=6.5cm]{img/2024-11-23-21-08-41.png}
+\caption{버거 카테고리 화면의 시선 추적 결과 (좌: Original, 우: Improved)}
+\label{fig:category}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=6.5cm]{img/2024-11-23-21-14-59.png}
+\hspace{1cm}
+\includegraphics[height=6.5cm]{img/2024-11-23-21-09-41.png}
+\caption{빅맥 찾기 화면의 시선 추적 결과 (좌: Original, 우: Improved)}
+\label{fig:bigmac}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=6.5cm]{img/2024-11-23-21-15-36.png}
+\hspace{1cm}
+\includegraphics[height=6.5cm]{img/2024-11-23-21-10-11.png}
+\caption{세트 변경 화면의 시선 추적 결과 (좌: Original, 우: Improved)}
+\label{fig:set}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=7cm]{img/2024-11-23-21-16-13.png}
+\caption{Original - 사이드 변경 화면의 시선 추적 결과}
+\label{fig:side}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=7cm]{img/2024-11-23-21-11-00.png}
+\hspace{1cm}
+\includegraphics[height=7cm]{img/2024-11-23-21-11-28.png}
+\caption{Improved - 사이드 변경 화면의 시선 추적 결과}
+\end{center}
+\end{figure}
+
+\newpage
+
+## 설문 조사 결과
+
+실험 참가자들을 대상으로 UI 사용 경험에 대한 5점 척도 설문 조사를 실시했습니다. 설문은 광고의 방해 정도, 메뉴 표시량의 적절성, 진행 단계의 명확성, 메뉴 탐색의 용이성, 가독성 등 총 5개 항목에 대해 평가했습니다. 아래 그래프는 각 UI 유형별 응답 분포를 보여줍니다.
+
+\hspace{0.5em}
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6
+#| out-width: "100%"
+
+library(tidyverse)
+library(ggplot2)
+library(showtext)
+
+font_add_google("Noto Sans KR", "Noto Sans KR")
+showtext_auto()
+
+# 만족도 데이터 불러오기
+satisfaction_data <- read.csv("data/satisfaction_survey.csv")
+
+satisfaction_data %>%
+  pivot_longer(cols = starts_with("q"), 
+              names_to = "question",
+              values_to = "score") %>%
+  mutate(
+    question = case_when(
+      question == "q1" ~ "광고가 주문에 방해됨",
+      question == "q2" ~ "한 화면에 보이는 메뉴 갯수가 적절함",
+      question == "q3" ~ "진행 단계의 명확함",
+      question == "q4" ~ "찾는 메뉴를 실수없이 찾기 쉬움",
+      question == "q5" ~ "글자 크기가 읽기 쉬움"
+    ),
+    score = factor(score, levels = 1:5,
+                  labels = c("매우 그렇다", "그렇다", "보통이다", "그렇지 않다", "매우 그렇지 않다"))
+  ) %>%
+  ggplot(aes(x = question, fill = score)) +
+  geom_bar(position = "fill") +
+  coord_flip() +
+  facet_wrap(~ui_type, ncol = 1, 
+             labeller = labeller(ui_type = c("original" = "개선된 UI", 
+                                           "improved" = "기존 UI"))) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "RdYlBu") +
+  labs(
+    title = "UI 유형별 응답 분포",
+    x = NULL,
+    y = NULL,
+    fill = "응답"
+  ) +
+  theme_minimal(base_family = "Noto Sans KR") +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 16),
+    axis.text.y = element_text(size = 12),
+    legend.position = "bottom",
+    strip.text = element_text(size = 12, face = "bold")
+  )
+```
+
+# 결론
+
+실험 결과를 통해 다음과 같은 주요 발견점을 도출할 수 있었습니다
+
+## 분석 결과
+
+1. **포장 / 매장 선택 화면**
+   - 개선된 UI에서는 사용자의 시선이 주요 선택 버튼에 더 집중되는 경향을 보였습니다.
+   - 기존 UI의 경우 큰 광고 화면으로 인해 전반적으로 시선이 분산되는 현상이 관찰되었습니다.
+
+2. **메뉴 선택 화면**
+   - 개선된 UI의 카테고리 구분이 더 명확하여 사용자의 시선 이동이 효율적으로 이루어졌습니다.
+   - 또한 메뉴의 가시성이 높아진 결과, 사용자가 목표하는 메뉴를 더 정확히 찾는 것으로 나타났습니다.
+
+3. **옵션 선택 화면**
+   - 세트 변경과 사이드 메뉴 선택 과정에서 개선된 UI는 더 체계적인 시선 흐름을 유도했습니다.
+   - 기존 UI에 비해 개선된 UI에서 선택 대상의 크기를 키움으로써 사용자가 원하는 메뉴를 더 빠르고 정확하게 선택할 수 있었습니다.
+
+## 제언
+
+본 실험의 결과를 바탕으로, 키오스크 UI 설계 시 다음과 같은 개선 방향을 제안합니다:
+
+1. **광고 노출 최소화**
+   - 주문 과정에서 불필요한 광고 노출을 줄여 사용자의 주의 분산을 방지해야 합니다.
+
+2. **메뉴 구조 최적화**
+   - 한 화면에 표시되는 메뉴의 수를 적절히 조절하여 사용자의 시각적 부담을 줄여야 합니다.
+   - 메뉴 카테고리 간 구분을 명확히 하여 목표 메뉴로의 효율적인 시선 이동을 유도해야 합니다.
+
+3. **UI 요소의 가시성 개선**
+   - 주요 선택 버튼의 크기를 충분히 확보하여 사용자의 시선 집중도를 높여야 합니다.
+   - 텍스트 크기를 적절히 조정하여 메뉴 정보의 가독성을 향상시켜야 합니다.
+
+# 부록
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=10cm]{img/2024-11-23-20-40-46.png}
+\hspace{1cm}
+\includegraphics[height=10cm]{img/2024-11-23-20-43-10.png}
+\caption{eyetracking 앱 접속 화면}
+\label{fig:app_access}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[height=9cm]{img/2024-11-24-07-34-39.png}
+\caption{실험 진행 예시 화면}
+\label{fig:example}
+\end{center}
+\end{figure}
 
 
-1. 에타에 실험 방법을 올리고 관심있으면 쪽지를 달라고 한다.
-2. 쪽지를 보낸 사람 중 절반은 original, 나머지 절반은 개선된 UI로 코드를 알려준다.
-3. 실험에 참여하면 추첨을 통해 bbq 황금올리브 기프티콘을 준다고 한다. (저 안쓰는거 있습니다)
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[height=6.5cm]{img/2024-11-24-20-16-05.png}}
+\hspace{1cm}
+\fbox{\includegraphics[height=6.5cm]{img/2024-11-24-20-13-09.png}}
+\hspace{1cm}
+\fbox{\includegraphics[height=6.5cm]{img/2024-11-24-20-13-55.png}}
 
+\vspace{1cm}
 
-- 기대 샘플 크기: 15명 이상
+\fbox{\includegraphics[height=6.5cm]{img/2024-11-24-20-14-19.png}}
+\hspace{1cm}
+\fbox{\includegraphics[height=6.5cm]{img/2024-11-24-20-14-58.png}}
+\hspace{1cm}
+\fbox{\includegraphics[height=6.5cm]{img/2024-11-24-20-15-42.png}}
+\vspace{0.5cm}
+\caption{기존 UI 디자인}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
 
-### 과업
+\begin{figure}[H]
+\begin{center}
 
-우리가 사용하는 시소랩스 툴은 사용자가 직접 선택하는게 아니고 일정시간 이미지를 보여주는거라서 **이미지의 순서를 특정 시나리오를 가정**해서 배치하면 좋지 않을까 생각합니다(피험자가 실험에 참가하기 전에 시나리오에 대해 설명할 예정)
+\fbox{\includegraphics[height=6.5cm]{img/2024-11-24-20-23-19.png}}
+\hspace{1cm}
+\fbox{\includegraphics[height=6.5cm]{img/imp1.jpeg}}
+\hspace{1cm}
+\fbox{\includegraphics[height=6.5cm]{img/imp4.jpeg}}
 
+\vspace{1cm}
 
-- 쉬운 과업: 단순 메뉴 선택
-- 복잡한 과업: 결제 등
-
-
-### 데이터 수집 / 분석
-
-#### 정량적 분석
-
-- Heatmap 비교: 시각적 주의 집중 패턴 확인
-- Gaze plot: 시선 이동 경로의 복잡성 분석
-
-#### 정성적 분석
-
-- 사용자 피드백 및 만족도 조사
-- 개선된 UI가 더 직관적이고 사용하기 쉬운지 확인
-
-### 사후 설문 문항
-
-객관식
-
-
-1. 광고가 주문에 방해가 되지 않았다
-2. 메뉴와 가격의 글자 크기가 읽기 적당했다
-3. 메뉴 사진과 텍스트의 배치가 보기 편했다
-4. 화면 구성이 전반적으로 깔끔했다
-5. 한 화면에 표시되는 메뉴의 수가 적절했다
-6. 원하는 메뉴를 쉽게 찾을 수 있었다
-7. 결제 단계가 명확하다
-8. 추천 메뉴가 메뉴 선택에 도움이 되었다
-9. 실수 없이 정확하게 주문할 수 있다
-10. 전반적인 주문 경험에 만족한다
-
-
-주관식
-
-
-1. 키오스크 UI에서 가장 만족스러웠던 점은 무엇인가요?
-2. 키오스크 UI에서 개선이 필요하다고 생각되는 부분이 있다면 무엇인가요?
-3. email을 알려주시면 추첨을 통해 bbq 황금올리브 기프티콘을 보내드립니다.
+\fbox{\includegraphics[height=6.5cm]{img/imp5.jpeg}}
+\hspace{1cm}
+\fbox{\includegraphics[height=6.5cm]{img/imp6.jpeg}}
+\vspace{0.5cm}
+\caption{개선된 UI 디자인}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}

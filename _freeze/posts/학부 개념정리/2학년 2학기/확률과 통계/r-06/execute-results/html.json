@@ -1,0 +1,17 @@
+{
+  "hash": "917bdaee5f97319b795c74da8e404886",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: 'R06'\ndate: 2024-11-23\ncategories: [\"개념 정리\"]\ndescription: 'R programming에 대해 알아봅니다.'\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nx <- rexp(100000, rate=3)\nhist(x, freq=FALSE, col=\"lightblue\", main=\"Exponential Distribution\", xlab=\"x\", ylab=\"f(x)\")\ncurve(dexp(x, rate=3), add=TRUE, col=\"blue\", lwd=3)\n```\n\n::: {.cell-output-display}\n![](r-06_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n\n```{.r .cell-code}\nmean(x)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 0.3328882\n```\n\n\n:::\n\n```{.r .cell-code}\nvar(x)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 0.1113315\n```\n\n\n:::\n\n```{.r .cell-code}\nx <- seq(0.01, 5, 0.01)\nalpha <- c(0.5, 1, 2, 3)\ncurve(dgamma(x, shape=alpha[1]), xlim=c(0, 5), ylim=c(0, 1.2), col=\"red\", lwd=2, ylab=\"f(x)\", xlab=\"x\", main=\"Gamma Distribution\")\ngrid(col=7)\nfor (i in 2:4) {\n  curve(dgamma(x, shape=alpha[i], scale=1), col=i, add=TRUE, lwd=2)\n}\n```\n\n::: {.cell-output-display}\n![](r-06_files/figure-html/unnamed-chunk-1-2.png){width=672}\n:::\n\n```{.r .cell-code}\nxsum <- NULL\nfor (i in 1:1000) {\n  x <- rexp(5, rate=3)\n  xsum <- c(xsum, sum(x))\n}\nhist(xsum,, freq=F, xlab=\"X\", main=\"Sum of 5 Exponential Random Variables\")\ncurve(dgamma(x, shape=5, scale=1/3), add=TRUE, col=\"red\", lwd=2)\n```\n\n::: {.cell-output-display}\n![](r-06_files/figure-html/unnamed-chunk-1-3.png){width=672}\n:::\n\n```{.r .cell-code}\nmean(xsum)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 1.663248\n```\n\n\n:::\n\n```{.r .cell-code}\nvar(xsum)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 0.5334814\n```\n\n\n:::\n\n```{.r .cell-code}\ncurve(dnorm(x, mean=4, sd=1), xlim=c(-10, 10), lwd=2, main=\"N(4, 1^2) & N(-2, 2^2)\", ylab=\"f(x)\", xlab=\"x\")\ncurve(dnorm(x, mean=-2, sd=2), add=TRUE, lwd=2, col=\"red\")\n```\n\n::: {.cell-output-display}\n![](r-06_files/figure-html/unnamed-chunk-1-4.png){width=672}\n:::\n\n```{.r .cell-code}\nx <- rnorm(10000, mean=4, sd=1)\ny <- rnorm(10000, mean=-2, sd=2)\n\nz <- x + y\n\nhist(z, freq=FALSE, col=\"lightblue\", main=\"Sum of Two Normal Random Variables\", xlab=\"z\", ylab=\"f(z)\", ylim=c(0, 0.4))\ncurve(dnorm(x, mean=4, sd=1), add=TRUE, lwd=2, col=\"blue\")\ncurve(dnorm(x, mean=-2, sd=2), add=TRUE, lwd=2, col=\"red\")\ncurve(dnorm(x, mean=2, sd=sqrt(5)), add=TRUE, col=\"green\", lwd=2)\n```\n\n::: {.cell-output-display}\n![](r-06_files/figure-html/unnamed-chunk-1-5.png){width=672}\n:::\n\n```{.r .cell-code}\nz <- (x - 4) / 1\nhist(z, freq=FALSE, col=\"lightblue\", main=\"Standard Normal Distribution\", xlab=\"z\", ylab=\"f(z)\")\ncurve(dnorm(x, mean=0, sd=1), add=TRUE, lwd=2, col=\"blue\")\n```\n\n::: {.cell-output-display}\n![](r-06_files/figure-html/unnamed-chunk-1-6.png){width=672}\n:::\n\n```{.r .cell-code}\nz <- rnorm(1000, mean=0, sd=1)\nhist(z^2, freq=F, main=\"Chi-Square Distribution\", xlab=\"z^2\", ylab=\"f(z^2)\")\ncurve(dchisq(x, df=1), add=TRUE, col=\"red\", lwd=2)\n```\n\n::: {.cell-output-display}\n![](r-06_files/figure-html/unnamed-chunk-1-7.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "r-06_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,1080 @@
+---
+title: |
+  ![](img/2024-11-26-04-56-30.png) \par
+  \textbf{숭실대학교 학생식당 식자제 SCM 설계}
+subtitle: |
+  \hspace{1em}
+  산업정보시스템공학과 20192208 김형훈 \par
+  산업정보시스템공학과 20211275 김진호 \par
+  산업정보시스템공학과 20231342 박소윤 \par
+  산업정보시스템공학과 20231351 안가은 \par
+  \vfill
+  \hfill 과목명: 데이터베이스 설계 및 활용 \par
+  \hfill 분반: (가)반 \par
+  \hfill 제출일: 2024년 12월 2일 \par
+
+# header-includes:
+# - |
+#   \usepackage{authblk}
+#   \renewcommand\Authfont{\normalsize}
+#   \renewcommand\Affilfont{\small}
+categories: ["work"]
+format: 
+  pdf:
+    documentclass: report
+    toc: true
+    papersize: a4
+    number-sections: true
+    number-depth: 3
+    top-level-division: chapter
+    fontsize: 17pt
+    geometry:
+      - top=20mm
+include-in-header: 
+  text: |
+    \usepackage{colortbl}
+    \definecolor{lightgray}{RGB}{245,245,245}
+    \rowcolors{2}{white}{lightgray}
+    \usepackage{fontspec}
+    \usepackage[table]{xcolor}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{}{0pt}{\huge}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{-3pt}{-20pt}{5pt}
+    \titlespacing*{\section}{0pt}{10pt}{10pt}
+    \newcommand{\chapterbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{1.5}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+---
+
+
+# 주제 선정
+
+## 주제
+
+숭실대학교 학생식당 식자재 관리를 효율적으로 하기 위한 SCM 구축
+
+## 주제 선정 배경
+
+매일 수천 명의 학생들에게 식사를 제공하고 있는 숭실대학교 학생식당은 효율적인 식자재 관리가 필수적이다. 재고 관리와 발주 과정을 시스템화하여 식자재 낭비를 줄이고, 신선도 관리를 강화하며, 이해관계자 간의 원활한 소통을 실현하고자 한다.[^1] 또한 실제 운영되는 시스템을 가상으로 구현해봄으로써 데이터베이스 설계부터 구현까지의 전반적인 개발 과정을 학습하고, SCM(Supply Chain Management)의 실무적 이해를 높이고자 한다.
+
+[^1]: Oracle의 [Symphony POS](https://www.oracle.com/kr/food-beverage/restaurant-pos-systems/restaurant-inventory-management-software/?er=228062#cost-reports)와 같은 전문 시스템은 재고 및 메뉴 관리, 레스토랑 데이터 분석 등의 기능을 제공하여 대형 프랜차이즈의 운영 효율성을 크게 향상시켰다.
+
+## 과제 목표 및 범위
+
+### 과제 목표
+
+1. 식자재의 효율적인 공급 및 재고 관리를 위한 통합 시스템 구축
+2. 주방 및 부서 간의 원활한 의사소통 및 작업 흐름 관리
+3. 공급망 최적화를 통한 운영 효율성 향상
+
+### 과제 범위
+
+예상 사용자별로 다음 기능들을 구현한다.
+
+1. **주방 직원**  
+학생식당 메뉴별로 재료 사용량 및 재료 재고 확인
+
+2. **구매 담당자**  
+재료 주문 생성 및 공급업체 관리
+
+3. **공급업체**  
+식자재 제공 현황 및 거래 기록 확인  
+주문 상태 업데이트
+
+4. **영양사**  
+학생식당 메뉴 등록/수정 및 재료별 영양 정보 확인
+
+# ER Modeling
+
+## E-R Diagram
+
+\begin{figure}[H]
+\fbox{\includegraphics[height=20cm]{img/2024-11-26-20-55-46.png}}  
+\caption{ER 다이아그램 전체 모습}
+\label{fig:improved_ui}
+\end{figure}
+
+[draw.io 링크](https://app.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=FOOD_CRM.drawio#R%3Cmxfile%3E%3Cdiagram%20id%3D%22R2lEEEUBdFMjLlhIrx00%22%20name%3D%22Page-1%22%3E7V1dd6I6F%2F41vbRLBGy9bK1tnVNtx7bznrmalUqqnFLiYGy1v%2F4NSlBMQCggkLBW16rE8OHeTx529kdyonbflzcOmE0HyIDWSatpLE%2FUq5NWS211WuSf27LatLS05vmmZeKYxqZN2TY8ml%2FQa2x6rQvTgPNAR4yQhc1ZsHGMbBuOcaANOA76DHZ7RVbwrjMwgUzD4xhYbOv%2FTANPN63nenPbfgvNyZTeWWl637wD2tlrmE%2BBgT4DTXCJr5GNvUd8gM47sKGNyTcD4LxB50TvTTF2f%2BnFSeua%2FL26vU8nCE0sCGbm%2FHSM3knzeE66XL%2BCd9Ny5bxzoUvvQuR2au9E7ToI4c2n92UXWq6yqBo2z3Qd8q0vB8e9bowTft5oi8HqA%2FyCHaU9WXx9zYDRUFRP%2Bx%2FAWngS9qSDV1Tk0CAa8A6Rg6dogmxg9batlw5a2AZ0b9QkR9s%2BdwjNSKNCGv%2BDGK88OIEFRqRpit8t79s5Bg6%2BcOFBGnojIi3j3ob0i2vTsrxrQ9vYdvuCDnpCA2CvNt8E%2BmFn9a939fXBb%2FebU50eXi13e16t6NHSxP5p5PPOWeRoe5J7QM9hNeEpZ44WztgTYrfxsbp7a2L79lP9hQeDycPZS6OleSMIOBPonbv8d3kzffsJ%2Fvzo%2FZ3f%2F%2Fj52h9%2BNTTVA6gRGB2epm8geofkV5AODrQANj%2BCgwV4gJ74%2FbxTiSjBaqfDDJku%2BrdXfnAbSAfKHx1voFD20PUg5g70V1qB%2FuTD5gno0c5P2TatcczHNF%2BoKgPp%2FvBm1Lvq94ZPDLgJC8zcjxi8WD7gPJyqrnYJkWFg2mTMblAxRpYFZnNz3X3TMjUt4w6s0ALTC9Gjy1dzCY3RhvWU9Uj5vCMXm3vQcfmDDi33a2CZE5t8HhMouXe8dOCcPMsdmGOvRyjYPqCD4TISHPTb1p4WKbd%2Fbgm1RQl1ukum581wQO0o9Rs60w7TENUU%2Be3YBNaIvF2APVkrLagTV7CGg2ZPdFS5DWtoQ6f3ATf8vpY%2B4YsuspCrWhut%2BcYbAeSG%2BiX5I7%2B36w5%2FnTxAlxwr22Py53Z3cBfZc%2BwAc60PSDT1CV1tXeI197n3seArfQzHk6b7%2BQVhTF4XYXqNBvdhbXvaVWMqV81Ntzqj24d%2FkmgXkR%2F7aq05f2oaBrQ3o9I1L8BW4xxlcjXgS31fHftjMa5GtNga2VGBmlAD3sW2Ykl8NWAR%2BNsAw0v3ZT1n1JoF87ZZ5rUnDjRMIsL%2BVQl1Tvl20%2FdyPgNj057cbc5s74FCzwUUy5PQYdrKFCSxLncMlJzJzPV8gzEjrm8XzvUxphPFj%2Fq48j%2BLLX%2Fhmb3D6HUI3mEJdXuQ0bNXvsgMftlto0fj%2BnZ1%2Fzx%2B%2BfFbayzNcUNqYz1XAu8ckcC5qmVt9RKOcVb8kTCVir65kmDt8p8LYGMTr0qo3W8weEr1i0zg3bvGRXfQ1ib2249n8Gv%2BV32ZNFT2dV4zeDYM7jvXjmKD85SrNavJ4dFIlYrE%2BXpVGL12EYF%2B%2BXT7HRs8pfJFpnDu2612ouTG4HrRRnhFnSiROJWKv7mSYG2uZ9sUhL5Tql469ub40xgglDbtgmDqUNaFfxAv64IFFC%2BDgmci0BSknQQKbqKL6nXMLoEilY3OmnL3IyLZ%2FvAmlA8kSlBoaPt5JnEzFDp5TapaMptbIdHwKGCXMz2BO8lgNFvV7IQo3EplfvGnzyzlOgZ0iGUjbGZCOkCIbJRxRZMu9lFxjk%2Fgk0vM8UdNS%2BA9MRv%2FKOGIjyl9Pbb0RWd01gW2ZnRoXAgyq06pf5EJnF%2FNoFS5miF8Wm2A%2BXT9PH4xw7pE4bTZ1ILzbOVgeYN79ECsHiLq9YQxcvZdcLWBpgZngbq6V%2BFyoL%2Fajqg2YGsVzvh38x9344vwzop4DPVM2XsM7VQPXmrjrmAuldk4YEbB4%2FPDw12%2FNwrlRYm8C%2FvlD9q5Hs888QMDaewTrsJq7wKj1khgl9K7wPc7MpqtqHchErdS2aJcSbDehcfFbGaZ0BHVu5ASEPIZp3XdQ14sf0z%2FQohuKxqyP4DUmtcVoSsfUqtfOhZPN85rDg%2Fl8GNWPnCfOF1KdLkY%2FDy29IXnbzYZ%2BmHqSr58us2Kv%2BMrXzr2VljPWE3fmdD3UcseQswWgQhcia8A4RmcdaFdGIYD5%2FMSqjczGzyxV1siEmf9KDS88ad7P3waXXTrZZ5OXPbdC2idxaRon8uz52ipp09JAh3xp%2BBliXQo7ARKpFCHUs%2BpfCc%2FO6cig4OMjbGwizylhYR0L%2BlWPdPKi%2BkLj3ZQVQox00pgVwnP6%2BxM69E1k6%2FIXUuo4KzmWskta4lovF7qKS8aLzzgwVmXtYSjPO4glnKxJ74o2GqHnm2ITuL1ak%2BhslHZ%2BRqtNv7Tf%2BoNQmFRFWfZNmE%2FqwJk5bsFyPnlCKtSz6gSeGp8uFfHd6ayMyqRfGdqPcfyRcHOsUQvQ04LCZHf1%2FzNXtKVq9ZMXw7fGV%2B3bPCyokwfDV2pmJ4vCjbWKf5mGGlBITLX8ymsdrDlxfWFO9hUkRxsau1g80Uh%2BnLqaQEgMovz33D1eup5sfhRE4u5yqU3qxqNRyNVKhrn65WzTAYGeCFIXnFa9YtM4vwSftY1N%2BgNn0PRUJXoCAuN1EumNLRmTFbOLx6iST1zSuAl83FdnXiIJsyWsdHQleolzBcFO5caQHshqn8sLRykeymnNL4rzvIJZlbJWb7wPGKOAV7CUR9T%2Fj5Qa07XW%2Bzb2zHHIqefJdC%2ByBTOnXNKnbeUK4MfM8LBVS070Es4xlnxR8JUKv7mSoL1gzxB572Ems3KK1bnIoU7DGvyzom8SxDYEIi9pfSocCXBOlTEKf1IqXqR2TtkTST2Xc4g4QgbIgT2OfiCDgrZ6CD2xgkhOyKcJNp1EC5N7J9GPu%2BcRY62J7kHiXYq5OqCuluK3lSBbg9OQzmKh8vQXRX2T2il2lbBP%2F1YmyHobG7GqNftP%2FRCKbEqgb3gsAxFZoown3JW%2BNYIdNjIaYEmCCr5OK9OmK%2FNuoZECvP50JXKKOWLgvUUkQc2Z1CqQF8CQEhnqrZjWKri8nySQFNini880NdO50UqV6CvHd%2FTIzyrsx4kwfdGSKB8%2BRhc6rLVXBm88FKmdrq9i0rG4FIWqfJFwRapdpHjejjKp93MOLwuR3Wvdtlto0fj%2BnZ1%2Fzx%2B%2BfFbayzNcZ2rkRuFHzXcx9UtOwUv4SBn5R%2BJU6kYnCsJdtrcd8fBYoxNMiBKqOFv0HhKCIjM4iFhvxhj%2Ffj7oO9ucB65E%2Fo27hcMD%2FqBPv8gWaCPfs430HfuvRswfe%2BFGiL5RATZEFy7c9rxeIJOKPZicLH3Nmcv5QcQDwX0kkYq95bg6%2BiRT7bX29%2B4kRulzGqgnbPm8ya2%2BKc%2FvBn1rvq9YfW3Isl8dcX9MKMe0zLKb18SOmTltHsThLTO4295UJYgIyUGQYOM5%2FFnIgKZwnxNs7NXCYOMCQAhsmHMTxWUOsiYK88Xv7IiG2SsKM9HQ1cqnueLgg07yrqyYh2ODLcG0pU3VJzrE%2Fiyk3N94eHITrpQc7nCkT5QpWJ2vijYMDNdWXEE%2Fy5MwvEl1HNWgckEQJCOzRXOrr8MFI7v0g7UsnzLpx2sZDmqo1pRPJN511PdbXys7t6a2L79VH%2FhwWDycPbi765TdO0KBR6NqeoHSlf2%2BrfOmnvYzMEnrDQ56wo%2B3XfD5yJVcQSHIi0%2BYWl7bnotbn1JfltSN1sy24lJdkBuxld3WZy%2FSpP1%2BFTUK3AAvbXxqDRZD9AjRuM3UV0CqREhoRVZJ7jlRvaFl5koSrpXebncAlus1tSuKLytqQm1S7DvQhIcSEjo9QJFuRF64W5eRanoEkUHsFoTuqJwNqlezkxnJc5iRalBIB%2BbqzHy8CqYt5zax%2FvdFY5YUMb1DdOOB5OYveBh3jnMOt1wwns3nTXjZTAndzHrgfu0tei04%2F3%2BeifCxXxwcSR6dg5rI%2FHXb2VZePj8NOo%2F9e%2BHoSQskbt6H3WxTaKWloFNxFdZukrcihu8CRKmWvHLPAvwVvMfmS0nqKizOhq6Utm%2FfFGwhs5wgR3TLdoT1V2dFhMim8P8dbjZygWJqJ5vv2ZE9YVnK6sV3fskGqg1satsCKILiAZMKEgtdloAyMfiUtec5Mrihe9%2FolZ0YbtooNYsrnL2n3QQhqZdQvVmRuJ1MYl7Nf5iI7UpnheJF78wUsqkoJKtjCSlLc4XBc8Wd17QdGU45MaCGORpUSAfl9cGeW5cHncpl%2Fy4vKIWeTRSay7nZAJdA1xC1WbG4LU1Hi6beqXp3Bj8vHAGr%2BhS09FIrRlcYYPbj4sJcEqo3Mw4vF5pOlw2Ui%2B5lyuHt5SiOZxiTAwOl3KFPb5eOaXtyDAXgmwOnlb90pF4nCyGKm4vm3ZHWfo5s%2FU7Ilfl2M3R5i8T5r1CskvSDnk7kEMHIbwLMgfMpgNkQLfH%2FwE%3D%3C%2Fdiagram%3E%3C%2Fmxfile%3E)에서도 확인 가능합니다
+\clearpage
+
+## Entity 및 Attribute
+
+**ORDERING**
+
+
+- 재료 주문의 기본 정보(주문 시간) 저장
+
+**ORDERING_ITEM**
+
+
+- 주문된 재료의 상세 정보(수량, 상태) 저장
+- 상세 정보는 공급 업체가 수정 가능
+- 상태값: Preparing, Shipping, Delivered, Cancelled, Returning, Returned
+
+**MENU**
+
+
+- 학생식당 메뉴 정보(가격, 제공 시간대, 날짜) 저장
+- 시간대: Breakfast, Lunch, Dinner
+
+**RECIPE**
+
+
+- 요리 레시피 정보(이름, 조리법, 코너) 저장
+- 코너: HotPot, RiceBowl, Western
+
+**RECIPE_INGREDIENT**
+
+
+- 레시피별 필요한 재료와 수량 정보 저장
+
+**INGREDIENT**
+
+
+- 공급업체로부터 구매 가능한 재료 정보(이름, 단가, 단위) 저장
+
+**STOCK**
+
+
+- 재료별 재고 정보(수량, 유통기한) 저장
+
+**NUTRITION**
+
+
+- 재료의 영양 정보(칼로리, 단백질 등) 저장
+
+**SUPPLIER**
+
+
+- 공급업체 정보(이름, 연락처, 주소) 저장
+
+**SUPPLIER_CONTRACT**
+
+
+- 공급업체와의 계약 정보(시작일, 종료일) 저장
+
+\clearpage
+
+## Entity Relationship
+
+**ORDERING - ORDERING_ITEM - INGREDIENT**
+
+- ORDERING_ITEM은 weak entity (identifying relationship)
+- ORDERING → ORDERING_ITEM: 1:N (Mandatory One, Mandatory Many)
+- ORDERING_ITEM ← INGREDIENT: N:1 (Optional Many, Mandatory One)
+
+**MENU - RECIPE**
+
+- 1:N 관계 (Optional Many, Mandatory One)
+- 둘 다 strong entity (non-identifying relationship)
+
+**RECIPE - RECIPE_INGREDIENT - INGREDIENT**
+
+- RECIPE_INGREDIENT는 weak entity (identifying relationship)
+- RECIPE → RECIPE_INGREDIENT: 1:N (Mandatory One, Mandatory Many)
+- RECIPE_INGREDIENT ← INGREDIENT: N:1 (Optional Many, Mandatory One)
+
+**INGREDIENT - STOCK**
+
+- 1:N 관계 (Mandatory One, Optional Many)
+- 둘 다 strong entity (non-identifying relationship)
+
+**INGREDIENT - NUTRITION**
+
+- 1:1 관계 (Mandatory One, Mandatory One)
+- 둘 다 strong entity (non-identifying relationship)
+
+**SUPPLIER - INGREDIENT**
+
+- 1:N 관계 (Mandatory One, Mandatory Many)
+- 둘 다 strong entity (non-identifying relationship)
+
+**SUPPLIER - SUPPLIER_CONTRACT**
+
+- 1:N 관계 (Mandatory One, Mandatory Many)
+- 둘 다 strong entity (non-identifying relationship)
+
+## 그외 요구사항
+
+1.	MENU entity의 Term attribute에는 (‘Breakfast’, ‘Lunch’, ‘Dinner’) 중 하나의 값만 들어온다.
+2.	RECIPE entity의 Corner attribute에는 (‘HotPot’, ‘RiceBowl’, ‘Western’) 중 하나의 값만 들어온다.
+3.	ORDERING_ITEM entity의 Status attribute에는 (‘Preparing’, ‘Shipping’, ‘Delivered’, ‘Cancelled’, ‘Returning’, ‘Returned’) 중 하나의 값만 들어온다.
+
+# Database Design
+
+MySQL을 사용할 것을 고려하여 데이터베이스를 설계하였습니다.
+1:N의 경우 외래키를 N쪽에, 1:1의 경우 외래키를 둘 중 하나에 추가했습니다.
+
+## Database Design
+
+\begin{figure}[H]
+\fbox{\includegraphics[height=20cm]{img/2024-11-26-21-41-06.png}}  
+\caption{Foreign key를 추가한 모습}
+\label{fig:improved_ui}
+\end{figure}
+
+[draw.io 링크](https://app.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=FOOD_CRM.drawio#R%3Cmxfile%3E%3Cdiagram%20id%3D%22R2lEEEUBdFMjLlhIrx00%22%20name%3D%22Page-1%22%3E7V1td6KwEv41%2FegeEbX2Y7W2dW%2B13b7s3f3Uk0qq3FLiYmy1v%2F4GBVQmIBQQSDin51RieHHmycNkZjI5UXvvyysLzaZDomHjpFHXlifqxUmjodZP6%2Byf3bLatDQanbNNy8TStU2bsm140L%2Bw0%2BicOFnoGp7vdaSEGFSf7TeOiWniMd1rQ5ZFPve7vRJj%2F64zNMGg4WGMDNj6X12j001rp1Xftl9jfTJ176zUnW%2FekdvZaZhPkUY%2B95rwkl4SkzqPeIetd2Rik7Jvhsh6w9ZJqz%2Bl1P6l5yeNS%2Fb3avf%2BMSFkYmA00%2Bc%2FxuSdNY%2FnrMvlK3rXDVvOOxfqOhdit1P7J2rPIoRuPr0ve9iwleWqYfNMlwHfenKw7OtGOOHXVXMxXH2g3%2FhMaU8WX18zpNUUtbO5zgcyFo6EHenQlStyrDENOIfEolMyISYy%2BtvWrkUWpobtG9XZ0bbPDSEz1qiwxv9hSlcOnNCCEtY0pe%2BG8%2B2cIoue2%2FBgDf17Ji3t1sTuF5e6YTjXxqa27faFLfJIhshcbb7Z60et1R%2Fn6uuDv%2FY3P1ru4cVyt%2BfFyj1a6tQ7jX3eOYsdbU%2ByD9xzoCYc5czJwho7QuzVPlY3b3VqXn%2Bqv%2BlwOLk7fak1ms4IQtYEO%2Bcu%2Fyyvpm%2B%2F0PPP%2Fr%2F57c9fr4PRV62pOgDV9kaHo%2BkrTN4x%2BxWsg4UNRPWP%2FcGCHEBPvH7OqUyUaLXTYUZ0G%2F3bK9%2FZDayDyx9nzkBx2aPV2sfcgf5KY68%2F%2B7B5Avdo56dsm9Y45mOaL1QVQHowurrvXwz6o0cAbsYCM%2FsjRS%2BGBzgHp6qtXUZkFOkmG7MbVIyJYaDZXF9337RMdUO7QSuyoO6F3KPuq77E2v2G9ZT1SPm8YRebO9Cx%2BcMdWvbXyNAnJvs8ZlCy79i18Jw9yw2aU6dHINg%2BsEXxMhQc7rcNnxZdbv%2FcEmrDJdTpDpk2mvVgQO0o9Rs6ax6mIVdT7LdTHRn37O2CzMlaafs6sQWrWWT26I4qu2ENbWz1P%2FCG39fSZ3zRIwaxVWuSNd84I4DdsNVlf%2Bz39uzh32IP0GPHyvaY%2FdndLdoj5pxaSF%2FrAzNNfWJbW1265j77PgZ%2BdR%2FDcqRpf34hlLLXRZBew8F9WNsr950fTblqZrptAd3e%2FSeOdgn7sa%2FGmvOnuqZhczMqbfMCbTXOUSZXA57U%2Ferwj8WoGmlG1siOCtSYGnAuthVL7Kshg8HfRBR37Zf1HKg1DeZtQ%2BY1JxbWdCbCwUUBde7y7aZvdz5DY92c3GzObPtA0coEFMuTwGHaSBUkkS53DJScysz1fIMxJa5v5871EaYT%2BY%2F6qPI%2FjSx%2F4Zn9DOh1hN5xAXV7kNHTV77IDN7ttcmDdnm9un0av%2Fz826wt9XFNamM9UwI%2FOyKBc1ULbfUCjnEo%2FlCYSkXfXElAu%2FzXAplUp6sCavcbDJ5Q%2FSITeO%2Bmdt4btpsT8%2B3nE%2Fo9%2F6e%2BTGoqfJ1XDJ4Og3vOtaPY4Dzluk66snF4OFKlInG%2BXhWg1x5h0C%2Bebr9jgydUvsgUjp66z88vf9BX98%2Frpdav1WuNy5qiVoydEmO3jsjYfF3CCdVlET3kUAWh0JSLs%2FmigPOph8VsZujYKqc%2FPH0IyMfc9TiKr5g7hLk7uTM3tMlKzdz1yCoQnrkbQLOjBbV0qhNTbOqOjgGRqZvrUqoil1lReeQcpMw83yWNXIbiVCoa50oCOjqfTF0Qn0lC1UvH3pwgNgBCYXOdGaYOpTp7B9FSnSGgeGnLPL%2Bcm%2Fe%2Fk7XMzS5XnY7pZS0ncoxDW%2F32nkl2MLoK5AOJsoJrTX9yd9RX8lkKr2SuwqAJLpG5FZCCGgbsYuYEcz37QLNlTQkOw61U5hc%2FZgUp19KwxSybcs6hI6QDJwOEyEYZVzTJEo5KzvExAuGxOf6oucC8J4ZJRwUc8RGl34osfdEZHbrA1oyOtXNBZtUJ9S8ygfOXECtlXkIcPK3W0Hy6fh5vBfF6XfCPer25P89WDq4pto%2FumNXDRL2eMIbOvndn1aGx1ZzXAjfV%2FeliyzkOWgvs76%2B2Q9YCw5XEp%2Fy7eY%2B7cVo4Z4U8htrhP4Z3oY38wYVSGy5gsDw83d3dDPr3gfQpkRPCvzS52WlFs2K8JJ4kZgxXYZUTAqg1FNiFdELw3ZNAsyV1QoTiViqTlSsJ6IQodw7WYSdEQkDIZ8NWa5KzYvljuiECdFvSyP4BpFa8rgi9Kjmx%2BqVj8WTjvOLwQA4%2F5qpk7hMnW65YLAbvRJa%2B8PwNFyreTW3JF0%2B3afF3dOVLx96cVPqKvlOh76MuSQ4wWwQicCW6AoRncOhCO9c0C8%2FnBVRvajZ4bK%2B2RCQO%2FShueOO5dzt6vD%2FvVSVYT2z29YWzTiNSdHZxjihhXHHfv3ECHdGn4EWJdChwAiVSqEOp5lSekx%2FOqdjgYGNjLGwB1qSQkO4l3ahmWlkxfe7RDleVQsy0YthVwvM6nGk92GbyBbtrARWc1lwrvmUtEY1XZVizovHcAx6cPRMKOMqjDmIpC7HyRQEXRfRNTXQSryqxrq%2FGTeZuV5ydDmcfNcrB1yV0fpa6GFQ7sgoEom2%2BKKBvtNwppOlDQGTm5mePQ0%2BbW07iefDYHwbCoixhju2KrLQqTCjfrTCRXdRDldoXFsPH7sG9PFEPFfrCRIp6qJV3zBMF9I6JXmciKSREfl%2Fzt9BNVo%2BgYvpiRD34uoUzr5IyfTh0pWJ6vijgTEz8LUaTgkJkrudTWBUayYrrcw%2BNqCKFRtQqNOKJQvRN6pICQGQW57%2Fhql3qsmLxowZLuMp1b1Y2Gg9HqlQ0ztcrp8ARRXQhyIqQpOoXmcT5xVega27YHz0FoqEs0REIjcTFrmrNekRW9jY%2BSt26bko9c4rhJfNwXZ54SBPOnErqJQuHrlQvYb4o4FxqiM2FqP6xpHCQ7qWc0PguOcvHmFnFZ%2FncV4BwDPACjvqI8veAWnF6qwHf3pY%2BFjlxOIb2RaZw7pxT6rylTBn8mBEOrmrhQC%2FgGIfiD4WpVPzNlQT0gzxi672Amk3LK1blIq2vxsurblZcnQ5X57%2FoA%2FpUyrzmQ0oXClcS0IPCnlef4XL6UFJXv8iUzY%2FxVPZ2VhzeytvgLmlGUShOpWJwriQgg4uzzjqh6kVm74ACpHD6BZBwhE3K9vYe%2B8IWCdh8LPJmZgG7lJ3E2gkcL3XqncY%2B75zFjrYn2Qexdg%2Fn6sL1kB%2Fc6MzBc977nDV9UXrFwW%2FgRmf%2BExqxdjpr%2BkpD1lTFN14y3qGsBdPu7vu9wV0%2FkDrLkrOxP3wDEZwgg0M5zX2%2FMnd4yWmpxsgX8HBengyONvT6i5TB4UFXKuOVLwoYBCiz%2F%2BGbORwxACGdSduOYNGKy%2FNxcghi83zuORztZN6mYuVwtKN7hIRndehpEnzDshjKl4%2FBpa5IkCmD575KtZ1sQ9GCMbiU9Qf4ooD1B3rEsj0cxdNuahxeVRqwr9bttcmDdnm9un0av%2Fz826wt9XGVhpcZhR81tYOrWzgFL%2BAgh%2FIPxalUDM6VBJw2D%2BxxsBhTnQ2IAmr4GzSeEAIis3hAeDDCWD9CeNAX9mNo8eKD%2FsDfXiRxGx%2FcDyN6AUHvIF5A0P2cbUCw47wbdgOCoe7AlCOCIASnts9%2BnDk84U4oWvsX2fwoEIOLcikvgHgooBc3UumrrnrWCn0yX29vN3VulDKtgdaB5vMmtvg8GF3d9y8G%2FVH59wdMvXCuP8wYNWHKOy%2F16a07ZOW0e2OEtDrR9yErSpDRJQZfkJFNAtXlOfvlhcxv%2FmbEsRN9WiKQXcxXO5zKShhxjAEIka1kfn6h1BHHTEk%2F%2Fwq6MOIoAumH41gq0ueLAgYkZS2nWwUqg02DZAskSk78Mbzc8Yk%2F90DlWbIgdLEClR5QpWJ2vihgANotp3uP%2Fy10xvEF1HNaIcsYQJCOzRXOPnUACsd3du%2BthvmWt3t%2FLUxWLmzuUhVHorse7F7tY3XzVqfm9af6mw6Hk7vTF28rzLzXtLiwc2OtnQNLWnz9G6d1HzIz8BUrdU4p2cfbXvBMpCwO4kCcRaerps9938x93YlSb8hsJcZwD2yBXR6nsFKHzh%2BRlp5s0VuZjkodOoMeKBm%2FieoQSIwICW3IKvEtM7LPffmJoiR7lRfLKbDFakXtigJf42tql2CrnTg4kJDQqwJHmRF67k5eRSlpiaMDWK0IXVGg%2F76%2FnOnWSpxiR4lBIDKbh7kjK%2BpOTN35FxiFGbOFzMWAKghDplzMzZUEzKAte%2BZF6hAQmbf5BKVGyKsu4TqUxJG571a2g5CMGtFz7aqDi1Icfs56TYo%2FBHeqRFuREj802Nq%2FTz18GYm%2Ff%2BssJDQIl8ec1rlnZ1Drjr%2FVArSeR0%2BP94PHwe0okIIlCjO2fMUII09lG80U7CG%2BypJVVii5tRsjzbURfdl%2BDlFG%2FiNDY7ekQcZw6Epl%2FfJFAQ2d0YJaur0Iu5zW7zfzjmNgQmRzmL9lDlyJJhHV8%2B3XlKg%2B9wUnakm3KQwHakXsagPotYeYBnQsSG2NpACQj8WlXjaYKYvnvlWhWtJCpeFArVhc5WwVbxGKdbOA6k2NxKslgPbV%2BMWjKlM8KxLPv9BdwmTOglW6k9IW54uCZ4tbL2S60ix2Y0EM8qQokI%2FLK4M8My4%2F5l6GfOWW1CIPR2rF5ZwMzktEC6ja1Bi8ssaDZVPtHJAZg3dyZ%2FCSbh0QjtSKwRUY3H5YTJBVQOWmxuHVzgHBspG6hGqmHN5Q8uZwF2NicLiURVL5euWUJCGavngvoHZTI%2FGqJGqgbKJkMZRxW%2FGkO4m7n1OruhRaTWk3R5tf3NF5haSXpB3wdmCHFiF0F2QWmk2HRMN2j%2F8D%3C%2Fdiagram%3E%3C%2Fmxfile%3E)에서도 확인 가능합니다
+\clearpage
+
+## Database Design Schema
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[h]
+\fontspec{Open Sans}
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor{white} \normalsize\textbf{Entity} & \normalsize\textbf{Attributes} \\
+\hline
+MENU & \textbf{\underline{MenuID}}, Price, Term, \textit{RecipeID}, Date \\
+\hline
+RECIPE & \textbf{\underline{RecipeID}}, Name, Corner, Instructions \\
+\hline
+RECIPE\_INGREDIENT & \textbf{\underline{\textit{RecipeID}}}, \textbf{\underline{\textit{IngredientID}}}, QuantityRequired \\
+\hline
+INGREDIENT & \textbf{\underline{IngredientID}}, Name, Quantity, Cost, \textit{SupplierID}, \textit{NutritionID}, Unit \\
+\hline
+STOCK & \textbf{\underline{StockID}}, StockQuantity, ExpiryDate, \textit{IngredientID} \\
+\hline
+SUPPLIER & \textbf{\underline{SupplierID}}, Name, Phone, Address \\
+\hline
+SUPPLIER\_CONTRACT & \textbf{\underline{ContractID}}, StartDate, EndDate, \textit{SupplierID} \\
+\hline
+NUTRITION & \textbf{\underline{NutritionID}}, Calories, Protein, Carbohydrates, Fat, Sugar, Sodium \\
+\hline
+ORDERING\_ITEM & \textbf{\underline{\textit{OrderingID}}}, \textbf{\underline{\textit{IngredientID}}}, Quantity, Status \\
+\hline
+ORDERING & \textbf{\underline{OrderingID}}, OrderedAt \\
+\hline
+\end{tabularx}
+\end{table}
+
+Primary key: 굵은글씨, 밑줄  
+Foreign key: 기울임
+
+## Column Property Specifications
+
+\renewcommand{\arraystretch}{1.5}
+
+\begin{table}[h]
+\caption{MENU 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+MenuID & int & PK & YES & AUTO\_INCREMENT & \\
+\hline
+Price & decimal(10,2) & & YES & & \\
+\hline
+Term & char(10) & & YES & & 'Breakfast',\newline'Lunch',\newline'Dinner' \\
+\hline
+RecipeID & int & FK & YES & & \\
+\hline
+Date & date & & YES & & \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{RECIPE 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+RecipeID & int & PK & YES & AUTO\_INCREMENT & \\
+\hline
+Name & varchar(255) & & YES & & \\
+\hline
+Corner & char(50) & & YES & & 'HotPot',\newline'RiceBowl',\newline'Western' \\
+\hline
+Instructions & varchar(4095) & & YES & & \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{RECIPE\_INGREDIENT 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+RecipeID & int & PK, FK & YES & & \\
+\hline
+IngredientID & int & PK, FK & YES & & \\
+\hline
+QuantityRequired & decimal(15,10) & & YES & & \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{INGREDIENT 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+IngredientID & int & PK & YES & AUTO\_INCREMENT & \\
+\hline
+Name & varchar(255) & & YES & & \\
+\hline
+Quantity & decimal(10,2) & & YES & & \\
+\hline
+Cost & decimal(10,2) & & YES & & \\
+\hline
+SupplierID & int & FK & YES & & \\
+\hline
+NutritionID & int & FK, UNIQUE & YES & & \\
+\hline
+Unit & char(5) & & YES & & \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{STOCK 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+StockID & int & PK & YES & AUTO\_INCREMENT & \\
+\hline
+StockQuantity & decimal(10,2) & & YES & & \\
+\hline
+ExpiryDate & datetime & & NO & & \\
+\hline
+IngredientID & int & FK & YES & & \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{SUPPLIER 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+SupplierID & int & PK & YES & AUTO\_INCREMENT & \\
+\hline
+Name & varchar(255) & & YES & & \\
+\hline
+Phone & char(15) & & YES & & \\
+\hline
+Address & varchar(255) & & YES & & \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{SUPPLIER\_CONTRACT 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+ContractID & int & PK & YES & AUTO\_INCREMENT & \\
+\hline
+StartDate & date & & YES & & \\
+\hline
+EndDate & date & & YES & & \\
+\hline
+SupplierID & int & FK & YES & & \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{NUTRITION 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+NutritionID & int & PK & YES & AUTO\_INCREMENT & \\
+\hline
+Calories & decimal(10,2) & & NO & & kcal \\
+\hline
+Protein & decimal(10,2) & & NO & & g \\
+\hline
+Carbohydrates & decimal(10,2) & & NO & & g \\
+\hline
+Fat & decimal(10,2) & & NO & & g \\
+\hline
+Sugar & decimal(10,2) & & NO & & g \\
+\hline
+Sodium & decimal(10,2) & & NO & & mg \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{ORDERING\_ITEM 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+OrderingID & int & PK, FK & YES & & \\
+\hline
+IngredientID & int & PK, FK & YES & & \\
+\hline
+Quantity & int & & YES & & \\
+\hline
+Status & char(20) & & YES & & 'Preparing',\newline'Shipping',\newline'Delivered',\newline'Cancelled',\newline'Returning',\newline'Returned' \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\caption{ORDERING 테이블}
+\small
+\begin{tabularx}{\textwidth}{|l|l|l|l|l|X|}
+\hline
+\rowcolor{white} \textbf{ColumnName} & \textbf{DataType} & \textbf{Key} & \textbf{Required} & \textbf{DefaultValue} & \textbf{Remarks} \\
+\hline
+OrderingID & int & PK & YES & AUTO\_INCREMENT & \\
+\hline
+OrderedAt & datetime & & NO & & \\
+\hline
+\end{tabularx}
+\end{table}
+
+\clearpage
+
+## SQL DDL
+
+\begin{figure}[H]
+\includegraphics{img/2024-11-26-21-28-58.png}
+\includegraphics{img/2024-11-26-21-29-20.png}
+\caption{SQL DDL}
+\label{fig:improved_ui}
+\end{figure}
+
+Foreign key를 맨 뒤에 추가한 이유는, 테이블을 생성하는 동시에 외래키를 추가할 때, 참조하는 테이블이 존재하지 않을 수 있기 때문입니다.
+
+# Implementation
+
+## 구조
+
+\begin{figure}[H]
+\includegraphics{img/2024-11-23-08-12-51.png}  
+\caption{개발 구조}
+\label{fig:improved_ui}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{img/2024-11-23-08-09-57.png}  
+\caption{사용자 접근 구조}
+\label{fig:improved_ui}
+\end{figure}
+
+## 웹 서버 생성
+
+AWS Console에서 다음의 과정들을 거쳐 필요한 자원을 생성합니다.  
+먼저 Application Server이자 Mysql Client 역할을 해줄 컴퓨터(인스턴스)를 생성하겠습니다.  
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-07-49-26.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-21-21-13-47.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-21-21-14-42.png}}
+\caption{AWS console EC2 접속}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+제일 먼저 지역이 서울로 잘 설정되어 있는지 확인해줍니다.  
+그런 다음, EC2를 검색한 후 들어간 다음 왼쪽 탭에서 인스턴스를 선택합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-21-21-15-31.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-21-21-16-47.png}}
+\caption{EC2 생성}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+인스턴스 시작을 눌러 사용할 운영체제만 설정 해줍니다.  
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-21-21-17-29.png}}
+\caption{EC2 생성 완료}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+인스턴스가 정상적으로 생성된 모습을 확인해볼 수 있습니다.  
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-07-43-19.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-22-07-44-09.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-22-07-45-20.png}}
+\caption{EC2 보안 그룹 설정}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+생성된 인스턴스 옆 체크박스를 선택하면 아래에 추가적인 정보가 보이는데, 여기서 보안을 눌러줍니다.  
+그런 다음 보안 그룹(firewall)의 'sg-...'으로 보이는 파란 글씨를 누른 다음 인바운드 규칙 편집을 눌러줍니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-07-45-45.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-22-07-48-05.png}}
+
+\caption{EC2 보안 그룹 설정}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+다음과 같이 보안그룹을 설정해줍니다.  
+22번 포트는 컴퓨터에 접속하기 위해, 8000번 포트는 사용자가 웹 서버에 접속하기 위해 열어줍니다.  
+설정을 마친 후, 보안 그룹 ID만 다른 곳에 복사를 해둡니다.
+
+## 데이터베이스 서버 생성
+
+이제 MySQL Server를 생성합니다.
+
+
+\begin{figure}[H]
+\begin{center}
+
+\fbox{\includegraphics{img/2024-11-21-20-51-54.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-21-20-52-44.png}}
+\caption{AWS RDS 생성}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+RDS를 검색한 후 들어간 다음 왼쪽에 보이는 탭에서 데이터베이스를 선택합니다.  
+이후 데이터베이스 생성을 눌러줍니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-21-20-53-30.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-21-20-53-47.png}}
+\caption{RDS Configuration}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+MySQL 엔진 프리티어(무과금)를 기준으로 선택하겠습니다.
+
+\begin{figure}[H]
+\begin{center}
+
+\fbox{\includegraphics{img/2024-11-21-20-57-53.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-22-07-57-21.png}}
+\caption{RDS 보안그룹}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+외부에서 접속할 master 사용자(user)의 이름과 비밀번호도 설정해줍니다. 그런 다음 보안그룹도 새로 생성해줍니다. 
+이름은 아무거나, 가용 영역은 ap-northeast-2c로 설정하겠습니다.
+
+\begin{figure}[H]
+\begin{center}
+
+\fbox{\includegraphics{img/2024-11-21-21-04-22.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-21-21-03-31.png}}
+\caption{RDS 생성 완료}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+설정이 모두 마무리되면 데이터 베이스 생성을 클릭합니다. 그러면 정상적으로 생성된 모습을 확인해볼 수 있습니다.  
+이제 위의 보이는 화면에서 파란 글씨의 식별자를 선택합니다.
+
+\begin{figure}[H]
+\begin{center}
+
+\fbox{\includegraphics{img/2024-11-22-08-00-45.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-22-08-01-16.png}}
+
+\caption{RDS 보안그룹}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+RDS 엔드포인트만 복사를 해둔 다음 보안 그룹을 선택합니다. 그런 다음 보안 그룹 ID를 선택해줍니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-08-01-50.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-22-08-02-50.png}}
+\caption{RDS 보안그룹}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+아까 복사해둔 보안 그룹 ID를 찾아서 선택해준 후 규칙을 저장합니다.  
+
+모든 자원할당 과정이 끝났습니다.  
+이제 EC2에 접속해서, 데이터베이스 설정과 application 실행 과정을 진행하겠습니다
+
+
+## 데이터베이스 설정 및 Application 실행
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-08-05-05.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-21-21-19-25.png}}
+\caption{EC2 접속}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+위의 보이는 화면에서 인스턴스 ID를 선택합니다.
+그러면 보이는 화면에서 퍼블릭 IPv4 DNS만 복사한 후, 연결을 눌러줍니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-21-21-19-59.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics{img/2024-11-21-21-20-32.png}}
+\caption{EC2 접속}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+이어지는 화면에서 다시 연결을 선택하면 EC2 인스턴스에 접속할 수 있습니다.
+이제 필요한 프로그램들을 설치합니다.
+
+```bash
+sudo apt update
+sudo apt install -y mysql-client python-is-python3 python3-pip
+pip install flask pymysql
+
+git clone https://github.com/cryscham123/db_gimal_work.git work # source code
+
+export RDS_ENDPOINT=<Copied RDS Endpoint>
+export RDS_USERNAME=<RDS User Name>
+export RDS_PASSWORD=<RDS Password>
+# create database
+mysql -h $RDS_ENDPOINT -u $RDS_USERNAME -p $RDS_PASSWORD < work/sql/create.sql
+# create user
+mysql -h $RDS_ENDPOINT -u $RDS_USERNAME -p $RDS_PASSWORD < work/sql/auth.sql
+# insert data
+mysql -h $RDS_ENDPOINT -u $RDS_USERNAME -p $RDS_PASSWORD < work/sql/insert.sql
+
+python work/app/index.py # run application
+```
+
+다음 명령어를 실행해서 데이터베이스를 설정해준 후 어플을 실행합니다.  
+\<Copied RDS Endpoint\>는 복사해둔 RDS의 endpoint, 나머지 \<RDS User Name\>과 \<RDS Password\>는 RDS 생성시 설정한 것을 입력해줍니다.  
+
+이제 브라우저에서 복사해둔 퍼블릭 IPv4 DNS의 8000번 포트로 접속하면, 아래와 같은 화면이 나옵니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-08-14-00.png}}
+\caption{HTTP 경고}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+네트워크 암호화 설정을 안해준 관계로 해당 경고창이 뜹니다.  
+그냥 HTTP 사이트로 계속 진행하겠습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-08-24-51.png}}
+\caption{브라우저 화면}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+정상적으로 실행되는 모습. 이 [페이지](http://ec2-3-35-235-211.ap-northeast-2.compute.amazonaws.com:8000/)에서 확인 가능합니다.
+
+## Application Code
+
+Python의 flask 라이브러리를 사용하여 웹 서버를 구축했습니다.  
+구체적인 코드 구조는 [Remote 저장소](https://github.com/cryscham123/db_gimal_work.git)에서 확인 가능합니다.
+
+### Menu 페이지
+
+이 페이지에서는 날짜별 학생식당 메뉴를 확인하고 수정할 수 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-19-30-58.png}}
+\caption{메뉴 화면(확대 시 선명하게 볼 수 있습니다)}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+메뉴 이름의 하이퍼링크를 클릭하면 해당 메뉴의 레시피 정보를 확인할 수 있습니다.  
+수정과 삭제버튼은 각각 record를 수정하고 삭제할 수 있는 기능을 제공합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-19-41-27.png}}
+\caption{Update 로직}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+수정 버튼을 누르면 해당 레코드의 정보를 수정할 수 있는 form이 나타납니다. 원하는 값을 넣은 후, 저장을 누르면 수정이 완료됩니다.  
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-19-43-23.png}}
+\caption{수정이 완료된 모습. 저장을 눌러야 적용됩니다.}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-19-46-45.png}}
+\caption{Delete 로직}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+삭제 버튼을 누르면 해당 레코드가 삭제됩니다.  
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[height=5cm]{img/2024-11-26-19-47-41.png}}
+\caption{삭제가 완료된 모습}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+### Recipe 페이지
+
+이 페이지에서는 레시피 정보를 확인하고, 해당 레시피를 원하는 날짜의 메뉴에 추가할 수 있습니다.  
+확인 가능한 레시피 정보는 레시피 이름, instructions, 재료 사용량, 사용 재료 재고, 영양 정보 입니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-08-25.png}}
+\caption{레시피 화면}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+새우까스 메뉴를 등록해보겠습니다. 필드를 채운 후 메뉴 등록 버튼을 눌러줍니다.  
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-09-22.png}}
+\caption{메뉴 등록 폼}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-10-30.png}}
+\caption{메뉴 등록 완료}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+\newpage
+
+### Ingredient 페이지
+
+이 페이지에서는 재료 정보를 확인하고 재료 구매 주문을 만들 수 있습니다.  
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-17-56.png}}
+\caption{재료 화면}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+재료 이름을 클릭할 경우 재료의 영양 정보, 재고량을 확인할 수 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-21-40.png}}
+\caption{재료 세부 정보}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+재료 주문을 만들어 보겠습니다. 재료의 좌측에 보이는 입력란에 원하는 수량을 입력한 후 주문 버튼을 누릅니다.
+주문 버튼은 맨 아래에 있습니다. 계약이 만료된 공급업체의 재료는 입력란이 비활성화 되어 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-22-24.png}}
+
+\vspace{0.5cm}
+
+\fbox{\includegraphics[height=10cm]{img/2024-11-26-20-30-44.png}}
+\caption{재료 주문}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-24-29.png}}
+\caption{주문 완료}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+### Ordering 페이지
+
+이 페이지에서는 주문 정보를 확인하고 주문 상태를 업데이트할 수 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-35-28.png}}
+\caption{주문 화면}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+주문 상태는 아래의 그림과 같이 드롭다운 메뉴를 통해 업데이트 할 수 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-36-02.png}}
+\caption{주문 상태 업데이트}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-38-22.png}}
+\caption{주문 상태 업데이트}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+### Supplier 페이지
+
+마지막 페이지입니다. 이 페이지에서는 공급업체 정보를 확인하고, 공급업체의 계약을 확인할 수 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-41-39.png}}
+\caption{공급 업체 화면}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+업체의 이름을 클릭하면 세부 계약 내역을 확인할 수 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-26-20-42-13.png}}
+\caption{공급 업체 화면}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+# DB administration
+
+## User User Management
+
+### 유저 생성
+
+```sql
+CREATE USER 'kitchen_staff'@'%' IDENTIFIED BY 'secret123';
+CREATE USER 'purchasing_manager'@'%' IDENTIFIED BY 'secret123';
+CREATE USER 'supplier'@'%' IDENTIFIED BY 'secret123';
+CREATE USER 'nutritionist'@'%' IDENTIFIED BY 'secret123';
+```
+목표한 사용자들을 생성합니다. 비밀번호는 'secret123'으로 설정해주었습니다.
+
+### 권한 부여
+
+```sql
+-- kitchen staff
+GRANT SELECT ON MENU TO 'kitchen_staff'@'%';
+GRANT SELECT ON RECIPE_INGREDIENT TO 'kitchen_staff'@'%';
+GRANT SELECT ON RECIPE TO 'kitchen_staff'@'%';
+GRANT SELECT ON INGREDIENT TO 'kitchen_staff'@'%';
+GRANT SELECT ON STOCK TO 'kitchen_staff'@'%';
+
+-- purchasing manager
+GRANT SELECT, INSERT ON ORDERING TO 'purchasing_manager'@'%';
+GRANT SELECT, INSERT ON ORDERING_ITEM TO 'purchasing_manager'@'%';
+GRANT SELECT ON INGREDIENT TO 'purchasing_manager'@'%';
+GRANT SELECT ON STOCK TO 'purchasing_manager'@'%';
+GRANT SELECT ON SUPPLIER TO 'purchasing_manager'@'%';
+GRANT SELECT ON SUPPLIER_CONTRACT TO 'purchasing_manager'@'%';
+
+-- supplier
+GRANT SELECT ON ORDERING TO 'supplier'@'%';
+GRANT SELECT, UPDATE ON ORDERING_ITEM TO 'supplier'@'%';
+GRANT SELECT ON INGREDIENT TO 'supplier'@'%';
+GRANT SELECT ON SUPPLIER_CONTRACT TO 'supplier'@'%';
+GRANT SELECT ON SUPPLIER TO 'supplier'@'%';
+
+-- nutritionist
+GRANT SELECT ON RECIPE TO 'nutritionist'@'%';
+GRANT SELECT ON RECIPE_INGREDIENT TO 'nutritionist'@'%';
+GRANT SELECT ON NUTRITION TO 'nutritionist'@'%';
+GRANT SELECT ON INGREDIENT TO 'nutritionist'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON MENU TO 'nutritionist'@'%';
+```
+
+
+### 권한 적용
+
+마지막으로 FLUSH를 해서 모든 권한을 적용합니다.
+
+```sql
+FLUSH PRIVILEGES;
+```
+
+
+## Backup
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-08-44-15.png}}
+\caption{AWS Backup 화면}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+RDS 기본 설정으로 백업이 설정되어 있습니다.
+만약 백업 파일을 수동으로 생성하고 싶다면 EC2 인스턴스에서 다음 명령어를 실행합니다.
+
+```bash
+mysqldump -h $RDS_ENDPOINT -u $RDS_USERNAME -p$RDS_PASSWORD > backup.sql
+```
+
+만약 transaction log를 수동으로 생성하고 싶다면 다음의 단계를 따릅니다.
+
+```bash
+# set log retention period
+CALL mysql.rds_set_configuration('binlog retention hours', 24);
+SHOW BINARY LOGS; # check log file name
+mysqlbinlog \
+    --read-from-remote-server \
+    --host=<RDS ENDPOINT> \
+    --port=3306  \
+    --user admin \
+    --password \
+    --raw \
+    --verbose \
+    --result-file=<path to store> \
+    <name of log file> # create log file
+
+mysqlbinlog \
+    --base64-output=DECODE-ROWS \
+    --verbose \
+    <stored path> > binlog.sql # convert to sql format
+```
+
+우선 mysql에 접속해서 log파일의 보관기간을 수동으로 늘려줍니다.
+그런 다음 log file의 파일명을 확인합니다.
+그 후, mysqlbinlog 명령어를 통해 log file을 생성할 수 있습니다.
+log file은 사용하기 좋게 sql 형식으로 변환해줍니다.
+
+
+## Recovery
+
+AWS 콘솔에서 복구를 선택할 수 있지만, 수동으로 생성한 백업 파일을 이용해서 복구할 수 있습니다.
+다음의 명렁어를 새로운 환경에서 실행합니다.
+
+```bash
+cat << EOF | mysql
+CREATE DATABASE SOONGSIL_STUDENT_CAFETERIA_SCM;
+EOF
+mysql SOONGSIL_STUDENT_CAFETERIA_SCM < backup.sql
+mysql SOONGSIL_STUDENT_CAFETERIA_SCM < binlog.sql
+```
+
+log file은 AWS RDS 환경이 아니면 에러가 발생할 수 있습니다.
+하지만 AWS RDS 환경에서 log file을 직접적으로 사용할 권한이 없습니다.
+결론적으로, 우리의 구현에서 log file은 사용할 수 없습니다.
+
+### Database Security
+
+1. firewall  
+  AWS 보안 그룹을 이용해서 RDS 인스턴스에 대한 접근을 제한했습니다.
+
+2. Encryption store
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2024-11-22-08-47-22.png}}
+\caption{AWS RDS 생성 화면에서 암호화 설정}
+\label{fig:improved_ui}
+\end{center}
+\end{figure}
+
+RDS 인스턴스 기본 설정으로 암호화 설정을 활성화했습니다.

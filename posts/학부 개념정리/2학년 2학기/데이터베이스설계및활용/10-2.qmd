@@ -14,3 +14,17 @@ description: "Database Design"
 - backup / recovery
 - security
 
+```sql
+                SELECT 
+                    ri.QuantityRequired,
+                    i.Name,
+                    i.Unit,
+                    (ri.QuantityRequired * i.Quantity) AS TotalQuantity,
+                    SUM(st.StockQuantity * i.Quantity) AS TotalStock
+                FROM RECIPE r
+                JOIN RECIPE_INGREDIENT ri ON r.RecipeID = ri.RecipeID
+                JOIN INGREDIENT i ON ri.IngredientID = i.IngredientID
+                LEFT JOIN STOCK st ON st.IngredientID = i.IngredientID AND st.ExpiryDate > NOW()
+                WHERE r.Name = %s
+                GROUP BY i.IngredientID;
+```
