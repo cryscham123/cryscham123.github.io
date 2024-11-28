@@ -180,37 +180,51 @@ execute:
 
 **ORDERING - ORDERING_ITEM - INGREDIENT**
 
-- ORDERING_ITEM은 부모 테이블 ORDERING과 INGREDIENT가 있어야 하므로 weak entity
+- ORDERING_ITEM은 weak entity
 - ORDERING, INGREDIENT는 각각 고유한 PK를 가지므로 strong entity
-- ORDERING→ORDERING_ITEM: 하나의 ORDERING은 하나의 ORDERING_ITEM에 의존하며, ORDERING_ITEM은 하나 이상의 ORDERING에 연결될 수 있다.
-- ORDERING_ITEM←INGREDIENT: 하나의 INGREDIENT는 하나의 ORDERING_ITEM에 의존하며, ORDERING_ITEM은 하나의 ORDERING에 연결된다.
+- ORDERING → ORDERING_ITEM: 1:N (Mandatory One, Mandatory Many)  
+  한 번의 주문에는 반드시 하나의 ORDERING_ITEM이 존재한다.
+- ORDERING_ITEM ← INGREDIENT: N:1 (Optional Many, Mandatory One)  
+  하나의 ORDERING_ITEM는 반드시 하나의 INGREDIENT에 의존하며, INGREDIENT를 여러번 주문할 수도, 안 할수도 있다.
 
 **MENU - RECIPE**
 
-- 하나의 MENU는 반드시 하나의 RECIPE에 의존하며, 하나의 RECIPE는 여러 MENU에 연결될 수도, 안될 수도 있다.
+- 둘 다 strong entity (non-identifying relationship)
+- 1:N 관계 (Optional Many, Mandatory One)
+  하나의 MENU는 반드시 하나의 RECIPE에 의존하며, 하나의 RECIPE는 여러 MENU에 연결될 수도, 안될 수도 있다.
 
 **RECIPE - RECIPE_INGREDIENT - INGREDIENT**
 
-- RECIPE_INGREDIENT는 부모 테이블 REIPE와 INGREDIENT가 있어야 하므로 weak entity
+- RECIPE_INGREDIENT는 weak entity
 - RECIPE, INGREDIENT는 각각 고유한 PK를 가지므로 strong entity
-- RECIPE→RECIPE_INGREDIENT: 하나의 RECIPE_INGREDIENT는 반드시 하나의 RECIPE에 의존하며, 하나의 RECIPE는 하나 이상의 RECIPE_INGREDIENT에 연결된다.
-- RECIPE_INGREDIENT←INGREDIENT: 하나의 RECIPE_INGREDIENT는 반드시 하나의 INGREDIENT에 의존하며, 하나의 INGREDIENT는 여러 RECIPE_INGREDIENT에 연결될 수도, 안될 수도 있다.
+- RECIPE → RECIPE_INGREDIENT: 1:N (Mandatory One, Mandatory Many)  
+  하나의 RECIPE_INGREDIENT는 반드시 하나의 RECIPE에 의존하며, 하나의 RECIPE는 하나 이상의 RECIPE_INGREDIENT가 존재한다.
+- RECIPE_INGREDIENT ← INGREDIENT: N:1 (Optional Many, Mandatory One)  
+  하나의 RECIPE_INGREDIENT는 반드시 하나의 INGREDIENT에 의존하며, 하나의 INGREDIENT는 여러 RECIPE_INGREDIENT에 연결될 수도, 안될 수도 있다.
 
 **INGREDIENT - STOCK**
 
-- STOCK은 반드시 하나의 INGREDIENT에 의존하며, 하나의 INGREDIENT는 여러 STOCK과 연결될 수도, 안될 수도 있다.
+- 둘 다 strong entity (non-identifying relationship)
+- 1:N 관계 (Mandatory One, Optional Many)  
+  STOCK은 반드시 하나의 INGREDIENT에 의존하며, 재고에 하나의 INGREDIENT가 여러 번 존재할수도, 안 존재할 수도 있다. (같은 ingredient 여도 유통기한때문에 주문 날짜가 다르면 다르게 본다.)
 
 **INGREDIENT - NUTRITION**
 
-- INGREDIENT는 반드시 하나의 NUTRITION에 의존하며, 하나의 NUTRITION도 반드시 하나의 INGREDIENT에 의존한다.
+- 1:1 관계 (Mandatory One, Mandatory One)  
+  INGREDIENT는 반드시 하나의 NUTRITION에 의존하며, 하나의 NUTRITION도 반드시 하나의 INGREDIENT에 의존한다.
+- 둘 다 strong entity (non-identifying relationship)
 
 **SUPPLIER - INGREDIENT**
 
-- 하나의 INGREDIENT는 하나의 SUPPLIER에 의존하고, 하나의 SUPPLIER는 하나 이상의 INGREDIENT와 연결될 수 있다.
+- 1:N 관계 (Mandatory One, Mandatory Many)  
+  하나의 INGREDIENT는 하나의 SUPPLIER에 의존하고, 하나의 SUPPLIER는 하나 이상의 INGREDIENT와 연결될 수 있다.
+- 둘 다 strong entity (non-identifying relationship)
 
 **SUPPLIER - SUPPLIER_CONTRACT**
 
-- 하나의 SUPPLIER는 하나 이상의 SUPPLIER_CONTRACT와 연결될 수 있고, SUPPLIER_CONTRACT는 반드시 하나의 SUPPLIER와 연결된다.
+- 1:N 관계 (Mandatory One, Mandatory Many)  
+  하나의 SUPPLIER는 하나 이상의 SUPPLIER_CONTRACT와 연결될 수 있고, SUPPLIER_CONTRACT는 반드시 하나의 SUPPLIER와 연결된다.
+- 둘 다 strong entity (non-identifying relationship)
 
 ## 그외 요구사항
 
