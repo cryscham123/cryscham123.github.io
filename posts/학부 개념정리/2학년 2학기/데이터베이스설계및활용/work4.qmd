@@ -175,44 +175,42 @@ execute:
 
 \clearpage
 
+
 ## Entity Relationship
 
 **ORDERING - ORDERING_ITEM - INGREDIENT**
 
-- ORDERING_ITEM은 weak entity (identifying relationship)
-- ORDERING → ORDERING_ITEM: 1:N (Mandatory One, Mandatory Many)
-- ORDERING_ITEM ← INGREDIENT: N:1 (Optional Many, Mandatory One)
+- ORDERING_ITEM은 부모 테이블 ORDERING과 INGREDIENT가 있어야 하므로 weak entity
+- ORDERING, INGREDIENT는 각각 고유한 PK를 가지므로 strong entity
+- ORDERING→ORDERING_ITEM: 하나의 ORDERING은 하나의 ORDERING_ITEM에 의존하며, ORDERING_ITEM은 하나 이상의 ORDERING에 연결될 수 있다.
+- ORDERING_ITEM←INGREDIENT: 하나의 INGREDIENT는 하나의 ORDERING_ITEM에 의존하며, ORDERING_ITEM은 하나의 ORDERING에 연결된다.
 
 **MENU - RECIPE**
 
-- 1:N 관계 (Optional Many, Mandatory One)
-- 둘 다 strong entity (non-identifying relationship)
+- 하나의 MENU는 반드시 하나의 RECIPE에 의존하며, 하나의 RECIPE는 여러 MENU에 연결될 수도, 안될 수도 있다.
 
 **RECIPE - RECIPE_INGREDIENT - INGREDIENT**
 
-- RECIPE_INGREDIENT는 weak entity (identifying relationship)
-- RECIPE → RECIPE_INGREDIENT: 1:N (Mandatory One, Mandatory Many)
-- RECIPE_INGREDIENT ← INGREDIENT: N:1 (Optional Many, Mandatory One)
+- RECIPE_INGREDIENT는 부모 테이블 REIPE와 INGREDIENT가 있어야 하므로 weak entity
+- RECIPE, INGREDIENT는 각각 고유한 PK를 가지므로 strong entity
+- RECIPE→RECIPE_INGREDIENT: 하나의 RECIPE_INGREDIENT는 반드시 하나의 RECIPE에 의존하며, 하나의 RECIPE는 하나 이상의 RECIPE_INGREDIENT에 연결된다.
+- RECIPE_INGREDIENT←INGREDIENT: 하나의 RECIPE_INGREDIENT는 반드시 하나의 INGREDIENT에 의존하며, 하나의 INGREDIENT는 여러 RECIPE_INGREDIENT에 연결될 수도, 안될 수도 있다.
 
 **INGREDIENT - STOCK**
 
-- 1:N 관계 (Mandatory One, Optional Many)
-- 둘 다 strong entity (non-identifying relationship)
+- STOCK은 반드시 하나의 INGREDIENT에 의존하며, 하나의 INGREDIENT는 여러 STOCK과 연결될 수도, 안될 수도 있다.
 
 **INGREDIENT - NUTRITION**
 
-- 1:1 관계 (Mandatory One, Mandatory One)
-- 둘 다 strong entity (non-identifying relationship)
+- INGREDIENT는 반드시 하나의 NUTRITION에 의존하며, 하나의 NUTRITION도 반드시 하나의 INGREDIENT에 의존한다.
 
 **SUPPLIER - INGREDIENT**
 
-- 1:N 관계 (Mandatory One, Mandatory Many)
-- 둘 다 strong entity (non-identifying relationship)
+- 하나의 INGREDIENT는 하나의 SUPPLIER에 의존하고, 하나의 SUPPLIER는 하나 이상의 INGREDIENT와 연결될 수 있다.
 
 **SUPPLIER - SUPPLIER_CONTRACT**
 
-- 1:N 관계 (Mandatory One, Mandatory Many)
-- 둘 다 strong entity (non-identifying relationship)
+- 하나의 SUPPLIER는 하나 이상의 SUPPLIER_CONTRACT와 연결될 수 있고, SUPPLIER_CONTRACT는 반드시 하나의 SUPPLIER와 연결된다.
 
 ## 그외 요구사항
 
