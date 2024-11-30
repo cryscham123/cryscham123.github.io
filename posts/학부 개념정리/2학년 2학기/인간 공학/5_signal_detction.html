@@ -537,16 +537,25 @@ window.Quarto = {
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
-  <li><a href="#what-does-it-mean-to-detect" id="toc-what-does-it-mean-to-detect" class="nav-link" data-scroll-target="#what-does-it-mean-to-detect">What does it mean to detect?</a></li>
   <li><a href="#signal-detection-theory" id="toc-signal-detection-theory" class="nav-link" data-scroll-target="#signal-detection-theory">Signal Detection Theory</a>
   <ul class="collapse">
+  <li><a href="#what-does-it-mean-to-detect" id="toc-what-does-it-mean-to-detect" class="nav-link" data-scroll-target="#what-does-it-mean-to-detect">What does it mean to detect?</a></li>
   <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#distribution-of-signal-and-noise" id="toc-distribution-of-signal-and-noise" class="nav-link" data-scroll-target="#distribution-of-signal-and-noise">Distribution of signal and noise</a></li>
+  </ul></li>
+  <li><a href="#distribution-of-signal-and-noise" id="toc-distribution-of-signal-and-noise" class="nav-link" data-scroll-target="#distribution-of-signal-and-noise">Distribution of signal and noise</a>
+  <ul class="collapse">
   <li><a href="#d-계산" id="toc-d-계산" class="nav-link" data-scroll-target="#d-계산">d′ 계산</a></li>
   <li><a href="#β-계산" id="toc-β-계산" class="nav-link" data-scroll-target="#β-계산">β 계산</a></li>
   <li><a href="#λ_center-계산" id="toc-λ_center-계산" class="nav-link" data-scroll-target="#λ_center-계산"><span class="math inline">\(λ_{center}\)</span> 계산</a></li>
   </ul></li>
   <li><a href="#optimal-response-criterion" id="toc-optimal-response-criterion" class="nav-link" data-scroll-target="#optimal-response-criterion">Optimal Response Criterion</a></li>
+  <li><a href="#sluggish-β" id="toc-sluggish-β" class="nav-link" data-scroll-target="#sluggish-β">Sluggish β</a></li>
+  <li><a href="#roc-curve" id="toc-roc-curve" class="nav-link" data-scroll-target="#roc-curve">ROC Curve</a></li>
+  <li><a href="#signal-detection-performance" id="toc-signal-detection-performance" class="nav-link" data-scroll-target="#signal-detection-performance">Signal Detection Performance</a>
+  <ul class="collapse">
+  <li><a href="#response-bias-β" id="toc-response-bias-β" class="nav-link" data-scroll-target="#response-bias-β">Response Bias (β)</a></li>
+  <li><a href="#sensitivity-d" id="toc-sensitivity-d" class="nav-link" data-scroll-target="#sensitivity-d">Sensitivity (d′)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -614,14 +623,6 @@ phantoms vibration</li>
 </ul>
 <p>주변의 제품, 서비스 문제 파악, 해결 디자인 제시, 검증</p>
 </section>
-<section id="what-does-it-mean-to-detect" class="level2">
-<h2 class="anchored" data-anchor-id="what-does-it-mean-to-detect">What does it mean to detect?</h2>
-<ul>
-<li><p>signal is <code>digital (exist / not exist)</code></p></li>
-<li><p>Absolute threshold is exist =&gt; <code>where the threshold?</code></p></li>
-<li><p>signal vs noise</p></li>
-</ul>
-</section>
 <section id="signal-detection-theory" class="level2">
 <h2 class="anchored" data-anchor-id="signal-detection-theory">Signal Detection Theory</h2>
 <ul>
@@ -638,32 +639,41 @@ phantoms vibration</li>
 </ul>
 <p><img src="../../../../img/signal-detection.png" class="img-fluid"></p>
 <ul>
-<li><strong>Hit rate</strong>: P(Hit) = Number of Hits / Number of Signal Trials</li>
-<li><strong>False alarm rate</strong>: P(FA) = Number of False Alarms / Number of Noise Trials</li>
-<li><strong>Miss rate</strong>: P(Miss) = 1 - P(Hit)</li>
-<li><strong>Correct rejection rate</strong>: P(CR) = 1 - P(FA)</li>
+<li><code>Hit rate</code>: P(Hit) = Number of Hits / Number of Signal Trials</li>
+<li><code>False alarm rate</code>: P(FA) = Number of False Alarms / Number of Noise Trials</li>
+<li><code>Miss rate</code>: P(Miss) = 1 - P(Hit)</li>
+<li><code>Correct rejection rate</code>: P(CR) = 1 - P(FA)</li>
 </ul>
+<section id="what-does-it-mean-to-detect" class="level3">
+<h3 class="anchored" data-anchor-id="what-does-it-mean-to-detect">What does it mean to detect?</h3>
+<ul>
+<li>signal is <code>digital (exist / not exist)</code></li>
+<li>Absolute threshold is exist</li>
+</ul>
+</section>
 <section id="assumptions" class="level3">
 <h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
 <ul>
-<li>사용자가 관찰할 수 있는 근거는 숫자나 변수로 표현할 수 있어야함 (<code>유사도</code>)</li>
-<li>evidence는 random variation이 있다</li>
-<li>simple decision criterion으로 결정할 수 있어야함</li>
+<li>관찰자가 관찰할 수 있는 signal은 숫자나 변수로 표현할 수 있어야함 (<code>유사도</code>)</li>
+<li>signal이 random variation이 있다</li>
+<li>피험자가 signal이 있는지 없는지 단순하게 표시할 수 있다.</li>
 </ul>
 </section>
-<section id="distribution-of-signal-and-noise" class="level3">
-<h3 class="anchored" data-anchor-id="distribution-of-signal-and-noise">Distribution of signal and noise</h3>
+</section>
+<section id="distribution-of-signal-and-noise" class="level2">
+<h2 class="anchored" data-anchor-id="distribution-of-signal-and-noise">Distribution of signal and noise</h2>
 <p><img src="../../../../img/distribution.png" class="img-fluid"></p>
 <ul>
-<li>sensitivity index (d’)
+<li><code>sensitivity index (d')</code>
 <ul>
 <li>값이 작으면 분간 힘듦</li>
 <li>값이 크면 분간 쉬움</li>
+<li>signal의 성격에 따라 결정됨</li>
 </ul></li>
-<li>response bias (β)
+<li><code>response bias (β)</code>
 <ul>
 <li>criterion에 따라 yes라고 대답하는 비중과 no라고 대답하는 비중</li>
-<li>분포가 아니라 평가자에 따라 다름</li>
+<li>평가자에 따라 결정됨</li>
 </ul></li>
 <li>d′이 0, β가 50%면 그냥 랜덤으로 대답한 것과 같음</li>
 <li>d′을 넓게 하는게 objective
@@ -672,19 +682,21 @@ phantoms vibration</li>
 <li>각각의 분포의 variability를 줄임. (specificity)</li>
 </ol></li>
 </ul>
-</section>
 <section id="d-계산" class="level3">
 <h3 class="anchored" data-anchor-id="d-계산">d′ 계산</h3>
-<p>d′ lambda 구하고, 어떤 성향인지 이런거 시험 나온단다</p>
+<ol type="1">
+<li>P(M), P(CR) 계산</li>
+<li>표준 정규분포를 그림</li>
+<li>M과 CR의 z값을 찾음</li>
+<li>d′ = (0 - z(M)) + (z(CR) - 0)</li>
+</ol>
 </section>
 <section id="β-계산" class="level3">
 <h3 class="anchored" data-anchor-id="β-계산">β 계산</h3>
 <ul>
 <li>d′과 관계 없이 조절<br>
 </li>
-<li><span class="math inline">\(β = \frac{P(X/(S+N))}{P(X/N)}\)</span></li>
-<li><span class="math inline">\(β = \frac{f_s(λ)}{f_n(λ)}\)</span><br>
-<span class="math inline">\(\ln β = d′(λ - \frac{1}{2}d′) = d′λ_{center}\)</span></li>
+<li><span class="math inline">\(β = \frac{P(X/(S+N))}{P(X/N)}\)</span> <span class="math inline">\(\ln β = d′λ_{center}\)</span></li>
 <li>β ~ 1: neutral</li>
 </ul>
 </section>
@@ -702,13 +714,55 @@ ex) 억울한 죄인을 만들지 않으려는 범원 판결</li>
 </section>
 <section id="optimal-response-criterion" class="level2">
 <h2 class="anchored" data-anchor-id="optimal-response-criterion">Optimal Response Criterion</h2>
+<p>signal이 더 많은 환경, noise가 더 많은 환경이 있음. 즉, <code>probability</code>가 다를 수 있음</p>
+<p>또, <code>Effects of payoffs</code>가 있음</p>
 <ul>
-<li>Influenced by <code>Signal Probability</code> and <code>payoffs</code></li>
-<li>Signal Probability: P(signal)</li>
+<li>signal이 많은 환경 -&gt; criterion을 낮추는게 좋음. <span class="math inline">\(β_{opt} &lt; 1\)</span></li>
+<li>noise가 많은 환경 -&gt; criterion을 높이는게 좋음. <span class="math inline">\(β_{opt} &gt; 1\)</span></li>
 <li><span class="math inline">\(β_{opt} = \frac{P(N)}{P(S)} * \frac{V(CR) + C(FA)}{V(H) + C(M)}\)</span></li>
+</ul>
+</section>
+<section id="sluggish-β" class="level2">
+<h2 class="anchored" data-anchor-id="sluggish-β">Sluggish β</h2>
+<p><img src="img/2024-11-30-12-05-00.png" class="img-fluid"></p>
+<ul>
+<li><span class="math inline">\(β_{opt}\)</span>가 높은 경우, ideal보다 덜 risky함.</li>
+<li><span class="math inline">\(β_{opt}\)</span>가 낮은 경우, ideal보다 덜 conservative함.</li>
+<li>확률에 의해 b가 조정될 때 더 많이 발생함.
+<ul>
+<li>확률에 대한 계산이 잘못되는 경우</li>
+<li>평가자가 반복되는 반응에 bored해지는 경우</li>
+</ul></li>
+</ul>
+</section>
+<section id="roc-curve" class="level2">
+<h2 class="anchored" data-anchor-id="roc-curve">ROC Curve</h2>
+<p><img src="img/2024-11-30-12-12-28.png" class="img-fluid"></p>
+</section>
+<section id="signal-detection-performance" class="level2">
+<h2 class="anchored" data-anchor-id="signal-detection-performance">Signal Detection Performance</h2>
+<section id="response-bias-β" class="level3">
+<h3 class="anchored" data-anchor-id="response-bias-β">Response Bias (β)</h3>
+<ul>
+<li>잘 맞추면 보상을 준다</li>
+<li>false signals to raise signal rate</li>
+<li>False Alarm에서도 incentive를 준다.</li>
+</ul>
+</section>
+<section id="sensitivity-d" class="level3">
+<h3 class="anchored" data-anchor-id="sensitivity-d">Sensitivity (d′)</h3>
+<ul>
+<li>give feedback</li>
+<li>signal을 조금 더 오래 보여줌</li>
+<li>signal을 강조</li>
+<li>signal을 움직이게</li>
+<li>휴식 시간을 충분히 줌</li>
+<li>signal이 어떠넌지 잘 보여줌</li>
+<li>온갖 감각으로 signal을 보여줌</li>
 </ul>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
