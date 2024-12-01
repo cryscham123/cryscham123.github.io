@@ -2256,6 +2256,76 @@ font-style: inherit;">6</span>)</span></code></pre></div>
   <pubDate>Sun, 03 Nov 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Database Design</title>
+  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="purpose-of-a-database-design" class="level2">
+<h2 class="anchored" data-anchor-id="purpose-of-a-database-design">Purpose of a Database Design</h2>
+<p>set of database specifications that can be implemented as a database in a DBMS</p>
+<ul>
+<li><code>conceptual design</code>: non-DBMS specific</li>
+<li><code>logical design</code>: DBMS specific</li>
+<li><code>physical design</code>: DBMS specific but not implemented directly by humans</li>
+</ul>
+</section>
+<section id="logical-designrelational-design" class="level2">
+<h2 class="anchored" data-anchor-id="logical-designrelational-design">Logical Design(<code>Relational</code> Design)</h2>
+<ol type="1">
+<li>Create a table(relation) for each entity</li>
+</ol>
+<ul>
+<li>specify primary key</li>
+<li>specify <code>properties</code> for each column
+<ul>
+<li>data type</li>
+<li>constraints</li>
+<li>default value</li>
+<li>null status</li>
+</ul></li>
+<li>verify <code>normalization</code></li>
+</ul>
+<ol start="2" type="1">
+<li>Create relationships by placing foreign keys:</li>
+</ol>
+<ul>
+<li>Strong entity relationships</li>
+<li>ID-dependent / non-ID-dependent weak entity relationships</li>
+<li>Subtypes</li>
+<li>Recursive</li>
+</ul>
+</section>
+<section id="denormalization" class="level2">
+<h2 class="anchored" data-anchor-id="denormalization"><code>Denormalization</code></h2>
+<ul>
+<li>Normalization 반대로 함</li>
+<li>조회시 성능 향성, 조인 불필요 감소 목적</li>
+</ul>
+</section>
+<section id="representing-relationships" class="level2">
+<h2 class="anchored" data-anchor-id="representing-relationships">Representing Relationships</h2>
+<p><code>Maximum cardinality</code>의 유형에 따라 관계 표현 방법이 달라짐</p>
+<ul>
+<li><code>1:1</code>: <code>foreign key</code>를 어디에 두어도 상관 없음</li>
+<li><code>1:N</code>: many 쪽에 <code>foreign key</code>를 두는 것이 일반적<br>
+1 side is called <code>parent</code>, many side is called <code>child</code></li>
+<li><code>M:N</code>: <code>intersection table</code>을 사용하여 표현<br>
+intersection table에는 두 entity의 primary key를 포함하는 composite key를 가짐</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>개념 정리</category>
+  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09.html</guid>
+  <pubDate>Wed, 30 Oct 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Database Design2</title>
   <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/10-2.html</link>
   <description><![CDATA[ 
@@ -2350,76 +2420,6 @@ font-style: inherit;">BY</span> i.IngredientID;</span></code></pre></div>
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>개념 정리</category>
   <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/10-2.html</guid>
-  <pubDate>Wed, 30 Oct 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Database Design</title>
-  <link>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09-2.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="purpose-of-a-database-design" class="level2">
-<h2 class="anchored" data-anchor-id="purpose-of-a-database-design">Purpose of a Database Design</h2>
-<p>set of database specifications that can be implemented as a database in a DBMS</p>
-<ul>
-<li><code>conceptual design</code>: non-DBMS specific</li>
-<li><code>logical design</code>: DBMS specific</li>
-<li><code>physical design</code>: DBMS specific but not implemented directly by humans</li>
-</ul>
-</section>
-<section id="logical-designrelational-design" class="level2">
-<h2 class="anchored" data-anchor-id="logical-designrelational-design">Logical Design(<code>Relational</code> Design)</h2>
-<ol type="1">
-<li>Create a table(relation) for each entity</li>
-</ol>
-<ul>
-<li>specify primary key</li>
-<li>specify <code>properties</code> for each column
-<ul>
-<li>data type</li>
-<li>constraints</li>
-<li>default value</li>
-<li>null status</li>
-</ul></li>
-<li>verify <code>normalization</code></li>
-</ul>
-<ol start="2" type="1">
-<li>Create relationships by placing foreign keys:</li>
-</ol>
-<ul>
-<li>Strong entity relationships</li>
-<li>ID-dependent / non-ID-dependent weak entity relationships</li>
-<li>Subtypes</li>
-<li>Recursive</li>
-</ul>
-</section>
-<section id="denormalization" class="level2">
-<h2 class="anchored" data-anchor-id="denormalization"><code>Denormalization</code></h2>
-<ul>
-<li>Normalization 반대로 함</li>
-<li>조회시 성능 향성, 조인 불필요 감소 목적</li>
-</ul>
-</section>
-<section id="representing-relationships" class="level2">
-<h2 class="anchored" data-anchor-id="representing-relationships">Representing Relationships</h2>
-<p><code>Maximum cardinality</code>의 유형에 따라 관계 표현 방법이 달라짐</p>
-<ul>
-<li><code>1:1</code>: <code>foreign key</code>를 어디에 두어도 상관 없음</li>
-<li><code>1:N</code>: many 쪽에 <code>foreign key</code>를 두는 것이 일반적<br>
-1 side is called <code>parent</code>, many side is called <code>child</code></li>
-<li><code>M:N</code>: <code>intersection table</code>을 사용하여 표현<br>
-intersection table에는 두 entity의 primary key를 포함하는 composite key를 가짐</li>
-</ul>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>개념 정리</category>
-  <guid>https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09-2.html</guid>
   <pubDate>Wed, 30 Oct 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
