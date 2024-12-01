@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Control에 대해 알아봅니다">
+<meta name="description" content="Database Design">
 
-<title>Control – 김형훈의 학습 블로그</title>
+<title>Database Design – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,8 +26,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/인간공학-보고서-초안.pdf" rel="next">
-<link href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/7_display.html" rel="prev">
+<link href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/10-2.html" rel="next">
+<link href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/07.html" rel="prev">
 <link href="../../../../favicon" rel="icon">
 <script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../site_libs/quarto-html/quarto.js"></script>
@@ -55,35 +55,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
@@ -110,7 +81,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html">인간 공학</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/8_control.html">Control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/01-2.html">데이터베이스설계및활용</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09.html">Database Design</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -239,13 +210,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
  <span class="menu-text">데이터베이스설계및활용</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/01-2.html" class="sidebar-item-text sidebar-link">
@@ -278,7 +249,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Database Design</span></a>
   </div>
 </li>
@@ -387,13 +358,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
  <span class="menu-text">인간 공학</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 show">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html" class="sidebar-item-text sidebar-link">
@@ -444,7 +415,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/8_control.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/8_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Control</span></a>
   </div>
 </li>
@@ -535,34 +506,27 @@ window.Quarto = {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#basic-control-task-and-device" id="toc-basic-control-task-and-device" class="nav-link active" data-scroll-target="#basic-control-task-and-device">Basic Control Task and Device</a></li>
-  <li><a href="#principles-to-design-of-control-device" id="toc-principles-to-design-of-control-device" class="nav-link" data-scroll-target="#principles-to-design-of-control-device">15 principles to design of control device</a>
-  <ul class="collapse">
-  <li><a href="#attention-principles" id="toc-attention-principles" class="nav-link" data-scroll-target="#attention-principles">Attention principles</a></li>
-  <li><a href="#perceptual-principles" id="toc-perceptual-principles" class="nav-link" data-scroll-target="#perceptual-principles">Perceptual principles</a></li>
-  <li><a href="#memory-principles" id="toc-memory-principles" class="nav-link" data-scroll-target="#memory-principles">Memory Principles</a></li>
-  <li><a href="#mental-model-principles" id="toc-mental-model-principles" class="nav-link" data-scroll-target="#mental-model-principles">Mental model principles</a></li>
-  <li><a href="#population-stereotypes" id="toc-population-stereotypes" class="nav-link" data-scroll-target="#population-stereotypes">Population Stereotypes</a></li>
-  <li><a href="#response-selection-principles" id="toc-response-selection-principles" class="nav-link" data-scroll-target="#response-selection-principles">Response selection principles</a></li>
-  </ul></li>
+  <li><a href="#purpose-of-a-database-design" id="toc-purpose-of-a-database-design" class="nav-link active" data-scroll-target="#purpose-of-a-database-design">Purpose of a Database Design</a></li>
+  <li><a href="#logical-designrelational-design" id="toc-logical-designrelational-design" class="nav-link" data-scroll-target="#logical-designrelational-design">Logical Design(<code>Relational</code> Design)</a></li>
+  <li><a href="#denormalization" id="toc-denormalization" class="nav-link" data-scroll-target="#denormalization"><code>Denormalization</code></a></li>
+  <li><a href="#representing-relationships" id="toc-representing-relationships" class="nav-link" data-scroll-target="#representing-relationships">Representing Relationships</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/0_intro.html">인간 공학</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/8_control.html">Control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">학부 개념정리</li><li class="breadcrumb-item">2학년 2학기</li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/01-2.html">데이터베이스설계및활용</a></li><li class="breadcrumb-item"><a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/09.html">Database Design</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Control</h1>
+<h1 class="title">Database Design</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">인간 공학</div>
     <div class="quarto-category">개념 정리</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Control에 대해 알아봅니다
+    Database Design
   </div>
 </div>
 
@@ -573,7 +537,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024년 11월 21일</p>
+      <p class="date">2024년 10월 31일</p>
     </div>
   </div>
   
@@ -585,144 +549,61 @@ window.Quarto = {
 </header>
 
 
-<p><img src="../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="basic-control-task-and-device" class="level2">
-<h2 class="anchored" data-anchor-id="basic-control-task-and-device">Basic Control Task and Device</h2>
-<p><img src="img/2024-11-29-13-19-54.png" class="img-fluid"></p>
-<p><img src="img/2024-11-29-13-20-07.png" class="img-fluid"></p>
+<p><img src="../../../../img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="purpose-of-a-database-design" class="level2">
+<h2 class="anchored" data-anchor-id="purpose-of-a-database-design">Purpose of a Database Design</h2>
+<p>set of database specifications that can be implemented as a database in a DBMS</p>
 <ul>
-<li>상태를 체크할 때는 toggle switch, 눌렀다 떼는 건 push button</li>
-<li>레버도 상태를 체크할 때 사용. 그 중 큰 힘이 필요한 경우. continuous setting에서는 slider가 쓰임</li>
-<li>selector switch는 lever랑은 다르게 discrete한 상태가 있음 (선풍기 버튼)</li>
-<li>조이스틱은 보통 가속도(2D, 멀리 밀면 빨리 가는 애)를 제어하거나 속도(1D, 버튼 조이스틱)를 제어하는데 사용. 마우스는 위치를 제어.</li>
+<li><code>conceptual design</code>: non-DBMS specific</li>
+<li><code>logical design</code>: DBMS specific</li>
+<li><code>physical design</code>: DBMS specific but not implemented directly by humans</li>
 </ul>
 </section>
-<section id="principles-to-design-of-control-device" class="level2">
-<h2 class="anchored" data-anchor-id="principles-to-design-of-control-device">15 principles to design of control device</h2>
-<section id="attention-principles" class="level3">
-<h3 class="anchored" data-anchor-id="attention-principles">Attention principles</h3>
-<section id="proximity-compatibility" class="level4">
-<h4 class="anchored" data-anchor-id="proximity-compatibility">Proximity compatibility</h4>
+<section id="logical-designrelational-design" class="level2">
+<h2 class="anchored" data-anchor-id="logical-designrelational-design">Logical Design(<code>Relational</code> Design)</h2>
+<ol type="1">
+<li>Create a table(relation) for each entity</li>
+</ol>
 <ul>
-<li>컨트롤 하고자 하는 대상과 컨트롤이 <code>가까워야</code> 한다.</li>
-<li>비상 스위치는 가까이 있어야 한다.</li>
+<li>specify primary key</li>
+<li>specify <code>properties</code> for each column
+<ul>
+<li>data type</li>
+<li>constraints</li>
+<li>default value</li>
+<li>null status</li>
+</ul></li>
+<li>verify <code>normalization</code></li>
+</ul>
+<ol start="2" type="1">
+<li>Create relationships by placing foreign keys:</li>
+</ol>
+<ul>
+<li>Strong entity relationships</li>
+<li>ID-dependent / non-ID-dependent weak entity relationships</li>
+<li>Subtypes</li>
+<li>Recursive</li>
 </ul>
 </section>
-<section id="avoid-resource-competition" class="level4">
-<h4 class="anchored" data-anchor-id="avoid-resource-competition">Avoid resource competition</h4>
+<section id="denormalization" class="level2">
+<h2 class="anchored" data-anchor-id="denormalization"><code>Denormalization</code></h2>
 <ul>
-<li>같은 physical or cognitive resource를 사용하는 control은 피해야한다.<br>
-ex) 레버로 속도, 방향 모두 제어</li>
+<li>Normalization 반대로 함</li>
+<li>조회시 성능 향성, 조인 불필요 감소 목적</li>
 </ul>
 </section>
-</section>
-<section id="perceptual-principles" class="level3">
-<h3 class="anchored" data-anchor-id="perceptual-principles">Perceptual principles</h3>
-<section id="make-accessible" class="level4">
-<h4 class="anchored" data-anchor-id="make-accessible">Make accessible</h4>
+<section id="representing-relationships" class="level2">
+<h2 class="anchored" data-anchor-id="representing-relationships">Representing Relationships</h2>
+<p><code>Maximum cardinality</code>의 유형에 따라 관계 표현 방법이 달라짐</p>
 <ul>
-<li>physical accessibility: 손이 닿아야 한다.</li>
-<li>cognitive accessibility: 뭐 하는 control인지 이해하기 쉬워야 한다.<br>
-ex) 미는 손잡이는 flat하게 만든다.</li>
-<li>다양한 환경을 고려해야한다. (빛이나 소음이 많은 환경)</li>
+<li><code>1:1</code>: <code>foreign key</code>를 어디에 두어도 상관 없음</li>
+<li><code>1:N</code>: many 쪽에 <code>foreign key</code>를 두는 것이 일반적<br>
+1 side is called <code>parent</code>, many side is called <code>child</code></li>
+<li><code>M:N</code>: <code>intersection table</code>을 사용하여 표현<br>
+intersection table에는 두 entity의 primary key를 포함하는 composite key를 가짐</li>
 </ul>
-</section>
-<section id="make-discriminable" class="level4">
-<h4 class="anchored" data-anchor-id="make-discriminable">Make discriminable</h4>
-<ul>
-<li>visual differentiation: 각각의 컨트롤 장비를 구분할 수 있게</li>
-<li>logical grouping: 비슷한 기능을 하는 것끼리 묶어놓기</li>
-</ul>
-</section>
-<section id="exploit활용-redundancy-gain" class="level4">
-<h4 class="anchored" data-anchor-id="exploit활용-redundancy-gain">Exploit(활용) redundancy gain</h4>
-<ul>
-<li>두개의 독립적인 정보를 제공하면 성능이 좋아진다.</li>
-<li>한 가지 정보가 없어도 다른 정보로 대체할 수 있다.</li>
-</ul>
-</section>
-<section id="avoid-absolute-judgement-limits" class="level4">
-<h4 class="anchored" data-anchor-id="avoid-absolute-judgement-limits">Avoid absolute judgement limits</h4>
-<ul>
-<li>working memory limit(7)를 넘기지 말라.</li>
-<li>continuous vs with detents: 연속적인 조절에서 anchor point를 만들어주면 좋다.</li>
-</ul>
-</section>
-</section>
-<section id="memory-principles" class="level3">
-<h3 class="anchored" data-anchor-id="memory-principles">Memory Principles</h3>
-<section id="knowledge-in-the-world" class="level4">
-<h4 class="anchored" data-anchor-id="knowledge-in-the-world">Knowledge in the world</h4>
-<p>보편적으로 아는 표현을 사용</p>
-</section>
-<section id="be-consistent" class="level4">
-<h4 class="anchored" data-anchor-id="be-consistent">Be consistent</h4>
-<ul>
-<li>다른 상황에서도 예상 가능하고 일정한 방법으로 control이 가능해야한다.</li>
-</ul>
-<p><img src="img/2024-11-29-14-56-01.png" class="img-fluid"></p>
-<ul>
-<li>make discriminable vs be consistent</li>
-</ul>
-</section>
-</section>
-<section id="mental-model-principles" class="level3">
-<h3 class="anchored" data-anchor-id="mental-model-principles">Mental model principles</h3>
-<section id="location-compatibility" class="level4">
-<h4 class="anchored" data-anchor-id="location-compatibility">Location Compatibility</h4>
-<ul>
-<li>Spatial Compatibility / physical similarity</li>
-</ul>
-</section>
-<section id="movement-compatibility" class="level4">
-<h4 class="anchored" data-anchor-id="movement-compatibility">Movement Compatibility</h4>
-<p><img src="img/2024-11-29-15-02-28.png" class="img-fluid"></p>
-</section>
-</section>
-<section id="population-stereotypes" class="level3">
-<h3 class="anchored" data-anchor-id="population-stereotypes">Population Stereotypes</h3>
-<ul>
-<li>rotary controls: 시계방향으로 돌리면 커진다</li>
-<li>Up is on</li>
-<li>Increase is right, Forward is faster</li>
-</ul>
-</section>
-<section id="response-selection-principles" class="level3">
-<h3 class="anchored" data-anchor-id="response-selection-principles">Response selection principles</h3>
-<section id="avoid-accidental-activation" class="level4">
-<h4 class="anchored" data-anchor-id="avoid-accidental-activation">Avoid accidental activation</h4>
-<ul>
-<li>사고로 눌리는 것을 방지해야한다.</li>
-</ul>
-</section>
-<section id="hick-hyman-law" class="level4">
-<h4 class="anchored" data-anchor-id="hick-hyman-law">Hick-Hyman Law</h4>
-<p><span class="math inline">\(RT = a + b \log_2(n+1)\)</span><br>
-N is the number of choices<br>
-종류가 많아져도 그냥 몇개만 고민함</p>
-</section>
-<section id="decision-complexity-advantage" class="level4">
-<h4 class="anchored" data-anchor-id="decision-complexity-advantage">Decision complexity advantage</h4>
-<ul>
-<li>일반적으로 복잡한 선택을 적게 하는게 간단한 선택을 여러번 하는것보다 효율적이다</li>
-</ul>
-</section>
-<section id="fitts-law" class="level4">
-<h4 class="anchored" data-anchor-id="fitts-law">Fitt’s Law</h4>
-<p><img src="img/2024-11-29-15-16-54.png" class="img-fluid"></p>
-<ul>
-<li>Index of Difficulty: <span class="math inline">\(ID = \log_2(\frac{2A}{W})\)</span></li>
-<li>Movement Time: <span class="math inline">\(MT = a + bID\)</span></li>
-</ul>
-<p>avoid accidental vs Fitt’s Law - target width가 구석에 있으면 width가 무한대가 된다.</p>
-</section>
-<section id="provide-feedback" class="level4">
-<h4 class="anchored" data-anchor-id="provide-feedback">provide feedback</h4>
-<p>touch screen은 haptic feedback이 없어서 불편함</p>
 
 
-</section>
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
@@ -1152,13 +1033,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/7_display.html" class="pagination-link" aria-label="Display">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Display</span>
+      <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/07.html" class="pagination-link" aria-label="Data Modeling and the Entity-Relationship Model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data Modeling and the Entity-Relationship Model</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/인간 공학/인간공학-보고서-초안.pdf" class="pagination-link" aria-label="인간공학 기말 4조 보고서">
-        <span class="nav-page-text">인간공학 기말 4조 보고서</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/10-2.html" class="pagination-link" aria-label="Database Design2">
+        <span class="nav-page-text">Database Design2</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
