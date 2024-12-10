@@ -7,80 +7,70 @@ description: "ASP.NET"
 
 ![](/img/db-thumb.jpg){.post-thumbnail}
 
-## The Database Processing Environment
-
-1. Multiple users
-2. Multiple Queries, multiple forms, multiple reports
-3. Multiple application programs
-
-<!-- 사진 넣어주세요 -->
-
 ## 3-Tier Layers of Database System
 
-## Web-based Database System
+- presentation layer: user interface
+- application layer: web server(`IIS`)
+- `data` layer: database server
+
+![](img/2024-12-10-08-08-56.png)
 
 ## API Interface Standards for DB Access
 
-## OBDC
+DBMS에 접근하기 위한 표준 API
 
-## ODBC Three-Tier Web Server Architecture
+- `ODBC`
+   Open Database Connectivity  
+   DBMS-independent API
 
-## ODBC Connected Applications
+- `JDBC`: Java Database Connectivity
 
-## Creating ODBC Data Sources
-
-## Creating an ODBC Data Source
-
-## The Completed ODBC Data Source
-
-## Typlical Web & DB Server Setups
-
-## Internet Information Server (IIS) 설치
-
-## ISS: The www root Folder
-
-## The IIS Localstart Web Page
-
-## IIS 관리자 실행
-
-## IIS 기본 문서 설정
-
-## 참고: ASP IIS 설정 - 브라우저에 오류 전송
-
-## 참고: ASP IIS 설정 - 오류 페이지 설정
-
-## HTML
-
-## Understand web pages
-
-## View HTML sources
-
-## My First Web Page
-
-## Basic Structure of HTML documents
-
-## Header and Styling
-
-## Accessing My First Web Page via IIS
-
-## 관리자 권한으로 메모장 실행
-
-## HTML
-
-## HTML Tables
-
-## HTML Forms
-
-## HTML Links - Hyperlinks
+```html
+<a target="_blank">
+```
 
 ## ASP (Active Server Pages)
 
-## ASP Syntax
+server side scripting(`VBScript`) language  
+CGI: <% %>는 server에서 실행되는 코드
 
 ## ASP 데이터베이스 연동
 
-## DB 연동 결과 & html charset 설정
+```html
+<%
+  Dim conn, connCmd, rs
+  Set connCmd = "DSN=dsn_name; Database=dbname; UID=user;PWD=password"
+  Set conn = Server.CreateObject("ADODB.Connection")
+  Set rs = Server.CreateObject("ADODB.Recordset")
+  conn.Open connCmd
+  rs.Open "SELECT * FROM table_name", conn
+%>
 
-## HTML Table Formatting
+<%
+  rs.getRows()
 
-## HSD ASP Application 구축
+  conn.Execute SQL
+%>
+```
+
+## 오류 메세지 한글 설정
+
+```html
+<meta charset="UTF-8">
+<%
+  Session.CodePage = 949
+  Response.CharSet = "euc-kr"
+  Response.AddHeader "Pragma","no-cache"
+  Response.AddHeader "cache-control", "no-staff"
+  Response.Expires = -1
+%>
+```
+
+### form tag 한글 깨짐 문제
+
+```html
+<%
+Session.CodePage="65001"
+Response.CharSet="UTF-8"
+%>
+```

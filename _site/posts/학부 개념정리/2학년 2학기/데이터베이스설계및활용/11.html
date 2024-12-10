@@ -232,6 +232,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/tmp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">반사실 주의</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work2.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4조 기말과제 제안서</span></a>
   </div>
@@ -398,7 +404,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#lock" id="toc-lock" class="nav-link" data-scroll-target="#lock">lock</a></li>
   <li><a href="#cursor" id="toc-cursor" class="nav-link" data-scroll-target="#cursor">Cursor</a></li>
   </ul></li>
-  <li><a href="#backup-and-recovery" id="toc-backup-and-recovery" class="nav-link" data-scroll-target="#backup-and-recovery"><code>Backup and recovery</code></a></li>
+  <li><a href="#backup-and-recovery" id="toc-backup-and-recovery" class="nav-link" data-scroll-target="#backup-and-recovery"><code>Backup and recovery</code></a>
+  <ul class="collapse">
+  <li><a href="#recovery" id="toc-recovery" class="nav-link" data-scroll-target="#recovery">Recovery</a></li>
+  </ul></li>
   <li><a href="#security" id="toc-security" class="nav-link" data-scroll-target="#security"><code>Security</code></a></li>
   </ul></li>
   </ul>
@@ -501,7 +510,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><code>Durable</code>: 트랜잭션이 <code>성공적으로 완료</code>되면, 그 결과는 <code>영구적으로 저장</code>되어야 한다</p></li>
 </ul></li>
 </ul>
-<p><img src="img/isolation.jpeg" class="img-fluid"></p>
+<p><img src="img/2024-12-10-08-07-45.png" class="img-fluid"></p>
 </section>
 <section id="deadlock-deadly-embrace" class="level3">
 <h3 class="anchored" data-anchor-id="deadlock-deadly-embrace"><code>Deadlock</code> / <code>deadly embrace</code></h3>
@@ -530,6 +539,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="backup-and-recovery" class="level2">
 <h2 class="anchored" data-anchor-id="backup-and-recovery"><code>Backup and recovery</code></h2>
+<section id="recovery" class="level3">
+<h3 class="anchored" data-anchor-id="recovery">Recovery</h3>
+<ul>
+<li>via <code>Reprocessing</code></li>
+<li>via <code>Rollback</code> and <code>Rollforward</code>
+<ul>
+<li><code>log file</code> transaction을 <code>undo</code>할 때, <code>before-images</code>가 존재해함. (<code>rollback</code>) transaction을 <code>redo</code>할 때, <code>after-images</code>가 존재해함.(<code>rollforward</code>)</li>
+</ul></li>
+</ul>
+</section>
 </section>
 <section id="security" class="level2">
 <h2 class="anchored" data-anchor-id="security"><code>Security</code></h2>

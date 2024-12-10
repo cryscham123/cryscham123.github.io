@@ -141,8 +141,38 @@ execute:
 
 맥도날드 키오스크의 주요 사용자층인 20~30대 젊은 층을 대상으로 실험을 진행했습니다. 대학교 온라인 커뮤니티(에브리타임)를 통해 모집된 14명의 참가자들은 다음과 같은 특성을 가지고 있습니다
 
-- **연령대**: 20~30대 대학생
-- **디지털 리터러시**: 높은 수준의 디지털 기기 활용능력 보유
+\vspace{0.5cm}
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6
+#| out-width: "100%"
+
+library(kableExtra)
+library(tidyverse)
+
+participant_stats <- tribble(
+  ~구분, ~"세부 내용",
+  "성별 분포", "남성 8명 (57.1%), 여성 6명 (42.9%)",
+  "평균 연령", "23.4세 (SD = 2.1)",
+  "키오스크 사용 빈도", "주 1회 이상 11명 (78.6%), 월 1회 이상 3명 (21.4%)",
+  "실험 그룹 배정", "기존 UI 그룹 7명, 개선 UI 그룹 7명"
+)
+
+participant_stats %>%
+  kbl(booktabs = TRUE, 
+      align = c("l", "l"),
+      col.names = c("구분", "세부 내용"),
+      caption = NULL,
+      linesep = "\\addlinespace") %>%
+  kable_styling(latex_options = c("HOLD_position", "scale_down"),
+                full_width = TRUE) %>%
+  column_spec(1, width = "7cm", bold = TRUE) %>%
+  column_spec(2, width = "10cm") %>%
+  row_spec(0, bold = TRUE, color = "black")
+```
+
+\vspace{0.5cm}
 
 실험의 신뢰도를 높이기 위해 **between-subjects design** 방식을 채택했습니다. 이는 학습 효과(intra person variability)로 인한 결과 왜곡을 방지하기 위함으로, 각 참가자는 기존 UI 또는 개선된 UI 중 하나만을 체험하도록 설계했습니다.
 

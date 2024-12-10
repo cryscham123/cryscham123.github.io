@@ -249,15 +249,21 @@ N is the number of choices<br>
 <p>독립적이고 동일한 확률분포(iid)를 가진 확률변수들의 집합</p>
 <p>통계량: 확률변수들의 함수 (표본 평균, 표본 분산: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bn-1%7D%5Csum_%7Bi=1%7D%5E%7Bn%7D(X_i%20-%20%5Cbar%7BX%7D)%5E2">))</p>
 <p>추정량: 표본을 이용해 모수를 추정하는 통계량</p>
+<p>모집단의 분포와 관계없이, 모집단의 평균이 μ이고, 분산이 <img src="https://latex.codecogs.com/png.latex?%CF%83%5E2">이면, <img src="https://latex.codecogs.com/png.latex?%5Cbar%7BX%7D">의 평균은 μ이고, 분산은 <img src="https://latex.codecogs.com/png.latex?%CF%83%5E2/n">이다.</p>
+<p>정규 모집단이 아닐 경우<br>
+<img src="https://latex.codecogs.com/png.latex?n%20%5Cgeq%2030"> 이면 중심극한정리에 의해 <img src="https://latex.codecogs.com/png.latex?%5Cbar%7BX%7D">는 정규분포에 근사됨. (모집단의 skewed에 따라 더 큰 n이 필요할 수 있음)<br>
+∴ <img src="https://latex.codecogs.com/png.latex?%5Cbar%7BX%7D%20%5Csim%20N(%CE%BC,%20%5Cfrac%7B%CF%83%5E2%7D%7Bn%7D),%20%5Cfrac%7B%5Cbar%7BX%7D%20-%20%CE%BC%7D%7B%CF%83/%5Csqrt%7Bn%7D%7D%20%5Csim%20N(0,%201%5E2)"><br>
+모집단의 분포가 이산, 연속 분포일 때 모두 적용 가능하다.</p>
 <section id="좋은-추정량이-되기-위한-조건" class="level2">
 <h2 class="anchored" data-anchor-id="좋은-추정량이-되기-위한-조건">좋은 추정량이 되기 위한 조건</h2>
 <ol type="1">
 <li><p>불편성 (Unbiasedness) - 기본 조건</p>
 <p>추정량의 기대값이 추정하려는 모수와 같아야 함<br>
-<img src="https://latex.codecogs.com/png.latex?E(%5Chat%7BX%7D)%20=%20%CE%BC"> <img src="https://latex.codecogs.com/png.latex?E(X_1)%20=%20%CE%BC"></p></li>
+<img src="https://latex.codecogs.com/png.latex?E(%5Chat%7BX%7D)%20=%20%CE%BC"><br>
+<img src="https://latex.codecogs.com/png.latex?E(X_1)%20=%20%CE%BC"></p></li>
 <li><p>최소분산 (Minimum Variance)</p>
 <p>추정량의 분산이 가능한 작아야 함.<br>
-표본의 갯수를 늘릴수록 분산이 줄어듦<br>
+표본의 갯수를 늘릴수록 분산이 줄어들어서 더 좋은 추정량이 됨<br>
 <img src="https://latex.codecogs.com/png.latex?Var(%5Chat%7BX%7D)%20=%20%5Cfrac%7B%CF%83%5E2%7D%7Bn%7D"></p>
 <p><img src="https://latex.codecogs.com/png.latex?Var(X_1)%20=%20%5Csigma%5E2"></p></li>
 </ol>
@@ -265,26 +271,28 @@ N is the number of choices<br>
 </section>
 <section id="정규분포와-관련된-표본의-분포" class="level1">
 <h1>정규분포와 관련된 표본의 분포</h1>
-<section id="정규분포의-표본의-분포" class="level2">
-<h2 class="anchored" data-anchor-id="정규분포의-표본의-분포">정규분포의 표본의 분포</h2>
 <p>자연 발생 데이터나 관측 데이터는 정규분포에 의해 모델링 가능</p>
-<section id="분산" class="level3">
-<h3 class="anchored" data-anchor-id="분산">분산</h3>
+<section id="표본평균의-분포" class="level2">
+<h2 class="anchored" data-anchor-id="표본평균의-분포">표본평균의 분포</h2>
+</section>
+<section id="표본분산의-분포" class="level2">
+<h2 class="anchored" data-anchor-id="표본분산의-분포">표본분산의 분포</h2>
 <p>정규분포로 부터 추출된 표본의 <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi=1%7D%5E%7Bn%7D%20Z%5E2">은 자유도가 n인 카이제곱분포를 따름</p>
 <p>정규분포로 부터 추출된 표본의 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B(n-1)s%5E2%7D%7B%5Csigma%5E2%7D">은 자유도가 n-1인 카이제곱분포를 따름</p>
 </section>
 </section>
-</section>
-<section id="모집단의-분포를-모를-때" class="level1">
-<h1>모집단의 분포를 모를 때</h1>
+<section id="모집단의-분산을-모를-때" class="level1">
+<h1>모집단의 분산을 모를 때</h1>
 <section id="평균" class="level2">
 <h2 class="anchored" data-anchor-id="평균">평균</h2>
 <p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5Chat%7BX%7D%20-%20%CE%BC%7D%7Bs/%5Csqrt%7Bn%7D%7D"> t-분포를 따름</p>
 <p>T분포: 표준 정규분포 Z, 자유도가 n인 카이제곱분포가 서로 독립일 때 <img src="https://latex.codecogs.com/png.latex?T=%5Cfrac%7BZ%7D%7B%5Csqrt%7BY/n%7D%7D"></p>
 <p>T분포는 정규분포와 비슷하지만, 표본의 크기가 작을 때 정규분포보다 두꺼운 꼬리를 가짐</p>
+<p>T분포가 값이 더 작고, 신뢰도가 감소함</p>
 </section>
-<section id="분산-1" class="level2">
-<h2 class="anchored" data-anchor-id="분산-1">분산</h2>
+<section id="분산" class="level2">
+<h2 class="anchored" data-anchor-id="분산">분산</h2>
+<p>확률변수 U와 V가 자유도가 n1, n2인 카이제곱분포를 따르고 서로 독립이면, <img src="https://latex.codecogs.com/png.latex?F=%5Cfrac%7BU/n1%7D%7BV/n2%7D">는 F분포를 따름</p>
 
 
 </section>
@@ -487,7 +495,7 @@ ex) 신호등의 위치가 고정되어 있음</li>
 <section id="gamma-distribution" class="level1">
 <h1>Gamma Distribution</h1>
 <p>0보다 크고, 대칭이 아니고 왼쪽으로 치우친 분포</p>
-<p>표기: $X Γ(α,θ)e</p>
+<p>표기: <img src="https://latex.codecogs.com/png.latex?X%20%5Csim%20%CE%93(%CE%B1,%CE%B8),%20x%20%3E%200"></p>
 <p><img src="https://latex.codecogs.com/png.latex?E(x)%20=%20%CE%B1%CE%B8"></p>
 <p><img src="https://latex.codecogs.com/png.latex?Var(x)%20=%20%CE%B1%CE%B8%5E2"></p>
 <p><img src="https://latex.codecogs.com/png.latex?m(t)%20=%20%5Cfrac%7B1%7D%7B(1-%5Ctheta%20t)%5E%5Calpha%7D,%20t%20%3C%20%5Cfrac%7B1%7D%7B%5Ctheta%7D"></p>
@@ -512,6 +520,7 @@ ex) 신호등의 위치가 고정되어 있음</li>
 <p><img src="https://latex.codecogs.com/png.latex?E(x)%20=%20%5Cfrac%7B1%7D%7B%CE%BB%7D"></p>
 <p><img src="https://latex.codecogs.com/png.latex?Var(x)%20=%20%5Cfrac%7B1%7D%7B%CE%BB%5E2%7D"></p>
 <p><img src="https://latex.codecogs.com/png.latex?P(X%20%3E%20x)%20=%20e%5E%7B-%CE%BBx%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%20%3E%20x%20+%20y%20%7C%20X%20%3E%20x)%20=%20P(X%20%3E%20y)%20=%20e%5E%7B-%CE%BBy%7D"></p>
 <p>포아송분포에서의 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B%CE%BB%7D">와 동일</p>
 <p>비기억 특성을 가짐</p>
 <p>독립적으로 동일한 지수분포의 합은 감마분포 <img src="https://latex.codecogs.com/png.latex?%CE%93(n,%20%5Cfrac%7B1%7D%7B%5Clambda%7D)">를 따름</p>
@@ -998,6 +1007,17 @@ font-style: inherit;">table</span>(foriegn_key);</span></code></pre></div></li>
 <li><p>Recursive Relationship: 방향 이거 다시 보자</p>
 <p>N:M의 경우 virtual table을 생성하여 표현</p></li>
 </ul>
+<p>설문조사는</p>
+<p>descriptive statistics</p>
+<p>남녀 비율, 경험 비율 등등도 포함되어야 한다.</p>
+<p>가중 평균으로 보여준다</p>
+<p>도서관 예약 시스템</p>
+<ol type="1">
+<li>퇴설 처리 미흡</li>
+<li>좌석 이용 정보 파악</li>
+<li>앱 알림</li>
+</ol>
+<p>좌석 배치도 감이 안온다. 잔여시간도 안뜬다</p>
 
 
 </section>
@@ -1016,121 +1036,100 @@ font-style: inherit;">table</span>(foriegn_key);</span></code></pre></div></li>
 
 
 <p><img src="https://cryscham123.github.io/img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="the-database-processing-environment" class="level2">
-<h2 class="anchored" data-anchor-id="the-database-processing-environment">The Database Processing Environment</h2>
-<ol type="1">
-<li>Multiple users</li>
-<li>Multiple Queries, multiple forms, multiple reports</li>
-<li>Multiple application programs</li>
-</ol>
-<!-- 사진 넣어주세요 -->
-</section>
 <section id="tier-layers-of-database-system" class="level2">
 <h2 class="anchored" data-anchor-id="tier-layers-of-database-system">3-Tier Layers of Database System</h2>
-</section>
-<section id="web-based-database-system" class="level2">
-<h2 class="anchored" data-anchor-id="web-based-database-system">Web-based Database System</h2>
+<ul>
+<li>presentation layer: user interface</li>
+<li>application layer: web server(<code>IIS</code>)</li>
+<li><code>data</code> layer: database server</li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/img/2024-12-10-08-08-56.png" class="img-fluid"></p>
 </section>
 <section id="api-interface-standards-for-db-access" class="level2">
 <h2 class="anchored" data-anchor-id="api-interface-standards-for-db-access">API Interface Standards for DB Access</h2>
-</section>
-<section id="obdc" class="level2">
-<h2 class="anchored" data-anchor-id="obdc">OBDC</h2>
-</section>
-<section id="odbc-three-tier-web-server-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="odbc-three-tier-web-server-architecture">ODBC Three-Tier Web Server Architecture</h2>
-</section>
-<section id="odbc-connected-applications" class="level2">
-<h2 class="anchored" data-anchor-id="odbc-connected-applications">ODBC Connected Applications</h2>
-</section>
-<section id="creating-odbc-data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="creating-odbc-data-sources">Creating ODBC Data Sources</h2>
-</section>
-<section id="creating-an-odbc-data-source" class="level2">
-<h2 class="anchored" data-anchor-id="creating-an-odbc-data-source">Creating an ODBC Data Source</h2>
-</section>
-<section id="the-completed-odbc-data-source" class="level2">
-<h2 class="anchored" data-anchor-id="the-completed-odbc-data-source">The Completed ODBC Data Source</h2>
-</section>
-<section id="typlical-web-db-server-setups" class="level2">
-<h2 class="anchored" data-anchor-id="typlical-web-db-server-setups">Typlical Web &amp; DB Server Setups</h2>
-</section>
-<section id="internet-information-server-iis-설치" class="level2">
-<h2 class="anchored" data-anchor-id="internet-information-server-iis-설치">Internet Information Server (IIS) 설치</h2>
-</section>
-<section id="iss-the-www-root-folder" class="level2">
-<h2 class="anchored" data-anchor-id="iss-the-www-root-folder">ISS: The www root Folder</h2>
-</section>
-<section id="the-iis-localstart-web-page" class="level2">
-<h2 class="anchored" data-anchor-id="the-iis-localstart-web-page">The IIS Localstart Web Page</h2>
-</section>
-<section id="iis-관리자-실행" class="level2">
-<h2 class="anchored" data-anchor-id="iis-관리자-실행">IIS 관리자 실행</h2>
-</section>
-<section id="iis-기본-문서-설정" class="level2">
-<h2 class="anchored" data-anchor-id="iis-기본-문서-설정">IIS 기본 문서 설정</h2>
-</section>
-<section id="참고-asp-iis-설정---브라우저에-오류-전송" class="level2">
-<h2 class="anchored" data-anchor-id="참고-asp-iis-설정---브라우저에-오류-전송">참고: ASP IIS 설정 - 브라우저에 오류 전송</h2>
-</section>
-<section id="참고-asp-iis-설정---오류-페이지-설정" class="level2">
-<h2 class="anchored" data-anchor-id="참고-asp-iis-설정---오류-페이지-설정">참고: ASP IIS 설정 - 오류 페이지 설정</h2>
-</section>
-<section id="html" class="level2">
-<h2 class="anchored" data-anchor-id="html">HTML</h2>
-</section>
-<section id="understand-web-pages" class="level2">
-<h2 class="anchored" data-anchor-id="understand-web-pages">Understand web pages</h2>
-</section>
-<section id="view-html-sources" class="level2">
-<h2 class="anchored" data-anchor-id="view-html-sources">View HTML sources</h2>
-</section>
-<section id="my-first-web-page" class="level2">
-<h2 class="anchored" data-anchor-id="my-first-web-page">My First Web Page</h2>
-</section>
-<section id="basic-structure-of-html-documents" class="level2">
-<h2 class="anchored" data-anchor-id="basic-structure-of-html-documents">Basic Structure of HTML documents</h2>
-</section>
-<section id="header-and-styling" class="level2">
-<h2 class="anchored" data-anchor-id="header-and-styling">Header and Styling</h2>
-</section>
-<section id="accessing-my-first-web-page-via-iis" class="level2">
-<h2 class="anchored" data-anchor-id="accessing-my-first-web-page-via-iis">Accessing My First Web Page via IIS</h2>
-</section>
-<section id="관리자-권한으로-메모장-실행" class="level2">
-<h2 class="anchored" data-anchor-id="관리자-권한으로-메모장-실행">관리자 권한으로 메모장 실행</h2>
-</section>
-<section id="html-1" class="level2">
-<h2 class="anchored" data-anchor-id="html-1">HTML</h2>
-</section>
-<section id="html-tables" class="level2">
-<h2 class="anchored" data-anchor-id="html-tables">HTML Tables</h2>
-</section>
-<section id="html-forms" class="level2">
-<h2 class="anchored" data-anchor-id="html-forms">HTML Forms</h2>
-</section>
-<section id="html-links---hyperlinks" class="level2">
-<h2 class="anchored" data-anchor-id="html-links---hyperlinks">HTML Links - Hyperlinks</h2>
+<p>DBMS에 접근하기 위한 표준 API</p>
+<ul>
+<li><p><code>ODBC</code> Open Database Connectivity<br>
+DBMS-independent API</p></li>
+<li><p><code>JDBC</code>: Java Database Connectivity</p></li>
+</ul>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">&lt;</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">a</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"> target</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_blank"</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div>
 </section>
 <section id="asp-active-server-pages" class="level2">
 <h2 class="anchored" data-anchor-id="asp-active-server-pages">ASP (Active Server Pages)</h2>
-</section>
-<section id="asp-syntax" class="level2">
-<h2 class="anchored" data-anchor-id="asp-syntax">ASP Syntax</h2>
+<p>server side scripting(<code>VBScript</code>) language<br>
+CGI: &lt;% %&gt;는 server에서 실행되는 코드</p>
 </section>
 <section id="asp-데이터베이스-연동" class="level2">
 <h2 class="anchored" data-anchor-id="asp-데이터베이스-연동">ASP 데이터베이스 연동</h2>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb2-1"><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">&lt;</span>%</span>
+<span id="cb2-2">  Dim conn, connCmd, rs</span>
+<span id="cb2-3">  Set connCmd = "DSN=dsn_name; Database=dbname; UID=user;PWD=password"</span>
+<span id="cb2-4">  Set conn = Server.CreateObject("ADODB.Connection")</span>
+<span id="cb2-5">  Set rs = Server.CreateObject("ADODB.Recordset")</span>
+<span id="cb2-6">  conn.Open connCmd</span>
+<span id="cb2-7">  rs.Open "SELECT * FROM table_name", conn</span>
+<span id="cb2-8">%&gt;</span>
+<span id="cb2-9"></span>
+<span id="cb2-10"><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">&lt;</span>%</span>
+<span id="cb2-11">  rs.getRows()</span>
+<span id="cb2-12"></span>
+<span id="cb2-13">  conn.Execute SQL</span>
+<span id="cb2-14">%&gt;</span></code></pre></div>
 </section>
-<section id="db-연동-결과-html-charset-설정" class="level2">
-<h2 class="anchored" data-anchor-id="db-연동-결과-html-charset-설정">DB 연동 결과 &amp; html charset 설정</h2>
-</section>
-<section id="html-table-formatting" class="level2">
-<h2 class="anchored" data-anchor-id="html-table-formatting">HTML Table Formatting</h2>
-</section>
-<section id="hsd-asp-application-구축" class="level2">
-<h2 class="anchored" data-anchor-id="hsd-asp-application-구축">HSD ASP Application 구축</h2>
+<section id="오류-메세지-한글-설정" class="level2">
+<h2 class="anchored" data-anchor-id="오류-메세지-한글-설정">오류 메세지 한글 설정</h2>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">&lt;</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">meta</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"> charset</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"UTF-8"</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb3-2"><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">&lt;</span>%</span>
+<span id="cb3-3">  Session.CodePage = 949</span>
+<span id="cb3-4">  Response.CharSet = "euc-kr"</span>
+<span id="cb3-5">  Response.AddHeader "Pragma","no-cache"</span>
+<span id="cb3-6">  Response.AddHeader "cache-control", "no-staff"</span>
+<span id="cb3-7">  Response.Expires = -1</span>
+<span id="cb3-8">%&gt;</span></code></pre></div>
+<section id="form-tag-한글-깨짐-문제" class="level3">
+<h3 class="anchored" data-anchor-id="form-tag-한글-깨짐-문제">form tag 한글 깨짐 문제</h3>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb4-1"><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">&lt;</span>%</span>
+<span id="cb4-2">Session.CodePage="65001"</span>
+<span id="cb4-3">Response.CharSet="UTF-8"</span>
+<span id="cb4-4">%&gt;</span></code></pre></div>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
@@ -1224,7 +1223,7 @@ font-style: inherit;">TABLES</span></span></code></pre></div></li>
 <li><p><code>Durable</code>: 트랜잭션이 <code>성공적으로 완료</code>되면, 그 결과는 <code>영구적으로 저장</code>되어야 한다</p></li>
 </ul></li>
 </ul>
-<p><img src="https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/img/isolation.jpeg" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/img/2024-12-10-08-07-45.png" class="img-fluid"></p>
 </section>
 <section id="deadlock-deadly-embrace" class="level3">
 <h3 class="anchored" data-anchor-id="deadlock-deadly-embrace"><code>Deadlock</code> / <code>deadly embrace</code></h3>
@@ -1268,6 +1267,16 @@ font-style: inherit;">FROM</span> table_name</span></code></pre></div>
 </section>
 <section id="backup-and-recovery" class="level2">
 <h2 class="anchored" data-anchor-id="backup-and-recovery"><code>Backup and recovery</code></h2>
+<section id="recovery" class="level3">
+<h3 class="anchored" data-anchor-id="recovery">Recovery</h3>
+<ul>
+<li>via <code>Reprocessing</code></li>
+<li>via <code>Rollback</code> and <code>Rollforward</code>
+<ul>
+<li><code>log file</code> transaction을 <code>undo</code>할 때, <code>before-images</code>가 존재해함. (<code>rollback</code>) transaction을 <code>redo</code>할 때, <code>after-images</code>가 존재해함.(<code>rollforward</code>)</li>
+</ul></li>
+</ul>
+</section>
 </section>
 <section id="security" class="level2">
 <h2 class="anchored" data-anchor-id="security"><code>Security</code></h2>
@@ -1353,6 +1362,7 @@ font-style: inherit;">FROM</span> table_name</span></code></pre></div>
 <p><img src="https://latex.codecogs.com/png.latex?E(x)%20=%20%5Cfrac%7B1%7D%7Bp%7D"></p>
 <p><img src="https://latex.codecogs.com/png.latex?Var(x)%20=%20%5Cfrac%7B1-p%7D%7Bp%5E2%7D"></p>
 <p><img src="https://latex.codecogs.com/png.latex?m(t)%20=%20%5Cfrac%7Bpe%5Et%7D%7B1-qe%5Et%7D,%20(qe%5Et%3C1),%20(q=1-p)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%20%3E%20x%20+%20y%20%7C%20X%20%3E%20x)%20=%20P(X%20%3E%20y)%20=%20(1-p)%5Ey"></p>
 </section>
 </section>
 <section id="초기하-분포" class="level1">
@@ -1377,7 +1387,7 @@ font-style: inherit;">FROM</span> table_name</span></code></pre></div>
 <p>임의의 기간동안 어떤 사건이 간헐적으로 발생할 때, 사건이 발생하는 횟수 X</p>
 <p>임의의 기간을 n 등분하여 각 등분에서 사건이 발생할 확률이 p라고 할 때, 발생횟수 기댓값 λ를 고정시킨 채로 n을 무한히 증가시킴</p>
 <p>n이 매우 크고 p가 매우 작을 때 이항분포를 포아송분포로 근사할 수 있다</p>
-<p><img src="https://latex.codecogs.com/png.latex?P(%CE%BB)%20+%20P(%CE%BB)%20=%20P(2%CE%BB)"></p>
+<p>포아송 분포 + 포아송 분포 = 포아송 분포: <img src="https://latex.codecogs.com/png.latex?P(%CE%BB)%20+%20P(%CE%BB)%20=%20P(2%CE%BB)"></p>
 </section>
 <section id="분포-4" class="level2">
 <h2 class="anchored" data-anchor-id="분포-4">분포</h2>

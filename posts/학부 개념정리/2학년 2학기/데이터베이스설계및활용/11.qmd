@@ -69,7 +69,7 @@ Users submit `Transactions(LUWs)`
        - `serializable`: 가장 강력한 격리 수준 보장
     - `Durable`: 트랜잭션이 `성공적으로 완료`되면, 그 결과는 `영구적으로 저장`되어야 한다
 
-![](img/isolation.jpeg)
+![](img/2024-12-10-08-07-45.png)
 
 ### `Deadlock` / `deadly embrace`
 
@@ -95,5 +95,13 @@ DECLARE cursor_name CURSOR FOR SELECT column_name FROM table_name
 ```
 
 ## `Backup and recovery`
+
+### Recovery
+
+- via `Reprocessing`
+- via `Rollback` and `Rollforward`
+   - `log file`
+      transaction을 `undo`할 때, `before-images`가 존재해함.  (`rollback`)
+      transaction을 `redo`할 때, `after-images`가 존재해함.(`rollforward`)
 
 ## `Security`

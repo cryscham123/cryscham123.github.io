@@ -21,12 +21,46 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work1.pdf" rel="next">
+<link href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/tmp.html" rel="next">
 <link href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/11.html" rel="prev">
 <link href="../../../../favicon" rel="icon">
 <script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
@@ -198,6 +232,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/tmp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">반사실 주의</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work2.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4조 기말과제 제안서</span></a>
   </div>
@@ -354,42 +394,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#the-database-processing-environment" id="toc-the-database-processing-environment" class="nav-link active" data-scroll-target="#the-database-processing-environment">The Database Processing Environment</a></li>
-  <li><a href="#tier-layers-of-database-system" id="toc-tier-layers-of-database-system" class="nav-link" data-scroll-target="#tier-layers-of-database-system">3-Tier Layers of Database System</a></li>
-  <li><a href="#web-based-database-system" id="toc-web-based-database-system" class="nav-link" data-scroll-target="#web-based-database-system">Web-based Database System</a></li>
+  <li><a href="#tier-layers-of-database-system" id="toc-tier-layers-of-database-system" class="nav-link active" data-scroll-target="#tier-layers-of-database-system">3-Tier Layers of Database System</a></li>
   <li><a href="#api-interface-standards-for-db-access" id="toc-api-interface-standards-for-db-access" class="nav-link" data-scroll-target="#api-interface-standards-for-db-access">API Interface Standards for DB Access</a></li>
-  <li><a href="#obdc" id="toc-obdc" class="nav-link" data-scroll-target="#obdc">OBDC</a></li>
-  <li><a href="#odbc-three-tier-web-server-architecture" id="toc-odbc-three-tier-web-server-architecture" class="nav-link" data-scroll-target="#odbc-three-tier-web-server-architecture">ODBC Three-Tier Web Server Architecture</a></li>
-  <li><a href="#odbc-connected-applications" id="toc-odbc-connected-applications" class="nav-link" data-scroll-target="#odbc-connected-applications">ODBC Connected Applications</a></li>
-  <li><a href="#creating-odbc-data-sources" id="toc-creating-odbc-data-sources" class="nav-link" data-scroll-target="#creating-odbc-data-sources">Creating ODBC Data Sources</a></li>
-  <li><a href="#creating-an-odbc-data-source" id="toc-creating-an-odbc-data-source" class="nav-link" data-scroll-target="#creating-an-odbc-data-source">Creating an ODBC Data Source</a></li>
-  <li><a href="#the-completed-odbc-data-source" id="toc-the-completed-odbc-data-source" class="nav-link" data-scroll-target="#the-completed-odbc-data-source">The Completed ODBC Data Source</a></li>
-  <li><a href="#typlical-web-db-server-setups" id="toc-typlical-web-db-server-setups" class="nav-link" data-scroll-target="#typlical-web-db-server-setups">Typlical Web &amp; DB Server Setups</a></li>
-  <li><a href="#internet-information-server-iis-설치" id="toc-internet-information-server-iis-설치" class="nav-link" data-scroll-target="#internet-information-server-iis-설치">Internet Information Server (IIS) 설치</a></li>
-  <li><a href="#iss-the-www-root-folder" id="toc-iss-the-www-root-folder" class="nav-link" data-scroll-target="#iss-the-www-root-folder">ISS: The www root Folder</a></li>
-  <li><a href="#the-iis-localstart-web-page" id="toc-the-iis-localstart-web-page" class="nav-link" data-scroll-target="#the-iis-localstart-web-page">The IIS Localstart Web Page</a></li>
-  <li><a href="#iis-관리자-실행" id="toc-iis-관리자-실행" class="nav-link" data-scroll-target="#iis-관리자-실행">IIS 관리자 실행</a></li>
-  <li><a href="#iis-기본-문서-설정" id="toc-iis-기본-문서-설정" class="nav-link" data-scroll-target="#iis-기본-문서-설정">IIS 기본 문서 설정</a></li>
-  <li><a href="#참고-asp-iis-설정---브라우저에-오류-전송" id="toc-참고-asp-iis-설정---브라우저에-오류-전송" class="nav-link" data-scroll-target="#참고-asp-iis-설정---브라우저에-오류-전송">참고: ASP IIS 설정 - 브라우저에 오류 전송</a></li>
-  <li><a href="#참고-asp-iis-설정---오류-페이지-설정" id="toc-참고-asp-iis-설정---오류-페이지-설정" class="nav-link" data-scroll-target="#참고-asp-iis-설정---오류-페이지-설정">참고: ASP IIS 설정 - 오류 페이지 설정</a></li>
-  <li><a href="#html" id="toc-html" class="nav-link" data-scroll-target="#html">HTML</a></li>
-  <li><a href="#understand-web-pages" id="toc-understand-web-pages" class="nav-link" data-scroll-target="#understand-web-pages">Understand web pages</a></li>
-  <li><a href="#view-html-sources" id="toc-view-html-sources" class="nav-link" data-scroll-target="#view-html-sources">View HTML sources</a></li>
-  <li><a href="#my-first-web-page" id="toc-my-first-web-page" class="nav-link" data-scroll-target="#my-first-web-page">My First Web Page</a></li>
-  <li><a href="#basic-structure-of-html-documents" id="toc-basic-structure-of-html-documents" class="nav-link" data-scroll-target="#basic-structure-of-html-documents">Basic Structure of HTML documents</a></li>
-  <li><a href="#header-and-styling" id="toc-header-and-styling" class="nav-link" data-scroll-target="#header-and-styling">Header and Styling</a></li>
-  <li><a href="#accessing-my-first-web-page-via-iis" id="toc-accessing-my-first-web-page-via-iis" class="nav-link" data-scroll-target="#accessing-my-first-web-page-via-iis">Accessing My First Web Page via IIS</a></li>
-  <li><a href="#관리자-권한으로-메모장-실행" id="toc-관리자-권한으로-메모장-실행" class="nav-link" data-scroll-target="#관리자-권한으로-메모장-실행">관리자 권한으로 메모장 실행</a></li>
-  <li><a href="#html-1" id="toc-html-1" class="nav-link" data-scroll-target="#html-1">HTML</a></li>
-  <li><a href="#html-tables" id="toc-html-tables" class="nav-link" data-scroll-target="#html-tables">HTML Tables</a></li>
-  <li><a href="#html-forms" id="toc-html-forms" class="nav-link" data-scroll-target="#html-forms">HTML Forms</a></li>
-  <li><a href="#html-links---hyperlinks" id="toc-html-links---hyperlinks" class="nav-link" data-scroll-target="#html-links---hyperlinks">HTML Links - Hyperlinks</a></li>
   <li><a href="#asp-active-server-pages" id="toc-asp-active-server-pages" class="nav-link" data-scroll-target="#asp-active-server-pages">ASP (Active Server Pages)</a></li>
-  <li><a href="#asp-syntax" id="toc-asp-syntax" class="nav-link" data-scroll-target="#asp-syntax">ASP Syntax</a></li>
   <li><a href="#asp-데이터베이스-연동" id="toc-asp-데이터베이스-연동" class="nav-link" data-scroll-target="#asp-데이터베이스-연동">ASP 데이터베이스 연동</a></li>
-  <li><a href="#db-연동-결과-html-charset-설정" id="toc-db-연동-결과-html-charset-설정" class="nav-link" data-scroll-target="#db-연동-결과-html-charset-설정">DB 연동 결과 &amp; html charset 설정</a></li>
-  <li><a href="#html-table-formatting" id="toc-html-table-formatting" class="nav-link" data-scroll-target="#html-table-formatting">HTML Table Formatting</a></li>
-  <li><a href="#hsd-asp-application-구축" id="toc-hsd-asp-application-구축" class="nav-link" data-scroll-target="#hsd-asp-application-구축">HSD ASP Application 구축</a></li>
+  <li><a href="#오류-메세지-한글-설정" id="toc-오류-메세지-한글-설정" class="nav-link" data-scroll-target="#오류-메세지-한글-설정">오류 메세지 한글 설정</a>
+  <ul class="collapse">
+  <li><a href="#form-tag-한글-깨짐-문제" id="toc-form-tag-한글-깨짐-문제" class="nav-link" data-scroll-target="#form-tag-한글-깨짐-문제">form tag 한글 깨짐 문제</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -430,121 +442,66 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p><img src="../../../../img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="the-database-processing-environment" class="level2">
-<h2 class="anchored" data-anchor-id="the-database-processing-environment">The Database Processing Environment</h2>
-<ol type="1">
-<li>Multiple users</li>
-<li>Multiple Queries, multiple forms, multiple reports</li>
-<li>Multiple application programs</li>
-</ol>
-<!-- 사진 넣어주세요 -->
-</section>
 <section id="tier-layers-of-database-system" class="level2">
 <h2 class="anchored" data-anchor-id="tier-layers-of-database-system">3-Tier Layers of Database System</h2>
-</section>
-<section id="web-based-database-system" class="level2">
-<h2 class="anchored" data-anchor-id="web-based-database-system">Web-based Database System</h2>
+<ul>
+<li>presentation layer: user interface</li>
+<li>application layer: web server(<code>IIS</code>)</li>
+<li><code>data</code> layer: database server</li>
+</ul>
+<p><img src="img/2024-12-10-08-08-56.png" class="img-fluid"></p>
 </section>
 <section id="api-interface-standards-for-db-access" class="level2">
 <h2 class="anchored" data-anchor-id="api-interface-standards-for-db-access">API Interface Standards for DB Access</h2>
-</section>
-<section id="obdc" class="level2">
-<h2 class="anchored" data-anchor-id="obdc">OBDC</h2>
-</section>
-<section id="odbc-three-tier-web-server-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="odbc-three-tier-web-server-architecture">ODBC Three-Tier Web Server Architecture</h2>
-</section>
-<section id="odbc-connected-applications" class="level2">
-<h2 class="anchored" data-anchor-id="odbc-connected-applications">ODBC Connected Applications</h2>
-</section>
-<section id="creating-odbc-data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="creating-odbc-data-sources">Creating ODBC Data Sources</h2>
-</section>
-<section id="creating-an-odbc-data-source" class="level2">
-<h2 class="anchored" data-anchor-id="creating-an-odbc-data-source">Creating an ODBC Data Source</h2>
-</section>
-<section id="the-completed-odbc-data-source" class="level2">
-<h2 class="anchored" data-anchor-id="the-completed-odbc-data-source">The Completed ODBC Data Source</h2>
-</section>
-<section id="typlical-web-db-server-setups" class="level2">
-<h2 class="anchored" data-anchor-id="typlical-web-db-server-setups">Typlical Web &amp; DB Server Setups</h2>
-</section>
-<section id="internet-information-server-iis-설치" class="level2">
-<h2 class="anchored" data-anchor-id="internet-information-server-iis-설치">Internet Information Server (IIS) 설치</h2>
-</section>
-<section id="iss-the-www-root-folder" class="level2">
-<h2 class="anchored" data-anchor-id="iss-the-www-root-folder">ISS: The www root Folder</h2>
-</section>
-<section id="the-iis-localstart-web-page" class="level2">
-<h2 class="anchored" data-anchor-id="the-iis-localstart-web-page">The IIS Localstart Web Page</h2>
-</section>
-<section id="iis-관리자-실행" class="level2">
-<h2 class="anchored" data-anchor-id="iis-관리자-실행">IIS 관리자 실행</h2>
-</section>
-<section id="iis-기본-문서-설정" class="level2">
-<h2 class="anchored" data-anchor-id="iis-기본-문서-설정">IIS 기본 문서 설정</h2>
-</section>
-<section id="참고-asp-iis-설정---브라우저에-오류-전송" class="level2">
-<h2 class="anchored" data-anchor-id="참고-asp-iis-설정---브라우저에-오류-전송">참고: ASP IIS 설정 - 브라우저에 오류 전송</h2>
-</section>
-<section id="참고-asp-iis-설정---오류-페이지-설정" class="level2">
-<h2 class="anchored" data-anchor-id="참고-asp-iis-설정---오류-페이지-설정">참고: ASP IIS 설정 - 오류 페이지 설정</h2>
-</section>
-<section id="html" class="level2">
-<h2 class="anchored" data-anchor-id="html">HTML</h2>
-</section>
-<section id="understand-web-pages" class="level2">
-<h2 class="anchored" data-anchor-id="understand-web-pages">Understand web pages</h2>
-</section>
-<section id="view-html-sources" class="level2">
-<h2 class="anchored" data-anchor-id="view-html-sources">View HTML sources</h2>
-</section>
-<section id="my-first-web-page" class="level2">
-<h2 class="anchored" data-anchor-id="my-first-web-page">My First Web Page</h2>
-</section>
-<section id="basic-structure-of-html-documents" class="level2">
-<h2 class="anchored" data-anchor-id="basic-structure-of-html-documents">Basic Structure of HTML documents</h2>
-</section>
-<section id="header-and-styling" class="level2">
-<h2 class="anchored" data-anchor-id="header-and-styling">Header and Styling</h2>
-</section>
-<section id="accessing-my-first-web-page-via-iis" class="level2">
-<h2 class="anchored" data-anchor-id="accessing-my-first-web-page-via-iis">Accessing My First Web Page via IIS</h2>
-</section>
-<section id="관리자-권한으로-메모장-실행" class="level2">
-<h2 class="anchored" data-anchor-id="관리자-권한으로-메모장-실행">관리자 권한으로 메모장 실행</h2>
-</section>
-<section id="html-1" class="level2">
-<h2 class="anchored" data-anchor-id="html-1">HTML</h2>
-</section>
-<section id="html-tables" class="level2">
-<h2 class="anchored" data-anchor-id="html-tables">HTML Tables</h2>
-</section>
-<section id="html-forms" class="level2">
-<h2 class="anchored" data-anchor-id="html-forms">HTML Forms</h2>
-</section>
-<section id="html-links---hyperlinks" class="level2">
-<h2 class="anchored" data-anchor-id="html-links---hyperlinks">HTML Links - Hyperlinks</h2>
+<p>DBMS에 접근하기 위한 표준 API</p>
+<ul>
+<li><p><code>ODBC</code> Open Database Connectivity<br>
+DBMS-independent API</p></li>
+<li><p><code>JDBC</code>: Java Database Connectivity</p></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> target</span><span class="op">=</span><span class="st">"_blank"</span><span class="dt">&gt;</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="asp-active-server-pages" class="level2">
 <h2 class="anchored" data-anchor-id="asp-active-server-pages">ASP (Active Server Pages)</h2>
-</section>
-<section id="asp-syntax" class="level2">
-<h2 class="anchored" data-anchor-id="asp-syntax">ASP Syntax</h2>
+<p>server side scripting(<code>VBScript</code>) language<br>
+CGI: &lt;% %&gt;는 server에서 실행되는 코드</p>
 </section>
 <section id="asp-데이터베이스-연동" class="level2">
 <h2 class="anchored" data-anchor-id="asp-데이터베이스-연동">ASP 데이터베이스 연동</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>%</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Dim conn, connCmd, rs</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  Set connCmd = "DSN=dsn_name; Database=dbname; UID=user;PWD=password"</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  Set conn = Server.CreateObject("ADODB.Connection")</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  Set rs = Server.CreateObject("ADODB.Recordset")</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  conn.Open connCmd</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  rs.Open "SELECT * FROM table_name", conn</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>%&gt;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>%</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  rs.getRows()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  conn.Execute SQL</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>%&gt;</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="db-연동-결과-html-charset-설정" class="level2">
-<h2 class="anchored" data-anchor-id="db-연동-결과-html-charset-설정">DB 연동 결과 &amp; html charset 설정</h2>
-</section>
-<section id="html-table-formatting" class="level2">
-<h2 class="anchored" data-anchor-id="html-table-formatting">HTML Table Formatting</h2>
-</section>
-<section id="hsd-asp-application-구축" class="level2">
-<h2 class="anchored" data-anchor-id="hsd-asp-application-구축">HSD ASP Application 구축</h2>
+<section id="오류-메세지-한글-설정" class="level2">
+<h2 class="anchored" data-anchor-id="오류-메세지-한글-설정">오류 메세지 한글 설정</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">"UTF-8"</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>%</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  Session.CodePage = 949</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  Response.CharSet = "euc-kr"</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  Response.AddHeader "Pragma","no-cache"</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  Response.AddHeader "cache-control", "no-staff"</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  Response.Expires = -1</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>%&gt;</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="form-tag-한글-깨짐-문제" class="level3">
+<h3 class="anchored" data-anchor-id="form-tag-한글-깨짐-문제">form tag 한글 깨짐 문제</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>%</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Session.CodePage="65001"</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Response.CharSet="UTF-8"</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>%&gt;</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
@@ -979,8 +936,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/work1.pdf" class="pagination-link" aria-label="데이터베이스설계및활용 개인과제 #2">
-        <span class="nav-page-text">데이터베이스설계및활용 개인과제 #2</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../posts/학부 개념정리/2학년 2학기/데이터베이스설계및활용/tmp.html" class="pagination-link" aria-label="반사실 주의">
+        <span class="nav-page-text">반사실 주의</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
