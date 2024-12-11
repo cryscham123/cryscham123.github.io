@@ -942,6 +942,7 @@ ex) driving할 때 손과 발을 따로 사용하게 하기</p></li>
 
 
 <p><img src="https://cryscham123.github.io/img/db-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<p>MS access is <code>prototyping tool</code> for <code>mock-ups</code></p>
 <section id="purpose-of-a-database-design" class="level2">
 <h2 class="anchored" data-anchor-id="purpose-of-a-database-design">Purpose of a Database Design</h2>
 <p>set of database specifications that can be implemented as a database in a DBMS</p>
@@ -954,20 +955,19 @@ ex) driving할 때 손과 발을 따로 사용하게 하기</p></li>
 <section id="logical-designrelational-design" class="level2">
 <h2 class="anchored" data-anchor-id="logical-designrelational-design">Logical Design(<code>Relational</code> Design)</h2>
 <ol type="1">
-<li><p>Create a table(<code>relation</code>) for each entity</p>
+<li>Create a table(<code>relation</code>) for each entity
 <ul>
-<li><p>specify primary key</p></li>
-<li><p>specify <code>properties</code> for each column</p>
+<li>specify primary key</li>
+<li>specify <code>properties</code> for each column
 <ul>
 <li>data type</li>
 <li>constraints</li>
 <li>default value</li>
 <li>null status</li>
 </ul></li>
-<li><p>verify <code>normalization</code>: data structure의 <code>complexity</code>를 증가시킬 수도 있다</p>
-<p>→ <code>denormalization</code>: 조인 불필요, 조회 시 성능 향상 → datastructure complexity vs modification problems</p></li>
+<li>verify <code>normalization</code>: data structure의 <code>complexity</code>를 증가시킬 수도 있다 → <code>denormalization</code>: 조인 불필요, 조회 시 성능 향상 → datastructure complexity vs modification problems</li>
 </ul></li>
-<li><p>Create relationships by placing foreign keys:</p>
+<li>Create relationships by placing foreign keys:
 <ul>
 <li>Strong entity relationships</li>
 <li>ID-dependent / non-ID-dependent weak entity relationships</li>
@@ -1280,8 +1280,32 @@ font-style: inherit;">FROM</span> table_name</span></code></pre></div>
 </section>
 <section id="security" class="level2">
 <h2 class="anchored" data-anchor-id="security"><code>Security</code></h2>
+<p>only <code>authenticated users</code> perform <code>authorized activities</code></p>
+<ul>
+<li><code>Authentication</code>: <code>User ID</code>와 <code>password</code>를 사용하여 사용자를 인증</li>
+<li><code>Authorization</code>: <code>user groups(roles)</code>: dbcreator, public, … <code>sql  GRANT SELECT, INSERT, UPDATE, DELETE ON table_name TO user_name</code></li>
+</ul>
+</section>
+<section id="database-performance" class="level2">
+<h2 class="anchored" data-anchor-id="database-performance"><code>Database Performance</code></h2>
+<ul>
+<li>index</li>
+<li><code>disk mirroring</code>: 데이터 복제 말씀하신 듯</li>
+<li>RAID</li>
+<li>SANs</li>
+<li><code>Distributed database</code>: service cluster partitioned replicated</li>
+</ul>
+<section id="dba-responsibilities" class="level3">
+<h3 class="anchored" data-anchor-id="dba-responsibilities">DBA Responsibilities</h3>
+<ol type="1">
+<li>user reported errors를 모아서 system이 잘 돌아갈 수 있게 해야함</li>
+<li>database 설정을 잘 관리해야함</li>
+<li>문서화 잘 해야함</li>
+<li>cloud로 db 관리(<code>service level agreement</code>)</li>
+</ol>
 
 
+</section>
 </section>
 </section>
 
