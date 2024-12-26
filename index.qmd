@@ -4,14 +4,18 @@ back-to-top-navigation: false
 page-navigation: false
 margin-header: profile.html
 toc: false
-sidebar: false
 ---
 
-<details>
+<details open>
 <summary><h2 class="section-title">0. Inboxes</h2></summary>
 
 <div class="content">
-  분류되지 않은 노트들
+
+```{python}
+#| echo: false
+
+{{< include includes/_para_inbox.py >}}
+```
 </div>
 
 </details>
@@ -25,92 +29,13 @@ sidebar: false
 
 ```{python}
 #| echo: false
-import os
-import yaml
-from IPython.display import HTML
 
-def find_ongoing_posts(posts_dir):
-    ongoing_posts = []
+def target_func(metadata):
+    return metadata.get('status') == 'on-going'
 
-    for root, _, files in os.walk(posts_dir):
-        for file in files:
-            if file == "index.qmd":
-                file_path = os.path.join(root, file)
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    try:
-                        lines = f.readlines()
-                        if lines[0].strip() == "---":
-                            yaml_end = lines[1:].index("---\n") + 1
-                            metadata = yaml.safe_load("".join(lines[1:yaml_end]))
-                            # Check for 'on-going: true'
-                            if metadata.get('status') == 'on-going':
-                                ongoing_posts.append({
-                                    "title": metadata.get("title", "Untitled"),
-                                    "date": metadata.get("date", "Unknown"),
-                                    "end_date": metadata.get("end_date"),
-                                    "status": metadata.get("status"),
-                                    "categories": metadata.get("categories", []),
-                                    "description": metadata.get("description", ""),
-                                    "path": root
-                                })
-
-                    except Exception as e:
-                        print(f"Error reading {file_path}: {e}")
-
-    return ongoing_posts
-posts_directory = "posts"
-
-ongoing_posts = find_ongoing_posts(posts_directory)
-
-from datetime import datetime
-
-def calculate_days_left(end_date):
-    if not end_date:
-        return ('No end date', 'days-left-nodate')
-    try:
-        end = datetime.strptime(str(end_date), "%Y-%m-%d")
-        days_left = (end - datetime.now()).days
-        if days_left > 0:
-            return (f"{days_left} days left", 'days-left-remaining')
-        else:
-            return ('Overdue', 'days-left-overdue')
-    except:
-        return ('Invalid date', 'days-left-invalid')
-
-if ongoing_posts:
-    html_content = """
-    <div class="project-cards">
-    """
-    for post in ongoing_posts:
-        days_left, days_left_class = calculate_days_left(post.get('end_date'))
-        categories = post.get('categories', [])
-        if isinstance(categories, str):
-            categories = [categories]
-        html_content += f"""
-        <a href="{post['path']}" style="text-decoration: none;">
-            <div class="project-card">
-                <div class="project-title">
-                    <span>{post['title']}</span>
-                    <span class="status-badge status-{post['status']}">{post['status']}</span>
-                </div>
-                <div class="project-dates">
-                    Started: {post.get('date', 'Unknown')}
-                    <br>
-                    <span class="days-left {days_left_class}">{days_left}</span>
-                </div>
-                <div class="project-categories">
-                    {' '.join(f'<span class="category-tag">{cat}</span>' for cat in categories)}
-                </div>
-                <div class="project-description">{post.get('description', 'No description available')}</div>
-            </div>
-        </a>
-        """
-    
-    html_content += "</div>"
-    display(HTML(html_content))
-else:
-    display(HTML("<p>No ongoing posts found.</p>"))
+{{< include includes/_para_card.py >}}
 ```
+
 </div>
 </details>
 
@@ -137,91 +62,12 @@ else:
 
 ```{python}
 #| echo: false
-import os
-import yaml
-from IPython.display import HTML
 
-def find_ongoing_posts(posts_dir):
-    ongoing_posts = []
+def target_func(metadata):
+    return metadata.get('status') != 'on-going'
 
-    for root, _, files in os.walk(posts_dir):
-        for file in files:
-            if file == "index.qmd":
-                file_path = os.path.join(root, file)
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    try:
-                        lines = f.readlines()
-                        if lines[0].strip() == "---":
-                            yaml_end = lines[1:].index("---\n") + 1
-                            metadata = yaml.safe_load("".join(lines[1:yaml_end]))
-                            # Check for 'on-going: true'
-                            if metadata.get('status') != 'on-going':
-                                ongoing_posts.append({
-                                    "title": metadata.get("title", "Untitled"),
-                                    "date": metadata.get("date", "Unknown"),
-                                    "end_date": metadata.get("end_date"),
-                                    "status": metadata.get("status"),
-                                    "categories": metadata.get("categories", []),
-                                    "description": metadata.get("description", ""),
-                                    "path": root
-                                })
-
-                    except Exception as e:
-                        print(f"Error reading {file_path}: {e}")
-
-    return ongoing_posts
-posts_directory = "posts"
-
-ongoing_posts = find_ongoing_posts(posts_directory)
-
-from datetime import datetime
-
-def calculate_days_left(end_date):
-    if not end_date:
-        return ('No end date', 'days-left-nodate')
-    try:
-        end = datetime.strptime(str(end_date), "%Y-%m-%d")
-        days_left = (end - datetime.now()).days
-        if days_left > 0:
-            return (f"{days_left} days left", 'days-left-remaining')
-        else:
-            return ('Overdue', 'days-left-overdue')
-    except:
-        return ('Invalid date', 'days-left-invalid')
-
-if ongoing_posts:
-    html_content = """
-    <div class="project-cards">
-    """
-    for post in ongoing_posts:
-        days_left, days_left_class = calculate_days_left(post.get('end_date'))
-        categories = post.get('categories', [])
-        if isinstance(categories, str):
-            categories = [categories]
-        html_content += f"""
-        <a href="{post['path']}" style="text-decoration: none;">
-            <div class="project-card">
-                <div class="project-title">
-                    <span>{post['title']}</span>
-                    <span class="status-badge status-{post['status']}">{post['status']}</span>
-                </div>
-                <div class="project-dates">
-                    Started: {post.get('date', 'Unknown')}
-                    <br>
-                    <span class="days-left {days_left_class}">{days_left}</span>
-                </div>
-                <div class="project-categories">
-                    {' '.join(f'<span class="category-tag">{cat}</span>' for cat in categories)}
-                </div>
-                <div class="project-description">{post.get('description', 'No description available')}</div>
-            </div>
-        </a>
-        """
-    
-    html_content += "</div>"
-    display(HTML(html_content))
-else:
-    display(HTML("<p>No ongoing posts found.</p>"))
+{{< include includes/_para_card.py >}}
 ```
+
 </div>
 </details>

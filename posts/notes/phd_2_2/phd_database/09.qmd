@@ -1,0 +1,81 @@
+---
+title: "Database Design"
+categories: ['database']
+date: 2024-10-31
+projects: ["phd_2_2"]
+---
+
+![](/img/db-thumb.jpg){.post-thumbnail}
+
+MS access is `prototyping tool` for `mock-ups`
+
+## Purpose of a Database Design
+
+set of database specifications that can be implemented as a database in a DBMS
+
+- `conceptual design`: non-DBMS specific
+- `logical design`: DBMS specific
+- `physical design`: DBMS specific but not implemented directly by humans
+
+## Logical Design(`Relational` Design)
+
+1. Create a table(`relation`) for each entity
+   - specify primary key
+   - specify `properties` for each column
+      - data type
+      - constraints
+      - default value
+      - null status
+   - verify `normalization`: data structure의 `complexity`를 증가시킬 수도 있다
+      → `denormalization`: 조인 불필요, 조회 시 성능 향상
+      → datastructure complexity vs modification problems
+
+2. Create relationships by placing foreign keys:
+   - Strong entity relationships
+   - ID-dependent / non-ID-dependent weak entity relationships
+   - Subtypes
+   - Recursive
+
+## Representing Relationships
+
+id-dependent의 경우 부모의 primary key로 `composite key` 생성
+
+`Maximum cardinality`의 유형에 따라 관계 표현 방법이 달라짐
+
+- `1:1`: `foreign key`를 어디에 두어도 상관 없음
+   
+   ```sql
+   CREATE UNIQUE INDEX idx_1_1 ON table(foriegn_key);
+   ```
+
+- `1:N`: many(`child`) 쪽에 `foreign key`를 두는 것이 일반적
+   
+   1 side is called `parent`, many side is called `child`
+- `M:N`
+   
+   Data Modeling에서만 쓰임. database design에서는 `intersection table`을 사용하여 표현.
+   intersection table은 두 entity의 primary key를 포함하는 `composite key`를 가짐
+   
+   만약 두 primary key 외의 attribute를 가진다면, `association entity`로 표현
+- Supertype / Subtype: Supertype의 primary key를 Subtype의 primary key로 사용
+- Recursive Relationship: 방향 이거 다시 보자
+   
+   N:M의 경우 virtual table을 생성하여 표현
+
+
+설문조사는
+
+descriptive statistics
+
+남녀 비율, 경험 비율 등등도 포함되어야 한다.
+
+가중 평균으로 보여준다
+
+
+도서관 예약 시스템
+
+1. 퇴설 처리 미흡
+2. 좌석 이용 정보 파악
+3. 앱 알림
+
+좌석 배치도 감이 안온다. 잔여시간도 안뜬다

@@ -1,0 +1,29 @@
+---
+title: "Database Normalization"
+categories: ['database']
+date: "2024-09-24"
+projects: ["phd_2_2"]
+---
+
+![](/img/db-thumb.jpg){.post-thumbnail}
+
+## `Normalization`
+- process of organizing a database to reduce `redundancy problem` and improve data integrity
+
+## `Functional Dependency`
+- 하나의 atrribute가 다른 attribute의 value를 결정하는지 여부를 판단
+- well formed인지 판별할 수 있는 기준
+- A(`Determinant`) -> B(`dependent`): A가 결정되면 B도 결정된다면 B는 A에 함수적 종속
+- `Every determinant must be a Candidate Key`
+
+## `Normalization` Process
+- BCFNF: `Boyce-Codd` Normal Form => `Each relation has only one theme`
+
+1. Identify all the `Candidate Keys`.
+2. Identify all the `Functional Dependencies`.
+3. Examine the `determinants` of the functional dependencies
+   a. place the columns of the functional dependency in a new relation of their own
+   b. make the determinant of the functianl dependency the primary key of the new relation
+   c. Leabe a copy of the determinant as a foreign key in the original relation
+   d. create a `referential integrity` constraint between the original and new relation
+4. Repeat the process until every determinant of every relation is a candidate key
