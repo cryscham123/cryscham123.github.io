@@ -166,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
 </summary>
 
 <div class="content">
-<div id="11b2eea1" class="cell" data-execution_count="1">
+<div id="ca903bf7" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <h3 class="content-title anchored">분류되지 않은 노트들 (0)</h3>
         <p style="margin-top: 1em;">분류되지 않은 노트가 없습니다.</p>
@@ -187,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="content-title anchored">
 현재 진행중인 프로젝트
 </h3>
-<div id="17cd3380" class="cell" data-execution_count="2">
+<div id="17deabca" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 
     <div class="project-cards">
@@ -259,7 +259,331 @@ ul.task-list li input[type="checkbox"] {
 </summary>
 
 <div class="content">
-<p>만드는중</p>
+<h3 class="content-title anchored">
+관심 분야
+</h3>
+<div id="1dce0599" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+
+<script>
+function changePage(page) {
+    const rows = document.querySelectorAll('.category-row');
+    const pagination = document.querySelector('.pagination');
+    const startIdx = (page - 1) * 10;
+    const endIdx = startIdx + 10;
+    
+    rows.forEach((row, idx) => {
+        if (idx >= startIdx && idx < endIdx) {
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    const buttons = pagination.querySelectorAll('button');
+    buttons.forEach(button => {
+        if (button.textContent == page) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+}
+
+function showModal(categoryId) {
+    const modal = document.getElementById('modal-' + categoryId);
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(categoryId) {
+    const modal = document.getElementById('modal-' + categoryId);
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// ESC 키로 모달 닫기
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            modal.style.display = 'none';
+        });
+        document.body.style.overflow = 'auto';
+    }
+});
+</script>
+
+<div id="modal-0" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('0')">×</span>
+            <h3 class="anchored">Operational Research</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/index_OR.qmd">OR 예습</a></td>-->
+                <!--            <td>Operational Research</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (2)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/OR/0.qmd">Overview</a></td>-->
+                <!--            <td>Operational Research</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/OR/1.qmd">model and applications</a></td>-->
+                <!--            <td>Operational Research</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-1" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('1')">×</span>
+            <h3 class="anchored">블로그</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/index_blog.qmd">Blog 제작</a></td>-->
+                <!--            <td>블로그</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (1)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/blog/0.qmd">PARA Blog 제작</a></td>-->
+                <!--            <td>블로그</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('2')">×</span>
+            <h3 class="anchored">데이터 분석</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/index_adp.qmd">ADP 필기 합격</a></td>-->
+                <!--            <td>자격증, 데이터 분석</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (1)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/adp/data-handling/01.qmd">pandas data 구조</a></td>-->
+                <!--            <td>데이터 분석</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-3" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('3')">×</span>
+            <h3 class="anchored">42 seoul</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/index_42_python.qmd">42 seoul python 피신</a></td>-->
+                <!--            <td>42 seoul, python</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (0)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('4')">×</span>
+            <h3 class="anchored">python</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/index_42_python.qmd">42 seoul python 피신</a></td>-->
+                <!--            <td>42 seoul, python</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (0)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><table class="category-table">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Projects</th>
+            <th>Notes</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr class="category-row" style="display: table-row" onclick="showModal('0')">
+            <td>Operational Research</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('1')">
+            <td>블로그</td>
+            <td>1</td>
+            <td>1</td>
+            <td>2</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('2')">
+            <td>데이터 분석</td>
+            <td>1</td>
+            <td>1</td>
+            <td>2</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('3')">
+            <td>42 seoul</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('4')">
+            <td>python</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+        </tr>
+    
+    
+    
+    </tbody>
+</table>
+<div class="pagination">
+
+    <button onclick="changePage(1)" class="active">1</button>
+    
+</div>
+</div>
+</div>
 </div>
 </details>
 <details>
@@ -271,7 +595,499 @@ ul.task-list li input[type="checkbox"] {
 </summary>
 
 <div class="content">
-<p>만드는중</p>
+<div id="61afb326" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+
+<script>
+function changePage(page) {
+    const rows = document.querySelectorAll('.category-row');
+    const pagination = document.querySelector('.pagination');
+    const startIdx = (page - 1) * 10;
+    const endIdx = startIdx + 10;
+    
+    rows.forEach((row, idx) => {
+        if (idx >= startIdx && idx < endIdx) {
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    const buttons = pagination.querySelectorAll('button');
+    buttons.forEach(button => {
+        if (button.textContent == page) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+}
+
+function showModal(categoryId) {
+    const modal = document.getElementById('modal-' + categoryId);
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(categoryId) {
+    const modal = document.getElementById('modal-' + categoryId);
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// ESC 키로 모달 닫기
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            modal.style.display = 'none';
+        });
+        document.body.style.overflow = 'auto';
+    }
+});
+</script>
+
+<div id="modal-0" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('0')">×</span>
+            <h3 class="anchored">database</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (11)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/09.qmd">Database Design</a></td>-->
+                <!--            <td>database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/04-2.qmd">SQL</a></td>-->
+                <!--            <td>database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/work2.qmd">4조 기말과제 제안서</a></td>-->
+                <!--            <td>보고서, database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/03.qmd">The Relational Model</a></td>-->
+                <!--            <td>database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/13.qmd">ASP.NET</a></td>-->
+                <!--            <td>database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/04-1.qmd">Database Normalization</a></td>-->
+                <!--            <td>database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/01-2.qmd">An Overview of Database</a></td>-->
+                <!--            <td>database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/work1.qmd">데이터베이스설계및활용 개인과제 #2</a></td>-->
+                <!--            <td>보고서, database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/work4.qmd">숭실대학교 학생식당 식자제 SCM 설계</a></td>-->
+                <!--            <td>보고서, database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/11.qmd">Database Administration</a></td>-->
+                <!--            <td>database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/07.qmd">Data Modeling and the Entity-Relationship Model</a></td>-->
+                <!--            <td>database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-1" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('1')">×</span>
+            <h3 class="anchored">인간 공학</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (10)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/0_intro.qmd">Introduction to Human Factors</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/3_sensory_system.qmd">Sensor System (Visual)</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/1_reaserch_method.qmd">Research Method in Human Factors</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/7_display.qmd">Display</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/6_attention.qmd">Attention</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/2_human_information_processing_model.qmd">Human Information Processing Model</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/8_control.qmd">Control</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/인간공학-보고서-초안.qmd">맥도날드 키오스크 UI 개선 보고서</a></td>-->
+                <!--            <td>보고서, 인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/5_signal_detction.qmd">Signal Detection Theory</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/4_Auditory_Haptic.qmd">Auditory Haptic</a></td>-->
+                <!--            <td>인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('2')">×</span>
+            <h3 class="anchored">확률과 통계</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (8)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_statistics/8-central-limit-theorem.qmd">중심 극한 정리</a></td>-->
+                <!--            <td>확률과 통계</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_statistics/6-정규분포.qmd">정규 분포</a></td>-->
+                <!--            <td>확률과 통계</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_statistics/2-확률변수와-분포.qmd">확률변수와 확률분포</a></td>-->
+                <!--            <td>확률과 통계</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_statistics/1-통계학의-개념.qmd">확률과 통계의 정의</a></td>-->
+                <!--            <td>확률과 통계</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_statistics/4-이산형 확률분포.qmd">이산형 확률분포</a></td>-->
+                <!--            <td>확률과 통계</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_statistics/3-확률변수의-기댓값.qmd">확률변수의 기댓값</a></td>-->
+                <!--            <td>확률과 통계</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_statistics/5-연속형-확률분포.qmd">연속형 확률분포</a></td>-->
+                <!--            <td>확률과 통계</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_statistics/7-표본의-분포.qmd">표본의 분포</a></td>-->
+                <!--            <td>확률과 통계</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-3" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('3')">×</span>
+            <h3 class="anchored">보고서</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (4)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_human/인간공학-보고서-초안.qmd">맥도날드 키오스크 UI 개선 보고서</a></td>-->
+                <!--            <td>보고서, 인간 공학</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/work2.qmd">4조 기말과제 제안서</a></td>-->
+                <!--            <td>보고서, database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/work1.qmd">데이터베이스설계및활용 개인과제 #2</a></td>-->
+                <!--            <td>보고서, database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/notes/phd_2_2/phd_database/work4.qmd">숭실대학교 학생식당 식자제 SCM 설계</a></td>-->
+                <!--            <td>보고서, database</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('4')">×</span>
+            <h3 class="anchored">산업공학 학부</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/index_phd_2_2.qmd">2학년 2학기 학부 정리</a></td>-->
+                <!--            <td>산업공학 학부</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (0)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><div id="modal-5" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('5')">×</span>
+            <h3 class="anchored">자격증</h3>
+            <div class="document-section">
+                <h4 class="anchored">만드는 중. 자꾸 에러가 나요. esc 누르면 나가짐.</h4>
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--        <tr>-->
+                <!--            <td><a href="posts/index_adp.qmd">ADP 필기 합격</a></td>-->
+                <!--            <td>자격증, 데이터 분석</td>-->
+                <!--        </tr>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+                <!---->
+                <!--<h4>Notes (0)</h4>-->
+                <!--<table class="modal-table">-->
+                <!--    <thead>-->
+                <!--        <tr>-->
+                <!--            <th>Title</th>-->
+                <!--            <th>Categories</th>-->
+                <!--        </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        -->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div><table class="category-table">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Projects</th>
+            <th>Notes</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr class="category-row" style="display: table-row" onclick="showModal('0')">
+            <td>database</td>
+            <td>0</td>
+            <td>11</td>
+            <td>11</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('1')">
+            <td>인간 공학</td>
+            <td>0</td>
+            <td>10</td>
+            <td>10</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('2')">
+            <td>확률과 통계</td>
+            <td>0</td>
+            <td>8</td>
+            <td>8</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('3')">
+            <td>보고서</td>
+            <td>0</td>
+            <td>4</td>
+            <td>4</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('4')">
+            <td>산업공학 학부</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+        </tr>
+    
+    
+    
+        <tr class="category-row" style="display: table-row" onclick="showModal('5')">
+            <td>자격증</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+        </tr>
+    
+    
+    
+    </tbody>
+</table>
+<div class="pagination">
+
+    <button onclick="changePage(1)" class="active">1</button>
+    
+</div>
+</div>
+</div>
 </div>
 </details>
 <details>
@@ -283,7 +1099,7 @@ ul.task-list li input[type="checkbox"] {
 </summary>
 
 <div class="content">
-<div id="d909cc7b" class="cell" data-execution_count="3">
+<div id="01e13151" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 
     <div class="project-cards">
