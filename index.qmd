@@ -20,7 +20,6 @@ toc: false
 
 </details>
 
-
 <details open>
 <summary><h2 class="section-title">1. Projects</h2></summary>
 
@@ -31,9 +30,11 @@ toc: false
 #| echo: false
 
 def target_func(metadata):
-    return metadata.get('status') == 'on-going'
+    return metadata.get('status') == 'on-going' and metadata.get('directory') == 'project'
 
 {{< include includes/_para_card.py >}}
+{{< include includes/_para_projects.py >}}
+
 ```
 
 </div>
@@ -49,10 +50,12 @@ def target_func(metadata):
 ```{python}
 #| echo: false
 
-context = 'area'
-area = ['블로그', '42 seoul', 'Operational Research', '데이터 분석', 'python']
+def target_func(metadata):
+    return metadata.get('directory') == 'area'
 
-{{< include includes/_para_category.py >}}
+{{< include includes/_para_card.py >}}
+{{< include includes/_para_resource_area.py >}}
+
 ```
 
 </div>
@@ -63,12 +66,17 @@ area = ['블로그', '42 seoul', 'Operational Research', '데이터 분석', 'py
 
 <div class="content">
 
+<h3 class="content-title">참고 자료</h3>
+
 ```{python}
 #| echo: false
 
-context = 'resource'
+def target_func(metadata):
+    return metadata.get('directory') == 'resource'
 
-{{< include includes/_para_category.py >}}
+{{< include includes/_para_card.py >}}
+{{< include includes/_para_resource_area.py >}}
+
 ```
 
 </div>
@@ -83,9 +91,10 @@ context = 'resource'
 #| echo: false
 
 def target_func(metadata):
-    return metadata.get('status') != 'on-going'
+    return metadata.get('status', '') != 'on-going' and metadata.get('directory') == 'project'
 
 {{< include includes/_para_card.py >}}
+{{< include includes/_para_projects.py >}}
 ```
 
 </div>

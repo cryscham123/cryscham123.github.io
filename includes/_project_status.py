@@ -13,26 +13,8 @@ def get_yaml_metadata(file_path):
 
 meta = get_yaml_metadata(target)
 
-# 날짜 정보 가져오기 및 처리
 start_date_str = meta.get('start_date')
 end_date_str = meta.get('end_date')
-today = datetime.now()
-
-# 시작일과 종료일이 모두 있는 경우에만 진행률 계산
-if start_date_str and end_date_str:
-    try:
-        start_date = datetime.strptime(str(start_date_str), '%Y-%m-%d')
-        end_date = datetime.strptime(str(end_date_str), '%Y-%m-%d')
-        total_days = (end_date - start_date).days
-        days_passed = (today - start_date).days if today > start_date else 0
-        days_left = (end_date - today).days if today < end_date else 0
-        progress = min(max((days_passed / total_days * 100), 0), 100) if total_days > 0 else 0
-    except ValueError:
-        start_date = end_date = None
-        total_days = days_passed = days_left = progress = 0
-else:
-    start_date = end_date = None
-    total_days = days_passed = days_left = progress = 0
 
 # 상태별 색상
 status_colors = {
@@ -45,10 +27,9 @@ status_colors = {
 html_content = f"""
 <style>
 .project-info {{
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
 }}
 
 .date-info {{
@@ -66,7 +47,7 @@ html_content = f"""
 
 .progress-bar {{
     background-color: {status_colors[meta['status']]};
-    width: {progress}%;
+    width: 0%;
     height: 20px;
     border-radius: 2px;
     transition: width 0.5s ease-in-out;
@@ -104,17 +85,44 @@ html_content = f"""
         <div>시작일: {meta.get('start_date', '미정')}</div>
         <div>종료일: {meta.get('end_date', '미정')}</div>
     </div>
-    
-    {f"""
-    <div class="progress-container">
-        <div class="progress-bar"></div>
+    <div id="progress-section">
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        <div class="progress-text">계산 중...</div>
     </div>
-    
-    <div>진행률: {progress:.1f}% ({days_passed}일 경과 / {days_left}일 남음)</div>
-    """ if start_date and end_date else '<div>일정이 설정되지 않았습니다.</div>'}
-    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {{
+        const startDate = '{start_date_str}';
+        const endDate = '{end_date_str}';
+        const progressBar = document.querySelector('.progress-bar');
+        const progressText = document.querySelector('.progress-text');
+        const progressSection = document.getElementById('progress-section');
+        
+        if (startDate && endDate) {{
+            try {{
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const today = new Date();
+                const totalDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+                const daysPassed = Math.max(Math.floor((today - start) / (1000 * 60 * 60 * 24)), 0);
+                const daysLeft = Math.max(Math.floor((end - today) / (1000 * 60 * 60 * 24)), 0);
+                let progress = 0;
+                if (totalDays > 0) {{
+                    progress = Math.min(Math.max((daysPassed / totalDays * 100), 0), 100);
+                }}
+                progressBar.style.width = `${{progress}}%`;
+                progressText.textContent = `진행률: ${{progress.toFixed(1)}}% (${{daysPassed}}일 경과 / ${{daysLeft}}일 남음)`;
+            }} catch (e) {{
+                progressSection.innerHTML = '<div>날짜 형식이 올바르지 않습니다.</div>';
+            }}
+        }} else {{
+            progressSection.innerHTML = '<div>일정이 설정되지 않았습니다.</div>';
+        }}
+    }});
+    </script>
     <div class="categories-container">
-        {''.join([f'<span class="category-tag">{cat}</span>' for cat in meta['categories']])}
+        {''.join([f'<span class="category-tag">{cat}</span>' for cat in meta['tags']])}
     </div>
 </div>
 """

@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="과연 2번째 도전은 성공할 것인가">
+<meta name="description" content="ADP 실기를 준비해 봅시다.">
 
-<title>ADP 필기 합격 – 김형훈의 학습 블로그</title>
+<title>ADP 실기 준비 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -118,7 +118,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../styles.css">
-<link rel="alternate" type="application/rss+xml" title="김형훈의 학습 블로그" href="index_adp.xml" data-external="1"></head>
+<link rel="alternate" type="application/rss+xml" title="김형훈의 학습 블로그" href="index_adp_실기.xml" data-external="1"></head>
 
 <body class="nav-fixed">
 
@@ -217,16 +217,12 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ADP 필기 합격</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">자격증</div>
-    <div class="quarto-category">데이터 분석</div>
-  </div>
-  </div>
+<h1 class="title">ADP 실기 준비</h1>
+</div>
 
 <div>
   <div class="description">
-    과연 2번째 도전은 성공할 것인가
+    ADP 실기를 준비해 봅시다.
   </div>
 </div>
 
@@ -243,15 +239,14 @@ window.Quarto = {
 </header>
 
 
-<div id="bb9e6391" class="cell" data-execution_count="1">
+<div id="8877716a" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 
 <style>
 .project-info {
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
 }
 
 .date-info {
@@ -269,7 +264,7 @@ window.Quarto = {
 
 .progress-bar {
     background-color: #2ecc71;
-    width: 7.936507936507936%;
+    width: 0%;
     height: 20px;
     border-radius: 2px;
     transition: width 0.5s ease-in-out;
@@ -305,26 +300,52 @@ window.Quarto = {
     
     <div class="date-info">
         <div>시작일: 2024-12-21</div>
-        <div>종료일: 2025-02-22</div>
+        <div>종료일: 2025-04-26</div>
     </div>
-    
-    
-    <div class="progress-container">
-        <div class="progress-bar"></div>
+    <div id="progress-section">
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        <div class="progress-text">계산 중...</div>
     </div>
-    
-    <div>진행률: 7.9% (5일 경과 / 57일 남음)</div>
-    
-    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startDate = '2024-12-21';
+        const endDate = '2025-04-26';
+        const progressBar = document.querySelector('.progress-bar');
+        const progressText = document.querySelector('.progress-text');
+        const progressSection = document.getElementById('progress-section');
+        
+        if (startDate && endDate) {
+            try {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const today = new Date();
+                const totalDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+                const daysPassed = Math.max(Math.floor((today - start) / (1000 * 60 * 60 * 24)), 0);
+                const daysLeft = Math.max(Math.floor((end - today) / (1000 * 60 * 60 * 24)), 0);
+                let progress = 0;
+                if (totalDays > 0) {
+                    progress = Math.min(Math.max((daysPassed / totalDays * 100), 0), 100);
+                }
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `진행률: ${progress.toFixed(1)}% (${daysPassed}일 경과 / ${daysLeft}일 남음)`;
+            } catch (e) {
+                progressSection.innerHTML = '<div>날짜 형식이 올바르지 않습니다.</div>';
+            }
+        } else {
+            progressSection.innerHTML = '<div>일정이 설정되지 않았습니다.</div>';
+        }
+    });
+    </script>
     <div class="categories-container">
-        <span class="category-tag">자격증</span><span class="category-tag">데이터 분석</span>
+        <span class="category-tag">자격증</span><span class="category-tag">데이터 분석</span><span class="category-tag">python</span>
     </div>
 </div>
 </div>
 </div>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="https://cryscham123.framer.website/blog/adp-%ED%95%84%EA%B8%B0-%EC%8B%9C%ED%97%98%EC%9D%84-%EB%B4%A4%EC%8A%B5%EB%8B%88%EB%8B%A4">1회차 시도</a>는 실패했지만, 이번엔 잘 할 수 있지 않을까요</p>
 </section>
 <section id="tasks" class="level2">
 <h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
@@ -374,9 +395,9 @@ window.Quarto = {
 </tr>
 </thead>
 <tbody class="list">
-<tr data-index="0" data-categories="데이터 분석" data-listing-date-sort="1734620400000" data-listing-file-modified-sort="1735184922193" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="346" data-listing-title-sort="pandas data 구조" data-listing-filename-sort="01.qmd">
+<tr data-index="0" data-categories="데이터 분석" data-listing-date-sort="1734620400000" data-listing-file-modified-sort="1735287670998" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="346" data-listing-title-sort="pandas data 구조" data-listing-filename-sort="01.qmd">
 <td>
-<a href="../posts/notes/adp/data-handling/01.html" class="title listing-title">pandas data 구조</a>
+<a href="../posts/notes/adp/실기/data-handling/01.html" class="title listing-title">pandas data 구조</a>
 </td>
 <td>
 <span class="listing-date">2024-12-20</span>

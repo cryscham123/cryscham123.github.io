@@ -14,8 +14,7 @@ def find_unclassified_posts(root_dir='posts'):
                         if '---' in content:
                             _, fm, _ = content.split('---', 2)
                             metadata = yaml.safe_load(fm)
-                            # projects나 area_resource가 없는 파일만 선택
-                            if not metadata.get('projects') and not metadata.get('area_resource'):
+                            if not metadata.get('directories') or metadata.get('directories') == ['']:
                                 unclassified.append({
                                     'title': metadata.get('title', 'Untitled'),
                                     'date': metadata.get('date', 'No date'),
