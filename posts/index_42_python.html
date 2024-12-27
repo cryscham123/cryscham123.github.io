@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="빠르게 마무리해봅시다.">
+<meta name="description" content="42 seoul project 입니다">
 
-<title>42 seoul python 피신 – 김형훈의 학습 블로그</title>
+<title>python for data science 수행 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -217,16 +217,12 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">42 seoul python 피신</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">42 seoul</div>
-    <div class="quarto-category">python</div>
-  </div>
-  </div>
+<h1 class="title">python for data science 수행</h1>
+</div>
 
 <div>
   <div class="description">
-    빠르게 마무리해봅시다.
+    42 seoul project 입니다
   </div>
 </div>
 
@@ -243,15 +239,14 @@ window.Quarto = {
 </header>
 
 
-<div id="05c2b6ee" class="cell" data-execution_count="1">
+<div id="7062b2ea" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 
 <style>
 .project-info {
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
 }
 
 .date-info {
@@ -307,9 +302,42 @@ window.Quarto = {
         <div>시작일: </div>
         <div>종료일: </div>
     </div>
-    
-    <div>일정이 설정되지 않았습니다.</div>
-    
+    <div id="progress-section">
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        <div class="progress-text">계산 중...</div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startDate = '';
+        const endDate = '';
+        const progressBar = document.querySelector('.progress-bar');
+        const progressText = document.querySelector('.progress-text');
+        const progressSection = document.getElementById('progress-section');
+        
+        if (startDate && endDate) {
+            try {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const today = new Date();
+                const totalDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+                const daysPassed = Math.max(Math.floor((today - start) / (1000 * 60 * 60 * 24)), 0);
+                const daysLeft = Math.max(Math.floor((end - today) / (1000 * 60 * 60 * 24)), 0);
+                let progress = 0;
+                if (totalDays > 0) {
+                    progress = Math.min(Math.max((daysPassed / totalDays * 100), 0), 100);
+                }
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `진행률: ${progress.toFixed(1)}% (${daysPassed}일 경과 / ${daysLeft}일 남음)`;
+            } catch (e) {
+                progressSection.innerHTML = '<div>날짜 형식이 올바르지 않습니다.</div>';
+            }
+        } else {
+            progressSection.innerHTML = '<div>일정이 설정되지 않았습니다.</div>';
+        }
+    });
+    </script>
     <div class="categories-container">
         <span class="category-tag">42 seoul</span><span class="category-tag">python</span>
     </div>
@@ -318,7 +346,7 @@ window.Quarto = {
 </div>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p>42 seoul python picine project 수행 과정 노트입니다.</p>
+<p>42 seoul python for data science 수행 과정 노트입니다</p>
 </section>
 <section id="tasks" class="level2">
 <h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
