@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="PARA 구조에 맞게 quarto 블로그를 리뉴얼 해봅시다">
 
-<title>Blog – 김형훈의 학습 블로그</title>
+<title>1차 PARA 구조 블로그 리뉴얼 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -216,9 +217,14 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
+<h1 class="title">1차 PARA 구조 블로그 리뉴얼</h1>
 </div>
 
+<div>
+  <div class="description">
+    PARA 구조에 맞게 quarto 블로그를 리뉴얼 해봅시다
+  </div>
+</div>
 
 
 <div class="quarto-title-meta column-page-left">
@@ -233,13 +239,118 @@ window.Quarto = {
 </header>
 
 
+<div id="fcc56afa" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+
+<style>
+.project-info {
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
+.date-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.progress-container {
+    background-color: #e9ecef;
+    border-radius: 4px;
+    padding: 3px;
+    margin: 1rem 0;
+}
+
+.progress-bar {
+    background-color: #2ecc71;
+    width: 0%;
+    height: 20px;
+    border-radius: 2px;
+    transition: width 0.5s ease-in-out;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    color: white;
+    background-color: #2ecc71;
+    margin-bottom: 1rem;
+}
+
+.categories-container {
+    margin-top: 1rem;
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #495057;
+}
+</style>
+
+<div class="project-info">
+    <div class="status-badge">ON-GOING</div>
+    
+    <div class="date-info">
+        <div>시작일: 2024-12-21</div>
+        <div>종료일: 2025-01-07</div>
+    </div>
+    <div id="progress-section">
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        <div class="progress-text">계산 중...</div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startDate = '2024-12-21';
+        const endDate = '2025-01-07';
+        const progressBar = document.querySelector('.progress-bar');
+        const progressText = document.querySelector('.progress-text');
+        const progressSection = document.getElementById('progress-section');
+        
+        if (startDate && endDate) {
+            try {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const today = new Date();
+                const totalDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+                const daysPassed = Math.max(Math.floor((today - start) / (1000 * 60 * 60 * 24)), 0);
+                const daysLeft = Math.max(Math.floor((end - today) / (1000 * 60 * 60 * 24)), 0);
+                let progress = 0;
+                if (totalDays > 0) {
+                    progress = Math.min(Math.max((daysPassed / totalDays * 100), 0), 100);
+                }
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `진행률: ${progress.toFixed(1)}% (${daysPassed}일 경과 / ${daysLeft}일 남음)`;
+            } catch (e) {
+                progressSection.innerHTML = '<div>날짜 형식이 올바르지 않습니다.</div>';
+            }
+        } else {
+            progressSection.innerHTML = '<div>일정이 설정되지 않았습니다.</div>';
+        }
+    });
+    </script>
+    <div class="categories-container">
+        <span class="category-tag">blog</span><span class="category-tag">PARA</span><span class="category-tag">학습</span>
+    </div>
+</div>
+</div>
+</div>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p>블로그 관련 노트입니다.</p>
+<p>블로그를 학습에 용이하게 리뉴얼해보고자 합니다.</p>
 </section>
 <section id="tasks" class="level2">
 <h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
-<div id="0eabe6d5" class="cell" data-execution_count="1">
+<div id="616dc7a6" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 
     <style>
@@ -288,24 +399,14 @@ window.Quarto = {
     
             <li class="task-item">
                 <input type="checkbox" class="task-checkbox " disabled="">
-                <a href="../../01_projects/para_blog/" class="task-link">
-                    <span class="task-name clickable">PARA 구조에 맞게 블로그 구조 변경</span>
+                <span class="task-name non-clickable">PARA 구조 공부</span>
+            </li>
+            
+            <li class="task-item">
+                <input type="checkbox" class="task-checkbox completed" checked="" disabled="">
+                <a href="../../../posts/01_projects/para_blog/0.html" class="task-link">
+                    <span class="task-name clickable completed">블로그 리뉴얼</span>
                 </a>
-            </li>
-            
-            <li class="task-item">
-                <input type="checkbox" class="task-checkbox " disabled="">
-                <span class="task-name non-clickable">게시글에 관련 게시글, 관련 directory 추가</span>
-            </li>
-            
-            <li class="task-item">
-                <input type="checkbox" class="task-checkbox " disabled="">
-                <span class="task-name non-clickable">google analytics 적용</span>
-            </li>
-            
-            <li class="task-item">
-                <input type="checkbox" class="task-checkbox " disabled="">
-                <span class="task-name non-clickable">about me 페이지 작성</span>
             </li>
             </ul>
 </div>

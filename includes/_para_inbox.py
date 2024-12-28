@@ -2,7 +2,7 @@ import os
 import yaml
 from IPython.display import HTML
 
-def find_unclassified_posts(root_dir='posts/00_inboxes'):
+def find_unclassified_posts(root_dir):
     unclassified = []
     for root, _, files in os.walk(root_dir):
         for file in files:
@@ -24,10 +24,10 @@ def find_unclassified_posts(root_dir='posts/00_inboxes'):
                 print(f"Error processing {file_path}: {e}")
     return sorted(unclassified, key=lambda x: str(x['date']), reverse=True)
 
-unclassified = find_unclassified_posts()
+unclassified = find_unclassified_posts(target_dir)
 
 # HTML 테이블 생성
-html_table = f'<h3 class="content-title">분류되지 않은 노트들 ({len(unclassified)})</h3>'
+html_table = f'<h3 class="content-title">{message} ({len(unclassified)})</h3>'
 if unclassified:
     html_table += f"""
     <table class="table">
@@ -54,6 +54,6 @@ if unclassified:
     """
 else:
     html_table += f"""
-        <p style="margin-top: 1em;">분류되지 않은 노트가 없습니다.</p>
+        <p style="margin-top: 1em;">{message}가 없습니다.</p>
     """
 display(HTML(html_table))

@@ -68,11 +68,12 @@ def generate_tasks_html(tasks, base_dir="posts"):
     """
     for task in tasks:
         name = task.get('name', '')
-        directory = task.get('directory')
+        directory = task.get('directory', '')
         href = task.get('link', '')
-        checked = ""
-        name_class = "clickable" if href != '' else "non-clickable"
-        checkbox_class = ""
+        checked = 'checked' if task.get('completed', '') == True else ''
+        checkbox_class = 'completed' if task.get('completed', '') == True else ''
+        name_class = "clickable" if href != '' or directory != '' else "non-clickable"
+        name_class += ' completed' if task.get('completed', '') == True else ''
         if directory:
             for root, _, files in os.walk('../../'):
                 for file in files:
