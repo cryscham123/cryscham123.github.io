@@ -1,5 +1,3 @@
-from datetime import datetime
-import pandas as pd
 import yaml
 from IPython.display import HTML
 
@@ -79,7 +77,7 @@ html_content = f"""
 </style>
 
 <div class="project-info">
-    <div class="status-badge">{meta['status'].upper()}</div>
+    <div class="status-badge">{meta.get('status', 'completed').upper()}</div>
     
     <div class="date-info">
         <div>시작일: {meta.get('start_date', '미정')}</div>
@@ -122,7 +120,7 @@ html_content = f"""
     }});
     </script>
     <div class="categories-container">
-        {''.join([f'<span class="category-tag">{cat}</span>' for cat in meta['tags']])}
+        {''.join([f'<span class="category-tag">{cat}</span>' for cat in meta.get('tags', [])])}
     </div>
 </div>
 """
