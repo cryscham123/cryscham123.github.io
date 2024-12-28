@@ -2,27 +2,26 @@ import os
 import yaml
 from IPython.display import HTML
 
-def find_unclassified_posts(root_dir='posts'):
+def find_unclassified_posts(root_dir='posts/00_inboxes'):
     unclassified = []
     for root, _, files in os.walk(root_dir):
         for file in files:
-            if not file.startswith("index") and file.endswith(".qmd"):
-                file_path = os.path.join(root, file)
-                try:
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        content = f.read()
-                        if '---' in content:
-                            _, fm, _ = content.split('---', 2)
-                            metadata = yaml.safe_load(fm)
-                            if not metadata.get('directories') or metadata.get('directories') == ['']:
-                                unclassified.append({
-                                    'title': metadata.get('title', 'Untitled'),
-                                    'date': metadata.get('date', 'No date'),
-                                    'description': metadata.get('description', 'No description'),
-                                    'path': file_path
-                                })
-                except Exception as e:
-                    print(f"Error processing {file_path}: {e}")
+            file_path = os.path.join(root, file)
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    if '---' in content:
+                        _, fm, _ = content.split('---', 2)
+                        metadata = yaml.safe_load(fm)
+                        if not metadata.get('directories') or metadata.get('directories') == ['']:
+                            unclassified.append({
+                                'title': metadata.get('title', 'Untitled'),
+                                'date': metadata.get('date', 'No date'),
+                                'description': metadata.get('description', 'No description'),
+                                'path': file_path
+                            })
+            except Exception as e:
+                print(f"Error processing {file_path}: {e}")
     return sorted(unclassified, key=lambda x: str(x['date']), reverse=True)
 
 unclassified = find_unclassified_posts()

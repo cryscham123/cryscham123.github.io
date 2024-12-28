@@ -11,7 +11,7 @@ def get_yaml_metadata(file_path):
             return yaml.safe_load(fm)
     return {}
 
-meta = get_yaml_metadata(target)
+meta = get_yaml_metadata("index.qmd")
 
 start_date_str = meta.get('start_date')
 end_date_str = meta.get('end_date')
