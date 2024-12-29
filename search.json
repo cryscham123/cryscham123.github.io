@@ -13,6 +13,7 @@
     "section": "process of conducting an OR study",
     "text": "process of conducting an OR study\n\n\n\n\n\nflowchart TD\n  A(Collect data) --&gt; B(Define the problem)\n  B --&gt; C{Data are sufficient?}\n  C --&gt;|No| A\n  C --&gt;|Yes| D(Formulate a model)\n  D --&gt; E(Solve the model)\n  E --&gt; F{Model is good?}\n  F --&gt;|Yes| G(Interpret results make suggestions)\n  F --&gt;|No| D\n\n\n\n\n\n\n\nOR cant solve everything\nAim of course: know what may be solved by OR and what cannot be solve by OR",
     "crumbs": [
+      "All Notes",
       "01 Projects",
       "OR 예습",
       "Overview"
@@ -25,6 +26,7 @@
     "section": "model",
     "text": "model\n\ndescision variables\nobjective function\nconstraints\n\n\nKnapSack(backpack) Problem\n\nLinear Programming\n\n\\[\\begin{aligned}\nmax & \\sum_{i=1}^{n} v_i x_i \\\\\ns.t. & \\sum_{i=1}^{n} w_i x_i \\leq B \\\\\n& 0 \\leq x_i \\leq 1\n\\end{aligned}\\]\n\nInteger Programming\n\n\\[\\begin{aligned}\nmax & \\sum_{i=1}^{n} v_i x_i \\\\\ns.t. & \\sum_{i=1}^{n} w_i x_i \\leq B \\\\\n& x_i \\in \\{0, 1\\}\n\\end{aligned}\\]",
     "crumbs": [
+      "All Notes",
       "01 Projects",
       "OR 예습",
       "Overview"
@@ -35,48 +37,28 @@
     "href": "posts/01_projects/adp_실기/01.html",
     "title": "pandas data 구조",
     "section": "",
-    "text": "pandas: numpy를 라벨링한거",
-    "crumbs": [
-      "01 Projects",
-      "ADP 실기 준비",
-      "pandas data 구조"
-    ]
+    "text": "pandas: numpy를 라벨링한거"
   },
   {
     "objectID": "posts/01_projects/adp_실기/01.html#before",
     "href": "posts/01_projects/adp_실기/01.html#before",
     "title": "pandas data 구조",
     "section": "Before",
-    "text": "Before\n데이터를 호출하고, 데이터 내용과 요약 / 통계 정보를 확인해야함\n칼럼명이 칼럼 타입을 변경해야할 때도 있음\n\nPandas 사용 준비\n\n라이브러리 설치\n라이브러리 호출\n\n\nimport pandas as pd\n\npd.set_option('display.max_rows', 10)\n\n\n\nDataFrame 선언\n\nimport numpy as np\ndataset = np.array([['kor', 70], ['math', 80]])\n# declare df 1\ndf = pd.DataFrame(dataset, columns=['class', 'score'])\n# declare df 2\ndf = pd.DataFrame([['kor', 70], ['math', 80]], columns=['class', 'score'])\n# declare df 3\ndf = pd.DataFrame({'class': ['kor', 'math'], 'score': [70, 80]})\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\n0\nkor\n70\n\n\n1\nmath\n80\n\n\n\n\n\n\n\n\n\nDataFrame 읽고 저장\n\n# filepath = '../book/data/data.csv'\n# data = pd.read_csv(filepath, na_values='NA', encoding='utf8')\n# data.to_csv('result.csv', header=True, index=True, encoding='utf8')\n\n\n\nDataFrame 출력\n\nfrom sklearn.datasets import load_iris\n\niris = load_iris()\niris\n\n{'data': array([[5.1, 3.5, 1.4, 0.2],\n        [4.9, 3. , 1.4, 0.2],\n        [4.7, 3.2, 1.3, 0.2],\n        [4.6, 3.1, 1.5, 0.2],\n        [5. , 3.6, 1.4, 0.2],\n        [5.4, 3.9, 1.7, 0.4],\n        [4.6, 3.4, 1.4, 0.3],\n        [5. , 3.4, 1.5, 0.2],\n        [4.4, 2.9, 1.4, 0.2],\n        [4.9, 3.1, 1.5, 0.1],\n        [5.4, 3.7, 1.5, 0.2],\n        [4.8, 3.4, 1.6, 0.2],\n        [4.8, 3. , 1.4, 0.1],\n        [4.3, 3. , 1.1, 0.1],\n        [5.8, 4. , 1.2, 0.2],\n        [5.7, 4.4, 1.5, 0.4],\n        [5.4, 3.9, 1.3, 0.4],\n        [5.1, 3.5, 1.4, 0.3],\n        [5.7, 3.8, 1.7, 0.3],\n        [5.1, 3.8, 1.5, 0.3],\n        [5.4, 3.4, 1.7, 0.2],\n        [5.1, 3.7, 1.5, 0.4],\n        [4.6, 3.6, 1. , 0.2],\n        [5.1, 3.3, 1.7, 0.5],\n        [4.8, 3.4, 1.9, 0.2],\n        [5. , 3. , 1.6, 0.2],\n        [5. , 3.4, 1.6, 0.4],\n        [5.2, 3.5, 1.5, 0.2],\n        [5.2, 3.4, 1.4, 0.2],\n        [4.7, 3.2, 1.6, 0.2],\n        [4.8, 3.1, 1.6, 0.2],\n        [5.4, 3.4, 1.5, 0.4],\n        [5.2, 4.1, 1.5, 0.1],\n        [5.5, 4.2, 1.4, 0.2],\n        [4.9, 3.1, 1.5, 0.2],\n        [5. , 3.2, 1.2, 0.2],\n        [5.5, 3.5, 1.3, 0.2],\n        [4.9, 3.6, 1.4, 0.1],\n        [4.4, 3. , 1.3, 0.2],\n        [5.1, 3.4, 1.5, 0.2],\n        [5. , 3.5, 1.3, 0.3],\n        [4.5, 2.3, 1.3, 0.3],\n        [4.4, 3.2, 1.3, 0.2],\n        [5. , 3.5, 1.6, 0.6],\n        [5.1, 3.8, 1.9, 0.4],\n        [4.8, 3. , 1.4, 0.3],\n        [5.1, 3.8, 1.6, 0.2],\n        [4.6, 3.2, 1.4, 0.2],\n        [5.3, 3.7, 1.5, 0.2],\n        [5. , 3.3, 1.4, 0.2],\n        [7. , 3.2, 4.7, 1.4],\n        [6.4, 3.2, 4.5, 1.5],\n        [6.9, 3.1, 4.9, 1.5],\n        [5.5, 2.3, 4. , 1.3],\n        [6.5, 2.8, 4.6, 1.5],\n        [5.7, 2.8, 4.5, 1.3],\n        [6.3, 3.3, 4.7, 1.6],\n        [4.9, 2.4, 3.3, 1. ],\n        [6.6, 2.9, 4.6, 1.3],\n        [5.2, 2.7, 3.9, 1.4],\n        [5. , 2. , 3.5, 1. ],\n        [5.9, 3. , 4.2, 1.5],\n        [6. , 2.2, 4. , 1. ],\n        [6.1, 2.9, 4.7, 1.4],\n        [5.6, 2.9, 3.6, 1.3],\n        [6.7, 3.1, 4.4, 1.4],\n        [5.6, 3. , 4.5, 1.5],\n        [5.8, 2.7, 4.1, 1. ],\n        [6.2, 2.2, 4.5, 1.5],\n        [5.6, 2.5, 3.9, 1.1],\n        [5.9, 3.2, 4.8, 1.8],\n        [6.1, 2.8, 4. , 1.3],\n        [6.3, 2.5, 4.9, 1.5],\n        [6.1, 2.8, 4.7, 1.2],\n        [6.4, 2.9, 4.3, 1.3],\n        [6.6, 3. , 4.4, 1.4],\n        [6.8, 2.8, 4.8, 1.4],\n        [6.7, 3. , 5. , 1.7],\n        [6. , 2.9, 4.5, 1.5],\n        [5.7, 2.6, 3.5, 1. ],\n        [5.5, 2.4, 3.8, 1.1],\n        [5.5, 2.4, 3.7, 1. ],\n        [5.8, 2.7, 3.9, 1.2],\n        [6. , 2.7, 5.1, 1.6],\n        [5.4, 3. , 4.5, 1.5],\n        [6. , 3.4, 4.5, 1.6],\n        [6.7, 3.1, 4.7, 1.5],\n        [6.3, 2.3, 4.4, 1.3],\n        [5.6, 3. , 4.1, 1.3],\n        [5.5, 2.5, 4. , 1.3],\n        [5.5, 2.6, 4.4, 1.2],\n        [6.1, 3. , 4.6, 1.4],\n        [5.8, 2.6, 4. , 1.2],\n        [5. , 2.3, 3.3, 1. ],\n        [5.6, 2.7, 4.2, 1.3],\n        [5.7, 3. , 4.2, 1.2],\n        [5.7, 2.9, 4.2, 1.3],\n        [6.2, 2.9, 4.3, 1.3],\n        [5.1, 2.5, 3. , 1.1],\n        [5.7, 2.8, 4.1, 1.3],\n        [6.3, 3.3, 6. , 2.5],\n        [5.8, 2.7, 5.1, 1.9],\n        [7.1, 3. , 5.9, 2.1],\n        [6.3, 2.9, 5.6, 1.8],\n        [6.5, 3. , 5.8, 2.2],\n        [7.6, 3. , 6.6, 2.1],\n        [4.9, 2.5, 4.5, 1.7],\n        [7.3, 2.9, 6.3, 1.8],\n        [6.7, 2.5, 5.8, 1.8],\n        [7.2, 3.6, 6.1, 2.5],\n        [6.5, 3.2, 5.1, 2. ],\n        [6.4, 2.7, 5.3, 1.9],\n        [6.8, 3. , 5.5, 2.1],\n        [5.7, 2.5, 5. , 2. ],\n        [5.8, 2.8, 5.1, 2.4],\n        [6.4, 3.2, 5.3, 2.3],\n        [6.5, 3. , 5.5, 1.8],\n        [7.7, 3.8, 6.7, 2.2],\n        [7.7, 2.6, 6.9, 2.3],\n        [6. , 2.2, 5. , 1.5],\n        [6.9, 3.2, 5.7, 2.3],\n        [5.6, 2.8, 4.9, 2. ],\n        [7.7, 2.8, 6.7, 2. ],\n        [6.3, 2.7, 4.9, 1.8],\n        [6.7, 3.3, 5.7, 2.1],\n        [7.2, 3.2, 6. , 1.8],\n        [6.2, 2.8, 4.8, 1.8],\n        [6.1, 3. , 4.9, 1.8],\n        [6.4, 2.8, 5.6, 2.1],\n        [7.2, 3. , 5.8, 1.6],\n        [7.4, 2.8, 6.1, 1.9],\n        [7.9, 3.8, 6.4, 2. ],\n        [6.4, 2.8, 5.6, 2.2],\n        [6.3, 2.8, 5.1, 1.5],\n        [6.1, 2.6, 5.6, 1.4],\n        [7.7, 3. , 6.1, 2.3],\n        [6.3, 3.4, 5.6, 2.4],\n        [6.4, 3.1, 5.5, 1.8],\n        [6. , 3. , 4.8, 1.8],\n        [6.9, 3.1, 5.4, 2.1],\n        [6.7, 3.1, 5.6, 2.4],\n        [6.9, 3.1, 5.1, 2.3],\n        [5.8, 2.7, 5.1, 1.9],\n        [6.8, 3.2, 5.9, 2.3],\n        [6.7, 3.3, 5.7, 2.5],\n        [6.7, 3. , 5.2, 2.3],\n        [6.3, 2.5, 5. , 1.9],\n        [6.5, 3. , 5.2, 2. ],\n        [6.2, 3.4, 5.4, 2.3],\n        [5.9, 3. , 5.1, 1.8]]),\n 'target': array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n        0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,\n        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,\n        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,\n        2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,\n        2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),\n 'frame': None,\n 'target_names': array(['setosa', 'versicolor', 'virginica'], dtype='&lt;U10'),\n 'DESCR': '.. _iris_dataset:\\n\\nIris plants dataset\\n--------------------\\n\\n**Data Set Characteristics:**\\n\\n:Number of Instances: 150 (50 in each of three classes)\\n:Number of Attributes: 4 numeric, predictive attributes and the class\\n:Attribute Information:\\n    - sepal length in cm\\n    - sepal width in cm\\n    - petal length in cm\\n    - petal width in cm\\n    - class:\\n            - Iris-Setosa\\n            - Iris-Versicolour\\n            - Iris-Virginica\\n\\n:Summary Statistics:\\n\\n============== ==== ==== ======= ===== ====================\\n                Min  Max   Mean    SD   Class Correlation\\n============== ==== ==== ======= ===== ====================\\nsepal length:   4.3  7.9   5.84   0.83    0.7826\\nsepal width:    2.0  4.4   3.05   0.43   -0.4194\\npetal length:   1.0  6.9   3.76   1.76    0.9490  (high!)\\npetal width:    0.1  2.5   1.20   0.76    0.9565  (high!)\\n============== ==== ==== ======= ===== ====================\\n\\n:Missing Attribute Values: None\\n:Class Distribution: 33.3% for each of 3 classes.\\n:Creator: R.A. Fisher\\n:Donor: Michael Marshall (MARSHALL%PLU@io.arc.nasa.gov)\\n:Date: July, 1988\\n\\nThe famous Iris database, first used by Sir R.A. Fisher. The dataset is taken\\nfrom Fisher\\'s paper. Note that it\\'s the same as in R, but not as in the UCI\\nMachine Learning Repository, which has two wrong data points.\\n\\nThis is perhaps the best known database to be found in the\\npattern recognition literature.  Fisher\\'s paper is a classic in the field and\\nis referenced frequently to this day.  (See Duda & Hart, for example.)  The\\ndata set contains 3 classes of 50 instances each, where each class refers to a\\ntype of iris plant.  One class is linearly separable from the other 2; the\\nlatter are NOT linearly separable from each other.\\n\\n.. dropdown:: References\\n\\n  - Fisher, R.A. \"The use of multiple measurements in taxonomic problems\"\\n    Annual Eugenics, 7, Part II, 179-188 (1936); also in \"Contributions to\\n    Mathematical Statistics\" (John Wiley, NY, 1950).\\n  - Duda, R.O., & Hart, P.E. (1973) Pattern Classification and Scene Analysis.\\n    (Q327.D83) John Wiley & Sons.  ISBN 0-471-22361-1.  See page 218.\\n  - Dasarathy, B.V. (1980) \"Nosing Around the Neighborhood: A New System\\n    Structure and Classification Rule for Recognition in Partially Exposed\\n    Environments\".  IEEE Transactions on Pattern Analysis and Machine\\n    Intelligence, Vol. PAMI-2, No. 1, 67-71.\\n  - Gates, G.W. (1972) \"The Reduced Nearest Neighbor Rule\".  IEEE Transactions\\n    on Information Theory, May 1972, 431-433.\\n  - See also: 1988 MLC Proceedings, 54-64.  Cheeseman et al\"s AUTOCLASS II\\n    conceptual clustering system finds 3 classes in the data.\\n  - Many, many more ...\\n',\n 'feature_names': ['sepal length (cm)',\n  'sepal width (cm)',\n  'petal length (cm)',\n  'petal width (cm)'],\n 'filename': 'iris.csv',\n 'data_module': 'sklearn.datasets.data'}\n\n\n\niris = pd.DataFrame(iris.data, columns=iris.feature_names)\niris\n\n\n\n\n\n\n\n\nsepal length (cm)\nsepal width (cm)\npetal length (cm)\npetal width (cm)\n\n\n\n\n0\n5.1\n3.5\n1.4\n0.2\n\n\n1\n4.9\n3.0\n1.4\n0.2\n\n\n2\n4.7\n3.2\n1.3\n0.2\n\n\n3\n4.6\n3.1\n1.5\n0.2\n\n\n4\n5.0\n3.6\n1.4\n0.2\n\n\n...\n...\n...\n...\n...\n\n\n145\n6.7\n3.0\n5.2\n2.3\n\n\n146\n6.3\n2.5\n5.0\n1.9\n\n\n147\n6.5\n3.0\n5.2\n2.0\n\n\n148\n6.2\n3.4\n5.4\n2.3\n\n\n149\n5.9\n3.0\n5.1\n1.8\n\n\n\n\n150 rows × 4 columns\n\n\n\n\niris.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 150 entries, 0 to 149\nData columns (total 4 columns):\n #   Column             Non-Null Count  Dtype  \n---  ------             --------------  -----  \n 0   sepal length (cm)  150 non-null    float64\n 1   sepal width (cm)   150 non-null    float64\n 2   petal length (cm)  150 non-null    float64\n 3   petal width (cm)   150 non-null    float64\ndtypes: float64(4)\nmemory usage: 4.8 KB\n\n\n\niris.describe()\n\n\n\n\n\n\n\n\nsepal length (cm)\nsepal width (cm)\npetal length (cm)\npetal width (cm)\n\n\n\n\ncount\n150.000000\n150.000000\n150.000000\n150.000000\n\n\nmean\n5.843333\n3.057333\n3.758000\n1.199333\n\n\nstd\n0.828066\n0.435866\n1.765298\n0.762238\n\n\nmin\n4.300000\n2.000000\n1.000000\n0.100000\n\n\n25%\n5.100000\n2.800000\n1.600000\n0.300000\n\n\n50%\n5.800000\n3.000000\n4.350000\n1.300000\n\n\n75%\n6.400000\n3.300000\n5.100000\n1.800000\n\n\nmax\n7.900000\n4.400000\n6.900000\n2.500000\n\n\n\n\n\n\n\nsepal length와 petal width의 값의 차이가 크다.\n전처리 과정에서 변수 정규화 수행의 근거가 된다.\n\n\nindex / column 명 변경\n\ndf.index\n\nRangeIndex(start=0, stop=2, step=1)\n\n\n\nlist(df.index)\n\n[0, 1]\n\n\n\ndf.index = ['A', 'B']\ndf.index\n\nIndex(['A', 'B'], dtype='object')\n\n\n\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\nA\nkor\n70\n\n\nB\nmath\n80\n\n\n\n\n\n\n\n\ndf.set_index('class', drop=True, append=False, inplace=True)\ndf\n\n\n\n\n\n\n\n\nscore\n\n\nclass\n\n\n\n\n\nkor\n70\n\n\nmath\n80\n\n\n\n\n\n\n\n\ndf.reset_index(drop=False, inplace=True)\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\n0\nkor\n70\n\n\n1\nmath\n80\n\n\n\n\n\n\n\n\niris.columns\n\nIndex(['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)',\n       'petal width (cm)'],\n      dtype='object')\n\n\n\niris.columns = ['sepal length', 'sepal width', 'petal length', 'petal width']\niris\n\n\n\n\n\n\n\n\nsepal length\nsepal width\npetal length\npetal width\n\n\n\n\n0\n5.1\n3.5\n1.4\n0.2\n\n\n1\n4.9\n3.0\n1.4\n0.2\n\n\n2\n4.7\n3.2\n1.3\n0.2\n\n\n3\n4.6\n3.1\n1.5\n0.2\n\n\n4\n5.0\n3.6\n1.4\n0.2\n\n\n...\n...\n...\n...\n...\n\n\n145\n6.7\n3.0\n5.2\n2.3\n\n\n146\n6.3\n2.5\n5.0\n1.9\n\n\n147\n6.5\n3.0\n5.2\n2.0\n\n\n148\n6.2\n3.4\n5.4\n2.3\n\n\n149\n5.9\n3.0\n5.1\n1.8\n\n\n\n\n150 rows × 4 columns\n\n\n\n\niris.columns = iris.columns.str.replace(' ', '_')\niris\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\npetal_length\npetal_width\n\n\n\n\n0\n5.1\n3.5\n1.4\n0.2\n\n\n1\n4.9\n3.0\n1.4\n0.2\n\n\n2\n4.7\n3.2\n1.3\n0.2\n\n\n3\n4.6\n3.1\n1.5\n0.2\n\n\n4\n5.0\n3.6\n1.4\n0.2\n\n\n...\n...\n...\n...\n...\n\n\n145\n6.7\n3.0\n5.2\n2.3\n\n\n146\n6.3\n2.5\n5.0\n1.9\n\n\n147\n6.5\n3.0\n5.2\n2.0\n\n\n148\n6.2\n3.4\n5.4\n2.3\n\n\n149\n5.9\n3.0\n5.1\n1.8\n\n\n\n\n150 rows × 4 columns\n\n\n\n\n\n데이터 타입 변경\n사용 가능한 타입\n\nint\nfloat\nbool\ndatetime\ncategory\nobject\n\n\niris.dtypes\n\nsepal_length    float64\nsepal_width     float64\npetal_length    float64\npetal_width     float64\ndtype: object\n\n\n\niris['sepal_length'] = iris['sepal_length'].astype('int')\niris[['sepal_width', 'petal_length']] = \\\niris[['sepal_width', 'petal_length']].astype('int')\niris\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\npetal_length\npetal_width\n\n\n\n\n0\n5\n3\n1\n0.2\n\n\n1\n4\n3\n1\n0.2\n\n\n2\n4\n3\n1\n0.2\n\n\n3\n4\n3\n1\n0.2\n\n\n4\n5\n3\n1\n0.2\n\n\n...\n...\n...\n...\n...\n\n\n145\n6\n3\n5\n2.3\n\n\n146\n6\n2\n5\n1.9\n\n\n147\n6\n3\n5\n2.0\n\n\n148\n6\n3\n5\n2.3\n\n\n149\n5\n3\n5\n1.8\n\n\n\n\n150 rows × 4 columns",
-    "crumbs": [
-      "01 Projects",
-      "ADP 실기 준비",
-      "pandas data 구조"
-    ]
+    "text": "Before\n데이터를 호출하고, 데이터 내용과 요약 / 통계 정보를 확인해야함\n칼럼명이 칼럼 타입을 변경해야할 때도 있음\n\nPandas 사용 준비\n\n라이브러리 설치\n라이브러리 호출\n\n\nimport pandas as pd\n\npd.set_option('display.max_rows', 10)\n\n\n\nDataFrame 선언\n\nimport numpy as np\ndataset = np.array([['kor', 70], ['math', 80]])\n# declare df 1\ndf = pd.DataFrame(dataset, columns=['class', 'score'])\n# declare df 2\ndf = pd.DataFrame([['kor', 70], ['math', 80]], columns=['class', 'score'])\n# declare df 3\ndf = pd.DataFrame({'class': ['kor', 'math'], 'score': [70, 80]})\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\n0\nkor\n70\n\n\n1\nmath\n80\n\n\n\n\n\n\n\n\n\nDataFrame 읽고 저장\n\n# filepath = '../book/data/data.csv'\n# data = pd.read_csv(filepath, na_values='NA', encoding='utf8')\n# data.to_csv('result.csv', header=True, index=True, encoding='utf8')\n\n\n\nDataFrame 출력\n\nfrom sklearn.datasets import load_iris\n\niris = load_iris()\niris\n\n{'data': array([[5.1, 3.5, 1.4, 0.2],\n        [4.9, 3. , 1.4, 0.2],\n        [4.7, 3.2, 1.3, 0.2],\n        [4.6, 3.1, 1.5, 0.2],\n        [5. , 3.6, 1.4, 0.2],\n        [5.4, 3.9, 1.7, 0.4],\n        [4.6, 3.4, 1.4, 0.3],\n        [5. , 3.4, 1.5, 0.2],\n        [4.4, 2.9, 1.4, 0.2],\n        [4.9, 3.1, 1.5, 0.1],\n        [5.4, 3.7, 1.5, 0.2],\n        [4.8, 3.4, 1.6, 0.2],\n        [4.8, 3. , 1.4, 0.1],\n        [4.3, 3. , 1.1, 0.1],\n        [5.8, 4. , 1.2, 0.2],\n        [5.7, 4.4, 1.5, 0.4],\n        [5.4, 3.9, 1.3, 0.4],\n        [5.1, 3.5, 1.4, 0.3],\n        [5.7, 3.8, 1.7, 0.3],\n        [5.1, 3.8, 1.5, 0.3],\n        [5.4, 3.4, 1.7, 0.2],\n        [5.1, 3.7, 1.5, 0.4],\n        [4.6, 3.6, 1. , 0.2],\n        [5.1, 3.3, 1.7, 0.5],\n        [4.8, 3.4, 1.9, 0.2],\n        [5. , 3. , 1.6, 0.2],\n        [5. , 3.4, 1.6, 0.4],\n        [5.2, 3.5, 1.5, 0.2],\n        [5.2, 3.4, 1.4, 0.2],\n        [4.7, 3.2, 1.6, 0.2],\n        [4.8, 3.1, 1.6, 0.2],\n        [5.4, 3.4, 1.5, 0.4],\n        [5.2, 4.1, 1.5, 0.1],\n        [5.5, 4.2, 1.4, 0.2],\n        [4.9, 3.1, 1.5, 0.2],\n        [5. , 3.2, 1.2, 0.2],\n        [5.5, 3.5, 1.3, 0.2],\n        [4.9, 3.6, 1.4, 0.1],\n        [4.4, 3. , 1.3, 0.2],\n        [5.1, 3.4, 1.5, 0.2],\n        [5. , 3.5, 1.3, 0.3],\n        [4.5, 2.3, 1.3, 0.3],\n        [4.4, 3.2, 1.3, 0.2],\n        [5. , 3.5, 1.6, 0.6],\n        [5.1, 3.8, 1.9, 0.4],\n        [4.8, 3. , 1.4, 0.3],\n        [5.1, 3.8, 1.6, 0.2],\n        [4.6, 3.2, 1.4, 0.2],\n        [5.3, 3.7, 1.5, 0.2],\n        [5. , 3.3, 1.4, 0.2],\n        [7. , 3.2, 4.7, 1.4],\n        [6.4, 3.2, 4.5, 1.5],\n        [6.9, 3.1, 4.9, 1.5],\n        [5.5, 2.3, 4. , 1.3],\n        [6.5, 2.8, 4.6, 1.5],\n        [5.7, 2.8, 4.5, 1.3],\n        [6.3, 3.3, 4.7, 1.6],\n        [4.9, 2.4, 3.3, 1. ],\n        [6.6, 2.9, 4.6, 1.3],\n        [5.2, 2.7, 3.9, 1.4],\n        [5. , 2. , 3.5, 1. ],\n        [5.9, 3. , 4.2, 1.5],\n        [6. , 2.2, 4. , 1. ],\n        [6.1, 2.9, 4.7, 1.4],\n        [5.6, 2.9, 3.6, 1.3],\n        [6.7, 3.1, 4.4, 1.4],\n        [5.6, 3. , 4.5, 1.5],\n        [5.8, 2.7, 4.1, 1. ],\n        [6.2, 2.2, 4.5, 1.5],\n        [5.6, 2.5, 3.9, 1.1],\n        [5.9, 3.2, 4.8, 1.8],\n        [6.1, 2.8, 4. , 1.3],\n        [6.3, 2.5, 4.9, 1.5],\n        [6.1, 2.8, 4.7, 1.2],\n        [6.4, 2.9, 4.3, 1.3],\n        [6.6, 3. , 4.4, 1.4],\n        [6.8, 2.8, 4.8, 1.4],\n        [6.7, 3. , 5. , 1.7],\n        [6. , 2.9, 4.5, 1.5],\n        [5.7, 2.6, 3.5, 1. ],\n        [5.5, 2.4, 3.8, 1.1],\n        [5.5, 2.4, 3.7, 1. ],\n        [5.8, 2.7, 3.9, 1.2],\n        [6. , 2.7, 5.1, 1.6],\n        [5.4, 3. , 4.5, 1.5],\n        [6. , 3.4, 4.5, 1.6],\n        [6.7, 3.1, 4.7, 1.5],\n        [6.3, 2.3, 4.4, 1.3],\n        [5.6, 3. , 4.1, 1.3],\n        [5.5, 2.5, 4. , 1.3],\n        [5.5, 2.6, 4.4, 1.2],\n        [6.1, 3. , 4.6, 1.4],\n        [5.8, 2.6, 4. , 1.2],\n        [5. , 2.3, 3.3, 1. ],\n        [5.6, 2.7, 4.2, 1.3],\n        [5.7, 3. , 4.2, 1.2],\n        [5.7, 2.9, 4.2, 1.3],\n        [6.2, 2.9, 4.3, 1.3],\n        [5.1, 2.5, 3. , 1.1],\n        [5.7, 2.8, 4.1, 1.3],\n        [6.3, 3.3, 6. , 2.5],\n        [5.8, 2.7, 5.1, 1.9],\n        [7.1, 3. , 5.9, 2.1],\n        [6.3, 2.9, 5.6, 1.8],\n        [6.5, 3. , 5.8, 2.2],\n        [7.6, 3. , 6.6, 2.1],\n        [4.9, 2.5, 4.5, 1.7],\n        [7.3, 2.9, 6.3, 1.8],\n        [6.7, 2.5, 5.8, 1.8],\n        [7.2, 3.6, 6.1, 2.5],\n        [6.5, 3.2, 5.1, 2. ],\n        [6.4, 2.7, 5.3, 1.9],\n        [6.8, 3. , 5.5, 2.1],\n        [5.7, 2.5, 5. , 2. ],\n        [5.8, 2.8, 5.1, 2.4],\n        [6.4, 3.2, 5.3, 2.3],\n        [6.5, 3. , 5.5, 1.8],\n        [7.7, 3.8, 6.7, 2.2],\n        [7.7, 2.6, 6.9, 2.3],\n        [6. , 2.2, 5. , 1.5],\n        [6.9, 3.2, 5.7, 2.3],\n        [5.6, 2.8, 4.9, 2. ],\n        [7.7, 2.8, 6.7, 2. ],\n        [6.3, 2.7, 4.9, 1.8],\n        [6.7, 3.3, 5.7, 2.1],\n        [7.2, 3.2, 6. , 1.8],\n        [6.2, 2.8, 4.8, 1.8],\n        [6.1, 3. , 4.9, 1.8],\n        [6.4, 2.8, 5.6, 2.1],\n        [7.2, 3. , 5.8, 1.6],\n        [7.4, 2.8, 6.1, 1.9],\n        [7.9, 3.8, 6.4, 2. ],\n        [6.4, 2.8, 5.6, 2.2],\n        [6.3, 2.8, 5.1, 1.5],\n        [6.1, 2.6, 5.6, 1.4],\n        [7.7, 3. , 6.1, 2.3],\n        [6.3, 3.4, 5.6, 2.4],\n        [6.4, 3.1, 5.5, 1.8],\n        [6. , 3. , 4.8, 1.8],\n        [6.9, 3.1, 5.4, 2.1],\n        [6.7, 3.1, 5.6, 2.4],\n        [6.9, 3.1, 5.1, 2.3],\n        [5.8, 2.7, 5.1, 1.9],\n        [6.8, 3.2, 5.9, 2.3],\n        [6.7, 3.3, 5.7, 2.5],\n        [6.7, 3. , 5.2, 2.3],\n        [6.3, 2.5, 5. , 1.9],\n        [6.5, 3. , 5.2, 2. ],\n        [6.2, 3.4, 5.4, 2.3],\n        [5.9, 3. , 5.1, 1.8]]),\n 'target': array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n        0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,\n        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,\n        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,\n        2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,\n        2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),\n 'frame': None,\n 'target_names': array(['setosa', 'versicolor', 'virginica'], dtype='&lt;U10'),\n 'DESCR': '.. _iris_dataset:\\n\\nIris plants dataset\\n--------------------\\n\\n**Data Set Characteristics:**\\n\\n:Number of Instances: 150 (50 in each of three classes)\\n:Number of Attributes: 4 numeric, predictive attributes and the class\\n:Attribute Information:\\n    - sepal length in cm\\n    - sepal width in cm\\n    - petal length in cm\\n    - petal width in cm\\n    - class:\\n            - Iris-Setosa\\n            - Iris-Versicolour\\n            - Iris-Virginica\\n\\n:Summary Statistics:\\n\\n============== ==== ==== ======= ===== ====================\\n                Min  Max   Mean    SD   Class Correlation\\n============== ==== ==== ======= ===== ====================\\nsepal length:   4.3  7.9   5.84   0.83    0.7826\\nsepal width:    2.0  4.4   3.05   0.43   -0.4194\\npetal length:   1.0  6.9   3.76   1.76    0.9490  (high!)\\npetal width:    0.1  2.5   1.20   0.76    0.9565  (high!)\\n============== ==== ==== ======= ===== ====================\\n\\n:Missing Attribute Values: None\\n:Class Distribution: 33.3% for each of 3 classes.\\n:Creator: R.A. Fisher\\n:Donor: Michael Marshall (MARSHALL%PLU@io.arc.nasa.gov)\\n:Date: July, 1988\\n\\nThe famous Iris database, first used by Sir R.A. Fisher. The dataset is taken\\nfrom Fisher\\'s paper. Note that it\\'s the same as in R, but not as in the UCI\\nMachine Learning Repository, which has two wrong data points.\\n\\nThis is perhaps the best known database to be found in the\\npattern recognition literature.  Fisher\\'s paper is a classic in the field and\\nis referenced frequently to this day.  (See Duda & Hart, for example.)  The\\ndata set contains 3 classes of 50 instances each, where each class refers to a\\ntype of iris plant.  One class is linearly separable from the other 2; the\\nlatter are NOT linearly separable from each other.\\n\\n.. dropdown:: References\\n\\n  - Fisher, R.A. \"The use of multiple measurements in taxonomic problems\"\\n    Annual Eugenics, 7, Part II, 179-188 (1936); also in \"Contributions to\\n    Mathematical Statistics\" (John Wiley, NY, 1950).\\n  - Duda, R.O., & Hart, P.E. (1973) Pattern Classification and Scene Analysis.\\n    (Q327.D83) John Wiley & Sons.  ISBN 0-471-22361-1.  See page 218.\\n  - Dasarathy, B.V. (1980) \"Nosing Around the Neighborhood: A New System\\n    Structure and Classification Rule for Recognition in Partially Exposed\\n    Environments\".  IEEE Transactions on Pattern Analysis and Machine\\n    Intelligence, Vol. PAMI-2, No. 1, 67-71.\\n  - Gates, G.W. (1972) \"The Reduced Nearest Neighbor Rule\".  IEEE Transactions\\n    on Information Theory, May 1972, 431-433.\\n  - See also: 1988 MLC Proceedings, 54-64.  Cheeseman et al\"s AUTOCLASS II\\n    conceptual clustering system finds 3 classes in the data.\\n  - Many, many more ...\\n',\n 'feature_names': ['sepal length (cm)',\n  'sepal width (cm)',\n  'petal length (cm)',\n  'petal width (cm)'],\n 'filename': 'iris.csv',\n 'data_module': 'sklearn.datasets.data'}\n\n\n\niris = pd.DataFrame(iris.data, columns=iris.feature_names)\niris\n\n\n\n\n\n\n\n\nsepal length (cm)\nsepal width (cm)\npetal length (cm)\npetal width (cm)\n\n\n\n\n0\n5.1\n3.5\n1.4\n0.2\n\n\n1\n4.9\n3.0\n1.4\n0.2\n\n\n2\n4.7\n3.2\n1.3\n0.2\n\n\n3\n4.6\n3.1\n1.5\n0.2\n\n\n4\n5.0\n3.6\n1.4\n0.2\n\n\n...\n...\n...\n...\n...\n\n\n145\n6.7\n3.0\n5.2\n2.3\n\n\n146\n6.3\n2.5\n5.0\n1.9\n\n\n147\n6.5\n3.0\n5.2\n2.0\n\n\n148\n6.2\n3.4\n5.4\n2.3\n\n\n149\n5.9\n3.0\n5.1\n1.8\n\n\n\n\n150 rows × 4 columns\n\n\n\n\niris.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 150 entries, 0 to 149\nData columns (total 4 columns):\n #   Column             Non-Null Count  Dtype  \n---  ------             --------------  -----  \n 0   sepal length (cm)  150 non-null    float64\n 1   sepal width (cm)   150 non-null    float64\n 2   petal length (cm)  150 non-null    float64\n 3   petal width (cm)   150 non-null    float64\ndtypes: float64(4)\nmemory usage: 4.8 KB\n\n\n\niris.describe()\n\n\n\n\n\n\n\n\nsepal length (cm)\nsepal width (cm)\npetal length (cm)\npetal width (cm)\n\n\n\n\ncount\n150.000000\n150.000000\n150.000000\n150.000000\n\n\nmean\n5.843333\n3.057333\n3.758000\n1.199333\n\n\nstd\n0.828066\n0.435866\n1.765298\n0.762238\n\n\nmin\n4.300000\n2.000000\n1.000000\n0.100000\n\n\n25%\n5.100000\n2.800000\n1.600000\n0.300000\n\n\n50%\n5.800000\n3.000000\n4.350000\n1.300000\n\n\n75%\n6.400000\n3.300000\n5.100000\n1.800000\n\n\nmax\n7.900000\n4.400000\n6.900000\n2.500000\n\n\n\n\n\n\n\nsepal length와 petal width의 값의 차이가 크다.\n전처리 과정에서 변수 정규화 수행의 근거가 된다.\n\n\nindex / column 명 변경\n\ndf.index\n\nRangeIndex(start=0, stop=2, step=1)\n\n\n\nlist(df.index)\n\n[0, 1]\n\n\n\ndf.index = ['A', 'B']\ndf.index\n\nIndex(['A', 'B'], dtype='object')\n\n\n\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\nA\nkor\n70\n\n\nB\nmath\n80\n\n\n\n\n\n\n\n\ndf.set_index('class', drop=True, append=False, inplace=True)\ndf\n\n\n\n\n\n\n\n\nscore\n\n\nclass\n\n\n\n\n\nkor\n70\n\n\nmath\n80\n\n\n\n\n\n\n\n\ndf.reset_index(drop=False, inplace=True)\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\n0\nkor\n70\n\n\n1\nmath\n80\n\n\n\n\n\n\n\n\niris.columns\n\nIndex(['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)',\n       'petal width (cm)'],\n      dtype='object')\n\n\n\niris.columns = ['sepal length', 'sepal width', 'petal length', 'petal width']\niris\n\n\n\n\n\n\n\n\nsepal length\nsepal width\npetal length\npetal width\n\n\n\n\n0\n5.1\n3.5\n1.4\n0.2\n\n\n1\n4.9\n3.0\n1.4\n0.2\n\n\n2\n4.7\n3.2\n1.3\n0.2\n\n\n3\n4.6\n3.1\n1.5\n0.2\n\n\n4\n5.0\n3.6\n1.4\n0.2\n\n\n...\n...\n...\n...\n...\n\n\n145\n6.7\n3.0\n5.2\n2.3\n\n\n146\n6.3\n2.5\n5.0\n1.9\n\n\n147\n6.5\n3.0\n5.2\n2.0\n\n\n148\n6.2\n3.4\n5.4\n2.3\n\n\n149\n5.9\n3.0\n5.1\n1.8\n\n\n\n\n150 rows × 4 columns\n\n\n\n\niris.columns = iris.columns.str.replace(' ', '_')\niris\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\npetal_length\npetal_width\n\n\n\n\n0\n5.1\n3.5\n1.4\n0.2\n\n\n1\n4.9\n3.0\n1.4\n0.2\n\n\n2\n4.7\n3.2\n1.3\n0.2\n\n\n3\n4.6\n3.1\n1.5\n0.2\n\n\n4\n5.0\n3.6\n1.4\n0.2\n\n\n...\n...\n...\n...\n...\n\n\n145\n6.7\n3.0\n5.2\n2.3\n\n\n146\n6.3\n2.5\n5.0\n1.9\n\n\n147\n6.5\n3.0\n5.2\n2.0\n\n\n148\n6.2\n3.4\n5.4\n2.3\n\n\n149\n5.9\n3.0\n5.1\n1.8\n\n\n\n\n150 rows × 4 columns\n\n\n\n\n\n데이터 타입 변경\n사용 가능한 타입\n\nint\nfloat\nbool\ndatetime\ncategory\nobject\n\n\niris.dtypes\n\nsepal_length    float64\nsepal_width     float64\npetal_length    float64\npetal_width     float64\ndtype: object\n\n\n\niris['sepal_length'] = iris['sepal_length'].astype('int')\niris[['sepal_width', 'petal_length']] = \\\niris[['sepal_width', 'petal_length']].astype('int')\niris\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\npetal_length\npetal_width\n\n\n\n\n0\n5\n3\n1\n0.2\n\n\n1\n4\n3\n1\n0.2\n\n\n2\n4\n3\n1\n0.2\n\n\n3\n4\n3\n1\n0.2\n\n\n4\n5\n3\n1\n0.2\n\n\n...\n...\n...\n...\n...\n\n\n145\n6\n3\n5\n2.3\n\n\n146\n6\n2\n5\n1.9\n\n\n147\n6\n3\n5\n2.0\n\n\n148\n6\n3\n5\n2.3\n\n\n149\n5\n3\n5\n1.8\n\n\n\n\n150 rows × 4 columns"
   },
   {
     "objectID": "posts/01_projects/adp_실기/01.html#row-coumn-선택-추가-삭제",
     "href": "posts/01_projects/adp_실기/01.html#row-coumn-선택-추가-삭제",
     "title": "pandas data 구조",
     "section": "row / coumn 선택 추가 삭제",
-    "text": "row / coumn 선택 추가 삭제\n\nrow 선택\n\niris[0:4]\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\npetal_length\npetal_width\n\n\n\n\n0\n5\n3\n1\n0.2\n\n\n1\n4\n3\n1\n0.2\n\n\n2\n4\n3\n1\n0.2\n\n\n3\n4\n3\n1\n0.2\n\n\n\n\n\n\n\n\n\ncolumn 선택\nSeries 형식으로 출력\n\niris['sepal_length']\n\n0      5\n1      4\n2      4\n3      4\n4      5\n      ..\n145    6\n146    6\n147    6\n148    6\n149    5\nName: sepal_length, Length: 150, dtype: int64\n\n\nDataFrame 형식으로 출력\n\niris[['sepal_length', 'sepal_width']]\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\n\n\n\n\n0\n5\n3\n\n\n1\n4\n3\n\n\n2\n4\n3\n\n\n3\n4\n3\n\n\n4\n5\n3\n\n\n...\n...\n...\n\n\n145\n6\n3\n\n\n146\n6\n2\n\n\n147\n6\n3\n\n\n148\n6\n3\n\n\n149\n5\n3\n\n\n\n\n150 rows × 2 columns\n\n\n\n\n\ncolumn, row 선택\n\niris.loc[0:4, ['sepal_length', 'sepal_width']]\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\n\n\n\n\n0\n5\n3\n\n\n1\n4\n3\n\n\n2\n4\n3\n\n\n3\n4\n3\n\n\n4\n5\n3\n\n\n\n\n\n\n\n\niris.iloc[0:4, [1, 2]]\n\n\n\n\n\n\n\n\nsepal_width\npetal_length\n\n\n\n\n0\n3\n1\n\n\n1\n3\n1\n\n\n2\n3\n1\n\n\n3\n3\n1\n\n\n\n\n\n\n\n\n\nrow 추가\n\n# 방법 1: concat 사용\n# df = pd.concat([df, pd.DataFrame([{'class': 'eng', 'score': 90}])], ignore_index=True)\n\n# 방법 2: loc 사용 \ndf.loc[len(df)] = {'class': 'eng', 'score': 90}\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\n0\nkor\n70\n\n\n1\nmath\n80\n\n\n2\neng\n90\n\n\n\n\n\n\n\n\n\ncolumn 추가\n\ndf['yo'] = df['score'] + 10\ndf\n\n\n\n\n\n\n\n\nclass\nscore\nyo\n\n\n\n\n0\nkor\n70\n80\n\n\n1\nmath\n80\n90\n\n\n2\neng\n90\n100\n\n\n\n\n\n\n\n\n\nrow 삭제\n\ndf.drop(2, inplace=True)\ndf\n\n\n\n\n\n\n\n\nclass\nscore\nyo\n\n\n\n\n0\nkor\n70\n80\n\n\n1\nmath\n80\n90\n\n\n\n\n\n\n\n\n\ncolumn 삭제\n\ndf.drop(columns=['yo'], inplace=True)\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\n0\nkor\n70\n\n\n1\nmath\n80",
-    "crumbs": [
-      "01 Projects",
-      "ADP 실기 준비",
-      "pandas data 구조"
-    ]
+    "text": "row / coumn 선택 추가 삭제\n\nrow 선택\n\niris[0:4]\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\npetal_length\npetal_width\n\n\n\n\n0\n5\n3\n1\n0.2\n\n\n1\n4\n3\n1\n0.2\n\n\n2\n4\n3\n1\n0.2\n\n\n3\n4\n3\n1\n0.2\n\n\n\n\n\n\n\n\n\ncolumn 선택\nSeries 형식으로 출력\n\niris['sepal_length']\n\n0      5\n1      4\n2      4\n3      4\n4      5\n      ..\n145    6\n146    6\n147    6\n148    6\n149    5\nName: sepal_length, Length: 150, dtype: int64\n\n\nDataFrame 형식으로 출력\n\niris[['sepal_length', 'sepal_width']]\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\n\n\n\n\n0\n5\n3\n\n\n1\n4\n3\n\n\n2\n4\n3\n\n\n3\n4\n3\n\n\n4\n5\n3\n\n\n...\n...\n...\n\n\n145\n6\n3\n\n\n146\n6\n2\n\n\n147\n6\n3\n\n\n148\n6\n3\n\n\n149\n5\n3\n\n\n\n\n150 rows × 2 columns\n\n\n\n\n\ncolumn, row 선택\n\niris.loc[0:4, ['sepal_length', 'sepal_width']]\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\n\n\n\n\n0\n5\n3\n\n\n1\n4\n3\n\n\n2\n4\n3\n\n\n3\n4\n3\n\n\n4\n5\n3\n\n\n\n\n\n\n\n\niris.iloc[0:4, [1, 2]]\n\n\n\n\n\n\n\n\nsepal_width\npetal_length\n\n\n\n\n0\n3\n1\n\n\n1\n3\n1\n\n\n2\n3\n1\n\n\n3\n3\n1\n\n\n\n\n\n\n\n\n\nrow 추가\n\n# 방법 1: concat 사용\n# df = pd.concat([df, pd.DataFrame([{'class': 'eng', 'score': 90}])], ignore_index=True)\n\n# 방법 2: loc 사용 \ndf.loc[len(df)] = {'class': 'eng', 'score': 90}\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\n0\nkor\n70\n\n\n1\nmath\n80\n\n\n2\neng\n90\n\n\n\n\n\n\n\n\n\ncolumn 추가\n\ndf['yo'] = df['score'] + 10\ndf\n\n\n\n\n\n\n\n\nclass\nscore\nyo\n\n\n\n\n0\nkor\n70\n80\n\n\n1\nmath\n80\n90\n\n\n2\neng\n90\n100\n\n\n\n\n\n\n\n\n\nrow 삭제\n\ndf.drop(2, inplace=True)\ndf\n\n\n\n\n\n\n\n\nclass\nscore\nyo\n\n\n\n\n0\nkor\n70\n80\n\n\n1\nmath\n80\n90\n\n\n\n\n\n\n\n\n\ncolumn 삭제\n\ndf.drop(columns=['yo'], inplace=True)\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n\n\n\n\n0\nkor\n70\n\n\n1\nmath\n80"
   },
   {
     "objectID": "posts/01_projects/adp_실기/01.html#조건-선택",
     "href": "posts/01_projects/adp_실기/01.html#조건-선택",
     "title": "pandas data 구조",
     "section": "조건 선택",
-    "text": "조건 선택\n\niris[(iris['sepal_length'] &gt; 5) & (iris['sepal_width'] &lt; 3)]\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\npetal_length\npetal_width\n\n\n\n\n54\n6\n2\n4\n1.5\n\n\n58\n6\n2\n4\n1.3\n\n\n62\n6\n2\n4\n1.0\n\n\n63\n6\n2\n4\n1.4\n\n\n68\n6\n2\n4\n1.5\n\n\n...\n...\n...\n...\n...\n\n\n130\n7\n2\n6\n1.9\n\n\n132\n6\n2\n5\n2.2\n\n\n133\n6\n2\n5\n1.5\n\n\n134\n6\n2\n5\n1.4\n\n\n146\n6\n2\n5\n1.9\n\n\n\n\n29 rows × 4 columns\n\n\n\n\ndf.loc[df['score'] &gt; 70, '합격'] = 'Pass'\ndf.loc[df['합격'] != 'Pass', '합격'] = 'Fail'\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n합격\n\n\n\n\n0\nkor\n70\nFail\n\n\n1\nmath\n80\nPass\n\n\n\n\n\n\n\n\nimport numpy as np\n\ncondition_list = [(df['score'] &gt;= 70), \n                  (df['score'] &lt; 70) & (df['score'] &gt;= 60),\n                  (df['score'] &lt; 60)]\ngrade_list = ['A', 'B', 'C']\ndf['grade'] = np.select(condition_list, grade_list, default='F')\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n합격\ngrade\n\n\n\n\n0\nkor\n70\nFail\nA\n\n\n1\nmath\n80\nPass\nA\n\n\n\n\n\n\n\n\n결측치 탐색\n\ndf.isna().sum()\n\nclass    0\nscore    0\n합격       0\ngrade    0\ndtype: int64\n\n\n\ndf.notna().sum(1) # 행 기준\n\n0    4\n1    4\ndtype: int64\n\n\n\n\n결측치 제거\n\n# dropna(axis=0, how='any' or 'all', thresh=None, subset=None, inplace=False)\ndf.dropna()\n\n\n\n\n\n\n\n\nclass\nscore\n합격\ngrade\n\n\n\n\n0\nkor\n70\nFail\nA\n\n\n1\nmath\n80\nPass\nA\n\n\n\n\n\n\n\n\n\n결측치 대체\n\n# fillna(value=None, method=None ('pad', 'ffill', 'backfill', 'bfill'), axis=None, inplace=False, limit=None)",
-    "crumbs": [
-      "01 Projects",
-      "ADP 실기 준비",
-      "pandas data 구조"
-    ]
+    "text": "조건 선택\n\niris[(iris['sepal_length'] &gt; 5) & (iris['sepal_width'] &lt; 3)]\n\n\n\n\n\n\n\n\nsepal_length\nsepal_width\npetal_length\npetal_width\n\n\n\n\n54\n6\n2\n4\n1.5\n\n\n58\n6\n2\n4\n1.3\n\n\n62\n6\n2\n4\n1.0\n\n\n63\n6\n2\n4\n1.4\n\n\n68\n6\n2\n4\n1.5\n\n\n...\n...\n...\n...\n...\n\n\n130\n7\n2\n6\n1.9\n\n\n132\n6\n2\n5\n2.2\n\n\n133\n6\n2\n5\n1.5\n\n\n134\n6\n2\n5\n1.4\n\n\n146\n6\n2\n5\n1.9\n\n\n\n\n29 rows × 4 columns\n\n\n\n\ndf.loc[df['score'] &gt; 70, '합격'] = 'Pass'\ndf.loc[df['합격'] != 'Pass', '합격'] = 'Fail'\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n합격\n\n\n\n\n0\nkor\n70\nFail\n\n\n1\nmath\n80\nPass\n\n\n\n\n\n\n\n\nimport numpy as np\n\ncondition_list = [(df['score'] &gt;= 70), \n                  (df['score'] &lt; 70) & (df['score'] &gt;= 60),\n                  (df['score'] &lt; 60)]\ngrade_list = ['A', 'B', 'C']\ndf['grade'] = np.select(condition_list, grade_list, default='F')\ndf\n\n\n\n\n\n\n\n\nclass\nscore\n합격\ngrade\n\n\n\n\n0\nkor\n70\nFail\nA\n\n\n1\nmath\n80\nPass\nA\n\n\n\n\n\n\n\n\n결측치 탐색\n\ndf.isna().sum()\n\nclass    0\nscore    0\n합격       0\ngrade    0\ndtype: int64\n\n\n\ndf.notna().sum(1) # 행 기준\n\n0    4\n1    4\ndtype: int64\n\n\n\n\n결측치 제거\n\n# dropna(axis=0, how='any' or 'all', thresh=None, subset=None, inplace=False)\ndf.dropna()\n\n\n\n\n\n\n\n\nclass\nscore\n합격\ngrade\n\n\n\n\n0\nkor\n70\nFail\nA\n\n\n1\nmath\n80\nPass\nA\n\n\n\n\n\n\n\n\n\n결측치 대체\n\n# fillna(value=None, method=None ('pad', 'ffill', 'backfill', 'bfill'), axis=None, inplace=False, limit=None)"
   },
   {
     "objectID": "posts/01_projects/phd_3_1/index.html",
@@ -85,7 +67,7 @@
     "section": "",
     "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-06-20\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        산업공학 학부",
     "crumbs": [
-      "01 Projects",
+      "projects",
       "3학년 1학기 학부 정리"
     ]
   },
@@ -96,7 +78,7 @@
     "section": "Details",
     "text": "Details\n산업정보시스템공학과 3학년 1학기 수강 과목들에 대한 개념 정리 노트입니다.",
     "crumbs": [
-      "01 Projects",
+      "projects",
       "3학년 1학기 학부 정리"
     ]
   },
@@ -107,7 +89,7 @@
     "section": "Tasks",
     "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    OR 예습",
     "crumbs": [
-      "01 Projects",
+      "projects",
       "3학년 1학기 학부 정리"
     ]
   },
@@ -118,7 +100,7 @@
     "section": "Related Posts",
     "text": "Related Posts",
     "crumbs": [
-      "01 Projects",
+      "projects",
       "3학년 1학기 학부 정리"
     ]
   },
@@ -274,63 +256,117 @@
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#the-importance-of-dbs-today",
     "title": "An Overview of Database",
     "section": "The Importance of DBs Today",
-    "text": "The Importance of DBs Today\n\nDepend upon database: Internet, Web 2.0, IOT"
+    "text": "The Importance of DBs Today\n\nDepend upon database: Internet, Web 2.0, IOT",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#why-and-how-databases-are-used",
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#why-and-how-databases-are-used",
     "title": "An Overview of Database",
     "section": "Why and How Databases are Used?",
-    "text": "Why and How Databases are Used?\n\nThe purpose of a database is to keep track of thing\ndb store information that is more complicated than a simple spread sheet"
+    "text": "Why and How Databases are Used?\n\nThe purpose of a database is to keep track of thing\ndb store information that is more complicated than a simple spread sheet",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#problems-with-lists-spread-sheet",
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#problems-with-lists-spread-sheet",
     "title": "An Overview of Database",
     "section": "Problems with Lists (spread sheet)",
-    "text": "Problems with Lists (spread sheet)\n\nRedundancy\n\n\n\n\n필요없는 column들이 중복됨\n\n\n\nMultiple Themes\n\n\n그 결과로, list에 나타날 때만 존재하는 informartion이 생김\n\n\nList Modification Issues\n\n\n\n\ndeletion problems, update problems, insertion problems"
+    "text": "Problems with Lists (spread sheet)\n\nRedundancy\n\n\n\n\n필요없는 column들이 중복됨\n\n\n\nMultiple Themes\n\n\n그 결과로, list에 나타날 때만 존재하는 informartion이 생김\n\n\nList Modification Issues\n\n\n\n\ndeletion problems, update problems, insertion problems",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#relational-databases",
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#relational-databases",
     "title": "An Overview of Database",
     "section": "Relational Databases",
-    "text": "Relational Databases\n\nRelationa Model is methodology used as a solution for database design\nA relational database stores information in tables\n\nEach informational topic is stored in its own table\n\nEach theme in the list can be stored in a table\n\nTable = file = relation\ncolumn = fields = attribute\nrow = record = tuple"
+    "text": "Relational Databases\n\nRelationa Model is methodology used as a solution for database design\nA relational database stores information in tables\n\nEach informational topic is stored in its own table\n\nEach theme in the list can be stored in a table\n\nTable = file = relation\ncolumn = fields = attribute\nrow = record = tuple",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#sql-structured-query-language",
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#sql-structured-query-language",
     "title": "An Overview of Database",
     "section": "SQL (Structured Query Language)",
-    "text": "SQL (Structured Query Language)\n\ninternational standard for creating, processing, querying databases and their tables\ndb applications use SQL to retrieve, format, report, insert, delete, modify data for users\ncan combine table by join operation\n\nSELECT  CUSTOMER.CustomerLastName, \n        CUSTOMER.CustomerFirstName, \n        CUSTOMER.Phone,\n        COURSE.CourseDate, \n        ENROLLMENT.AmountPaid,\n        COURSE.Course, \n        COURSE.Fee\nFROM    CUSTOMER, ENROLLMENT, COURSE\nWHERE   CUSTOMER.CustomerNumber = ENROLLMENT.CustomerNumber -- join condition\n        AND  COURSE.CourseNumber = ENROLLMENT.CourseNumber; -- join condition"
+    "text": "SQL (Structured Query Language)\n\ninternational standard for creating, processing, querying databases and their tables\ndb applications use SQL to retrieve, format, report, insert, delete, modify data for users\ncan combine table by join operation\n\nSELECT  CUSTOMER.CustomerLastName, \n        CUSTOMER.CustomerFirstName, \n        CUSTOMER.Phone,\n        COURSE.CourseDate, \n        ENROLLMENT.AmountPaid,\n        COURSE.Course, \n        COURSE.Fee\nFROM    CUSTOMER, ENROLLMENT, COURSE\nWHERE   CUSTOMER.CustomerNumber = ENROLLMENT.CustomerNumber -- join condition\n        AND  COURSE.CourseNumber = ENROLLMENT.CourseNumber; -- join condition",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#database-system-dbs",
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#database-system-dbs",
     "title": "An Overview of Database",
     "section": "Database System (DBS)",
-    "text": "Database System (DBS)\n\n\n\nThe four components of database system\n\n\n\nUser: Employ database application to keep track of things\nUse forms to read, enter, query data\nproduce reports\nDatabase Application: web/mobile database applications, Forms, Reports\nDBMS: used to create, process, administer the database\nDatabase: self-describing collection of related tables\nuser data, metadata, index and other overhead data, application metadata(form, reports) are stored in db\nmetadata = about the structure of the database. &lt;-&gt; user data\n\n\nFunction of DBMS\n\nDB administration\n\nControl concurrency\nProvide security\nPerform backup and recovery\n\n\n\n\nReferential Integrity Constraints"
+    "text": "Database System (DBS)\n\n\n\nThe four components of database system\n\n\n\nUser: Employ database application to keep track of things\nUse forms to read, enter, query data\nproduce reports\nDatabase Application: web/mobile database applications, Forms, Reports\nDBMS: used to create, process, administer the database\nDatabase: self-describing collection of related tables\nuser data, metadata, index and other overhead data, application metadata(form, reports) are stored in db\nmetadata = about the structure of the database. &lt;-&gt; user data\n\n\nFunction of DBMS\n\nDB administration\n\nControl concurrency\nProvide security\nPerform backup and recovery\n\n\n\n\nReferential Integrity Constraints",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#personal-vs-enterprise-class-database-systems",
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#personal-vs-enterprise-class-database-systems",
     "title": "An Overview of Database",
     "section": "Personal vs Enterprise-class Database Systems",
-    "text": "Personal vs Enterprise-class Database Systems\n\nPersonal: Access\nEnterprise-class(Organizational): Microsoft SQL server"
+    "text": "Personal vs Enterprise-class Database Systems\n\nPersonal: Access\nEnterprise-class(Organizational): Microsoft SQL server",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#nosql-databases",
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#nosql-databases",
     "title": "An Overview of Database",
     "section": "NoSQL databases",
-    "text": "NoSQL databases\n\nNoSQL database = non-relational database"
+    "text": "NoSQL databases\n\nNoSQL database = non-relational database",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#cloud-databases",
     "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#cloud-databases",
     "title": "An Overview of Database",
     "section": "Cloud databases",
-    "text": "Cloud databases\nMain frame -&gt; Client/server -&gt; Cloud"
+    "text": "Cloud databases\nMain frame -&gt; Client/server -&gt; Cloud",
+    "crumbs": [
+      "Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
   },
   {
     "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#tier-layers-of-database-system",
@@ -644,7 +680,7 @@
     "section": "",
     "text": "Problem Solving에 대한 노트 모음입니다.",
     "crumbs": [
-      "03 Resources",
+      "resources",
       "Problem Solving"
     ]
   },
@@ -655,7 +691,7 @@
     "section": "",
     "text": "Problem Solving에 대한 노트 모음입니다.",
     "crumbs": [
-      "03 Resources",
+      "resources",
       "Problem Solving"
     ]
   },
@@ -666,7 +702,7 @@
     "section": "Tasks",
     "text": "Tasks\n\n\nNo tasks defined.",
     "crumbs": [
-      "03 Resources",
+      "resources",
       "Problem Solving"
     ]
   },
@@ -677,7 +713,7 @@
     "section": "Related Posts",
     "text": "Related Posts",
     "crumbs": [
-      "03 Resources",
+      "resources",
       "Problem Solving"
     ]
   },
@@ -1282,7 +1318,7 @@
     "section": "",
     "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-02-22\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        자격증데이터 분석",
     "crumbs": [
-      "01 Projects",
+      "Projects",
       "ADP 필기 준비"
     ]
   },
@@ -1293,7 +1329,7 @@
     "section": "Details",
     "text": "Details\n1회차 시도는 실패했지만, 이번엔 잘 되겠죠",
     "crumbs": [
-      "01 Projects",
+      "Projects",
       "ADP 필기 준비"
     ]
   },
@@ -1304,7 +1340,7 @@
     "section": "Tasks",
     "text": "Tasks\n\n\nNo tasks defined.",
     "crumbs": [
-      "01 Projects",
+      "Projects",
       "ADP 필기 준비"
     ]
   },
@@ -1315,7 +1351,7 @@
     "section": "Related Posts",
     "text": "Related Posts",
     "crumbs": [
-      "01 Projects",
+      "Projects",
       "ADP 필기 준비"
     ]
   },
@@ -1414,6 +1450,7 @@
     "section": "Linear Programming",
     "text": "Linear Programming",
     "crumbs": [
+      "All Notes",
       "01 Projects",
       "OR 예습",
       "model and applications"
@@ -1426,8 +1463,8 @@
     "section": "Overview",
     "text": "Overview\n유튜브에서 ‘제2의 두뇌’ 관련 영상을 보고 이 구조로 제 학습 블로그에 적용하면 좋겠다는 생각이 들었습니다.\nQuarto로 만들어진 제 블로그에 이 구조를 적용하는 것이 생각보다 쉽지 않긴 했지만, 나름 해볼만 했습니다.\n사실 이 글을 작성하는 시점에는 이미 블로그 리뉴얼이 어느 정도 완료된 상태입니다.\n코드가 최적화되지 않아 따로 제작 과정을 상세히 공유하지는 않으려 합니다만, 제 GitHub 레포에서 전체 코드를 확인하실 수 있습니다.\n이전 블로그는 여기에서 확인할 수 있습니다.",
     "crumbs": [
-      "01 Projects",
-      "1차 PARA 구조 블로그 리뉴얼",
+      "Projects",
+      "Para Blog",
       "PARA Blog 제작"
     ]
   },
@@ -1473,6 +1510,706 @@
     "crumbs": [
       "01 Projects",
       "1차 PARA 구조 블로그 리뉴얼"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/OR_예습/2.html",
+    "href": "posts/01_projects/OR_예습/2.html",
+    "title": "tmp",
+    "section": "",
+    "text": "yo\n\n\n\n 맨 위로",
+    "crumbs": [
+      "Projects",
+      "OR 예습",
+      "tmp"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/OR_예습/2.html#section",
+    "href": "posts/01_projects/OR_예습/2.html#section",
+    "title": "tmp",
+    "section": "",
+    "text": "yo",
+    "crumbs": [
+      "projects",
+      "OR 예습",
+      "tmp"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projedcts/OR_예습/index.html",
+    "href": "indexes/01_projedcts/OR_예습/index.html",
+    "title": "OR 예습",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-03-02\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        Operational Research"
+  },
+  {
+    "objectID": "indexes/01_projedcts/OR_예습/index.html#details",
+    "href": "indexes/01_projedcts/OR_예습/index.html#details",
+    "title": "OR 예습",
+    "section": "Details",
+    "text": "Details\nCoursera 강의로 예습 중입니다."
+  },
+  {
+    "objectID": "indexes/01_projedcts/OR_예습/index.html#tasks",
+    "href": "indexes/01_projedcts/OR_예습/index.html#tasks",
+    "title": "OR 예습",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                1차 강의 듣기\n            \n            \n            \n                \n                2차 강의 듣기\n            \n            \n            \n                \n                3차 강의 듣기"
+  },
+  {
+    "objectID": "indexes/01_projedcts/OR_예습/index.html#related-posts",
+    "href": "indexes/01_projedcts/OR_예습/index.html#related-posts",
+    "title": "OR 예습",
+    "section": "Related Posts",
+    "text": "Related Posts"
+  },
+  {
+    "objectID": "indexes/01_projedcts/para_blog/index.html",
+    "href": "indexes/01_projedcts/para_blog/index.html",
+    "title": "1차 PARA 구조 블로그 리뉴얼",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-01-07\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        blogPARA학습"
+  },
+  {
+    "objectID": "indexes/01_projedcts/para_blog/index.html#details",
+    "href": "indexes/01_projedcts/para_blog/index.html#details",
+    "title": "1차 PARA 구조 블로그 리뉴얼",
+    "section": "Details",
+    "text": "Details\n블로그를 학습에 용이하게 리뉴얼해보고자 합니다."
+  },
+  {
+    "objectID": "indexes/01_projedcts/para_blog/index.html#tasks",
+    "href": "indexes/01_projedcts/para_blog/index.html#tasks",
+    "title": "1차 PARA 구조 블로그 리뉴얼",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                PARA 구조 공부\n            \n            \n            \n                \n                \n                    블로그 리뉴얼"
+  },
+  {
+    "objectID": "indexes/01_projedcts/para_blog/index.html#related-posts",
+    "href": "indexes/01_projedcts/para_blog/index.html#related-posts",
+    "title": "1차 PARA 구조 블로그 리뉴얼",
+    "section": "Related Posts",
+    "text": "Related Posts"
+  },
+  {
+    "objectID": "indexes/01_projedcts/adp_필기/index.html",
+    "href": "indexes/01_projedcts/adp_필기/index.html",
+    "title": "ADP 필기 준비",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-02-22\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        자격증데이터 분석"
+  },
+  {
+    "objectID": "indexes/01_projedcts/adp_필기/index.html#details",
+    "href": "indexes/01_projedcts/adp_필기/index.html#details",
+    "title": "ADP 필기 준비",
+    "section": "Details",
+    "text": "Details\n1회차 시도는 실패했지만, 이번엔 잘 되겠죠"
+  },
+  {
+    "objectID": "indexes/01_projedcts/adp_필기/index.html#tasks",
+    "href": "indexes/01_projedcts/adp_필기/index.html#tasks",
+    "title": "ADP 필기 준비",
+    "section": "Tasks",
+    "text": "Tasks\n\n\nNo tasks defined."
+  },
+  {
+    "objectID": "indexes/01_projedcts/adp_필기/index.html#related-posts",
+    "href": "indexes/01_projedcts/adp_필기/index.html#related-posts",
+    "title": "ADP 필기 준비",
+    "section": "Related Posts",
+    "text": "Related Posts"
+  },
+  {
+    "objectID": "indexes/04_archives/42_python/index.html",
+    "href": "indexes/04_archives/42_python/index.html",
+    "title": "python for data science 수행",
+    "section": "",
+    "text": "BEFORE-START\n    \n    \n        시작일: \n        종료일: \n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        42 seoulpython",
+    "crumbs": [
+      "Archives",
+      "python for data science 수행"
+    ]
+  },
+  {
+    "objectID": "indexes/04_archives/42_python/index.html#details",
+    "href": "indexes/04_archives/42_python/index.html#details",
+    "title": "python for data science 수행",
+    "section": "Details",
+    "text": "Details\n42 seoul python for data science 수행 과정 노트입니다",
+    "crumbs": [
+      "Archives",
+      "python for data science 수행"
+    ]
+  },
+  {
+    "objectID": "indexes/04_archives/42_python/index.html#tasks",
+    "href": "indexes/04_archives/42_python/index.html#tasks",
+    "title": "python for data science 수행",
+    "section": "Tasks",
+    "text": "Tasks\n\n\nNo tasks defined.",
+    "crumbs": [
+      "Archives",
+      "python for data science 수행"
+    ]
+  },
+  {
+    "objectID": "indexes/04_archives/42_python/index.html#related-posts",
+    "href": "indexes/04_archives/42_python/index.html#related-posts",
+    "title": "python for data science 수행",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Archives",
+      "python for data science 수행"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/42_seoul/index.html",
+    "href": "indexes/02_areas/42_seoul/index.html",
+    "title": "42 Seoul",
+    "section": "",
+    "text": "42 seoul에서 진행한 프로젝트들에 대한 노트 모음입니다.",
+    "crumbs": [
+      "Areas",
+      "02 Areas",
+      "42 Seoul"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/42_seoul/index.html#details",
+    "href": "indexes/02_areas/42_seoul/index.html#details",
+    "title": "42 Seoul",
+    "section": "",
+    "text": "42 seoul에서 진행한 프로젝트들에 대한 노트 모음입니다.",
+    "crumbs": [
+      "Areas",
+      "02 Areas",
+      "42 Seoul"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/42_seoul/index.html#tasks",
+    "href": "indexes/02_areas/42_seoul/index.html#tasks",
+    "title": "42 Seoul",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    python for data science",
+    "crumbs": [
+      "Areas",
+      "02 Areas",
+      "42 Seoul"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/42_seoul/index.html#related-posts",
+    "href": "indexes/02_areas/42_seoul/index.html#related-posts",
+    "title": "42 Seoul",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Areas",
+      "02 Areas",
+      "42 Seoul"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/blog/index.html",
+    "href": "indexes/02_areas/blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "블로그 관련 노트입니다.",
+    "crumbs": [
+      "Areas",
+      "Blog"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/blog/index.html#details",
+    "href": "indexes/02_areas/blog/index.html#details",
+    "title": "Blog",
+    "section": "",
+    "text": "블로그 관련 노트입니다.",
+    "crumbs": [
+      "Areas",
+      "Blog"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/blog/index.html#tasks",
+    "href": "indexes/02_areas/blog/index.html#tasks",
+    "title": "Blog",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    PARA 구조에 맞게 블로그 구조 변경\n                \n            \n            \n            \n                \n                게시글에 관련 게시글, 관련 directory 추가\n            \n            \n            \n                \n                google analytics 적용\n            \n            \n            \n                \n                about me 페이지 작성",
+    "crumbs": [
+      "Areas",
+      "Blog"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/blog/index.html#related-posts",
+    "href": "indexes/02_areas/blog/index.html#related-posts",
+    "title": "Blog",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Areas",
+      "Blog"
+    ]
+  },
+  {
+    "objectID": "indexes/03_resources/problem_solve/index.html",
+    "href": "indexes/03_resources/problem_solve/index.html",
+    "title": "Problem Solving",
+    "section": "",
+    "text": "Problem Solving에 대한 노트 모음입니다.",
+    "crumbs": [
+      "Resources",
+      "Problem Solving"
+    ]
+  },
+  {
+    "objectID": "indexes/03_resources/problem_solve/index.html#details",
+    "href": "indexes/03_resources/problem_solve/index.html#details",
+    "title": "Problem Solving",
+    "section": "",
+    "text": "Problem Solving에 대한 노트 모음입니다.",
+    "crumbs": [
+      "Resources",
+      "Problem Solving"
+    ]
+  },
+  {
+    "objectID": "indexes/03_resources/problem_solve/index.html#tasks",
+    "href": "indexes/03_resources/problem_solve/index.html#tasks",
+    "title": "Problem Solving",
+    "section": "Tasks",
+    "text": "Tasks\n\n\nNo tasks defined.",
+    "crumbs": [
+      "Resources",
+      "Problem Solving"
+    ]
+  },
+  {
+    "objectID": "indexes/03_resources/problem_solve/index.html#related-posts",
+    "href": "indexes/03_resources/problem_solve/index.html#related-posts",
+    "title": "Problem Solving",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Resources",
+      "Problem Solving"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/certificate/index.html",
+    "href": "indexes/02_areas/certificate/index.html",
+    "title": "자격증",
+    "section": "",
+    "text": "자격증 학습 정리 노트 모음입니다.",
+    "crumbs": [
+      "Areas",
+      "02 Areas",
+      "자격증"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/certificate/index.html#details",
+    "href": "indexes/02_areas/certificate/index.html#details",
+    "title": "자격증",
+    "section": "",
+    "text": "자격증 학습 정리 노트 모음입니다.",
+    "crumbs": [
+      "Areas",
+      "02 Areas",
+      "자격증"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/certificate/index.html#tasks",
+    "href": "indexes/02_areas/certificate/index.html#tasks",
+    "title": "자격증",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    adp 필기 준비\n                \n            \n            \n            \n                \n                \n                    adp 실기 준비",
+    "crumbs": [
+      "Areas",
+      "02 Areas",
+      "자격증"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/certificate/index.html#related-posts",
+    "href": "indexes/02_areas/certificate/index.html#related-posts",
+    "title": "자격증",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Areas",
+      "02 Areas",
+      "자격증"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/phd/index.html",
+    "href": "indexes/02_areas/phd/index.html",
+    "title": "산업공학 학부",
+    "section": "",
+    "text": "산업정보시스템공학과 학부 과정에 대한 노트입니다.",
+    "crumbs": [
+      "Areas",
+      "산업공학 학부"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/phd/index.html#details",
+    "href": "indexes/02_areas/phd/index.html#details",
+    "title": "산업공학 학부",
+    "section": "",
+    "text": "산업정보시스템공학과 학부 과정에 대한 노트입니다.",
+    "crumbs": [
+      "Areas",
+      "산업공학 학부"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/phd/index.html#tasks",
+    "href": "indexes/02_areas/phd/index.html#tasks",
+    "title": "산업공학 학부",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    2학년 2학기 학부 정리\n                \n            \n            \n            \n                \n                \n                    3학년 1학기 학부 정리",
+    "crumbs": [
+      "Areas",
+      "산업공학 학부"
+    ]
+  },
+  {
+    "objectID": "indexes/02_areas/phd/index.html#related-posts",
+    "href": "indexes/02_areas/phd/index.html#related-posts",
+    "title": "산업공학 학부",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Areas",
+      "산업공학 학부"
+    ]
+  },
+  {
+    "objectID": "indexes/04_archives/phd_2_2/index.html",
+    "href": "indexes/04_archives/phd_2_2/index.html",
+    "title": "2학년 2학기 학부 정리",
+    "section": "",
+    "text": "COMPLETED\n    \n    \n        시작일: 2024-09-02\n        종료일: 2024-12-20\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        산업공학 학부",
+    "crumbs": [
+      "Archives",
+      "2학년 2학기 학부 정리"
+    ]
+  },
+  {
+    "objectID": "indexes/04_archives/phd_2_2/index.html#details",
+    "href": "indexes/04_archives/phd_2_2/index.html#details",
+    "title": "2학년 2학기 학부 정리",
+    "section": "Details",
+    "text": "Details\n산업정보시스템공학과 2학년 2학기 수강 과목들에 대한 개념 정리 노트입니다.",
+    "crumbs": [
+      "Archives",
+      "2학년 2학기 학부 정리"
+    ]
+  },
+  {
+    "objectID": "indexes/04_archives/phd_2_2/index.html#tasks",
+    "href": "indexes/04_archives/phd_2_2/index.html#tasks",
+    "title": "2학년 2학기 학부 정리",
+    "section": "Tasks",
+    "text": "Tasks\n\n\nNo tasks defined.",
+    "crumbs": [
+      "Archives",
+      "2학년 2학기 학부 정리"
+    ]
+  },
+  {
+    "objectID": "indexes/04_archives/phd_2_2/index.html#related-posts",
+    "href": "indexes/04_archives/phd_2_2/index.html#related-posts",
+    "title": "2학년 2학기 학부 정리",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Archives",
+      "2학년 2학기 학부 정리"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projedcts/phd_3_1/index.html",
+    "href": "indexes/01_projedcts/phd_3_1/index.html",
+    "title": "3학년 1학기 학부 정리",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-06-20\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        산업공학 학부"
+  },
+  {
+    "objectID": "indexes/01_projedcts/phd_3_1/index.html#details",
+    "href": "indexes/01_projedcts/phd_3_1/index.html#details",
+    "title": "3학년 1학기 학부 정리",
+    "section": "Details",
+    "text": "Details\n산업정보시스템공학과 3학년 1학기 수강 과목들에 대한 개념 정리 노트입니다."
+  },
+  {
+    "objectID": "indexes/01_projedcts/phd_3_1/index.html#tasks",
+    "href": "indexes/01_projedcts/phd_3_1/index.html#tasks",
+    "title": "3학년 1학기 학부 정리",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    OR 예습"
+  },
+  {
+    "objectID": "indexes/01_projedcts/phd_3_1/index.html#related-posts",
+    "href": "indexes/01_projedcts/phd_3_1/index.html#related-posts",
+    "title": "3학년 1학기 학부 정리",
+    "section": "Related Posts",
+    "text": "Related Posts"
+  },
+  {
+    "objectID": "indexes/01_projedcts/adp_실기/index.html",
+    "href": "indexes/01_projedcts/adp_실기/index.html",
+    "title": "ADP 실기 준비",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-04-26\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        자격증데이터 분석python"
+  },
+  {
+    "objectID": "indexes/01_projedcts/adp_실기/index.html#details",
+    "href": "indexes/01_projedcts/adp_실기/index.html#details",
+    "title": "ADP 실기 준비",
+    "section": "Details",
+    "text": "Details"
+  },
+  {
+    "objectID": "indexes/01_projedcts/adp_실기/index.html#tasks",
+    "href": "indexes/01_projedcts/adp_실기/index.html#tasks",
+    "title": "ADP 실기 준비",
+    "section": "Tasks",
+    "text": "Tasks\n\n\nNo tasks defined."
+  },
+  {
+    "objectID": "indexes/01_projedcts/adp_실기/index.html#related-posts",
+    "href": "indexes/01_projedcts/adp_실기/index.html#related-posts",
+    "title": "ADP 실기 준비",
+    "section": "Related Posts",
+    "text": "Related Posts"
+  },
+  {
+    "objectID": "indexes/01_projects/OR_예습/index.html",
+    "href": "indexes/01_projects/OR_예습/index.html",
+    "title": "OR 예습",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-03-02\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        Operational Research",
+    "crumbs": [
+      "Projects",
+      "OR 예습"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/OR_예습/index.html#details",
+    "href": "indexes/01_projects/OR_예습/index.html#details",
+    "title": "OR 예습",
+    "section": "Details",
+    "text": "Details\nCoursera 강의로 예습 중입니다.",
+    "crumbs": [
+      "Projects",
+      "OR 예습"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/OR_예습/index.html#tasks",
+    "href": "indexes/01_projects/OR_예습/index.html#tasks",
+    "title": "OR 예습",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                1차 강의 듣기\n            \n            \n            \n                \n                2차 강의 듣기\n            \n            \n            \n                \n                3차 강의 듣기",
+    "crumbs": [
+      "Projects",
+      "OR 예습"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/OR_예습/index.html#related-posts",
+    "href": "indexes/01_projects/OR_예습/index.html#related-posts",
+    "title": "OR 예습",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Projects",
+      "OR 예습"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/para_blog/index.html",
+    "href": "indexes/01_projects/para_blog/index.html",
+    "title": "1차 PARA 구조 블로그 리뉴얼",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-01-07\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        blogPARA학습",
+    "crumbs": [
+      "Projects",
+      "1차 PARA 구조 블로그 리뉴얼"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/para_blog/index.html#details",
+    "href": "indexes/01_projects/para_blog/index.html#details",
+    "title": "1차 PARA 구조 블로그 리뉴얼",
+    "section": "Details",
+    "text": "Details\n블로그를 학습에 용이하게 리뉴얼해보고자 합니다.",
+    "crumbs": [
+      "Projects",
+      "1차 PARA 구조 블로그 리뉴얼"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/para_blog/index.html#tasks",
+    "href": "indexes/01_projects/para_blog/index.html#tasks",
+    "title": "1차 PARA 구조 블로그 리뉴얼",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                PARA 구조 공부\n            \n            \n            \n                \n                \n                    블로그 리뉴얼",
+    "crumbs": [
+      "Projects",
+      "1차 PARA 구조 블로그 리뉴얼"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/para_blog/index.html#related-posts",
+    "href": "indexes/01_projects/para_blog/index.html#related-posts",
+    "title": "1차 PARA 구조 블로그 리뉴얼",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Projects",
+      "1차 PARA 구조 블로그 리뉴얼"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/adp_필기/index.html",
+    "href": "indexes/01_projects/adp_필기/index.html",
+    "title": "ADP 필기 준비",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-02-22\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        자격증데이터 분석",
+    "crumbs": [
+      "Projects",
+      "ADP 필기 준비"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/adp_필기/index.html#details",
+    "href": "indexes/01_projects/adp_필기/index.html#details",
+    "title": "ADP 필기 준비",
+    "section": "Details",
+    "text": "Details\n1회차 시도는 실패했지만, 이번엔 잘 되겠죠",
+    "crumbs": [
+      "Projects",
+      "ADP 필기 준비"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/adp_필기/index.html#tasks",
+    "href": "indexes/01_projects/adp_필기/index.html#tasks",
+    "title": "ADP 필기 준비",
+    "section": "Tasks",
+    "text": "Tasks\n\n\nNo tasks defined.",
+    "crumbs": [
+      "Projects",
+      "ADP 필기 준비"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/adp_필기/index.html#related-posts",
+    "href": "indexes/01_projects/adp_필기/index.html#related-posts",
+    "title": "ADP 필기 준비",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Projects",
+      "ADP 필기 준비"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/phd_3_1/index.html",
+    "href": "indexes/01_projects/phd_3_1/index.html",
+    "title": "3학년 1학기 학부 정리",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-06-20\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        산업공학 학부",
+    "crumbs": [
+      "Projects",
+      "3학년 1학기 학부 정리"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/phd_3_1/index.html#details",
+    "href": "indexes/01_projects/phd_3_1/index.html#details",
+    "title": "3학년 1학기 학부 정리",
+    "section": "Details",
+    "text": "Details\n산업정보시스템공학과 3학년 1학기 수강 과목들에 대한 개념 정리 노트입니다.",
+    "crumbs": [
+      "Projects",
+      "3학년 1학기 학부 정리"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/phd_3_1/index.html#tasks",
+    "href": "indexes/01_projects/phd_3_1/index.html#tasks",
+    "title": "3학년 1학기 학부 정리",
+    "section": "Tasks",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    OR 예습",
+    "crumbs": [
+      "Projects",
+      "3학년 1학기 학부 정리"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/phd_3_1/index.html#related-posts",
+    "href": "indexes/01_projects/phd_3_1/index.html#related-posts",
+    "title": "3학년 1학기 학부 정리",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Projects",
+      "3학년 1학기 학부 정리"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/adp_실기/index.html",
+    "href": "indexes/01_projects/adp_실기/index.html",
+    "title": "ADP 실기 준비",
+    "section": "",
+    "text": "ON-GOING\n    \n    \n        시작일: 2024-12-21\n        종료일: 2025-04-26\n    \n    \n        \n            \n        \n        계산 중...\n    \n    \n    \n        자격증데이터 분석python",
+    "crumbs": [
+      "Projects",
+      "ADP 실기 준비"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/adp_실기/index.html#details",
+    "href": "indexes/01_projects/adp_실기/index.html#details",
+    "title": "ADP 실기 준비",
+    "section": "Details",
+    "text": "Details",
+    "crumbs": [
+      "Projects",
+      "ADP 실기 준비"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/adp_실기/index.html#tasks",
+    "href": "indexes/01_projects/adp_실기/index.html#tasks",
+    "title": "ADP 실기 준비",
+    "section": "Tasks",
+    "text": "Tasks\n\n\nNo tasks defined.",
+    "crumbs": [
+      "Projects",
+      "ADP 실기 준비"
+    ]
+  },
+  {
+    "objectID": "indexes/01_projects/adp_실기/index.html#related-posts",
+    "href": "indexes/01_projects/adp_실기/index.html#related-posts",
+    "title": "ADP 실기 준비",
+    "section": "Related Posts",
+    "text": "Related Posts",
+    "crumbs": [
+      "Projects",
+      "ADP 실기 준비"
     ]
   }
 ]
