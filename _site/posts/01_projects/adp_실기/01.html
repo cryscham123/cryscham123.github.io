@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../posts/01_projects/OR_예습/0.html" rel="next">
+<link href="../../../posts/01_projects/adp_실기/02.html" rel="next">
 <link href="../../../favicon" rel="icon">
 <script src="../../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -141,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
@@ -262,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
- <span class="menu-text">이 아래는 아직 미완성</span>
+ <span class="menu-text">이 아래 UI는 아직 미완성</span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
@@ -297,6 +297,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">pandas data 구조</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/01_projects/adp_실기/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EDA와 시각화</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -317,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../posts/01_projects/OR_예습/1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">model and applications</span></a>
+ <span class="menu-text">Linear Programming</span></a>
   </div>
 </li>
       </ul>
@@ -645,11 +651,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p><img src="../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <p>pandas: numpy를 라벨링한거</p>
 <section id="series" class="level1">
 <h1>Series</h1>
 <p>1차원 배열 구조, 이름과 형식을 가지고 모든 값에 고유한 인덱스를 가짐</p>
-<div id="8803fe06" class="cell" data-execution_count="1">
+<div id="fde4f1a8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data1 <span class="op">=</span> pd.Series({<span class="st">'ulala'</span>: <span class="dv">1</span>, <span class="st">'haha'</span>: <span class="dv">2</span>}, name<span class="op">=</span><span class="st">'class'</span>)</span>
@@ -660,7 +667,7 @@ haha     2
 Name: class, dtype: int64</code></pre>
 </div>
 </div>
-<div id="19237ca7" class="cell" data-execution_count="2">
+<div id="c88086c5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="op">=</span> pd.Series({<span class="st">'ulala'</span>: <span class="dv">1</span>, <span class="st">'ulala'</span>: <span class="dv">2</span>}, name<span class="op">=</span><span class="st">'class'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data1</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -668,7 +675,7 @@ Name: class, dtype: int64</code></pre>
 Name: class, dtype: int64</code></pre>
 </div>
 </div>
-<div id="0ab26e11" class="cell" data-execution_count="3">
+<div id="ca3506b0" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> pd.Series([<span class="dv">1</span>, <span class="dv">2</span>], name<span class="op">=</span><span class="st">'class'</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data2</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -691,7 +698,7 @@ Name: class, dtype: int64</code></pre>
 <li>라이브러리 설치</li>
 <li>라이브러리 호출</li>
 </ol>
-<div id="1bc2853a" class="cell" data-execution_count="4">
+<div id="6b7a6ea6" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="dv">10</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -699,7 +706,7 @@ Name: class, dtype: int64</code></pre>
 </section>
 <section id="dataframe-선언" class="level3">
 <h3 class="anchored" data-anchor-id="dataframe-선언">DataFrame 선언</h3>
-<div id="59eb6d4d" class="cell" data-execution_count="5">
+<div id="40fbbcbb" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> np.array([[<span class="st">'kor'</span>, <span class="dv">70</span>], [<span class="st">'math'</span>, <span class="dv">80</span>]])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># declare df 1</span></span>
@@ -741,7 +748,7 @@ Name: class, dtype: int64</code></pre>
 </section>
 <section id="dataframe-읽고-저장" class="level3">
 <h3 class="anchored" data-anchor-id="dataframe-읽고-저장">DataFrame 읽고 저장</h3>
-<div id="27d13847" class="cell" data-execution_count="6">
+<div id="f2501d72" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filepath = '../book/data/data.csv'</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data = pd.read_csv(filepath, na_values='NA', encoding='utf8')</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># data.to_csv('result.csv', header=True, index=True, encoding='utf8')</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -749,7 +756,7 @@ Name: class, dtype: int64</code></pre>
 </section>
 <section id="dataframe-출력" class="level3">
 <h3 class="anchored" data-anchor-id="dataframe-출력">DataFrame 출력</h3>
-<div id="e90bd764" class="cell" data-execution_count="7">
+<div id="a3c91005" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> load_iris()</span>
@@ -923,7 +930,7 @@ Name: class, dtype: int64</code></pre>
  'data_module': 'sklearn.datasets.data'}</code></pre>
 </div>
 </div>
-<div id="ee02d850" class="cell" data-execution_count="8">
+<div id="125fff1f" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> pd.DataFrame(iris.data, columns<span class="op">=</span>iris.feature_names)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>iris</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -1025,7 +1032,7 @@ Name: class, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="a432969d" class="cell" data-execution_count="9">
+<div id="ca8c32ef" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>iris.info()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -1041,7 +1048,7 @@ dtypes: float64(4)
 memory usage: 4.8 KB</code></pre>
 </div>
 </div>
-<div id="fd1d4649" class="cell" data-execution_count="10">
+<div id="a67e1d37" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>iris.describe()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
@@ -1125,26 +1132,26 @@ memory usage: 4.8 KB</code></pre>
 </section>
 <section id="index-column-명-변경" class="level3">
 <h3 class="anchored" data-anchor-id="index-column-명-변경">index / column 명 변경</h3>
-<div id="2456d19b" class="cell" data-execution_count="11">
+<div id="2c093d37" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df.index</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>RangeIndex(start=0, stop=2, step=1)</code></pre>
 </div>
 </div>
-<div id="e9ae007d" class="cell" data-execution_count="12">
+<div id="05abd22b" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(df.index)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>[0, 1]</code></pre>
 </div>
 </div>
-<div id="ae2cb896" class="cell" data-execution_count="13">
+<div id="2781b446" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df.index <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>]</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df.index</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>Index(['A', 'B'], dtype='object')</code></pre>
 </div>
 </div>
-<div id="cfdbfb75" class="cell" data-execution_count="14">
+<div id="9658a4ab" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -1175,7 +1182,7 @@ memory usage: 4.8 KB</code></pre>
 </div>
 </div>
 </div>
-<div id="90ae4db2" class="cell" data-execution_count="15">
+<div id="06a5a5dd" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df.set_index(<span class="st">'class'</span>, drop<span class="op">=</span><span class="va">True</span>, append<span class="op">=</span><span class="va">False</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
@@ -1208,7 +1215,7 @@ memory usage: 4.8 KB</code></pre>
 </div>
 </div>
 </div>
-<div id="513f97af" class="cell" data-execution_count="16">
+<div id="8d52a42d" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df.reset_index(drop<span class="op">=</span><span class="va">False</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
@@ -1240,7 +1247,7 @@ memory usage: 4.8 KB</code></pre>
 </div>
 </div>
 </div>
-<div id="b9ad89aa" class="cell" data-execution_count="17">
+<div id="4214ab61" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>iris.columns</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>Index(['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)',
@@ -1248,7 +1255,7 @@ memory usage: 4.8 KB</code></pre>
       dtype='object')</code></pre>
 </div>
 </div>
-<div id="77e15abe" class="cell" data-execution_count="18">
+<div id="05a30286" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>iris.columns <span class="op">=</span> [<span class="st">'sepal length'</span>, <span class="st">'sepal width'</span>, <span class="st">'petal length'</span>, <span class="st">'petal width'</span>]</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>iris</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
@@ -1350,7 +1357,7 @@ memory usage: 4.8 KB</code></pre>
 </div>
 </div>
 </div>
-<div id="358e09b2" class="cell" data-execution_count="19">
+<div id="8450f599" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>iris.columns <span class="op">=</span> iris.columns.<span class="bu">str</span>.replace(<span class="st">' '</span>, <span class="st">'_'</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>iris</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -1464,7 +1471,7 @@ memory usage: 4.8 KB</code></pre>
 <li>category</li>
 <li>object</li>
 </ul>
-<div id="a6cad900" class="cell" data-execution_count="20">
+<div id="f7e23fd5" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>iris.dtypes</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>sepal_length    float64
@@ -1474,7 +1481,7 @@ petal_width     float64
 dtype: object</code></pre>
 </div>
 </div>
-<div id="270621e4" class="cell" data-execution_count="21">
+<div id="0676d40a" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>iris[<span class="st">'sepal_length'</span>] <span class="op">=</span> iris[<span class="st">'sepal_length'</span>].astype(<span class="st">'int'</span>)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>iris[[<span class="st">'sepal_width'</span>, <span class="st">'petal_length'</span>]] <span class="op">=</span> <span class="op">\</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>iris[[<span class="st">'sepal_width'</span>, <span class="st">'petal_length'</span>]].astype(<span class="st">'int'</span>)</span>
@@ -1584,7 +1591,7 @@ dtype: object</code></pre>
 <h2 class="anchored" data-anchor-id="row-coumn-선택-추가-삭제">row / coumn 선택 추가 삭제</h2>
 <section id="row-선택" class="level3">
 <h3 class="anchored" data-anchor-id="row-선택">row 선택</h3>
-<div id="6117a56c" class="cell" data-execution_count="22">
+<div id="af2e0d04" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>iris[<span class="dv">0</span>:<span class="dv">4</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <div>
@@ -1639,7 +1646,7 @@ dtype: object</code></pre>
 <section id="column-선택" class="level3">
 <h3 class="anchored" data-anchor-id="column-선택">column 선택</h3>
 <p>Series 형식으로 출력</p>
-<div id="7bf74f9b" class="cell" data-execution_count="23">
+<div id="280bfee5" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>iris[<span class="st">'sepal_length'</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>0      5
@@ -1657,7 +1664,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </div>
 </div>
 <p>DataFrame 형식으로 출력</p>
-<div id="00f47580" class="cell" data-execution_count="24">
+<div id="b31cf056" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>iris[[<span class="st">'sepal_length'</span>, <span class="st">'sepal_width'</span>]]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <div>
@@ -1737,7 +1744,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </section>
 <section id="column-row-선택" class="level3">
 <h3 class="anchored" data-anchor-id="column-row-선택">column, row 선택</h3>
-<div id="def27c4d" class="cell" data-execution_count="25">
+<div id="d28fbeb9" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>iris.loc[<span class="dv">0</span>:<span class="dv">4</span>, [<span class="st">'sepal_length'</span>, <span class="st">'sepal_width'</span>]]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <div>
@@ -1783,7 +1790,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="5e0d1e3f" class="cell" data-execution_count="26">
+<div id="41aa3f64" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>iris.iloc[<span class="dv">0</span>:<span class="dv">4</span>, [<span class="dv">1</span>, <span class="dv">2</span>]]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <div>
@@ -1827,7 +1834,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </section>
 <section id="row-추가" class="level3">
 <h3 class="anchored" data-anchor-id="row-추가">row 추가</h3>
-<div id="69721cd6" class="cell" data-execution_count="27">
+<div id="4b2f1f4b" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 방법 1: concat 사용</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df = pd.concat([df, pd.DataFrame([{'class': 'eng', 'score': 90}])], ignore_index=True)</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1871,7 +1878,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </section>
 <section id="column-추가" class="level3">
 <h3 class="anchored" data-anchor-id="column-추가">column 추가</h3>
-<div id="d346930a" class="cell" data-execution_count="28">
+<div id="5e3b5c34" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'yo'</span>] <span class="op">=</span> df[<span class="st">'score'</span>] <span class="op">+</span> <span class="dv">10</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="28">
@@ -1915,7 +1922,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </section>
 <section id="row-삭제" class="level3">
 <h3 class="anchored" data-anchor-id="row-삭제">row 삭제</h3>
-<div id="1127195e" class="cell" data-execution_count="29">
+<div id="6bc33dd3" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df.drop(<span class="dv">2</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
@@ -1953,7 +1960,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </section>
 <section id="column-삭제" class="level3">
 <h3 class="anchored" data-anchor-id="column-삭제">column 삭제</h3>
-<div id="f2a09a8c" class="cell" data-execution_count="30">
+<div id="c2c726e6" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df.drop(columns<span class="op">=</span>[<span class="st">'yo'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="30">
@@ -1989,7 +1996,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </section>
 <section id="조건-선택" class="level2">
 <h2 class="anchored" data-anchor-id="조건-선택">조건 선택</h2>
-<div id="0b7b097d" class="cell" data-execution_count="31">
+<div id="a16d73fc" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>iris[(iris[<span class="st">'sepal_length'</span>] <span class="op">&gt;</span> <span class="dv">5</span>) <span class="op">&amp;</span> (iris[<span class="st">'sepal_width'</span>] <span class="op">&lt;</span> <span class="dv">3</span>)]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <div>
@@ -2090,7 +2097,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="faef8600" class="cell" data-execution_count="32">
+<div id="9971257c" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'score'</span>] <span class="op">&gt;</span> <span class="dv">70</span>, <span class="st">'합격'</span>] <span class="op">=</span> <span class="st">'Pass'</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'합격'</span>] <span class="op">!=</span> <span class="st">'Pass'</span>, <span class="st">'합격'</span>] <span class="op">=</span> <span class="st">'Fail'</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2126,7 +2133,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="5e3b4e66" class="cell" data-execution_count="33">
+<div id="d425e606" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>condition_list <span class="op">=</span> [(df[<span class="st">'score'</span>] <span class="op">&gt;=</span> <span class="dv">70</span>), </span>
@@ -2172,7 +2179,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </div>
 <section id="결측치-탐색" class="level3">
 <h3 class="anchored" data-anchor-id="결측치-탐색">결측치 탐색</h3>
-<div id="c392bafc" class="cell" data-execution_count="34">
+<div id="26b6cec8" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df.isna().<span class="bu">sum</span>()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
 <pre><code>class    0
@@ -2182,7 +2189,7 @@ grade    0
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="ad28c473" class="cell" data-execution_count="35">
+<div id="dd10ed80" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df.notna().<span class="bu">sum</span>(<span class="dv">1</span>) <span class="co"># 행 기준</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
 <pre><code>0    4
@@ -2193,7 +2200,7 @@ dtype: int64</code></pre>
 </section>
 <section id="결측치-제거" class="level3">
 <h3 class="anchored" data-anchor-id="결측치-제거">결측치 제거</h3>
-<div id="cbbc93ee" class="cell" data-execution_count="36">
+<div id="fa33e8de" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dropna(axis=0, how='any' or 'all', thresh=None, subset=None, inplace=False)</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>df.dropna()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="36">
@@ -2234,7 +2241,7 @@ dtype: int64</code></pre>
 </section>
 <section id="결측치-대체" class="level3">
 <h3 class="anchored" data-anchor-id="결측치-대체">결측치 대체</h3>
-<div id="a768ca55" class="cell" data-execution_count="37">
+<div id="b1e026d7" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fillna(value=None, method=None ('pad', 'ffill', 'backfill', 'bfill'), axis=None, inplace=False, limit=None)</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
@@ -2672,8 +2679,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../posts/01_projects/OR_예습/0.html" class="pagination-link" aria-label="Overview">
-        <span class="nav-page-text">Overview</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../posts/01_projects/adp_실기/02.html" class="pagination-link" aria-label="EDA와 시각화">
+        <span class="nav-page-text">EDA와 시각화</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,0 +1,110 @@
+---
+title: "EDA와 시각화"
+date: 2024-12-30
+categories: ["데이터 분석"]
+directories: ["adp_실기"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## EDA(Exploratory Data Analysis)
+
+: 데이터의 특징과 데이터에 내재된 관계를 알아내기 위해 그래프와 통계적 분석 방법을 활용하여 탐구하는 것
+
+### 주제
+
+1. 저항성 강조: 부분적 변동(이상치 등)에 대한 민감성 확인
+2. 잔차 계산
+3. 자료변수의 재표현: 변수를 적당한 척도로 바꾸는 것
+4. 그래프를 통한 현시성
+
+## 막대 그래프
+
+`범주형 데이터`를 요약하고 시각적으로 비교하는 데 활용
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_wine
+
+wine_load = load_wine()
+wine = pd.DataFrame(wine_load.data, columns=wine_load.feature_names)
+wine_load
+wine['Class'] = wine_load.target
+wine['Class'] = wine['Class'].map({0: 'class_0', 1: 'class_1', 2: 'class_2'})
+
+wine_type = wine['Class'].value_counts()
+wine_type
+```
+
+```{python}
+# 수직 막대
+plt.bar(wine_type.index, wine_type.values, width=0.8, bottom=None, align = 'center')
+plt.show()
+```
+
+```{python}
+# 수평 막대
+plt.barh(wine_type.index, wine_type.values, height=0.8, left=None, align = 'center')
+plt.show()
+```
+
+각 범주의 값의 갯수 `차이가 극단적`인지 확인한다.
+극단적일 경우, 전처리 과정에서 `업/다운 샘플링 등을 통해 갯수가 유사해지도록 조정`해야한다.
+
+## 히스토그램
+
+`연속형 데이터`의 분포를 확인하는 데 활용
+
+```{python}
+plt.title('Wine alcohol histogram')
+plt.hist('alcohol', bins=8, range=(11, 15), color='purple', data=wine)
+plt.show()
+```
+
+## box plot
+
+`수치형 변수`의 분포를 확인하는 그래프
+
+```{python}
+from sklearn.datasets import load_iris
+
+iris_load = load_iris()
+iris = pd.DataFrame(iris_load.data, columns=iris_load.feature_names)
+iris['class'] = iris_load.target
+iris['class'] = iris['class'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
+
+plt.boxplot(iris.drop(columns='class'))
+plt.show()
+```
+
+```{python}
+import seaborn as sns
+
+sns.boxplot(x="class", y="sepal width (cm)", data=iris)
+plt.show()
+```
+
+## 산점도
+
+두 개의 `수치형 변수`의 `분포와 관계`를 확인하는 그래프
+
+```{python}
+plt.title('iris scatter')
+plt.xlabel('sepal length (cm)')
+plt.ylabel('sepal width (cm)')
+
+plt.scatter('sepal length (cm)', 'sepal width (cm)', data=iris, alpha=0.5)
+plt.show()
+```
+
+```{python}
+sns.scatterplot(x='sepal length (cm)', y='sepal width (cm)', hue='class', data=iris, style='class')
+plt.show()
+```
+
+## 선그래프
+
+## 상관관계 시각화
+
+## Pandas Profiling

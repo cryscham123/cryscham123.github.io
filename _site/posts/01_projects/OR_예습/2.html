@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="ADP 실기를 준비해 봅시다.">
 
-<title>ADP 실기 준비 – 김형훈의 학습 블로그</title>
+<title>Excel Solver – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,16 +23,16 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
+<link href="../../../posts/01_projects/para_blog/0.html" rel="next">
+<link href="../../../posts/01_projects/OR_예습/1.html" rel="prev">
 <link href="../../../favicon" rel="icon">
-<script src="../../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -70,71 +69,11 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "검색"
   }
 }</script>
-<script>
+<style>html{ scroll-behavior: smooth; }</style>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../../styles.css">
-<link rel="alternate" type="application/rss+xml" title="김형훈의 학습 블로그" href="index.xml" data-external="1"></head>
+</head>
 
 <body class="nav-sidebar floating nav-fixed">
 
@@ -157,27 +96,27 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../indexes/01_projects/adp_필기/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../indexes/01_projects/adp_실기/index.html">ADP 실기 준비</a></li></ol></nav>
+        <h1 class="quarto-secondary-nav-title no-breadcrumbs">Excel Solver</h1>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Projects</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../indexes/01_projects/adp_필기/index.html" class="sidebar-item-text sidebar-link">
@@ -198,7 +137,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../indexes/01_projects/adp_실기/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../indexes/01_projects/adp_실기/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ADP 실기 준비</span></a>
   </div>
 </li>
@@ -285,101 +224,361 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+ <span class="menu-text">이 아래 UI는 아직 미완성</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Related Posts</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">01 Projects</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Adp 실기</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/01_projects/adp_실기/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pandas data 구조</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">OR 예습</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/01_projects/OR_예습/0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/01_projects/OR_예습/1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/01_projects/OR_예습/2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Excel Solver</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Para Blog</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/01_projects/para_blog/0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PARA Blog 제작</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">04 Archives</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Phd 2 2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Phd Database</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/01-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">An Overview of Database</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Relational Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/04-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Normalization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/04-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Modeling and the Entity-Relationship Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Administration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ASP.NET</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/work1.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">데이터베이스설계및활용 개인과제 #2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/work2.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4조 기말과제 제안서</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_database/work4.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">숭실대학교 학생식당 식자제 SCM 설계</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">Phd Human</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/0_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Human Factors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Research Method in Human Factors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/2_human_information_processing_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Information Processing Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/3_sensory_system.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sensor System (Visual)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auditory Haptic</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/5_signal_detction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Signal Detection Theory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/6_attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/7_display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/8_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_human/인간공학-보고서-초안.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">맥도날드 키오스크 UI 개선 보고서</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Phd Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률과 통계의 정의</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률변수와 확률분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률변수의 기댓값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_statistics/4-이산형 확률분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">이산형 확률분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">연속형 확률분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">정규 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">표본의 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">중심 극한 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
-<div class="profile-container">
-  <img src="../../../profile.jpg" alt="Profile" class="profile-image">
-  <div class="profile-info">
-    <h2 class="profile-name">김형훈</h2>
-    <div class="profile-description" style="white-space: pre-wrap;">언제 졸업하지</div>
-    <div class="social-links">
-      <a href="https://github.com/cryscham123" target="_blank" class="social-link">
-        <i class="bi bi-github"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/hyunghoon-kim-083a3a1b6/" target="_blank" class="social-link">
-        <i class="bi bi-linkedin"></i>
-      </a>
-      <a href="mailto:hyunghki@student.42seoul.kr" class="social-link">
-        <i class="bi bi-envelope"></i>
-      </a>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#excel-solver-add-in" id="toc-excel-solver-add-in" class="nav-link active" data-scroll-target="#excel-solver-add-in">Excel Solver Add-in</a></li>
+  </ul>
+</nav>
     </div>
-  </div>
-</div>
-
-<style>
-
-.profile-container {
-  text-align: center;
-  padding: 1.5rem;
-  border: 1px solid #dee2e6;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.profile-image {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  margin-bottom: 1rem;
-}
-
-.profile-name {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #212529;
-  margin: 0.5rem 0;
-}
-
-.profile-info {
-  margin-top: 1rem;
-}
-
-.profile-description {
-  margin-bottom: 1rem;
-  color: #495057;
-}
-
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.social-link {
-  color: #495057;
-  font-size: 1.2rem;
-  transition: color 0.2s;
-}
-
-.social-link:hover {
-  color: #228be6;
-}
-</style>
-
-</div></div>
-    <h5 class="quarto-listing-category-title">분류</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">전체 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="데이터 분석">데이터 분석 <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../indexes/01_projects/adp_필기/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../indexes/01_projects/adp_실기/index.html">ADP 실기 준비</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ADP 실기 준비</h1>
-</div>
-
-<div>
-  <div class="description">
-    ADP 실기를 준비해 봅시다.
+<h1 class="title d-none d-lg-block">Excel Solver</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Operational Research</div>
+    <div class="quarto-category">1차</div>
   </div>
-</div>
+  </div>
 
 
-<div class="quarto-title-meta column-body">
+
+<div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">공개</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2024년 12월 30일</p>
+    </div>
+  </div>
   
     
   </div>
@@ -389,246 +588,14 @@ window.Quarto = {
 </header>
 
 
-<div id="a5785c5a" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display">
-
-<style>
-.project-info {
-    border-bottom: 1px solid #e9ecef;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-}
-
-.date-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.progress-container {
-    background-color: #e9ecef;
-    border-radius: 4px;
-    padding: 3px;
-    margin: 1rem 0;
-}
-
-.progress-bar {
-    background-color: #2ecc71;
-    width: 0%;
-    height: 20px;
-    border-radius: 2px;
-    transition: width 0.5s ease-in-out;
-}
-
-.status-badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    color: white;
-    background-color: #2ecc71;
-    margin-bottom: 1rem;
-}
-
-.categories-container {
-    margin-top: 1rem;
-}
-
-.category-tag {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background-color: #e9ecef;
-    border-radius: 4px;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: #495057;
-}
-</style>
-
-<div class="project-info">
-    <div class="status-badge">ON-GOING</div>
-    
-    <div class="date-info">
-        <div>시작일: 2024-12-21</div>
-        <div>종료일: 2025-04-26</div>
-    </div>
-    <div id="progress-section">
-        <div class="progress-container">
-            <div class="progress-bar" style="width: 0%"></div>
-        </div>
-        <div class="progress-text">계산 중...</div>
-    </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const startDate = '2024-12-21';
-        const endDate = '2025-04-26';
-        const progressBar = document.querySelector('.progress-bar');
-        const progressText = document.querySelector('.progress-text');
-        const progressSection = document.getElementById('progress-section');
-        
-        if (startDate && endDate) {
-            try {
-                const start = new Date(startDate);
-                const end = new Date(endDate);
-                const today = new Date();
-                const totalDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
-                const daysPassed = Math.max(Math.floor((today - start) / (1000 * 60 * 60 * 24)), 0);
-                const daysLeft = Math.max(Math.floor((end - today) / (1000 * 60 * 60 * 24)), 0);
-                let progress = 0;
-                if (totalDays > 0) {
-                    progress = Math.min(Math.max((daysPassed / totalDays * 100), 0), 100);
-                }
-                progressBar.style.width = `${progress}%`;
-                progressText.textContent = `진행률: ${progress.toFixed(1)}% (${daysPassed}일 경과 / ${daysLeft}일 남음)`;
-            } catch (e) {
-                progressSection.innerHTML = '<div>날짜 형식이 올바르지 않습니다.</div>';
-            }
-        } else {
-            progressSection.innerHTML = '<div>일정이 설정되지 않았습니다.</div>';
-        }
-    });
-    </script>
-    <div class="categories-container">
-        <span class="category-tag">자격증</span><span class="category-tag">데이터 분석</span><span class="category-tag">python</span>
-    </div>
-</div>
-</div>
-</div>
-<section id="details" class="level2">
-<h2 class="anchored" data-anchor-id="details">Details</h2>
-</section>
-<section id="tasks" class="level2">
-<h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
-<div id="019ef48c" class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display">
-
-    <style>
-    .tasks-list {
-        list-style-type: none;
-        padding-left: 0;
-    }
-    .task-item {
-        display: flex;
-        align-items: center;
-        margin: 4px 0;
-        padding: 4px 0;
-    }
-    .task-checkbox {
-        margin-right: 8px;
-        width: 16px;
-        height: 16px;
-        cursor: default;
-    }
-    .task-checkbox.failed:checked {
-        accent-color: #cf222e;
-    }
-    .task-link {
-        text-decoration: none;
-        flex-grow: 1;
-    }
-    .task-name {
-        font-size: 1em;
-    }
-    .task-name.clickable {
-        color: #0969da;
-        cursor: pointer;
-    }
-    .task-name.completed {
-        text-decoration: line-through;
-    }
-    .task-name.failed {
-        color: #cf222e;
-        text-decoration: line-through;
-    }
-    .task-name.non-clickable {
-        color: #57606a;
-    }
-    </style>
-    <ul class="tasks-list">
-    
-            <li class="task-item">
-                <input type="checkbox" class="task-checkbox " disabled="">
-                <a href="https://product.kyobobook.co.kr/detail/S000213500148" class="task-link">
-                    <span class="task-name clickable">파이썬 한권으로 끝내기 완독</span>
-                </a>
-            </li>
-            </ul>
-</div>
-</div>
-</section>
-<section id="related-posts" class="level2">
-<h2 class="anchored" data-anchor-id="related-posts">Related Posts</h2>
-
+<p><img src="../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="excel-solver-add-in" class="level2">
+<h2 class="anchored" data-anchor-id="excel-solver-add-in">Excel Solver Add-in</h2>
 
 
 </section>
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="정렬" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">정렬</option>
-       <option value="index" data-direction="asc">디폴트</option>
-         <option value="listing-date-sort" data-direction="asc">
-          날짜 - 날짜(오름차순)
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          날짜 - 날짜(내림차순)
-        </option>
-         <option value="listing-title-sort" data-direction="asc">
-          제목
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="필터">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">제목</a>
-</th>
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">날짜</a>
-</th>
-<th>
-분류
-</th>
-</tr>
-</thead>
-<tbody class="list">
-<tr data-index="0" data-categories="데이터 분석" data-listing-date-sort="1735484400000" data-listing-file-modified-sort="1735557003148" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="157" data-listing-title-sort="EDA와 시각화" data-listing-filename-sort="02.qmd">
-<td>
-<a href="../../../posts/01_projects/adp_실기/02.html" class="title listing-title">EDA와 시각화</a>
-</td>
-<td>
-<span class="listing-date">2024-12-30</span>
-</td>
-<td>
-<span class="listing-categories">데이터 분석</span>
-</td>
-</tr>
-<tr data-index="1" data-categories="데이터 분석" data-listing-date-sort="1734620400000" data-listing-file-modified-sort="1735555244801" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="346" data-listing-title-sort="pandas data 구조" data-listing-filename-sort="01.qmd">
-<td>
-<a href="../../../posts/01_projects/adp_실기/01.html" class="title listing-title">pandas data 구조</a>
-</td>
-<td>
-<span class="listing-date">2024-12-20</span>
-</td>
-<td>
-<span class="listing-categories">데이터 분석</span>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="listing-no-matching d-none">
-일치 없음
-</div>
-</div><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1049,6 +1016,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://giscus.app/client.js" data-repo="cryscham123/cryscham123.github.io" data-repo-id="R_kgDONGE9Rw" data-category="Announcements" data-category-id="DIC_kwDONGE9R84CjtIQ" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="light">
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../posts/01_projects/OR_예습/1.html" class="pagination-link" aria-label="Linear Programming">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Linear Programming</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../posts/01_projects/para_blog/0.html" class="pagination-link" aria-label="PARA Blog 제작">
+        <span class="nav-page-text">PARA Blog 제작</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1067,4 +1050,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

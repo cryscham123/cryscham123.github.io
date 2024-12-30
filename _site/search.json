@@ -15,7 +15,7 @@
     "href": "indexes/01_projects/OR_예습/index.html#details",
     "title": "OR 예습",
     "section": "Details",
-    "text": "Details\nCoursera 강의로 예습 중입니다.",
+    "text": "Details\n\n작년 강의 계획서\n\nCoursera 강의로 예습 중입니다.",
     "crumbs": [
       "Projects",
       "OR 예습"
@@ -2273,7 +2273,7 @@
     "href": "indexes/01_projects/adp_실기/index.html#tasks",
     "title": "ADP 실기 준비",
     "section": "Tasks",
-    "text": "Tasks\n\n\nNo tasks defined.",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    파이썬 한권으로 끝내기 완독",
     "crumbs": [
       "Projects",
       "ADP 실기 준비"
@@ -2327,6 +2327,136 @@
       "01 Projects",
       "OR 예습",
       "Linear Programming"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/OR_예습/2.html#excel-solver-add-in",
+    "href": "posts/01_projects/OR_예습/2.html#excel-solver-add-in",
+    "title": "Excel Solver",
+    "section": "Excel Solver Add-in",
+    "text": "Excel Solver Add-in",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "OR 예습",
+      "Excel Solver"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html",
+    "href": "posts/01_projects/adp_실기/02.html",
+    "title": "EDA와 시각화",
+    "section": "",
+    "text": "맨 위로",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#edaexploratory-data-analysis",
+    "href": "posts/01_projects/adp_실기/02.html#edaexploratory-data-analysis",
+    "title": "EDA와 시각화",
+    "section": "EDA(Exploratory Data Analysis)",
+    "text": "EDA(Exploratory Data Analysis)\n: 데이터의 특징과 데이터에 내재된 관계를 알아내기 위해 그래프와 통계적 분석 방법을 활용하여 탐구하는 것\n\n주제\n\n저항성 강조: 부분적 변동(이상치 등)에 대한 민감성 확인\n잔차 계산\n자료변수의 재표현: 변수를 적당한 척도로 바꾸는 것\n그래프를 통한 현시성",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#막대-그래프",
+    "href": "posts/01_projects/adp_실기/02.html#막대-그래프",
+    "title": "EDA와 시각화",
+    "section": "막대 그래프",
+    "text": "막대 그래프\n범주형 데이터를 요약하고 시각적으로 비교하는 데 활용\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom sklearn.datasets import load_wine\n\nwine_load = load_wine()\nwine = pd.DataFrame(wine_load.data, columns=wine_load.feature_names)\nwine_load\nwine['Class'] = wine_load.target\nwine['Class'] = wine['Class'].map({0: 'class_0', 1: 'class_1', 2: 'class_2'})\n\nwine_type = wine['Class'].value_counts()\nwine_type\n\nClass\nclass_1    71\nclass_0    59\nclass_2    48\nName: count, dtype: int64\n\n\n\n# 수직 막대\nplt.bar(wine_type.index, wine_type.values, width=0.8, bottom=None, align = 'center')\nplt.show()\n\n\n\n\n\n\n\n\n\n# 수평 막대\nplt.barh(wine_type.index, wine_type.values, height=0.8, left=None, align = 'center')\nplt.show()\n\n\n\n\n\n\n\n\n각 범주의 값의 갯수 차이가 극단적인지 확인한다. 극단적일 경우, 전처리 과정에서 업/다운 샘플링 등을 통해 갯수가 유사해지도록 조정해야한다.",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#히스토그램",
+    "href": "posts/01_projects/adp_실기/02.html#히스토그램",
+    "title": "EDA와 시각화",
+    "section": "히스토그램",
+    "text": "히스토그램\n연속형 데이터의 분포를 확인하는 데 활용\n\nplt.title('Wine alcohol histogram')\nplt.hist('alcohol', bins=8, range=(11, 15), color='purple', data=wine)\nplt.show()",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#box-plot",
+    "href": "posts/01_projects/adp_실기/02.html#box-plot",
+    "title": "EDA와 시각화",
+    "section": "box plot",
+    "text": "box plot\n수치형 변수의 분포를 확인하는 그래프\n\nfrom sklearn.datasets import load_iris\n\niris_load = load_iris()\niris = pd.DataFrame(iris_load.data, columns=iris_load.feature_names)\niris['class'] = iris_load.target\niris['class'] = iris['class'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})\n\nplt.boxplot(iris.drop(columns='class'))\nplt.show()\n\n\n\n\n\n\n\n\n\nimport seaborn as sns\n\nsns.boxplot(x=\"class\", y=\"sepal width (cm)\", data=iris)\nplt.show()",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#산점도",
+    "href": "posts/01_projects/adp_실기/02.html#산점도",
+    "title": "EDA와 시각화",
+    "section": "산점도",
+    "text": "산점도\n두 개의 수치형 변수의 분포와 관계를 확인하는 그래프\n\nplt.title('iris scatter')\nplt.xlabel('sepal length (cm)')\nplt.ylabel('sepal width (cm)')\n\nplt.scatter('sepal length (cm)', 'sepal width (cm)', data=iris, alpha=0.5)\nplt.show()\n\n\n\n\n\n\n\n\n\nsns.scatterplot(x='sepal length (cm)', y='sepal width (cm)', hue='class', data=iris, style='class')\nplt.show()",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#선그래프",
+    "href": "posts/01_projects/adp_실기/02.html#선그래프",
+    "title": "EDA와 시각화",
+    "section": "선그래프",
+    "text": "선그래프",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#상관관계-시각화",
+    "href": "posts/01_projects/adp_실기/02.html#상관관계-시각화",
+    "title": "EDA와 시각화",
+    "section": "상관관계 시각화",
+    "text": "상관관계 시각화",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#pandas-profiling",
+    "href": "posts/01_projects/adp_실기/02.html#pandas-profiling",
+    "title": "EDA와 시각화",
+    "section": "Pandas Profiling",
+    "text": "Pandas Profiling",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
     ]
   }
 ]
