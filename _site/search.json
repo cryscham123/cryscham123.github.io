@@ -297,58 +297,1563 @@
     ]
   },
   {
-    "objectID": "posts/01_projects/para_blog/0.html#overview",
-    "href": "posts/01_projects/para_blog/0.html#overview",
-    "title": "PARA Blog 제작",
-    "section": "Overview",
-    "text": "Overview\n유튜브에서 ‘제2의 두뇌’ 관련 영상을 보고 이 구조로 제 학습 블로그에 적용하면 좋겠다는 생각이 들었습니다.\nQuarto로 만들어진 제 블로그에 이 구조를 적용하는 것이 생각보다 쉽지 않긴 했지만, 나름 해볼만 했습니다.\n사실 이 글을 작성하는 시점에는 이미 블로그 리뉴얼이 어느 정도 완료된 상태입니다.\n코드가 최적화되지 않아 따로 제작 과정을 상세히 공유하지는 않으려 합니다만, 제 GitHub 레포에서 전체 코드를 확인하실 수 있습니다.\n이전 블로그는 여기에서 확인할 수 있습니다.",
+    "objectID": "posts/01_projects/adp_실기/02.html#edaexploratory-data-analysis",
+    "href": "posts/01_projects/adp_실기/02.html#edaexploratory-data-analysis",
+    "title": "EDA와 시각화",
+    "section": "EDA(Exploratory Data Analysis)",
+    "text": "EDA(Exploratory Data Analysis)\n: 데이터의 특징과 데이터에 내재된 관계를 알아내기 위해 그래프와 통계적 분석 방법을 활용하여 탐구하는 것\n\n주제\n\n저항성 강조: 부분적 변동(이상치 등)에 대한 민감성 확인\n잔차 계산\n자료변수의 재표현: 변수를 적당한 척도로 바꾸는 것\n그래프를 통한 현시성",
     "crumbs": [
       "Related Posts",
       "01 Projects",
-      "Para Blog",
-      "PARA Blog 제작"
+      "Adp 실기",
+      "EDA와 시각화"
     ]
   },
   {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#standard-normal-distribution",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#standard-normal-distribution",
-    "title": "연속형 확률분포",
-    "section": "Standard Normal Distribution",
-    "text": "Standard Normal Distribution\n\nμ = 0, σ = 1인 정규분포",
+    "objectID": "posts/01_projects/adp_실기/02.html#막대-그래프",
+    "href": "posts/01_projects/adp_실기/02.html#막대-그래프",
+    "title": "EDA와 시각화",
+    "section": "막대 그래프",
+    "text": "막대 그래프\n범주형 데이터를 요약하고 시각적으로 비교하는 데 활용\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom sklearn.datasets import load_wine\n\nwine_load = load_wine()\nwine = pd.DataFrame(wine_load.data, columns=wine_load.feature_names)\nwine_load\nwine['Class'] = wine_load.target\nwine['Class'] = wine['Class'].map({0: 'class_0', 1: 'class_1', 2: 'class_2'})\n\nwine_type = wine['Class'].value_counts()\nwine_type\n\nClass\nclass_1    71\nclass_0    59\nclass_2    48\nName: count, dtype: int64\n\n\n\n# 수직 막대\nplt.bar(wine_type.index, wine_type.values, width=0.8, bottom=None, align = 'center')\nplt.show()\n\n\n\n\n\n\n\n\n\n# 수평 막대\nplt.barh(wine_type.index, wine_type.values, height=0.8, left=None, align = 'center')\nplt.show()\n\n\n\n\n\n\n\n\n각 범주의 값의 갯수 차이가 극단적인지 확인한다. 극단적일 경우, 전처리 과정에서 업/다운 샘플링 등을 통해 갯수가 유사해지도록 조정해야한다.",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#히스토그램",
+    "href": "posts/01_projects/adp_실기/02.html#히스토그램",
+    "title": "EDA와 시각화",
+    "section": "히스토그램",
+    "text": "히스토그램\n연속형 데이터의 분포를 확인하는 데 활용\n\nplt.title('Wine alcohol histogram')\nplt.hist('alcohol', bins=8, range=(11, 15), color='purple', data=wine)\nplt.show()",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#box-plot",
+    "href": "posts/01_projects/adp_실기/02.html#box-plot",
+    "title": "EDA와 시각화",
+    "section": "box plot",
+    "text": "box plot\n수치형 변수의 분포를 확인하는 그래프\n\nfrom sklearn.datasets import load_iris\n\niris_load = load_iris()\niris = pd.DataFrame(iris_load.data, columns=iris_load.feature_names)\niris['class'] = iris_load.target\niris['class'] = iris['class'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})\n\nplt.boxplot(iris.drop(columns='class'))\nplt.show()\n\n\n\n\n\n\n\n\n\nimport seaborn as sns\n\nsns.boxplot(x=\"class\", y=\"sepal width (cm)\", data=iris)\nplt.show()",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#산점도",
+    "href": "posts/01_projects/adp_실기/02.html#산점도",
+    "title": "EDA와 시각화",
+    "section": "산점도",
+    "text": "산점도\n두 개의 수치형 변수의 분포와 관계를 확인하는 그래프\n\nplt.title('iris scatter')\nplt.xlabel('sepal length (cm)')\nplt.ylabel('sepal width (cm)')\n\nplt.scatter('sepal length (cm)', 'sepal width (cm)', data=iris, alpha=0.5)\nplt.show()\n\n\n\n\n\n\n\n\n\nsns.scatterplot(x='sepal length (cm)', y='sepal width (cm)', hue='class', data=iris, style='class')\nplt.show()",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#선그래프",
+    "href": "posts/01_projects/adp_실기/02.html#선그래프",
+    "title": "EDA와 시각화",
+    "section": "선그래프",
+    "text": "선그래프",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#상관관계-시각화",
+    "href": "posts/01_projects/adp_실기/02.html#상관관계-시각화",
+    "title": "EDA와 시각화",
+    "section": "상관관계 시각화",
+    "text": "상관관계 시각화",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/adp_실기/02.html#pandas-profiling",
+    "href": "posts/01_projects/adp_실기/02.html#pandas-profiling",
+    "title": "EDA와 시각화",
+    "section": "Pandas Profiling",
+    "text": "Pandas Profiling",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "Adp 실기",
+      "EDA와 시각화"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#좋은-추정량이-되기-위한-조건",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#좋은-추정량이-되기-위한-조건",
+    "title": "표본의 분포",
+    "section": "좋은 추정량이 되기 위한 조건",
+    "text": "좋은 추정량이 되기 위한 조건\n\n불편성 (Unbiasedness) - 기본 조건\n추정량의 기대값이 추정하려는 모수와 같아야 함\n\\(E(\\hat{X}) = μ\\)\n\\(E(X_1) = μ\\)\n최소분산 (Minimum Variance)\n추정량의 분산이 가능한 작아야 함.\n표본의 갯수를 늘릴수록 분산이 줄어들어서 더 좋은 추정량이 됨\n\\(Var(\\hat{X}) = \\frac{σ^2}{n}\\)\n\\(Var(X_1) = \\sigma^2\\)",
     "crumbs": [
       "Related Posts",
       "04 Archives",
       "Phd 2 2",
       "Phd Statistics",
-      "연속형 확률분포"
+      "표본의 분포"
     ]
   },
   {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#chi-square-distribution",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#chi-square-distribution",
-    "title": "연속형 확률분포",
-    "section": "Chi-square Distribution",
-    "text": "Chi-square Distribution\nα = ν/2, θ = 2인 감마분포\n자유도 ν에 따라 모양이 변함: 커질수록 정규분포에 가까워짐\n표기: \\(X \\sim χ^2(ν)\\)\n\\(E(x) = ν\\)\n\\(Var(x) = 2ν\\)",
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#표본평균의-분포",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#표본평균의-분포",
+    "title": "표본의 분포",
+    "section": "표본평균의 분포",
+    "text": "표본평균의 분포",
     "crumbs": [
       "Related Posts",
       "04 Archives",
       "Phd 2 2",
       "Phd Statistics",
-      "연속형 확률분포"
+      "표본의 분포"
     ]
   },
   {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#exponential-distribution",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#exponential-distribution",
-    "title": "연속형 확률분포",
-    "section": "Exponential Distribution",
-    "text": "Exponential Distribution\nα = 1, \\(λ = \\frac{1}{\\theta}\\)인 감마분포\nPoisson 분포에서 사건 발생 사이의 시간을 나타낼 수 있음\n표기: \\(X \\sim Exp(λ)\\)\n\\(f(x) = λe^{-λx}, x \\geq 0\\)\n\\(E(x) = \\frac{1}{λ}\\)\n\\(Var(x) = \\frac{1}{λ^2}\\)\n\\(P(X &gt; x) = e^{-λx}\\)\n\\(P(X &gt; x + y | X &gt; x) = P(X &gt; y) = e^{-λy}\\)\n포아송분포에서의 \\(\\frac{1}{λ}\\)와 동일\n비기억 특성을 가짐\n독립적으로 동일한 지수분포의 합은 감마분포 \\(Γ(n, \\frac{1}{\\lambda})\\)를 따름",
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#표본분산의-분포",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#표본분산의-분포",
+    "title": "표본의 분포",
+    "section": "표본분산의 분포",
+    "text": "표본분산의 분포\n정규분포로 부터 추출된 표본의 \\(\\sum_{i=1}^{n} Z^2\\)은 자유도가 n인 카이제곱분포를 따름\n정규분포로 부터 추출된 표본의 \\(\\frac{(n-1)s^2}{\\sigma^2}\\)은 자유도가 n-1인 카이제곱분포를 따름",
     "crumbs": [
       "Related Posts",
       "04 Archives",
       "Phd 2 2",
       "Phd Statistics",
-      "연속형 확률분포"
+      "표본의 분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#평균",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#평균",
+    "title": "표본의 분포",
+    "section": "평균",
+    "text": "평균\n\\(\\frac{\\hat{X} - μ}{s/\\sqrt{n}}\\) t-분포를 따름\nT분포: 표준 정규분포 Z, 자유도가 n인 카이제곱분포가 서로 독립일 때 \\(T=\\frac{Z}{\\sqrt{Y/n}}\\)\nT분포는 정규분포와 비슷하지만, 표본의 크기가 작을 때 정규분포보다 두꺼운 꼬리를 가짐\nT분포가 값이 더 작고, 신뢰도가 감소함",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "표본의 분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#분산",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#분산",
+    "title": "표본의 분포",
+    "section": "분산",
+    "text": "분산\n확률변수 U와 V가 자유도가 n1, n2인 카이제곱분포를 따르고 서로 독립이면, \\(F=\\frac{U/n1}{V/n2}\\)는 F분포를 따름",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "표본의 분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html#확률변수의-기댓값",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html#확률변수의-기댓값",
+    "title": "확률변수의 기댓값",
+    "section": "확률변수의 기댓값",
+    "text": "확률변수의 기댓값\n\n\\(μ = E(x)\\)로 가정. (모집단)\ncovariance는 선형관계를 보여준다.\nx와 y는 독립이다 -&gt; cov(x, y) = 0",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수의 기댓값"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html#moment-generationg-functions",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html#moment-generationg-functions",
+    "title": "확률변수의 기댓값",
+    "section": "Moment Generationg Functions",
+    "text": "Moment Generationg Functions\n\n평균과 분산만으로 확률분포를 설명하기에는 부족하다.\n\nmoment: \\(μ_k′ = E(X^k), k ∈ ℤ+\\)\nVar(x) = \\(μ_2′ - μ_1′^2\\)\nE(x) = \\(μ_1′\\)\n모든 k에 대해 검증 불가 =&gt; mgf(moment generating function)\nmgf: \\(M_X(t) = E(e^{tx})\\)\n\n\n\\(M_X(t) = 1 + tμ_1′ + \\frac{t^2}{2!}μ_2′ + \\frac{t^3}{3!}μ_3′ + ...\\)\n\\(M′(t) = μ_1′ + \\frac{2t}{2!}μ_2′ + \\frac{3t^2}{3!}μ_3′ + ...\\)\n\\(M′(0) = μ_1′\\)\n\\(M′′(0) = μ_2′\\)\n\\(M^{(k)}(0) = μ_k′\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수의 기댓값"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#통계학의-정의",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#통계학의-정의",
+    "title": "확률과 통계의 정의",
+    "section": "통계학의 정의",
+    "text": "통계학의 정의\n\n불확실한 상황에서 데이터에 근거하여 과학적인 의사결정을 도출하기 위한 이론과 방법 체계\n모집단으로부터 수집된 데이터(sample)를 기반으로 모집단의 특성을 추론하는 것을 목표로 함\n\n\n\n모집단: 통계분석의 대상이 되는 모든 개체들의 집합\n표본: 모집단으로부터 일정한 규칙에 의해 추출한 부분집합",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률과 통계의 정의"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#확률의-개념",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#확률의-개념",
+    "title": "확률과 통계의 정의",
+    "section": "확률의 개념",
+    "text": "확률의 개념\n\n모집단에서 특정 사건(event)의 상대도수의 극한\n\n\nLaw of Large Numbers\n무수히 많은 시행이 반복되면 상대도수에 의해 계산되는 확률(통계적 확률)이 이론적 확률로 수렴한다.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률과 통계의 정의"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#sample-space-and-events",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#sample-space-and-events",
+    "title": "확률과 통계의 정의",
+    "section": "Sample Space and Events",
+    "text": "Sample Space and Events\n\nExperiment(확률실험): 동일한 조건에서 독립적으로 반복할 수 있는 실험이나 관측\nSample space(표본공간): 모든 simple event의 집합\nEvent(사건): 실험에서 발생하는 결과 (부분 집합)\nSimple event(단순사건): 원소가 하나인 사건\n\n\n\n\nevent는 여러 원소를 가질 수 있다",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률과 통계의 정의"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#확률의-정의",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#확률의-정의",
+    "title": "확률과 통계의 정의",
+    "section": "확률의 정의",
+    "text": "확률의 정의\n\n고전적 확률: 모든 simple event가 동일한 확률을 가질 때 P(A)는 sample space가 n개의 원소로 이루어져 있을 때 k개의 원소를 가지는 event A의 확률\n통계적 확률: simple event가 동일한 확률을 가지지 않아도 된다. 표본의 수가 무한대로 갈 때, 표본의 확률이 수렴하는 값\n\n\n확률의 성질\n\n모든x에 대하여 P(x) &gt;= 0\nP(sample space) = 1\nA와 B가 배반사건이면 P(A or B) = P(A) + P(B)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률과 통계의 정의"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#조건부-확률",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#조건부-확률",
+    "title": "확률과 통계의 정의",
+    "section": "조건부 확률",
+    "text": "조건부 확률\n\nEvent B가 발생했을 때 Event A의 확률 \\[P(A|B) = \\frac{P(A∩B)}{P(B)}\\]\n결합확률 (joint probability): P(A∩B)\n주변확률 (marginal probability): P(A), P(B), …\n\n\nMultiplication Law\n\\[P(A∩B) = P(A|B)P(B)\\]",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률과 통계의 정의"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#independent-events",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#independent-events",
+    "title": "확률과 통계의 정의",
+    "section": "Independent Events",
+    "text": "Independent Events\n\n두 사건 A와 B가 독립일 때, P(A|B) = P(A), P(B|A) = P(B)\nsample space는 임의의 event와 독립이다.\n공집합은 임의의 event와 독립이다. (P(∅∩A) = P(∅) * P(A) = 0 * P(A) = 0 = P(∅))",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률과 통계의 정의"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#베이즈-정리",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#베이즈-정리",
+    "title": "확률과 통계의 정의",
+    "section": "베이즈 정리",
+    "text": "베이즈 정리\n\n\nsample space를 상호 배반인 {B1, B2, …, Bn}으로 분할 (partition)\n\\(P(A) = P(A∩B_1) + P(A∩B_2) + ... + P(A∩B_n)\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률과 통계의 정의"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html#정규-분포의-합",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html#정규-분포의-합",
+    "title": "정규 분포",
+    "section": "정규 분포의 합",
+    "text": "정규 분포의 합\n두 분포의 합이 같은 분포가 되는 경우는 흔치 않다 (uniform distribution도 같지 않다)\n두 정규분포의 합은 정규분포가 된다\n\\(X + Y \\sim N(μ_1 + μ_2, σ_1^2 + σ_2^2)\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "정규 분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html#chi-square-분포",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html#chi-square-분포",
+    "title": "정규 분포",
+    "section": "Chi-square 분포",
+    "text": "Chi-square 분포\nα = ν/2, θ = 2인 감마분포\n\\(Z \\sim N(0,1)\\)일 때, \\(Z^2 \\sim χ^2(1)\\)\n\\(Z_i \\sim N(0,1)\\)일 때, \\(Z_1^2 + Z_2^2 + ...  + Z_n^2 \\sim χ^2(n)\\)\n\\(X_i\\)가 서로 독립이고, 자유도가 \\(ν_i\\)인 카이제곱분포를 따른다면, \\(X_1 + X_2 + ... + X_n \\sim x^2(ν_1 + ν_2 + ... + ν_n)\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "정규 분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#data-and-information",
+    "href": "posts/04_archives/phd_2_2/phd_database/07.html#data-and-information",
+    "title": "Data Modeling and the Entity-Relationship Model",
+    "section": "Data and information",
+    "text": "Data and information\n\nData: raw facts. recorded facts\nInformation: meaningful context\nKnowledge: information + 가치",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Data Modeling and the Entity-Relationship Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#what-is-information-system",
+    "href": "posts/04_archives/phd_2_2/phd_database/07.html#what-is-information-system",
+    "title": "Data Modeling and the Entity-Relationship Model",
+    "section": "What is information system?",
+    "text": "What is information system?\n\nSystem: a set of components that interact to achieve some purpose or goal\nInformation System: composed of hardware, software, data, procedures, people",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Data Modeling and the Entity-Relationship Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#system-analysis-and-design",
+    "href": "posts/04_archives/phd_2_2/phd_database/07.html#system-analysis-and-design",
+    "title": "Data Modeling and the Entity-Relationship Model",
+    "section": "System Analysis and Design",
+    "text": "System Analysis and Design\n\nSystem analysis and design: process of creating and maintaining information systems\nclassic methodology: SDLC\n\n\nSDLC (System Development Life Cycle)\n\n\n\nSDLC\n\n\n\nSystem definitions: 예산 편상, 위험 분석, …\nRequirements analysis\nComponent design\nImplementation\nSystem maintenance\n\n\ndatabase development process\n\nRequirements analysis\ninput: the project plan\noutput: a set of approved requirements -&gt; data model (ER model로 conceptual design)\nsource: Use cases, Business rules\nComponent Design: Relational Database Design (상세 설계)\nImplementation",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Data Modeling and the Entity-Relationship Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#er-model",
+    "href": "posts/04_archives/phd_2_2/phd_database/07.html#er-model",
+    "title": "Data Modeling and the Entity-Relationship Model",
+    "section": "ER model",
+    "text": "ER model\n\nEntities\n\nEntity class\nEntity instance\n\nAttributes: Data type, Properties(default, constraints)\nIdentifiers\n\nunique\nNonunique: identifies a set of instances\n\nRelationships\n\nbinary relationship\n\nMaximum cardinality: 1:1(A has a B), 1:N(A has a set of B), M:N\nMinimum cardinality: 0, 1\n\nternary relationship",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Data Modeling and the Entity-Relationship Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#entit-relationship-diagram",
+    "href": "posts/04_archives/phd_2_2/phd_database/07.html#entit-relationship-diagram",
+    "title": "Data Modeling and the Entity-Relationship Model",
+    "section": "Entit-Relationship Diagram",
+    "text": "Entit-Relationship Diagram\n\nEntity classes: rectangle\nRelationships: diamond\nmaximum cardinality: inside the diamond\nminimum cardinality: oval or hash mark next to diamond\nstrong entity: 독자적으로 존재 가능. 강한개체 관계는 점선\nNon-ID-dependent: identifier에 다른 entity의 identifier가 포함되어 있지 않음. 점선으로 표기(non-identifying relationship)\nweak entity: 약, 강 관계는 실선. IS: rounded square, traditional: 2 layer square\nID-dependent: identifier에 다른 entity의 identifier가 포함되어 있음. 실선으로 표기(identifying relationship)\nassociative entity: relationship이 entity로 변환된 것.\nMany-to-many relationship을 2개의 1:N으로 변환\nsuper type, sub type: 상속관계. sub type is a super type\n\nexclusive: Discriminator attribute가 필요함\ninclusive\n\nrecursive relationship\nBusiness rule: build-in constraints, trigger, stored procedure, application code로 구현 가능\ndata model validation: form, report를 이용한 prototyping",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Data Modeling and the Entity-Relationship Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#the-importance-of-dbs-today",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#the-importance-of-dbs-today",
+    "title": "An Overview of Database",
+    "section": "The Importance of DBs Today",
+    "text": "The Importance of DBs Today\n\nDepend upon database: Internet, Web 2.0, IOT",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#why-and-how-databases-are-used",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#why-and-how-databases-are-used",
+    "title": "An Overview of Database",
+    "section": "Why and How Databases are Used?",
+    "text": "Why and How Databases are Used?\n\nThe purpose of a database is to keep track of thing\ndb store information that is more complicated than a simple spread sheet",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#problems-with-lists-spread-sheet",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#problems-with-lists-spread-sheet",
+    "title": "An Overview of Database",
+    "section": "Problems with Lists (spread sheet)",
+    "text": "Problems with Lists (spread sheet)\n\nRedundancy\n\n\n\n\n필요없는 column들이 중복됨\n\n\n\nMultiple Themes\n\n\n그 결과로, list에 나타날 때만 존재하는 informartion이 생김\n\n\nList Modification Issues\n\n\n\n\ndeletion problems, update problems, insertion problems",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#relational-databases",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#relational-databases",
+    "title": "An Overview of Database",
+    "section": "Relational Databases",
+    "text": "Relational Databases\n\nRelationa Model is methodology used as a solution for database design\nA relational database stores information in tables\n\nEach informational topic is stored in its own table\n\nEach theme in the list can be stored in a table\n\nTable = file = relation\ncolumn = fields = attribute\nrow = record = tuple",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#sql-structured-query-language",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#sql-structured-query-language",
+    "title": "An Overview of Database",
+    "section": "SQL (Structured Query Language)",
+    "text": "SQL (Structured Query Language)\n\ninternational standard for creating, processing, querying databases and their tables\ndb applications use SQL to retrieve, format, report, insert, delete, modify data for users\ncan combine table by join operation\n\nSELECT  CUSTOMER.CustomerLastName, \n        CUSTOMER.CustomerFirstName, \n        CUSTOMER.Phone,\n        COURSE.CourseDate, \n        ENROLLMENT.AmountPaid,\n        COURSE.Course, \n        COURSE.Fee\nFROM    CUSTOMER, ENROLLMENT, COURSE\nWHERE   CUSTOMER.CustomerNumber = ENROLLMENT.CustomerNumber -- join condition\n        AND  COURSE.CourseNumber = ENROLLMENT.CourseNumber; -- join condition",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#database-system-dbs",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#database-system-dbs",
+    "title": "An Overview of Database",
+    "section": "Database System (DBS)",
+    "text": "Database System (DBS)\n\n\n\nThe four components of database system\n\n\n\nUser: Employ database application to keep track of things\nUse forms to read, enter, query data\nproduce reports\nDatabase Application: web/mobile database applications, Forms, Reports\nDBMS: used to create, process, administer the database\nDatabase: self-describing collection of related tables\nuser data, metadata, index and other overhead data, application metadata(form, reports) are stored in db\nmetadata = about the structure of the database. &lt;-&gt; user data\n\n\nFunction of DBMS\n\nDB administration\n\nControl concurrency\nProvide security\nPerform backup and recovery\n\n\n\n\nReferential Integrity Constraints",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#personal-vs-enterprise-class-database-systems",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#personal-vs-enterprise-class-database-systems",
+    "title": "An Overview of Database",
+    "section": "Personal vs Enterprise-class Database Systems",
+    "text": "Personal vs Enterprise-class Database Systems\n\nPersonal: Access\nEnterprise-class(Organizational): Microsoft SQL server",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#nosql-databases",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#nosql-databases",
+    "title": "An Overview of Database",
+    "section": "NoSQL databases",
+    "text": "NoSQL databases\n\nNoSQL database = non-relational database",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#cloud-databases",
+    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#cloud-databases",
+    "title": "An Overview of Database",
+    "section": "Cloud databases",
+    "text": "Cloud databases\nMain frame -&gt; Client/server -&gt; Cloud",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "An Overview of Database"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#tier-layers-of-database-system",
+    "href": "posts/04_archives/phd_2_2/phd_database/13.html#tier-layers-of-database-system",
+    "title": "ASP.NET",
+    "section": "3-Tier Layers of Database System",
+    "text": "3-Tier Layers of Database System\n\npresentation layer: user interface\napplication layer: web server(IIS)\ndata layer: database server",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "ASP.NET"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#api-interface-standards-for-db-access",
+    "href": "posts/04_archives/phd_2_2/phd_database/13.html#api-interface-standards-for-db-access",
+    "title": "ASP.NET",
+    "section": "API Interface Standards for DB Access",
+    "text": "API Interface Standards for DB Access\nDBMS에 접근하기 위한 표준 API\n\nODBC Open Database Connectivity\nDBMS-independent API\nJDBC: Java Database Connectivity\n\n&lt;a target=\"_blank\"&gt;",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "ASP.NET"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#asp-active-server-pages",
+    "href": "posts/04_archives/phd_2_2/phd_database/13.html#asp-active-server-pages",
+    "title": "ASP.NET",
+    "section": "ASP (Active Server Pages)",
+    "text": "ASP (Active Server Pages)\nserver side scripting(VBScript) language\nCGI: &lt;% %&gt;는 server에서 실행되는 코드",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "ASP.NET"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#asp-데이터베이스-연동",
+    "href": "posts/04_archives/phd_2_2/phd_database/13.html#asp-데이터베이스-연동",
+    "title": "ASP.NET",
+    "section": "ASP 데이터베이스 연동",
+    "text": "ASP 데이터베이스 연동\n&lt;%\n  Dim conn, connCmd, rs\n  Set connCmd = \"DSN=dsn_name; Database=dbname; UID=user;PWD=password\"\n  Set conn = Server.CreateObject(\"ADODB.Connection\")\n  Set rs = Server.CreateObject(\"ADODB.Recordset\")\n  conn.Open connCmd\n  rs.Open \"SELECT * FROM table_name\", conn\n%&gt;\n\n&lt;%\n  rs.getRows()\n\n  conn.Execute SQL\n%&gt;",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "ASP.NET"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#오류-메세지-한글-설정",
+    "href": "posts/04_archives/phd_2_2/phd_database/13.html#오류-메세지-한글-설정",
+    "title": "ASP.NET",
+    "section": "오류 메세지 한글 설정",
+    "text": "오류 메세지 한글 설정\n&lt;meta charset=\"UTF-8\"&gt;\n&lt;%\n  Session.CodePage = 949\n  Response.CharSet = \"euc-kr\"\n  Response.AddHeader \"Pragma\",\"no-cache\"\n  Response.AddHeader \"cache-control\", \"no-staff\"\n  Response.Expires = -1\n%&gt;\n\nform tag 한글 깨짐 문제\n&lt;%\nSession.CodePage=\"65001\"\nResponse.CharSet=\"UTF-8\"\n%&gt;",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "ASP.NET"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/09.html",
+    "href": "posts/04_archives/phd_2_2/phd_database/09.html",
+    "title": "Database Design",
+    "section": "",
+    "text": "MS access is prototyping tool for mock-ups",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Design"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/09.html#purpose-of-a-database-design",
+    "href": "posts/04_archives/phd_2_2/phd_database/09.html#purpose-of-a-database-design",
+    "title": "Database Design",
+    "section": "Purpose of a Database Design",
+    "text": "Purpose of a Database Design\nset of database specifications that can be implemented as a database in a DBMS\n\nconceptual design: non-DBMS specific\nlogical design: DBMS specific\nphysical design: DBMS specific but not implemented directly by humans",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Design"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/09.html#logical-designrelational-design",
+    "href": "posts/04_archives/phd_2_2/phd_database/09.html#logical-designrelational-design",
+    "title": "Database Design",
+    "section": "Logical Design(Relational Design)",
+    "text": "Logical Design(Relational Design)\n\nCreate a table(relation) for each entity\n\nspecify primary key\nspecify properties for each column\n\ndata type\nconstraints\ndefault value\nnull status\n\nverify normalization: data structure의 complexity를 증가시킬 수도 있다 → denormalization: 조인 불필요, 조회 시 성능 향상 → datastructure complexity vs modification problems\n\nCreate relationships by placing foreign keys:\n\nStrong entity relationships\nID-dependent / non-ID-dependent weak entity relationships\nSubtypes\nRecursive",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Design"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/09.html#representing-relationships",
+    "href": "posts/04_archives/phd_2_2/phd_database/09.html#representing-relationships",
+    "title": "Database Design",
+    "section": "Representing Relationships",
+    "text": "Representing Relationships\nid-dependent의 경우 부모의 primary key로 composite key 생성\nMaximum cardinality의 유형에 따라 관계 표현 방법이 달라짐\n\n1:1: foreign key를 어디에 두어도 상관 없음\nCREATE UNIQUE INDEX idx_1_1 ON table(foriegn_key);\n1:N: many(child) 쪽에 foreign key를 두는 것이 일반적\n1 side is called parent, many side is called child\nM:N\nData Modeling에서만 쓰임. database design에서는 intersection table을 사용하여 표현. intersection table은 두 entity의 primary key를 포함하는 composite key를 가짐\n만약 두 primary key 외의 attribute를 가진다면, association entity로 표현\nSupertype / Subtype: Supertype의 primary key를 Subtype의 primary key로 사용\nRecursive Relationship: 방향 이거 다시 보자\nN:M의 경우 virtual table을 생성하여 표현\n\n설문조사는\ndescriptive statistics\n남녀 비율, 경험 비율 등등도 포함되어야 한다.\n가중 평균으로 보여준다\n도서관 예약 시스템\n\n퇴설 처리 미흡\n좌석 이용 정보 파악\n앱 알림\n\n좌석 배치도 감이 안온다. 잔여시간도 안뜬다",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Design"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#overview",
+    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#overview",
+    "title": "Signal Detection Theory",
+    "section": "Overview",
+    "text": "Overview\n\n인간의 정보 처리 과정 중 perception에 관련된 것\nperception 단계에서 자극 뿐 아니라 노이즈도 같이 들어옴\n여러가지 신호 중 무엇이 중요한지 판단하는 것\nsiganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표\n인공지능 분야에서 중요성이 대두되고 있음",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Signal Detection Theory"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#example",
+    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#example",
+    "title": "Signal Detection Theory",
+    "section": "Example",
+    "text": "Example\n\nQuality control inspector\n빵이나 과자가 찌그러졌는지 검사, 반도체 품질 검사. 요즘에는 기계가 대부분 담당\nDetection of a flashing warning light (or cctv)\n거수자 탐지\nAirport security guard\nDetecting peculiar patterns in medical imaging (x-ray)\n종양, 암세포 탐지\nMobile phone rings (sound)\nphantoms vibration\nMorning alarm is active or not (visual)\n\n주변의 제품, 서비스 문제 파악, 해결 디자인 제시, 검증",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Signal Detection Theory"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#signal-detection-theory",
+    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#signal-detection-theory",
+    "title": "Signal Detection Theory",
+    "section": "Signal Detection Theory",
+    "text": "Signal Detection Theory\n\nTrials\n\nSignal case(signal + noise): target이 존재\nNoise case(noise only): target이 없음\n\nResponse\n\nYes\nNo\n\n\n\n\nHit rate: P(Hit) = Number of Hits / Number of Signal Trials\nFalse alarm rate: P(FA) = Number of False Alarms / Number of Noise Trials\nMiss rate: P(Miss) = 1 - P(Hit)\nCorrect rejection rate: P(CR) = 1 - P(FA)\n\n\nWhat does it mean to detect?\n\nsignal is digital (exist / not exist)\nAbsolute threshold is exist\n\n\n\nAssumptions\n\n관찰자가 관찰할 수 있는 signal은 숫자나 변수로 표현할 수 있어야함\nsignal이 random variation이 있다\n피험자가 signal이 있는지 없는지 단순하게 표시할 수 있다.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Signal Detection Theory"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#distribution-of-signal-and-noise",
+    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#distribution-of-signal-and-noise",
+    "title": "Signal Detection Theory",
+    "section": "Distribution of signal and noise",
+    "text": "Distribution of signal and noise\n\n\nsensitivity index (d')\n\n값이 작으면 분간 힘듦\n값이 크면 분간 쉬움\nsignal의 성격에 따라 결정됨\n\nresponse bias (β)\n\ncriterion에 따라 yes라고 대답하는 비중과 no라고 대답하는 비중\n평가자에 따라 결정됨\n\nd′이 0, β가 50%면 그냥 랜덤으로 대답한 것과 같음\n\n\nd′ 계산\n\nP(M), P(CR) 계산\n표준 정규분포를 그림\nM과 CR의 z값을 찾음\nd′ = (0 - z(M)) + (z(CR) - 0)\n\n\n\nβ 계산\n\nd′과 관계 없이 조절\n\n\\(β = \\frac{P(X/(S+N))}{P(X/N)}\\)\n\\(\\ln β = d′λ_{center}\\)\nβ ~ 1: neutral\n\n\n\n\\(λ_{center}\\) 계산\n\\(λ_{center} = -\\frac{1}{2}(Z(FA)+Z(H))\\)\n\n\\(λ_{center}\\) = 0: ideal observer\n\\(λ_{center}\\) &lt; 0: liberal. yes라고 대답하는 비중이 늘어, hit rate가 높아지지만 false alarm rate도 높아짐\nex) 용의자를 찾는 경찰, 암세포 탐지\n\\(λ_{center}\\) &gt; 0: conservative. no라고 대답하는 비중이 늘어, correct rejection rate가 높아지지만 miss rate도 높아짐\nex) 억울한 죄인을 만들지 않으려는 범원 판결",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Signal Detection Theory"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#optimal-response-criterion",
+    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#optimal-response-criterion",
+    "title": "Signal Detection Theory",
+    "section": "Optimal Response Criterion",
+    "text": "Optimal Response Criterion\nsignal이 더 많은 환경, noise가 더 많은 환경이 있음. 즉, probability가 다를 수 있음\n또, Effects of payoffs가 있음\n\nsignal이 많은 환경 -&gt; criterion을 낮추는게 좋음. \\(β_{opt} &lt; 1\\)\nnoise가 많은 환경 -&gt; criterion을 높이는게 좋음. \\(β_{opt} &gt; 1\\)\n\\(β_{opt} = \\frac{P(N)}{P(S)} * \\frac{V(CR) + C(FA)}{V(H) + C(M)}\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Signal Detection Theory"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#sluggish-β",
+    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#sluggish-β",
+    "title": "Signal Detection Theory",
+    "section": "Sluggish β",
+    "text": "Sluggish β\n\n\n\nprobability 혹은 payoffs의 변화에 따라 bias가 optimal이랑 다르게 나옴\n\n\n\n\\(β_{opt}\\)가 낮은 경우, ideal보다 덜 conservative함.\n\\(β_{opt}\\)가 높은 경우, ideal보다 덜 risky함.\n확률에 의해 b가 조정될 때 더 많이 발생함.\n\n확률에 대한 계산이 잘못되는 경우\n평가자가 반복되는 반응에 bored해지는 경우",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Signal Detection Theory"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#roc-curve",
+    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#roc-curve",
+    "title": "Signal Detection Theory",
+    "section": "ROC Curve",
+    "text": "ROC Curve\n\n\n\nd′이 높아질 수록 false alarm 비중이 낮아지고, hit 비중이 높아짐",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Signal Detection Theory"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#signal-detection-performance",
+    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#signal-detection-performance",
+    "title": "Signal Detection Theory",
+    "section": "Signal Detection Performance",
+    "text": "Signal Detection Performance\n\nResponse Bias (β)\n\n잘 맞추면 보상을 준다\nfalse signals to raise signal rate\nFalse Alarm에서도 incentive를 준다.\n\n\n\nSensitivity (d′)\n\ngive feedback\nsignal을 조금 더 오래 보여줌\nsignal을 강조\nsignal을 움직이게\n휴식 시간을 충분히 줌\nsignal이 어떠넌지 잘 보여줌\n온갖 감각으로 signal을 보여줌",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Signal Detection Theory"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/8_control.html#basic-control-task-and-device",
+    "href": "posts/04_archives/phd_2_2/phd_human/8_control.html#basic-control-task-and-device",
+    "title": "Control",
+    "section": "Basic Control Task and Device",
+    "text": "Basic Control Task and Device\n\n\n\n상태를 체크할 때는 toggle switch, 눌렀다 떼는 건 push button\n레버도 상태를 체크할 때 사용. 그 중 큰 힘이 필요한 경우. continuous setting에서는 slider가 쓰임\nselector switch는 lever랑은 다르게 discrete한 상태가 있음 (선풍기 버튼)\n조이스틱은 보통 가속도(2D, 멀리 밀면 빨리 가는 애)를 제어하거나 속도(1D, 버튼 조이스틱)를 제어하는데 사용. 마우스는 위치를 제어.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Control"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/8_control.html#principles-to-design-of-control-device",
+    "href": "posts/04_archives/phd_2_2/phd_human/8_control.html#principles-to-design-of-control-device",
+    "title": "Control",
+    "section": "15 principles to design of control device",
+    "text": "15 principles to design of control device\n\nAttention principles\n\nProximity compatibility\n\n컨트롤 하고자 하는 대상과 컨트롤이 가까워야 한다.\n비상 스위치는 가까이 있어야 한다.\n\n\n\nAvoid resource competition\n\n같은 physical or cognitive resource를 사용하는 control은 피해야한다.\nex) 레버로 속도, 방향 모두 제어\n\n\n\n\nPerceptual principles\n\nMake accessible\n\nphysical accessibility: 손이 닿아야 한다.\ncognitive accessibility: 뭐 하는 control인지 이해하기 쉬워야 한다.\nex) 미는 손잡이는 flat하게 만든다.\n다양한 환경을 고려해야한다. (빛이나 소음이 많은 환경)\n\n\n\nMake discriminable\n\nvisual differentiation: 각각의 컨트롤 장비를 구분할 수 있게\nlogical grouping: 비슷한 기능을 하는 것끼리 묶어놓기\n\n\n\nExploit(활용) redundancy gain\n\n두개의 독립적인 정보를 제공하면 성능이 좋아진다.\n한 가지 정보가 없어도 다른 정보로 대체할 수 있다.\n\n\n\nAvoid absolute judgement limits\n\nworking memory limit(7)를 넘기지 말라.\ncontinuous vs with detents: 연속적인 조절에서 anchor point를 만들어주면 좋다.\n\n\n\n\nMemory Principles\n\nKnowledge in the world\n보편적으로 아는 표현을 사용\n\n\nBe consistent\n\n다른 상황에서도 예상 가능하고 일정한 방법으로 control이 가능해야한다.\n\n\n\nmake discriminable vs be consistent\n\n\n\n\nMental model principles\n\nLocation Compatibility\n\nSpatial Compatibility / physical similarity\n\n\n\nMovement Compatibility\n\n\n\n\nPopulation Stereotypes\n\nrotary controls: 시계방향으로 돌리면 커진다\nUp is on\nIncrease is right, Forward is faster\n\n\n\nResponse selection principles\n\nAvoid accidental activation\n\n사고로 눌리는 것을 방지해야한다.\n\n\n\nHick-Hyman Law\n\\(RT = a + b \\log_2(n+1)\\)\nN is the number of choices\n종류가 많아져도 그냥 몇개만 고민함\n\n\nDecision complexity advantage\n\n일반적으로 복잡한 선택을 적게 하는게 간단한 선택을 여러번 하는것보다 효율적이다\n\n\n\nFitt’s Law\n\n\nIndex of Difficulty: \\(ID = \\log_2(\\frac{2A}{W})\\)\nMovement Time: \\(MT = a + bID\\)\n\navoid accidental vs Fitt’s Law - target width가 구석에 있으면 width가 무한대가 된다.\n\n\nprovide feedback\ntouch screen은 haptic feedback이 없어서 불편함",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Control"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#attention의-정의",
+    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#attention의-정의",
+    "title": "Attention",
+    "section": "Attention의 정의",
+    "text": "Attention의 정의\n\nAttention acts as a means of focusing limited mental resources on the information and cognitive processes that are most salient at a given moment\nFocusing most salient at a given moment:\n\n주의는 Search light로 비유됨\n한 영역에 집중하면 다른 부분은 배제.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Attention"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#attention의-네-가지-주요-측면",
+    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#attention의-네-가지-주요-측면",
+    "title": "Attention",
+    "section": "Attention의 네 가지 주요 측면",
+    "text": "Attention의 네 가지 주요 측면\n\nSelective, Focused, Divided, Sustained Attention은 독립적이지 않으며, 상호작용하여 주의 과정 형성.\n\n\nFocused Attention (집중적 주의)\n\n특정 과업에 집중하고, 외부 방해 요인을 배제하는 능력.\n방해 요소(Distraction)를 최소화하여 현재 작업에 주의 집중.\n예시:\n\n냉장고에서 음식을 꺼내려는 도중 질문을 받으면 집중력이 분산되어 원래 작업을 잊어버릴 수 있음.\n\n\n\n\nDivided Attention (분할 주의)\n\n여러 작업을 동시에 수행하며 주의를 분배.\nSelective Attention과의 차이:\n\nSelective Attention: 특정 자극을 선택적으로 받아들임.\nDivided Attention: 여러 작업 간 우선순위를 메기고 주의 자원 분배.\n\n예시:\n\n운전 중 대화하며 라디오 듣기.\n각 작업에 필요한 시간과 노력을 어떻게 배분할지를 결정.\n\n\n\n\nSustained Attention (지속적 주의)\n\n주의가 높거나 낮거나보다는, 장시간 동안 주의를 유지하는 능력.\n높은 주의 레벨 필요 시:\n\n정보를 놓치는 경우가 발생할 가능성이 높음.\n여러 정보와 자극을 동시에 처리.\n예: 주식 거래에서 여러 종목을 모니터링.\n\n낮은 주의 레벨 시:\n\n자극 부족으로 주의 산만 발생.\n예: CCTV 감시 업무.\n\n\n\n\nSelective Attention (선택적 주의)\n\n여러 감각 자극 중 중요한 정보를 선택적으로 처리.\n시각, 청각, 촉각 등 다양한 감각 경로를 통해 들어오는 자극에서 의미 있는 정보 선별.\n예시:\n\n운전 중:\n\n표지판, 신호등, 앞차의 움직임 → 중요한 정보.\n옆 보행자의 얼굴이나 주변 불필요한 자극 → 중요하지 않은 정보.\n\n\n\n\n\nMental Workload (정신적 작업 부하)\n\n동시에 수행할 수 있는 과업이 몇 개인지 혹은 이 과업이 수행하기에 attention scale을 넘어가는 것인지 분석 용도\n측정 방법:\n\n주관적 설문:\n\n작업자가 느끼는 주관적 부담을 평가.\n\n생체 반응 분석:\n\n심박수, 뇌파 등 생리적 데이터를 활용.\n\n부과 과업(parallel tasking):\n\n추가 과업을 부여하여 작업 부하 평가.\n예시:\n\n운전 중 숫자 거꾸로 세기.\n특정 숫자를 기억하고 응답(예: N-back 테스트).\n\n\n\n워크로드 증가의 결과 특정 작업의 실패 확률 증가한다.\n\n\n\nAttention의 결정 요인\n\n의지\n\n개인의 목표와 필요에 따라 주의 집중.\n예: 차선 변경 시 후방 차량 확인.\n\ncaptured by salience and grouping\n\n공간, 강도, 색상, 크기, 음조 등 외부 요인.\n강렬한 자극이 주의를 끌 가능성 높음.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Attention"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#selective-attention",
+    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#selective-attention",
+    "title": "Attention",
+    "section": "Selective Attention",
+    "text": "Selective Attention\n\n특정한 자극(예: 시각적 또는 청각적 정보)에 주의를 집중하며, 다른 자극을 배제하는 과정.\n중요도에 따라 특정 정보를 선택적으로 처리하며 불필요한 정보는 억제.\nattention이 sensory memory로 부터 들어온 정보의 filter나 gateway나 bottle neck으로 작용한다고 봄\n\n\n작동 원리\n\nTop-down Processing (Mental model):\n\n개인의 경험과 목표에 기반하여 주의 집중 전략을 개발.\n예: 초보 운전때 앞만 보고 가다가 숙련이 되면 사이드미러 같은 주변도 보게 됨.\n\nBottom-up Processing (자극 기반 처리):\n\n강렬하거나 눈에 띄는 자극에 주의가 끌림.\n예: 갑작스러운 소리나 반짝이는 신호등.\n결정 요인\n\nSalience Source: 자극의 강도(밝기, 소리 크기 등).\n\nInformation Access Trade-offs: 특정 정보를 처리함으로써 얻는 이득.\n\n\n\n\nBottleneck Model\nEarly Selection Theory\n- sensory memory까지는 잘 오지만, Attention filter에 선택이 된게 처리가 되고 나머지는 처리가 안 된다.\n- 감각 단계에서 물리적 특성(의미가 아닌)을 기준으로 정보 필터링.\n- 폐기된 정보는 행동에 미치는 영향 없음.\n- 한계: 칵테일 파티 현상(의미 정보 처리 설명 불가).\n\nLate Selection Theory\n- 모든 정보가 cognition / working memory까지 전달 후 선택.\n- 식별되지 않은 정보는 작업 기억의 제한된 용량으로 인해 빠르게 잊혀짐.\n- 선택되지 않은 정보도 행동에 영향을 미침.\n- 광고 실험 - 인지하지 못하는 정보(빠르게 잊어버려서)에 의해서도 행동의 변화가 있을 것이다.\n\n\nTask\nGeneral orientation and scene scanning\n- 그림을 보거나 웹 브라우징\n감독 제어 (Supervisory Control)\n- 자동화된 시스템에서 이상 징후를 탐지.\n- 주로 AOI(Area of Interests)를 스캐닝 함.\nAOI는 여러개가 있음. 시간, 중요도, 과업의 컨텍스트에 따라서 다르게 설정됨\nspecific task-related information이 있는 물리적 위치\nAOI를 몇개를 만들고, 이들에 대한 시선의 이동을 어떻게 만들것인가가 중요한 issue - 예시:\n자율주행 차량 또는 산업 기계 감독.\n제어 패널에서 비정상적인 지표 확인 (예: 전력 공급 문제, 자원 부족).\n탐지 (Noticing)\n- 예상치 못한 사건이나 환경 변화 감지.\n- 예시:\n- CCTV로 비정상적인 활동 탐지.\n- 주요 시스템 성능의 갑작스러운 변화 인식.\n탐색 (Searching)\n- 방해 요소 속에서 특정 목표를 찾는 활동.\n- 예시:\n- 공항에서 수하물의 X-ray 검색.\n읽기 (Reading)\n- 책이나 디스플레이에서 정보를 읽고 이해.\n- 예시:\n- 계기판의 게이지 읽기.\n확인 (Confirming)\n- 작업이나 과정의 결과를 확인.\n- 예시:\n- 비행기 바퀴가 잘 내려왔는지 확인\n선택적 주의 과업 실패는 중요 정보를 놓치거나 잘못 해석하는 경우 발생할 수 있다.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Attention"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#seev-model",
+    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#seev-model",
+    "title": "Attention",
+    "section": "SEEV Model",
+    "text": "SEEV Model\nvisual attention에 영향을 주는 요소들을 설명\n\nBottom-up factors\n\nSalience: cue의 특징\nEffort: AOI로 이동하는데 드는 비용\n선형적으로 증가하는건 아니고, 그룹핑 할 수 있음.\n(Within foveal vision) 중심시에서 초점 변화. 멀리있는거에서 가까이 있는거 보는거 &lt; Eye movement &lt; Head movement &lt; Body\n중요한 정보는 cost가 작은 쪽에 배치를 해야함.\n\n\n\nTop-down factors\n\nExpectancy: 일어날 것 같은거에 주의를 더 많이 집중. mental model에 의해 예측 능력이 생길 수 있음.\nValue: 이것에 집중했을 때 얻는 이득, 보지 않았을 때 지불하는 비용\n\n\n\nGuidline\n\n중요한 AOI는 salience가 높아야함\n사용 빈도가 높은 AOI 사이의 거리는 가까워야함\n순차적인 디스플레이도 서로 가깝게 배치해야함.\n\n\n\nChange Blindness\n\n발생 원인\n\n멘탈 워크로드가 높은 경우\n눈에 띄는 변화(Slient change)는 발견하기 쉬움\n중심시에서 멀리 떨어진 곳에서 변화가 발생하면 탐지하기 어렵다.\n시야 밖에서 일어나는 변화는 인지하기 어려움(화면이 깜빡이면서 변하면 animation 효과가 안나타남)\n예상치 못한 변화는 탐지하기 어려움.(top-down processing)\n특정 위치를 응시(fixation)하고 있어도 집중(attention)이 부족하면 변화를 인지하지 못함.\n\n\n\n\nSearch Task의 유형\n\nSerial Search\n\n하나씩 순차적으로 탐색, 탐색 시간이 항목 수에 비례.\n\n예: 긴 텍스트 리스트에서 특정 단어 찾기. 같은 그림 2개 찾기\n\nParallel Search\n\n눈에 띄는 단서(pop-out effect)를 이용해 한 번에 탐색.\n\n5 search items is the same for 50 search items\n\npreattentive process로 유발됨\n\nParallel Search를 유도하는 방법\n\n색상, 크기, 대비(contrast), 회전\n\nmotion\n\nfeature를 adding하는건 찾기 쉬운데 missing하는건 찾기 어려움\n\nO안에서 Q 찾기 vs Q안에서 O 찾기\n\n깜빡이는 곳에서 안깜빡이는거 찾기 vs 안깜빡이는거에서 깜빡이는거 찾기",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Attention"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#divided-attention",
+    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#divided-attention",
+    "title": "Attention",
+    "section": "Divided Attention",
+    "text": "Divided Attention\n\n개념\n\n일반적으로 단순 작업보다는 멀티 태스킹이 많이 일어남.\n\n단순 작업: 라면 끓일 때 진짜 라면만 순서대로 끓임. (멀티테스킹 x)\n\n복잡 작업: 라면을 끓이면서 설거지도 하고, 반찬도 만들고, 카톡도 하고, … (멀티테스킹 o)\n\n여러 작업을 동시에 수행하면서 주의를 분배.\nAttention을 한계가 있는 자원으로 바라봄\n\n\n\nResource Model\n\nCentral Resource Theory:\n주의 자원을 단일 통으로 간주. 예: 교차로 진입 시 운전에만 집중, 라디오 듣기같은 다른 작업은 집중을 못함.\nMultiple Resource Theory:\n주의 자원이 감각기관의 특성, 과업의 특성에 따라 별개로 존재\n예: 시각(도로), 청각(라디오) 자원을 분리 사용.\n작업 간 유사성이 높을수록 분배 어려움.\n예: 운전 중 영화 감상(둘 다 시각 자원 사용).\n\n\n\n주의 자원과 훈련의 문제\n주의 자원은 고정인가, 훈련으로 확장 가능한가?\n\n리소스 차이는 명확히 증명되지 않았음.\n전략을 통한 과업 배분 및 우선순위 설정 → 성능 향상.\n반복적 학습과 자동화 → 개별 과업 및 주의 배분이 자연스럽게 효율화.\n\n\n\nAttention as capacity\n\n어떤 정보를 얼마나 주의 깊게 받아들일지 결정\n어떤 정보를 선택할 것인지는 disposition(형태), intentions, arousal, evaluation에 의존\n받아들이는 정보의 특성(visual, auditory), 반응(manual, vocal)에 따라 리소스 풀을 나눌 수 있다.\ntasks interfere to the degree that they tap into the same pool of resources\n\n\n\nUnitary Resource Model (단일 자원 모델)\n\n\n주의(attention)를 제한된 자원으로 봄\n과업 수행에 필요한 자원의 양이 가용 자원을 초과하면 성능 저하\n\n\n\nMultiple Resource Model (다중 자원 모델)\n\n서로 다른 유형의 과업은 다른 자원을 사용\n하지만 한쪽의 workload가 높으면 다른쪽에 영향을 미칠 수 있음.\n비주얼 테스트 두 개를 수행하는 것이 비주얼-청각 테스트보다 더 어려움\n한 객체의 두 가지 특징에 주의를 기울이는 것이 두 객체의 한 가지 특징에 주의를 기울이는 것보다 쉬움\nEx) 특성을 여러 막대로 보여주는것보다 육각형으로 보여주는게 더 보기 쉬움\n\n\n\nPerceptual Modalities\n\nAuditory,Visual, and Tactile Perceptual modalities에 사용하는 resource가 전부 다름\nVisual은 Focal과 Ambient가 서로 다른 자원을 사용함\nCross-modality가 15%정도 더 효과가 있음\ntactile은 auditory랑 비슷함.\n\n\n\ncoding\n\nspatial, verbal\nauditory verbal verbal and visual spatial manual is efficient\nverbal은 단 너무 길면 좋지 않다.\n모든 채널에서 다 쓸 수는 없다. (tactile 같은 경우에는 verbal 코딩이 없음)\n\n\n\nAttentional Allocation during Time-sharing: Skill or Ability?\n\nIf skill:\nAttentional allocation should be trainable\nSkills developed in one task transfer to unrelated tasks.\nIf ability:\nNo evidence supports the existence of a universal “multitasking ability.”\nPeople excel at specific tasks due to familiarity and automation, not inherent multitasking talent.\n\n\nPractical Implications\n\nOperator training:\nTraining must develop automaticity in single-task skills to reduce resource demand\nTraining of attentional allocation and time-sharing will help dual-task performance\nOperator selection:\ntime-sharing ability가 좋은 사람을 선택하는 것보다는 single-task performance가 좋고 자동화가 잘 사람을 선택하는 것이 더 좋음\n\n\n\n\nSystem design이나 multi-task performance를 측정할 때 좋은 것\n\nTask analysis나 multiple resource model를 사용하는 것이 좋다.\nTask의 어떤 면이 효율적으로 time-shared 될 것인가?\nTask의 어떤 면이 interference를 일으킬 것인가?\ninterference를 최소화하기 위해 어떻게 디자인 해야하나?\nex) driving할 때 손과 발을 따로 사용하게 하기\nTime-sharing efficiency, task performance, and mental workload를 고려해야한다\n(멘탈 워크로드 측정은 아직도 쉽지 않다.)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Attention"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html#reaserch-meathods",
+    "href": "posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html#reaserch-meathods",
+    "title": "Research Method in Human Factors",
+    "section": "reaserch meathods",
+    "text": "reaserch meathods\n\ndescriptive Research\n관찰을 통해 데이터 묘사\n\n무엇을 측정할지\n어떻게 숫자로 표현할지\n\n\n대부분 평균, 표준편차를 대푯값으로 사용\n변수들 간의 관계를 파악하기 위해 상관분석, 회귀분석을 사용\n\n\ntypes of descriptive research\n\nobservational research\n\n\n관찰 연구를 계획할 때, 측정할 변수, 각 변수를 기록할 방법, 관찰이 이루어지는 조건, 관찰 기간 등을 식별\n\n\nsurvey research\n\n\n설문조사를 통해 데이터 수집\n\n\nincident and accident analysis\n\n\n사고나 오류를 분석하여 원인을 찾음\n사고나 오류를 줄이기 위한 대책을 마련\n\n\n\n\nexperimanetal Research\n하나 이상의 독립변수에 의도적인 변화를 주고, 그 변화가 하나 이상의 종속변수에 미치는 인과관계를 측정\n이때 다른 변수들은 통제한다\n\n예시\n\n휴대전화를 사용하는 것이 운전에 미치는 영향\n인센티브를 미리 주고 잘못 할 때마다 차감하는 것과, 잘할 때마다 인센티브를 주는 것의 차이\n\n\n\ntype of variables\n\nindependent(predictor, stratification) variable\ndependent(descriptive, criterion) variable\ncontrol variable: 이 값은 고정시키고 실험을 진행한다. 일반화하기 어렵게 한다.\nrandom variable (sigma): 통제할 수 없는 변수. 일반화하기 용이하다.\nconfounding variable: 수식에는 포함되지 않지만 주의해야하는 변수.\n\n\ndecide variables\noperational definition: 변수를 관찰 가능하고 측정 가능한 형태로 정의\n\nindependent variable\n\nRange: realistic / select a range taht will show the effect / pilot experiment\n\ndependent variable\n\nreliability: consistent. solution: increase the number of observations\nvalidity: measure what was intended\n\n\n\n\n\n\nwhy use experimental research?\n\nhumans are variable\n\n\nintra individual variability\ninter individual variability\n\n\nways to handle variability\n\n\nuse statistical techniques\ncontrol variability as much as possible\n\n\n\ntypes of experimental design\n\nsingle variable experiment\n\n\ntwo levels\nmulti levels\n\n\nfactorial design: 두개 이상의 독립변수를 조합하여 실험군을 만든다.\n\n\n변수 간 interaction effect을 확인할 수 있다.\nmore difficult to analyze\n2 x 2, 3 x 3, 2 x 2 x 2 등으로 설계한다.\nbetween-subject, within-subject를 모두 사용하는 mixed designs를 사용할 수 있음.\n\n\nbetween-subjects design: 각각의 실험군에 다른 사람들을 넣는다.\n\n\ngeneralibility 높다, intra person variability를 제거할 수 있다.\n\n\nwithin-subjects design: 같은 사람들을 다른 실험군에 넣는다.\n\n\ncost-effective, less variability, inter person variability를 제거할 수 있다.\n\n\n\n\nevaluation research\n시스템이나 제품이 목적을 충족하는지 평가\n\nusability testing: 사용자가 제품을 실제로 사용하면서 발생하는 문제점 파악\n\n태스크 완료 시간, 오류율, 사용자 만족도 등을 측정\n\ncost-benefit analysis: 제품 또는 시스템 도입의 경제성 평가\n\n직접 비용(하드웨어, 소프트웨어 구입비, training cost 등)\n예상되는 이익(생산성 향상, 오류 감소 등)을 비교 분석",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Research Method in Human Factors"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html#research-design",
+    "href": "posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html#research-design",
+    "title": "Research Method in Human Factors",
+    "section": "research design",
+    "text": "research design\n\nqualitative research\n\n보통 마케팅에서 진행.\n\n\n\nquantitative research\n\nexperiments\ncorrelational observation\nsurveys and questionnaires\n\nsample: 랜덤하게 샘플링하는게 중요\nrating\nbias: 질문의 순서, 질문의 내용, 질문의 방향\n\narchival research\n\n\nfield study\n\nuncontrolled\nresults may be more generalizable to real-world situations\nhigher cost\ndifficult to replicate\ndifficult to control extraneous variables\n\n\n\nlab experiment\n\ncontrolled\nprecise replication\nlower cost\nmore flexibility\nreal-world generalizability may be limited",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Research Method in Human Factors"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/0_intro.html#what-is-human-factors",
+    "href": "posts/04_archives/phd_2_2/phd_human/0_intro.html#what-is-human-factors",
+    "title": "Introduction to Human Factors",
+    "section": "what is human factors",
+    "text": "what is human factors\n\nhuman factors = Ergonomics\na human-centered design philosophy &lt;-&gt; technology-centered design",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Introduction to Human Factors"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/0_intro.html#component-of-human-factors",
+    "href": "posts/04_archives/phd_2_2/phd_human/0_intro.html#component-of-human-factors",
+    "title": "Introduction to Human Factors",
+    "section": "component of human factors",
+    "text": "component of human factors\n\nhuman: physical, cognitive, group\ntask: physical + cognitive + group\nenvirnment: working environment, systems",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Introduction to Human Factors"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/0_intro.html#goal-of-human-factors",
+    "href": "posts/04_archives/phd_2_2/phd_human/0_intro.html#goal-of-human-factors",
+    "title": "Introduction to Human Factors",
+    "section": "Goal of human factors",
+    "text": "Goal of human factors\n\nReduce errors\nIncrease productivity\nEnhance safety\nEnhance comfort",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Introduction to Human Factors"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#눈의-구조",
+    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#눈의-구조",
+    "title": "Sensor System (Visual)",
+    "section": "눈의 구조",
+    "text": "눈의 구조\n\n결막 (conjunctiva): 눈을 보호\n각막 (cornea): 빛을 굴절\n홍채(iris): 빛의 양을 조절\n동공 (pupil): 빛이 들어오는 곳\n수정체(lens): 빛을 집중하는 역할\n공막 (sclera): 눈을 보호\n유리체 (vitreous humor): 눈을 유지\n망막(retina): 빛을 감지\n망막의 세포\n\nNerve cell: 빛을 감지\nPhotoreceptor: 빛을 감지\n\n간상세포(cone): 세부적인 정보, 색상 인식, photopic conditions. fovea에 몰려있음. 짧은 파장의 색에 더 민감함\n막대세포(rod): 어두운 곳에서 활동, 주변 시야 빛을 받으면 rhodopsin이 분해됨, scotopic conditions. 긴 파장의 색에 더 민감함.\n\nChoroid: 영양 공급\n\n시신경(optic nerve): 망막에서 뇌로 정보 전달\n맹점(optic disk)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Sensor System (Visual)"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#light-adaption",
+    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#light-adaption",
+    "title": "Sensor System (Visual)",
+    "section": "light adaption",
+    "text": "light adaption\n\n눈이 어두운 곳에서 밝은 곳으로 이동할 때, 시간이 걸림\n명순응동안 rod sensitivity가 감소하고 cone sensitivity가 증가\n어두운 곳에서 밝은 곳으로 이동할 때, 눈이 눈부실 수 있음\n암순응동안 cone sensitivity가 감소하고 rod sensitivity가 증가",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Sensor System (Visual)"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#color-vision",
+    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#color-vision",
+    "title": "Sensor System (Visual)",
+    "section": "color vision",
+    "text": "color vision\n\ncone cell의 photo-pigment(RGB 64:32:2)로 색상을 인식\n망막 중앙에는 파란색이 없음\nsharpness는 brightness와 color difference에 영향을 받음\n사람은 7백만가지 색상을 인식할 수 있음",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Sensor System (Visual)"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#design-with-color",
+    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#design-with-color",
+    "title": "Sensor System (Visual)",
+    "section": "design with color",
+    "text": "design with color\n\nMono-chromatic: 단색\nAnalogous: 비슷한 색\nComplementary: 반대 색\n\n\nbefore design\n\n굳이 흑백을 안쓰고 color를 사용해야하는 이유가 있는지\ncolor가 텍스트나 object에 적합한지\ncolor가 이해나 관습에 도움이 되는지\n노안 / 색맹 고려",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Sensor System (Visual)"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#depth-perception",
+    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#depth-perception",
+    "title": "Sensor System (Visual)",
+    "section": "depth perception",
+    "text": "depth perception\n\ndepth judgment\n\nobject-centered cues\n\n\nlinear perspective: 두 평행선이 좁을 수록 더 멀리 있는 것으로 인식\ninterposition(occlusion): 물체가 다른 물체를 가리면 가려진 물체가 더 멀리 있는 것으로 인식\nheight in the plane: 물체가 높이 있을수록 더 멀리 있는 것으로 인식\nlight and shadow: 빛과 그림자로 물체의 거리를 인식\nrelative size: 물체가 작을수록 더 멀리 있는 것으로 인식\ntexture gradient: 물체가 멀어질수록 세부적인 텍스처가 사라짐\nbrightness: 물체가 밝을수록 더 가까이 있는 것으로 인식\naerial perspective: 물체가 먼발에서 가까워질수록 색이 흐려짐\nmotion parallax: 물체가 빠르게 움직일수록 더 가까이 있는 것으로 인식 fixation point\n\n\nobserver-centered cues\n\n\nbinocular disparity: 두 눈의 시각적 차이\nconvergence: 눈이 물체를 바라볼 때 발생하는 각도\naccommodation: 눈의 렌즈가 물체를 바라볼 때 발생하는 조절. 가까운 물체일수록 렌즈가 더 둥글어짐",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Sensor System (Visual)"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#display-purpose",
+    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#display-purpose",
+    "title": "Display",
+    "section": "Display Purpose",
+    "text": "Display Purpose\n\n사람의 인지와 시스템의 실제 정보 사이의 커뮤니케이션을 위한 중간 다리 역할.\n시스템이 무엇을 하는 중이고, 무엇을 해야 하고, 어떻게 작동하는지 오퍼레이터에게 전달하기 위한 목적(mental model을 만들기 위함)\n설계된 sensory input을 통해서 파악하게 해야함\n다른 sensory input과 구별이 되야함.\n사용자가 이해할 수 있어야함(Compatible)\n\nConceptual Compatibility\nex) 플로피 디스크 심볼은 저장 용도로 사용됨\nmovement compatibility(pictorial realism): 실제와 유사한 모양을 사용하면 이해하기 쉬움\nex) 엘리베이터가 위 아래로 움직이니까 스케일을 linear로 맞춤",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Display"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#display-rules",
+    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#display-rules",
+    "title": "Display",
+    "section": "Display Rules",
+    "text": "Display Rules\n\nFour Cardinal Rules\n\n꼭 필요한 정보만 제공해라\n필요한 수준의 정확도만 제공하라 (ex. 소숫점 3자리까지만. 굳이 다 보여주지 않아도 됨)\n가장 direct, simple, understandable, and usable하게 정보를 제공하라\nex) 지하철 디스플레이에서 열차가 언제 도착하는지 알려줘야 하는데 이상한걸 보여줘서 멘탈 워크로드가 높아진다.\n고장이나 작업 실패의 경우 명확히 어디서 문제가 발생했는지 바로 알아차리게 제공하라\n첫번째 원칙을 위반할 수도 있다(alarm flooding)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Display"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#types-of-displays",
+    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#types-of-displays",
+    "title": "Display",
+    "section": "Types of Displays",
+    "text": "Types of Displays\n\nAuditory\n\nDetectable\nDiscrmination\nMeaningful\nMain problem: hearing ability depends on environments / background noise (auditory spatial coding 인지하기 힘듦)\n\nTactual(Haptic)\n\nDetectable: 손처럼 민감한 부분은 가능하지만, 둔감한 부분은 어렵다\nDiscrimination: nomal job이랑 구분되어야 한다\nMeaningful: tactual display에서는 어려운 부분. convention이 없음\nMain problem: 잘 안쓰이고, 손 이외에는 사용하기 어렵다\n\nOlfactory Displays - smell\n\nDetectable\nDiscrimination\nMeaningful\nMain problem: 냄새에 대한 민감도가 사람마다 다르다. regenerate 하기가 어렵다. 후각이 금방 마비된다. 전쟁에서 후각을 이용한 의사전달을 시도하기도 함",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Display"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#visual-displays",
+    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#visual-displays",
+    "title": "Display",
+    "section": "Visual Displays",
+    "text": "Visual Displays\n\nAppropriate if:\n\nNoisy environment\n한 자리에 머무는 경우(traditional. 옛날엔 들고 다니기 어려웠음)\nmessage가 길거나 복잡한 경우, spatial coding이 필요한 경우\n\nGuiding principles for design:\n\n눈에 잘 띄어야함(배경과 전경의 차이가 구분되어야함)\nLegible, 쉽게 보고 읽을 수 있어야함(ex. 엠뷸런스의 글씨)\nUnderstandable\nmain problem: 시각이 overload됨. 정보가 너무 많음\n\n\n\nDynamic Information\n변화하는 정보를 보여주는 것에는 4가지 원칙이 있다.\n\nSituation awareness\n가까운 미래에 무슨 일이 일어날 지 예측할 수 있어야함\n상황 인식 3단계:\n\nPerception: 무엇이 일어나고 있는지 인지(check readings)\nComprehension: 그것이 무엇을 의미하는지 이해\nProjection: 미래에 무슨 일이 일어날지 예측\n\n\n\nQuantitative readings\n정확한 값을 보여주는 용도로 사용됨\n\n고정 스케일의 움직이는 초점 (generally best)\n움직이는 스케일의 고정 초점\ndigital display (변동성이 큰 경우 그냥 숫자만 보여주는것보다 스케일, 초점을 사용하는게 더 효과적임)\nDesign of Analog Scales\n\n일반적으로 fixed scale, moving pointer가 좋다\n숫자의 증가는, linear 스케일에 움직이는 포인터가 자연스럽다.\nex) 온도계, 엘리베이터\n같은 작업을 하는 여러개의 pointer, scale indicator를 섞어 쓰지 말아라.\ncontrol, display가 혼합된경우 control로 pointer로 움직여라\n작은 변화 감지가 중요한 경우는 moving pointer가 더 좋다\n범위가 너무 큰 경우는 moving scale이 더 좋다\n\n\n\n\nQualitative readings\n대략적인 값, 트렌드, 변화의 비율, 변화의 방향을 보여주는 용도로 주로 사용됨.\n\ncontinuous data converted to range\n의미를 강조하고 싶을 때 color를 보조 도구로써 보여주기도 함\nShape coding\nex) 교통 표지판 8각형은 stop을 의미\nZone coding\nex) 신호등의 위치가 고정되어 있음\n\nRedundancy gain: 시각 청각 촉각, 혹은 칼라코드, 위치코드 같이 여러가지 정보(multi-modal)를 제공하면 정확히 해석할 수 있다.\n\n\nCheck readings\n시스템의 상태를 확인할 수 있어야함\n\nqualitaative reading의 특별한 case\n정상인 상태는 명확히 보여줘야함\n정상적인 것은 align해서, 비정상적인 것은 삐뚤어지게 설계해서 pre-attentive processing을 유도하라\n시각 정보를 보완하기 위해 청각 시그널을 제공하라",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Display"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#signal-and-warning-lights",
+    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#signal-and-warning-lights",
+    "title": "Display",
+    "section": "Signal and Warning Lights",
+    "text": "Signal and Warning Lights\n실질적인, 잠재적인 위험 상황을 알리는 용도\n일반적으로 하나의 라이트만 사용함\n\nsteady-state light: 지속적인 싱태를 나타냄\nflashing light: 위급 상황 (flash 비율은 3-10 per seconds)\n배경에 비해 최소 두 배 이상 밝아야함\n유효 시야 30도 안쪽에 배치해야함",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Display"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/2_human_information_processing_model.html#인간-정보-처리-과정",
+    "href": "posts/04_archives/phd_2_2/phd_human/2_human_information_processing_model.html#인간-정보-처리-과정",
+    "title": "Human Information Processing Model",
+    "section": "인간 정보 처리 과정",
+    "text": "인간 정보 처리 과정\n\n\n1. 감각 처리 (Sensory Processing)\n\n주요 감각: 시각, 청각, 운동 감각(proprioception)\n운동 감각: 생리적 신호, 중력과 가속도에 따른 몸의 위치 감각\nSTSS (Short Term Sensory Store)\n\n각 감각기관별 정보 저장 공간\n주의 집중 불필요, 정보 그대로 저장\n빠르게 소멸 (예: 시각 - Iconic Memory 200-300ms, 청각 - Echoic Memory 2-8s)\n\n\n\n\n2. 지각 (Perception)\n\n정보 해석 과정\nTop-Down Processing: 과거 기억으로 정보 해석 (Long Term Memory 활용)\nBottom-Up Processing: 새로운/익숙하지 않은 정보 해석\nPreattentive Processing: 주의 집중 없이 자동적 정보 해석 (예: Stroop Effect)\n\n\n\n3. 주의 자원 (Attention Resources)\n\n전반적인 정보 처리 과정에 영향\nSearch Light Metaphor: 주의 집중의 비유적 설명\n주의 실패 유형:\n\nSelective Attention: 잘못된 곳에 집중\nFocused Attention: 주의 집중 부족\nDivided Attention: 다중 작업 시 주의 분산\nSustained Attention: 장시간 주의 유지 실패\n\n\n\n\n4. 장기 기억 (Long Term Memory)\n\n학습을 통한 정보 저장\n유형:\n\nDeclarative Memory (What): 사실적 지식 (Episodic, Semantic)\nProcedural Memory (How): 절차적 지식\n\n기억 실패: Encoding, Storage, Retrieval 단계에서 발생 가능\n\n\n\n5. 인지 (Cognition)\n\nWorking Memory:\n\n단기적 정보 처리 및 조작\n제한된 용량 (7±2 items)\nLong Term Memory와 Perception으로부터 정보 획득\n\n\n\n\n6. 반응 선택 (Response Selection)\n\n의사결정 이론:\n\nSignal Detection Theory\nExpected Value\nBayesian Decision Theory\nMulti-attribute Theory\n\nInformation Processing\n\nAttention and working memory\nHeuristics and biases: 인간은 합리적이지 않음\n\nNaturalistic Decision Making: Recognition-Primed Decision Model (직감)\n\n\n\n7. 반응 실행 (Response Execution)\n\n\n8. 시스템 환경 (System Environment)\n\nclosed-loop 형태의 피드백 제공\ndelay가 발생시 성능 저하",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Human Information Processing Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#귀의-구조",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#귀의-구조",
+    "title": "Auditory Haptic",
+    "section": "귀의 구조",
+    "text": "귀의 구조",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#sound-waves",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#sound-waves",
+    "title": "Auditory Haptic",
+    "section": "Sound Waves",
+    "text": "Sound Waves\n\n소리는 압력이 변하는 것\n소리는 vibrating object에 의해 발생한다\n연못에 돌을 던지면 생기는 wave와 비슷함\n어떤 분자든 움직이고 압력을 만들 수 있는건 전달 가능함\n물속에서도 소리가 전달됨. (밀도가 높아서 더 빨리 전달됨)\n고체(층간소음, 철로), gas\n진공에서는 매질이 없어서 소리가 안들림(우주 공간) &lt;-&gt; 빛은 매질이 없어도 이동됨\n파동이 전기신호로 바뀌어서 들림\n\n\n물리적 특성\n\n\namplitude: 진폭의 크기 -&gt; volume\nwavelength: 진폭의 넓이 -&gt; pitch, 1초 안에 몇 번 진동하는지(주파수 10Hz = 10번 진동)\n\n\n\n사람이 느끼는 perception\n\nPitch(소리의 높낮이)\n사람이 들을 수 있는 주파수는 20Hz ~ 15kHz\n어릴 때는 고주파를 잘 들음 (고주파에 고막이 반응을 못해서)\n사람은 고주파에 반응을 잘 못함\n절대 음감이랑 관련\nTimbre(음색)\n음악에서는 악기마다 다른 음색이 있음\n음색은 여러 주파수의 하모니(complex set of resonance공명)로 결정됨\nAmplitude and loudness\n소리의 물리적 강도가 2배 증가할 때 우리가 느끼는 소리의 크기(loudness)가 배로 느껴짐(찾아보니까 2배는 아니긴 함) 160db까지 들을 수 있음 130db부터는 고통스러움\nSpatialisation\n소리는 어느 방향에서 소리가 나도 들을 수 있음 (omnidirectional).\n시각은 볼 수 있는 방향만 볼 수 있음\n\n\n\nSound intensity (dB)\n\n데시벨(dB)은 기준점에서 로그 스케일만큼 증가. (선형적 x)\nthreshold: 주변의 소음에 비해 소리가 들리는 정도. 주파수에 따라 다른 특성을 가짐.\n\n\n\n85 dB에 장시간 노출되면 청력 손상\n\n신경의 손상: 장시간 센 자극에 hair cell이 손상됨\nconduction damage: 소리의 세기가 너무 커서 고막이나 뼈에서 손상이 생김",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#masking-effect",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#masking-effect",
+    "title": "Auditory Haptic",
+    "section": "Masking Effect",
+    "text": "Masking Effect\n\n청각에서만 주로 나타남.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#equal-loudness-contour",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#equal-loudness-contour",
+    "title": "Auditory Haptic",
+    "section": "Equal Loudness Contour",
+    "text": "Equal Loudness Contour\n\n곡선은 사람들이 소리가 같은 크기라고 느끼는 지점을 나타냄\n인간 청력의 threshold가 주파수마다 다르다.\n저주파수와 고주파수는 중간 주파수에 비해 같은 강도에서 상대적으로 작게 들립니다",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#locating-sounds",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#locating-sounds",
+    "title": "Auditory Haptic",
+    "section": "Locating Sounds",
+    "text": "Locating Sounds\n왼쪽 귀와 오른쪽 귀에서 들리는 소리의 차이\n\ndifference in phase(위상): 소리의 파장이 오목한 phase, 볼록한 phase 차이\ndifference in loudness: 가까운게 더 크게 들림\ndifference in onset: 가까운게 더 빨리 도달함\n\n\n여기까지가 소리의 mechanical한 특성이고, 이후는 이 소리를 인간이 어떻게 perception하는지에 관한 내용",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#hearing-without-awareness",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#hearing-without-awareness",
+    "title": "Auditory Haptic",
+    "section": "Hearing Without Awareness",
+    "text": "Hearing Without Awareness\n\nCocktail Party Effect: 주변 소음에서도 특정 소리를 들을 수 있음\nEx) 친구 이름을 듣고 반응하는 것, 한국인들이 한국말을 잘 듣는것\nDichotic Listening: 두 귀에 다른 소리를 들려주고 정보를 인식했는지 확인\nignored 귀에서 여전히 정보를 인식할 수 있다.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#alarms",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#alarms",
+    "title": "Auditory Haptic",
+    "section": "Alarms",
+    "text": "Alarms\n\nOverview\nomnidirectional한 특성때문에 visual alarm에 비해 자주 사용된다\nEx) 소방차 사이렌 소리\n\n주변 소음에 비해 충분히 db이 커야함 주변 소음과의 차이가 15dB minimal, 30dB required\n하지만 소리가 너무 크면 청각에 손상을 일으킬 수 있음\n안전상의 이유로 소리는 85 ~ 90dB 이하로 유지되어야 함\nmasking 위협때문에 여러 주파수를 혼합해서 냄\n다른 signal과 헷갈리지 않아야함\nEx) 병원의 환자실에 여러 장비가 있는데 장비마다 알람이 구분이 안되면 안됨.\nInformative and distinctive\n각각의 physical dimension(pitch(4), duration(4), amplitude(4))은 4개를 넘게 쓰지 마라\nEx) 컴퓨터 메인보드, 장비 고장 시 비프음 기준이 있음\nEx) 자동차\n\nstereotypic: 어디서 소리가 오는지\n\npitch\n\n\n\n\nNon-speech Alarm\n\nlanguage independent\n글로벌하게 가고 싶다면\nNSA가 유용하다는 증거\n클릭을할 때 딸깍 소리가 나면 실수가 덜 함\n비디오 게이머들은 소리가 없으면 게임을 못함\n일시적이고 부수적인 상태 정보 전달에 효과적\n예시) 게임에서:\n\nHP가 부족할 때 주기적인 경고음\n\n아이템 획득 시 짧은 효과음\n\n배경에서 지속적으로 재생되는 상태 알림음\n\nstereo sound로 방향을 알려줄 수 있음\n비쥬얼로는 3d 표현하기 어려움\n\n\n\nVoice Alarm\n\n자연스러운 방법으로 기기와 통신할 수 있음\nSymbolic alarm에 비해 더 많은 정보를 전달할 수 있음\nSymbolic alarm은 학습을 해야한다는 단점이 있음\nNon-Speech에 비한 한계\n\n소리가 섞이면 헷갈림\n\nmore susceptible to frequency-specific masking\n사람의 voice는 정해진 주파수가 있다.\n그 주파수에 소리가 섞이면 소리를 못들을 수 있음\n다국어 환경을 고려해야함\n\nSound Transmission Problem\n말하고자 하는 바가 전달이 잘 안될 수 있음\nEx) 파일럿 안내. 라디오에서 사용할 수 있는 대역폭이 제한되있음",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#voice-recognition",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#voice-recognition",
+    "title": "Auditory Haptic",
+    "section": "Voice Recognition",
+    "text": "Voice Recognition\nSound Transmission Problem을 해결하기 위해 사용됨\n\nArticulation index: pure bottom-up(signal의 특성에 의존) approach\nsignal이 얼마나 명확하게 잘 들리는지 평가\n1.0: 주변소음에 상관없이 잘 들리는 상태\n0.0: 주변소음에 묻혀서 소리가 들리지 않는 상태\nSpeech intelligibility measure\npoor signal quality is compensated by top-down processing =&gt; 어떻게 top-down processing을 잘 할까?를 테스트 해 보았다.\n전달하는 정보의 양을 제한, 문장의 형태로 전달하는게 좋음\n긍정이나 부정이 잘 나타나는 단어를 사용(Ok는 애매함)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#tactile-perception",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#tactile-perception",
+    "title": "Auditory Haptic",
+    "section": "Tactile Perception",
+    "text": "Tactile Perception\n\nTouch is complex\nOnly bi-directional communication channel: 접촉하거나 움직이거나 한 다음에 반응을 얻는 등, input과 output이 동시에 일어남\n환경에 대한 정보를 포괄해서 전달함\n온도, 표면의 거칠기, 등등\nfeedback을 제공함\n수용체가 피부 변형을 감지함\n민감도는 단위 면적당 촉점이 얼마나 분포되어 있는지에 따라 결정됨",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#tactile-information",
+    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#tactile-information",
+    "title": "Auditory Haptic",
+    "section": "Tactile information",
+    "text": "Tactile information\n\n운동 감각을 통해 받아들이는 것 (force feedback)\n\n\n\n큰 물체는 움직이기 어렵게 함 =&gt; 더 세밀하게 조종 가능\n\n게임에서 많이 사용됨\n\n\n촉감을 통해 받아들이는 것 (vibration feedback)\n\n\n\nusing vibration for information transfer\nsimilar physical characteristics to auditory signal\n\namplitude, frequency, duration, wave pattern\n\nused for navigation aid\n중요한 정보는 시각, 나머지 feedback은 촉각, 청각으로 받아들임.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Human",
+      "Auditory Haptic"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/04-2.html#ddl-data-definition-language",
+    "href": "posts/04_archives/phd_2_2/phd_database/04-2.html#ddl-data-definition-language",
+    "title": "SQL",
+    "section": "DDL (Data Definition Language)",
+    "text": "DDL (Data Definition Language)\n\nCREATE (database, tables, views, indexes)\nALTER: modify columns / constraints\nDROP (database, tables, views, indexes)\nTRUNCATE: delete table data while keeping structure.\nMS Access에서는 지원하지 않음 =&gt; DELETE FROM table\n\nCREATE TABLE student (\n    id INT NOT NULL,\n    CourseID INT NOT NULL,\n    Name VARCHAR(100) UNIQUE, # unique는 자동으로 index 생성\n    Age INT,\n    CONSTRAINT STUDENT_PK PRIMARY KEY (id),\n    CONSTRAINT \n    COURSE_FK FOREIGN KEY (CourseID) \n    REFERENCES Course(CourseID) \n    ON UPDATE CASACADE \n    ON DELETE NO ACTION\n);\nALTER TABLE student ADD COLUMN major VARCHAR(100);\nALTER TABLE student ADD CONSTRAINT STUDENT_FK FOREIGN KEY (CourseID) REFERENCES Course(CourseID) ON DELETE CASCADE;\nALTER TABLE student ADD CONSTRAINT AGE_CHECK CHECK (Age &gt; 0);\nALTER TABLE student DROP CONSTRAINT AGE_CHECK;\nDROP TABLE student;\nTRUNCATE TABLE student;\n\nCREATE VIEW [view name] AS SELECT * FROM student;\n\nDML (Data Manipulation Language)\nINSERT INTO student VALUES (1, 'Alice', 20);\nUPDATE student SET age = 21, Name = 'babo' WHERE id = 1;\nDELETE FROM student WHERE id = 1;\n\n\nDQL (Data Query Language)\nA query create temporarily a new table.\nthis allows a query to create a new relation and feed information to another query as a subquery\nSELECT * FROM student;\nSELECT name \nFROM student \nWHERE age &gt; 20\nORDER BY name DESC, age ASC;\nSELECT DISTINCT name FROM student;\nSELECT name, age FROM student WHERE Age &gt; (SELECT AVG(Age) FROM student);\n\n\nJOIN\n\ninner join(equijoin)\n\nexplicit join: FROM table1 INNER JOIN table2 ON table1.id = table2.id\n(MS Access에서는 INNER를 명시해야됨)\nimplicit join: FROM table1, table2 WHERE table1.id = table2.id\n\nouter join\n\nleft outer join: FROM table1 LEFT JOIN table2 ON table1.id = table2.id\nright outer join: FROM table1 RIGHT JOIN table2 ON table1.id = table2.id",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "SQL"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#entity",
+    "href": "posts/04_archives/phd_2_2/phd_database/03.html#entity",
+    "title": "The Relational Model",
+    "section": "entity",
+    "text": "entity\na formal name for a thing that is being tracked one theme or topic (just single table)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "The Relational Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#relation",
+    "href": "posts/04_archives/phd_2_2/phd_database/03.html#relation",
+    "title": "The Relational Model",
+    "section": "Relation",
+    "text": "Relation\n\na two-dimensional table that has specific charateristics\nCell of the table hold single value\nAll entries in a column are of the same kind\nNo two rows in a table are identical",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "The Relational Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#domain-cartesian-product",
+    "href": "posts/04_archives/phd_2_2/phd_database/03.html#domain-cartesian-product",
+    "title": "The Relational Model",
+    "section": "domain & cartesian product",
+    "text": "domain & cartesian product\n\ndomain: set of possible values for a column\ncartesian product: set of all possible combinations of rows from two tables",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "The Relational Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#presenting-relation-structures",
+    "href": "posts/04_archives/phd_2_2/phd_database/03.html#presenting-relation-structures",
+    "title": "The Relational Model",
+    "section": "Presenting Relation Structures",
+    "text": "Presenting Relation Structures\nRELATION_NAME(PrimaryKey, ForeignKey, ColumnName, …)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "The Relational Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#key",
+    "href": "posts/04_archives/phd_2_2/phd_database/03.html#key",
+    "title": "The Relational Model",
+    "section": "key",
+    "text": "key\n\nidentify a row\nUnique Key(Primary Key)\nNonUnique Key(Foreign Key)\nComposite Key: Primary key가 두개 이상. Surrogate Key로 대체되곤 함.\nCandidate Key: unique한 columns\nSurrogate Key: 자동으로 할당되는 일련번호\nIDENTITY (start, increment)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "The Relational Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#referential-integrity-constraint",
+    "href": "posts/04_archives/phd_2_2/phd_database/03.html#referential-integrity-constraint",
+    "title": "The Relational Model",
+    "section": "Referential Integrity Constraint",
+    "text": "Referential Integrity Constraint\n\n모든 foriegn key는 존재하는 primary key와 매칭되야한다.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "The Relational Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#null-values",
+    "href": "posts/04_archives/phd_2_2/phd_database/03.html#null-values",
+    "title": "The Relational Model",
+    "section": "Null values",
+    "text": "Null values\n\nrequired, allow nulls 설정으로 null값을 허용할지 결정",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "The Relational Model"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/04-1.html#normalization",
+    "href": "posts/04_archives/phd_2_2/phd_database/04-1.html#normalization",
+    "title": "Database Normalization",
+    "section": "Normalization",
+    "text": "Normalization\n\nprocess of organizing a database to reduce redundancy problem and improve data integrity",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Normalization"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/04-1.html#functional-dependency",
+    "href": "posts/04_archives/phd_2_2/phd_database/04-1.html#functional-dependency",
+    "title": "Database Normalization",
+    "section": "Functional Dependency",
+    "text": "Functional Dependency\n\n하나의 atrribute가 다른 attribute의 value를 결정하는지 여부를 판단\nwell formed인지 판별할 수 있는 기준\nA(Determinant) -&gt; B(dependent): A가 결정되면 B도 결정된다면 B는 A에 함수적 종속\nEvery determinant must be a Candidate Key",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Normalization"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/04-1.html#normalization-process",
+    "href": "posts/04_archives/phd_2_2/phd_database/04-1.html#normalization-process",
+    "title": "Database Normalization",
+    "section": "Normalization Process",
+    "text": "Normalization Process\n\nBCFNF: Boyce-Codd Normal Form =&gt; Each relation has only one theme\n\n\nIdentify all the Candidate Keys.\nIdentify all the Functional Dependencies.\nExamine the determinants of the functional dependencies\n\nplace the columns of the functional dependency in a new relation of their own\nmake the determinant of the functianl dependency the primary key of the new relation\nLeabe a copy of the determinant as a foreign key in the original relation\ncreate a referential integrity constraint between the original and new relation\n\nRepeat the process until every determinant of every relation is a candidate key",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Normalization"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/11.html#concurrency-control",
+    "href": "posts/04_archives/phd_2_2/phd_database/11.html#concurrency-control",
+    "title": "Database Administration",
+    "section": "Concurrency control",
+    "text": "Concurrency control\nEnsuring that one user’s work does not inappropriately influence another user’s work\n\nStrict concurrency control requires locking the database, 다른 사용자의 동시 사용 허가 x\nLower concurrency control allows more throughput\n\n\nTransactions\nUsers submit Transactions(LUWs)\n\nAtmomic Transaction: 데이터베이스에서 일련의 작업들이 모두 성공적으로 수행되거나, 그렇지 않을 경우 작업이 전혀 수행되지 않아 데이터베이스가 변경되지 않는 상태를 유지하는 트랜잭션\n→ Before committed, all LUWs must be successfully completed, or rollback\nConcurrent Transactions: 여러 트랜잭션이 동시에 실행되는 것\n\nLost update problem: 두 트랜잭션이 동시에 같은 데이터를 수정할 때, 하나의 트렌잭션이 다른 트랜잭션의 변경을 덮어쓰는 문제\nInconsistent read problem: 한 트랜잭션이 데이터를 읽는 도중 다른 트랜잭션이 데이터를 수정하는 문제\n\nDirty read: commit 되기 이전에 수정된 데이터를 읽는 것. 만약 rollback이 될 경우 문제가 발생.\nNonrepeatable read: 데이터를 두 번 읽었는데 commit된 transaction 때문에 값이 다른 경우\nPhantom read: 데이터를 두 번 읽었는데 commit된 transaction 때문에 새로운 row가 추가된 경우\n\nResource locking\n\nImplicit locks: DBMS가 자동으로 수행하는 lock\nExplicit locks\nLOCK TABLES table_name READ -- or WRITE\nUNLOCK TABLES\nExclusive locks: 다른 트랜잭션에서 읽기/쓰기 불가\nShared locks: 다른 트랜잭션에서 읽기 가능, 쓰기 불가\nrock granularity: row-level vs table-level vs database-level\n\n\nSerializable Transactions: 가장 강력한 격리 수준 보장\n\nTwo-pase locking(2PL): growing phase와 shrinking phase로 나뉨\n\nACID Transaction\n\nAtomic: 성공한 transaction만 저장되어야 한다\nConsistent: 현재의 transaction이 마무리 되기 전 까지 record를 저장할 수 없다\n→ 트랜잭션의 살향 결과로 데이터베이스 상태가 모순되지 않음\nIsolated\n\nread uncommitted: 다른 트랜잭션에서 commit되지 않은 데이터도 읽을 수 있음\nread committed: 다른 트랜잭션이 commit된 데이터만 읽을 수 있음\nrepeatable read: 한 트랜잭션에서 하나의 스냅션만 사용\nserializable: 가장 강력한 격리 수준 보장\n\nDurable: 트랜잭션이 성공적으로 완료되면, 그 결과는 영구적으로 저장되어야 한다\n\n\n\n\n\nDeadlock / deadly embrace\n두 개 이상의 트랜잭션이 서로 unlock을 무한히 기다리는 상태\n\n\nlock\n\noptimistic locking\n\nassumption: No conflict will occur\nif no conflict occurs, the transaction is committed else it is rolled back and repeated\n\npessimistic locking\n\nassumption: Conflict will occur\nlock the data before the transaction starts\n\n\n\n\nCursor\nA cursor is a pointer into a set of rows that are the result set from an SQL SELECT statement\nDECLARE cursor_name CURSOR FOR SELECT column_name FROM table_name",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Administration"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/11.html#backup-and-recovery",
+    "href": "posts/04_archives/phd_2_2/phd_database/11.html#backup-and-recovery",
+    "title": "Database Administration",
+    "section": "Backup and recovery",
+    "text": "Backup and recovery\n\nRecovery\n\nvia Reprocessing\nvia Rollback and Rollforward\n\nlog file transaction을 undo할 때, before-images가 존재해함. (rollback) transaction을 redo할 때, after-images가 존재해함.(rollforward)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Administration"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/11.html#security",
+    "href": "posts/04_archives/phd_2_2/phd_database/11.html#security",
+    "title": "Database Administration",
+    "section": "Security",
+    "text": "Security\nonly authenticated users perform authorized activities\n\nAuthentication: User ID와 password를 사용하여 사용자를 인증\nAuthorization: user groups(roles): dbcreator, public, … sql  GRANT SELECT, INSERT, UPDATE, DELETE ON table_name TO user_name",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Administration"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_database/11.html#database-performance",
+    "href": "posts/04_archives/phd_2_2/phd_database/11.html#database-performance",
+    "title": "Database Administration",
+    "section": "Database Performance",
+    "text": "Database Performance\n\nindex\ndisk mirroring: 데이터 복제 말씀하신 듯\nRAID\nSANs\nDistributed database: service cluster partitioned replicated\n\n\nDBA Responsibilities\n\nuser reported errors를 모아서 system이 잘 돌아갈 수 있게 해야함\ndatabase 설정을 잘 관리해야함\n문서화 잘 해야함\ncloud로 db 관리(service level agreement)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Database",
+      "Database Administration"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html#중심-극한-정리",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html#중심-극한-정리",
+    "title": "중심 극한 정리",
+    "section": "중심 극한 정리",
+    "text": "중심 극한 정리\n평군이 μ이고, 분산이 \\(σ^2\\)인 모집단으로부터 추출한 확률표본 \\(X_1, X_2, ..., X_n\\)의 표본평균 \\(\\bar{X}\\)의 분포\n\n모집단의 분포와 상관 없이 \\(E(\\bar{X}) = μ\\), \\(Var(\\bar{X}) = \\frac{σ^2}{n}\\)\n정규 모집단일 경우 \\(\\bar{X}\\)가 정규분포를 따름\n정규 모집단이 아닐 경우\n\\(n \\geq 30\\) 이면 중심극한정리에 의해 \\(\\bar{X}\\)는 정규분포에 근사됨. (모집단의 skewed에 따라 더 큰 n이 필요할 수 있음)\n∴ \\(\\bar{X} \\sim N(μ, \\frac{σ^2}{n}), \\frac{\\bar{X} - μ}{σ/\\sqrt{n}} \\sim N(0, 1^2)\\)\n모집단의 분포가 이산, 연속 분포일 때 모두 적용 가능하다.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "중심 극한 정리"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html#이항분포의-정규근사",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html#이항분포의-정규근사",
+    "title": "중심 극한 정리",
+    "section": "이항분포의 정규근사",
+    "text": "이항분포의 정규근사",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "중심 극한 정리"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률변수",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률변수",
+    "title": "확률변수와 확률분포",
+    "section": "확률변수",
+    "text": "확률변수\nsample space의 원소를 상호 배반인 event들로 분할하여 실수 값으로 대응시키는 함수\n\n이산확률변수: 확률변수가 취할 수 있는 값이 유한개 또는 무한개이지만 셀 수 있는 경우\n연속확률변수: 확률변수가 취할 수 있는 값이 실수의 구간이고 셀 수 없는 경우\n\n이산 표본공간 -&gt; 이산 확률변수\n연속 표본공간 -&gt; 연속 확률변수\n연속 표본공간 -&gt; 이산 확률변수",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수와 확률분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률-분포",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률-분포",
+    "title": "확률변수와 확률분포",
+    "section": "확률 분포",
+    "text": "확률 분포\n\n표본공간 S에 정의된 확률변수 X의 모든 함수값들이 발생할 확률. 모집단의 확률구조를 나타냄\n확률 실험 -&gt; 표본공간 -&gt; 확률변수 -&gt; 확률분포\n\n\n이산확률분포\n확률 질량 함수(pmf): P(X=x) = f(x) =&gt; X가 x일 확률\n- 기하분포: 성공확률 p인 베르누이 시행을 독립적으로 반복했을 때 첫 번째 성공이 나타날 때까지의 시행횟수\n\n\n연속확률분포\n\n확률 밀도 함수(pdf): \\(\\int{f(x)}dx = 1\\)\n\\(\\int_a^b {f(x)}dx = P(a ≤ x ≤ b)\\) =&gt; x가 a와 b사이에 있을 확률\nP(X=x) = 0 (연속형 데이터여서 특정값을 가질 확률은 0)\nf(x) ≠ P(X=x)\nf(x)는 1보다 큰 값을 가질 수 있음\n누적분포함수(cdf): \\(F(x) = P(X ≤ x)\\) =&gt; \\(\\int_{-∞}^x{f(y)}dy\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수와 확률분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#결합-확률분포",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#결합-확률분포",
+    "title": "확률변수와 확률분포",
+    "section": "결합 확률분포",
+    "text": "결합 확률분포\n\npmf: \\(P(X=x, Y=y) = f(x, y)\\)\npdf: \\(P(a ≤ X ≤ b, c ≤ Y ≤ d) = \\int_{a}^{b}\\int_{c}^{d}{f(x, y)}dydx\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수와 확률분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#주변-확률분포",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#주변-확률분포",
+    "title": "확률변수와 확률분포",
+    "section": "주변 확률분포",
+    "text": "주변 확률분포\n\npmf: \\(f_X(x) = \\sum_y{f(x,y)}\\)\npdf: \\(f_X(x) = \\int_{-∞}^{∞}{f(x, y)}dy\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수와 확률분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#조건부-확률분포",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#조건부-확률분포",
+    "title": "확률변수와 확률분포",
+    "section": "조건부 확률분포",
+    "text": "조건부 확률분포\n\n\\(f(x|y)\\) = \\(\\frac{joint}{marginal}\\) = \\(\\frac{f(x, y)}{f_Y(y)}\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수와 확률분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#독립-확률변수",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#독립-확률변수",
+    "title": "확률변수와 확률분포",
+    "section": "독립 확률변수",
+    "text": "독립 확률변수\n\n모든 \\(x, y\\)에 대해 \\(f(x, y) = f_X(x)f_Y(y)\\)\n\n\n\n\\(f(x, y) = g(x) * h(y)\\)\n\nx, y 의 구간이 서로 간섭받지 않는다.\nX,Y는 독립이다.",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수와 확률분포"
+    ]
+  },
+  {
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률변수의-변환",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률변수의-변환",
+    "title": "확률변수와 확률분포",
+    "section": "확률변수의 변환",
+    "text": "확률변수의 변환\n\ncdf를 이용한 변환\ncdf를 미분해서 pdf\n\n\n역함수가 존재할 경우\n\\(g(y) = f(u^{-1}(y)) * |\\frac{du^{-1}}{dy}|\\)",
+    "crumbs": [
+      "Related Posts",
+      "04 Archives",
+      "Phd 2 2",
+      "Phd Statistics",
+      "확률변수와 확률분포"
     ]
   },
   {
@@ -506,1459 +2011,58 @@
     ]
   },
   {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률변수",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률변수",
-    "title": "확률변수와 확률분포",
-    "section": "확률변수",
-    "text": "확률변수\nsample space의 원소를 상호 배반인 event들로 분할하여 실수 값으로 대응시키는 함수\n\n이산확률변수: 확률변수가 취할 수 있는 값이 유한개 또는 무한개이지만 셀 수 있는 경우\n연속확률변수: 확률변수가 취할 수 있는 값이 실수의 구간이고 셀 수 없는 경우\n\n이산 표본공간 -&gt; 이산 확률변수\n연속 표본공간 -&gt; 연속 확률변수\n연속 표본공간 -&gt; 이산 확률변수",
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#standard-normal-distribution",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#standard-normal-distribution",
+    "title": "연속형 확률분포",
+    "section": "Standard Normal Distribution",
+    "text": "Standard Normal Distribution\n\nμ = 0, σ = 1인 정규분포",
     "crumbs": [
       "Related Posts",
       "04 Archives",
       "Phd 2 2",
       "Phd Statistics",
-      "확률변수와 확률분포"
+      "연속형 확률분포"
     ]
   },
   {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률-분포",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률-분포",
-    "title": "확률변수와 확률분포",
-    "section": "확률 분포",
-    "text": "확률 분포\n\n표본공간 S에 정의된 확률변수 X의 모든 함수값들이 발생할 확률. 모집단의 확률구조를 나타냄\n확률 실험 -&gt; 표본공간 -&gt; 확률변수 -&gt; 확률분포\n\n\n이산확률분포\n확률 질량 함수(pmf): P(X=x) = f(x) =&gt; X가 x일 확률\n- 기하분포: 성공확률 p인 베르누이 시행을 독립적으로 반복했을 때 첫 번째 성공이 나타날 때까지의 시행횟수\n\n\n연속확률분포\n\n확률 밀도 함수(pdf): \\(\\int{f(x)}dx = 1\\)\n\\(\\int_a^b {f(x)}dx = P(a ≤ x ≤ b)\\) =&gt; x가 a와 b사이에 있을 확률\nP(X=x) = 0 (연속형 데이터여서 특정값을 가질 확률은 0)\nf(x) ≠ P(X=x)\nf(x)는 1보다 큰 값을 가질 수 있음\n누적분포함수(cdf): \\(F(x) = P(X ≤ x)\\) =&gt; \\(\\int_{-∞}^x{f(y)}dy\\)",
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#chi-square-distribution",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#chi-square-distribution",
+    "title": "연속형 확률분포",
+    "section": "Chi-square Distribution",
+    "text": "Chi-square Distribution\nα = ν/2, θ = 2인 감마분포\n자유도 ν에 따라 모양이 변함: 커질수록 정규분포에 가까워짐\n표기: \\(X \\sim χ^2(ν)\\)\n\\(E(x) = ν\\)\n\\(Var(x) = 2ν\\)",
     "crumbs": [
       "Related Posts",
       "04 Archives",
       "Phd 2 2",
       "Phd Statistics",
-      "확률변수와 확률분포"
+      "연속형 확률분포"
     ]
   },
   {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#결합-확률분포",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#결합-확률분포",
-    "title": "확률변수와 확률분포",
-    "section": "결합 확률분포",
-    "text": "결합 확률분포\n\npmf: \\(P(X=x, Y=y) = f(x, y)\\)\npdf: \\(P(a ≤ X ≤ b, c ≤ Y ≤ d) = \\int_{a}^{b}\\int_{c}^{d}{f(x, y)}dydx\\)",
+    "objectID": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#exponential-distribution",
+    "href": "posts/04_archives/phd_2_2/phd_statistics/5-연속형-확률분포.html#exponential-distribution",
+    "title": "연속형 확률분포",
+    "section": "Exponential Distribution",
+    "text": "Exponential Distribution\nα = 1, \\(λ = \\frac{1}{\\theta}\\)인 감마분포\nPoisson 분포에서 사건 발생 사이의 시간을 나타낼 수 있음\n표기: \\(X \\sim Exp(λ)\\)\n\\(f(x) = λe^{-λx}, x \\geq 0\\)\n\\(E(x) = \\frac{1}{λ}\\)\n\\(Var(x) = \\frac{1}{λ^2}\\)\n\\(P(X &gt; x) = e^{-λx}\\)\n\\(P(X &gt; x + y | X &gt; x) = P(X &gt; y) = e^{-λy}\\)\n포아송분포에서의 \\(\\frac{1}{λ}\\)와 동일\n비기억 특성을 가짐\n독립적으로 동일한 지수분포의 합은 감마분포 \\(Γ(n, \\frac{1}{\\lambda})\\)를 따름",
     "crumbs": [
       "Related Posts",
       "04 Archives",
       "Phd 2 2",
       "Phd Statistics",
-      "확률변수와 확률분포"
+      "연속형 확률분포"
     ]
   },
   {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#주변-확률분포",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#주변-확률분포",
-    "title": "확률변수와 확률분포",
-    "section": "주변 확률분포",
-    "text": "주변 확률분포\n\npmf: \\(f_X(x) = \\sum_y{f(x,y)}\\)\npdf: \\(f_X(x) = \\int_{-∞}^{∞}{f(x, y)}dy\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률변수와 확률분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#조건부-확률분포",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#조건부-확률분포",
-    "title": "확률변수와 확률분포",
-    "section": "조건부 확률분포",
-    "text": "조건부 확률분포\n\n\\(f(x|y)\\) = \\(\\frac{joint}{marginal}\\) = \\(\\frac{f(x, y)}{f_Y(y)}\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률변수와 확률분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#독립-확률변수",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#독립-확률변수",
-    "title": "확률변수와 확률분포",
-    "section": "독립 확률변수",
-    "text": "독립 확률변수\n\n모든 \\(x, y\\)에 대해 \\(f(x, y) = f_X(x)f_Y(y)\\)\n\n\n\n\\(f(x, y) = g(x) * h(y)\\)\n\nx, y 의 구간이 서로 간섭받지 않는다.\nX,Y는 독립이다.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률변수와 확률분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률변수의-변환",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/2-확률변수와-분포.html#확률변수의-변환",
-    "title": "확률변수와 확률분포",
-    "section": "확률변수의 변환",
-    "text": "확률변수의 변환\n\ncdf를 이용한 변환\ncdf를 미분해서 pdf\n\n\n역함수가 존재할 경우\n\\(g(y) = f(u^{-1}(y)) * |\\frac{du^{-1}}{dy}|\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률변수와 확률분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html#중심-극한-정리",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html#중심-극한-정리",
-    "title": "중심 극한 정리",
-    "section": "중심 극한 정리",
-    "text": "중심 극한 정리\n평군이 μ이고, 분산이 \\(σ^2\\)인 모집단으로부터 추출한 확률표본 \\(X_1, X_2, ..., X_n\\)의 표본평균 \\(\\bar{X}\\)의 분포\n\n모집단의 분포와 상관 없이 \\(E(\\bar{X}) = μ\\), \\(Var(\\bar{X}) = \\frac{σ^2}{n}\\)\n정규 모집단일 경우 \\(\\bar{X}\\)가 정규분포를 따름\n정규 모집단이 아닐 경우\n\\(n \\geq 30\\) 이면 중심극한정리에 의해 \\(\\bar{X}\\)는 정규분포에 근사됨. (모집단의 skewed에 따라 더 큰 n이 필요할 수 있음)\n∴ \\(\\bar{X} \\sim N(μ, \\frac{σ^2}{n}), \\frac{\\bar{X} - μ}{σ/\\sqrt{n}} \\sim N(0, 1^2)\\)\n모집단의 분포가 이산, 연속 분포일 때 모두 적용 가능하다.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "중심 극한 정리"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html#이항분포의-정규근사",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/8-central-limit-theorem.html#이항분포의-정규근사",
-    "title": "중심 극한 정리",
-    "section": "이항분포의 정규근사",
-    "text": "이항분포의 정규근사",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "중심 극한 정리"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/11.html#concurrency-control",
-    "href": "posts/04_archives/phd_2_2/phd_database/11.html#concurrency-control",
-    "title": "Database Administration",
-    "section": "Concurrency control",
-    "text": "Concurrency control\nEnsuring that one user’s work does not inappropriately influence another user’s work\n\nStrict concurrency control requires locking the database, 다른 사용자의 동시 사용 허가 x\nLower concurrency control allows more throughput\n\n\nTransactions\nUsers submit Transactions(LUWs)\n\nAtmomic Transaction: 데이터베이스에서 일련의 작업들이 모두 성공적으로 수행되거나, 그렇지 않을 경우 작업이 전혀 수행되지 않아 데이터베이스가 변경되지 않는 상태를 유지하는 트랜잭션\n→ Before committed, all LUWs must be successfully completed, or rollback\nConcurrent Transactions: 여러 트랜잭션이 동시에 실행되는 것\n\nLost update problem: 두 트랜잭션이 동시에 같은 데이터를 수정할 때, 하나의 트렌잭션이 다른 트랜잭션의 변경을 덮어쓰는 문제\nInconsistent read problem: 한 트랜잭션이 데이터를 읽는 도중 다른 트랜잭션이 데이터를 수정하는 문제\n\nDirty read: commit 되기 이전에 수정된 데이터를 읽는 것. 만약 rollback이 될 경우 문제가 발생.\nNonrepeatable read: 데이터를 두 번 읽었는데 commit된 transaction 때문에 값이 다른 경우\nPhantom read: 데이터를 두 번 읽었는데 commit된 transaction 때문에 새로운 row가 추가된 경우\n\nResource locking\n\nImplicit locks: DBMS가 자동으로 수행하는 lock\nExplicit locks\nLOCK TABLES table_name READ -- or WRITE\nUNLOCK TABLES\nExclusive locks: 다른 트랜잭션에서 읽기/쓰기 불가\nShared locks: 다른 트랜잭션에서 읽기 가능, 쓰기 불가\nrock granularity: row-level vs table-level vs database-level\n\n\nSerializable Transactions: 가장 강력한 격리 수준 보장\n\nTwo-pase locking(2PL): growing phase와 shrinking phase로 나뉨\n\nACID Transaction\n\nAtomic: 성공한 transaction만 저장되어야 한다\nConsistent: 현재의 transaction이 마무리 되기 전 까지 record를 저장할 수 없다\n→ 트랜잭션의 살향 결과로 데이터베이스 상태가 모순되지 않음\nIsolated\n\nread uncommitted: 다른 트랜잭션에서 commit되지 않은 데이터도 읽을 수 있음\nread committed: 다른 트랜잭션이 commit된 데이터만 읽을 수 있음\nrepeatable read: 한 트랜잭션에서 하나의 스냅션만 사용\nserializable: 가장 강력한 격리 수준 보장\n\nDurable: 트랜잭션이 성공적으로 완료되면, 그 결과는 영구적으로 저장되어야 한다\n\n\n\n\n\nDeadlock / deadly embrace\n두 개 이상의 트랜잭션이 서로 unlock을 무한히 기다리는 상태\n\n\nlock\n\noptimistic locking\n\nassumption: No conflict will occur\nif no conflict occurs, the transaction is committed else it is rolled back and repeated\n\npessimistic locking\n\nassumption: Conflict will occur\nlock the data before the transaction starts\n\n\n\n\nCursor\nA cursor is a pointer into a set of rows that are the result set from an SQL SELECT statement\nDECLARE cursor_name CURSOR FOR SELECT column_name FROM table_name",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Administration"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/11.html#backup-and-recovery",
-    "href": "posts/04_archives/phd_2_2/phd_database/11.html#backup-and-recovery",
-    "title": "Database Administration",
-    "section": "Backup and recovery",
-    "text": "Backup and recovery\n\nRecovery\n\nvia Reprocessing\nvia Rollback and Rollforward\n\nlog file transaction을 undo할 때, before-images가 존재해함. (rollback) transaction을 redo할 때, after-images가 존재해함.(rollforward)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Administration"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/11.html#security",
-    "href": "posts/04_archives/phd_2_2/phd_database/11.html#security",
-    "title": "Database Administration",
-    "section": "Security",
-    "text": "Security\nonly authenticated users perform authorized activities\n\nAuthentication: User ID와 password를 사용하여 사용자를 인증\nAuthorization: user groups(roles): dbcreator, public, … sql  GRANT SELECT, INSERT, UPDATE, DELETE ON table_name TO user_name",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Administration"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/11.html#database-performance",
-    "href": "posts/04_archives/phd_2_2/phd_database/11.html#database-performance",
-    "title": "Database Administration",
-    "section": "Database Performance",
-    "text": "Database Performance\n\nindex\ndisk mirroring: 데이터 복제 말씀하신 듯\nRAID\nSANs\nDistributed database: service cluster partitioned replicated\n\n\nDBA Responsibilities\n\nuser reported errors를 모아서 system이 잘 돌아갈 수 있게 해야함\ndatabase 설정을 잘 관리해야함\n문서화 잘 해야함\ncloud로 db 관리(service level agreement)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Administration"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/04-1.html#normalization",
-    "href": "posts/04_archives/phd_2_2/phd_database/04-1.html#normalization",
-    "title": "Database Normalization",
-    "section": "Normalization",
-    "text": "Normalization\n\nprocess of organizing a database to reduce redundancy problem and improve data integrity",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Normalization"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/04-1.html#functional-dependency",
-    "href": "posts/04_archives/phd_2_2/phd_database/04-1.html#functional-dependency",
-    "title": "Database Normalization",
-    "section": "Functional Dependency",
-    "text": "Functional Dependency\n\n하나의 atrribute가 다른 attribute의 value를 결정하는지 여부를 판단\nwell formed인지 판별할 수 있는 기준\nA(Determinant) -&gt; B(dependent): A가 결정되면 B도 결정된다면 B는 A에 함수적 종속\nEvery determinant must be a Candidate Key",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Normalization"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/04-1.html#normalization-process",
-    "href": "posts/04_archives/phd_2_2/phd_database/04-1.html#normalization-process",
-    "title": "Database Normalization",
-    "section": "Normalization Process",
-    "text": "Normalization Process\n\nBCFNF: Boyce-Codd Normal Form =&gt; Each relation has only one theme\n\n\nIdentify all the Candidate Keys.\nIdentify all the Functional Dependencies.\nExamine the determinants of the functional dependencies\n\nplace the columns of the functional dependency in a new relation of their own\nmake the determinant of the functianl dependency the primary key of the new relation\nLeabe a copy of the determinant as a foreign key in the original relation\ncreate a referential integrity constraint between the original and new relation\n\nRepeat the process until every determinant of every relation is a candidate key",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Normalization"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#entity",
-    "href": "posts/04_archives/phd_2_2/phd_database/03.html#entity",
-    "title": "The Relational Model",
-    "section": "entity",
-    "text": "entity\na formal name for a thing that is being tracked one theme or topic (just single table)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "The Relational Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#relation",
-    "href": "posts/04_archives/phd_2_2/phd_database/03.html#relation",
-    "title": "The Relational Model",
-    "section": "Relation",
-    "text": "Relation\n\na two-dimensional table that has specific charateristics\nCell of the table hold single value\nAll entries in a column are of the same kind\nNo two rows in a table are identical",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "The Relational Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#domain-cartesian-product",
-    "href": "posts/04_archives/phd_2_2/phd_database/03.html#domain-cartesian-product",
-    "title": "The Relational Model",
-    "section": "domain & cartesian product",
-    "text": "domain & cartesian product\n\ndomain: set of possible values for a column\ncartesian product: set of all possible combinations of rows from two tables",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "The Relational Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#presenting-relation-structures",
-    "href": "posts/04_archives/phd_2_2/phd_database/03.html#presenting-relation-structures",
-    "title": "The Relational Model",
-    "section": "Presenting Relation Structures",
-    "text": "Presenting Relation Structures\nRELATION_NAME(PrimaryKey, ForeignKey, ColumnName, …)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "The Relational Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#key",
-    "href": "posts/04_archives/phd_2_2/phd_database/03.html#key",
-    "title": "The Relational Model",
-    "section": "key",
-    "text": "key\n\nidentify a row\nUnique Key(Primary Key)\nNonUnique Key(Foreign Key)\nComposite Key: Primary key가 두개 이상. Surrogate Key로 대체되곤 함.\nCandidate Key: unique한 columns\nSurrogate Key: 자동으로 할당되는 일련번호\nIDENTITY (start, increment)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "The Relational Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#referential-integrity-constraint",
-    "href": "posts/04_archives/phd_2_2/phd_database/03.html#referential-integrity-constraint",
-    "title": "The Relational Model",
-    "section": "Referential Integrity Constraint",
-    "text": "Referential Integrity Constraint\n\n모든 foriegn key는 존재하는 primary key와 매칭되야한다.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "The Relational Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/03.html#null-values",
-    "href": "posts/04_archives/phd_2_2/phd_database/03.html#null-values",
-    "title": "The Relational Model",
-    "section": "Null values",
-    "text": "Null values\n\nrequired, allow nulls 설정으로 null값을 허용할지 결정",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "The Relational Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/04-2.html#ddl-data-definition-language",
-    "href": "posts/04_archives/phd_2_2/phd_database/04-2.html#ddl-data-definition-language",
-    "title": "SQL",
-    "section": "DDL (Data Definition Language)",
-    "text": "DDL (Data Definition Language)\n\nCREATE (database, tables, views, indexes)\nALTER: modify columns / constraints\nDROP (database, tables, views, indexes)\nTRUNCATE: delete table data while keeping structure.\nMS Access에서는 지원하지 않음 =&gt; DELETE FROM table\n\nCREATE TABLE student (\n    id INT NOT NULL,\n    CourseID INT NOT NULL,\n    Name VARCHAR(100) UNIQUE, # unique는 자동으로 index 생성\n    Age INT,\n    CONSTRAINT STUDENT_PK PRIMARY KEY (id),\n    CONSTRAINT \n    COURSE_FK FOREIGN KEY (CourseID) \n    REFERENCES Course(CourseID) \n    ON UPDATE CASACADE \n    ON DELETE NO ACTION\n);\nALTER TABLE student ADD COLUMN major VARCHAR(100);\nALTER TABLE student ADD CONSTRAINT STUDENT_FK FOREIGN KEY (CourseID) REFERENCES Course(CourseID) ON DELETE CASCADE;\nALTER TABLE student ADD CONSTRAINT AGE_CHECK CHECK (Age &gt; 0);\nALTER TABLE student DROP CONSTRAINT AGE_CHECK;\nDROP TABLE student;\nTRUNCATE TABLE student;\n\nCREATE VIEW [view name] AS SELECT * FROM student;\n\nDML (Data Manipulation Language)\nINSERT INTO student VALUES (1, 'Alice', 20);\nUPDATE student SET age = 21, Name = 'babo' WHERE id = 1;\nDELETE FROM student WHERE id = 1;\n\n\nDQL (Data Query Language)\nA query create temporarily a new table.\nthis allows a query to create a new relation and feed information to another query as a subquery\nSELECT * FROM student;\nSELECT name \nFROM student \nWHERE age &gt; 20\nORDER BY name DESC, age ASC;\nSELECT DISTINCT name FROM student;\nSELECT name, age FROM student WHERE Age &gt; (SELECT AVG(Age) FROM student);\n\n\nJOIN\n\ninner join(equijoin)\n\nexplicit join: FROM table1 INNER JOIN table2 ON table1.id = table2.id\n(MS Access에서는 INNER를 명시해야됨)\nimplicit join: FROM table1, table2 WHERE table1.id = table2.id\n\nouter join\n\nleft outer join: FROM table1 LEFT JOIN table2 ON table1.id = table2.id\nright outer join: FROM table1 RIGHT JOIN table2 ON table1.id = table2.id",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "SQL"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#귀의-구조",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#귀의-구조",
-    "title": "Auditory Haptic",
-    "section": "귀의 구조",
-    "text": "귀의 구조",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#sound-waves",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#sound-waves",
-    "title": "Auditory Haptic",
-    "section": "Sound Waves",
-    "text": "Sound Waves\n\n소리는 압력이 변하는 것\n소리는 vibrating object에 의해 발생한다\n연못에 돌을 던지면 생기는 wave와 비슷함\n어떤 분자든 움직이고 압력을 만들 수 있는건 전달 가능함\n물속에서도 소리가 전달됨. (밀도가 높아서 더 빨리 전달됨)\n고체(층간소음, 철로), gas\n진공에서는 매질이 없어서 소리가 안들림(우주 공간) &lt;-&gt; 빛은 매질이 없어도 이동됨\n파동이 전기신호로 바뀌어서 들림\n\n\n물리적 특성\n\n\namplitude: 진폭의 크기 -&gt; volume\nwavelength: 진폭의 넓이 -&gt; pitch, 1초 안에 몇 번 진동하는지(주파수 10Hz = 10번 진동)\n\n\n\n사람이 느끼는 perception\n\nPitch(소리의 높낮이)\n사람이 들을 수 있는 주파수는 20Hz ~ 15kHz\n어릴 때는 고주파를 잘 들음 (고주파에 고막이 반응을 못해서)\n사람은 고주파에 반응을 잘 못함\n절대 음감이랑 관련\nTimbre(음색)\n음악에서는 악기마다 다른 음색이 있음\n음색은 여러 주파수의 하모니(complex set of resonance공명)로 결정됨\nAmplitude and loudness\n소리의 물리적 강도가 2배 증가할 때 우리가 느끼는 소리의 크기(loudness)가 배로 느껴짐(찾아보니까 2배는 아니긴 함) 160db까지 들을 수 있음 130db부터는 고통스러움\nSpatialisation\n소리는 어느 방향에서 소리가 나도 들을 수 있음 (omnidirectional).\n시각은 볼 수 있는 방향만 볼 수 있음\n\n\n\nSound intensity (dB)\n\n데시벨(dB)은 기준점에서 로그 스케일만큼 증가. (선형적 x)\nthreshold: 주변의 소음에 비해 소리가 들리는 정도. 주파수에 따라 다른 특성을 가짐.\n\n\n\n85 dB에 장시간 노출되면 청력 손상\n\n신경의 손상: 장시간 센 자극에 hair cell이 손상됨\nconduction damage: 소리의 세기가 너무 커서 고막이나 뼈에서 손상이 생김",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#masking-effect",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#masking-effect",
-    "title": "Auditory Haptic",
-    "section": "Masking Effect",
-    "text": "Masking Effect\n\n청각에서만 주로 나타남.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#equal-loudness-contour",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#equal-loudness-contour",
-    "title": "Auditory Haptic",
-    "section": "Equal Loudness Contour",
-    "text": "Equal Loudness Contour\n\n곡선은 사람들이 소리가 같은 크기라고 느끼는 지점을 나타냄\n인간 청력의 threshold가 주파수마다 다르다.\n저주파수와 고주파수는 중간 주파수에 비해 같은 강도에서 상대적으로 작게 들립니다",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#locating-sounds",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#locating-sounds",
-    "title": "Auditory Haptic",
-    "section": "Locating Sounds",
-    "text": "Locating Sounds\n왼쪽 귀와 오른쪽 귀에서 들리는 소리의 차이\n\ndifference in phase(위상): 소리의 파장이 오목한 phase, 볼록한 phase 차이\ndifference in loudness: 가까운게 더 크게 들림\ndifference in onset: 가까운게 더 빨리 도달함\n\n\n여기까지가 소리의 mechanical한 특성이고, 이후는 이 소리를 인간이 어떻게 perception하는지에 관한 내용",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#hearing-without-awareness",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#hearing-without-awareness",
-    "title": "Auditory Haptic",
-    "section": "Hearing Without Awareness",
-    "text": "Hearing Without Awareness\n\nCocktail Party Effect: 주변 소음에서도 특정 소리를 들을 수 있음\nEx) 친구 이름을 듣고 반응하는 것, 한국인들이 한국말을 잘 듣는것\nDichotic Listening: 두 귀에 다른 소리를 들려주고 정보를 인식했는지 확인\nignored 귀에서 여전히 정보를 인식할 수 있다.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#alarms",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#alarms",
-    "title": "Auditory Haptic",
-    "section": "Alarms",
-    "text": "Alarms\n\nOverview\nomnidirectional한 특성때문에 visual alarm에 비해 자주 사용된다\nEx) 소방차 사이렌 소리\n\n주변 소음에 비해 충분히 db이 커야함 주변 소음과의 차이가 15dB minimal, 30dB required\n하지만 소리가 너무 크면 청각에 손상을 일으킬 수 있음\n안전상의 이유로 소리는 85 ~ 90dB 이하로 유지되어야 함\nmasking 위협때문에 여러 주파수를 혼합해서 냄\n다른 signal과 헷갈리지 않아야함\nEx) 병원의 환자실에 여러 장비가 있는데 장비마다 알람이 구분이 안되면 안됨.\nInformative and distinctive\n각각의 physical dimension(pitch(4), duration(4), amplitude(4))은 4개를 넘게 쓰지 마라\nEx) 컴퓨터 메인보드, 장비 고장 시 비프음 기준이 있음\nEx) 자동차\n\nstereotypic: 어디서 소리가 오는지\n\npitch\n\n\n\n\nNon-speech Alarm\n\nlanguage independent\n글로벌하게 가고 싶다면\nNSA가 유용하다는 증거\n클릭을할 때 딸깍 소리가 나면 실수가 덜 함\n비디오 게이머들은 소리가 없으면 게임을 못함\n일시적이고 부수적인 상태 정보 전달에 효과적\n예시) 게임에서:\n\nHP가 부족할 때 주기적인 경고음\n\n아이템 획득 시 짧은 효과음\n\n배경에서 지속적으로 재생되는 상태 알림음\n\nstereo sound로 방향을 알려줄 수 있음\n비쥬얼로는 3d 표현하기 어려움\n\n\n\nVoice Alarm\n\n자연스러운 방법으로 기기와 통신할 수 있음\nSymbolic alarm에 비해 더 많은 정보를 전달할 수 있음\nSymbolic alarm은 학습을 해야한다는 단점이 있음\nNon-Speech에 비한 한계\n\n소리가 섞이면 헷갈림\n\nmore susceptible to frequency-specific masking\n사람의 voice는 정해진 주파수가 있다.\n그 주파수에 소리가 섞이면 소리를 못들을 수 있음\n다국어 환경을 고려해야함\n\nSound Transmission Problem\n말하고자 하는 바가 전달이 잘 안될 수 있음\nEx) 파일럿 안내. 라디오에서 사용할 수 있는 대역폭이 제한되있음",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#voice-recognition",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#voice-recognition",
-    "title": "Auditory Haptic",
-    "section": "Voice Recognition",
-    "text": "Voice Recognition\nSound Transmission Problem을 해결하기 위해 사용됨\n\nArticulation index: pure bottom-up(signal의 특성에 의존) approach\nsignal이 얼마나 명확하게 잘 들리는지 평가\n1.0: 주변소음에 상관없이 잘 들리는 상태\n0.0: 주변소음에 묻혀서 소리가 들리지 않는 상태\nSpeech intelligibility measure\npoor signal quality is compensated by top-down processing =&gt; 어떻게 top-down processing을 잘 할까?를 테스트 해 보았다.\n전달하는 정보의 양을 제한, 문장의 형태로 전달하는게 좋음\n긍정이나 부정이 잘 나타나는 단어를 사용(Ok는 애매함)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#tactile-perception",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#tactile-perception",
-    "title": "Auditory Haptic",
-    "section": "Tactile Perception",
-    "text": "Tactile Perception\n\nTouch is complex\nOnly bi-directional communication channel: 접촉하거나 움직이거나 한 다음에 반응을 얻는 등, input과 output이 동시에 일어남\n환경에 대한 정보를 포괄해서 전달함\n온도, 표면의 거칠기, 등등\nfeedback을 제공함\n수용체가 피부 변형을 감지함\n민감도는 단위 면적당 촉점이 얼마나 분포되어 있는지에 따라 결정됨",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#tactile-information",
-    "href": "posts/04_archives/phd_2_2/phd_human/4_Auditory_Haptic.html#tactile-information",
-    "title": "Auditory Haptic",
-    "section": "Tactile information",
-    "text": "Tactile information\n\n운동 감각을 통해 받아들이는 것 (force feedback)\n\n\n\n큰 물체는 움직이기 어렵게 함 =&gt; 더 세밀하게 조종 가능\n\n게임에서 많이 사용됨\n\n\n촉감을 통해 받아들이는 것 (vibration feedback)\n\n\n\nusing vibration for information transfer\nsimilar physical characteristics to auditory signal\n\namplitude, frequency, duration, wave pattern\n\nused for navigation aid\n중요한 정보는 시각, 나머지 feedback은 촉각, 청각으로 받아들임.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Auditory Haptic"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/2_human_information_processing_model.html#인간-정보-처리-과정",
-    "href": "posts/04_archives/phd_2_2/phd_human/2_human_information_processing_model.html#인간-정보-처리-과정",
-    "title": "Human Information Processing Model",
-    "section": "인간 정보 처리 과정",
-    "text": "인간 정보 처리 과정\n\n\n1. 감각 처리 (Sensory Processing)\n\n주요 감각: 시각, 청각, 운동 감각(proprioception)\n운동 감각: 생리적 신호, 중력과 가속도에 따른 몸의 위치 감각\nSTSS (Short Term Sensory Store)\n\n각 감각기관별 정보 저장 공간\n주의 집중 불필요, 정보 그대로 저장\n빠르게 소멸 (예: 시각 - Iconic Memory 200-300ms, 청각 - Echoic Memory 2-8s)\n\n\n\n\n2. 지각 (Perception)\n\n정보 해석 과정\nTop-Down Processing: 과거 기억으로 정보 해석 (Long Term Memory 활용)\nBottom-Up Processing: 새로운/익숙하지 않은 정보 해석\nPreattentive Processing: 주의 집중 없이 자동적 정보 해석 (예: Stroop Effect)\n\n\n\n3. 주의 자원 (Attention Resources)\n\n전반적인 정보 처리 과정에 영향\nSearch Light Metaphor: 주의 집중의 비유적 설명\n주의 실패 유형:\n\nSelective Attention: 잘못된 곳에 집중\nFocused Attention: 주의 집중 부족\nDivided Attention: 다중 작업 시 주의 분산\nSustained Attention: 장시간 주의 유지 실패\n\n\n\n\n4. 장기 기억 (Long Term Memory)\n\n학습을 통한 정보 저장\n유형:\n\nDeclarative Memory (What): 사실적 지식 (Episodic, Semantic)\nProcedural Memory (How): 절차적 지식\n\n기억 실패: Encoding, Storage, Retrieval 단계에서 발생 가능\n\n\n\n5. 인지 (Cognition)\n\nWorking Memory:\n\n단기적 정보 처리 및 조작\n제한된 용량 (7±2 items)\nLong Term Memory와 Perception으로부터 정보 획득\n\n\n\n\n6. 반응 선택 (Response Selection)\n\n의사결정 이론:\n\nSignal Detection Theory\nExpected Value\nBayesian Decision Theory\nMulti-attribute Theory\n\nInformation Processing\n\nAttention and working memory\nHeuristics and biases: 인간은 합리적이지 않음\n\nNaturalistic Decision Making: Recognition-Primed Decision Model (직감)\n\n\n\n7. 반응 실행 (Response Execution)\n\n\n8. 시스템 환경 (System Environment)\n\nclosed-loop 형태의 피드백 제공\ndelay가 발생시 성능 저하",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Human Information Processing Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#display-purpose",
-    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#display-purpose",
-    "title": "Display",
-    "section": "Display Purpose",
-    "text": "Display Purpose\n\n사람의 인지와 시스템의 실제 정보 사이의 커뮤니케이션을 위한 중간 다리 역할.\n시스템이 무엇을 하는 중이고, 무엇을 해야 하고, 어떻게 작동하는지 오퍼레이터에게 전달하기 위한 목적(mental model을 만들기 위함)\n설계된 sensory input을 통해서 파악하게 해야함\n다른 sensory input과 구별이 되야함.\n사용자가 이해할 수 있어야함(Compatible)\n\nConceptual Compatibility\nex) 플로피 디스크 심볼은 저장 용도로 사용됨\nmovement compatibility(pictorial realism): 실제와 유사한 모양을 사용하면 이해하기 쉬움\nex) 엘리베이터가 위 아래로 움직이니까 스케일을 linear로 맞춤",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Display"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#display-rules",
-    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#display-rules",
-    "title": "Display",
-    "section": "Display Rules",
-    "text": "Display Rules\n\nFour Cardinal Rules\n\n꼭 필요한 정보만 제공해라\n필요한 수준의 정확도만 제공하라 (ex. 소숫점 3자리까지만. 굳이 다 보여주지 않아도 됨)\n가장 direct, simple, understandable, and usable하게 정보를 제공하라\nex) 지하철 디스플레이에서 열차가 언제 도착하는지 알려줘야 하는데 이상한걸 보여줘서 멘탈 워크로드가 높아진다.\n고장이나 작업 실패의 경우 명확히 어디서 문제가 발생했는지 바로 알아차리게 제공하라\n첫번째 원칙을 위반할 수도 있다(alarm flooding)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Display"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#types-of-displays",
-    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#types-of-displays",
-    "title": "Display",
-    "section": "Types of Displays",
-    "text": "Types of Displays\n\nAuditory\n\nDetectable\nDiscrmination\nMeaningful\nMain problem: hearing ability depends on environments / background noise (auditory spatial coding 인지하기 힘듦)\n\nTactual(Haptic)\n\nDetectable: 손처럼 민감한 부분은 가능하지만, 둔감한 부분은 어렵다\nDiscrimination: nomal job이랑 구분되어야 한다\nMeaningful: tactual display에서는 어려운 부분. convention이 없음\nMain problem: 잘 안쓰이고, 손 이외에는 사용하기 어렵다\n\nOlfactory Displays - smell\n\nDetectable\nDiscrimination\nMeaningful\nMain problem: 냄새에 대한 민감도가 사람마다 다르다. regenerate 하기가 어렵다. 후각이 금방 마비된다. 전쟁에서 후각을 이용한 의사전달을 시도하기도 함",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Display"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#visual-displays",
-    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#visual-displays",
-    "title": "Display",
-    "section": "Visual Displays",
-    "text": "Visual Displays\n\nAppropriate if:\n\nNoisy environment\n한 자리에 머무는 경우(traditional. 옛날엔 들고 다니기 어려웠음)\nmessage가 길거나 복잡한 경우, spatial coding이 필요한 경우\n\nGuiding principles for design:\n\n눈에 잘 띄어야함(배경과 전경의 차이가 구분되어야함)\nLegible, 쉽게 보고 읽을 수 있어야함(ex. 엠뷸런스의 글씨)\nUnderstandable\nmain problem: 시각이 overload됨. 정보가 너무 많음\n\n\n\nDynamic Information\n변화하는 정보를 보여주는 것에는 4가지 원칙이 있다.\n\nSituation awareness\n가까운 미래에 무슨 일이 일어날 지 예측할 수 있어야함\n상황 인식 3단계:\n\nPerception: 무엇이 일어나고 있는지 인지(check readings)\nComprehension: 그것이 무엇을 의미하는지 이해\nProjection: 미래에 무슨 일이 일어날지 예측\n\n\n\nQuantitative readings\n정확한 값을 보여주는 용도로 사용됨\n\n고정 스케일의 움직이는 초점 (generally best)\n움직이는 스케일의 고정 초점\ndigital display (변동성이 큰 경우 그냥 숫자만 보여주는것보다 스케일, 초점을 사용하는게 더 효과적임)\nDesign of Analog Scales\n\n일반적으로 fixed scale, moving pointer가 좋다\n숫자의 증가는, linear 스케일에 움직이는 포인터가 자연스럽다.\nex) 온도계, 엘리베이터\n같은 작업을 하는 여러개의 pointer, scale indicator를 섞어 쓰지 말아라.\ncontrol, display가 혼합된경우 control로 pointer로 움직여라\n작은 변화 감지가 중요한 경우는 moving pointer가 더 좋다\n범위가 너무 큰 경우는 moving scale이 더 좋다\n\n\n\n\nQualitative readings\n대략적인 값, 트렌드, 변화의 비율, 변화의 방향을 보여주는 용도로 주로 사용됨.\n\ncontinuous data converted to range\n의미를 강조하고 싶을 때 color를 보조 도구로써 보여주기도 함\nShape coding\nex) 교통 표지판 8각형은 stop을 의미\nZone coding\nex) 신호등의 위치가 고정되어 있음\n\nRedundancy gain: 시각 청각 촉각, 혹은 칼라코드, 위치코드 같이 여러가지 정보(multi-modal)를 제공하면 정확히 해석할 수 있다.\n\n\nCheck readings\n시스템의 상태를 확인할 수 있어야함\n\nqualitaative reading의 특별한 case\n정상인 상태는 명확히 보여줘야함\n정상적인 것은 align해서, 비정상적인 것은 삐뚤어지게 설계해서 pre-attentive processing을 유도하라\n시각 정보를 보완하기 위해 청각 시그널을 제공하라",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Display"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/7_display.html#signal-and-warning-lights",
-    "href": "posts/04_archives/phd_2_2/phd_human/7_display.html#signal-and-warning-lights",
-    "title": "Display",
-    "section": "Signal and Warning Lights",
-    "text": "Signal and Warning Lights\n실질적인, 잠재적인 위험 상황을 알리는 용도\n일반적으로 하나의 라이트만 사용함\n\nsteady-state light: 지속적인 싱태를 나타냄\nflashing light: 위급 상황 (flash 비율은 3-10 per seconds)\n배경에 비해 최소 두 배 이상 밝아야함\n유효 시야 30도 안쪽에 배치해야함",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Display"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#눈의-구조",
-    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#눈의-구조",
-    "title": "Sensor System (Visual)",
-    "section": "눈의 구조",
-    "text": "눈의 구조\n\n결막 (conjunctiva): 눈을 보호\n각막 (cornea): 빛을 굴절\n홍채(iris): 빛의 양을 조절\n동공 (pupil): 빛이 들어오는 곳\n수정체(lens): 빛을 집중하는 역할\n공막 (sclera): 눈을 보호\n유리체 (vitreous humor): 눈을 유지\n망막(retina): 빛을 감지\n망막의 세포\n\nNerve cell: 빛을 감지\nPhotoreceptor: 빛을 감지\n\n간상세포(cone): 세부적인 정보, 색상 인식, photopic conditions. fovea에 몰려있음. 짧은 파장의 색에 더 민감함\n막대세포(rod): 어두운 곳에서 활동, 주변 시야 빛을 받으면 rhodopsin이 분해됨, scotopic conditions. 긴 파장의 색에 더 민감함.\n\nChoroid: 영양 공급\n\n시신경(optic nerve): 망막에서 뇌로 정보 전달\n맹점(optic disk)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Sensor System (Visual)"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#light-adaption",
-    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#light-adaption",
-    "title": "Sensor System (Visual)",
-    "section": "light adaption",
-    "text": "light adaption\n\n눈이 어두운 곳에서 밝은 곳으로 이동할 때, 시간이 걸림\n명순응동안 rod sensitivity가 감소하고 cone sensitivity가 증가\n어두운 곳에서 밝은 곳으로 이동할 때, 눈이 눈부실 수 있음\n암순응동안 cone sensitivity가 감소하고 rod sensitivity가 증가",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Sensor System (Visual)"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#color-vision",
-    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#color-vision",
-    "title": "Sensor System (Visual)",
-    "section": "color vision",
-    "text": "color vision\n\ncone cell의 photo-pigment(RGB 64:32:2)로 색상을 인식\n망막 중앙에는 파란색이 없음\nsharpness는 brightness와 color difference에 영향을 받음\n사람은 7백만가지 색상을 인식할 수 있음",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Sensor System (Visual)"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#design-with-color",
-    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#design-with-color",
-    "title": "Sensor System (Visual)",
-    "section": "design with color",
-    "text": "design with color\n\nMono-chromatic: 단색\nAnalogous: 비슷한 색\nComplementary: 반대 색\n\n\nbefore design\n\n굳이 흑백을 안쓰고 color를 사용해야하는 이유가 있는지\ncolor가 텍스트나 object에 적합한지\ncolor가 이해나 관습에 도움이 되는지\n노안 / 색맹 고려",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Sensor System (Visual)"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#depth-perception",
-    "href": "posts/04_archives/phd_2_2/phd_human/3_sensory_system.html#depth-perception",
-    "title": "Sensor System (Visual)",
-    "section": "depth perception",
-    "text": "depth perception\n\ndepth judgment\n\nobject-centered cues\n\n\nlinear perspective: 두 평행선이 좁을 수록 더 멀리 있는 것으로 인식\ninterposition(occlusion): 물체가 다른 물체를 가리면 가려진 물체가 더 멀리 있는 것으로 인식\nheight in the plane: 물체가 높이 있을수록 더 멀리 있는 것으로 인식\nlight and shadow: 빛과 그림자로 물체의 거리를 인식\nrelative size: 물체가 작을수록 더 멀리 있는 것으로 인식\ntexture gradient: 물체가 멀어질수록 세부적인 텍스처가 사라짐\nbrightness: 물체가 밝을수록 더 가까이 있는 것으로 인식\naerial perspective: 물체가 먼발에서 가까워질수록 색이 흐려짐\nmotion parallax: 물체가 빠르게 움직일수록 더 가까이 있는 것으로 인식 fixation point\n\n\nobserver-centered cues\n\n\nbinocular disparity: 두 눈의 시각적 차이\nconvergence: 눈이 물체를 바라볼 때 발생하는 각도\naccommodation: 눈의 렌즈가 물체를 바라볼 때 발생하는 조절. 가까운 물체일수록 렌즈가 더 둥글어짐",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Sensor System (Visual)"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/0_intro.html#what-is-human-factors",
-    "href": "posts/04_archives/phd_2_2/phd_human/0_intro.html#what-is-human-factors",
-    "title": "Introduction to Human Factors",
-    "section": "what is human factors",
-    "text": "what is human factors\n\nhuman factors = Ergonomics\na human-centered design philosophy &lt;-&gt; technology-centered design",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Introduction to Human Factors"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/0_intro.html#component-of-human-factors",
-    "href": "posts/04_archives/phd_2_2/phd_human/0_intro.html#component-of-human-factors",
-    "title": "Introduction to Human Factors",
-    "section": "component of human factors",
-    "text": "component of human factors\n\nhuman: physical, cognitive, group\ntask: physical + cognitive + group\nenvirnment: working environment, systems",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Introduction to Human Factors"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/0_intro.html#goal-of-human-factors",
-    "href": "posts/04_archives/phd_2_2/phd_human/0_intro.html#goal-of-human-factors",
-    "title": "Introduction to Human Factors",
-    "section": "Goal of human factors",
-    "text": "Goal of human factors\n\nReduce errors\nIncrease productivity\nEnhance safety\nEnhance comfort",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Introduction to Human Factors"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html#reaserch-meathods",
-    "href": "posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html#reaserch-meathods",
-    "title": "Research Method in Human Factors",
-    "section": "reaserch meathods",
-    "text": "reaserch meathods\n\ndescriptive Research\n관찰을 통해 데이터 묘사\n\n무엇을 측정할지\n어떻게 숫자로 표현할지\n\n\n대부분 평균, 표준편차를 대푯값으로 사용\n변수들 간의 관계를 파악하기 위해 상관분석, 회귀분석을 사용\n\n\ntypes of descriptive research\n\nobservational research\n\n\n관찰 연구를 계획할 때, 측정할 변수, 각 변수를 기록할 방법, 관찰이 이루어지는 조건, 관찰 기간 등을 식별\n\n\nsurvey research\n\n\n설문조사를 통해 데이터 수집\n\n\nincident and accident analysis\n\n\n사고나 오류를 분석하여 원인을 찾음\n사고나 오류를 줄이기 위한 대책을 마련\n\n\n\n\nexperimanetal Research\n하나 이상의 독립변수에 의도적인 변화를 주고, 그 변화가 하나 이상의 종속변수에 미치는 인과관계를 측정\n이때 다른 변수들은 통제한다\n\n예시\n\n휴대전화를 사용하는 것이 운전에 미치는 영향\n인센티브를 미리 주고 잘못 할 때마다 차감하는 것과, 잘할 때마다 인센티브를 주는 것의 차이\n\n\n\ntype of variables\n\nindependent(predictor, stratification) variable\ndependent(descriptive, criterion) variable\ncontrol variable: 이 값은 고정시키고 실험을 진행한다. 일반화하기 어렵게 한다.\nrandom variable (sigma): 통제할 수 없는 변수. 일반화하기 용이하다.\nconfounding variable: 수식에는 포함되지 않지만 주의해야하는 변수.\n\n\ndecide variables\noperational definition: 변수를 관찰 가능하고 측정 가능한 형태로 정의\n\nindependent variable\n\nRange: realistic / select a range taht will show the effect / pilot experiment\n\ndependent variable\n\nreliability: consistent. solution: increase the number of observations\nvalidity: measure what was intended\n\n\n\n\n\n\nwhy use experimental research?\n\nhumans are variable\n\n\nintra individual variability\ninter individual variability\n\n\nways to handle variability\n\n\nuse statistical techniques\ncontrol variability as much as possible\n\n\n\ntypes of experimental design\n\nsingle variable experiment\n\n\ntwo levels\nmulti levels\n\n\nfactorial design: 두개 이상의 독립변수를 조합하여 실험군을 만든다.\n\n\n변수 간 interaction effect을 확인할 수 있다.\nmore difficult to analyze\n2 x 2, 3 x 3, 2 x 2 x 2 등으로 설계한다.\nbetween-subject, within-subject를 모두 사용하는 mixed designs를 사용할 수 있음.\n\n\nbetween-subjects design: 각각의 실험군에 다른 사람들을 넣는다.\n\n\ngeneralibility 높다, intra person variability를 제거할 수 있다.\n\n\nwithin-subjects design: 같은 사람들을 다른 실험군에 넣는다.\n\n\ncost-effective, less variability, inter person variability를 제거할 수 있다.\n\n\n\n\nevaluation research\n시스템이나 제품이 목적을 충족하는지 평가\n\nusability testing: 사용자가 제품을 실제로 사용하면서 발생하는 문제점 파악\n\n태스크 완료 시간, 오류율, 사용자 만족도 등을 측정\n\ncost-benefit analysis: 제품 또는 시스템 도입의 경제성 평가\n\n직접 비용(하드웨어, 소프트웨어 구입비, training cost 등)\n예상되는 이익(생산성 향상, 오류 감소 등)을 비교 분석",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Research Method in Human Factors"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html#research-design",
-    "href": "posts/04_archives/phd_2_2/phd_human/1_reaserch_method.html#research-design",
-    "title": "Research Method in Human Factors",
-    "section": "research design",
-    "text": "research design\n\nqualitative research\n\n보통 마케팅에서 진행.\n\n\n\nquantitative research\n\nexperiments\ncorrelational observation\nsurveys and questionnaires\n\nsample: 랜덤하게 샘플링하는게 중요\nrating\nbias: 질문의 순서, 질문의 내용, 질문의 방향\n\narchival research\n\n\nfield study\n\nuncontrolled\nresults may be more generalizable to real-world situations\nhigher cost\ndifficult to replicate\ndifficult to control extraneous variables\n\n\n\nlab experiment\n\ncontrolled\nprecise replication\nlower cost\nmore flexibility\nreal-world generalizability may be limited",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Research Method in Human Factors"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#attention의-정의",
-    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#attention의-정의",
-    "title": "Attention",
-    "section": "Attention의 정의",
-    "text": "Attention의 정의\n\nAttention acts as a means of focusing limited mental resources on the information and cognitive processes that are most salient at a given moment\nFocusing most salient at a given moment:\n\n주의는 Search light로 비유됨\n한 영역에 집중하면 다른 부분은 배제.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Attention"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#attention의-네-가지-주요-측면",
-    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#attention의-네-가지-주요-측면",
-    "title": "Attention",
-    "section": "Attention의 네 가지 주요 측면",
-    "text": "Attention의 네 가지 주요 측면\n\nSelective, Focused, Divided, Sustained Attention은 독립적이지 않으며, 상호작용하여 주의 과정 형성.\n\n\nFocused Attention (집중적 주의)\n\n특정 과업에 집중하고, 외부 방해 요인을 배제하는 능력.\n방해 요소(Distraction)를 최소화하여 현재 작업에 주의 집중.\n예시:\n\n냉장고에서 음식을 꺼내려는 도중 질문을 받으면 집중력이 분산되어 원래 작업을 잊어버릴 수 있음.\n\n\n\n\nDivided Attention (분할 주의)\n\n여러 작업을 동시에 수행하며 주의를 분배.\nSelective Attention과의 차이:\n\nSelective Attention: 특정 자극을 선택적으로 받아들임.\nDivided Attention: 여러 작업 간 우선순위를 메기고 주의 자원 분배.\n\n예시:\n\n운전 중 대화하며 라디오 듣기.\n각 작업에 필요한 시간과 노력을 어떻게 배분할지를 결정.\n\n\n\n\nSustained Attention (지속적 주의)\n\n주의가 높거나 낮거나보다는, 장시간 동안 주의를 유지하는 능력.\n높은 주의 레벨 필요 시:\n\n정보를 놓치는 경우가 발생할 가능성이 높음.\n여러 정보와 자극을 동시에 처리.\n예: 주식 거래에서 여러 종목을 모니터링.\n\n낮은 주의 레벨 시:\n\n자극 부족으로 주의 산만 발생.\n예: CCTV 감시 업무.\n\n\n\n\nSelective Attention (선택적 주의)\n\n여러 감각 자극 중 중요한 정보를 선택적으로 처리.\n시각, 청각, 촉각 등 다양한 감각 경로를 통해 들어오는 자극에서 의미 있는 정보 선별.\n예시:\n\n운전 중:\n\n표지판, 신호등, 앞차의 움직임 → 중요한 정보.\n옆 보행자의 얼굴이나 주변 불필요한 자극 → 중요하지 않은 정보.\n\n\n\n\n\nMental Workload (정신적 작업 부하)\n\n동시에 수행할 수 있는 과업이 몇 개인지 혹은 이 과업이 수행하기에 attention scale을 넘어가는 것인지 분석 용도\n측정 방법:\n\n주관적 설문:\n\n작업자가 느끼는 주관적 부담을 평가.\n\n생체 반응 분석:\n\n심박수, 뇌파 등 생리적 데이터를 활용.\n\n부과 과업(parallel tasking):\n\n추가 과업을 부여하여 작업 부하 평가.\n예시:\n\n운전 중 숫자 거꾸로 세기.\n특정 숫자를 기억하고 응답(예: N-back 테스트).\n\n\n\n워크로드 증가의 결과 특정 작업의 실패 확률 증가한다.\n\n\n\nAttention의 결정 요인\n\n의지\n\n개인의 목표와 필요에 따라 주의 집중.\n예: 차선 변경 시 후방 차량 확인.\n\ncaptured by salience and grouping\n\n공간, 강도, 색상, 크기, 음조 등 외부 요인.\n강렬한 자극이 주의를 끌 가능성 높음.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Attention"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#selective-attention",
-    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#selective-attention",
-    "title": "Attention",
-    "section": "Selective Attention",
-    "text": "Selective Attention\n\n특정한 자극(예: 시각적 또는 청각적 정보)에 주의를 집중하며, 다른 자극을 배제하는 과정.\n중요도에 따라 특정 정보를 선택적으로 처리하며 불필요한 정보는 억제.\nattention이 sensory memory로 부터 들어온 정보의 filter나 gateway나 bottle neck으로 작용한다고 봄\n\n\n작동 원리\n\nTop-down Processing (Mental model):\n\n개인의 경험과 목표에 기반하여 주의 집중 전략을 개발.\n예: 초보 운전때 앞만 보고 가다가 숙련이 되면 사이드미러 같은 주변도 보게 됨.\n\nBottom-up Processing (자극 기반 처리):\n\n강렬하거나 눈에 띄는 자극에 주의가 끌림.\n예: 갑작스러운 소리나 반짝이는 신호등.\n결정 요인\n\nSalience Source: 자극의 강도(밝기, 소리 크기 등).\n\nInformation Access Trade-offs: 특정 정보를 처리함으로써 얻는 이득.\n\n\n\n\nBottleneck Model\nEarly Selection Theory\n- sensory memory까지는 잘 오지만, Attention filter에 선택이 된게 처리가 되고 나머지는 처리가 안 된다.\n- 감각 단계에서 물리적 특성(의미가 아닌)을 기준으로 정보 필터링.\n- 폐기된 정보는 행동에 미치는 영향 없음.\n- 한계: 칵테일 파티 현상(의미 정보 처리 설명 불가).\n\nLate Selection Theory\n- 모든 정보가 cognition / working memory까지 전달 후 선택.\n- 식별되지 않은 정보는 작업 기억의 제한된 용량으로 인해 빠르게 잊혀짐.\n- 선택되지 않은 정보도 행동에 영향을 미침.\n- 광고 실험 - 인지하지 못하는 정보(빠르게 잊어버려서)에 의해서도 행동의 변화가 있을 것이다.\n\n\nTask\nGeneral orientation and scene scanning\n- 그림을 보거나 웹 브라우징\n감독 제어 (Supervisory Control)\n- 자동화된 시스템에서 이상 징후를 탐지.\n- 주로 AOI(Area of Interests)를 스캐닝 함.\nAOI는 여러개가 있음. 시간, 중요도, 과업의 컨텍스트에 따라서 다르게 설정됨\nspecific task-related information이 있는 물리적 위치\nAOI를 몇개를 만들고, 이들에 대한 시선의 이동을 어떻게 만들것인가가 중요한 issue - 예시:\n자율주행 차량 또는 산업 기계 감독.\n제어 패널에서 비정상적인 지표 확인 (예: 전력 공급 문제, 자원 부족).\n탐지 (Noticing)\n- 예상치 못한 사건이나 환경 변화 감지.\n- 예시:\n- CCTV로 비정상적인 활동 탐지.\n- 주요 시스템 성능의 갑작스러운 변화 인식.\n탐색 (Searching)\n- 방해 요소 속에서 특정 목표를 찾는 활동.\n- 예시:\n- 공항에서 수하물의 X-ray 검색.\n읽기 (Reading)\n- 책이나 디스플레이에서 정보를 읽고 이해.\n- 예시:\n- 계기판의 게이지 읽기.\n확인 (Confirming)\n- 작업이나 과정의 결과를 확인.\n- 예시:\n- 비행기 바퀴가 잘 내려왔는지 확인\n선택적 주의 과업 실패는 중요 정보를 놓치거나 잘못 해석하는 경우 발생할 수 있다.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Attention"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#seev-model",
-    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#seev-model",
-    "title": "Attention",
-    "section": "SEEV Model",
-    "text": "SEEV Model\nvisual attention에 영향을 주는 요소들을 설명\n\nBottom-up factors\n\nSalience: cue의 특징\nEffort: AOI로 이동하는데 드는 비용\n선형적으로 증가하는건 아니고, 그룹핑 할 수 있음.\n(Within foveal vision) 중심시에서 초점 변화. 멀리있는거에서 가까이 있는거 보는거 &lt; Eye movement &lt; Head movement &lt; Body\n중요한 정보는 cost가 작은 쪽에 배치를 해야함.\n\n\n\nTop-down factors\n\nExpectancy: 일어날 것 같은거에 주의를 더 많이 집중. mental model에 의해 예측 능력이 생길 수 있음.\nValue: 이것에 집중했을 때 얻는 이득, 보지 않았을 때 지불하는 비용\n\n\n\nGuidline\n\n중요한 AOI는 salience가 높아야함\n사용 빈도가 높은 AOI 사이의 거리는 가까워야함\n순차적인 디스플레이도 서로 가깝게 배치해야함.\n\n\n\nChange Blindness\n\n발생 원인\n\n멘탈 워크로드가 높은 경우\n눈에 띄는 변화(Slient change)는 발견하기 쉬움\n중심시에서 멀리 떨어진 곳에서 변화가 발생하면 탐지하기 어렵다.\n시야 밖에서 일어나는 변화는 인지하기 어려움(화면이 깜빡이면서 변하면 animation 효과가 안나타남)\n예상치 못한 변화는 탐지하기 어려움.(top-down processing)\n특정 위치를 응시(fixation)하고 있어도 집중(attention)이 부족하면 변화를 인지하지 못함.\n\n\n\n\nSearch Task의 유형\n\nSerial Search\n\n하나씩 순차적으로 탐색, 탐색 시간이 항목 수에 비례.\n\n예: 긴 텍스트 리스트에서 특정 단어 찾기. 같은 그림 2개 찾기\n\nParallel Search\n\n눈에 띄는 단서(pop-out effect)를 이용해 한 번에 탐색.\n\n5 search items is the same for 50 search items\n\npreattentive process로 유발됨\n\nParallel Search를 유도하는 방법\n\n색상, 크기, 대비(contrast), 회전\n\nmotion\n\nfeature를 adding하는건 찾기 쉬운데 missing하는건 찾기 어려움\n\nO안에서 Q 찾기 vs Q안에서 O 찾기\n\n깜빡이는 곳에서 안깜빡이는거 찾기 vs 안깜빡이는거에서 깜빡이는거 찾기",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Attention"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/6_attention.html#divided-attention",
-    "href": "posts/04_archives/phd_2_2/phd_human/6_attention.html#divided-attention",
-    "title": "Attention",
-    "section": "Divided Attention",
-    "text": "Divided Attention\n\n개념\n\n일반적으로 단순 작업보다는 멀티 태스킹이 많이 일어남.\n\n단순 작업: 라면 끓일 때 진짜 라면만 순서대로 끓임. (멀티테스킹 x)\n\n복잡 작업: 라면을 끓이면서 설거지도 하고, 반찬도 만들고, 카톡도 하고, … (멀티테스킹 o)\n\n여러 작업을 동시에 수행하면서 주의를 분배.\nAttention을 한계가 있는 자원으로 바라봄\n\n\n\nResource Model\n\nCentral Resource Theory:\n주의 자원을 단일 통으로 간주. 예: 교차로 진입 시 운전에만 집중, 라디오 듣기같은 다른 작업은 집중을 못함.\nMultiple Resource Theory:\n주의 자원이 감각기관의 특성, 과업의 특성에 따라 별개로 존재\n예: 시각(도로), 청각(라디오) 자원을 분리 사용.\n작업 간 유사성이 높을수록 분배 어려움.\n예: 운전 중 영화 감상(둘 다 시각 자원 사용).\n\n\n\n주의 자원과 훈련의 문제\n주의 자원은 고정인가, 훈련으로 확장 가능한가?\n\n리소스 차이는 명확히 증명되지 않았음.\n전략을 통한 과업 배분 및 우선순위 설정 → 성능 향상.\n반복적 학습과 자동화 → 개별 과업 및 주의 배분이 자연스럽게 효율화.\n\n\n\nAttention as capacity\n\n어떤 정보를 얼마나 주의 깊게 받아들일지 결정\n어떤 정보를 선택할 것인지는 disposition(형태), intentions, arousal, evaluation에 의존\n받아들이는 정보의 특성(visual, auditory), 반응(manual, vocal)에 따라 리소스 풀을 나눌 수 있다.\ntasks interfere to the degree that they tap into the same pool of resources\n\n\n\nUnitary Resource Model (단일 자원 모델)\n\n\n주의(attention)를 제한된 자원으로 봄\n과업 수행에 필요한 자원의 양이 가용 자원을 초과하면 성능 저하\n\n\n\nMultiple Resource Model (다중 자원 모델)\n\n서로 다른 유형의 과업은 다른 자원을 사용\n하지만 한쪽의 workload가 높으면 다른쪽에 영향을 미칠 수 있음.\n비주얼 테스트 두 개를 수행하는 것이 비주얼-청각 테스트보다 더 어려움\n한 객체의 두 가지 특징에 주의를 기울이는 것이 두 객체의 한 가지 특징에 주의를 기울이는 것보다 쉬움\nEx) 특성을 여러 막대로 보여주는것보다 육각형으로 보여주는게 더 보기 쉬움\n\n\n\nPerceptual Modalities\n\nAuditory,Visual, and Tactile Perceptual modalities에 사용하는 resource가 전부 다름\nVisual은 Focal과 Ambient가 서로 다른 자원을 사용함\nCross-modality가 15%정도 더 효과가 있음\ntactile은 auditory랑 비슷함.\n\n\n\ncoding\n\nspatial, verbal\nauditory verbal verbal and visual spatial manual is efficient\nverbal은 단 너무 길면 좋지 않다.\n모든 채널에서 다 쓸 수는 없다. (tactile 같은 경우에는 verbal 코딩이 없음)\n\n\n\nAttentional Allocation during Time-sharing: Skill or Ability?\n\nIf skill:\nAttentional allocation should be trainable\nSkills developed in one task transfer to unrelated tasks.\nIf ability:\nNo evidence supports the existence of a universal “multitasking ability.”\nPeople excel at specific tasks due to familiarity and automation, not inherent multitasking talent.\n\n\nPractical Implications\n\nOperator training:\nTraining must develop automaticity in single-task skills to reduce resource demand\nTraining of attentional allocation and time-sharing will help dual-task performance\nOperator selection:\ntime-sharing ability가 좋은 사람을 선택하는 것보다는 single-task performance가 좋고 자동화가 잘 사람을 선택하는 것이 더 좋음\n\n\n\n\nSystem design이나 multi-task performance를 측정할 때 좋은 것\n\nTask analysis나 multiple resource model를 사용하는 것이 좋다.\nTask의 어떤 면이 효율적으로 time-shared 될 것인가?\nTask의 어떤 면이 interference를 일으킬 것인가?\ninterference를 최소화하기 위해 어떻게 디자인 해야하나?\nex) driving할 때 손과 발을 따로 사용하게 하기\nTime-sharing efficiency, task performance, and mental workload를 고려해야한다\n(멘탈 워크로드 측정은 아직도 쉽지 않다.)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Attention"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/8_control.html#basic-control-task-and-device",
-    "href": "posts/04_archives/phd_2_2/phd_human/8_control.html#basic-control-task-and-device",
-    "title": "Control",
-    "section": "Basic Control Task and Device",
-    "text": "Basic Control Task and Device\n\n\n\n상태를 체크할 때는 toggle switch, 눌렀다 떼는 건 push button\n레버도 상태를 체크할 때 사용. 그 중 큰 힘이 필요한 경우. continuous setting에서는 slider가 쓰임\nselector switch는 lever랑은 다르게 discrete한 상태가 있음 (선풍기 버튼)\n조이스틱은 보통 가속도(2D, 멀리 밀면 빨리 가는 애)를 제어하거나 속도(1D, 버튼 조이스틱)를 제어하는데 사용. 마우스는 위치를 제어.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Control"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/8_control.html#principles-to-design-of-control-device",
-    "href": "posts/04_archives/phd_2_2/phd_human/8_control.html#principles-to-design-of-control-device",
-    "title": "Control",
-    "section": "15 principles to design of control device",
-    "text": "15 principles to design of control device\n\nAttention principles\n\nProximity compatibility\n\n컨트롤 하고자 하는 대상과 컨트롤이 가까워야 한다.\n비상 스위치는 가까이 있어야 한다.\n\n\n\nAvoid resource competition\n\n같은 physical or cognitive resource를 사용하는 control은 피해야한다.\nex) 레버로 속도, 방향 모두 제어\n\n\n\n\nPerceptual principles\n\nMake accessible\n\nphysical accessibility: 손이 닿아야 한다.\ncognitive accessibility: 뭐 하는 control인지 이해하기 쉬워야 한다.\nex) 미는 손잡이는 flat하게 만든다.\n다양한 환경을 고려해야한다. (빛이나 소음이 많은 환경)\n\n\n\nMake discriminable\n\nvisual differentiation: 각각의 컨트롤 장비를 구분할 수 있게\nlogical grouping: 비슷한 기능을 하는 것끼리 묶어놓기\n\n\n\nExploit(활용) redundancy gain\n\n두개의 독립적인 정보를 제공하면 성능이 좋아진다.\n한 가지 정보가 없어도 다른 정보로 대체할 수 있다.\n\n\n\nAvoid absolute judgement limits\n\nworking memory limit(7)를 넘기지 말라.\ncontinuous vs with detents: 연속적인 조절에서 anchor point를 만들어주면 좋다.\n\n\n\n\nMemory Principles\n\nKnowledge in the world\n보편적으로 아는 표현을 사용\n\n\nBe consistent\n\n다른 상황에서도 예상 가능하고 일정한 방법으로 control이 가능해야한다.\n\n\n\nmake discriminable vs be consistent\n\n\n\n\nMental model principles\n\nLocation Compatibility\n\nSpatial Compatibility / physical similarity\n\n\n\nMovement Compatibility\n\n\n\n\nPopulation Stereotypes\n\nrotary controls: 시계방향으로 돌리면 커진다\nUp is on\nIncrease is right, Forward is faster\n\n\n\nResponse selection principles\n\nAvoid accidental activation\n\n사고로 눌리는 것을 방지해야한다.\n\n\n\nHick-Hyman Law\n\\(RT = a + b \\log_2(n+1)\\)\nN is the number of choices\n종류가 많아져도 그냥 몇개만 고민함\n\n\nDecision complexity advantage\n\n일반적으로 복잡한 선택을 적게 하는게 간단한 선택을 여러번 하는것보다 효율적이다\n\n\n\nFitt’s Law\n\n\nIndex of Difficulty: \\(ID = \\log_2(\\frac{2A}{W})\\)\nMovement Time: \\(MT = a + bID\\)\n\navoid accidental vs Fitt’s Law - target width가 구석에 있으면 width가 무한대가 된다.\n\n\nprovide feedback\ntouch screen은 haptic feedback이 없어서 불편함",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Control"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#overview",
-    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#overview",
-    "title": "Signal Detection Theory",
+    "objectID": "posts/01_projects/para_blog/0.html#overview",
+    "href": "posts/01_projects/para_blog/0.html#overview",
+    "title": "PARA Blog 제작",
     "section": "Overview",
-    "text": "Overview\n\n인간의 정보 처리 과정 중 perception에 관련된 것\nperception 단계에서 자극 뿐 아니라 노이즈도 같이 들어옴\n여러가지 신호 중 무엇이 중요한지 판단하는 것\nsiganal 탐지 과정을 정량적 모델로 분석하고 성능 평가가 목표\n인공지능 분야에서 중요성이 대두되고 있음",
+    "text": "Overview\n유튜브에서 ‘제2의 두뇌’ 관련 영상을 보고 이 구조로 제 학습 블로그에 적용하면 좋겠다는 생각이 들었습니다.\nQuarto로 만들어진 제 블로그에 이 구조를 적용하는 것이 생각보다 쉽지 않긴 했지만, 나름 해볼만 했습니다.\n사실 이 글을 작성하는 시점에는 이미 블로그 리뉴얼이 어느 정도 완료된 상태입니다.\n코드가 최적화되지 않아 따로 제작 과정을 상세히 공유하지는 않으려 합니다만, 제 GitHub 레포에서 전체 코드를 확인하실 수 있습니다.\n이전 블로그는 여기에서 확인할 수 있습니다.",
     "crumbs": [
       "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Signal Detection Theory"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#example",
-    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#example",
-    "title": "Signal Detection Theory",
-    "section": "Example",
-    "text": "Example\n\nQuality control inspector\n빵이나 과자가 찌그러졌는지 검사, 반도체 품질 검사. 요즘에는 기계가 대부분 담당\nDetection of a flashing warning light (or cctv)\n거수자 탐지\nAirport security guard\nDetecting peculiar patterns in medical imaging (x-ray)\n종양, 암세포 탐지\nMobile phone rings (sound)\nphantoms vibration\nMorning alarm is active or not (visual)\n\n주변의 제품, 서비스 문제 파악, 해결 디자인 제시, 검증",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Signal Detection Theory"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#signal-detection-theory",
-    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#signal-detection-theory",
-    "title": "Signal Detection Theory",
-    "section": "Signal Detection Theory",
-    "text": "Signal Detection Theory\n\nTrials\n\nSignal case(signal + noise): target이 존재\nNoise case(noise only): target이 없음\n\nResponse\n\nYes\nNo\n\n\n\n\nHit rate: P(Hit) = Number of Hits / Number of Signal Trials\nFalse alarm rate: P(FA) = Number of False Alarms / Number of Noise Trials\nMiss rate: P(Miss) = 1 - P(Hit)\nCorrect rejection rate: P(CR) = 1 - P(FA)\n\n\nWhat does it mean to detect?\n\nsignal is digital (exist / not exist)\nAbsolute threshold is exist\n\n\n\nAssumptions\n\n관찰자가 관찰할 수 있는 signal은 숫자나 변수로 표현할 수 있어야함\nsignal이 random variation이 있다\n피험자가 signal이 있는지 없는지 단순하게 표시할 수 있다.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Signal Detection Theory"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#distribution-of-signal-and-noise",
-    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#distribution-of-signal-and-noise",
-    "title": "Signal Detection Theory",
-    "section": "Distribution of signal and noise",
-    "text": "Distribution of signal and noise\n\n\nsensitivity index (d')\n\n값이 작으면 분간 힘듦\n값이 크면 분간 쉬움\nsignal의 성격에 따라 결정됨\n\nresponse bias (β)\n\ncriterion에 따라 yes라고 대답하는 비중과 no라고 대답하는 비중\n평가자에 따라 결정됨\n\nd′이 0, β가 50%면 그냥 랜덤으로 대답한 것과 같음\n\n\nd′ 계산\n\nP(M), P(CR) 계산\n표준 정규분포를 그림\nM과 CR의 z값을 찾음\nd′ = (0 - z(M)) + (z(CR) - 0)\n\n\n\nβ 계산\n\nd′과 관계 없이 조절\n\n\\(β = \\frac{P(X/(S+N))}{P(X/N)}\\)\n\\(\\ln β = d′λ_{center}\\)\nβ ~ 1: neutral\n\n\n\n\\(λ_{center}\\) 계산\n\\(λ_{center} = -\\frac{1}{2}(Z(FA)+Z(H))\\)\n\n\\(λ_{center}\\) = 0: ideal observer\n\\(λ_{center}\\) &lt; 0: liberal. yes라고 대답하는 비중이 늘어, hit rate가 높아지지만 false alarm rate도 높아짐\nex) 용의자를 찾는 경찰, 암세포 탐지\n\\(λ_{center}\\) &gt; 0: conservative. no라고 대답하는 비중이 늘어, correct rejection rate가 높아지지만 miss rate도 높아짐\nex) 억울한 죄인을 만들지 않으려는 범원 판결",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Signal Detection Theory"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#optimal-response-criterion",
-    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#optimal-response-criterion",
-    "title": "Signal Detection Theory",
-    "section": "Optimal Response Criterion",
-    "text": "Optimal Response Criterion\nsignal이 더 많은 환경, noise가 더 많은 환경이 있음. 즉, probability가 다를 수 있음\n또, Effects of payoffs가 있음\n\nsignal이 많은 환경 -&gt; criterion을 낮추는게 좋음. \\(β_{opt} &lt; 1\\)\nnoise가 많은 환경 -&gt; criterion을 높이는게 좋음. \\(β_{opt} &gt; 1\\)\n\\(β_{opt} = \\frac{P(N)}{P(S)} * \\frac{V(CR) + C(FA)}{V(H) + C(M)}\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Signal Detection Theory"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#sluggish-β",
-    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#sluggish-β",
-    "title": "Signal Detection Theory",
-    "section": "Sluggish β",
-    "text": "Sluggish β\n\n\n\nprobability 혹은 payoffs의 변화에 따라 bias가 optimal이랑 다르게 나옴\n\n\n\n\\(β_{opt}\\)가 낮은 경우, ideal보다 덜 conservative함.\n\\(β_{opt}\\)가 높은 경우, ideal보다 덜 risky함.\n확률에 의해 b가 조정될 때 더 많이 발생함.\n\n확률에 대한 계산이 잘못되는 경우\n평가자가 반복되는 반응에 bored해지는 경우",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Signal Detection Theory"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#roc-curve",
-    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#roc-curve",
-    "title": "Signal Detection Theory",
-    "section": "ROC Curve",
-    "text": "ROC Curve\n\n\n\nd′이 높아질 수록 false alarm 비중이 낮아지고, hit 비중이 높아짐",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Signal Detection Theory"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#signal-detection-performance",
-    "href": "posts/04_archives/phd_2_2/phd_human/5_signal_detction.html#signal-detection-performance",
-    "title": "Signal Detection Theory",
-    "section": "Signal Detection Performance",
-    "text": "Signal Detection Performance\n\nResponse Bias (β)\n\n잘 맞추면 보상을 준다\nfalse signals to raise signal rate\nFalse Alarm에서도 incentive를 준다.\n\n\n\nSensitivity (d′)\n\ngive feedback\nsignal을 조금 더 오래 보여줌\nsignal을 강조\nsignal을 움직이게\n휴식 시간을 충분히 줌\nsignal이 어떠넌지 잘 보여줌\n온갖 감각으로 signal을 보여줌",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Human",
-      "Signal Detection Theory"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/09.html",
-    "href": "posts/04_archives/phd_2_2/phd_database/09.html",
-    "title": "Database Design",
-    "section": "",
-    "text": "MS access is prototyping tool for mock-ups",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Design"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/09.html#purpose-of-a-database-design",
-    "href": "posts/04_archives/phd_2_2/phd_database/09.html#purpose-of-a-database-design",
-    "title": "Database Design",
-    "section": "Purpose of a Database Design",
-    "text": "Purpose of a Database Design\nset of database specifications that can be implemented as a database in a DBMS\n\nconceptual design: non-DBMS specific\nlogical design: DBMS specific\nphysical design: DBMS specific but not implemented directly by humans",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Design"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/09.html#logical-designrelational-design",
-    "href": "posts/04_archives/phd_2_2/phd_database/09.html#logical-designrelational-design",
-    "title": "Database Design",
-    "section": "Logical Design(Relational Design)",
-    "text": "Logical Design(Relational Design)\n\nCreate a table(relation) for each entity\n\nspecify primary key\nspecify properties for each column\n\ndata type\nconstraints\ndefault value\nnull status\n\nverify normalization: data structure의 complexity를 증가시킬 수도 있다 → denormalization: 조인 불필요, 조회 시 성능 향상 → datastructure complexity vs modification problems\n\nCreate relationships by placing foreign keys:\n\nStrong entity relationships\nID-dependent / non-ID-dependent weak entity relationships\nSubtypes\nRecursive",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Design"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/09.html#representing-relationships",
-    "href": "posts/04_archives/phd_2_2/phd_database/09.html#representing-relationships",
-    "title": "Database Design",
-    "section": "Representing Relationships",
-    "text": "Representing Relationships\nid-dependent의 경우 부모의 primary key로 composite key 생성\nMaximum cardinality의 유형에 따라 관계 표현 방법이 달라짐\n\n1:1: foreign key를 어디에 두어도 상관 없음\nCREATE UNIQUE INDEX idx_1_1 ON table(foriegn_key);\n1:N: many(child) 쪽에 foreign key를 두는 것이 일반적\n1 side is called parent, many side is called child\nM:N\nData Modeling에서만 쓰임. database design에서는 intersection table을 사용하여 표현. intersection table은 두 entity의 primary key를 포함하는 composite key를 가짐\n만약 두 primary key 외의 attribute를 가진다면, association entity로 표현\nSupertype / Subtype: Supertype의 primary key를 Subtype의 primary key로 사용\nRecursive Relationship: 방향 이거 다시 보자\nN:M의 경우 virtual table을 생성하여 표현\n\n설문조사는\ndescriptive statistics\n남녀 비율, 경험 비율 등등도 포함되어야 한다.\n가중 평균으로 보여준다\n도서관 예약 시스템\n\n퇴설 처리 미흡\n좌석 이용 정보 파악\n앱 알림\n\n좌석 배치도 감이 안온다. 잔여시간도 안뜬다",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Database Design"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#tier-layers-of-database-system",
-    "href": "posts/04_archives/phd_2_2/phd_database/13.html#tier-layers-of-database-system",
-    "title": "ASP.NET",
-    "section": "3-Tier Layers of Database System",
-    "text": "3-Tier Layers of Database System\n\npresentation layer: user interface\napplication layer: web server(IIS)\ndata layer: database server",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "ASP.NET"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#api-interface-standards-for-db-access",
-    "href": "posts/04_archives/phd_2_2/phd_database/13.html#api-interface-standards-for-db-access",
-    "title": "ASP.NET",
-    "section": "API Interface Standards for DB Access",
-    "text": "API Interface Standards for DB Access\nDBMS에 접근하기 위한 표준 API\n\nODBC Open Database Connectivity\nDBMS-independent API\nJDBC: Java Database Connectivity\n\n&lt;a target=\"_blank\"&gt;",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "ASP.NET"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#asp-active-server-pages",
-    "href": "posts/04_archives/phd_2_2/phd_database/13.html#asp-active-server-pages",
-    "title": "ASP.NET",
-    "section": "ASP (Active Server Pages)",
-    "text": "ASP (Active Server Pages)\nserver side scripting(VBScript) language\nCGI: &lt;% %&gt;는 server에서 실행되는 코드",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "ASP.NET"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#asp-데이터베이스-연동",
-    "href": "posts/04_archives/phd_2_2/phd_database/13.html#asp-데이터베이스-연동",
-    "title": "ASP.NET",
-    "section": "ASP 데이터베이스 연동",
-    "text": "ASP 데이터베이스 연동\n&lt;%\n  Dim conn, connCmd, rs\n  Set connCmd = \"DSN=dsn_name; Database=dbname; UID=user;PWD=password\"\n  Set conn = Server.CreateObject(\"ADODB.Connection\")\n  Set rs = Server.CreateObject(\"ADODB.Recordset\")\n  conn.Open connCmd\n  rs.Open \"SELECT * FROM table_name\", conn\n%&gt;\n\n&lt;%\n  rs.getRows()\n\n  conn.Execute SQL\n%&gt;",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "ASP.NET"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/13.html#오류-메세지-한글-설정",
-    "href": "posts/04_archives/phd_2_2/phd_database/13.html#오류-메세지-한글-설정",
-    "title": "ASP.NET",
-    "section": "오류 메세지 한글 설정",
-    "text": "오류 메세지 한글 설정\n&lt;meta charset=\"UTF-8\"&gt;\n&lt;%\n  Session.CodePage = 949\n  Response.CharSet = \"euc-kr\"\n  Response.AddHeader \"Pragma\",\"no-cache\"\n  Response.AddHeader \"cache-control\", \"no-staff\"\n  Response.Expires = -1\n%&gt;\n\nform tag 한글 깨짐 문제\n&lt;%\nSession.CodePage=\"65001\"\nResponse.CharSet=\"UTF-8\"\n%&gt;",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "ASP.NET"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#the-importance-of-dbs-today",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#the-importance-of-dbs-today",
-    "title": "An Overview of Database",
-    "section": "The Importance of DBs Today",
-    "text": "The Importance of DBs Today\n\nDepend upon database: Internet, Web 2.0, IOT",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#why-and-how-databases-are-used",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#why-and-how-databases-are-used",
-    "title": "An Overview of Database",
-    "section": "Why and How Databases are Used?",
-    "text": "Why and How Databases are Used?\n\nThe purpose of a database is to keep track of thing\ndb store information that is more complicated than a simple spread sheet",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#problems-with-lists-spread-sheet",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#problems-with-lists-spread-sheet",
-    "title": "An Overview of Database",
-    "section": "Problems with Lists (spread sheet)",
-    "text": "Problems with Lists (spread sheet)\n\nRedundancy\n\n\n\n\n필요없는 column들이 중복됨\n\n\n\nMultiple Themes\n\n\n그 결과로, list에 나타날 때만 존재하는 informartion이 생김\n\n\nList Modification Issues\n\n\n\n\ndeletion problems, update problems, insertion problems",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#relational-databases",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#relational-databases",
-    "title": "An Overview of Database",
-    "section": "Relational Databases",
-    "text": "Relational Databases\n\nRelationa Model is methodology used as a solution for database design\nA relational database stores information in tables\n\nEach informational topic is stored in its own table\n\nEach theme in the list can be stored in a table\n\nTable = file = relation\ncolumn = fields = attribute\nrow = record = tuple",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#sql-structured-query-language",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#sql-structured-query-language",
-    "title": "An Overview of Database",
-    "section": "SQL (Structured Query Language)",
-    "text": "SQL (Structured Query Language)\n\ninternational standard for creating, processing, querying databases and their tables\ndb applications use SQL to retrieve, format, report, insert, delete, modify data for users\ncan combine table by join operation\n\nSELECT  CUSTOMER.CustomerLastName, \n        CUSTOMER.CustomerFirstName, \n        CUSTOMER.Phone,\n        COURSE.CourseDate, \n        ENROLLMENT.AmountPaid,\n        COURSE.Course, \n        COURSE.Fee\nFROM    CUSTOMER, ENROLLMENT, COURSE\nWHERE   CUSTOMER.CustomerNumber = ENROLLMENT.CustomerNumber -- join condition\n        AND  COURSE.CourseNumber = ENROLLMENT.CourseNumber; -- join condition",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#database-system-dbs",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#database-system-dbs",
-    "title": "An Overview of Database",
-    "section": "Database System (DBS)",
-    "text": "Database System (DBS)\n\n\n\nThe four components of database system\n\n\n\nUser: Employ database application to keep track of things\nUse forms to read, enter, query data\nproduce reports\nDatabase Application: web/mobile database applications, Forms, Reports\nDBMS: used to create, process, administer the database\nDatabase: self-describing collection of related tables\nuser data, metadata, index and other overhead data, application metadata(form, reports) are stored in db\nmetadata = about the structure of the database. &lt;-&gt; user data\n\n\nFunction of DBMS\n\nDB administration\n\nControl concurrency\nProvide security\nPerform backup and recovery\n\n\n\n\nReferential Integrity Constraints",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#personal-vs-enterprise-class-database-systems",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#personal-vs-enterprise-class-database-systems",
-    "title": "An Overview of Database",
-    "section": "Personal vs Enterprise-class Database Systems",
-    "text": "Personal vs Enterprise-class Database Systems\n\nPersonal: Access\nEnterprise-class(Organizational): Microsoft SQL server",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#nosql-databases",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#nosql-databases",
-    "title": "An Overview of Database",
-    "section": "NoSQL databases",
-    "text": "NoSQL databases\n\nNoSQL database = non-relational database",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/01-2.html#cloud-databases",
-    "href": "posts/04_archives/phd_2_2/phd_database/01-2.html#cloud-databases",
-    "title": "An Overview of Database",
-    "section": "Cloud databases",
-    "text": "Cloud databases\nMain frame -&gt; Client/server -&gt; Cloud",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "An Overview of Database"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#data-and-information",
-    "href": "posts/04_archives/phd_2_2/phd_database/07.html#data-and-information",
-    "title": "Data Modeling and the Entity-Relationship Model",
-    "section": "Data and information",
-    "text": "Data and information\n\nData: raw facts. recorded facts\nInformation: meaningful context\nKnowledge: information + 가치",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Data Modeling and the Entity-Relationship Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#what-is-information-system",
-    "href": "posts/04_archives/phd_2_2/phd_database/07.html#what-is-information-system",
-    "title": "Data Modeling and the Entity-Relationship Model",
-    "section": "What is information system?",
-    "text": "What is information system?\n\nSystem: a set of components that interact to achieve some purpose or goal\nInformation System: composed of hardware, software, data, procedures, people",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Data Modeling and the Entity-Relationship Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#system-analysis-and-design",
-    "href": "posts/04_archives/phd_2_2/phd_database/07.html#system-analysis-and-design",
-    "title": "Data Modeling and the Entity-Relationship Model",
-    "section": "System Analysis and Design",
-    "text": "System Analysis and Design\n\nSystem analysis and design: process of creating and maintaining information systems\nclassic methodology: SDLC\n\n\nSDLC (System Development Life Cycle)\n\n\n\nSDLC\n\n\n\nSystem definitions: 예산 편상, 위험 분석, …\nRequirements analysis\nComponent design\nImplementation\nSystem maintenance\n\n\ndatabase development process\n\nRequirements analysis\ninput: the project plan\noutput: a set of approved requirements -&gt; data model (ER model로 conceptual design)\nsource: Use cases, Business rules\nComponent Design: Relational Database Design (상세 설계)\nImplementation",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Data Modeling and the Entity-Relationship Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#er-model",
-    "href": "posts/04_archives/phd_2_2/phd_database/07.html#er-model",
-    "title": "Data Modeling and the Entity-Relationship Model",
-    "section": "ER model",
-    "text": "ER model\n\nEntities\n\nEntity class\nEntity instance\n\nAttributes: Data type, Properties(default, constraints)\nIdentifiers\n\nunique\nNonunique: identifies a set of instances\n\nRelationships\n\nbinary relationship\n\nMaximum cardinality: 1:1(A has a B), 1:N(A has a set of B), M:N\nMinimum cardinality: 0, 1\n\nternary relationship",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Data Modeling and the Entity-Relationship Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_database/07.html#entit-relationship-diagram",
-    "href": "posts/04_archives/phd_2_2/phd_database/07.html#entit-relationship-diagram",
-    "title": "Data Modeling and the Entity-Relationship Model",
-    "section": "Entit-Relationship Diagram",
-    "text": "Entit-Relationship Diagram\n\nEntity classes: rectangle\nRelationships: diamond\nmaximum cardinality: inside the diamond\nminimum cardinality: oval or hash mark next to diamond\nstrong entity: 독자적으로 존재 가능. 강한개체 관계는 점선\nNon-ID-dependent: identifier에 다른 entity의 identifier가 포함되어 있지 않음. 점선으로 표기(non-identifying relationship)\nweak entity: 약, 강 관계는 실선. IS: rounded square, traditional: 2 layer square\nID-dependent: identifier에 다른 entity의 identifier가 포함되어 있음. 실선으로 표기(identifying relationship)\nassociative entity: relationship이 entity로 변환된 것.\nMany-to-many relationship을 2개의 1:N으로 변환\nsuper type, sub type: 상속관계. sub type is a super type\n\nexclusive: Discriminator attribute가 필요함\ninclusive\n\nrecursive relationship\nBusiness rule: build-in constraints, trigger, stored procedure, application code로 구현 가능\ndata model validation: form, report를 이용한 prototyping",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Database",
-      "Data Modeling and the Entity-Relationship Model"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html#정규-분포의-합",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html#정규-분포의-합",
-    "title": "정규 분포",
-    "section": "정규 분포의 합",
-    "text": "정규 분포의 합\n두 분포의 합이 같은 분포가 되는 경우는 흔치 않다 (uniform distribution도 같지 않다)\n두 정규분포의 합은 정규분포가 된다\n\\(X + Y \\sim N(μ_1 + μ_2, σ_1^2 + σ_2^2)\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "정규 분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html#chi-square-분포",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/6-정규분포.html#chi-square-분포",
-    "title": "정규 분포",
-    "section": "Chi-square 분포",
-    "text": "Chi-square 분포\nα = ν/2, θ = 2인 감마분포\n\\(Z \\sim N(0,1)\\)일 때, \\(Z^2 \\sim χ^2(1)\\)\n\\(Z_i \\sim N(0,1)\\)일 때, \\(Z_1^2 + Z_2^2 + ...  + Z_n^2 \\sim χ^2(n)\\)\n\\(X_i\\)가 서로 독립이고, 자유도가 \\(ν_i\\)인 카이제곱분포를 따른다면, \\(X_1 + X_2 + ... + X_n \\sim x^2(ν_1 + ν_2 + ... + ν_n)\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "정규 분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#통계학의-정의",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#통계학의-정의",
-    "title": "확률과 통계의 정의",
-    "section": "통계학의 정의",
-    "text": "통계학의 정의\n\n불확실한 상황에서 데이터에 근거하여 과학적인 의사결정을 도출하기 위한 이론과 방법 체계\n모집단으로부터 수집된 데이터(sample)를 기반으로 모집단의 특성을 추론하는 것을 목표로 함\n\n\n\n모집단: 통계분석의 대상이 되는 모든 개체들의 집합\n표본: 모집단으로부터 일정한 규칙에 의해 추출한 부분집합",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률과 통계의 정의"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#확률의-개념",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#확률의-개념",
-    "title": "확률과 통계의 정의",
-    "section": "확률의 개념",
-    "text": "확률의 개념\n\n모집단에서 특정 사건(event)의 상대도수의 극한\n\n\nLaw of Large Numbers\n무수히 많은 시행이 반복되면 상대도수에 의해 계산되는 확률(통계적 확률)이 이론적 확률로 수렴한다.",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률과 통계의 정의"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#sample-space-and-events",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#sample-space-and-events",
-    "title": "확률과 통계의 정의",
-    "section": "Sample Space and Events",
-    "text": "Sample Space and Events\n\nExperiment(확률실험): 동일한 조건에서 독립적으로 반복할 수 있는 실험이나 관측\nSample space(표본공간): 모든 simple event의 집합\nEvent(사건): 실험에서 발생하는 결과 (부분 집합)\nSimple event(단순사건): 원소가 하나인 사건\n\n\n\n\nevent는 여러 원소를 가질 수 있다",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률과 통계의 정의"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#확률의-정의",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#확률의-정의",
-    "title": "확률과 통계의 정의",
-    "section": "확률의 정의",
-    "text": "확률의 정의\n\n고전적 확률: 모든 simple event가 동일한 확률을 가질 때 P(A)는 sample space가 n개의 원소로 이루어져 있을 때 k개의 원소를 가지는 event A의 확률\n통계적 확률: simple event가 동일한 확률을 가지지 않아도 된다. 표본의 수가 무한대로 갈 때, 표본의 확률이 수렴하는 값\n\n\n확률의 성질\n\n모든x에 대하여 P(x) &gt;= 0\nP(sample space) = 1\nA와 B가 배반사건이면 P(A or B) = P(A) + P(B)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률과 통계의 정의"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#조건부-확률",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#조건부-확률",
-    "title": "확률과 통계의 정의",
-    "section": "조건부 확률",
-    "text": "조건부 확률\n\nEvent B가 발생했을 때 Event A의 확률 \\[P(A|B) = \\frac{P(A∩B)}{P(B)}\\]\n결합확률 (joint probability): P(A∩B)\n주변확률 (marginal probability): P(A), P(B), …\n\n\nMultiplication Law\n\\[P(A∩B) = P(A|B)P(B)\\]",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률과 통계의 정의"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#independent-events",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#independent-events",
-    "title": "확률과 통계의 정의",
-    "section": "Independent Events",
-    "text": "Independent Events\n\n두 사건 A와 B가 독립일 때, P(A|B) = P(A), P(B|A) = P(B)\nsample space는 임의의 event와 독립이다.\n공집합은 임의의 event와 독립이다. (P(∅∩A) = P(∅) * P(A) = 0 * P(A) = 0 = P(∅))",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률과 통계의 정의"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#베이즈-정리",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/1-통계학의-개념.html#베이즈-정리",
-    "title": "확률과 통계의 정의",
-    "section": "베이즈 정리",
-    "text": "베이즈 정리\n\n\nsample space를 상호 배반인 {B1, B2, …, Bn}으로 분할 (partition)\n\\(P(A) = P(A∩B_1) + P(A∩B_2) + ... + P(A∩B_n)\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률과 통계의 정의"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html#확률변수의-기댓값",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html#확률변수의-기댓값",
-    "title": "확률변수의 기댓값",
-    "section": "확률변수의 기댓값",
-    "text": "확률변수의 기댓값\n\n\\(μ = E(x)\\)로 가정. (모집단)\ncovariance는 선형관계를 보여준다.\nx와 y는 독립이다 -&gt; cov(x, y) = 0",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률변수의 기댓값"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html#moment-generationg-functions",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/3-확률변수의-기댓값.html#moment-generationg-functions",
-    "title": "확률변수의 기댓값",
-    "section": "Moment Generationg Functions",
-    "text": "Moment Generationg Functions\n\n평균과 분산만으로 확률분포를 설명하기에는 부족하다.\n\nmoment: \\(μ_k′ = E(X^k), k ∈ ℤ+\\)\nVar(x) = \\(μ_2′ - μ_1′^2\\)\nE(x) = \\(μ_1′\\)\n모든 k에 대해 검증 불가 =&gt; mgf(moment generating function)\nmgf: \\(M_X(t) = E(e^{tx})\\)\n\n\n\\(M_X(t) = 1 + tμ_1′ + \\frac{t^2}{2!}μ_2′ + \\frac{t^3}{3!}μ_3′ + ...\\)\n\\(M′(t) = μ_1′ + \\frac{2t}{2!}μ_2′ + \\frac{3t^2}{3!}μ_3′ + ...\\)\n\\(M′(0) = μ_1′\\)\n\\(M′′(0) = μ_2′\\)\n\\(M^{(k)}(0) = μ_k′\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "확률변수의 기댓값"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#좋은-추정량이-되기-위한-조건",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#좋은-추정량이-되기-위한-조건",
-    "title": "표본의 분포",
-    "section": "좋은 추정량이 되기 위한 조건",
-    "text": "좋은 추정량이 되기 위한 조건\n\n불편성 (Unbiasedness) - 기본 조건\n추정량의 기대값이 추정하려는 모수와 같아야 함\n\\(E(\\hat{X}) = μ\\)\n\\(E(X_1) = μ\\)\n최소분산 (Minimum Variance)\n추정량의 분산이 가능한 작아야 함.\n표본의 갯수를 늘릴수록 분산이 줄어들어서 더 좋은 추정량이 됨\n\\(Var(\\hat{X}) = \\frac{σ^2}{n}\\)\n\\(Var(X_1) = \\sigma^2\\)",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "표본의 분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#표본평균의-분포",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#표본평균의-분포",
-    "title": "표본의 분포",
-    "section": "표본평균의 분포",
-    "text": "표본평균의 분포",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "표본의 분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#표본분산의-분포",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#표본분산의-분포",
-    "title": "표본의 분포",
-    "section": "표본분산의 분포",
-    "text": "표본분산의 분포\n정규분포로 부터 추출된 표본의 \\(\\sum_{i=1}^{n} Z^2\\)은 자유도가 n인 카이제곱분포를 따름\n정규분포로 부터 추출된 표본의 \\(\\frac{(n-1)s^2}{\\sigma^2}\\)은 자유도가 n-1인 카이제곱분포를 따름",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "표본의 분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#평균",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#평균",
-    "title": "표본의 분포",
-    "section": "평균",
-    "text": "평균\n\\(\\frac{\\hat{X} - μ}{s/\\sqrt{n}}\\) t-분포를 따름\nT분포: 표준 정규분포 Z, 자유도가 n인 카이제곱분포가 서로 독립일 때 \\(T=\\frac{Z}{\\sqrt{Y/n}}\\)\nT분포는 정규분포와 비슷하지만, 표본의 크기가 작을 때 정규분포보다 두꺼운 꼬리를 가짐\nT분포가 값이 더 작고, 신뢰도가 감소함",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "표본의 분포"
-    ]
-  },
-  {
-    "objectID": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#분산",
-    "href": "posts/04_archives/phd_2_2/phd_statistics/7-표본의-분포.html#분산",
-    "title": "표본의 분포",
-    "section": "분산",
-    "text": "분산\n확률변수 U와 V가 자유도가 n1, n2인 카이제곱분포를 따르고 서로 독립이면, \\(F=\\frac{U/n1}{V/n2}\\)는 F분포를 따름",
-    "crumbs": [
-      "Related Posts",
-      "04 Archives",
-      "Phd 2 2",
-      "Phd Statistics",
-      "표본의 분포"
+      "01 Projects",
+      "Para Blog",
+      "PARA Blog 제작"
     ]
   },
   {
@@ -2014,16 +2118,29 @@
     ]
   },
   {
-    "objectID": "posts/01_projects/OR_예습/1.html#linear-programming",
-    "href": "posts/01_projects/OR_예습/1.html#linear-programming",
-    "title": "model and applications",
-    "section": "Linear Programming",
-    "text": "Linear Programming\n\nprocess of fomulating and solving linear programs\nmathematical program with some special properties\n\nobjective function\nconstraints (\\(b_1, b_2, ..., b_m\\))\ndecision variables (\\(x_1, x_2, ..., x_n, x_i ∈ ℝ\\))\n→ also expressed as a \\(x\\) that means vector of \\(n\\) variables\n\n\n\nconstraints\n\nSign constraints: single variable\n\nnonnegative: \\(x_i ≥ 0\\)\nnonpositive: \\(x_i ≤ 0\\)\nunrestricted in sign or free: no sign constraints\n\nFunctional constraints: other cases\nequality constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n = b\\)\ninequality constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n ≤ b\\)\nbinding constraints (or active constraints)\nno matter \\(g(x)\\) is equality or not, if \\(g(a) = b, a\\) is binding\nstrict constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n &lt; b\\)\nweak constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n ≤ b\\)\n→ practical mathematical program’s inequalities are all weak\n\n\n\nsolution\n\nfeasible solution: satisfies all constraints\n\nfeasible region: set of all feasible solutions\n\noptimal solution: maximizes or minimizes the objective function\nthere may be multiple or no optimal solutions",
+    "objectID": "posts/01_projects/OR_예습/1.html#terminology",
+    "href": "posts/01_projects/OR_예습/1.html#terminology",
+    "title": "Linear Programming",
+    "section": "Terminology",
+    "text": "Terminology\n\nprocess of fomulating and solving linear programs\nmathematical program with some special properties\n\nobjective function\nconstraints (\\(b_1, b_2, ..., b_m\\))\ndecision variables (\\(x_1, x_2, ..., x_n, x_i ∈ ℝ\\))\n→ also expressed as a \\(x\\) that means vector of \\(n\\) variables\n\n\n\nconstraints\n\nSign constraints: single variable\n\nnonnegative: \\(x_i ≥ 0\\)\nnonpositive: \\(x_i ≤ 0\\)\nunrestricted in sign or free: no sign constraints\n\nFunctional constraints: other cases\nequality constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n = b\\)\ninequality constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n ≤ b\\)\nbinding constraints (or active constraints)\nno matter \\(g(x)\\) is equality or not, if \\(g(a) = b, a\\) is binding\nstrict constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n &lt; b\\)\nweak constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n ≤ b\\)\n→ practical mathematical program’s inequalities are all weak\n\n\n\nsolution\n\nfeasible solution: satisfies all constraints\n\nfeasible region: set of all feasible solutions\n\noptimal solution: maximizes or minimizes the objective function\nthere may be multiple or no optimal solutions",
     "crumbs": [
       "Related Posts",
       "01 Projects",
       "OR 예습",
-      "model and applications"
+      "Linear Programming"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/OR_예습/1.html#three-types-of-lps",
+    "href": "posts/01_projects/OR_예습/1.html#three-types-of-lps",
+    "title": "Linear Programming",
+    "section": "Three types of LPs",
+    "text": "Three types of LPs\n\nInfeasible\nUnbounded: unbounded feasible region does not imply an unbounded LP\nFinitely optimal\n\nUnique optimal solutions\nMultiple optimal solutions\n\n\n\nParameter: we know. \\(C_1, C_2, ...\\)\nVariables: do not know. \\(x_1, x_2, ...\\)",
+    "crumbs": [
+      "Related Posts",
+      "01 Projects",
+      "OR 예습",
+      "Linear Programming"
     ]
   },
   {
@@ -2288,175 +2405,6 @@
     "crumbs": [
       "Projects",
       "ADP 실기 준비"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/OR_예습/1.html#terminology",
-    "href": "posts/01_projects/OR_예습/1.html#terminology",
-    "title": "Linear Programming",
-    "section": "Terminology",
-    "text": "Terminology\n\nprocess of fomulating and solving linear programs\nmathematical program with some special properties\n\nobjective function\nconstraints (\\(b_1, b_2, ..., b_m\\))\ndecision variables (\\(x_1, x_2, ..., x_n, x_i ∈ ℝ\\))\n→ also expressed as a \\(x\\) that means vector of \\(n\\) variables\n\n\n\nconstraints\n\nSign constraints: single variable\n\nnonnegative: \\(x_i ≥ 0\\)\nnonpositive: \\(x_i ≤ 0\\)\nunrestricted in sign or free: no sign constraints\n\nFunctional constraints: other cases\nequality constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n = b\\)\ninequality constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n ≤ b\\)\nbinding constraints (or active constraints)\nno matter \\(g(x)\\) is equality or not, if \\(g(a) = b, a\\) is binding\nstrict constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n &lt; b\\)\nweak constraints: \\(a_1x_1 + a_2x_2 + ... + a_nx_n ≤ b\\)\n→ practical mathematical program’s inequalities are all weak\n\n\n\nsolution\n\nfeasible solution: satisfies all constraints\n\nfeasible region: set of all feasible solutions\n\noptimal solution: maximizes or minimizes the objective function\nthere may be multiple or no optimal solutions",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "OR 예습",
-      "Linear Programming"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/OR_예습/1.html#three-types-of-lps",
-    "href": "posts/01_projects/OR_예습/1.html#three-types-of-lps",
-    "title": "Linear Programming",
-    "section": "Three types of LPs",
-    "text": "Three types of LPs\n\nInfeasible\nUnbounded: unbounded feasible region does not imply an unbounded LP\nFinitely optimal\n\nUnique optimal solutions\nMultiple optimal solutions\n\n\n\nParameter: we know. \\(C_1, C_2, ...\\)\nVariables: do not know. \\(x_1, x_2, ...\\)",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "OR 예습",
-      "Linear Programming"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/OR_예습/1.html#simple-lp-formulations",
-    "href": "posts/01_projects/OR_예습/1.html#simple-lp-formulations",
-    "title": "Linear Programming",
-    "section": "Simple LP formulations",
-    "text": "Simple LP formulations",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "OR 예습",
-      "Linear Programming"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/OR_예습/2.html#excel-solver-add-in",
-    "href": "posts/01_projects/OR_예습/2.html#excel-solver-add-in",
-    "title": "Excel Solver",
-    "section": "Excel Solver Add-in",
-    "text": "Excel Solver Add-in",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "OR 예습",
-      "Excel Solver"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html",
-    "href": "posts/01_projects/adp_실기/02.html",
-    "title": "EDA와 시각화",
-    "section": "",
-    "text": "맨 위로",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html#edaexploratory-data-analysis",
-    "href": "posts/01_projects/adp_실기/02.html#edaexploratory-data-analysis",
-    "title": "EDA와 시각화",
-    "section": "EDA(Exploratory Data Analysis)",
-    "text": "EDA(Exploratory Data Analysis)\n: 데이터의 특징과 데이터에 내재된 관계를 알아내기 위해 그래프와 통계적 분석 방법을 활용하여 탐구하는 것\n\n주제\n\n저항성 강조: 부분적 변동(이상치 등)에 대한 민감성 확인\n잔차 계산\n자료변수의 재표현: 변수를 적당한 척도로 바꾸는 것\n그래프를 통한 현시성",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html#막대-그래프",
-    "href": "posts/01_projects/adp_실기/02.html#막대-그래프",
-    "title": "EDA와 시각화",
-    "section": "막대 그래프",
-    "text": "막대 그래프\n범주형 데이터를 요약하고 시각적으로 비교하는 데 활용\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom sklearn.datasets import load_wine\n\nwine_load = load_wine()\nwine = pd.DataFrame(wine_load.data, columns=wine_load.feature_names)\nwine_load\nwine['Class'] = wine_load.target\nwine['Class'] = wine['Class'].map({0: 'class_0', 1: 'class_1', 2: 'class_2'})\n\nwine_type = wine['Class'].value_counts()\nwine_type\n\nClass\nclass_1    71\nclass_0    59\nclass_2    48\nName: count, dtype: int64\n\n\n\n# 수직 막대\nplt.bar(wine_type.index, wine_type.values, width=0.8, bottom=None, align = 'center')\nplt.show()\n\n\n\n\n\n\n\n\n\n# 수평 막대\nplt.barh(wine_type.index, wine_type.values, height=0.8, left=None, align = 'center')\nplt.show()\n\n\n\n\n\n\n\n\n각 범주의 값의 갯수 차이가 극단적인지 확인한다. 극단적일 경우, 전처리 과정에서 업/다운 샘플링 등을 통해 갯수가 유사해지도록 조정해야한다.",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html#히스토그램",
-    "href": "posts/01_projects/adp_실기/02.html#히스토그램",
-    "title": "EDA와 시각화",
-    "section": "히스토그램",
-    "text": "히스토그램\n연속형 데이터의 분포를 확인하는 데 활용\n\nplt.title('Wine alcohol histogram')\nplt.hist('alcohol', bins=8, range=(11, 15), color='purple', data=wine)\nplt.show()",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html#box-plot",
-    "href": "posts/01_projects/adp_실기/02.html#box-plot",
-    "title": "EDA와 시각화",
-    "section": "box plot",
-    "text": "box plot\n수치형 변수의 분포를 확인하는 그래프\n\nfrom sklearn.datasets import load_iris\n\niris_load = load_iris()\niris = pd.DataFrame(iris_load.data, columns=iris_load.feature_names)\niris['class'] = iris_load.target\niris['class'] = iris['class'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})\n\nplt.boxplot(iris.drop(columns='class'))\nplt.show()\n\n\n\n\n\n\n\n\n\nimport seaborn as sns\n\nsns.boxplot(x=\"class\", y=\"sepal width (cm)\", data=iris)\nplt.show()",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html#산점도",
-    "href": "posts/01_projects/adp_실기/02.html#산점도",
-    "title": "EDA와 시각화",
-    "section": "산점도",
-    "text": "산점도\n두 개의 수치형 변수의 분포와 관계를 확인하는 그래프\n\nplt.title('iris scatter')\nplt.xlabel('sepal length (cm)')\nplt.ylabel('sepal width (cm)')\n\nplt.scatter('sepal length (cm)', 'sepal width (cm)', data=iris, alpha=0.5)\nplt.show()\n\n\n\n\n\n\n\n\n\nsns.scatterplot(x='sepal length (cm)', y='sepal width (cm)', hue='class', data=iris, style='class')\nplt.show()",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html#선그래프",
-    "href": "posts/01_projects/adp_실기/02.html#선그래프",
-    "title": "EDA와 시각화",
-    "section": "선그래프",
-    "text": "선그래프",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html#상관관계-시각화",
-    "href": "posts/01_projects/adp_실기/02.html#상관관계-시각화",
-    "title": "EDA와 시각화",
-    "section": "상관관계 시각화",
-    "text": "상관관계 시각화",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
-    ]
-  },
-  {
-    "objectID": "posts/01_projects/adp_실기/02.html#pandas-profiling",
-    "href": "posts/01_projects/adp_실기/02.html#pandas-profiling",
-    "title": "EDA와 시각화",
-    "section": "Pandas Profiling",
-    "text": "Pandas Profiling",
-    "crumbs": [
-      "Related Posts",
-      "01 Projects",
-      "Adp 실기",
-      "EDA와 시각화"
     ]
   }
 ]
