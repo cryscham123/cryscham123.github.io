@@ -13,7 +13,7 @@ if posts:
             const end = new Date(endDate);
             const now = new Date();
             const diffTime = end - now;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             if (isNaN(diffDays)) {
                 element.textContent = 'Invalid date';

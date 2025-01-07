@@ -105,6 +105,81 @@ plt.show()
 
 ## 선그래프
 
+### 수평 / 수직 선
+
+```{python}
+plt.hlines(y=-6, xmin=-10, xmax=10, colors='red', linestyles='solid')
+plt.vlines(x=0, ymin=-10, ymax=10, colors='blue', linestyles='dashed')
+```
+
+### 함수식
+
+```{python}
+def linear_func(x):
+    return 2*x + 1
+
+X = iris['sepal length (cm)']
+plt.plot(X, linear_func(X), c='red')
+plt.show()
+```
+
+### 회귀선
+
+```{python}
+import numpy as np
+
+X, Y = iris['sepal length (cm)'], iris['sepal width (cm)']
+plt.scatter(X, Y, alpha=0.5)
+a, b = np.polyfit(X, Y, 1)
+plt.plot(X, a*X + b, c='red')
+plt.show()
+```
+
+2차 이상의 그래프는 X값에 대하여 정렬해야 한다.
+
+```{python}
+iris2 = iris.sort_values(by='sepal length (cm)')
+X, Y = iris2['sepal length (cm)'], iris2['petal length (cm)']
+b2, b1, b0 = np.polyfit(X, Y, 2)
+plt.scatter(X, Y, alpha=0.5)
+plt.plot(X, b0 + b1*X + b2*X**2, color='red')
+plt.show()
+```
+
+### 꺾은선
+
+```{python}
+plt.plot('sepal length (cm)', 'petal length (cm)', data=iris2)
+plt.show()
+```
+
 ## 상관관계 시각화
 
+### 산점도 행렬
+
+```{python}
+from pandas.plotting import scatter_matrix
+
+scatter_matrix(iris, alpha=0.5, figsize= (8, 8), diagonal='hist')
+plt.show()
+```
+
+```{python}
+sns.pairplot(iris, diag_kind='auto', hue='class')
+plt.show()
+```
+
+### 상관계수 행렬 그래프
+
+```{python}
+iris_corr = iris.drop(columns='class').corr(method='pearson')
+sns.heatmap(iris_corr, xticklabels=iris_corr.columns, yticklabels=iris_corr.columns, cmap="RdBu_r", annot=True)
+```
+
 ## Pandas Profiling
+
+```{python}
+# from pandas_profiling import ProfileReport
+#
+# ProfileReport(iris)
+```

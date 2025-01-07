@@ -102,9 +102,9 @@ html_content = f"""
                 const start = new Date(startDate);
                 const end = new Date(endDate);
                 const today = new Date();
-                const totalDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+                const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
                 const daysPassed = Math.max(Math.floor((today - start) / (1000 * 60 * 60 * 24)), 0);
-                const daysLeft = Math.max(Math.floor((end - today) / (1000 * 60 * 60 * 24)), 0);
+                const daysLeft = Math.max(Math.ceil((end - today) / (1000 * 60 * 60 * 24)), 0);
                 let progress = 0;
                 if (totalDays > 0) {{
                     progress = Math.min(Math.max((daysPassed / totalDays * 100), 0), 100);

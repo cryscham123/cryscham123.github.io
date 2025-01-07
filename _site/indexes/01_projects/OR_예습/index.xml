@@ -15,7 +15,75 @@
 <link>https://cryscham123.github.io/indexes/01_projects/OR_예습/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sun, 22 Dec 2024 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 30 Dec 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>Integer Programming</title>
+  <link>https://cryscham123.github.io/posts/01_projects/OR_예습/2.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<p>all or nothing problem에서 사용<br>
+ex) knapsack problem → 아이템을 0.8개 넣을 수 없다</p>
+<section id="requirements-on-selecting-variables" class="level2">
+<h2 class="anchored" data-anchor-id="requirements-on-selecting-variables">Requirements on selecting variables</h2>
+<ol type="1">
+<li><p><strong>At Least</strong></p>
+<p>at least <code>one</code> of variables among items 1, 3, 4:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1%20+%20x_3%20+%20x_4%20%E2%89%A5%201"></p></li>
+<li><p><strong>At Most</strong></p>
+<p>at most <code>two</code> of variables among items 1, 3, 4:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1%20+%20x_3%20+%20x_4%20%E2%89%A4%202"></p></li>
+<li><p><strong>Or</strong></p>
+<p>select variable 1 or 2:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1%20+%20x_2%20%E2%89%A5%201"></p>
+<p>select 2 otherwise item 3 and 4 together:</p>
+<p><img src="https://latex.codecogs.com/png.latex?2x_2%20+%20x_3%20+%20x_4%20%E2%89%A5%202"></p></li>
+<li><p><strong>If-else</strong></p>
+<p>if variable 1 is selected, then variable 2 is also selected:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1%20%E2%89%A4%20x_2"></p>
+<p>if variable 1 is selected, do not select item 3 and 4:</p>
+<p><img src="https://latex.codecogs.com/png.latex?2(1%20-%20x_1)%20%E2%89%A5%20x_3%20+%20x_4"></p></li>
+</ol>
+</section>
+<section id="at-leastmost-some-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="at-leastmost-some-constraints">At least/most some constraints</h2>
+<p>constraints를 유연하게 선택하는 방법</p>
+<p><img src="https://latex.codecogs.com/png.latex?g_1(x)%20%E2%89%A4%20b_1">과 <img src="https://latex.codecogs.com/png.latex?g_2(x)%20%E2%89%A5%20b_2">를 둘 다 만족하는 경우를 표현하려면 union으로 표현할 수 있다.</p>
+<p>이는 linear program에 적합하지 않기 때문에 variable로 표현한다.</p>
+<p><img src="https://latex.codecogs.com/png.latex?z%20=%20%5Cbegin%7Bcases%7D%0A0%20&amp;%20%5Ctext%7Bif%20%7D%20g_1(x)%20%E2%89%A4%20b_1%20%5C%5C%0A1%20&amp;%20%5Ctext%7Bif%20%7D%20g_2(x)%20%E2%89%A4%20b_2%0A%5Cend%7Bcases%7D"></p>
+<p>이는 아래의 수식으로 표현할 수 있다</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Balign%7D%0A&amp;g_1(x)%20-%20b_1%20%E2%89%A4%20M_1z%20%5C%5C%0A&amp;g_2(x)%20-%20b_2%20%E2%89%A4%20M_2(1%20-%20z)%0A%5Cend%7Balign%7D"></p>
+<p>이때<img src="https://latex.codecogs.com/png.latex?M_1">과 <img src="https://latex.codecogs.com/png.latex?M_2">는 충분히 큰 상수이다.</p>
+</section>
+<section id="일반적인-예시" class="level2">
+<h2 class="anchored" data-anchor-id="일반적인-예시">일반적인 예시</h2>
+<p>Facility location problem</p>
+<ol type="1">
+<li>where to open convenience stores?</li>
+<li>where to build warehouses or distribution centers?</li>
+<li>where to build factories?</li>
+<li>where to build power stations, fire stations, or police stations?</li>
+</ol>
+<p>→ where to locate scarce resource?</p>
+<p>demoand nodes potential locations</p>
+<ol type="1">
+<li>set covering problem</li>
+<li>maximum covering problem</li>
+<li>fixed charge location problem</li>
+</ol>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>Operational Research</category>
+  <category>1차</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/OR_예습/2.html</guid>
+  <pubDate>Mon, 30 Dec 2024 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Linear Programming</title>
   <link>https://cryscham123.github.io/posts/01_projects/OR_예습/1.html</link>
