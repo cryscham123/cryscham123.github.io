@@ -99,6 +99,20 @@ ul.task-list li input[type="checkbox"] {
     }
   })
   </script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GOOGLE_TAG"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+ 
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied'
+  });
+gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -389,7 +403,7 @@ window.Quarto = {
 </header>
 
 
-<div id="af15cdc9" class="cell" data-execution_count="1">
+<div id="cd3f7166" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 
 <style>
@@ -413,7 +427,7 @@ window.Quarto = {
 }
 
 .progress-bar {
-    background-color: #2ecc71;
+    background-color: #f1c40f;
     width: 0%;
     height: 20px;
     border-radius: 2px;
@@ -425,7 +439,7 @@ window.Quarto = {
     padding: 0.25rem 0.75rem;
     border-radius: 4px;
     color: white;
-    background-color: #2ecc71;
+    background-color: #f1c40f;
     margin-bottom: 1rem;
 }
 
@@ -446,10 +460,10 @@ window.Quarto = {
 </style>
 
 <div class="project-info">
-    <div class="status-badge">ON-GOING</div>
+    <div class="status-badge">BEFORE-START</div>
     
     <div class="date-info">
-        <div>시작일: 2024-12-21</div>
+        <div>시작일: None</div>
         <div>종료일: 2025-02-22</div>
     </div>
     <div id="progress-section">
@@ -460,7 +474,7 @@ window.Quarto = {
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const startDate = '2024-12-21';
+        const startDate = 'None';
         const endDate = '2025-02-22';
         const progressBar = document.querySelector('.progress-bar');
         const progressText = document.querySelector('.progress-text');
@@ -471,9 +485,9 @@ window.Quarto = {
                 const start = new Date(startDate);
                 const end = new Date(endDate);
                 const today = new Date();
-                const totalDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+                const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
                 const daysPassed = Math.max(Math.floor((today - start) / (1000 * 60 * 60 * 24)), 0);
-                const daysLeft = Math.max(Math.floor((end - today) / (1000 * 60 * 60 * 24)), 0);
+                const daysLeft = Math.max(Math.ceil((end - today) / (1000 * 60 * 60 * 24)), 0);
                 let progress = 0;
                 if (totalDays > 0) {
                     progress = Math.min(Math.max((daysPassed / totalDays * 100), 0), 100);
@@ -500,9 +514,58 @@ window.Quarto = {
 </section>
 <section id="tasks" class="level2">
 <h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
-<div id="6701c777" class="cell" data-execution_count="2">
+<div id="3fcda9ce" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<p>No tasks defined.</p>
+
+    <style>
+    .tasks-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    .task-item {
+        display: flex;
+        align-items: center;
+        margin: 4px 0;
+        padding: 4px 0;
+    }
+    .task-checkbox {
+        margin-right: 8px;
+        width: 16px;
+        height: 16px;
+        cursor: default;
+    }
+    .task-checkbox.failed:checked {
+        accent-color: #cf222e;
+    }
+    .task-link {
+        text-decoration: none;
+        flex-grow: 1;
+    }
+    .task-name {
+        font-size: 1em;
+    }
+    .task-name.clickable {
+        color: #0969da;
+        cursor: pointer;
+    }
+    .task-name.completed {
+        text-decoration: line-through;
+    }
+    .task-name.failed {
+        color: #cf222e;
+        text-decoration: line-through;
+    }
+    .task-name.non-clickable {
+        color: #57606a;
+    }
+    </style>
+    <ul class="tasks-list">
+    
+            <li class="task-item">
+                <input type="checkbox" class="task-checkbox " disabled="">
+                <span class="task-name non-clickable">원서 접수 (2025.01.20 10 am)</span>
+            </li>
+            </ul>
 </div>
 </div>
 </section>
