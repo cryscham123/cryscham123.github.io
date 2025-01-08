@@ -17,7 +17,7 @@ def find_unclassified_posts(root_dir):
                             unclassified.append({
                                 'title': metadata.get('title', 'Untitled'),
                                 'date': metadata.get('date', 'No date'),
-                                'description': metadata.get('description', 'No description'),
+                                'categories': metadata.get('categories', ''),
                                 'path': file_path
                             })
             except Exception as e:
@@ -35,7 +35,7 @@ if unclassified:
             <tr>
                 <th>Title</th>
                 <th>Date</th>
-                <th>Description</th>
+                <th>Categories</th>
             </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@ if unclassified:
             <tr>
                 <td><a href="{post['path']}">{post['title']}</a></td>
                 <td>{post['date']}</td>
-                <td>{post['description']}</td>
+                <td>{', '.join(cat for cat in post['categories'])}</td>
             </tr>
         """
     html_table += """
