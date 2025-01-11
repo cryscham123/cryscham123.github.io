@@ -1,0 +1,264 @@
+---
+title: "2-기초"
+date: 2025-01-10
+categories: ["선형 대수"]
+directories: ["선형대수_복습"]
+---
+
+![](/img/human-thumb.jpg){.post-thumbnail}
+
+## Vector
+
+vector는 크기와 방향을 가지고 있다.
+
+### Example
+
+\begin{bmatrix}
+3 \\
+2
+\end{bmatrix}
+
+```{python}
+#| echo: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+vector = np.array([3, 2])
+
+plt.grid(True, linestyle='--', alpha=0.7)
+
+# 축 설정
+plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
+plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)
+
+# 벡터 그리기
+plt.quiver(0, 0, vector[0], vector[1], angles='xy', scale_units='xy', scale=1, color='red')
+
+# 점선 그리기
+plt.plot([vector[0], vector[0]], [0, vector[1]], 'k--', alpha=0.3)
+plt.plot([0, vector[0]], [vector[1], vector[1]], 'k--', alpha=0.3)
+
+# 좌표 텍스트 추가
+plt.text(vector[0]+0.1, vector[1]+0.1, f'({vector[0]}, {vector[1]})')
+
+# 축 범위 설정
+plt.xlim(-1, 4)
+plt.ylim(-1, 3)
+plt.yticks(np.arange(-1, 4, 1))
+
+# 축 레이블
+plt.xlabel('x')
+plt.ylabel('y')
+
+plt.show()
+```
+
+- 크기: $\sqrt{9 + 4} = \sqrt{13}$
+- 방향: $tan^{-1}(\frac{2}{3})$
+
+크기와 방향이 같으면 같은 벡터이다.
+
+### 덧셈
+
+벡터의 덧셈을 기하학적으로 알아보자
+
+$$
+\begin{bmatrix}
+3 \\
+2
+\end{bmatrix} +
+\begin{bmatrix}
+-2 \\
+1
+\end{bmatrix}
+$$
+
+위의 수식을 좌표평면에 나타나면 다음과 같다.
+
+```{python}
+#| echo: false
+
+vector1 = np.array([3, 2])
+vector2 = np.array([-2, 1])
+vector3 = np.array([1, 3])
+
+plt.grid(True, linestyle='--', alpha=0.7)
+
+# 축 설정
+plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
+plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)
+
+# 벡터 그리기
+plt.quiver(0, 0, vector1[0], vector1[1], angles='xy', scale_units='xy', scale=1, color='red')
+plt.quiver(vector1[0], vector[1], vector2[0], vector2[1], angles='xy', scale_units='xy', scale=1, color='blue')
+plt.quiver(0, 0, vector3[0], vector3[1], angles='xy', scale_units='xy', scale=1, color='green')
+
+# 좌표 텍스트 추가
+plt.text(vector1[0]+0.1, vector1[1]+0.1, f'({vector1[0]}, {vector1[1]})')
+plt.text(vector1[0] + vector2[0]-0.7, vector1[1] + vector2[1]+0.1, f'({vector2[0]}, {vector2[1]})')
+plt.text(vector3[0]-0.8, vector3[1]-0.5, f'({vector3[0]}, {vector3[1]})')
+
+# 축 범위 설정
+plt.xlim(-4, 4)
+plt.ylim(-1, 4)
+plt.yticks(np.arange(-1, 5, 1))
+
+# 축 레이블
+plt.xlabel('x')
+plt.ylabel('y')
+
+plt.show()
+```
+
+끝점을 다 더한 좌표와 시작 점을 연결한 벡터인 `초록색 화살표`가 두 벡터의 합이 된다.
+
+### Scalar 배
+
+vector에 scalar, 즉 숫자 하나를 곱하면 무슨 일이 생길까?
+
+$$
+2 * \begin{bmatrix}
+2 \\
+1
+\end{bmatrix} =
+\begin{bmatrix}
+4 \\
+2
+\end{bmatrix}
+$$
+$$
+-2 * \begin{bmatrix}
+2 \\
+1
+\end{bmatrix} = 
+\begin{bmatrix}
+-4 \\
+-2
+\end{bmatrix}
+$$
+
+마찬가지로 좌표평면으로 나타내는건 귀찮아서 생략하겠다.
+
+::: {.callout-note appearance="simple"}
+Scalar 배를 한 벡터끼리 더하면 모든 2차원 좌표를 표현할 수 있다.
+:::
+
+## 전치 (Transpose)
+
+행렬 $A$의 요소 $a_{ij}$는 A의 Transpose인 $A^T$의 $a_{ji}$가 된다.
+즉, 행렬 $A$를 전치하면 diagnal(대각선 요소)를 제외한 모든 요소가 대각선을 기준으로 서로 뒤바뀐다.
+
+> `Symmetrix matrix`: $A = A^T$인 행렬, 즉 대각선을 기준으로 값이 전부 같은 행렬
+> `Hermitian matrix`: $(A^*)^T = A^H(conjugate transpose) = A$를 만족하는 행렬
+
+Vector의 경우에는 Column Vector의 경우, Transpose시 Row Vector로, Row Vector의 경우도 반대로 작용한다.
+
+### Properties
+
+1. $(A^T)^T = A$
+1. $(A+B)^T = A^T + B^T$
+1. $\color{red}{(AB)^T = B^TA^T}$
+   
+   $(A^TA)^T$와 $(AA^T)^T$의 결과는 항상 자기 자신이 된다. → `Symmetrix matrix`
+1. $C(A)^T = CA^T$
+1. $det(A^T) = det(A)$
+1. $(A^T)^{-1} = (A^{-1})^T$
+
+## Inner Product & Projection
+
+$$
+\underset{a}{\begin{bmatrix}
+1 \\
+3
+\end{bmatrix}} *
+\underset{b}{\begin{bmatrix}
+5 \\
+1
+\end{bmatrix}} = 1 * 5 + 3 * 1 = 8 = a^Tb = b^Ta
+$$
+
+갑자기 등장한 $a^Tb$가 의미하는건 아래와 같다.
+
+$a^Tb = ||a||*||b||cosθ$
+
+> ||a||는 a 벡터의 크기를 의미한다.
+
+위의 식을 그림으로 표현해보자
+
+```{python}
+#| echo: false
+
+# 벡터 정의
+a = np.array([1, 3])
+b = np.array([5, 1])
+
+# 벡터 b에 대한 a의 투영 계산
+proj_length = np.dot(a, b) / np.linalg.norm(b)
+b_unit = b / np.linalg.norm(b)
+proj = proj_length * b_unit
+
+# 그래프 설정
+plt.figure(figsize=(8, 6))
+plt.grid(True, linestyle='--', alpha=0.7)
+
+# 축 설정
+plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
+plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)
+
+# 벡터 그리기
+plt.quiver(0, 0, a[0], a[1], angles='xy', scale_units='xy', scale=1, color='red', label='a')
+plt.quiver(0, 0, b[0], b[1], angles='xy', scale_units='xy', scale=1, color='blue', label='b')
+plt.quiver(0, 0, proj[0], proj[1], angles='xy', scale_units='xy', scale=1, color='green', label='proj_b(a)')
+
+# 점선 그리기 (투영 표시)
+plt.plot([a[0], proj[0]], [a[1], proj[1]], 'k--', alpha=0.3)
+
+# 각도 표시를 위한 호 그리기
+radius = 1
+angle = np.arctan2(b[1], b[0])
+angle2 = np.arctan2(a[1], a[0])
+theta = np.linspace(min(angle, angle2), max(angle, angle2), 100)
+plt.plot(radius * np.cos(theta), radius * np.sin(theta), 'k-', alpha=0.3)
+
+# 텍스트 추가
+plt.text(a[0]+0.1, a[1]+0.1, 'a')
+plt.text(b[0]+0.1, b[1]+0.1, 'b')
+plt.text(0.5, 0.5, 'θ')
+
+# 축 범위 설정
+plt.xlim(-1, 6)
+plt.ylim(-1, 4)
+
+# 범례 추가
+plt.legend()
+
+plt.show()
+```
+
+내적은 초록색 화살표와 파란색 화살표의 곱으로 표현할 수 있다.  
+이는 a 벡터가 b 벡터의 방향에 대해 얼마나 투영되었는지를 나타낸다.  
+두 벡터의 방향이 일치할 때 내적의 값이 가장 크고, 수직일 때 0 (안 닮음을 의미), 반대 방향일 때 가장 작은 값이 된다.
+
+### 단위 벡터(크기가 1인 벡터) 계산
+
+위의 식으로 부터 다음의 추론 과정을 통해 단위 벡터를 계산할 수 있다.
+
+$a^Ta = ||a||^2$  
+∴ $||a|| = \sqrt{a^Ta}$  
+∴ 단위 벡터는 $\frac{a}{||a||}$ = $\frac{a}{\sqrt{a^Ta}}$
+
+### 정사형 벡터의 좌표 계산
+
+벡터의 `좌표`는 `방향과 크기의 곱`으로 표현할 수 있다.  
+$a^Tb = ||a||*||b||cosθ$  
+정사형 벡터의 크기는 $\frac{a^Tb}{||b||} = \frac{a^Tb}{\sqrt{b^Tb}}$  
+장사형 벡터의 방향은 b의 단위 벡터와 같다.  
+즉, 정사형 벡터의 좌표는 $\frac{a^Tb}{\sqrt{b^Tb}} * \frac{b}{\sqrt{b^Tb}} = \frac{a^Tb}{b^Tb}b$
+
+$a^T\frac{b}{\sqrt{b^Tb}}*\frac{b}{\sqrt{b^Tb}}$로도 구할 수 있다.
+
+> a와 수직으로 연결되는 정사형 벡터 $\hat{x}$  
+> $(a-b\hat{x})^Tb\hat{x} = 0$  
+> $a^Tb - b^Tbb\hat{x} = 0$  
+> $\hat{x} = \frac{a^Tb}{b^Tb}$
