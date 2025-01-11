@@ -31,7 +31,7 @@ if posts:
     <div class="project-cards">
     """
 
-    for post in posts:
+    for post in filter(target_func, posts):
         tags = post.get('tags', [])
         if isinstance(tags, str):
             tags = [tags]

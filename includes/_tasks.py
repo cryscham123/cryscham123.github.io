@@ -28,10 +28,16 @@ def generate_tasks_html(tasks, base_dir="posts"):
         padding-left: 0;
     }
     .task-item {
-        display: flex;
-        align-items: center;
         margin: 4px 0;
         padding: 4px 0;
+    }
+    .task-main {
+        display: flex;
+        align-items: center;
+    }
+    .task-detail {
+        padding: 4px 0 0 0;
+        opacity: 0.7;
     }
     .task-checkbox {
         margin-right: 8px;
@@ -63,6 +69,12 @@ def generate_tasks_html(tasks, base_dir="posts"):
     .task-name.non-clickable {
         color: #57606a;
     }
+    .task-detail {
+        margin-left: 24px;
+        font-size: 0.9em;
+        color: #57606a;
+        font-style: italic;
+    }
     </style>
     <ul class="tasks-list">
     """
@@ -70,10 +82,10 @@ def generate_tasks_html(tasks, base_dir="posts"):
         name = task.get('name', '')
         directory = task.get('directory', '')
         href = task.get('link', '')
-        checked = 'checked' if task.get('completed', '') == True else ''
-        checkbox_class = 'completed' if task.get('completed', '') == True else ''
+        checked = 'checked' if task.get('status', '') == 'completed' else ''
+        checkbox_class = task.get('status', '')
         name_class = "clickable" if href != '' or directory != '' else "non-clickable"
-        name_class += ' completed' if task.get('completed', '') == True else ''
+        name_class += ' ' + task.get('status', '')
         if directory:
             for root, _, files in os.walk('../../'):
                 for file in files:
@@ -104,14 +116,19 @@ def generate_tasks_html(tasks, base_dir="posts"):
                 <a href="{href}" class="task-link">
                     <span class="task-name {name_class}">{name}</span>
                 </a>
+                {f'<div class="task-detail">{task.get("detail", "")}</div>' if task.get("detail") else ""}
             </li>
             """
         else:
             html_content += f"""
             <li class="task-item">
-                <input type="checkbox" class="task-checkbox {checkbox_class}" {checked} disabled>
-                <span class="task-name {name_class}">{name}</span>
+                <div class="task-main">
+                    <input type="checkbox" class="task-checkbox {checkbox_class}" {checked} disabled>
+                    <span class="task-name {name_class}">{name}</span>
+                </div>
+                {f'<div class="task-detail">{task.get("detail", "")}</div>' if task.get("detail") else ""}
             </li>
+
             """
     html_content += "</ul>"
     return html_content

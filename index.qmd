@@ -34,6 +34,8 @@ target_dir = "posts/00_inboxes"
 #| echo: false
 
 target_directory = "indexes/01_projects"
+def target_func(posts):
+  return posts["status"] == "on-going"
 
 {{< include includes/_para_card.py >}}
 {{< include includes/_para_projects.py >}}
@@ -48,12 +50,15 @@ target_directory = "indexes/01_projects"
 
 <div class="content">
 
-<h3 class="content-title">관심 분야</h3>
+<h3 class="content-title">관리 / 책임 영역</h3>
 
 ```{python}
 #| echo: false
 
 target_directory = "indexes/02_areas"
+def target_func(posts):
+  return posts["status"] == "area"
+
 {{< include includes/_para_card.py >}}
 {{< include includes/_para_resource_area.py >}}
 
@@ -67,16 +72,28 @@ target_directory = "indexes/02_areas"
 
 <div class="content">
 
-<h3 class="content-title">참고 자료</h3>
+<h3 class="content-title">진행 전인 프로젝트</h3>
 
 ```{python}
 #| echo: false
 
 target_directory = "indexes/03_resources"
+def target_func(posts):
+  return posts["status"] == "before-start"
 
 {{< include includes/_para_card.py >}}
-{{< include includes/_para_resource_area.py >}}
+{{< include includes/_para_projects.py >}}
+```
 
+<h3 class="content-title">관심 분야</h3>
+
+```{python}
+#| echo: false
+
+def target_func(posts):
+  return posts["status"] == "area"
+
+{{< include includes/_para_resource_area.py >}}
 ```
 
 </div>
@@ -87,23 +104,29 @@ target_directory = "indexes/03_resources"
 
 <div class="content">
 
-<h3 class="content-title">진행하지 않는 프로젝트</h3>
+<h3 class="content-title">완료된 프로젝트</h3>
 
 ```{python}
 #| echo: false
 
 target_directory = "indexes/04_archives"
 
+def target_func(posts):
+  return posts["status"] == "completed" or posts["status"] == "failed"
+
 {{< include includes/_para_card.py >}}
 {{< include includes/_para_projects.py >}}
 ```
 
+<h3 class="content-title">보관중인 자료</h3>
+
 ```{python}
 #| echo: false
 
-message = "보관중인 노트"
-target_dir = "posts/04_archives/notes"
-{{< include includes/_para_inbox.py >}}
+def target_func(posts):
+  return posts["status"] == "area"
+
+{{< include includes/_para_resource_area.py >}}
 ```
 
 </div>

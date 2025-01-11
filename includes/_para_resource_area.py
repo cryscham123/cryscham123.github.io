@@ -5,7 +5,7 @@ if posts:
     <div class="title-list">
     """
 
-    for post in posts:
+    for post in filter(target_func, posts):
         html_content += f"""
         <a href="{post['path']}" class="title-item">
             <span>{post['title']}</span>

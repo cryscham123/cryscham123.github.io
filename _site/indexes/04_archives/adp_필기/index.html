@@ -26,36 +26,19 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../">
 <link href="../../../favicon" rel="icon">
 <script src="../../../site_libs/quarto-listing/list.min.js"></script>
 <script src="../../../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "일치 없음",
     "search-matching-documents-text": "일치된 문서",
@@ -161,9 +144,23 @@ window.Quarto = {
     <span class="navbar-title">김형훈의 학습 블로그</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools tools-end">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">PARA</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/index.html"> 
+<span class="menu-text">전체 게시글</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
 </div>
-          <div id="quarto-search" class="" title="검색"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
@@ -415,7 +412,7 @@ window.Quarto = {
 </header>
 
 
-<div id="b6bf6c5e" class="cell" data-execution_count="1">
+<div id="08e08c0d" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 
 <style>
@@ -521,12 +518,12 @@ window.Quarto = {
 </div>
 </div>
 <section id="details" class="level2">
-<h2 class="anchored" data-anchor-id="details">Details</h2>
+<h2 data-anchor-id="details">Details</h2>
 <p><a href="https://cryscham123.framer.website/blog/adp-%ED%95%84%EA%B8%B0-%EC%8B%9C%ED%97%98%EC%9D%84-%EB%B4%A4%EC%8A%B5%EB%8B%88%EB%8B%A4">1회차 시도</a>는 실패했지만, 이번엔 잘 되겠죠</p>
 </section>
 <section id="tasks" class="level2">
-<h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
-<div id="5b429949" class="cell" data-execution_count="2">
+<h2 data-anchor-id="tasks">Tasks</h2>
+<div id="e38d980c" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 
     <style>
@@ -535,10 +532,16 @@ window.Quarto = {
         padding-left: 0;
     }
     .task-item {
-        display: flex;
-        align-items: center;
         margin: 4px 0;
         padding: 4px 0;
+    }
+    .task-main {
+        display: flex;
+        align-items: center;
+    }
+    .task-detail {
+        padding: 4px 0 0 0;
+        opacity: 0.7;
     }
     .task-checkbox {
         margin-right: 8px;
@@ -570,19 +573,29 @@ window.Quarto = {
     .task-name.non-clickable {
         color: #57606a;
     }
+    .task-detail {
+        margin-left: 24px;
+        font-size: 0.9em;
+        color: #57606a;
+        font-style: italic;
+    }
     </style>
     <ul class="tasks-list">
     
             <li class="task-item">
-                <input type="checkbox" class="task-checkbox " disabled="">
-                <span class="task-name non-clickable">원서 접수 (2025.01.20 10 am)</span>
+                <div class="task-main">
+                    <input type="checkbox" class="task-checkbox " disabled="">
+                    <span class="task-name non-clickable ">원서 접수 (2025.01.20 10 am)</span>
+                </div>
+                
             </li>
+
             </ul>
 </div>
 </div>
 </section>
 <section id="related-posts" class="level2">
-<h2 class="anchored" data-anchor-id="related-posts">Related Posts</h2>
+<h2 data-anchor-id="related-posts">Related Posts</h2>
 
 
 
@@ -652,13 +665,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
