@@ -1,0 +1,129 @@
+---
+title: "2-기초(2)"
+date: 2025-01-11
+categories: ["선형 대수"]
+directories: ["선형대수_복습"]
+---
+
+![](/img/human-thumb.jpg){.post-thumbnail}
+
+> 행렬의 곱은 교환법칙이 성립하지 않는다.
+
+## 행렬의 곱을 바라보는 관점
+
+1. 내적으로 바라보기
+
+$$
+A = \begin{bmatrix}
+a_1^T \\
+a_2^T \\
+a_3^T
+\end{bmatrix}
+\quad (a_x = \text{column vector})
+$$
+
+$$
+AB = \begin{bmatrix}
+a_1^T \\
+a_2^T \\
+a_3^T
+\end{bmatrix}
+\begin{bmatrix}
+b_1 & b_2 & b_3
+\end{bmatrix} = 
+\begin{bmatrix}
+a_1^Tb_1 & a_1^Tb_2 & a_1^Tb_3 \\
+a_2^Tb_1 & a_2^Tb_2 & a_2^Tb_3 \\
+a_3^Tb_1 & a_3^Tb_2 & a_3^Tb_3
+\end{bmatrix}
+$$
+
+2. rank-1 matrix의 합
+
+$$
+AB = \begin{bmatrix}
+a_1 & a_2 & a_3
+\end{bmatrix}
+\begin{bmatrix}
+b_1^T \\
+b_2^T \\
+b_3^T
+\end{bmatrix} = 
+a_1^Tb_1 + a_2^Tb_2 + a_3^Tb_3
+$$
+
+3. Column space로 바라보기
+
+$$
+Ax = \begin{bmatrix}
+a_1 & a_2 & a_3
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3
+\end{bmatrix} = a_1x_1 + a_2x_2 + a_3x_3
+$$
+
+4. Row space로 바라보기
+
+$$
+x^TA = \begin{bmatrix}
+x_1 & x_2 & x_3
+\end{bmatrix}
+\begin{bmatrix}
+a_1^T \\
+a_2^T \\
+a_3^T
+\end{bmatrix} = x_1a_1^T + x_2a_2^T + x_3a_3^T
+$$
+
+## span과 column space
+
+- column space: column vector들이 span하는 영역
+- span: linear combination으로 만들어지는 모든 벡터들의 집합
+- linear combination: vector들을 scalar 배 하고 더한 것
+- linear independent: span하는 vector들이 서로 독립적인 경우
+
+   수학적 정의: $a_1v_1 + a_2v_2 + \cdots + a_nv_n = 0$ 일 때 $a_1 = a_2 = \cdots = a_n = 0$ 인 경우
+
+- basis: 어떤 공간을 이루는 필수적인 구성요소 (`linear independent`, `span`)
+
+## 항등행렬
+
+$AI = IA = A$를 만족하는 행렬 $I$
+
+## 역행렬
+
+$Ax = b$를 만족하는 $x$를 찾는 것은 $A^{-1}Ax = A^{-1}b$를 만족하는 $x$를 찾는 것과 같다.
+
+## 대각 행렬
+
+diagonal을 제외한 모든 요소가 0인 행렬 (square, rectangular 모두 가능)
+
+## Orthogonal 행렬
+
+행렬의 모든 column들이 orthonormal vector인 경우
+
+$Q^{-1} = Q^T$
+
+## 행렬의 rank
+
+rank: 행렬이 가지는 independent한 column의 개수 → column space의 차원
+
+`rank(A) = rank(A^T)`
+
+- full-column rank: 해가 없거나 한 개 존재
+- full-row rank: 해가 무한하다
+- full rank: 해가 한 개 있다.
+- rank-deficient: b가 column space에 속하지 않는 경우 해가 없고, 그렇지 않으면 해가 무한하다.
+
+## Null space
+
+$Ax = 0$을 만족하는 모든 $x$의 집합
+
+A가 m x n 행렬이라면, dim(N(A)) = n - rank(A)
+
+null space와 row space는 orthogonal하다.
+
+
