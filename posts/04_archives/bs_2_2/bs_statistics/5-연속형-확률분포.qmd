@@ -1,0 +1,90 @@
+---
+title: '연속형 확률분포'
+date: 2024-11-05
+categories: ['확률과 통계']
+directories: ["bs_2_2"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+# Uniform Distribution
+
+정의: 구간 [a,b]에서 모든 구간의 길이에 대해 확률이 동일한 분포
+
+표기: $X \sim U(a,b)$
+
+$f(x) = \frac{1}{b-a}, a \leq x \leq b$
+
+$E(x) = \frac{a+b}{2}$
+
+$Var(x) = \frac{(b-a)^2}{12}$
+
+$m(t) = \frac{e^{tb} - e^{ta}}{t(b-a)}$
+
+# Normal Distribution
+
+정의: 평균 $\mu$, 분산 $\sigma^2$을 가지는 연속형 확률분포
+
+표기: $X \sim N(\mu, \sigma^2)$
+
+μ ± σ 에서 변곡점을 가짐
+
+## Standard Normal Distribution
+
+- μ = 0, σ = 1인 정규분포
+
+# Gamma Distribution
+
+0보다 크고, 대칭이 아니고 왼쪽으로 치우친 분포
+
+표기: $X \sim Γ(α,θ), x > 0$
+
+$E(x) = αθ$
+
+$Var(x) = αθ^2$
+
+$m(t) = \frac{1}{(1-\theta t)^\alpha}, t < \frac{1}{\theta}$
+
+α는 분포의 형태를 결정하기 때문에 `형상 모수 (shape parameter)`라고 함
+
+α가 커질 수록 분포가 정규분포에 가까워짐
+
+θ는 분포의 크기를 결정하기 때문에 `척도 모수 (scale parameter)`라고 함
+
+θ가 커질 수록 높이가 낮아지고 평평해짐
+
+## Chi-square Distribution
+
+α = ν/2, θ = 2인 감마분포
+
+자유도 ν에 따라 모양이 변함: 커질수록 정규분포에 가까워짐
+
+표기: $X \sim χ^2(ν)$
+
+$E(x) = ν$
+
+$Var(x) = 2ν$
+
+## Exponential Distribution
+
+α = 1, $λ = \frac{1}{\theta}$인 감마분포
+
+Poisson 분포에서 사건 발생 사이의 시간을 나타낼 수 있음
+
+표기: $X \sim Exp(λ)$
+
+$f(x) = λe^{-λx}, x \geq 0$
+
+$E(x) = \frac{1}{λ}$
+
+$Var(x) = \frac{1}{λ^2}$
+
+$P(X > x) = e^{-λx}$
+
+$P(X > x + y | X > x) = P(X > y) = e^{-λy}$
+
+포아송분포에서의 $\frac{1}{λ}$와 동일
+
+비기억 특성을 가짐
+
+독립적으로 동일한 지수분포의 합은 감마분포 $Γ(n, \frac{1}{\lambda})$를 따름

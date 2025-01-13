@@ -1,0 +1,92 @@
+---
+title: "Data Modeling and the Entity-Relationship Model"
+categories: ['database']
+date: "2024-10-14"
+directories: ["bs_2_2"]
+---
+
+![](/img/db-thumb.jpg){.post-thumbnail}
+
+## Data and information
+
+- Data: raw facts. `recorded facts`
+- Information: `meaningful context`
+- Knowledge: information + 가치
+
+## What is information system?
+
+- System: a `set of components` that interact to achieve some `purpose` or `goal`
+- Information System: composed of `hardware`, `software`, `data`, `procedures`, `people`
+
+![](/img/system-work.png)
+
+## System Analysis and Design
+
+- `System analysis and design`: process of creating and maintaining `information systems`
+- classic methodology: `SDLC`
+
+### `SDLC` (System Development Life Cycle)
+
+![SDLC](/img/system-use.png)
+
+1. System definitions: 예산 편상, 위험 분석, ...
+2. `Requirements` analysis
+3. Component design
+4. Implementation
+5. System maintenance
+
+#### database development process
+
+1. `Requirements` analysis  
+   input: the project plan  
+   output: a set of approved requirements -> `data model` (`ER model`로 `conceptual design`)  
+   source: `Use cases`, `Business rules`
+2. Component Design: Relational Database Design (상세 설계)
+3. Implementation
+
+## ER model
+
+- `Entities`
+  - `Entity class`
+  - `Entity instance`
+- Attributes: `Data type`, `Properties`(default, constraints)
+- Identifiers
+  - `unique`
+  - `Nonunique`: identifies a set of instances
+- `Relationships`
+  - `binary relationship`
+    - Maximum cardinality: `1:1`(A has a B), `1:N`(A has a set of B), `M:N`
+    - Minimum cardinality: `0`, `1`
+  - `ternary relationship`
+
+![](/img/entity.jpg)
+
+## `Entit-Relationship Diagram`
+
+- `Entity classes`: rectangle
+
+- `Relationships`: diamond
+
+- `maximum cardinality`: inside the diamond
+
+- `minimum cardinality`: oval or hash mark next to diamond
+
+- `strong entity`: 독자적으로 존재 가능. 강한개체 관계는 점선  
+  `Non-ID-dependent`: identifier에 다른 entity의 identifier가 포함되어 있지 않음. 점선으로 표기(`non-identifying relationship`)
+
+- `weak entity`: 약, 강 관계는 실선. IS: rounded square, traditional: 2 layer square  
+  `ID-dependent`: identifier에 다른 entity의 identifier가 포함되어 있음. 실선으로 표기(`identifying relationship`)  
+
+- `associative entity`: `relationship`이 `entity`로 변환된 것.  
+  `Many-to-many` relationship을 2개의 `1:N`으로 변환
+
+- `super type`, `sub type`: 상속관계. `sub type` is a `super type`
+  - exclusive: `Discriminator attribute`가 필요함
+  - inclusive
+
+- `recursive relationship`
+
+- Business rule: build-in constraints, trigger, stored procedure, application code로 구현 가능
+
+- data model validation: form, report를 이용한 prototyping
+
