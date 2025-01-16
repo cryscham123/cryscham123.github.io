@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -728,13 +762,13 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">intro</a></li>
-  <li><a href="#프로젝트-설명" id="toc-프로젝트-설명" class="nav-link" data-scroll-target="#프로젝트-설명">프로젝트 설명</a>
+  <li><a href="#프로젝트-및-구현-설명" id="toc-프로젝트-및-구현-설명" class="nav-link" data-scroll-target="#프로젝트-및-구현-설명">프로젝트 및 구현 설명</a>
   <ul class="collapse">
   <li><a href="#개요" id="toc-개요" class="nav-link" data-scroll-target="#개요">개요</a></li>
-  <li><a href="#mandatory" id="toc-mandatory" class="nav-link" data-scroll-target="#mandatory">Mandatory</a></li>
-  <li><a href="#bonus" id="toc-bonus" class="nav-link" data-scroll-target="#bonus">Bonus</a></li>
+  <li><a href="#github-action-setting" id="toc-github-action-setting" class="nav-link" data-scroll-target="#github-action-setting">Github Action Setting</a></li>
+  <li><a href="#jwt" id="toc-jwt" class="nav-link" data-scroll-target="#jwt">JWT</a></li>
+  <li><a href="#block-chain" id="toc-block-chain" class="nav-link" data-scroll-target="#block-chain">Block Chain</a></li>
   </ul></li>
-  <li><a href="#코드-설명" id="toc-코드-설명" class="nav-link" data-scroll-target="#코드-설명">코드 설명</a></li>
   <li><a href="#결과" id="toc-결과" class="nav-link" data-scroll-target="#결과">결과</a></li>
   <li><a href="#outro" id="toc-outro" class="nav-link" data-scroll-target="#outro">outro</a></li>
   </ul>
@@ -747,10 +781,11 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
 <div class="quarto-title">
 <h1 class="title d-none d-lg-block">ft_transcendence</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">agile</div>
     <div class="quarto-category">github action</div>
     <div class="quarto-category">django</div>
     <div class="quarto-category">jwt</div>
-    <div class="quarto-category">web3.0</div>
+    <div class="quarto-category">solidity</div>
     <div class="quarto-category">42 seoul</div>
   </div>
   </div>
@@ -794,49 +829,396 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
 <figcaption>42 seoul 공통과정 6서클 과제</figcaption>
 </figure>
 </div>
+<p>42 Seoul 공통과정의 마지막 과제입니다. 이 프로젝트는 개발자가 선호하는 라이브러리와 프레임워크를 자유롭게 선택하여 구현할 수 있다는 점이 특징입니다.</p>
+<p>대형 협업 과제인 만큼, 과제에 명시되어있지 않지만 협업을 위한 툴도 공부해서 다양하게 적용해볼 수 있는 좋은 과제인것 같습니다. 저같은 경우에는 coursera, udemy 강의를 통해 <strong>agile</strong> 협업 방식과 <strong>github에서의 적용 방법</strong>에 대해 공부를 했고, 프로젝트 진행에 있어서 꽤 도움이 됐던걸로 기억합니다. 사실 프로젝트를 진행하다보니, agile 방식을 온전히 다 적용하기엔 적합하지 않다고 판단했지만, <strong>Kanban Board</strong>로 프로젝트를 관리하는 것 같은 부분은 꽤 유용하게 활용할 수 있었습니다.</p>
 </section>
-<section id="프로젝트-설명" class="level2">
-<h2 class="anchored" data-anchor-id="프로젝트-설명">프로젝트 설명</h2>
+<section id="프로젝트-및-구현-설명" class="level2">
+<h2 class="anchored" data-anchor-id="프로젝트-및-구현-설명">프로젝트 및 구현 설명</h2>
 <section id="개요" class="level3">
 <h3 class="anchored" data-anchor-id="개요">개요</h3>
 <p><a href="https://cdn.intra.42.fr/pdf/pdf/140713/en.subject.pdf">과제 명세서</a></p>
-<!--구현 시 반드시 [norminette 규칙](https://github.com/taeng42/norminette/blob/master/pdf/ko.norm.pdf)을 준수해야 하는데, 이는 코드의 가독성을 위한 것이고, 대표적인 예시는 다음과 같습니다.-->
-<!---->
-<!--- 파일당 함수 5개 이하-->
-<!--- 함수당 코드 25줄 이하-->
-<!--- 한 줄당 80자 이하-->
-<!--[bash 공식 문서](https://www.gnu.org/software/bash/manual/bash.html)와 함께 [이 자료](https://mug896.github.io/bash-shell/index.html)를 많이 참고해서 구현했습니다.-->
-<p>자세한 내용은 <a href="#코드-설명">코드와 함께 설명</a>드리겠습니다.</p>
+<p>해당 과제는 실시간 <a href="https://www.ponggame.org/">Pong 게임</a> 매칭 웹사이트를 만드는게 목표입니다. 저는 이번 프로젝트에서 <strong>github action 설정, User Management Backend 설계와 42 API를 이용한 OAuth 인증, JWT 구현, Game History를 Block Chain으로 저장</strong>하는 파트를 담당했습니다.</p>
+<p>참고한 자료는 다음과 같습니다:</p>
+<ul>
+<li><a href="https://www.coursera.org/learn/agile-project-management">Google Agile Project 관리</a></li>
+<li><a href="https://docs.github.com/ko/actions">Github Action Docs</a></li>
+<li><a href="https://cli.github.com/manual/">Github CLI Docs</a></li>
+<li><a href="https://www.udemy.com/course/python-django-the-practical-guide/?couponCode=KRLETSLEARNNOW">Django udemy 강좌</a></li>
+<li><a href="https://www.django-rest-framework.org/">Django Rest Framework Docs</a></li>
+<li><a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html">Django Simple JWT</a></li>
+<li><a href="https://mgyo.tistory.com/832">JWT Token 탈취 대응 시나리오</a></li>
+<li><a href="https://medium.com/@jose-luis-navarro/securing-our-microservices-through-authentication-and-authorization-with-jwt-refresh-tokens-and-f4439810fce7">micro service에서 JWT 활용 방법</a></li>
+<li><a href="https://puleugo.tistory.com/154">Refresh Token을 사용해야 하는 이유</a></li>
+<li><a href="https://www.hahwul.com/2020/01/18/samesite-lax/">Cookie에서의 same site 옵션</a></li>
+<li><a href="https://bitcoin.org/files/bitcoin-paper/bitcoin_ko.pdf">Bitcoin 백서</a></li>
+<li><a href="https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=KRLETSLEARNNOW">Solidity Udemy 강의</a></li>
+<li><a href="https://docs.soliditylang.org/en/latest/">Solidity Docs</a></li>
+<li><a href="https://youtube.com/playlist?list=PL7jH19IHhOLOJfXeVqjtiawzNQLxOgTdq&amp;si=k5TMs5VUF0Z1xIA2">nomad coder 블록체인 시리즈</a></li>
+</ul>
+<p>그 외 참고하면 좋을것 같은 자료:</p>
+<ul>
+<li><a href="https://youtube.com/pqYfnK9aTF0?si=QVFRaodHyijfEeYD">EBS 블록체인 강좌</a></li>
+</ul>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>이 포스팅에서는 github action setting, jwt, block chain 부분만 다루겠습니다.</p>
+<p>이 포스팅에서는 <strong>github action setting, jwt, block chain</strong> 부분만 다루겠습니다.<br>
+전체 코드는 비공개 되어있는 상태입니다.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="mandatory" class="level3">
-<h3 class="anchored" data-anchor-id="mandatory">Mandatory</h3>
+<section id="github-action-setting" class="level3">
+<h3 class="anchored" data-anchor-id="github-action-setting">Github Action Setting</h3>
+<p>github를 이용해서 agile 방법론을 적용할 수 있도록 의도했고, <strong>자동화</strong>와 <strong>template</strong>을 이용해 통일성 있는 구조를 유지하려고 했습니다.</p>
+<p><strong>1. 회의를 통해 진행해야 하는 작업을 Kanban board에 정리한다.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-19-36-12.png" class="img-fluid figure-img"></p>
+<figcaption>Github Kanban Board</figcaption>
+</figure>
+</div>
+<p>각각의 column에는 다음과 같은 내용이 들어갑니다.</p>
+<ol type="1">
+<li><strong>Discussion</strong>: 논의가 필요한 작업. 개개인이 자유롭게 올릴 수 있습니다</li>
+<li><strong>Backlog</strong>: Discussion에 있는 내용 중 구현하기로 회의에서 정한 작업</li>
+<li><strong>Ready</strong>: Back log에 있는 작업 중 이번 Sprint에서 구현할 작업들</li>
+<li><strong>In Progress</strong>: Ready에 있는 작업 중 누군가가 작업중인 것</li>
+<li><strong>Done</strong>: master branch에 merge가 완료된 작업</li>
+</ol>
+<p>자세한 내용은 <a href="#meeting">meeting</a> 부분을 참고해 주세요.</p>
+<p>참고로 <strong>Disccusion</strong>에 작업을 올리는 방법은 <strong>template에 맞게 issue를 올리</strong>면 됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-19-51-40.png" class="img-fluid figure-img"></p>
+<figcaption>Discussion template</figcaption>
+</figure>
+</div>
+<p>아래와 같이 설정 파일을 만들어서 ‘.github/ISSUE_TEMPLATE/’ 폴더 안에 저장하면 issue create 시 자동으로 template이 뜨게 할 수 있습니다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">name:</span> New discussion</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">description:</span> new discussion</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">title:</span> <span class="st">"[DISCUSSION]"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">labels:</span> <span class="pp">[</span><span class="st">"enhancement"</span><span class="pp">]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">projects:</span> <span class="pp">[</span><span class="st">"organization-for-practice/5"</span><span class="pp">]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">body:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: markdown</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">attributes:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="ex">value:</span> <span class="kw">|</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">해당</span> 기능과 관련된 request가 이미 존재하는지 확인해주세요.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: textarea</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">id:</span> story</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">attributes:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="ex">label:</span> Story</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description:</span> 해당 기능에 대한 설명이나 필요한 배경을 작성해주세요.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="ex">placeholder:</span> 자유로운 양식으로 작성해주세요.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">validations:</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="ex">required:</span> true</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>2. Kanban board를 보고 개인이 능동적으로 고유 브랜치에 작업을 진행한다.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-19-44-52.png" class="img-fluid figure-img"></p>
+<figcaption>빨간 밑줄 부분을 설정해줍니다.</figcaption>
+</figure>
+</div>
+<p>Kanban board의 Ready section에 있는 작업을 클릭해서 들어간 후, <strong>assignees를 본인으로 선택해서 작업</strong>하면 됩니다. 실제 프로젝트를 진행할 때는 사진처럼 완료된 작업이 아닌 Ready에 있는 작업에 대해 설정합니다. <strong>task completion criteria</strong>라는 내용이 보이는데, 이는 <strong>회의를 통해 결정</strong>하는 것으로, 나중에 작업이 완료되고 <strong>pull request 시, 평가자가 작업에 완성도에 대해 판단할 수 있는 기준</strong>으로 제공됩니다.</p>
+<p>자동화 코드는 아래와 같이 구현했습니다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">name:</span> Create branch</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">on:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">issues:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">types:</span> [ assigned ]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">pull_request:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">types:</span> [ opened, closed ]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">jobs:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">create_issue_branch_job:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">runs-on:</span> ubuntu-latest</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">steps:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Generate token</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">id:</span> generate_token</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">uses:</span> tibdex/github-app-token@v2</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">with:</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>          <span class="ex">app_id:</span> <span class="va">${</span><span class="er">{ secrets.APP_ID </span><span class="va">}</span>}</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>          <span class="ex">private_key:</span> <span class="va">${</span><span class="er">{ secrets.PRIVATE_KEY </span><span class="va">}</span>}</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="co"># gh 명령어를 이용해 project의 상태를 In progress로 수정해줍니다.</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Project in-progress</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="ex">if:</span> github.event.action == <span class="st">'assigned'</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="ex">run:</span> <span class="kw">|</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>          <span class="va">PROJECT_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">gh</span> project view 5 <span class="at">--owner</span> organization-for-practice <span class="at">--format</span><span class="op">=</span>json <span class="at">--jq</span> <span class="st">'.id'</span><span class="va">)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>          <span class="va">ITEM_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">gh</span> project item-list 5 <span class="at">--owner</span> organization-for-practice <span class="at">--format</span><span class="op">=</span>json <span class="at">--jq</span> <span class="st">".items[] | select(.content.number == </span><span class="va">${NUMBER}</span><span class="st">) | .id"</span><span class="va">)</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>          <span class="va">FIELD_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">gh</span> project field-list 5 <span class="at">--owner</span> organization-for-practice <span class="at">--format</span><span class="op">=</span>json <span class="at">--jq</span> <span class="st">'.fields[2].id'</span><span class="va">)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>          <span class="va">SINGLE_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">gh</span> project field-list 5 <span class="at">--owner</span> organization-for-practice <span class="at">--format</span><span class="op">=</span>json <span class="at">--jq</span> <span class="st">'.fields[2].options[] | select(.name == "In progress") | .id'</span><span class="va">)</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>          <span class="ex">gh</span> project item-edit <span class="at">--id</span> <span class="va">${ITEM_ID}</span> <span class="at">--field-id</span> <span class="va">${FIELD_ID}</span> <span class="at">--single-select-option-id</span> <span class="va">${SINGLE_ID}</span> <span class="at">--project-id</span> <span class="va">${PROJECT_ID}</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>          <span class="ex">GH_TOKEN:</span> <span class="va">${</span><span class="er">{ steps.generate_token.outputs.token </span><span class="va">}</span>}</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>          <span class="ex">NUMBER:</span> <span class="va">${</span><span class="er">{ github.event.issue.number </span><span class="va">}</span>}</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      <span class="co"># assign한 작업에 대한 branch를 새로 만들어줍니다.</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Create Issue Branch</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="ex">uses:</span> robvanderleek/create-issue-branch@main</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>          <span class="ex">GITHUB_TOKEN:</span> <span class="va">${</span><span class="er">{ steps.generate_token.outputs.token </span><span class="va">}</span>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>위의 코드는 assign한 작업을 Ready column에서 In progress column으로 옮겨주고, 자동으로 작업할 branch를 만들어줍니다.</p>
+<p>branch 자동 생성은 <a href="https://github.com/robvanderleek/create-issue-branch">이 workflow</a>를 사용하였고, 적용 시 아래와 같이 브랜치가 생성됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-19-58-01.png" class="img-fluid figure-img"></p>
+<figcaption>자동 생성된 branch</figcaption>
+</figure>
+</div>
+<p>이름도 자동으로 생성되게 해서 <strong>convention을 지켜야 한다는 부담을 줄여</strong>줬습니다.</p>
+<p><strong>3. 작업이 완료되면, 모든 조건을 충족하는지 확인한 후, master에 merge 한다.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-20-03-32.png" class="img-fluid figure-img"></p>
+<figcaption>pull request 화면. 사진 속 private key는 딱히 중요하진 않습니다.</figcaption>
+</figure>
+</div>
+<p>작업이 완료됬다고 판단되면 위 화면과 같이 <strong>pull request를 생성</strong>하고, <strong>Reviewer를 설정</strong>해주면 됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-20-04-16.png" class="img-fluid figure-img"></p>
+<figcaption>task completion criteria</figcaption>
+</figure>
+</div>
+<p>그러면 이전에 설정했던 기준들이 자동으로 불러와지고, <strong>모든 항목에 체크가 완료</strong>되어야 <strong>merge를 할 수 있게 설정</strong>했습니다. 구현 코드는 아래와 같습니다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">name:</span> Master merge rutine</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">on:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">pull_request_target:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">types:</span> [ opened, synchronize ]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">branches:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> master</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">env:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PR_NUM:</span> <span class="va">${</span><span class="er">{ github.event.pull_request.number </span><span class="va">}</span>}</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">GH_REPO:</span> <span class="va">${</span><span class="er">{ github.repository </span><span class="va">}</span>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">jobs:</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">get_checklist:</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">runs-on:</span> ubuntu-latest</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">if:</span> github.event.action == <span class="st">'opened'</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">steps:</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Generate token</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">id:</span> generate_token</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="ex">uses:</span> tibdex/github-app-token@v2</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="ex">with:</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>          <span class="ex">app_id:</span> <span class="va">${</span><span class="er">{ secrets.APP_ID </span><span class="va">}</span>}</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>          <span class="ex">private_key:</span> <span class="va">${</span><span class="er">{ secrets.PRIVATE_KEY </span><span class="va">}</span>}</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Get issue</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="ex">id:</span> issue_num</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>          <span class="ex">BRANCH:</span> <span class="va">${</span><span class="er">{ github.event.pull_request.head.ref </span><span class="va">}</span>}</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="ex">run:</span> <span class="kw">|</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>          <span class="bu">echo</span> <span class="va">$BRANCH</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">'feature\/.*\/i[0-9]\+'</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="va">$BRANCH</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">'hot_fix\/.*\/i[0-9]\+'</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>          <span class="va">TMP</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="va">$BRANCH</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">'i[0-9]\+'</span><span class="va">)</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>          <span class="bu">echo</span> <span class="st">"NUMBER=</span><span class="va">${TMP</span><span class="op">#</span>i<span class="va">}</span><span class="st">"</span> <span class="op">&gt;&gt;</span> <span class="va">$GITHUB_OUTPUT</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Get issue body</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="ex">id:</span> issue_body</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>          <span class="ex">GH_TOKEN:</span> <span class="va">${</span><span class="er">{ steps.generate_token.outputs.token </span><span class="va">}</span>}</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>          <span class="ex">NUM:</span> <span class="va">${</span><span class="er">{ steps.issue_num.outputs.number </span><span class="va">}</span>}</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="ex">run:</span> <span class="kw">|</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>          <span class="bu">echo</span> <span class="st">"CONTENTS&lt;&lt;EOF"</span> <span class="op">&gt;&gt;</span> <span class="va">$GITHUB_OUTPUT</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>          <span class="ex">gh</span> issue view <span class="va">${NUM}</span> <span class="at">--json</span> body <span class="at">--jq</span> <span class="st">'.body'</span> <span class="op">&gt;&gt;</span> <span class="va">$GITHUB_OUTPUT</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>          <span class="bu">echo</span> <span class="st">"EOF"</span> <span class="op">&gt;&gt;</span> <span class="va">$GITHUB_OUTPUT</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Update checklist</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        <span class="ex">run:</span> <span class="kw">|</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>          <span class="ex">gh</span> pr comment <span class="va">$PR_NUM</span> <span class="at">--body</span> <span class="st">"</span><span class="va">${BODY}</span><span class="st">"</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>          <span class="ex">GH_TOKEN:</span> <span class="va">${</span><span class="er">{ steps.generate_token.outputs.token </span><span class="va">}</span>}</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>          <span class="ex">BODY:</span> <span class="st">"</span><span class="va">${</span><span class="er">{ steps.issue_body.outputs.contents </span><span class="va">}</span><span class="st">}"</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>merge가 완료된 branch</strong>는 <strong>자동으로 삭제</strong>가 되도록 설정을 해주었습니다.</p>
+<p>이제 아래는 실제 <strong>프로젝트를 진행할 때 만들었던 rule</strong>들입니다.</p>
+<section id="work-flow" class="level4">
+<h4 class="anchored" data-anchor-id="work-flow"><strong>1. work flow</strong></h4>
+<p><strong>github flow</strong>로 진행됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-20-11-33.png" class="img-fluid figure-img"></p>
+<figcaption>github flow</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li>매 작업은 master branch의 HEAD를 기반으로 이루어집니다.<br>
+pr을 올리지 않는 개인 작업용 <strong>local branch는 자유롭게 생성</strong>해주세요.</li>
+<li>master에 직접적인 push는 관리자를 제외하고는 불가능합니다.</li>
+<li>master에 대한 merge는 squash merge로 진행됩니다.</li>
+<li>그 외의 merge는 rebase로 진행해주세요.</li>
+</ol>
 </section>
-<section id="bonus" class="level3">
-<h3 class="anchored" data-anchor-id="bonus">Bonus</h3>
+<section id="work" class="level4">
+<h4 class="anchored" data-anchor-id="work"><strong>2. work</strong></h4>
+<ol type="1">
+<li>kanban board의 'Ready' 섹션에서 하나를 정해서 새로운 기능에 대한 작업을 진행해주세요.<br>
+선택한 작업은 assignees에 자신의 팀원을 등록 후, Start Date를 해당 날짜로 설정해주세요.<br>
+assignees 등록이 완료되면 자동으로 target branch가 생성됩니다.<br>
+해당 branch에 팀원들이 필요한 기능들을 자유로운 방식으로 구현한 후, master branch에 merge 해주세요.<br>
+단, 해당 branch에 대한 merge는 rebase로 진행해주세요.</li>
+<li>hot_fix issue나, new feature request issue는 discussion의 필요성이 있을 경우에 등록해주세요.</li>
+<li>작업 중, 현재 작업하는 범위 외에서 추가적인 기능이 필요할 경우 관련 issue에 comment를 남기거나, reopen 해주세요.</li>
+</ol>
 </section>
-</section>
-<section id="코드-설명" class="level2">
-<h2 class="anchored" data-anchor-id="코드-설명">코드 설명</h2>
+<section id="commit-message-convention" class="level4">
+<h4 class="anchored" data-anchor-id="commit-message-convention"><strong>3. commit message convention</strong></h4>
+<p>아래의 명령어를 입력해주세요</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config commit.template .github/COMMIT_MESSAGE_TEMPLATE</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>이후, -m 옵션 없이 ’git commit’으로 message를 입력해주세요.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>COMMIT_MESSAGE_TEMPLATE</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="COMMIT_MESSAGE_TEMPLATE"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># commit message template</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;Title&gt; 작성</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;빈 줄&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;body&gt; 작성</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;빈 줄&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;footer&gt; 작성</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># About Convention</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   &lt;Title&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 필수로 입력해주세요</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 형식: &lt;type&gt;: &lt;short summary&gt;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#       &lt;type&gt;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#           - config: 설정 관련 파일 작성 또는 변경</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#           - docs: 문서 변경사항</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#           - feat: 새로운 기능</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#           - fix: 버그 수정</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#           - refactor: 기능 추가나 버그 수정이 아닌 변경 사항</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#           - remove: 코드나 파일 제거</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#           - style: 스타일 작성 또는 수정</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#           - test: 누락된 테스트 추가 또는 기존 테스트 수정</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#           - core: 기능 구현 외 시스템 관련 작업</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#       &lt;short summary&gt;</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#           - 변경 사항에 대한 간단한 설명</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">#           - 첫글자 소문자, 현재 시제, 명령문으로 마지막에 .(마침표) 없이 작성</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   &lt;body&gt;</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 선택적으로 입력 해주세요</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 현재 시제, 명령문으로 작성</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 변경 사항의 동기(왜)를 설명</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 변경 효과를 설명하기 위해 이전 동작과 현재 동작의 비교를 포함할 수 있음</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co">#   &lt;footer&gt;</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 선택적으로 입력 해주세요</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 해당 commit과 관련된 task의 issue 번호들을 적어주세요</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 'bug'나 'task list' label이 붙은 issue는 제외해주세요</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co">#       - ex) closes #&lt;issue 번호&gt; closes #&lt;issue 번호&gt; ...</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>전체 코드는 비공개 되어있는 상태입니다.</p>
+<p>commit message template은 <a href="https://www.conventionalcommits.org/en/v1.0.0/">이 사이트</a>를 참고해서 만들었습니다.</p>
 </div>
 </div>
 </div>
+</section>
+<section id="pull-request" class="level4">
+<h4 class="anchored" data-anchor-id="pull-request"><strong>4. pull request</strong></h4>
+<ol type="1">
+<li>pull request는 <strong>500줄의 코드</strong>를 넘어가지 않게 작성 바랍니다.</li>
+<li>모든 check list를 통과한 request만 master에 merge 가능합니다.</li>
+<li>reviewers에는 해당 작업과 관련된 domain의 팀원을 선택해주세요. 최소 1명 이상의 동료에게 평가를 받은 request만 merge 가능합니다.</li>
+</ol>
+</section>
+<section id="meeting" class="level4">
+<h4 class="anchored" data-anchor-id="meeting"><strong>5. meeting</strong></h4>
+<ul>
+<li><p>daily meeting</p>
+<ul>
+<li><p>매일 정해진 시간에 팀원들은 각각 다음과 같은 사안에 대해 논의합니다.</p>
+<ol type="1">
+<li>개인이 어제 작업한 내용</li>
+<li>개인이 오늘 작업할 내용</li>
+<li>개인이 현재 도움이 필요한 내용</li>
+</ol></li>
+<li><p>이후, 새로운 내용이 추가된 ('Disccusion' 섹션에 있는) issue 중 다음과 같은 내용에 대해 논의합니다.</p>
+<ol type="1">
+<li>해당 issue가 유효한가</li>
+<li>추가적으로 필요하거나 필요 없는 내용</li>
+<li>해당 issue의 priority (매우 급함 / 급함 / 안 급함)</li>
+<li>해당 issue의 estimate (작업하는데 필요한 노력의 정량적인 수치)</li>
+</ol></li>
+<li><p>추가적으로, project의 'Back log' 항목에서 'Ready' 항목으로 추가해야 할 작업에 대해 논의하거나 'Ready' 항목에서 'Back log' 항목으로 제외할 작업에 대해 논의할 수 있습니다.</p></li>
+</ul></li>
+<li><p>sprint planning / retrospective</p>
+<ul>
+<li>2주에 한번 진행.</li>
+<li>이전 sprint에 대한 평가와 이후 sprint를 위한 계획을 세웁니다.<br>
+</li>
+<li>planning
+<ul>
+<li>Project의 'Back log' 항목 중 본격적으로 작업을 진행할 항목을 정합니다.</li>
+<li>daily meeting 시간을 조정할 수 있습니다.</li>
+</ul></li>
+<li>retrospective
+<ul>
+<li>이전 sprint의 문제점에 대해 서로 의논해봅니다.</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>프로젝트를 하다보니, 생각보다 진행 속도가 빨라서 2주에 한번 진행하는 sprint는 유명무실해져버렸습니다. 실제로는 daily meeting만 진행을 했습니다.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="jwt" class="level3">
+<h3 class="anchored" data-anchor-id="jwt">JWT</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-20-37-17.png" class="img-fluid figure-img"></p>
+<figcaption>security 요구사항</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-20-38-52.png" class="img-fluid figure-img"></p>
+<figcaption>JWT 요구사항</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li>session-cookie가 뭔지</li>
+<li>token 암호화방식이 뭔지</li>
+<li>JWT가 뭔지</li>
+<li>JWT의 보안상 위험</li>
+<li>구현 내용</li>
+</ol>
+</section>
+<section id="block-chain" class="level3">
+<h3 class="anchored" data-anchor-id="block-chain">Block Chain</h3>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>블록 체인의 개념적인 자세한 설명은 생략하겠습니다.</p>
+</div>
+</div>
+</div>
+<p><img src="img/2025-01-16-20-40-25.png" class="img-fluid"> <img src="img/2025-01-16-20-40-38.png" class="img-fluid" alt="block chain 요구사항"></p>
+<ol type="1">
+<li>smart contract가 뭔지</li>
+<li>가나슈를 선택한 이유</li>
+<li>구현 내용</li>
+</ol>
+</section>
 </section>
 <section id="결과" class="level2">
 <h2 class="anchored" data-anchor-id="결과">결과</h2>
@@ -857,6 +1239,8 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
 </section>
 <section id="outro" class="level2">
 <h2 class="anchored" data-anchor-id="outro">outro</h2>
+<p>ft_transcendence 과제는 통상 5인 팀이 2-3개월에 걸쳐 완성하는 대형 과제입니다. 이런 과제를 고작 3인이 한 달 만에 완료한것은 보통 일이 아니라고 생각합니다.</p>
+<p>처음 계획했던 것보다 빠른 진행이 가능했던 건 팀원들의 기술적 역량이 높았던 것도 있지만, 팀원 전원이 지속적인 몰입과 집중력을 유지했던 것과, 매일 아침 미팅을 진행하며 지속적으로 팀원간 의사소통을 했던 것이 크게 작용했던 것 같습니다. 앞으로 이 과제를 수행하실 분들도 협업 능력을 키우는 용도로 해당 과제를 수행해 나가시면 큰 도움이 될거라 생각합니다.</p>
 
 
 </section>
