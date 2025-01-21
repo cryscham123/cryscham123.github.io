@@ -3,7 +3,8 @@ const path = require('path');
 
 exports.handler = async (event, context) => {
     try {
-         const directoryPath = path.join(process.cwd(), 'posts/');
+         //const directoryPath = path.join(process.cwd(), 'posts/');
+         const directoryPath = pocess.cwd();
          const files = fs.readdirSync(directoryPath);
 
          return {
@@ -13,7 +14,10 @@ exports.handler = async (event, context) => {
        } catch (error) {
          return {
              statusCode: 500,
-             body: JSON.stringify({ error: 'Internal Server Error' }),
+             body: JSON.stringify({ 
+                error: 'Internal Server Error', 
+                message: directoryPath
+              }),
          };
      }
 };
