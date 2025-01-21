@@ -4,7 +4,7 @@ const path = require('path');
 exports.handler = async (event, context) => {
     try {
          //const directoryPath = path.join(process.cwd(), 'posts/');
-         const directoryPath = pocess.cwd();
+         const directoryPath = process.cwd();
          const files = fs.readdirSync(directoryPath);
 
          return {
@@ -17,6 +17,7 @@ exports.handler = async (event, context) => {
              body: JSON.stringify({ 
                 error: 'Internal Server Error', 
                 message: directoryPath
+                yo: error
               }),
          };
      }
