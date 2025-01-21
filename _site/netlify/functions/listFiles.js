@@ -3,7 +3,7 @@ const path = require('path');
 
 exports.handler = async (event, context) => {
     try {
-         const directoryPath = path.join(process.cwd(), 'public/docs');
+         const directoryPath = path.join(process.cwd(), 'posts/');
          const files = fs.readdirSync(directoryPath);
 
          return {
