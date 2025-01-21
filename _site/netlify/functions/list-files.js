@@ -11,10 +11,9 @@ exports.handler = async (event, context) => {
                         body: JSON.stringify({ files }),
                       };
           } catch (error) {
-            console.error(error);
             return {
                       statusCode: 500,
-                      body: JSON.stringify({ error: 'Failed to list posts.' }),
+                      body: JSON.stringify({ error: 'Failed to list posts.', message: error}),
                   };
       }
 };
