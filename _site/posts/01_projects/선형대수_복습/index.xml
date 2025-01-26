@@ -15,7 +15,118 @@
 <link>https://cryscham123.github.io/posts/01_projects/선형대수_복습/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Fri, 10 Jan 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 21 Jan 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>3-몰라</title>
+  <link>https://cryscham123.github.io/posts/01_projects/선형대수_복습/notes/3.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="가우스-조던-소거법" class="level2">
+<h2 class="anchored" data-anchor-id="가우스-조던-소거법">가우스 조던 소거법</h2>
+<blockquote class="blockquote">
+<p>선형대수의 목표는 <img src="https://latex.codecogs.com/png.latex?Ax%20=%20b">에서 x를 찾는 것이다.</p>
+</blockquote>
+<img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0Ax%20+%202y%20%5Cquad%20%20&amp;=%204%20%5C%5C%0A2x%20+%205y%20%5Cquad%20&amp;=%209%0A%5Cend%7Baligned%7D">
+<p>이 수식을 다시 살펴보자. 위의 수식은 아래와 같이 적용할 수 있다.</p>
+<img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A2x%20+%204y%20%5Cquad%20%20&amp;=%208%20%5C%5C%0A2x%20+%205y%20%5Cquad%20&amp;=%209%0A%5Cend%7Baligned%7D">
+<p>위의 열립방정식을 풀면 <img src="https://latex.codecogs.com/png.latex?y%20=%201">이라는 결과를 얻는다. 다시 <img src="https://latex.codecogs.com/png.latex?y=1">을 대입해서 <img src="https://latex.codecogs.com/png.latex?x=2">라는 값을 구할 수 있다.</p>
+<p>이제 이를 matrix와 vector로 풀어보자.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0A1%20&amp;%202%20%5C%5C%0A2%20&amp;%205%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Ax%20%5C%5C%0Ay%0A%5Cend%7Bbmatrix%7D%20=%0A%5Cbegin%7Bbmatrix%7D%0A4%20%5C%5C%0A9%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p>이를 확장행렬로 표현하면 다음과 같다</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5BA%7Cb%5D%20=%20%5Cbegin%7Bbmatrix%7D%0A1%20&amp;%202%20&amp;%20%7C%20&amp;%204%20%5C%5C%0A2%20&amp;%205%20&amp;%20%7C%20&amp;%209%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p>이제 가우스 조던 소거법을 적용해보자</p>
+<p>적용 순서는 다음과 같다.</p>
+<ol type="1">
+<li>양 변에 0이 아닌 상수배를 해준다.</li>
+<li>상수배를 한 행을 다른행에 더하거나 뺀다.</li>
+<li>행끼리 자리 바꾼다.</li>
+</ol>
+<p>이에 맞춰서 위의 식을 풀이하면,</p>
+<ol type="1">
+<li>두 번째 행에서 첫 번째 행의 2배를 빼면</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0A1%20&amp;%202%20&amp;%20%7C%20&amp;%204%20%5C%5C%0A0%20&amp;%201%20&amp;%20%7C%20&amp;%201%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<ol start="2" type="1">
+<li>첫 번째 행에서 두 번째 행의 2배를 빼면</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0A1%20&amp;%200%20&amp;%20%7C%20&amp;%202%20%5C%5C%0A0%20&amp;%201%20&amp;%20%7C%20&amp;%201%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p>따라서 <img src="https://latex.codecogs.com/png.latex?x%20=%202">, <img src="https://latex.codecogs.com/png.latex?y%20=%201">이라는 해를 얻을 수 있다.</p>
+<p>즉 가우스조던 소거법은 <code>왼쪽을 항등행렬</code>로 만들고, 그 <code>오른쪽에 있는 값이 답</code>이되는 소거법이다.</p>
+</section>
+<section id="역행렬-구하기" class="level2">
+<h2 class="anchored" data-anchor-id="역행렬-구하기">역행렬 구하기</h2>
+<p>역행렬을 구할 수 있다면 x의 값을 쉽게 구할 수 있다. (<img src="https://latex.codecogs.com/png.latex?x%20=%20A%5E%7B-1%7Db">)</p>
+<p>가우스 조던 소거법을 이용해 역행렬을 구해보자.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0Aa%20&amp;%20b%20&amp;%20%7C%20&amp;%201%20&amp;%200%20%5C%5C%0Ac%20&amp;%20d%20&amp;%20%7C%20&amp;%200%20&amp;%201%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0Aa%20&amp;%20b%20&amp;%20%7C%20&amp;%201%20&amp;%200%20%5C%5C%0A0%20&amp;%20%5Cfrac%7Bad-bc%7D%7Ba%7D%20&amp;%20%7C%20&amp;%20-%5Cfrac%7Bc%7D%7Ba%7D%20&amp;%201%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0Aa%20&amp;%20b%20&amp;%20%7C%20&amp;%201%20&amp;%200%20%5C%5C%0A0%20&amp;%201%20&amp;%20%7C%20&amp;%20-%5Cfrac%7B-c%7D%7Bad-bc%7D%20&amp;%20%5Cfrac%7Ba%7D%7Bad-bc%7D%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0Aa%20&amp;%200%20&amp;%20%7C%20&amp;%20%5Cfrac%7Bad%7D%7Bad-bc%7D%20&amp;%20%5Cfrac%7B-ab%7D%7Bad-bc%7D%20%5C%5C%0A0%20&amp;%201%20&amp;%20%7C%20&amp;%20-%5Cfrac%7B-c%7D%7Bad-bc%7D%20&amp;%20%5Cfrac%7Ba%7D%7Bad-bc%7D%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0A1%20&amp;%200%20&amp;%20%7C%20&amp;%20%5Cfrac%7Bd%7D%7Bad-bc%7D%20&amp;%20%5Cfrac%7B-b%7D%7Bad-bc%7D%20%5C%5C%0A0%20&amp;%201%20&amp;%20%7C%20&amp;%20-%5Cfrac%7B-c%7D%7Bad-bc%7D%20&amp;%20%5Cfrac%7Ba%7D%7Bad-bc%7D%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%E2%88%B4%20A%5E%7B-1%7D%20=%20%5Cfrac%7B1%7D%7Bad-bc%7D%0A%5Cbegin%7Bbmatrix%7D%0Ad%20&amp;%20-b%20%5C%5C%0A-c%20&amp;%20a%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<section id="invertible" class="level3">
+<h3 class="anchored" data-anchor-id="invertible">invertible</h3>
+<p>역행렬이 존재할 경우 invertible하다고 한다.</p>
+<ol type="1">
+<li><code>non singular matrix</code></li>
+<li><code>det(A) ≠ 0</code>: ad - bc(<code>determinant</code>) = 0인 경우 역행렬이 존재하지 않는다.</li>
+<li><code>A가 full rank</code>이다</li>
+<li><code>N(A) = 0</code></li>
+</ol>
+</section>
+</section>
+<section id="determinant" class="level2">
+<h2 class="anchored" data-anchor-id="determinant">determinant</h2>
+<p>정사각행렬의 element로 scalar 값을 만드는 함</p>
+<section id="x-3-행렬의-det" class="level3">
+<h3 class="anchored" data-anchor-id="x-3-행렬의-det">3 x 3 행렬의 det</h3>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA=%0A%5Cbegin%7Bbmatrix%7D%0Aa%20&amp;%20b%20&amp;%20c%5C%5C%0Ad%20&amp;%20e%20&amp;%20f%20%5C%5C%0Ag%20&amp;%20h%20&amp;%20i%0A%5Cend%7Bbmatrix%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?det(A)%20=%20a(ei%20-%20fh)%20-%20b(di-fg)+c(dh-eg)"></p>
+<p><code>Laplace expansion</code> or <code>cofactor expansion</code></p>
+</section>
+<section id="properties" class="level3">
+<h3 class="anchored" data-anchor-id="properties">properties</h3>
+<ol type="1">
+<li>det(A) = 0 이면 A is singular</li>
+<li>A가 rank-deficient 이면 det(A) = 0</li>
+<li>diagonal or triangular matrix, det(A) = 대각요소의 곱</li>
+<li>항등행렬의 det=1</li>
+<li>det(cA) = <img src="https://latex.codecogs.com/png.latex?c%5Endet(A)"> (A = nxn)</li>
+<li><img src="https://latex.codecogs.com/png.latex?det(A%5ET)%20=%20det(A)"></li>
+<li><code>det(AB) = det(A)det(B)</code></li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Ccolor%7Bred%7D%7Bdet(A%5E%7B-1%7D)%20=%20%5Cfrac%7B1%7D%7Bdet(A)%7D%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Ccolor%7Bred%7D%7Bdet(A)%20=%20%CE%BB_1%CE%BB_2,...,%CE%BB_n%7D"></li>
+</ol>
+</section>
+</section>
+<section id="trace" class="level2">
+<h2 class="anchored" data-anchor-id="trace">Trace</h2>
+<p>정사각 행렬에 대해서만 정의되는 것, diagonal 전부 더함</p>
+<p><img src="https://latex.codecogs.com/png.latex?tr(A)%20=%20%5Csum_%7Bi=1%7D%5E%7Bn%7Da_%7Bii%7D"></p>
+<ol type="1">
+<li>tr(A + B) = tr(A) + tr(B)</li>
+<li>tr(cA) = ctr(A)</li>
+<li><img src="https://latex.codecogs.com/png.latex?tr(A%5ET)%20=%20tr(A)"></li>
+<li>tr(AB) = tr(BA)</li>
+<li><img src="https://latex.codecogs.com/png.latex?tr(a%5ETb)%20=%20tr(ba%5ET)"></li>
+<li><code>tr(ABCD) = tr(BCDA) = tr(CDAB) = tr(DABC)</code> (cyclic property)</li>
+<li><img src="https://latex.codecogs.com/png.latex?tr(A)%20=%20%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Clambda_i"></li>
+</ol>
+</section>
+<section id="최소자승법" class="level2">
+<h2 class="anchored" data-anchor-id="최소자승법">최소자승법</h2>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>선형 대수</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/선형대수_복습/notes/3.html</guid>
+  <pubDate>Tue, 21 Jan 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>2-기초(2)</title>
   <link>https://cryscham123.github.io/posts/01_projects/선형대수_복습/notes/2.html</link>
@@ -111,10 +222,10 @@
 
 <p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <section id="vector" class="level2">
-<h2 data-anchor-id="vector">Vector</h2>
+<h2 class="anchored" data-anchor-id="vector">Vector</h2>
 <p>vector는 크기와 방향을 가지고 있다.</p>
 <section id="example" class="level3">
-<h3 data-anchor-id="example">Example</h3>
+<h3 class="anchored" data-anchor-id="example">Example</h3>
 <img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%0A3%20%5C%5C%0A2%0A%5Cend%7Bbmatrix%7D">
 <div id="2eb7257d" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
@@ -132,7 +243,7 @@
 <p>크기와 방향이 같으면 같은 벡터이다.</p>
 </section>
 <section id="덧셈" class="level3">
-<h3 data-anchor-id="덧셈">덧셈</h3>
+<h3 class="anchored" data-anchor-id="덧셈">덧셈</h3>
 <p>벡터의 덧셈을 기하학적으로 알아보자</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0A3%20%5C%5C%0A2%0A%5Cend%7Bbmatrix%7D%20+%0A%5Cbegin%7Bbmatrix%7D%0A-2%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%0A"></p>
 <p>위의 수식을 좌표평면에 나타나면 다음과 같다.</p>
@@ -148,7 +259,7 @@
 <p>끝점을 다 더한 좌표와 시작 점을 연결한 벡터인 <code>초록색 화살표</code>가 두 벡터의 합이 된다.</p>
 </section>
 <section id="scalar-배" class="level3">
-<h3 data-anchor-id="scalar-배">Scalar 배</h3>
+<h3 class="anchored" data-anchor-id="scalar-배">Scalar 배</h3>
 <p>vector에 scalar, 즉 숫자 하나를 곱하면 무슨 일이 생길까?</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A2%20*%20%5Cbegin%7Bbmatrix%7D%0A2%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20=%0A%5Cbegin%7Bbmatrix%7D%0A4%20%5C%5C%0A2%0A%5Cend%7Bbmatrix%7D%0A"> <img src="https://latex.codecogs.com/png.latex?%0A-2%20*%20%5Cbegin%7Bbmatrix%7D%0A2%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20=%0A%5Cbegin%7Bbmatrix%7D%0A-4%20%5C%5C%0A-2%0A%5Cend%7Bbmatrix%7D%0A"></p>
 <p>마찬가지로 좌표평면으로 나타내는건 귀찮아서 생략하겠다.</p>
@@ -165,14 +276,14 @@
 </section>
 </section>
 <section id="전치-transpose" class="level2">
-<h2 data-anchor-id="전치-transpose">전치 (Transpose)</h2>
+<h2 class="anchored" data-anchor-id="전치-transpose">전치 (Transpose)</h2>
 <p>행렬 <img src="https://latex.codecogs.com/png.latex?A">의 요소 <img src="https://latex.codecogs.com/png.latex?a_%7Bij%7D">는 A의 Transpose인 <img src="https://latex.codecogs.com/png.latex?A%5ET">의 <img src="https://latex.codecogs.com/png.latex?a_%7Bji%7D">가 된다. 즉, 행렬 <img src="https://latex.codecogs.com/png.latex?A">를 전치하면 diagnal(대각선 요소)를 제외한 모든 요소가 대각선을 기준으로 서로 뒤바뀐다.</p>
 <blockquote class="blockquote">
 <p><code>Symmetrix matrix</code>: <img src="https://latex.codecogs.com/png.latex?A%20=%20A%5ET">인 행렬, 즉 대각선을 기준으로 값이 전부 같은 행렬 <code>Hermitian matrix</code>: <img src="https://latex.codecogs.com/png.latex?(A%5E*)%5ET%20=%20A%5EH(conjugate%20transpose)%20=%20A">를 만족하는 행렬</p>
 </blockquote>
 <p>Vector의 경우에는 Column Vector의 경우, Transpose시 Row Vector로, Row Vector의 경우도 반대로 작용한다.</p>
 <section id="properties" class="level3">
-<h3 data-anchor-id="properties">Properties</h3>
+<h3 class="anchored" data-anchor-id="properties">Properties</h3>
 <ol type="1">
 <li><p><img src="https://latex.codecogs.com/png.latex?(A%5ET)%5ET%20=%20A"></p></li>
 <li><p><img src="https://latex.codecogs.com/png.latex?(A+B)%5ET%20=%20A%5ET%20+%20B%5ET"></p></li>
@@ -185,7 +296,7 @@
 </section>
 </section>
 <section id="inner-product-projection" class="level2">
-<h2 data-anchor-id="inner-product-projection">Inner Product &amp; Projection</h2>
+<h2 class="anchored" data-anchor-id="inner-product-projection">Inner Product &amp; Projection</h2>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cunderset%7Ba%7D%7B%5Cbegin%7Bbmatrix%7D%0A1%20%5C%5C%0A3%0A%5Cend%7Bbmatrix%7D%7D%20*%0A%5Cunderset%7Bb%7D%7B%5Cbegin%7Bbmatrix%7D%0A5%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%7D%20=%201%20*%205%20+%203%20*%201%20=%208%20=%20a%5ETb%20=%20b%5ETa%0A"></p>
 <p>갑자기 등장한 <img src="https://latex.codecogs.com/png.latex?a%5ETb">가 의미하는건 아래와 같다.</p>
 <p><img src="https://latex.codecogs.com/png.latex?a%5ETb%20=%20%7C%7Ca%7C%7C*%7C%7Cb%7C%7Ccos%CE%B8"></p>
@@ -206,14 +317,14 @@
 이는 a 벡터가 b 벡터의 방향에 대해 얼마나 투영되었는지를 나타낸다.<br>
 두 벡터의 방향이 일치할 때 내적의 값이 가장 크고, 수직일 때 0 (안 닮음을 의미), 반대 방향일 때 가장 작은 값이 된다.</p>
 <section id="단위-벡터크기가-1인-벡터-계산" class="level3">
-<h3 data-anchor-id="단위-벡터크기가-1인-벡터-계산">단위 벡터(크기가 1인 벡터) 계산</h3>
+<h3 class="anchored" data-anchor-id="단위-벡터크기가-1인-벡터-계산">단위 벡터(크기가 1인 벡터) 계산</h3>
 <p>위의 식으로 부터 다음의 추론 과정을 통해 단위 벡터를 계산할 수 있다.</p>
 <p><img src="https://latex.codecogs.com/png.latex?a%5ETa%20=%20%7C%7Ca%7C%7C%5E2"><br>
 ∴ <img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C%20=%20%5Csqrt%7Ba%5ETa%7D"><br>
 ∴ 단위 벡터는 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba%7D%7B%7C%7Ca%7C%7C%7D"> = <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba%7D%7B%5Csqrt%7Ba%5ETa%7D%7D"></p>
 </section>
 <section id="정사형-벡터의-좌표-계산" class="level3">
-<h3 data-anchor-id="정사형-벡터의-좌표-계산">정사형 벡터의 좌표 계산</h3>
+<h3 class="anchored" data-anchor-id="정사형-벡터의-좌표-계산">정사형 벡터의 좌표 계산</h3>
 <p>벡터의 <code>좌표</code>는 <code>방향과 크기의 곱</code>으로 표현할 수 있다.<br>
 <img src="https://latex.codecogs.com/png.latex?a%5ETb%20=%20%7C%7Ca%7C%7C*%7C%7Cb%7C%7Ccos%CE%B8"><br>
 정사형 벡터의 크기는 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba%5ETb%7D%7B%7C%7Cb%7C%7C%7D%20=%20%5Cfrac%7Ba%5ETb%7D%7B%5Csqrt%7Bb%5ETb%7D%7D"><br>
@@ -229,10 +340,10 @@
 </section>
 </section>
 <section id="norm" class="level2">
-<h2 data-anchor-id="norm">Norm</h2>
+<h2 class="anchored" data-anchor-id="norm">Norm</h2>
 <p>크기를 나타내는 것(0 포함, 양 음수 scalar)</p>
 <section id="norm-l_2-norm" class="level3">
-<h3 data-anchor-id="norm-l_2-norm">2-Norm (<img src="https://latex.codecogs.com/png.latex?l_2">-norm)</h3>
+<h3 class="anchored" data-anchor-id="norm-l_2-norm">2-Norm (<img src="https://latex.codecogs.com/png.latex?l_2">-norm)</h3>
 <p>벡터의 물리적인 길이.</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0Aa%20=%20%5Cbegin%7Bbmatrix%7D%0A1%20%5C%5C%0A2%20%5C%5C%0A3%0A%5Cend%7Bbmatrix%7D%0A"></p>
 <p><img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C_2%20=%20%5Csqrt%7B1%5E2+2%5E2+3%5E2%7D%20=%20(%7C1%7C%5E%7B%5Ccolor%7Bred%7D%7B2%7D%7D+%7C2%7C%5E%7B%5Ccolor%7Bred%7D%7B2%7D%7D+%7C3%7C%5E%7B%5Ccolor%7Bred%7D%7B2%7D%7D)%5E%7B%5Ccolor%7Bred%7D%7B%5Cfrac%7B1%7D%7B2%7D%7D%7D"></p>
@@ -242,16 +353,16 @@
 </blockquote>
 </section>
 <section id="norm-l_1-norm" class="level3">
-<h3 data-anchor-id="norm-l_1-norm">1-Norm (<img src="https://latex.codecogs.com/png.latex?l_1">-norm)</h3>
+<h3 class="anchored" data-anchor-id="norm-l_1-norm">1-Norm (<img src="https://latex.codecogs.com/png.latex?l_1">-norm)</h3>
 <p>1 제곱에 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B1%7D">을 계산해주면 된다.</p>
 <p><img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C_1%20=%20(%7C1%7C%5E1+%7C2%7C%5E1+%7C3%7C%5E1)%5E%7B%5Cfrac%7B1%7D%7B1%7D%7D"></p>
 </section>
 <section id="p-norm-l_p-norm" class="level3">
-<h3 data-anchor-id="p-norm-l_p-norm">p-Norm (<img src="https://latex.codecogs.com/png.latex?l_p">-norm)</h3>
+<h3 class="anchored" data-anchor-id="p-norm-l_p-norm">p-Norm (<img src="https://latex.codecogs.com/png.latex?l_p">-norm)</h3>
 <p><img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C_p%20=%20(%7Cx_1%7C%5Ep+%7Cx_2%7C%5Ep+%7Cx_3%7C%5Ep+...)%5E%7B%5Cfrac%7B1%7D%7Bp%7D%7D%20=%20(%5Cunderset%7Bt%7D%7B%5CSigma%7D%20%7Cx_t%7C%5Ep)%5E%7B%5Cfrac%7B1%7D%7Bp%7D%7D%20%5Cquad%20(p%20%E2%89%A5%201)"></p>
 </section>
 <section id="infinity-norm" class="level3">
-<h3 data-anchor-id="infinity-norm">infinity-Norm</h3>
+<h3 class="anchored" data-anchor-id="infinity-norm">infinity-Norm</h3>
 <p><img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C_%E2%88%9E%20=%20%5Cunderset%7Bt%7D%7Bmax%7D%7Cx_t%7C"></p>
 <p>1-norm, 2-norm, infinity-norm의 값이 1이 되는 모든 벡터들을 좌표평면에 나타내면 다음과 같다.</p>
 <div id="7fda1dda" class="cell" data-execution_count="4">
@@ -266,54 +377,10 @@
 <p>같은 벡터일 때, 1-norm ≥ 2-norm ≥ ∞-norm 순으로 크다.</p>
 
 
-
 </section>
 </section>
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="정렬" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">정렬</option>
-       <option value="index" data-direction="asc">디폴트</option>
-         <option value="listing-date-sort" data-direction="asc">
-          날짜 - 날짜(오름차순)
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          날짜 - 날짜(내림차순)
-        </option>
-         <option value="listing-title-sort" data-direction="asc">
-          제목
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="필터">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">제목</a>
-</th>
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">날짜</a>
-</th>
-<th>
-분류
-</th>
-</tr>
-</thead>
-<tbody class="list">
-</tbody>
-</table>
-<div class="listing-no-matching d-none">
-일치 없음
-</div>
-</div><a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>선형 대수</category>
   <guid>https://cryscham123.github.io/posts/01_projects/선형대수_복습/notes/1.html</guid>
   <pubDate>Thu, 09 Jan 2025 15:00:00 GMT</pubDate>
