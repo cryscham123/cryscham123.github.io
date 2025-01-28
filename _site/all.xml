@@ -15,10 +15,10 @@
 <link>https://cryscham123.github.io/all.html</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Tue, 28 Jan 2025 11:52:27 GMT</lastBuildDate>
+<lastBuildDate>Wed, 29 Jan 2025 07:00:13 GMT</lastBuildDate>
 <item>
-  <title>cloud-1</title>
-  <link>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/5.html</link>
+  <title>cloud-1 코드 설명</title>
+  <link>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/6.html</link>
   <description><![CDATA[ 
 
 
@@ -35,6 +35,567 @@
 </div>
 </div>
 </div>
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">intro</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/img/42-outer-1.png" class="img-fluid figure-img"></p>
+<figcaption>42 seoul outer 과제</figcaption>
+</figure>
+</div>
+<p><a href="../../../../posts/03_resources/42_seoul/notes/5.html">개념 설명</a>에 이어서 진행하도록 하겠습니다.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>전체 코드는 <a href="https://github.com/cryscham123/cloud-1">github repo</a>에서 확인하실 수 있습니다.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="프로젝트-및-구현-설명" class="level2">
+<h2 class="anchored" data-anchor-id="프로젝트-및-구현-설명">프로젝트 및 구현 설명</h2>
+<section id="build" class="level3">
+<h3 class="anchored" data-anchor-id="build">build</h3>
+<p>최종 build는 (42 seoul 사람에게 익숙한) <code>makefile</code>을 사용했습니다.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>제가 아직 로컬에서 돌려볼만한 다른 build 툴을 배우지 않아서 makefile을 사용하긴 했지만, 사실 c언어도 아니고..이 과제 구현에서 이 tool이 그렇게 어울리진 않은거 같긴 합니다.</p>
+</div>
+</div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>.env</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename=".env" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># only 1 line variable is allowed</span></span>
+<span id="cb1-2"></span>
+<span id="cb1-3">AWS_REGION<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-4">SERVER_INSTANCE_COUNT<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-5"></span>
+<span id="cb1-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># public subnet에 접근할 수 있는 ip address를 지정해줍니다.</span></span>
+<span id="cb1-7">SSH_IP<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># public subnet에 접근할 때 사용할 ssh key path를 지정해줍니다.</span></span>
+<span id="cb1-10">SSH_PUBLIC_KEY_PATH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-11">SSH_PRIVATE_KEY_PATH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-12"></span>
+<span id="cb1-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># docker compose setting</span></span>
+<span id="cb1-14">MYSQL_USER<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-15">MYSQL_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-16">MYSQL_ROOT_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-17">DATABASE_NAME<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-18">SITE_TITLE<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-19">ADMIN_NAME<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-20">ADMIN_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-21">ADMIN_EMAIL<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-22">USER_NAME<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-23">USER_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span>
+<span id="cb1-24">USER_EMAIL<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span></span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Makefile</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="Makefile" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># .env의 내용들을 makefile의 변수로 load 해줍니다.</span></span>
+<span id="cb2-2"></span>
+<span id="cb2-3">include .env</span>
+<span id="cb2-4">export</span></code></pre></div>
+</div>
+<p>먼저 <code>필요한 변수들</code>을 모두 <code>.env</code>에 저장해 <code>한번에 관리</code>할 수 있게 구현했습니다. 저장된 .env 내용은 makefile에서 위의 명령어로 불러와 build 명령어 실행시 사용할 수 있게 했습니다.</p>
+<p>makefile이 .env 파일을 읽을 때 한 줄씩 읽기 때문에, 위의 방식으로 구현하면 여러 줄에 걸친 환경변수는 사용하기 어려울 수 있습니다. (그럴땐 그냥 makefile 말고 다른 tool을 쓰면 됩니다)</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Makefile</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="Makefile" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">.PHONY: provision deploy <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">all</span> destroy re build_ami</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">all</span>: provision deploy</span>
+<span id="cb3-4"></span>
+<span id="cb3-5">build_ami: packer</span>
+<span id="cb3-6">    packer init $(PACKER_PATH)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>database.pkr.hcl</span>
+<span id="cb3-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@PKR_VAR_AWS_REGION</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(AWS_REGION) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-8">    PKR_VAR_MYSQL_USER<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(MYSQL_USER) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-9">    PKR_VAR_MYSQL_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(MYSQL_PASSWORD) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-10">    PKR_VAR_DATABASE_NAME<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(DATABASE_NAME) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-11">    PKR_VAR_MYSQL_ROOT_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(MYSQL_ROOT_PASSWORD) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-12">    packer build $(PACKER_PATH)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>database.pkr.hcl</span>
+<span id="cb3-13"></span>
+<span id="cb3-14">provision: build_ami terraform</span>
+<span id="cb3-15">    terraform <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>chdir<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(PROVISION_PATH) init</span>
+<span id="cb3-16">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@TF_VAR_AWS_REGION</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(AWS_REGION) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-17">    TF_VAR_SERVER_INSTANCE_COUNT<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(SERVER_INSTANCE_COUNT) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-18">    TF_VAR_SSH_IP<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(SSH_IP) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-19">    TF_VAR_SSH_PUBLIC_KEY_PATH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(SSH_PUBLIC_KEY_PATH) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-20">    terraform <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>chdir<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(PROVISION_PATH) <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">apply</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>auto<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>approve</span>
+<span id="cb3-21"></span>
+<span id="cb3-22">deploy: ansible</span>
+<span id="cb3-23">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@DB_PRIVATE_IP</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$(shell terraform -chdir=$(PROVISION_PATH) output -json db_private_ip | jq -r '.[]' | tr '</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">' ' ')"</span> \</span>
+<span id="cb3-24">    ANSIBLE_HOST_KEY_CHECKING<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-25">    ANSIBLE_REMOTE_USER<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ubuntu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-26">    ansible<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>playbook <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-27">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>i $(DEPLOY_PATH)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>inventories <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-28">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>private<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>key<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(SSH_PRIVATE_KEY_PATH) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-29">    $(DEPLOY_PATH)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>server.yml </span></code></pre></div>
+</div>
+<p>build 과정은 <code>ami 생성</code>, <code>provision</code>, <code>ansible deploy</code> 순서로 진행됩니다.</p>
+<p>각 과정에 필요한 변수들은 <code>명령어 수행 시 환경변수로 제공</code>해줍니다. 대표적으로 ansible의 경우, provision 이후 생성된 database ec2의 private ip를 전달하고 있습니다.</p>
+</section>
+<section id="packer-코드" class="level3">
+<h3 class="anchored" data-anchor-id="packer-코드">Packer 코드</h3>
+<p>이 프로젝트에서는 데이터베이스 서버를 Private subnet에 위치시키고, Public subnet의 EC2만 이 데이터베이스에 접근할 수 있도록 설계했습니다. <code>Private subnet에 있는 서버</code>는 SSH 접근이 제한되기 때문에 <code>Ansible로 직접 설정하기가 어렵습니다.</code> 이런 경우 <code>Packer를 사용하여 미리 설정된 AMI를 생성</code>하는 것이 좋은 해결책이 될 수 있습니다.</p>
+<p>먼저 <code>기본 이미지로 Ubuntu 20.04</code>를 사용하도록 작성했습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>database.pkr.hcl</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="database.pkr.hcl" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">source <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"amazon-ebs"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"database"</span> {</span>
+<span id="cb4-2">  region  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> var.AWS_REGION</span>
+<span id="cb4-3">  profile <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"default"</span></span>
+<span id="cb4-4"></span>
+<span id="cb4-5">  ami_name      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hyunghki-database-${formatdate("</span>YYYYMMDDhhmmss<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">", timestamp())}"</span></span>
+<span id="cb4-6">  instance_type <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t2.micro"</span></span>
+<span id="cb4-7">  source_ami_filter {</span>
+<span id="cb4-8">    filters <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb4-9">      name                <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"</span></span>
+<span id="cb4-10">      root<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>device<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ebs"</span></span>
+<span id="cb4-11">      virtualization<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hvm"</span></span>
+<span id="cb4-12">    }</span>
+<span id="cb4-13">    most_recent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> true</span>
+<span id="cb4-14">    owners      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"099720109477"</span>]</span>
+<span id="cb4-15">  }</span>
+<span id="cb4-16">  ssh_username <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ubuntu"</span></span>
+<span id="cb4-17">}</span></code></pre></div>
+</div>
+<p>Packer는 기본적으로 이미지 생성을 위한 최소한의 기능만 제공하지만, 다양한 플러그인을 지원합니다. 여기서는 <code>Ansible 플러그인을 사용</code>하여 데이터베이스 서버 설정을 자동화했습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>database.pkr.hcl</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="database.pkr.hcl" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">build {</span>
+<span id="cb5-2">  sources <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"source.amazon-ebs.database"</span>]</span>
+<span id="cb5-3"></span>
+<span id="cb5-4">  provisioner <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ansible"</span> {</span>
+<span id="cb5-5">    playbook_file <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{path.root}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/ansible/database.yml"</span></span>
+<span id="cb5-6">    user <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ubuntu"</span></span>
+<span id="cb5-7">    ansible_env_vars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb5-8">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ANSIBLE_HOST_KEY_CHECKING=False"</span>,</span>
+<span id="cb5-9">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MYSQL_USER=$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{var.MYSQL_USER}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb5-10">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MYSQL_PASSWORD=$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{var.MYSQL_PASSWORD}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb5-11">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"DATABASE_NAME=$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{var.DATABASE_NAME}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb5-12">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MYSQL_ROOT_PASSWORD=$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{var.MYSQL_ROOT_PASSWORD}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb5-13">    ]</span>
+<span id="cb5-14">  }</span>
+<span id="cb5-15">}</span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>ansible/database.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="ansible/database.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> hosts: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">all</span></span>
+<span id="cb6-2">  gather_facts: false</span>
+<span id="cb6-3">  become: true</span>
+<span id="cb6-4">  roles:</span>
+<span id="cb6-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># docker compose를 machine에 설치해줍니다.</span></span>
+<span id="cb6-6">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> role: setting_docker</span>
+<span id="cb6-7"></span>
+<span id="cb6-8">  tasks:</span>
+<span id="cb6-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># docker compose에 필요한 파일들을 옮겨줍니다.</span></span>
+<span id="cb6-10">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: copy_requirements</span>
+<span id="cb6-11">      copy:</span>
+<span id="cb6-12">        src: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"./_requirements/"</span></span>
+<span id="cb6-13">        dest: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/home/</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> ansible_user </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/app/"</span></span>
+<span id="cb6-14">        mode: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0755'</span></span>
+<span id="cb6-15">        directory_mode: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0755'</span></span>
+<span id="cb6-16"></span>
+<span id="cb6-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 적절한 환경변수와 함께 docker compose 명령어를 실행합니다.</span></span>
+<span id="cb6-18">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: execute docker compose</span>
+<span id="cb6-19">      shell:</span>
+<span id="cb6-20">        cmd: docker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>compose up <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>d</span>
+<span id="cb6-21">        chdir: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/home/</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> ansible_user </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/app/"</span></span>
+<span id="cb6-22">      environment:</span>
+<span id="cb6-23">        MYSQL_USER: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'MYSQL_USER') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb6-24">        MYSQL_PASSWORD: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'MYSQL_PASSWORD') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb6-25">        DATABASE_NAME: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'DATABASE_NAME') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb6-26">        MYSQL_ROOT_PASSWORD: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'MYSQL_ROOT_PASSWORD') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+</div>
+<p>이렇게 Ansible과 Packer를 조합하면 <code>멱등성이 보장되는 안정적인 서버 이미지를 생성</code>할 수 있습니다.</p>
+<p>참고로 packer에서 ansible plugin을 사용할 때 <code>taget host를 ami가 build되는 임시 EC2로 간주</code>하기 때문에, <code>inventory는 사용하지 않습니다.</code> 자세한 내용은 ansible part를 참고해주세요.</p>
+</section>
+<section id="terraform-코드" class="level3">
+<h3 class="anchored" data-anchor-id="terraform-코드">Terraform 코드</h3>
+<p>이제 본격적으로 provision을 해보겠습니다.</p>
+</section>
+<section id="ansible-코드" class="level3">
+<h3 class="anchored" data-anchor-id="ansible-코드">ansible 코드</h3>
+<p>이제 software 세팅을 시작하겠습니다.</p>
+</section>
+</section>
+<section id="결과" class="level2">
+<h2 class="anchored" data-anchor-id="결과">결과</h2>
+<p>아직 평가 전입니다.</p>
+</section>
+<section id="outro" class="level2">
+<h2 class="anchored" data-anchor-id="outro">outro</h2>
+<p>솔직히 일반적으로 사용되는 cloud 구조를 적용한건 아니긴 하지만, 과제에 맞춰서 진행하기 위해 고민하는 과정에서 다양한 구조를 적용해봤는데, 그 과정이 나름 학습에 도움이 된거 같습니다. 이 분야에 공부를 꽤 했고, 그 내용들을 다양하게 고민하며 적용해보고 싶다면 이 프로젝트가 괜찮은 선택지가 될 수도 있어 보입니다.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>aws</category>
+  <category>packer</category>
+  <category>terraform</category>
+  <category>ansible</category>
+  <category>42 seoul</category>
+  <guid>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/6.html</guid>
+  <pubDate>Wed, 29 Jan 2025 07:00:13 GMT</pubDate>
+</item>
+<item>
+  <title>cloud-1 개념 설명</title>
+  <link>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/5.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <section id="intro" class="level2">
 <h2 class="anchored" data-anchor-id="intro">intro</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -68,6 +629,23 @@
 </div>
 </div>
 </section>
+<section id="what-is-iac" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-iac">What is IaC?</h3>
+<p>이 프로젝트의 목표는 <code>IaC(Infrastructure as Code) tool</code>을 이용하여 wordpress 사이트를 cloud에 자동으로 배포하는 것입니다.</p>
+<p>IaC는 <code>인프라 구성을 코드로 관리하는 방식</code>으로, 수동으로 리소스를 생성하고 설정하는 방식에 비해 <code>버전 관리가 간편</code>하고, <code>동일한 환경을 쉽게 재현</code>하거나, <code>코드 리뷰 등의 방식으로 휴먼 에러를 줄이는 데 용이</code>하게 사용할 수 있습니다.</p>
+<p>이번 프로젝트에서는 <code>Packer, Terraform, Ansible</code> 세 가지 IaC tool을 조합해 사용했습니다</p>
+<p><img src="https://snipboard.io/Tq01JU.jpg" class="img-fluid"></p>
+<ol type="1">
+<li><p><strong>Packer</strong>: <code>인프라 생성 전, 상세 설정</code>이 되어있는 image를 build할 수 있는 tool 입니다.</p></li>
+<li><p><strong>Terraform</strong>: <code>cloud 인프라를 생성</code>하는 tool입니다. <code>packer에서 생성한 ami를 사용</code>할 수 있습니다.</p></li>
+<li><p><strong>Ansible</strong>: 서버 내부의 <code>상세 설정을 자동화</code>합니다. 일반적인 bash script와는 다르게 <code>멱등성 있는 설정</code>이 가능하다는 점이 큰 장점입니다. 이때, 서버는 <code>python이 설치되어 있어야 하고, ssh로 접근 가능</code>해야 합니다.</p></li>
+</ol>
+<p>위의 이미지 처럼, packer로 <code>필요한 설정이 완료된 image를 생성</code>한 뒤, 그 이미지를 기반으로 <code>cloud infra</code>를 terraform으로 생성하고, <code>생성된 infra의 상세 설정</code>을 ansible을 이용해서 구현해줄 것입니다.</p>
+<p>Packer와 Ansible은 서버 설정 자동화라는 <code>동일한 기능</code>을 수행하는 도구입니다. 두 도구는 각각 다양한 특징과 장단점이 있지만, 이 과제에서 알아야 하는 차이점은 아래와 같습니다.</p>
+<p>Ansible은 SSH 접근이 가능한 서버에서만 동작하지만, <code>인프라 구축 후에 얻을 수 있는 정보</code>(예: EC2의 IP)를 활용할 수 있습니다.</p>
+<p>Packer는 <code>임시 EC2 인스턴스</code>를 생성하여 그 위에서 필요한 설정을 완료한 후, 해당 인스턴스를 AMI로 변환하는 방식으로 동작합니다. 이렇게 생성된 AMI는 이후 실제 인프라 구축 시 그대로 사용할 수 있습니다. 따라서 최종 목적지 서버가 <code>SSH 접근이 제한되는 환경</code>이더라도, 미리 필요한 <code>모든 설정이 완료된 이미지를 사용</code>할 수 있다는 장점이 있습니다.</p>
+<p>이러한 특성을 고려하여 이 프로젝트에서는 두 도구를 상황에 맞게 조합하여 사용했습니다.</p>
+</section>
 <section id="전체적인-구조" class="level3">
 <h3 class="anchored" data-anchor-id="전체적인-구조">전체적인 구조</h3>
 <div class="quarto-figure quarto-figure-center">
@@ -76,8 +654,14 @@
 <figcaption>구현 aws 구조</figcaption>
 </figure>
 </div>
-<p>Public subnet의 EC2들에 대한 ssh 접근은 관리용 컴퓨터에서만(terraform, ansible 코드가 실행되는 컴퓨터) 접근이 가능하도록 제한했고, MySQL의 데이터는 Private subnet의 EC2에 저장하되 Public subnet의 EC2만 접근할 수 있도록 설정했습니다.</p>
+<p><code>Public subnet의 EC2</code>들에 대한 <code>ssh 접근</code>은 <code>관리용 컴퓨터에서만</code>(terraform, ansible 코드가 실행되는 컴퓨터) 접근이 가능하도록 제한했고, MySQL의 데이터는 <code>Private subnet의 EC2</code>에 저장한 뒤 <code>Public subnet의 EC2만 접근</code>할 수 있도록 설정했습니다. <code>Public subnet의 EC2</code>는 <code>사용자가 원하는 갯수를 설정</code>할 수 있고, <code>그 갯수에 맞춰서</code> private subnet의 <code>dbms EC2</code>가 생성되도록 설계했습니다.</p>
 <p>실제 프로덕션 환경이라면 위와 같은 구조로는 설계하지 않습니다. 일단 EC2 머신들을 Auto Scaling Group으로 묶고, 그 앞에 Network Load Balancer를 두어 단일 엔드포인트로 관리하는 것이 좋습니다. 또한 Database는 AWS RDS를 이용하고, WordPress의 파일 시스템은 EFS나 S3를 활용해 Stateless하게 구현하는게 좋습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://snipboard.io/EHrPWd.jpg" class="img-fluid figure-img"></p>
+<figcaption>조금 더 일반적인 구조(물론 docker compose는 잘 안쓸것 같긴 합니다)</figcaption>
+</figure>
+</div>
 <p>제 구현에서는 <code>각 서버가 독립적인 상태와 엔드포인트</code>를 가지고 있습니다.</p>
 <p>그렇게 한 이유는 일단 <code>aws free tier</code> 서비스만으로 과제를 구현하려고 했던게 제일 크고요..(NLB는 사용할 수 없었습니다.) 나머지는 과제 제약사항 때문인데,</p>
 <div class="quarto-figure quarto-figure-center">
@@ -87,389 +671,24 @@
 </figure>
 </div>
 <p>모든 프로세스는 컨테이너 안에서 동작해야 한다는 제약때문에, <code>aws RDS</code>는 <code>사용할 수 없었습니다</code>. 그리고 database는 public internet에서 접근할 수 없다고 해서, <code>db</code>는 <code>private subnet</code>의 ec2에서 돌아가게 설계했습니다.</p>
-<p>IaC 설명, ansible, packer, terraform 설명</p>
 </section>
-<section id="pakcer-코드" class="level3">
-<h3 class="anchored" data-anchor-id="pakcer-코드">Pakcer 코드</h3>
-<p>database ec2는 private subnet에 두고, public subnet의 ec2만 연결이 가능하도록 설계할것입니다.</p>
-<p>따라서 ansible로는 설정이 어렵습니다.</p>
-<p>packer를 그래서 씁니다.</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>database.pkr.hcl</strong></pre>
-</div>
-<div class="sourceCode" id="cb1" data-filename="database.pkr.hcl" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">source <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"amazon-ebs"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"database"</span> {</span>
-<span id="cb1-2">  region  <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> var.AWS_REGION</span>
-<span id="cb1-3">  profile <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"default"</span></span>
-<span id="cb1-4"></span>
-<span id="cb1-5">  ami_name      <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"hyunghki-database-${formatdate("</span>YYYYMMDDhhmmss<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">", timestamp())}"</span></span>
-<span id="cb1-6">  instance_type <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"t2.micro"</span></span>
-<span id="cb1-7">  source_ami_filter {</span>
-<span id="cb1-8">    filters <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> {</span>
-<span id="cb1-9">      name                <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"</span></span>
-<span id="cb1-10">      root<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>device<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">type</span>    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ebs"</span></span>
-<span id="cb1-11">      virtualization<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">type</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"hvm"</span></span>
-<span id="cb1-12">    }</span>
-<span id="cb1-13">    most_recent <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> true</span>
-<span id="cb1-14">    owners      <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"099720109477"</span>]</span>
-<span id="cb1-15">  }</span>
-<span id="cb1-16">  ssh_username <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ubuntu"</span></span>
-<span id="cb1-17">}</span></code></pre></div>
-</div>
-<p>ubuntu-20.04를 기본 이미지로 시작합니다.</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>database.pkr.hcl</strong></pre>
-</div>
-<div class="sourceCode" id="cb2" data-filename="database.pkr.hcl" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">build {</span>
-<span id="cb2-2">  sources <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"source.amazon-ebs.database"</span>]</span>
-<span id="cb2-3"></span>
-<span id="cb2-4">  provisioner <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ansible"</span> {</span>
-<span id="cb2-5">    playbook_file <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"$</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{path.root}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/ansible/database.yml"</span></span>
-<span id="cb2-6">    user <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ubuntu"</span></span>
-<span id="cb2-7">    ansible_env_vars <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [</span>
-<span id="cb2-8">      <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ANSIBLE_HOST_KEY_CHECKING=False"</span>,</span>
-<span id="cb2-9">      <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"MYSQL_USER=$</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{var.MYSQL_USER}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>,</span>
-<span id="cb2-10">      <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"MYSQL_PASSWORD=$</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{var.MYSQL_PASSWORD}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>,</span>
-<span id="cb2-11">      <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"DATABASE_NAME=$</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{var.DATABASE_NAME}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>,</span>
-<span id="cb2-12">      <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"MYSQL_ROOT_PASSWORD=$</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{var.MYSQL_ROOT_PASSWORD}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb2-13">    ]</span>
-<span id="cb2-14">  }</span>
-<span id="cb2-15">}</span></code></pre></div>
-</div>
-<p>packer의 ansible plugin을 사용하면, ansible을 이용해서 golden ami를 만들 수 있습니다.</p>
-<p>조금 더 멱등성 있게 편리한 세팅을 진행할 수 있죠.</p>
-</section>
-<section id="terraform-코드" class="level3">
-<h3 class="anchored" data-anchor-id="terraform-코드">Terraform 코드</h3>
-<p>이제 본격적으로 provision을 해보겠습니다.</p>
-</section>
-<section id="ansible-코드" class="level3">
-<h3 class="anchored" data-anchor-id="ansible-코드">ansible 코드</h3>
-<p>이제 software 세팅을 시작하겠습니다.</p>
-</section>
-<section id="build" class="level3">
-<h3 class="anchored" data-anchor-id="build">build</h3>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Makefile</strong></pre>
-</div>
-<div class="sourceCode" id="cb3" data-filename="Makefile" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">PROVISION_PATH<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>terraform<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span>main</span>
-<span id="cb3-2">PACKER_PATH<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>packer</span>
-<span id="cb3-3">DEPLOY_PATH<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ansible</span>
-<span id="cb3-4">include .env</span>
-<span id="cb3-5">export</span>
-<span id="cb3-6"></span>
-<span id="cb3-7">.PHONY: provision deploy <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">all</span> destroy re build_ami</span>
-<span id="cb3-8"></span>
-<span id="cb3-9"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">all</span>: provision deploy</span>
-<span id="cb3-10"></span>
-<span id="cb3-11">build_ami: packer</span>
-<span id="cb3-12">    packer init $(PACKER_PATH)<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span>database.pkr.hcl</span>
-<span id="cb3-13">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">@PKR_VAR_AWS_REGION</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(AWS_REGION) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-14">    PKR_VAR_MYSQL_USER<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(MYSQL_USER) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-15">    PKR_VAR_MYSQL_PASSWORD<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(MYSQL_PASSWORD) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-16">    PKR_VAR_DATABASE_NAME<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(DATABASE_NAME) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-17">    PKR_VAR_MYSQL_ROOT_PASSWORD<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(MYSQL_ROOT_PASSWORD) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-18">    packer build $(PACKER_PATH)<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span>database.pkr.hcl</span>
-<span id="cb3-19"></span>
-<span id="cb3-20">provision: build_ami terraform</span>
-<span id="cb3-21">    terraform <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>chdir<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(PROVISION_PATH) init</span>
-<span id="cb3-22">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">@TF_VAR_AWS_REGION</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(AWS_REGION) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-23">    TF_VAR_SERVER_INSTANCE_COUNT<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(SERVER_INSTANCE_COUNT) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-24">    TF_VAR_SSH_IP<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(SSH_IP) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-25">    TF_VAR_SSH_PUBLIC_KEY_PATH<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(SSH_PUBLIC_KEY_PATH) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-26">    terraform <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>chdir<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(PROVISION_PATH) <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">apply</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>auto<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>approve</span>
-<span id="cb3-27"></span>
-<span id="cb3-28">deploy: ansible</span>
-<span id="cb3-29">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">@DB_PRIVATE_IP</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"$(shell terraform -chdir=$(PROVISION_PATH) output -json db_private_ip | jq -r '.[]' | tr '</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">' ' ')"</span> \</span>
-<span id="cb3-30">    ANSIBLE_HOST_KEY_CHECKING<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">False</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-31">    ANSIBLE_REMOTE_USER<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ubuntu <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-32">    ansible<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>playbook <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-33">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>i $(DEPLOY_PATH)<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span>inventories <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-34">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">--</span>private<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>key<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(SSH_PRIVATE_KEY_PATH) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-35">    $(DEPLOY_PATH)<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span>server.yml </span>
-<span id="cb3-36"></span>
-<span id="cb3-37">destroy: terraform</span>
-<span id="cb3-38">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">@TF_VAR_AWS_REGION</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(AWS_REGION) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-39">    TF_VAR_SERVER_INSTANCE_COUNT<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(SERVER_INSTANCE_COUNT) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-40">    TF_VAR_SSH_IP<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(SSH_IP) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-41">    TF_VAR_SSH_PUBLIC_KEY_PATH<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(SSH_PUBLIC_KEY_PATH) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-42">    terraform <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>chdir<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>$(PROVISION_PATH) destroy <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>auto<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>approve</span>
-<span id="cb3-43"></span>
-<span id="cb3-44">re: destroy <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">all</span></span></code></pre></div>
-</div>
-<p>최종 build는 (42 seoul 사람에게 익숙한) <code>makefile</code>을 사용했습니다.</p>
-<p>모든 변수는 <code>.env</code>로 관리하고 <code>makefile 내부에서 환경변수</code>로 가져와 packer, terraform, ansible <code>명령어를 실행</code>해주었습니다.</p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>사실 c언어도 아니고..이 과제 구현에서 makefile은 별로 어울리진 않은거 같긴 합니다만, 제가 아직 로컬에서 돌려볼만한 다른 build 툴을 배우지 않아서..</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="결과" class="level2">
-<h2 class="anchored" data-anchor-id="결과">결과</h2>
-<p>아직 평가 전입니다.</p>
 </section>
 <section id="outro" class="level2">
 <h2 class="anchored" data-anchor-id="outro">outro</h2>
-<p>솔직히 일반적으로 사용되는 cloud 구조를 적용한건 아니긴 하지만, 과제에 맞춰서 진행하기 위해 고민하는 과정에서 다양한 구조를 적용해봤는데, 그 과정이 나름 학습에 도움이 된거 같습니다.</p>
-<p>그렇다고 cloud를 처음 공부하시는 분들에게 학습 용도로 추천할만한 과제까지는 아닌거 같지만, 이 분야에 공부를 꽤 했고, 그 내용들을 다양하게 고민하며 적용해보고 싶다면 괜찮은 선택지가 될 것 같습니다.</p>
+<p>여기서 구현된 infra 구조는 사실 별로 근본있는 구조는 아니니까, 이것보다는 IaC 툴을 얼마나 편리하게 사용할 수 있는지에 초점을 맞춰서 봐주시길 바라고 있습니다.</p>
+<p>이어서 코드에 대한 설명은 다음 게시글에 포스팅하겠습니다.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>aws</category>
+  <category>packer</category>
   <category>terraform</category>
   <category>ansible</category>
   <category>42 seoul</category>
   <guid>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/5.html</guid>
-  <pubDate>Tue, 28 Jan 2025 11:52:27 GMT</pubDate>
+  <pubDate>Wed, 29 Jan 2025 05:43:56 GMT</pubDate>
 </item>
 <item>
   <title>인간 관계론 - 데일 카네기</title>
@@ -10221,83 +10440,6 @@ font-style: inherit;"># ProfileReport(iris)</span></span></code></pre></div>
   <category>블로그</category>
   <guid>https://cryscham123.github.io/posts/04_archives/para_blog/notes/0.html</guid>
   <pubDate>Wed, 25 Dec 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Linear Programming</title>
-  <link>https://cryscham123.github.io/posts/01_projects/OR_예습/notes/1.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="terminology" class="level2">
-<h2 class="anchored" data-anchor-id="terminology">Terminology</h2>
-<ul>
-<li>process of <code>fomulating and solving</code> linear programs</li>
-<li><code>mathematical program</code> with some special properties
-<ol type="1">
-<li>objective function</li>
-<li>constraints (<img src="https://latex.codecogs.com/png.latex?b_1,%20b_2,%20...,%20b_m">)</li>
-<li>decision variables (<img src="https://latex.codecogs.com/png.latex?x_1,%20x_2,%20...,%20x_n,%20x_i%20%E2%88%88%20%E2%84%9D">)<br>
-→ also expressed as a <img src="https://latex.codecogs.com/png.latex?x"> that means vector of <img src="https://latex.codecogs.com/png.latex?n"> variables</li>
-</ol></li>
-</ul>
-<section id="constraints" class="level3">
-<h3 class="anchored" data-anchor-id="constraints">constraints</h3>
-<ul>
-<li><p>Sign constraints: single variable</p>
-<ul>
-<li>nonnegative: <img src="https://latex.codecogs.com/png.latex?x_i%20%E2%89%A5%200"></li>
-<li>nonpositive: <img src="https://latex.codecogs.com/png.latex?x_i%20%E2%89%A4%200"></li>
-<li>unrestricted in sign or free: no sign constraints</li>
-</ul></li>
-<li><p>Functional constraints: other cases</p></li>
-<li><p>equality constraints: <img src="https://latex.codecogs.com/png.latex?a_1x_1%20+%20a_2x_2%20+%20...%20+%20a_nx_n%20=%20b"></p></li>
-<li><p>inequality constraints: <img src="https://latex.codecogs.com/png.latex?a_1x_1%20+%20a_2x_2%20+%20...%20+%20a_nx_n%20%E2%89%A4%20b"></p></li>
-<li><p>binding constraints (or active constraints)<br>
-no matter <img src="https://latex.codecogs.com/png.latex?g(x)"> is equality or not, if <img src="https://latex.codecogs.com/png.latex?g(a)%20=%20b,%20a"> is binding</p></li>
-<li><p>strict constraints: <img src="https://latex.codecogs.com/png.latex?a_1x_1%20+%20a_2x_2%20+%20...%20+%20a_nx_n%20%3C%20b"></p></li>
-<li><p>weak constraints: <img src="https://latex.codecogs.com/png.latex?a_1x_1%20+%20a_2x_2%20+%20...%20+%20a_nx_n%20%E2%89%A4%20b"></p>
-<p>→ practical mathematical program’s inequalities are <code>all weak</code></p></li>
-</ul>
-</section>
-<section id="solution" class="level3">
-<h3 class="anchored" data-anchor-id="solution">solution</h3>
-<ul>
-<li>feasible solution: satisfies all constraints
-<ul>
-<li>feasible region: set of all feasible solutions</li>
-</ul></li>
-<li>optimal solution: maximizes or minimizes the objective function<br>
-there may be <code>multiple</code> or <code>no</code> optimal solutions</li>
-</ul>
-</section>
-</section>
-<section id="three-types-of-lps" class="level2">
-<h2 class="anchored" data-anchor-id="three-types-of-lps">Three types of LPs</h2>
-<ol type="1">
-<li>Infeasible</li>
-<li>Unbounded: unbounded feasible region <code>does not imply</code> an unbounded LP</li>
-<li>Finitely optimal
-<ul>
-<li>Unique optimal solutions</li>
-<li>Multiple optimal solutions</li>
-</ul></li>
-</ol>
-<blockquote class="blockquote">
-<p>Parameter: we know. <img src="https://latex.codecogs.com/png.latex?C_1,%20C_2,%20..."><br>
-Variables: do not know. <img src="https://latex.codecogs.com/png.latex?x_1,%20x_2,%20..."></p>
-</blockquote>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>Operational Research</category>
-  <category>1차</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/OR_예습/notes/1.html</guid>
-  <pubDate>Sun, 22 Dec 2024 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
