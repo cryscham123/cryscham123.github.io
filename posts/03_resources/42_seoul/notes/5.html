@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>cloud-1 – 김형훈의 학습 블로그</title>
+<title>cloud-1 개념 설명 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,46 +20,12 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../posts/04_archives/42_python/index.html" rel="next">
+<link href="../../../../posts/03_resources/42_seoul/notes/6.html" rel="next">
 <link href="../../../../posts/03_resources/42_seoul/notes/4.html" rel="prev">
 <link href="../../../../favicon" rel="icon">
 <script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
@@ -142,7 +108,7 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/03_resources/adp_필기/index.html">Resources</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/notes/5.html">cloud-1</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/03_resources/adp_필기/index.html">Resources</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/notes/5.html">cloud-1 개념 설명</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -466,7 +432,13 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/03_resources/42_seoul/notes/5.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">cloud-1</span></a>
+ <span class="menu-text">cloud-1 개념 설명</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/03_resources/42_seoul/notes/6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">cloud-1 코드 설명</span></a>
   </div>
 </li>
       </ul>
@@ -771,12 +743,7 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
   <li><a href="#개요" id="toc-개요" class="nav-link" data-scroll-target="#개요">개요</a></li>
   <li><a href="#what-is-iac" id="toc-what-is-iac" class="nav-link" data-scroll-target="#what-is-iac">What is IaC?</a></li>
   <li><a href="#전체적인-구조" id="toc-전체적인-구조" class="nav-link" data-scroll-target="#전체적인-구조">전체적인 구조</a></li>
-  <li><a href="#pakcer-코드" id="toc-pakcer-코드" class="nav-link" data-scroll-target="#pakcer-코드">Pakcer 코드</a></li>
-  <li><a href="#terraform-코드" id="toc-terraform-코드" class="nav-link" data-scroll-target="#terraform-코드">Terraform 코드</a></li>
-  <li><a href="#ansible-코드" id="toc-ansible-코드" class="nav-link" data-scroll-target="#ansible-코드">ansible 코드</a></li>
-  <li><a href="#build" id="toc-build" class="nav-link" data-scroll-target="#build">build</a></li>
   </ul></li>
-  <li><a href="#결과" id="toc-결과" class="nav-link" data-scroll-target="#결과">결과</a></li>
   <li><a href="#outro" id="toc-outro" class="nav-link" data-scroll-target="#outro">outro</a></li>
   </ul>
 </nav>
@@ -784,9 +751,9 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/03_resources/adp_필기/index.html">Resources</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/notes/5.html">cloud-1</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/03_resources/adp_필기/index.html">Resources</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/03_resources/42_seoul/notes/5.html">cloud-1 개념 설명</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">cloud-1</h1>
+<h1 class="title">cloud-1 개념 설명</h1>
   <div class="quarto-categories">
     <div class="quarto-category">aws</div>
     <div class="quarto-category">packer</div>
@@ -804,7 +771,7 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 1월 28일</p>
+      <p class="date">2025년 1월 29일</p>
     </div>
   </div>
   
@@ -817,16 +784,6 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
 
 
 <p><img src="../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>아직 작성중인 노트입니다.</p>
-</div>
-</div>
-</div>
 <section id="intro" class="level2">
 <h2 class="anchored" data-anchor-id="intro">intro</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -865,17 +822,17 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
 <p>이 프로젝트의 목표는 <code>IaC(Infrastructure as Code) tool</code>을 이용하여 wordpress 사이트를 cloud에 자동으로 배포하는 것입니다.</p>
 <p>IaC는 <code>인프라 구성을 코드로 관리하는 방식</code>으로, 수동으로 리소스를 생성하고 설정하는 방식에 비해 <code>버전 관리가 간편</code>하고, <code>동일한 환경을 쉽게 재현</code>하거나, <code>코드 리뷰 등의 방식으로 휴먼 에러를 줄이는 데 용이</code>하게 사용할 수 있습니다.</p>
 <p>이번 프로젝트에서는 <code>Packer, Terraform, Ansible</code> 세 가지 IaC tool을 조합해 사용했습니다</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://snipboard.io/Tq01JU.jpg" class="img-fluid figure-img"></p>
-<figcaption>napkin ai를 써봤습니다</figcaption>
-</figure>
-</div>
+<p><img src="https://snipboard.io/Tq01JU.jpg" class="img-fluid"></p>
 <ol type="1">
 <li><p><strong>Packer</strong>: <code>인프라 생성 전, 상세 설정</code>이 되어있는 image를 build할 수 있는 tool 입니다.</p></li>
 <li><p><strong>Terraform</strong>: <code>cloud 인프라를 생성</code>하는 tool입니다. <code>packer에서 생성한 ami를 사용</code>할 수 있습니다.</p></li>
 <li><p><strong>Ansible</strong>: 서버 내부의 <code>상세 설정을 자동화</code>합니다. 일반적인 bash script와는 다르게 <code>멱등성 있는 설정</code>이 가능하다는 점이 큰 장점입니다. 이때, 서버는 <code>python이 설치되어 있어야 하고, ssh로 접근 가능</code>해야 합니다.</p></li>
 </ol>
+<p>위의 이미지 처럼, packer로 <code>필요한 설정이 완료된 image를 생성</code>한 뒤, 그 이미지를 기반으로 <code>cloud infra</code>를 terraform으로 생성하고, <code>생성된 infra의 상세 설정</code>을 ansible을 이용해서 구현해줄 것입니다.</p>
+<p>Packer와 Ansible은 서버 설정 자동화라는 <code>동일한 기능</code>을 수행하는 도구입니다. 두 도구는 각각 다양한 특징과 장단점이 있지만, 이 과제에서 알아야 하는 차이점은 아래와 같습니다.</p>
+<p>Ansible은 SSH 접근이 가능한 서버에서만 동작하지만, <code>인프라 구축 후에 얻을 수 있는 정보</code>(예: EC2의 IP)를 활용할 수 있습니다.</p>
+<p>Packer는 <code>임시 EC2 인스턴스</code>를 생성하여 그 위에서 필요한 설정을 완료한 후, 해당 인스턴스를 AMI로 변환하는 방식으로 동작합니다. 이렇게 생성된 AMI는 이후 실제 인프라 구축 시 그대로 사용할 수 있습니다. 따라서 최종 목적지 서버가 <code>SSH 접근이 제한되는 환경</code>이더라도, 미리 필요한 <code>모든 설정이 완료된 이미지를 사용</code>할 수 있다는 장점이 있습니다.</p>
+<p>이러한 특성을 고려하여 이 프로젝트에서는 두 도구를 상황에 맞게 조합하여 사용했습니다.</p>
 </section>
 <section id="전체적인-구조" class="level3">
 <h3 class="anchored" data-anchor-id="전체적인-구조">전체적인 구조</h3>
@@ -885,8 +842,14 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
 <figcaption>구현 aws 구조</figcaption>
 </figure>
 </div>
-<p>Public subnet의 EC2들에 대한 ssh 접근은 관리용 컴퓨터에서만(terraform, ansible 코드가 실행되는 컴퓨터) 접근이 가능하도록 제한했고, MySQL의 데이터는 Private subnet의 EC2에 저장하되 Public subnet의 EC2만 접근할 수 있도록 설정했습니다.</p>
+<p><code>Public subnet의 EC2</code>들에 대한 <code>ssh 접근</code>은 <code>관리용 컴퓨터에서만</code>(terraform, ansible 코드가 실행되는 컴퓨터) 접근이 가능하도록 제한했고, MySQL의 데이터는 <code>Private subnet의 EC2</code>에 저장한 뒤 <code>Public subnet의 EC2만 접근</code>할 수 있도록 설정했습니다. <code>Public subnet의 EC2</code>는 <code>사용자가 원하는 갯수를 설정</code>할 수 있고, <code>그 갯수에 맞춰서</code> private subnet의 <code>dbms EC2</code>가 생성되도록 설계했습니다.</p>
 <p>실제 프로덕션 환경이라면 위와 같은 구조로는 설계하지 않습니다. 일단 EC2 머신들을 Auto Scaling Group으로 묶고, 그 앞에 Network Load Balancer를 두어 단일 엔드포인트로 관리하는 것이 좋습니다. 또한 Database는 AWS RDS를 이용하고, WordPress의 파일 시스템은 EFS나 S3를 활용해 Stateless하게 구현하는게 좋습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://snipboard.io/EHrPWd.jpg" class="img-fluid figure-img"></p>
+<figcaption>조금 더 일반적인 구조(물론 docker compose는 잘 안쓸것 같긴 합니다)</figcaption>
+</figure>
+</div>
 <p>제 구현에서는 <code>각 서버가 독립적인 상태와 엔드포인트</code>를 가지고 있습니다.</p>
 <p>그렇게 한 이유는 일단 <code>aws free tier</code> 서비스만으로 과제를 구현하려고 했던게 제일 크고요..(NLB는 사용할 수 없었습니다.) 나머지는 과제 제약사항 때문인데,</p>
 <div class="quarto-figure quarto-figure-center">
@@ -897,138 +860,11 @@ gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
 </div>
 <p>모든 프로세스는 컨테이너 안에서 동작해야 한다는 제약때문에, <code>aws RDS</code>는 <code>사용할 수 없었습니다</code>. 그리고 database는 public internet에서 접근할 수 없다고 해서, <code>db</code>는 <code>private subnet</code>의 ec2에서 돌아가게 설계했습니다.</p>
 </section>
-<section id="pakcer-코드" class="level3">
-<h3 class="anchored" data-anchor-id="pakcer-코드">Pakcer 코드</h3>
-<p>database ec2는 private subnet에 두고, public subnet의 ec2만 연결이 가능하도록 설계할것입니다.</p>
-<p>따라서 ansible로는 설정이 어렵습니다.</p>
-<p>packer를 그래서 씁니다.</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>database.pkr.hcl</strong></pre>
-</div>
-<div class="sourceCode" id="cb1" data-filename="database.pkr.hcl"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>source <span class="st">"amazon-ebs"</span> <span class="st">"database"</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  region  <span class="op">=</span> var.AWS_REGION</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  profile <span class="op">=</span> <span class="st">"default"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  ami_name      <span class="op">=</span> <span class="st">"hyunghki-database-${formatdate("</span>YYYYMMDDhhmmss<span class="st">", timestamp())}"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  instance_type <span class="op">=</span> <span class="st">"t2.micro"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  source_ami_filter {</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    filters <span class="op">=</span> {</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      name                <span class="op">=</span> <span class="st">"ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      root<span class="op">-</span>device<span class="op">-</span><span class="bu">type</span>    <span class="op">=</span> <span class="st">"ebs"</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      virtualization<span class="op">-</span><span class="bu">type</span> <span class="op">=</span> <span class="st">"hvm"</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    most_recent <span class="op">=</span> true</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    owners      <span class="op">=</span> [<span class="st">"099720109477"</span>]</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  ssh_username <span class="op">=</span> <span class="st">"ubuntu"</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>ubuntu-20.04를 기본 이미지로 시작합니다.</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>database.pkr.hcl</strong></pre>
-</div>
-<div class="sourceCode" id="cb2" data-filename="database.pkr.hcl"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>build {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  sources <span class="op">=</span> [<span class="st">"source.amazon-ebs.database"</span>]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  provisioner <span class="st">"ansible"</span> {</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    playbook_file <span class="op">=</span> <span class="st">"$</span><span class="sc">{path.root}</span><span class="st">/ansible/database.yml"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    user <span class="op">=</span> <span class="st">"ubuntu"</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    ansible_env_vars <span class="op">=</span> [</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"ANSIBLE_HOST_KEY_CHECKING=False"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"MYSQL_USER=$</span><span class="sc">{var.MYSQL_USER}</span><span class="st">"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"MYSQL_PASSWORD=$</span><span class="sc">{var.MYSQL_PASSWORD}</span><span class="st">"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"DATABASE_NAME=$</span><span class="sc">{var.DATABASE_NAME}</span><span class="st">"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">"MYSQL_ROOT_PASSWORD=$</span><span class="sc">{var.MYSQL_ROOT_PASSWORD}</span><span class="st">"</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>packer의 ansible plugin을 사용하면, ansible을 이용해서 golden ami를 만들 수 있습니다.</p>
-<p>조금 더 멱등성 있게 편리한 세팅을 진행할 수 있죠.</p>
-</section>
-<section id="terraform-코드" class="level3">
-<h3 class="anchored" data-anchor-id="terraform-코드">Terraform 코드</h3>
-<p>이제 본격적으로 provision을 해보겠습니다.</p>
-</section>
-<section id="ansible-코드" class="level3">
-<h3 class="anchored" data-anchor-id="ansible-코드">ansible 코드</h3>
-<p>이제 software 세팅을 시작하겠습니다. 사실 ansible 안쓰고 packer로 다 설정할 수 있긴 한데, 걍 ansible 쓰는게 초기 세팅에는 훨씬 빠르긴 함</p>
-</section>
-<section id="build" class="level3">
-<h3 class="anchored" data-anchor-id="build">build</h3>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Makefile</strong></pre>
-</div>
-<div class="sourceCode" id="cb3" data-filename="Makefile"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>PROVISION_PATH<span class="op">=</span>terraform<span class="op">/</span>main</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>PACKER_PATH<span class="op">=</span>packer</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>DEPLOY_PATH<span class="op">=</span>ansible</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>include .env</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>export</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>.PHONY: provision deploy <span class="bu">all</span> destroy re build_ami</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span>: provision deploy</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>build_ami: packer</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    packer init $(PACKER_PATH)<span class="op">/</span>database.pkr.hcl</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">@PKR_VAR_AWS_REGION</span><span class="op">=</span>$(AWS_REGION) <span class="op">\</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    PKR_VAR_MYSQL_USER<span class="op">=</span>$(MYSQL_USER) <span class="op">\</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    PKR_VAR_MYSQL_PASSWORD<span class="op">=</span>$(MYSQL_PASSWORD) <span class="op">\</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    PKR_VAR_DATABASE_NAME<span class="op">=</span>$(DATABASE_NAME) <span class="op">\</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    PKR_VAR_MYSQL_ROOT_PASSWORD<span class="op">=</span>$(MYSQL_ROOT_PASSWORD) <span class="op">\</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    packer build $(PACKER_PATH)<span class="op">/</span>database.pkr.hcl</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>provision: build_ami terraform</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    terraform <span class="op">-</span>chdir<span class="op">=</span>$(PROVISION_PATH) init</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">@TF_VAR_AWS_REGION</span><span class="op">=</span>$(AWS_REGION) <span class="op">\</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    TF_VAR_SERVER_INSTANCE_COUNT<span class="op">=</span>$(SERVER_INSTANCE_COUNT) <span class="op">\</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    TF_VAR_SSH_IP<span class="op">=</span>$(SSH_IP) <span class="op">\</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    TF_VAR_SSH_PUBLIC_KEY_PATH<span class="op">=</span>$(SSH_PUBLIC_KEY_PATH) <span class="op">\</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    terraform <span class="op">-</span>chdir<span class="op">=</span>$(PROVISION_PATH) <span class="bu">apply</span> <span class="op">-</span>auto<span class="op">-</span>approve</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>deploy: ansible</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">@DB_PRIVATE_IP</span><span class="op">=</span><span class="st">"$(shell terraform -chdir=$(PROVISION_PATH) output -json db_private_ip | jq -r '.[]' | tr '</span><span class="ch">\n</span><span class="st">' ' ')"</span> \</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    ANSIBLE_HOST_KEY_CHECKING<span class="op">=</span><span class="va">False</span> <span class="op">\</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    ANSIBLE_REMOTE_USER<span class="op">=</span>ubuntu <span class="op">\</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    ansible<span class="op">-</span>playbook <span class="op">\</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>i $(DEPLOY_PATH)<span class="op">/</span>inventories <span class="op">\</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>private<span class="op">-</span>key<span class="op">=</span>$(SSH_PRIVATE_KEY_PATH) <span class="op">\</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    $(DEPLOY_PATH)<span class="op">/</span>server.yml </span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>destroy: terraform</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">@TF_VAR_AWS_REGION</span><span class="op">=</span>$(AWS_REGION) <span class="op">\</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    TF_VAR_SERVER_INSTANCE_COUNT<span class="op">=</span>$(SERVER_INSTANCE_COUNT) <span class="op">\</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    TF_VAR_SSH_IP<span class="op">=</span>$(SSH_IP) <span class="op">\</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    TF_VAR_SSH_PUBLIC_KEY_PATH<span class="op">=</span>$(SSH_PUBLIC_KEY_PATH) <span class="op">\</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    terraform <span class="op">-</span>chdir<span class="op">=</span>$(PROVISION_PATH) destroy <span class="op">-</span>auto<span class="op">-</span>approve</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>re: destroy <span class="bu">all</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>최종 build는 (42 seoul 사람에게 익숙한) <code>makefile</code>을 사용했습니다.</p>
-<p>모든 변수는 <code>.env</code>로 관리하고 <code>makefile 내부에서 환경변수</code>로 가져와 packer, terraform, ansible <code>명령어를 실행</code>해주었습니다.</p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>사실 c언어도 아니고..이 과제 구현에서 makefile은 별로 어울리진 않은거 같긴 합니다만, 제가 아직 로컬에서 돌려볼만한 다른 build 툴을 배우지 않아서..</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="결과" class="level2">
-<h2 class="anchored" data-anchor-id="결과">결과</h2>
-<p>아직 평가 전입니다.</p>
 </section>
 <section id="outro" class="level2">
 <h2 class="anchored" data-anchor-id="outro">outro</h2>
-<p>솔직히 일반적으로 사용되는 cloud 구조를 적용한건 아니긴 하지만, 과제에 맞춰서 진행하기 위해 고민하는 과정에서 다양한 구조를 적용해봤는데, 그 과정이 나름 학습에 도움이 된거 같습니다.</p>
-<p>그렇다고 cloud를 처음 공부하시는 분들에게 학습 용도로 추천할만한 과제까지는 아닌거 같지만, 이 분야에 공부를 꽤 했고, 그 내용들을 다양하게 고민하며 적용해보고 싶다면 괜찮은 선택지가 될 것 같습니다.</p>
+<p>여기서 구현된 infra 구조는 사실 별로 근본있는 구조는 아니니까, 이것보다는 IaC 툴을 얼마나 편리하게 사용할 수 있는지에 초점을 맞춰서 봐주시길 바라고 있습니다.</p>
+<p>이어서 코드에 대한 설명은 다음 게시글에 포스팅하겠습니다.</p>
 
 
 </section>
@@ -1465,8 +1301,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/04_archives/42_python/index.html" class="pagination-link" aria-label="python for data science 수행">
-        <span class="nav-page-text">python for data science 수행</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../posts/03_resources/42_seoul/notes/6.html" class="pagination-link" aria-label="cloud-1 코드 설명">
+        <span class="nav-page-text">cloud-1 코드 설명</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
