@@ -15,7 +15,7 @@
 <link>https://cryscham123.github.io/all.html</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Wed, 29 Jan 2025 07:00:13 GMT</lastBuildDate>
+<lastBuildDate>Wed, 29 Jan 2025 07:14:03 GMT</lastBuildDate>
 <item>
   <title>cloud-1 코드 설명</title>
   <link>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/6.html</link>
@@ -294,47 +294,73 @@ font-style: inherit;">/</span>server.yml </span></code></pre></div>
 <section id="packer-코드" class="level3">
 <h3 class="anchored" data-anchor-id="packer-코드">Packer 코드</h3>
 <p>이 프로젝트에서는 데이터베이스 서버를 Private subnet에 위치시키고, Public subnet의 EC2만 이 데이터베이스에 접근할 수 있도록 설계했습니다. <code>Private subnet에 있는 서버</code>는 SSH 접근이 제한되기 때문에 <code>Ansible로 직접 설정하기가 어렵습니다.</code> 이런 경우 <code>Packer를 사용하여 미리 설정된 AMI를 생성</code>하는 것이 좋은 해결책이 될 수 있습니다.</p>
+<p>packer의 파일 구조는 아래와 같습니다.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">packer/</span></span>
+<span id="cb4-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> database.pkr.hcl</span>
+<span id="cb4-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">└──</span> ansible/</span>
+<span id="cb4-4">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> _requirements/                      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># docker compose setting files</span></span>
+<span id="cb4-5">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> roles/setting_docker/tasks</span>
+<span id="cb4-6">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>   └── main.yml</span>
+<span id="cb4-7">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">└──</span> database.yml                        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># playbook</span></span></code></pre></div>
 <p>먼저 <code>기본 이미지로 Ubuntu 20.04</code>를 사용하도록 작성했습니다.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>database.pkr.hcl</strong></pre>
 </div>
-<div class="sourceCode" id="cb4" data-filename="database.pkr.hcl" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">source <span class="st" style="color: #20794D;
+<div class="sourceCode" id="cb5" data-filename="database.pkr.hcl" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">source <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"amazon-ebs"</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"database"</span> {</span>
-<span id="cb4-2">  region  <span class="op" style="color: #5E5E5E;
+<span id="cb5-2">  region  <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> var.AWS_REGION</span>
-<span id="cb4-3">  profile <span class="op" style="color: #5E5E5E;
+<span id="cb5-3">  profile <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"default"</span></span>
-<span id="cb4-4"></span>
-<span id="cb4-5">  ami_name      <span class="op" style="color: #5E5E5E;
+<span id="cb5-4"></span>
+<span id="cb5-5">  ami_name      <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"hyunghki-database-${formatdate("</span>YYYYMMDDhhmmss<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">", timestamp())}"</span></span>
-<span id="cb4-6">  instance_type <span class="op" style="color: #5E5E5E;
+<span id="cb5-6">  instance_type <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"t2.micro"</span></span>
-<span id="cb4-7">  source_ami_filter {</span>
-<span id="cb4-8">    filters <span class="op" style="color: #5E5E5E;
+<span id="cb5-7">  source_ami_filter {</span>
+<span id="cb5-8">    filters <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
-<span id="cb4-9">      name                <span class="op" style="color: #5E5E5E;
+<span id="cb5-9">      name                <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"</span></span>
-<span id="cb4-10">      root<span class="op" style="color: #5E5E5E;
+<span id="cb5-10">      root<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span>device<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -345,7 +371,7 @@ background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ebs"</span></span>
-<span id="cb4-11">      virtualization<span class="op" style="color: #5E5E5E;
+<span id="cb5-11">      virtualization<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="bu" style="color: null;
 background-color: null;
@@ -354,39 +380,39 @@ background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"hvm"</span></span>
-<span id="cb4-12">    }</span>
-<span id="cb4-13">    most_recent <span class="op" style="color: #5E5E5E;
+<span id="cb5-12">    }</span>
+<span id="cb5-13">    most_recent <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> true</span>
-<span id="cb4-14">    owners      <span class="op" style="color: #5E5E5E;
+<span id="cb5-14">    owners      <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"099720109477"</span>]</span>
-<span id="cb4-15">  }</span>
-<span id="cb4-16">  ssh_username <span class="op" style="color: #5E5E5E;
+<span id="cb5-15">  }</span>
+<span id="cb5-16">  ssh_username <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ubuntu"</span></span>
-<span id="cb4-17">}</span></code></pre></div>
+<span id="cb5-17">}</span></code></pre></div>
 </div>
 <p>Packer는 기본적으로 이미지 생성을 위한 최소한의 기능만 제공하지만, 다양한 플러그인을 지원합니다. 여기서는 <code>Ansible 플러그인을 사용</code>하여 데이터베이스 서버 설정을 자동화했습니다.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>database.pkr.hcl</strong></pre>
 </div>
-<div class="sourceCode" id="cb5" data-filename="database.pkr.hcl" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">build {</span>
-<span id="cb5-2">  sources <span class="op" style="color: #5E5E5E;
+<div class="sourceCode" id="cb6" data-filename="database.pkr.hcl" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">build {</span>
+<span id="cb6-2">  sources <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"source.amazon-ebs.database"</span>]</span>
-<span id="cb5-3"></span>
-<span id="cb5-4">  provisioner <span class="st" style="color: #20794D;
+<span id="cb6-3"></span>
+<span id="cb6-4">  provisioner <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ansible"</span> {</span>
-<span id="cb5-5">    playbook_file <span class="op" style="color: #5E5E5E;
+<span id="cb6-5">    playbook_file <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -395,80 +421,80 @@ background-color: null;
 font-style: inherit;">{path.root}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/ansible/database.yml"</span></span>
-<span id="cb5-6">    user <span class="op" style="color: #5E5E5E;
+<span id="cb6-6">    user <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ubuntu"</span></span>
-<span id="cb5-7">    ansible_env_vars <span class="op" style="color: #5E5E5E;
+<span id="cb6-7">    ansible_env_vars <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [</span>
-<span id="cb5-8">      <span class="st" style="color: #20794D;
+<span id="cb6-8">      <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ANSIBLE_HOST_KEY_CHECKING=False"</span>,</span>
-<span id="cb5-9">      <span class="st" style="color: #20794D;
+<span id="cb6-9">      <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"MYSQL_USER=$</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{var.MYSQL_USER}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>,</span>
-<span id="cb5-10">      <span class="st" style="color: #20794D;
+<span id="cb6-10">      <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"MYSQL_PASSWORD=$</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{var.MYSQL_PASSWORD}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>,</span>
-<span id="cb5-11">      <span class="st" style="color: #20794D;
+<span id="cb6-11">      <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"DATABASE_NAME=$</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{var.DATABASE_NAME}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>,</span>
-<span id="cb5-12">      <span class="st" style="color: #20794D;
+<span id="cb6-12">      <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"MYSQL_ROOT_PASSWORD=$</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{var.MYSQL_ROOT_PASSWORD}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span></span>
-<span id="cb5-13">    ]</span>
-<span id="cb5-14">  }</span>
-<span id="cb5-15">}</span></code></pre></div>
+<span id="cb6-13">    ]</span>
+<span id="cb6-14">  }</span>
+<span id="cb6-15">}</span></code></pre></div>
 </div>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>ansible/database.yml</strong></pre>
 </div>
-<div class="sourceCode" id="cb6" data-filename="ansible/database.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="op" style="color: #5E5E5E;
+<div class="sourceCode" id="cb7" data-filename="ansible/database.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> hosts: <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">all</span></span>
-<span id="cb6-2">  gather_facts: false</span>
-<span id="cb6-3">  become: true</span>
-<span id="cb6-4">  roles:</span>
-<span id="cb6-5">    <span class="co" style="color: #5E5E5E;
+<span id="cb7-2">  gather_facts: false</span>
+<span id="cb7-3">  become: true</span>
+<span id="cb7-4">  roles:</span>
+<span id="cb7-5">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># docker compose를 machine에 설치해줍니다.</span></span>
-<span id="cb6-6">    <span class="op" style="color: #5E5E5E;
+<span id="cb7-6">    <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> role: setting_docker</span>
-<span id="cb6-7"></span>
-<span id="cb6-8">  tasks:</span>
-<span id="cb6-9">    <span class="co" style="color: #5E5E5E;
+<span id="cb7-7"></span>
+<span id="cb7-8">  tasks:</span>
+<span id="cb7-9">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># docker compose에 필요한 파일들을 옮겨줍니다.</span></span>
-<span id="cb6-10">    <span class="op" style="color: #5E5E5E;
+<span id="cb7-10">    <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> name: copy_requirements</span>
-<span id="cb6-11">      copy:</span>
-<span id="cb6-12">        src: <span class="st" style="color: #20794D;
+<span id="cb7-11">      copy:</span>
+<span id="cb7-12">        src: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"./_requirements/"</span></span>
-<span id="cb6-13">        dest: <span class="st" style="color: #20794D;
+<span id="cb7-13">        dest: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"/home/</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -479,26 +505,26 @@ background-color: null;
 font-style: inherit;">}}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/app/"</span></span>
-<span id="cb6-14">        mode: <span class="st" style="color: #20794D;
+<span id="cb7-14">        mode: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'0755'</span></span>
-<span id="cb6-15">        directory_mode: <span class="st" style="color: #20794D;
+<span id="cb7-15">        directory_mode: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'0755'</span></span>
-<span id="cb6-16"></span>
-<span id="cb6-17">    <span class="co" style="color: #5E5E5E;
+<span id="cb7-16"></span>
+<span id="cb7-17">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 적절한 환경변수와 함께 docker compose 명령어를 실행합니다.</span></span>
-<span id="cb6-18">    <span class="op" style="color: #5E5E5E;
+<span id="cb7-18">    <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> name: execute docker compose</span>
-<span id="cb6-19">      shell:</span>
-<span id="cb6-20">        cmd: docker<span class="op" style="color: #5E5E5E;
+<span id="cb7-19">      shell:</span>
+<span id="cb7-20">        cmd: docker<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span>compose up <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span>d</span>
-<span id="cb6-21">        chdir: <span class="st" style="color: #20794D;
+<span id="cb7-21">        chdir: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"/home/</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -509,8 +535,8 @@ background-color: null;
 font-style: inherit;">}}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/app/"</span></span>
-<span id="cb6-22">      environment:</span>
-<span id="cb6-23">        MYSQL_USER: <span class="st" style="color: #20794D;
+<span id="cb7-22">      environment:</span>
+<span id="cb7-23">        MYSQL_USER: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -521,7 +547,7 @@ background-color: null;
 font-style: inherit;">}}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span></span>
-<span id="cb6-24">        MYSQL_PASSWORD: <span class="st" style="color: #20794D;
+<span id="cb7-24">        MYSQL_PASSWORD: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -532,7 +558,7 @@ background-color: null;
 font-style: inherit;">}}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span></span>
-<span id="cb6-25">        DATABASE_NAME: <span class="st" style="color: #20794D;
+<span id="cb7-25">        DATABASE_NAME: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -543,7 +569,7 @@ background-color: null;
 font-style: inherit;">}}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span></span>
-<span id="cb6-26">        MYSQL_ROOT_PASSWORD: <span class="st" style="color: #20794D;
+<span id="cb7-26">        MYSQL_ROOT_PASSWORD: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -585,7 +611,7 @@ font-style: inherit;">"</span></span></code></pre></div>
   <category>ansible</category>
   <category>42 seoul</category>
   <guid>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/6.html</guid>
-  <pubDate>Wed, 29 Jan 2025 07:00:13 GMT</pubDate>
+  <pubDate>Wed, 29 Jan 2025 07:14:03 GMT</pubDate>
 </item>
 <item>
   <title>cloud-1 개념 설명</title>
