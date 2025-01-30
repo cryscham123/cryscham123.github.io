@@ -15,7 +15,7 @@
 <link>https://cryscham123.github.io/posts/03_resources/42_seoul/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Wed, 29 Jan 2025 12:01:42 GMT</lastBuildDate>
+<lastBuildDate>Thu, 30 Jan 2025 06:17:59 GMT</lastBuildDate>
 <item>
   <title>cloud-1 코드 설명</title>
   <link>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/6.html</link>
@@ -57,6 +57,18 @@
 </section>
 <section id="프로젝트-및-구현-설명" class="level2">
 <h2 class="anchored" data-anchor-id="프로젝트-및-구현-설명">프로젝트 및 구현 설명</h2>
+<section id="pre-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="pre-requirements">pre requirements</h3>
+<p>이 프로젝트를 진행하기 위해 필요한 것들은 다음과 같습니다.</p>
+<ul>
+<li>AWS IAM 계정과 aws cli를 통한 인증</li>
+<li>Packer</li>
+<li>Terraform</li>
+<li>Ansible</li>
+<li>jq</li>
+<li>boto3</li>
+</ul>
+</section>
 <section id="build" class="level3">
 <h3 class="anchored" data-anchor-id="build">build</h3>
 <p>최종 build는 (42 seoul 사람에게 익숙한) <code>makefile</code>을 사용했습니다.</p>
@@ -293,8 +305,8 @@ font-style: inherit;">/</span>server.yml </span></code></pre></div>
 </section>
 <section id="packer-코드" class="level3">
 <h3 class="anchored" data-anchor-id="packer-코드">Packer 코드</h3>
-<p>이 프로젝트에서는 데이터베이스 서버를 Private subnet에 위치시키고, Public subnet의 EC2만 이 데이터베이스에 접근할 수 있도록 설계했습니다. <code>Private subnet에 있는 서버</code>는 SSH 접근이 제한되기 때문에 <code>Ansible로 직접 설정하기가 어렵습니다.</code> 이런 경우 <code>Packer를 사용하여 미리 설정된 AMI를 생성</code>하는 것이 좋은 해결책이 될 수 있습니다.</p>
-<p>packer의 파일 구조는 아래와 같습니다.</p>
+<p>이 프로젝트에서는 데이터베이스 서버를 Private subnet에 위치시키고, Public subnet의 EC2만 이 데이터베이스에 접근할 수 있도록 설계했습니다. <code>Private subnet에 있는 서버</code>는 SSH 접근이 제한되기 때문에 <code>Ansible로 직접 설정하기는 어렵습니다.</code> 이런 경우 <code>Packer로 미리 설정된 AMI를 생성</code>하는 방법을 생각해볼 수 있습니다.</p>
+<p>구현한 Packer 파일 구조는 아래와 같습니다.</p>
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">packer/</span></span>
@@ -586,12 +598,1082 @@ font-style: inherit;">"</span></span></code></pre></div>
 </section>
 <section id="terraform-코드" class="level3">
 <h3 class="anchored" data-anchor-id="terraform-코드">Terraform 코드</h3>
-<p>이제 본격적으로 provision을 해보겠습니다.</p>
+<p>이제 본격적으로 provision을 해보겠습니다. 잠시 전체적인 구조를 다시 한번 보겠습니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://snipboard.io/LxOGgU.jpg" class="img-fluid figure-img"></p>
+<figcaption>구현 aws 구조</figcaption>
+</figure>
+</div>
+<p>필요한 리소스는 VPC, subnet, security group, ec2 입니다.</p>
+<p><code>server ec2</code>와 <code>database ec2</code>는 환경변수 SERVER_INSTANCE_COUNT에 지정된 갯수 만큼 생성됩니다. database ec2는 이전 단계에서 생성한 ami를 사용해줍니다.</p>
+<p>public, private subnet의 갯수는 임의로 생성했습니다.</p>
+<p>파일 구조는 아래와 같습니다.</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">terraform/</span></span>
+<span id="cb8-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> main/</span>
+<span id="cb8-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>   ├── main.tf</span>
+<span id="cb8-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>   ├── data.tf</span>
+<span id="cb8-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>   ├── output.tf</span>
+<span id="cb8-6"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>   └── variables.tf</span>
+<span id="cb8-7"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">└──</span> modules/network/</span>
+<span id="cb8-8">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> main.tf</span>
+<span id="cb8-9">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> output.tf</span>
+<span id="cb8-10">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">└──</span> variables.tf</span></code></pre></div>
+<p>main.tf에서는 <code>aws_instance</code>를 생성하고, 그 외 VPC, subnet과 같은 리소스는 <code>network module</code>로 분리해서 생성했습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>modules/network/main.tf</strong></pre>
+</div>
+<div class="sourceCode" id="cb9" data-filename="modules/network/main.tf" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_vpc"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"main_vpc"</span> {</span>
+<span id="cb9-2">  cidr_block           <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"10.0.0.0/16"</span></span>
+<span id="cb9-3">  instance_tenancy     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"default"</span></span>
+<span id="cb9-4">  enable_dns_hostnames <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"true"</span></span>
+<span id="cb9-5">}</span>
+<span id="cb9-6"></span>
+<span id="cb9-7">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_subnet"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"public-1"</span> {</span>
+<span id="cb9-8">  vpc_id                  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_vpc.main_vpc.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb9-9">  cidr_block              <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"10.0.1.0/24"</span></span>
+<span id="cb9-10">  map_public_ip_on_launch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"true"</span></span>
+<span id="cb9-11">  availability_zone       <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{var.AWS_REGION}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">a"</span></span>
+<span id="cb9-12">}</span>
+<span id="cb9-13"></span>
+<span id="cb9-14">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_subnet"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"public-2"</span> {</span>
+<span id="cb9-15">  vpc_id                  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_vpc.main_vpc.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb9-16">  cidr_block              <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"10.0.2.0/24"</span></span>
+<span id="cb9-17">  map_public_ip_on_launch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"true"</span></span>
+<span id="cb9-18">  availability_zone       <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{var.AWS_REGION}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">c"</span></span>
+<span id="cb9-19">}</span>
+<span id="cb9-20"></span>
+<span id="cb9-21">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_subnet"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"private"</span> {</span>
+<span id="cb9-22">  vpc_id                  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_vpc.main_vpc.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb9-23">  cidr_block              <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"10.0.3.0/24"</span></span>
+<span id="cb9-24">  map_public_ip_on_launch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"false"</span></span>
+<span id="cb9-25">  availability_zone       <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{var.AWS_REGION}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">a"</span></span>
+<span id="cb9-26">}</span></code></pre></div>
+</div>
+<p>먼저 VPC와 subnet을 생성합니다.</p>
+<p>cidr_block은 private ip 중에서 겹치지 않는 범위로 지정해줍니다.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Private IP ranges
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Class A: 10.0.0.0–10.255.255.255</li>
+<li>Class B: 172.16.0.0–172.31.255.255</li>
+<li>Class C: 192.168.0.0–192.168.255.255</li>
+</ul>
+</div>
+</div>
+<p>Public subnet이 인터넷과 통신하기 위해서는 <code>Internet Gateway</code>와 <code>Route Table</code>이 필요합니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>modules/network/main.tf</strong></pre>
+</div>
+<div class="sourceCode" id="cb10" data-filename="modules/network/main.tf" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_internet_gateway"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gate_way"</span> {</span>
+<span id="cb10-2">  vpc_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_vpc.main_vpc.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb10-3">}</span>
+<span id="cb10-4"></span>
+<span id="cb10-5">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_route_table"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"public_route_table"</span> {</span>
+<span id="cb10-6">  vpc_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_vpc.main_vpc.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb10-7"></span>
+<span id="cb10-8">  route {</span>
+<span id="cb10-9">    cidr_block <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0.0.0.0/0"</span></span>
+<span id="cb10-10">    gateway_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_internet_gateway.gate_way.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb10-11">  }</span>
+<span id="cb10-12">}</span>
+<span id="cb10-13"></span>
+<span id="cb10-14">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_route_table_association"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"public-1"</span> {</span>
+<span id="cb10-15">  subnet_id      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_subnet.public<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb10-16">  route_table_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_route_table.public_route_table.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb10-17">}</span>
+<span id="cb10-18"></span>
+<span id="cb10-19">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_route_table_association"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"public-2"</span> {</span>
+<span id="cb10-20">  subnet_id      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_subnet.public<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb10-21">  route_table_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_route_table.public_route_table.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb10-22">}</span></code></pre></div>
+</div>
+<p>모든 외부 트래픽을 Internet Gateway로 보내도록 Route Table을 설정하고, 이를 두 개의 Public subnet에 연결했습니다.</p>
+<p>참고로 VPC 내부 통신은 자동으로 라우팅됩니다. 같은 VPC 안에 있는 리소스들은 VPC의 기본 라우팅 테이블을 통해 서로 통신할 수 있기 때문에 내부 통신을 위한 route table은 따로 생성하지 않았습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>modules/network/main.tf</strong></pre>
+</div>
+<div class="sourceCode" id="cb11" data-filename="modules/network/main.tf" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_security_group"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server_sg"</span> {</span>
+<span id="cb11-2">  vpc_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_vpc.main_vpc.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb11-3">  name   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server_sg"</span></span>
+<span id="cb11-4"></span>
+<span id="cb11-5">  ingress {</span>
+<span id="cb11-6">    from_port   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22</span></span>
+<span id="cb11-7">    to_port     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22</span></span>
+<span id="cb11-8">    protocol    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tcp"</span></span>
+<span id="cb11-9">    cidr_blocks <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> var.SSH_CIDR_BLOCKS</span>
+<span id="cb11-10">  }</span>
+<span id="cb11-11"></span>
+<span id="cb11-12">  ingress {</span>
+<span id="cb11-13">    from_port   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb11-14">    to_port     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb11-15">    protocol    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tcp"</span></span>
+<span id="cb11-16">    cidr_blocks <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0.0.0.0/0"</span>]</span>
+<span id="cb11-17">  }</span>
+<span id="cb11-18"></span>
+<span id="cb11-19">  ingress {</span>
+<span id="cb11-20">    from_port   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">443</span></span>
+<span id="cb11-21">    to_port     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">443</span></span>
+<span id="cb11-22">    protocol    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tcp"</span></span>
+<span id="cb11-23">    cidr_blocks <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0.0.0.0/0"</span>]</span>
+<span id="cb11-24">  }</span>
+<span id="cb11-25"></span>
+<span id="cb11-26">  egress {</span>
+<span id="cb11-27">    from_port   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb11-28">    to_port     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb11-29">    protocol    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-1"</span></span>
+<span id="cb11-30">    cidr_blocks <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0.0.0.0/0"</span>]</span>
+<span id="cb11-31">  }</span>
+<span id="cb11-32">}</span>
+<span id="cb11-33"></span>
+<span id="cb11-34">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_security_group"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"database_sg"</span> {</span>
+<span id="cb11-35">  vpc_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_vpc.main_vpc.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb11-36">  name   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"efs_sg"</span></span>
+<span id="cb11-37"></span>
+<span id="cb11-38">  ingress {</span>
+<span id="cb11-39">    from_port       <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3306</span></span>
+<span id="cb11-40">    to_port         <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3306</span></span>
+<span id="cb11-41">    protocol        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tcp"</span></span>
+<span id="cb11-42">    security_groups <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [aws_security_group.server_sg.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span>]</span>
+<span id="cb11-43">  }</span>
+<span id="cb11-44"></span>
+<span id="cb11-45">  egress {</span>
+<span id="cb11-46">    from_port   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb11-47">    to_port     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb11-48">    protocol    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-1"</span></span>
+<span id="cb11-49">    cidr_blocks <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0.0.0.0/0"</span>]</span>
+<span id="cb11-50">  }</span>
+<span id="cb11-51">}</span></code></pre></div>
+</div>
+<p>마지막으로 security group입니다.</p>
+<p>server ec2의 ssh 접근은 환경변수를 통해 ansible을 실행하는 머신의 ip에서만 접근 가능하도록 설정해줬습니다.</p>
+<p>database ec2는 server ec2만 접근할 수 있도록 설정했습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>main/main.tf</strong></pre>
+</div>
+<div class="sourceCode" id="cb12" data-filename="main/main.tf" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 사용자가 지정한 경로의 ssh key를 사용해 ec2에 접근 가능하도록 설정했습니다.</span></span>
+<span id="cb12-2">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_key_pair"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_labtop"</span> {</span>
+<span id="cb12-3">  key_name   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_labtop"</span></span>
+<span id="cb12-4">  public_key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">file</span>(var.SSH_PUBLIC_KEY_PATH)</span>
+<span id="cb12-5">}</span>
+<span id="cb12-6"></span>
+<span id="cb12-7">module <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"network"</span> {</span>
+<span id="cb12-8">  source <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../modules/network"</span></span>
+<span id="cb12-9"></span>
+<span id="cb12-10">  AWS_REGION           <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> var.AWS_REGION</span>
+<span id="cb12-11">  SSH_CIDR_BLOCKS      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{var.SSH_IP}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/32"</span>]</span>
+<span id="cb12-12">}</span>
+<span id="cb12-13"></span>
+<span id="cb12-14">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_instance"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server"</span> {</span>
+<span id="cb12-15">  count         <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> var.SERVER_INSTANCE_COUNT</span>
+<span id="cb12-16">  ami           <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.aws_ami.latest_ubuntu.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb12-17">  instance_type <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t2.micro"</span></span>
+<span id="cb12-18"></span>
+<span id="cb12-19">  vpc_security_group_ids <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [module.network.server_sg_id]</span>
+<span id="cb12-20">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># subnet은 2개를 번걸아가면서 사용하도록 설정했습니다.</span></span>
+<span id="cb12-21">  subnet_id              <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> module.network.public_subnets[count.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]</span>
+<span id="cb12-22"></span>
+<span id="cb12-23">  key_name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_key_pair.my_labtop.key_name</span>
+<span id="cb12-24">  tags <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb12-25">    Name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"serverNode"</span></span>
+<span id="cb12-26">  }</span>
+<span id="cb12-27">}</span>
+<span id="cb12-28"></span>
+<span id="cb12-29">resource <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_instance"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"database"</span> {</span>
+<span id="cb12-30">  count         <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> var.SERVER_INSTANCE_COUNT</span>
+<span id="cb12-31">  ami           <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.aws_ami.database_ami.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span></span>
+<span id="cb12-32">  instance_type <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t2.micro"</span></span>
+<span id="cb12-33"></span>
+<span id="cb12-34">  vpc_security_group_ids <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [module.network.database_sg_id]</span>
+<span id="cb12-35">  subnet_id              <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> module.network.private_subnets</span>
+<span id="cb12-36"></span>
+<span id="cb12-37">  key_name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> aws_key_pair.my_labtop.key_name</span>
+<span id="cb12-38">  tags <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb12-39">    Name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dbNode"</span></span>
+<span id="cb12-40">  }</span>
+<span id="cb12-41">}</span></code></pre></div>
+</div>
+<p>최종적으로 main.tf에서 network module을 불러와서 필요한 리소스를 생성한 후, server와 database ec2를 생성했습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>main/data.tf</strong></pre>
+</div>
+<div class="sourceCode" id="cb13" data-filename="main/data.tf" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">data <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_ami"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"latest_ubuntu"</span> {</span>
+<span id="cb13-2">  most_recent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> true</span>
+<span id="cb13-3"></span>
+<span id="cb13-4">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">filter</span> {</span>
+<span id="cb13-5">    name   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"name"</span></span>
+<span id="cb13-6">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"</span>]</span>
+<span id="cb13-7">  }</span>
+<span id="cb13-8"></span>
+<span id="cb13-9">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">filter</span> {</span>
+<span id="cb13-10">    name   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"virtualization-type"</span></span>
+<span id="cb13-11">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hvm"</span>]</span>
+<span id="cb13-12">  }</span>
+<span id="cb13-13"></span>
+<span id="cb13-14">  owners <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"099720109477"</span>]</span>
+<span id="cb13-15">}</span>
+<span id="cb13-16"></span>
+<span id="cb13-17">data <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aws_ami"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"database_ami"</span> {</span>
+<span id="cb13-18">  most_recent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> true</span>
+<span id="cb13-19">  owners <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"self"</span>]</span>
+<span id="cb13-20">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">filter</span> {</span>
+<span id="cb13-21">    name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"name"</span></span>
+<span id="cb13-22">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hyunghki-database-*"</span>]</span>
+<span id="cb13-23">  }</span>
+<span id="cb13-24">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">filter</span> {</span>
+<span id="cb13-25">    name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"root-device-type"</span></span>
+<span id="cb13-26">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ebs"</span>]</span>
+<span id="cb13-27">  }</span>
+<span id="cb13-28">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">filter</span> {</span>
+<span id="cb13-29">    name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"virtualization-type"</span></span>
+<span id="cb13-30">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hvm"</span>]</span>
+<span id="cb13-31">  }</span>
+<span id="cb13-32">}</span></code></pre></div>
+</div>
+<p>server ec2는 기본 ubuntu 20.04 이미지를 사용하고, database ec2는 이전에 생성한 ami를 사용했습니다.</p>
 </section>
 <section id="ansible-코드" class="level3">
 <h3 class="anchored" data-anchor-id="ansible-코드">ansible 코드</h3>
-<p>이제 software 세팅을 시작하겠습니다.</p>
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">terraform/</span></span>
+<span id="cb14-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> _requirements/                      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># docker compose setting files</span></span>
+<span id="cb14-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> inventories/</span>
+<span id="cb14-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>   └── aws_ec2.yml</span>
+<span id="cb14-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├──</span> roles/setting_docker/tasks</span>
+<span id="cb14-6"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>   └── main.yml</span>
+<span id="cb14-7"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">└──</span> server.yml</span></code></pre></div>
+<p>용어 정리: role, inventory, playbook</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>aws_ec2.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb15" data-filename="aws_ec2.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">plugin: aws_ec2</span>
+<span id="cb15-2">regions:</span>
+<span id="cb15-3">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ap-northeast-2"</span></span>
+<span id="cb15-4">keyed_groups:</span>
+<span id="cb15-5">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> key: tags</span>
+<span id="cb15-6">compose:</span>
+<span id="cb15-7">  ansible_host: public_ip_address</span>
+<span id="cb15-8">leading_separator: <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span></span>
+<span id="cb15-9">filters:</span>
+<span id="cb15-10">  instance<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>state<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>name: running</span></code></pre></div>
+</div>
+<p>AWS EC2 동적 인벤토리 설정입니다. Terraform으로 생성한 EC2 인스턴스들을 자동으로 관리할 수 있습니다.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>server.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb16" data-filename="server.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> hosts: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Name_serverNode"</span></span>
+<span id="cb16-2">  gather_facts: false</span>
+<span id="cb16-3">  become: true</span>
+<span id="cb16-4">  roles:</span>
+<span id="cb16-5">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> role: setting_docker</span>
+<span id="cb16-6">  tasks:</span>
+<span id="cb16-7">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: copy_requirements</span>
+<span id="cb16-8">      copy:</span>
+<span id="cb16-9">        src: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"./_requirements/"</span></span>
+<span id="cb16-10">        dest: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/home/</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> ansible_user </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/app/"</span></span>
+<span id="cb16-11">        mode: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0755'</span></span>
+<span id="cb16-12">        directory_mode: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0755'</span></span>
+<span id="cb16-13"></span>
+<span id="cb16-14">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: Split array values <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> DB_PRIVATE_IP</span>
+<span id="cb16-15">      set_fact:</span>
+<span id="cb16-16">        target: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'DB_PRIVATE_IP') | split(' ') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-17"></span>
+<span id="cb16-18">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: execute docker compose</span>
+<span id="cb16-19">      shell:</span>
+<span id="cb16-20">        cmd: docker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>compose up <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>d</span>
+<span id="cb16-21">        chdir: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/home/</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> ansible_user </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/app/"</span></span>
+<span id="cb16-22">      environment:</span>
+<span id="cb16-23">        DOMAIN_NAME: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> ansible_host </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-24">        MYSQL_USER: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'MYSQL_USER') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-25">        MYSQL_PASSWORD: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'MYSQL_PASSWORD') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-26">        DATABASE_NAME: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'DATABASE_NAME') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-27">        SITE_TITLE: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'SITE_TITLE') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-28">        ADMIN_NAME: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'ADMIN_NAME') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-29">        ADMIN_PASSWORD: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'ADMIN_PASSWORD') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-30">        ADMIN_EMAIL: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'ADMIN_EMAIL') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-31">        USER_NAME: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'USER_NAME') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-32">        USER_PASSWORD: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'USER_PASSWORD') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-33">        USER_EMAIL: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> lookup('env', 'USER_EMAIL') </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-34">        DB_PRIVATE_IP: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> target[ansible_play_hosts.index(inventory_hostname)] </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb16-35"></span>
+<span id="cb16-36">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">all</span> done message</span>
+<span id="cb16-37">      debug:</span>
+<span id="cb16-38">        msg: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> ansible_host </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+</div>
+<p>’Name’이 ’serverNode’인 인스턴스들만 선택하여 설정을 진행하겠습니다.</p>
 </section>
+</section>
+<section id="실행" class="level2">
+<h2 class="anchored" data-anchor-id="실행">실행</h2>
+<p>먼저 .env 파일에 환경변수를 설정해줍니다.</p>
+<p>ip 정보도 알아낸 후, SSH_IP에 설정해줍니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://snipboard.io/xM1jsI.jpg" class="img-fluid figure-img"></p>
+<figcaption>naver에 내 ip 검색</figcaption>
+</figure>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>.env</strong></pre>
+</div>
+<div class="sourceCode" id="cb17" data-filename=".env" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># only 1 line variable is allowed</span></span>
+<span id="cb17-2">AWS_REGION<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>northeast<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb17-3">SERVER_INSTANCE_COUNT<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb17-4">SSH_IP<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">121.135.181.56</span></span>
+<span id="cb17-5">SSH_PUBLIC_KEY_PATH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=~/</span>.ssh<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>id_rsa.pub</span>
+<span id="cb17-6">SSH_PRIVATE_KEY_PATH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=~/</span>.ssh<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>id_rsa</span>
+<span id="cb17-7">MYSQL_USER<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>dudu</span>
+<span id="cb17-8">MYSQL_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>secret</span>
+<span id="cb17-9">MYSQL_ROOT_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>secret</span>
+<span id="cb17-10">DATABASE_NAME<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>cloud</span>
+<span id="cb17-11">SITE_TITLE<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'hyunghki blog'</span></span>
+<span id="cb17-12">ADMIN_NAME<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>admin</span>
+<span id="cb17-13">ADMIN_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>secret</span>
+<span id="cb17-14">ADMIN_EMAIL<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>admin<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">@</span>example.com</span>
+<span id="cb17-15">USER_NAME<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>user</span>
+<span id="cb17-16">USER_PASSWORD<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>secret</span>
+<span id="cb17-17">USER_EMAIL<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>user<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">@</span>example.com</span></code></pre></div>
+</div>
+<p>그후 make 명령어를 입력하면 자동으로 build가 진행됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://snipboard.io/me3Rqt.jpg" class="img-fluid figure-img"></p>
+<figcaption>명령어 실행 결과</figcaption>
+</figure>
+</div>
+<p>build가 완료되면 완료 메세지의 ip로 접속해줍니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://snipboard.io/Ae8iqR.jpg" class="img-fluid figure-img"></p>
+<figcaption>접속 페이지</figcaption>
+</figure>
+</div>
+<p>wordpress 접속 페이지가 잘 뜨는 것을 확인할 수 있습니다.</p>
 </section>
 <section id="결과" class="level2">
 <h2 class="anchored" data-anchor-id="결과">결과</h2>
@@ -611,7 +1693,7 @@ font-style: inherit;">"</span></span></code></pre></div>
   <category>ansible</category>
   <category>42 seoul</category>
   <guid>https://cryscham123.github.io/posts/03_resources/42_seoul/notes/6.html</guid>
-  <pubDate>Wed, 29 Jan 2025 12:01:42 GMT</pubDate>
+  <pubDate>Thu, 30 Jan 2025 06:17:59 GMT</pubDate>
 </item>
 <item>
   <title>cloud-1 개념 설명</title>
