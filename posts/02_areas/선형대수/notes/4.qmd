@@ -1,0 +1,159 @@
+---
+title: "벡터와 공간"
+date: 2025-01-30
+categories: ["선형 대수"]
+---
+
+![](/img/human-thumb.jpg){.post-thumbnail}
+
+## what is vector
+
+vector는 크기(magnitude)와 방향(direction)을 가지고 있고, 2, 3, 4 차원 너머를 수학적으로 표현할 수 있다.
+
+### vector의 수학적 표현
+
+vector는 ordered list인 tuple 형태로 표현할 수 있다.
+
+$$
+\vec{v} = 
+\begin{bmatrix}
+3 \\
+4
+\end{bmatrix} 
+$$
+
+domain과 dimension에 따라 vector는 다음과 같이 표현할 수 있다.
+
+$$
+\vec{v} ∈ R^2
+$$
+
+- 1차원: $R^1$
+- 2차원: $R^2$
+- 3차원: $R^3$
+- n차원: $R^n$
+
+## vector의 합
+
+vector의 합은 각 성분별로 더한 결과를 반환한다.
+
+### 기하학적 의미
+
+$$
+\begin{bmatrix}
+3 \\
+2
+\end{bmatrix} +
+\begin{bmatrix}
+-2 \\
+1
+\end{bmatrix}
+$$
+
+위의 수식을 좌표평면에 나타나면 다음과 같다.
+
+```{python}
+#| echo: false
+import numpy as np
+import matplotlib.pyplot as plt
+
+vector = np.array([3, 2])
+vector1 = np.array([3, 2])
+vector2 = np.array([-2, 1])
+vector3 = np.array([1, 3])
+
+plt.grid(True, linestyle='--', alpha=0.7)
+
+# 축 설정
+plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
+plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)
+
+# 벡터 그리기
+plt.quiver(0, 0, vector1[0], vector1[1], angles='xy', scale_units='xy', scale=1, color='red')
+plt.quiver(vector1[0], vector[1], vector2[0], vector2[1], angles='xy', scale_units='xy', scale=1, color='blue')
+plt.quiver(0, 0, vector3[0], vector3[1], angles='xy', scale_units='xy', scale=1, color='green')
+
+# 좌표 텍스트 추가
+plt.text(vector1[0]+0.1, vector1[1]+0.1, f'({vector1[0]}, {vector1[1]})')
+plt.text(vector1[0] + vector2[0]-0.7, vector1[1] + vector2[1]+0.1, f'({vector2[0]}, {vector2[1]})')
+plt.text(vector3[0]-0.8, vector3[1]-0.5, f'({vector3[0]}, {vector3[1]})')
+
+# 축 범위 설정
+plt.xlim(-4, 4)
+plt.ylim(-1, 4)
+plt.yticks(np.arange(-1, 5, 1))
+
+# 축 레이블
+plt.xlabel('x')
+plt.ylabel('y')
+
+plt.show()
+```
+
+끝점을 다 더한 좌표와 시작 점을 연결한 벡터인 `초록색 화살표`가 두 벡터의 합이 된다.
+
+## vector의 scalar 곱
+
+vector에 scalar, 즉 숫자 하나를 곱하면 무슨 일이 생길까?
+
+$$
+2 * \begin{bmatrix}
+2 \\
+1
+\end{bmatrix} =
+\begin{bmatrix}
+4 \\
+2
+\end{bmatrix}
+$$
+$$
+-2 * \begin{bmatrix}
+2 \\
+1
+\end{bmatrix} = 
+\begin{bmatrix}
+-4 \\
+-2
+\end{bmatrix}
+$$
+
+## vector의 차
+
+vector의 차는 각 성분별로 뺀 결과를 반환한다.
+
+기하학적으로는 두 벡터의 끝점을 연결한 벡터가 된다.
+
+$\vec{x} - \vec{y}$는 y에서 x를 연결한 벡터가 된다.
+
+$\vec{y} - \vec{x}$는 x에서 y를 연결한 벡터가 된다.
+
+## 단위 벡터
+
+$$
+\vec{v} = \begin{bmatrix}
+3 \\
+4
+\end{bmatrix}
+$$
+
+위의 벡터를 단위 벡터의 합으로 만들면 다음과 같다.
+
+$$
+\hat{i} = \begin{bmatrix}
+1 \\
+0
+\end{bmatrix}, 
+\hat{j} = \begin{bmatrix}
+0 \\
+1
+\end{bmatrix}
+$$
+
+$$
+\vec{v} = 3\hat{i} + 4\hat{j}
+$$
+
+::: {.callout-note appearance="simple"}
+Scalar 배를 한 기저 벡터끼리 더하면 모든 2차원 좌표를 표현할 수 있다.
+:::
+
