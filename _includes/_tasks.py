@@ -82,7 +82,7 @@ def generate_tasks_html(tasks, base_dir="posts"):
         name = task.get('name', '')
         directory = task.get('directory', '')
         href = task.get('link', '')
-        checked = 'checked' if task.get('status', '') == 'completed' else ''
+        checked = 'checked' if task.get('status', '') in ['completed', 'failed']  else ''
         checkbox_class = task.get('status', '')
         name_class = "clickable" if href != '' or directory != '' else "non-clickable"
         name_class += ' ' + task.get('status', '')

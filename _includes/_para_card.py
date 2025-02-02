@@ -37,7 +37,7 @@ def sort_post(posts):
     }
     posts.sort(key=lambda x: (
         status_priority.get(x.get('status', 'before-start'), 999),
-        x.get('end_date', '9999-12-31')  # end_date가 없는 경우 가장 마지막으로
+        str(x.get('end_date', '9999-12-31'))  # end_date가 없는 경우 가장 마지막으로
     ))
     return posts
 
