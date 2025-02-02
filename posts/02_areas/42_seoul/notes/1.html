@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ft_transcendence - github action – 김형훈의 학습 블로그</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../../../posts/02_areas/42_seoul/notes/2.html" rel="next">
+<link href="../../../../posts/02_areas/42_seoul/notes/0.html" rel="prev">
+<link href="../../../../favicon" rel="icon">
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GOOGLE_TAG"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+ 
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied'
+  });
+gtag('config', 'GOOGLE_TAG', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">김형훈의 학습 블로그</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../index.html"> 
+<span class="menu-text">PARA</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../all.html"> 
+<span class="menu-text">전체 게시글</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/certificate/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/1.html">ft_transcendence - github action</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Inboxes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/00_inboxes/notes/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">돈의 심리학 - 모건 하우절</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/00_inboxes/notes/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">인간 관계론 - 데일 카네기</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Projects</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/adp_필기/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ADP 필기 준비</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/bs_3_1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3학년 1학기 학부 정리</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../posts/01_projects/3_1_장학금_신청/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3학년 1학기 장학금 신청</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/3_1_장학금_신청/notes/1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">자기 소개서</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../posts/01_projects/adp_실기/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ADP 실기 준비</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/adp_실기/notes/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pandas data 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EDA와 시각화</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/adp_실기/notes/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">데이터 전처리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../posts/01_projects/OR_예습/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">OR 예습</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/OR_예습/notes/0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/OR_예습/notes/1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/OR_예습/notes/2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Integer Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/OR_예습/notes/3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Nonlinear Programming</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Areas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/certificate/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">자격증</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/bs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">산업공학 학부</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../posts/02_areas/blog/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Blog</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/blog/notes/0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PARA Blog 제작</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/blog/notes/1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Second Brain - 티아고 포르테</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../posts/02_areas/42_seoul/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">42 Seoul</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/42_seoul/notes/0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ft_printf</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/42_seoul/notes/1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">ft_transcendence - github action</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/42_seoul/notes/2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ft_transcendence - JWT</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/42_seoul/notes/3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ft_transcendence - block chain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/42_seoul/notes/5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">cloud-1 개념 설명</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/42_seoul/notes/6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">cloud-1 코드 설명</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../posts/02_areas/선형대수/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">선형대수 복습</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/선형대수/notes/0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">what is linear algebra</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/선형대수/notes/1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-기초(1)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/선형대수/notes/2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-기초(2)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/선형대수/notes/3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3-몰라</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/선형대수/notes/4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">벡터와 공간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/02_areas/선형대수/notes/5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">선형결합과 생성</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
+ <span class="menu-text">Resources</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/03_resources/problem_solve/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problem Solving</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false">
+ <span class="menu-text">Archives</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../posts/04_archives/bs_2_2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2학년 2학기 학부 정리</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
+ <span class="menu-text">Bs Database</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/01-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">An Overview of Database</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Relational Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/04-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Normalization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/04-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Modeling and the Entity-Relationship Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Administration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ASP.NET</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/work1.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">데이터베이스설계및활용 개인과제 #2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/work2.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4조 기말과제 제안서</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_database/work4.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">숭실대학교 학생식당 식자제 SCM 설계</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false">
+ <span class="menu-text">Bs Human</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/0_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Human Factors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/1_reaserch_method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Research Method in Human Factors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/2_human_information_processing_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Information Processing Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/3_sensory_system.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sensor System (Visual)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/4_Auditory_Haptic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auditory Haptic</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/5_signal_detction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Signal Detection Theory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/6_attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/7_display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/8_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_human/인간공학-보고서-초안.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">맥도날드 키오스크 UI 개선 보고서</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false">
+ <span class="menu-text">Bs Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_statistics/1-통계학의-개념.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률과 통계의 정의</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_statistics/2-확률변수와-분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률변수와 확률분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_statistics/3-확률변수의-기댓값.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률변수의 기댓값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_statistics/4-이산형 확률분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">이산형 확률분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_statistics/5-연속형-확률분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">연속형 확률분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_statistics/6-정규분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">정규 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_statistics/7-표본의-분포.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">표본의 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/04_archives/bs_2_2/notes/bs_statistics/8-central-limit-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">중심 극한 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">intro</a></li>
+  <li><a href="#프로젝트-및-구현-설명" id="toc-프로젝트-및-구현-설명" class="nav-link" data-scroll-target="#프로젝트-및-구현-설명">프로젝트 및 구현 설명</a>
+  <ul class="collapse">
+  <li><a href="#개요" id="toc-개요" class="nav-link" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#github-action-setting" id="toc-github-action-setting" class="nav-link" data-scroll-target="#github-action-setting">Github Action Setting</a></li>
+  </ul></li>
+  <li><a href="#outro" id="toc-outro" class="nav-link" data-scroll-target="#outro">outro</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/certificate/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/1.html">ft_transcendence - github action</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">ft_transcendence - github action</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">agile</div>
+    <div class="quarto-category">github action</div>
+    <div class="quarto-category">42 seoul</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">공개</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2025년 1월 17일</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">intro</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../img/42-course-6.png" class="img-fluid figure-img"></p>
+<figcaption>42 seoul 공통과정 6서클 과제</figcaption>
+</figure>
+</div>
+<p>42 Seoul 공통과정의 마지막 과제입니다. 이 프로젝트는 개발자가 선호하는 라이브러리와 프레임워크를 자유롭게 선택하여 구현할 수 있다는 점이 특징입니다.</p>
+<p>대형 협업 과제인 만큼, 과제에 명시되어있지 않지만 협업을 위한 툴도 공부해서 다양하게 적용해볼 수 있는 좋은 과제인것 같습니다. 저같은 경우에는 coursera, udemy 강의를 통해 <strong>agile</strong> 협업 방식과 <strong>github에서의 적용 방법</strong>에 대해 공부를 했고, 프로젝트 진행에 있어서 꽤 도움이 됐던걸로 기억합니다. 사실 프로젝트를 진행하다보니, agile 방식을 온전히 다 적용하기엔 적합하지 않다고 판단했지만, <strong>Kanban Board</strong>로 프로젝트를 관리하는 것 같은 부분은 꽤 유용하게 활용할 수 있었습니다.</p>
+</section>
+<section id="프로젝트-및-구현-설명" class="level2">
+<h2 class="anchored" data-anchor-id="프로젝트-및-구현-설명">프로젝트 및 구현 설명</h2>
+<section id="개요" class="level3">
+<h3 class="anchored" data-anchor-id="개요">개요</h3>
+<p><a href="https://cdn.intra.42.fr/pdf/pdf/140713/en.subject.pdf">과제 명세서</a></p>
+<p>해당 과제는 실시간 <a href="https://www.ponggame.org/">Pong 게임</a> 매칭 웹사이트를 만드는게 목표입니다. 저는 이번 프로젝트에서 <strong>github action 설정, User Management Backend 설계와 42 API를 이용한 OAuth 인증, JWT 구현, Game History를 Block Chain으로 저장</strong>하는 파트를 담당했습니다.</p>
+<p>참고한 자료는 다음과 같습니다:</p>
+<ul>
+<li><a href="https://www.coursera.org/learn/agile-project-management">Google Agile Project 관리</a></li>
+<li><a href="https://docs.github.com/ko/actions">Github Action Docs</a></li>
+<li><a href="https://cli.github.com/manual/">Github CLI Docs</a></li>
+<li><a href="https://www.udemy.com/course/python-django-the-practical-guide/?couponCode=KRLETSLEARNNOW">Django udemy 강좌</a></li>
+<li><a href="https://www.django-rest-framework.org/">Django Rest Framework Docs</a></li>
+<li><a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html">Django Simple JWT</a></li>
+<li><a href="https://mgyo.tistory.com/832">JWT Token 탈취 대응 시나리오</a></li>
+<li><a href="https://medium.com/@jose-luis-navarro/securing-our-microservices-through-authentication-and-authorization-with-jwt-refresh-tokens-and-f4439810fce7">micro service에서 JWT 활용 방법</a></li>
+<li><a href="https://puleugo.tistory.com/154">Refresh Token을 사용해야 하는 이유</a></li>
+<li><a href="https://www.hahwul.com/2020/01/18/samesite-lax/">Cookie에서의 same site 옵션</a></li>
+<li><a href="https://bitcoin.org/files/bitcoin-paper/bitcoin_ko.pdf">Bitcoin 백서</a></li>
+<li><a href="https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=KRLETSLEARNNOW">Solidity Udemy 강의</a></li>
+<li><a href="https://docs.soliditylang.org/en/latest/">Solidity Docs</a></li>
+<li><a href="https://youtube.com/playlist?list=PL7jH19IHhOLOJfXeVqjtiawzNQLxOgTdq&amp;si=k5TMs5VUF0Z1xIA2">nomad coder 블록체인 시리즈</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>이 포스팅에서는 <strong>github action setting, jwt, block chain</strong> 부분만 다루겠습니다.<br>
+전체 코드는 비공개 되어있는 상태입니다.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="github-action-setting" class="level3">
+<h3 class="anchored" data-anchor-id="github-action-setting">Github Action Setting</h3>
+<p>github를 이용해서 agile 방법론을 적용할 수 있도록 의도했고, <strong>자동화</strong>와 <strong>template</strong>을 이용해 통일성 있는 구조를 유지하려고 했습니다.</p>
+<p><strong>1. 회의를 통해 진행해야 하는 작업을 Kanban board에 정리한다.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-17-11-28-18.png" class="img-fluid figure-img"></p>
+<figcaption>Github Kanban Board</figcaption>
+</figure>
+</div>
+<p>각각의 column에는 다음과 같은 내용이 들어갑니다.</p>
+<ol type="1">
+<li><strong>Discussion</strong>: 논의가 필요한 작업. 개개인이 자유롭게 올릴 수 있습니다</li>
+<li><strong>Backlog</strong>: Discussion에 있는 내용 중 구현하기로 회의에서 정한 작업</li>
+<li><strong>Ready</strong>: Back log에 있는 작업 중 이번 Sprint에서 구현할 작업들</li>
+<li><strong>In Progress</strong>: Ready에 있는 작업 중 누군가가 작업중인 것</li>
+<li><strong>Done</strong>: master branch에 merge가 완료된 작업</li>
+</ol>
+<p>자세한 내용은 <a href="#meeting">meeting</a> 부분을 참고해 주세요.</p>
+<p>참고로 <strong>Disccusion</strong>에 작업을 올리는 방법은 <strong>template에 맞게 issue를 올리</strong>면 됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-19-51-40.png" class="img-fluid figure-img"></p>
+<figcaption>Discussion template</figcaption>
+</figure>
+</div>
+<p>아래와 같이 설정 파일을 만들어서 ‘.github/ISSUE_TEMPLATE/’ 폴더 안에 저장하면 issue create 시 자동으로 template이 뜨게 할 수 있습니다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">name:</span> New discussion</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">description:</span> new discussion</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">title:</span> <span class="st">"[DISCUSSION]"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">labels:</span> <span class="pp">[</span><span class="st">"enhancement"</span><span class="pp">]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">projects:</span> <span class="pp">[</span><span class="st">"org_name/5"</span><span class="pp">]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">body:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: markdown</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">attributes:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="ex">value:</span> <span class="kw">|</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">해당</span> 기능과 관련된 request가 이미 존재하는지 확인해주세요.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: textarea</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">id:</span> story</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">attributes:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="ex">label:</span> Story</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description:</span> 해당 기능에 대한 설명이나 필요한 배경을 작성해주세요.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="ex">placeholder:</span> 자유로운 양식으로 작성해주세요.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">validations:</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="ex">required:</span> true</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>2. Kanban board를 보고 개인이 능동적으로 고유 브랜치에 작업을 진행한다.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-17-11-29-41.png" class="img-fluid figure-img"></p>
+<figcaption>빨간 밑줄 부분을 설정해줍니다.</figcaption>
+</figure>
+</div>
+<p>Kanban board의 Ready section에 있는 작업을 클릭해서 들어간 후, <strong>assignees를 본인으로 선택해서 작업</strong>하면 됩니다. <strong>task completion criteria</strong>라는 내용이 보이는데, 이는 <strong>회의를 통해 결정</strong>하는 것으로, 나중에 작업이 완료되고 <strong>pull request 시, 평가자가 작업에 완성도에 대해 판단할 수 있는 기준</strong>으로 제공됩니다.</p>
+<p>자동화 코드는 아래와 같이 구현했습니다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">name:</span> Create branch</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">on:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">issues:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">types:</span> [ assigned ]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">pull_request:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">types:</span> [ opened, closed ]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">jobs:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">create_issue_branch_job:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">runs-on:</span> ubuntu-latest</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">steps:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Generate token</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">id:</span> generate_token</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">uses:</span> tibdex/github-app-token@v2</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">with:</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>          <span class="ex">app_id:</span> <span class="va">${</span><span class="er">{ secrets.APP_ID </span><span class="va">}</span>}</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>          <span class="ex">private_key:</span> <span class="va">${</span><span class="er">{ secrets.PRIVATE_KEY </span><span class="va">}</span>}</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="co"># gh 명령어를 이용해 project의 상태를 In progress로 수정해줍니다.</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Project in-progress</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="ex">if:</span> github.event.action == <span class="st">'assigned'</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="ex">run:</span> <span class="kw">|</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>          <span class="va">PROJECT_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">gh</span> project view 5 <span class="at">--owner</span> organization-for-practice <span class="at">--format</span><span class="op">=</span>json <span class="at">--jq</span> <span class="st">'.id'</span><span class="va">)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>          <span class="va">ITEM_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">gh</span> project item-list 5 <span class="at">--owner</span> organization-for-practice <span class="at">--format</span><span class="op">=</span>json <span class="at">--jq</span> <span class="st">".items[] | select(.content.number == </span><span class="va">${NUMBER}</span><span class="st">) | .id"</span><span class="va">)</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>          <span class="va">FIELD_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">gh</span> project field-list 5 <span class="at">--owner</span> organization-for-practice <span class="at">--format</span><span class="op">=</span>json <span class="at">--jq</span> <span class="st">'.fields[2].id'</span><span class="va">)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>          <span class="va">SINGLE_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">gh</span> project field-list 5 <span class="at">--owner</span> organization-for-practice <span class="at">--format</span><span class="op">=</span>json <span class="at">--jq</span> <span class="st">'.fields[2].options[] | select(.name == "In progress") | .id'</span><span class="va">)</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>          <span class="ex">gh</span> project item-edit <span class="at">--id</span> <span class="va">${ITEM_ID}</span> <span class="at">--field-id</span> <span class="va">${FIELD_ID}</span> <span class="at">--single-select-option-id</span> <span class="va">${SINGLE_ID}</span> <span class="at">--project-id</span> <span class="va">${PROJECT_ID}</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>          <span class="ex">GH_TOKEN:</span> <span class="va">${</span><span class="er">{ steps.generate_token.outputs.token </span><span class="va">}</span>}</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>          <span class="ex">NUMBER:</span> <span class="va">${</span><span class="er">{ github.event.issue.number </span><span class="va">}</span>}</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      <span class="co"># assign한 작업에 대한 branch를 새로 만들어줍니다.</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Create Issue Branch</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="ex">uses:</span> robvanderleek/create-issue-branch@main</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>          <span class="ex">GITHUB_TOKEN:</span> <span class="va">${</span><span class="er">{ steps.generate_token.outputs.token </span><span class="va">}</span>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>위의 코드는 assign한 작업을 Ready column에서 In progress column으로 옮겨주고, 자동으로 작업할 branch를 만들어줍니다.</p>
+<p>branch 자동 생성은 <a href="https://github.com/robvanderleek/create-issue-branch">이 workflow</a>를 사용하였고, 적용 시 아래와 같이 브랜치가 생성됩니다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoLinkIssue</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoCloseIssue</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">branchName</span><span class="kw">:</span><span class="at"> tiny</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">commentMessage</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  \"${branchName}\" branch 생성 완료.</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  해당 branch를 통해서 main에 pull request 올려주세요.</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">branches</span><span class="kw">:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">label</span><span class="kw">:</span><span class="at"> </span><span class="st">'task list'</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">prefix</span><span class="kw">:</span><span class="at"> feature/${issue.title[12,27],}/</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">copyIssueAssigneeToPR</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">label</span><span class="kw">:</span><span class="at"> </span><span class="st">'bug'</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">prefix</span><span class="kw">:</span><span class="at"> hot_fix/${issue.title[6,21],}/</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">copyIssueAssigneeToPR</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">label</span><span class="kw">:</span><span class="at"> </span><span class="st">'*'</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">skip</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>위의 config 파일을 작성해주면 아래와 같이 브랜치가 생성됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-17-11-30-26.png" class="img-fluid figure-img"></p>
+<figcaption>자동 생성된 branch</figcaption>
+</figure>
+</div>
+<p>이름도 자동으로 생성되게 해서 <strong>convention을 지켜야 한다는 부담을 줄여</strong>줬습니다.</p>
+<p><strong>3. 작업이 완료되면, 모든 조건을 충족하는지 확인한 후, master에 merge 한다.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-17-11-31-07.png" class="img-fluid figure-img"></p>
+<figcaption>pull request 화면</figcaption>
+</figure>
+</div>
+<p>작업이 완료됬다고 판단되면 위 화면과 같이 <strong>pull request를 생성</strong>하고, <strong>Reviewer를 설정</strong>해주면 됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-17-11-31-35.png" class="img-fluid figure-img"></p>
+<figcaption>task completion criteria</figcaption>
+</figure>
+</div>
+<p>그러면 이전에 설정했던 기준들이 자동으로 불러와지고, <strong>모든 항목에 체크가 완료</strong>되어야 <strong>merge를 할 수 있게 설정</strong>했습니다. 구현 코드는 아래와 같습니다.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">name:</span> Master merge rutine</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">on:</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">pull_request_target:</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">types:</span> [ opened, synchronize ]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">branches:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> master</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">env:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PR_NUM:</span> <span class="va">${</span><span class="er">{ github.event.pull_request.number </span><span class="va">}</span>}</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">GH_REPO:</span> <span class="va">${</span><span class="er">{ github.repository </span><span class="va">}</span>}</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ex">jobs:</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">get_checklist:</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">runs-on:</span> ubuntu-latest</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">if:</span> github.event.action == <span class="st">'opened'</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">steps:</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Generate token</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">id:</span> generate_token</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="ex">uses:</span> tibdex/github-app-token@v2</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="ex">with:</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>          <span class="ex">app_id:</span> <span class="va">${</span><span class="er">{ secrets.APP_ID </span><span class="va">}</span>}</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>          <span class="ex">private_key:</span> <span class="va">${</span><span class="er">{ secrets.PRIVATE_KEY </span><span class="va">}</span>}</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Get issue</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="ex">id:</span> issue_num</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>          <span class="ex">BRANCH:</span> <span class="va">${</span><span class="er">{ github.event.pull_request.head.ref </span><span class="va">}</span>}</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="ex">run:</span> <span class="kw">|</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>          <span class="bu">echo</span> <span class="va">$BRANCH</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">'feature\/.*\/i[0-9]\+'</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="va">$BRANCH</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">'hot_fix\/.*\/i[0-9]\+'</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>          <span class="va">TMP</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="va">$BRANCH</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">'i[0-9]\+'</span><span class="va">)</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>          <span class="bu">echo</span> <span class="st">"NUMBER=</span><span class="va">${TMP</span><span class="op">#</span>i<span class="va">}</span><span class="st">"</span> <span class="op">&gt;&gt;</span> <span class="va">$GITHUB_OUTPUT</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Get issue body</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="ex">id:</span> issue_body</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>          <span class="ex">GH_TOKEN:</span> <span class="va">${</span><span class="er">{ steps.generate_token.outputs.token </span><span class="va">}</span>}</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>          <span class="ex">NUM:</span> <span class="va">${</span><span class="er">{ steps.issue_num.outputs.number </span><span class="va">}</span>}</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="ex">run:</span> <span class="kw">|</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>          <span class="bu">echo</span> <span class="st">"CONTENTS&lt;&lt;EOF"</span> <span class="op">&gt;&gt;</span> <span class="va">$GITHUB_OUTPUT</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>          <span class="ex">gh</span> issue view <span class="va">${NUM}</span> <span class="at">--json</span> body <span class="at">--jq</span> <span class="st">'.body'</span> <span class="op">&gt;&gt;</span> <span class="va">$GITHUB_OUTPUT</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>          <span class="bu">echo</span> <span class="st">"EOF"</span> <span class="op">&gt;&gt;</span> <span class="va">$GITHUB_OUTPUT</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>      <span class="ex">-</span> name: Update checklist</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        <span class="ex">run:</span> <span class="kw">|</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>          <span class="ex">gh</span> pr comment <span class="va">$PR_NUM</span> <span class="at">--body</span> <span class="st">"</span><span class="va">${BODY}</span><span class="st">"</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="ex">env:</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>          <span class="ex">GH_TOKEN:</span> <span class="va">${</span><span class="er">{ steps.generate_token.outputs.token </span><span class="va">}</span>}</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>          <span class="ex">BODY:</span> <span class="st">"</span><span class="va">${</span><span class="er">{ steps.issue_body.outputs.contents </span><span class="va">}</span><span class="st">}"</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>merge가 완료된 branch</strong>는 <strong>자동으로 삭제</strong>가 되도록 설정을 해주었습니다.</p>
+<p>이제 아래는 실제 <strong>프로젝트를 진행할 때 만들었던 rule</strong>들입니다.</p>
+<section id="work-flow" class="level4">
+<h4 class="anchored" data-anchor-id="work-flow"><strong>1. work flow</strong></h4>
+<p><strong>github flow</strong>로 진행됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-01-16-20-11-33.png" class="img-fluid figure-img"></p>
+<figcaption>github flow</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li>매 작업은 master branch의 HEAD를 기반으로 이루어집니다.<br>
+pr을 올리지 않는 개인 작업용 <strong>local branch는 자유롭게 생성</strong>해주세요.</li>
+<li>master에 직접적인 push는 관리자를 제외하고는 불가능합니다.</li>
+<li>master에 대한 merge는 squash merge로 진행됩니다.</li>
+<li>그 외의 merge는 rebase로 진행해주세요.</li>
+</ol>
+</section>
+<section id="work" class="level4">
+<h4 class="anchored" data-anchor-id="work"><strong>2. work</strong></h4>
+<ol type="1">
+<li>kanban board의 'Ready' 섹션에서 하나를 정해서 새로운 기능에 대한 작업을 진행해주세요.<br>
+선택한 작업은 assignees에 자신의 팀원을 등록 후, Start Date를 해당 날짜로 설정해주세요.<br>
+assignees 등록이 완료되면 자동으로 target branch가 생성됩니다.<br>
+해당 branch에 팀원들이 필요한 기능들을 자유로운 방식으로 구현한 후, master branch에 merge 해주세요.<br>
+단, 해당 branch에 대한 merge는 rebase로 진행해주세요.</li>
+<li>hot_fix issue나, new feature request issue는 discussion의 필요성이 있을 경우에 등록해주세요.</li>
+<li>작업 중, 현재 작업하는 범위 외에서 추가적인 기능이 필요할 경우 관련 issue에 comment를 남기거나, reopen 해주세요.</li>
+</ol>
+</section>
+<section id="commit-message-convention" class="level4">
+<h4 class="anchored" data-anchor-id="commit-message-convention"><strong>3. commit message convention</strong></h4>
+<p>아래의 명령어를 입력해주세요</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config commit.template .github/COMMIT_MESSAGE_TEMPLATE</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>이후, -m 옵션 없이 ’git commit’으로 message를 입력해주세요.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>COMMIT_MESSAGE_TEMPLATE</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="COMMIT_MESSAGE_TEMPLATE"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># commit message template</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;Title&gt; 작성</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;빈 줄&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;body&gt; 작성</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;빈 줄&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ▼ &lt;footer&gt; 작성</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># About Convention</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   &lt;Title&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 필수로 입력해주세요</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 형식: &lt;type&gt;: &lt;short summary&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#       &lt;type&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#           - config: 설정 관련 파일 작성 또는 변경</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#           - docs: 문서 변경사항</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#           - feat: 새로운 기능</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#           - fix: 버그 수정</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#           - refactor: 기능 추가나 버그 수정이 아닌 변경 사항</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#           - remove: 코드나 파일 제거</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#           - style: 스타일 작성 또는 수정</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#           - test: 누락된 테스트 추가 또는 기존 테스트 수정</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#           - core: 기능 구현 외 시스템 관련 작업</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#       &lt;short summary&gt;</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#           - 변경 사항에 대한 간단한 설명</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#           - 첫글자 소문자, 현재 시제, 명령문으로 마지막에 .(마침표) 없이 작성</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   &lt;body&gt;</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 선택적으로 입력 해주세요</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 현재 시제, 명령문으로 작성</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 변경 사항의 동기(왜)를 설명</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 변경 효과를 설명하기 위해 이전 동작과 현재 동작의 비교를 포함할 수 있음</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#   &lt;footer&gt;</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 선택적으로 입력 해주세요</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 해당 commit과 관련된 task의 issue 번호들을 적어주세요</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#       - 'bug'나 'task list' label이 붙은 issue는 제외해주세요</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#       - ex) closes #&lt;issue 번호&gt; closes #&lt;issue 번호&gt; ...</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>commit message template은 <a href="https://www.conventionalcommits.org/en/v1.0.0/">이 사이트</a>를 참고해서 만들었습니다.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="pull-request" class="level4">
+<h4 class="anchored" data-anchor-id="pull-request"><strong>4. pull request</strong></h4>
+<ol type="1">
+<li>pull request는 <strong>500줄의 코드</strong>를 넘어가지 않게 작성 바랍니다.</li>
+<li>모든 check list를 통과한 request만 master에 merge 가능합니다.</li>
+<li>reviewers에는 해당 작업과 관련된 domain의 팀원을 선택해주세요. 최소 1명 이상의 동료에게 평가를 받은 request만 merge 가능합니다.</li>
+</ol>
+</section>
+<section id="meeting" class="level4">
+<h4 class="anchored" data-anchor-id="meeting"><strong>5. meeting</strong></h4>
+<ul>
+<li><p>daily meeting</p>
+<ul>
+<li><p>매일 정해진 시간에 팀원들은 각각 다음과 같은 사안에 대해 논의합니다.</p>
+<ol type="1">
+<li>개인이 어제 작업한 내용</li>
+<li>개인이 오늘 작업할 내용</li>
+<li>개인이 현재 도움이 필요한 내용</li>
+</ol></li>
+<li><p>이후, 새로운 내용이 추가된 ('Disccusion' 섹션에 있는) issue 중 다음과 같은 내용에 대해 논의합니다.</p>
+<ol type="1">
+<li>해당 issue가 유효한가</li>
+<li>추가적으로 필요하거나 필요 없는 내용</li>
+<li>해당 issue의 priority (매우 급함 / 급함 / 안 급함)</li>
+<li>해당 issue의 estimate (작업하는데 필요한 노력의 정량적인 수치)</li>
+</ol></li>
+<li><p>추가적으로, project의 'Back log' 항목에서 'Ready' 항목으로 추가해야 할 작업에 대해 논의하거나 'Ready' 항목에서 'Back log' 항목으로 제외할 작업에 대해 논의할 수 있습니다.</p></li>
+</ul></li>
+<li><p>sprint planning / retrospective</p>
+<ul>
+<li>2주에 한번 진행.</li>
+<li>이전 sprint에 대한 평가와 이후 sprint를 위한 계획을 세웁니다.<br>
+</li>
+<li>planning
+<ul>
+<li>Project의 'Back log' 항목 중 본격적으로 작업을 진행할 항목을 정합니다.</li>
+<li>daily meeting 시간을 조정할 수 있습니다.</li>
+</ul></li>
+<li>retrospective
+<ul>
+<li>이전 sprint의 문제점에 대해 서로 의논해봅니다.</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>프로젝트를 하다보니, 생각보다 진행 속도가 빨라서 2주에 한번 진행하는 sprint는 유명무실해져버렸습니다. 실제로는 daily meeting만 진행을 했습니다.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="outro" class="level2">
+<h2 class="anchored" data-anchor-id="outro">outro</h2>
+<p>내용이 너무 길어져서 2편에 계속 포스팅 하겠습니다.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/cryscham123\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="cryscham123/cryscham123.github.io" data-repo-id="R_kgDONGE9Rw" data-category="Announcements" data-category-id="DIC_kwDONGE9R84CjtIQ" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="light">
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../../posts/02_areas/42_seoul/notes/0.html" class="pagination-link" aria-label="ft_printf">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">ft_printf</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../../posts/02_areas/42_seoul/notes/2.html" class="pagination-link" aria-label="ft_transcendence - JWT">
+        <span class="nav-page-text">ft_transcendence - JWT</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2024 김형훈</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
