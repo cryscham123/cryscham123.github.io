@@ -15,29 +15,301 @@
 <link>https://cryscham123.github.io/all.html</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Tue, 04 Feb 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 07 Feb 2025 15:00:00 GMT</lastBuildDate>
 <item>
-  <title>성적 장학금</title>
-  <link>https://cryscham123.github.io/posts/01_projects/3_1_장학금_신청/notes/2.html</link>
+  <title>3 - 분석 마스터 플랜</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/06.html</link>
   <description><![CDATA[ 
 
 
 
 
 <p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<p><img src="https://cryscham123.github.io/posts/01_projects/3_1_장학금_신청/notes/img/2025-02-05-20-38-17.png" class="img-fluid"></p>
-<p>오~예~</p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/06.html</guid>
+  <pubDate>Fri, 07 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>3 - 데이터 분석 기획의 이해</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/05.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/05.html</guid>
+  <pubDate>Fri, 07 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>2 - 데이터 처리 프로세스</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/03.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="etl" class="level2">
+<h2 class="anchored" data-anchor-id="etl">ETL</h2>
+<section id="etl-개요" class="level3">
+<h3 class="anchored" data-anchor-id="etl-개요">1. ETL 개요</h3>
+<ul>
+<li><code>ETL(Extract, Transformation, Load)</code>: 데이터 이동 및 변환 절차</li>
+<li><code>batch ETL</code>, <code>real-time ETL</code>으로 나뉨</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-14-25-19.png" class="img-fluid figure-img"></p>
+<figcaption>ETL 작업 단계</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li><code>Interface</code>: 다양한 소스로부터 데이터 휙득을 위한 인터페이스(OLEDB, ODBC, FTP)</li>
+<li><code>Staging</code>: 정기적으로 데이터 원천으로 부터 저장. 아직은 정규화 x</li>
+<li><code>Profiling</code>: staging table의 데이터 특성을 식별하고, 품질 측정</li>
+<li><code>Cleansing</code>: profiling된 데이터를 보정</li>
+<li><code>Integration</code>: 데이터 충돌을 해소하고, 데이터를 통합. 아마 여기서 정규화가 이루어질듯(왜 책에 설명 똑바로 안해놓지)</li>
+<li><code>Export</code>: 운영보고서 생성, 데이터웨어하우스 / 데이터마트에 적재하기 위한 최적화(denormalization) 진행</li>
+</ol>
+</section>
+<section id="ods-구성" class="level3">
+<h3 class="anchored" data-anchor-id="ods-구성">2. ODS 구성</h3>
+<ul>
+<li>통합된 데이터를 저정하는 중간 저장소</li>
+<li><code>실시간</code>, <code>거의 실시간</code>으로 데이터 적재</li>
+</ul>
+</section>
+<section id="데이터-웨어하우스" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-웨어하우스">3. 데이터 웨어하우스</h3>
+<ul>
+<li>ODS를 통해 정제 / 통합된 데이터를 분석 및 보고서 생성을 위해 저장</li>
+</ul>
+<p><strong>특징</strong></p>
+<ul>
+<li><code>주제중심성</code></li>
+<li><code>영속성/비휘발성</code></li>
+<li><code>통합성</code></li>
+<li><code>시계열성</code></li>
+</ul>
+<p><strong>모델링 기법</strong></p>
+<ul>
+<li><code>스타 스키마(조인 스키마)</code>
+<ul>
+<li>제 3정규형의 fact 테이블과 제 2정규형의 차원 테이블로 구성</li>
+<li>복잡성이 낮지만, 데이터 무결성이 떨어짐</li>
+</ul></li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-14-42-58.png" class="img-fluid"></p>
+<ul>
+<li><code>스노우플레이크 스키마</code>
+<ul>
+<li>스타 스키마의 차원 테이블을 제 3정규형으로 정규화한 상태</li>
+<li>데이터 무결성이 높지만, 복잡성이 높음</li>
+</ul></li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-14-44-11.png" class="img-fluid"></p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>제 1 정규형: 반복되는 record나 다치 attribute를 포함하지 않음 제 2 정규형: 부분 종속성(primary key의 일부가 다른 일부를 종속함)이 없음 제 3 정규형: 이행적 종속성(primary key가 아닌 attribute의 종속성)이 없음</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ods-vs-dw" class="level3">
+<h3 class="anchored" data-anchor-id="ods-vs-dw">4. ODS vs DW</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-15-16-42.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="cdcchange-data-capture" class="level2">
+<h2 class="anchored" data-anchor-id="cdcchange-data-capture">CDC(change data capture)</h2>
+<section id="cdc-개념-및-특징" class="level3">
+<h3 class="anchored" data-anchor-id="cdc-개념-및-특징">1. CDC 개념 및 특징</h3>
+<ul>
+<li>데이터 변경을 감지하고, 변경된 데이터를 추출하는 기술</li>
+<li>하드웨어 계층부터 어플리케이션 계층까지 다양한 수준에서 적용 가능</li>
+</ul>
+</section>
+<section id="cdc-구현-기법" class="level3">
+<h3 class="anchored" data-anchor-id="cdc-구현-기법">2. CDC 구현 기법</h3>
+<ol type="1">
+<li><code>Time Stamp on Rows</code></li>
+<li><code>Version Numbers on Rows</code>: 참조테이블을 같이 사용하는게 일반적이라고 한다.</li>
+<li><code>Status on Rows</code>: time stamp, version number 보완 용도로, 사람이 레코드 반영 여부를 직접 판단할 수 있게 적용할 수 있음</li>
+<li><code>Time/Version/Status on Rows</code></li>
+<li><code>Triggers on Tables</code>: message queue로 변경 발생시 subscribe 된 대상에 publish하는 방식. 시스템 관리 복잡도가 높아짐</li>
+<li><code>Event Programming</code>: 어플리케이션에 데이터 변경 식별 기능을 추가</li>
+<li><code>Log Scanner on Database</code>: 데이터 스키마 변경 불필요, 어플리케이션 영향 최소화, 지연시간 최소화</li>
+</ol>
+</section>
+<section id="cdc-구현-방식" class="level3">
+<h3 class="anchored" data-anchor-id="cdc-구현-방식">3. CDC 구현 방식</h3>
+<ul>
+<li><code>Push</code>: 데이터 원천에서 변경 식별(agent)</li>
+<li><code>Pull</code>: 대상 시스템에서 원천을 주기적으로 모니터링</li>
+</ul>
+</section>
+</section>
+<section id="eai" class="level2">
+<h2 class="anchored" data-anchor-id="eai">EAI</h2>
+<section id="eai의-개념-및-특징" class="level3">
+<h3 class="anchored" data-anchor-id="eai의-개념-및-특징">1. EAI의 개념 및 특징</h3>
+<ul>
+<li>기업 내 혹은 기업 간 정보시스템을 연계하여 동기화.</li>
+<li>ETL은 <code>batch 처리</code> 중심, EAI는 <code>실시간 혹은 근접 실시간 처리</code> 중심</li>
+</ul>
+</section>
+<section id="데이터-연계-방식" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-연계-방식">2. 데이터 연계 방식</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-16-02-51.png" class="img-fluid"></p>
+<ul>
+<li>ETL/CDC는 운영 데이터와 분석을 위한 데이터베이스가 <code>구분</code>되지만, EAI는 <code>그냥 통합</code></li>
+</ul>
+</section>
+<section id="eai-구성요소" class="level3">
+<h3 class="anchored" data-anchor-id="eai-구성요소">3. EAI 구성요소</h3>
+<ul>
+<li><code>Adapter</code>: 시스템 간 데이터 변환</li>
+<li><code>Broker</code>: 데이터 전송</li>
+<li><code>Bus</code>: 데이터 전송 경로 설정</li>
+<li><code>Transformer</code>: 데이터 형식 변환</li>
+</ul>
+</section>
+<section id="eai-구현-유형" class="level3">
+<h3 class="anchored" data-anchor-id="eai-구현-유형">4. EAI 구현 유형</h3>
+<ol type="1">
+<li><code>Mediation</code>: Publish/Subscribe 방식</li>
+<li><code>Federaion</code>: Request/Reply 방식</li>
+</ol>
+</section>
+<section id="eai-활용-효과" class="level3">
+<h3 class="anchored" data-anchor-id="eai-활용-효과">5. EAI 활용 효과</h3>
+<ul>
+<li>협력사, 파트너, 고객과의 상호 협력 프로세스 연계</li>
+<li>그룹 및 지주 회사 계열사들 간 상호 관련 데이터 동기화 등을 위한 데이터 표준화 기반 제공</li>
+</ul>
+</section>
+<section id="eai-vs-esb" class="level3">
+<h3 class="anchored" data-anchor-id="eai-vs-esb">6. EAI vs ESB</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-16-13-57.png" class="img-fluid"></p>
+<p><a href="https://bcho.tistory.com/1292">추가적인 자료</a></p>
+</section>
+</section>
+<section id="데이터-통합-및-연계-기법" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-통합-및-연계-기법">데이터 통합 및 연계 기법</h2>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-16-32-24.png" class="img-fluid"></p>
+</section>
+<section id="대용량의-비정형-데이터-처리-방법" class="level2">
+<h2 class="anchored" data-anchor-id="대용량의-비정형-데이터-처리-방법">대용량의 비정형 데이터 처리 방법</h2>
+<section id="대규모-분산-병렬-처리" class="level3">
+<h3 class="anchored" data-anchor-id="대규모-분산-병렬-처리">2. 대규모 분산 병렬 처리</h3>
+</section>
+<section id="데이터-연동" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-연동">3. 데이터 연동</h3>
+</section>
+<section id="데이터-질의-기술" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-질의-기술">4. 데이터 질의 기술</h3>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/03.html</guid>
+  <pubDate>Fri, 07 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>2 - 데이터 처리 기술</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/04.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="분산-데이터-저장-기술" class="level2">
+<h2 class="anchored" data-anchor-id="분산-데이터-저장-기술">분산 데이터 저장 기술</h2>
+<section id="분산-파일-시스템" class="level3">
+<h3 class="anchored" data-anchor-id="분산-파일-시스템">1. 분산 파일 시스템</h3>
+</section>
+<section id="데이터베이스-클러스터" class="level3">
+<h3 class="anchored" data-anchor-id="데이터베이스-클러스터">2. 데이터베이스 클러스터</h3>
+</section>
+<section id="nosql" class="level3">
+<h3 class="anchored" data-anchor-id="nosql">3. NoSQL</h3>
+</section>
+</section>
+<section id="분산-컴퓨팅-기술" class="level2">
+<h2 class="anchored" data-anchor-id="분산-컴퓨팅-기술">분산 컴퓨팅 기술</h2>
+<section id="mapreduce" class="level3">
+<h3 class="anchored" data-anchor-id="mapreduce">1. MapReduce</h3>
+</section>
+<section id="병렬-쿼리-시스템" class="level3">
+<h3 class="anchored" data-anchor-id="병렬-쿼리-시스템">2. 병렬 쿼리 시스템</h3>
+</section>
+<section id="sql-on-hadoop" class="level3">
+<h3 class="anchored" data-anchor-id="sql-on-hadoop">3. SQL on Hadoop</h3>
+</section>
+</section>
+<section id="클라우드-인프라-기술" class="level2">
+<h2 class="anchored" data-anchor-id="클라우드-인프라-기술">클라우드 인프라 기술</h2>
+<section id="클라우드-컴퓨팅" class="level3">
+<h3 class="anchored" data-anchor-id="클라우드-컴퓨팅">1. 클라우드 컴퓨팅</h3>
+</section>
+<section id="cpu-가상화" class="level3">
+<h3 class="anchored" data-anchor-id="cpu-가상화">2. CPU 가상화</h3>
+</section>
+<section id="메모리-가상화" class="level3">
+<h3 class="anchored" data-anchor-id="메모리-가상화">3. 메모리 가상화</h3>
+</section>
+<section id="io-가상화" class="level3">
+<h3 class="anchored" data-anchor-id="io-가상화">4. I/O 가상화</h3>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/04.html</guid>
+  <pubDate>Fri, 07 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>성적 장학금</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/scholarships/2.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/scholarships/img/2025-02-05-20-38-17.png" class="img-fluid"></p>
+<p>오~예~ (남은 등록금 300만원을 대출 받으며)</p>
 
 
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>장학금</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/3_1_장학금_신청/notes/2.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/scholarships/2.html</guid>
   <pubDate>Tue, 04 Feb 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>통계 기초</title>
-  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/01.html</link>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/통계/01.html</link>
   <description><![CDATA[ 
 
 
@@ -98,12 +370,12 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>통계</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/01.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/통계/01.html</guid>
   <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>통계 기초</title>
-  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/02.html</link>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/통계/02.html</link>
   <description><![CDATA[ 
 
 
@@ -120,25 +392,149 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>통계</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/02.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/통계/02.html</guid>
   <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>1 - 데이터 이해</title>
-  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/00.html</link>
+  <title>1 - 데이터의 가치와 미래</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/01.html</link>
   <description><![CDATA[ 
 
 
 
 
 <p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="데이터의-이해" class="level2">
-<h2 class="anchored" data-anchor-id="데이터의-이해">데이터의 이해</h2>
-<section id="데이터와-정보" class="level3">
-<h3 class="anchored" data-anchor-id="데이터와-정보">데이터와 정보</h3>
-<p><strong>1. 데이터</strong></p>
+<section id="빅데이터의-이해" class="level2">
+<h2 class="anchored" data-anchor-id="빅데이터의-이해">빅데이터의 이해</h2>
+<section id="빅데이터의-정의" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터의-정의">1. 빅데이터의 정의</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-12-15-57.png" class="img-fluid"></p>
+<ul>
+<li>좁은 범위
+<ul>
+<li>데이터 자체의 특성에 초점을 맞춘 정의</li>
+<li><code>3V(다양성, 속도, 규모)</code>를 강조</li>
+</ul></li>
+<li>중간 범위
+<ul>
+<li>데이터 자체뿐 아니라 처리, 분석 방법도 포함하는 정의</li>
+</ul></li>
+<li>넓은 관점
+<ul>
+<li>인재, 조직 변화까지 포함한 정의</li>
+</ul></li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-12-16-09.png" class="img-fluid"></p>
+<p>∴ 기존 방식으로는 얻을 수 없는 통찰 및 가치 창출</p>
+</section>
+<section id="출현-배경과-변화" class="level3">
+<h3 class="anchored" data-anchor-id="출현-배경과-변화">2. 출현 배경과 변화</h3>
+<ol type="1">
+<li>산업계: 고객 데이터가 축적되며 새로운 가치 활용</li>
+<li>학계: 거대 데이터 활용 분야가 늘어나며 통계 도구들이 발전</li>
+<li>기술발전: 관련기술의 발전</li>
+</ol>
+</section>
+<section id="빅데이터의-기능" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터의-기능">3. 빅데이터의 기능</h3>
+<ol type="1">
+<li><code>산업혁명의 석탄, 철</code>: 산업 전반에 혁명적 변화를 가져옴</li>
+<li><code>21세기의 원유</code>: 생산성을 향상시키고, 기존에 없던 새로운 범주의 산업을 만들어낼 것으로 전망</li>
+<li><code>렌즈</code>: 데이터가 산업에 영향을 미침</li>
+<li><code>플랫폼</code></li>
+</ol>
+</section>
+<section id="빅데이터가-만들어-내는-본질적인-변화" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터가-만들어-내는-본질적인-변화">4. 빅데이터가 만들어 내는 본질적인 변화</h3>
+<ol type="1">
+<li><code>사전처리 → 사후처리</code></li>
+<li><code>표본조사 → 전수조사</code></li>
+<li><code>질 → 양</code></li>
+<li><code>인과관계 → 상관관계</code></li>
+</ol>
+</section>
+</section>
+<section id="빅데이터의-가치와-영향" class="level2">
+<h2 class="anchored" data-anchor-id="빅데이터의-가치와-영향">빅데이터의 가치와 영향</h2>
+<section id="빅데이터의-가치" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터의-가치">1. 빅데이터의 가치</h3>
+<p>빅데이터는 아래와 같은 이유로 가치 선정이 어렵다.</p>
+<ul>
+<li>데이터 활용방식: 데이터를 언제 어디서 누가 사용할지 미리 예측하기 어려움</li>
+<li>새로운 가치 창출: 기존에 없던 가치를 창출하기 때문에 가치를 예측하기 어려움</li>
+<li>분석 기술 발전: 현재 가치가 없더라도, 추후 기술이 발전하면 가치가 생길 수 있음</li>
+</ul>
+</section>
+<section id="빅데이터의-영향" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터의-영향">2. 빅데이터의 영향</h3>
+<p>빅데이터는 다양한 주체(기업, 정부, 개인)에 영향을 미친다.</p>
+</section>
+</section>
+<section id="비즈니스-모델" class="level2">
+<h2 class="anchored" data-anchor-id="비즈니스-모델">비즈니스 모델</h2>
+<section id="빅데이터-활용-사례" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터-활용-사례">1. 빅데이터 활용 사례</h3>
+<p>여러가지 활용 사례가 있다.</p>
+</section>
+<section id="빅데이터-활용-기본-테크닉" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터-활용-기본-테크닉">2. 빅데이터 활용 기본 테크닉</h3>
+<ul>
+<li><code>연관규칙학습</code>: 범주형 데이터의 변인들간의 규칙을 발견 (ex. 장바구니 분석)</li>
+<li><code>유형(군집)분석</code>: 데이터를 분류하거나 군집화. 비지도 학습 (not 분류분석)</li>
+<li><code>유전자 알고리즘</code>: 최적해를 찾는 알고리즘</li>
+<li><code>기계학습</code>: 훈련한 데이터로 예측</li>
+<li><code>회귀분석</code>: 연속형 데이터의 독립변수와 종속변수의 관계를 수학적으로 모델링해서 예측</li>
+<li><code>감정분석</code>: 비정형 데이터 분석</li>
+<li><code>소셜네트워크분석(사회관계망분석)</code>: 비정형 데이터 분석</li>
+</ul>
+</section>
+</section>
+<section id="위기-요인과-통제-방안" class="level2">
+<h2 class="anchored" data-anchor-id="위기-요인과-통제-방안">위기 요인과 통제 방안</h2>
+<section id="빅데이터-시대의-위기-요인과-통제-방안" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터-시대의-위기-요인과-통제-방안">1. 빅데이터 시대의 위기 요인과 통제 방안</h3>
+<ul>
+<li><code>사생활 침해</code>: 동의에서 책임으로</li>
+<li><code>책임 원칙 훼손</code>: 결과 기반 책임 원칙 고수</li>
+<li><code>데이터 오용</code>: 알고리즘 접근 허용, <code>알고리즈미스트</code></li>
+</ul>
+</section>
+</section>
+<section id="미래의-빅데이터" class="level2">
+<h2 class="anchored" data-anchor-id="미래의-빅데이터">미래의 빅데이터</h2>
+<section id="빅데이터-활용의-3요소" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터-활용의-3요소">1. 빅데이터 활용의 3요소</h3>
+<ul>
+<li><code>데이터</code>: 모든것의 데이터화</li>
+<li><code>기술</code>: 인공지능</li>
+<li><code>인력</code>: 데이터 사이언티스트, 알고리즈미스트</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/01.html</guid>
+  <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>1 - 데이터 이해</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="데이터와-정보" class="level2">
+<h2 class="anchored" data-anchor-id="데이터와-정보">데이터와 정보</h2>
+<section id="데이터" class="level3">
+<h3 class="anchored" data-anchor-id="데이터">1. 데이터</h3>
 <ul>
 <li><code>객관적 사실</code>을 나타내는 <code>존재적 특성</code>과, <code>추론 예측 전망 추정을 위한 근거</code>가 되는 <code>당위적 특성</code>을 모두 포함하는 개념</li>
+<li>단위: <code>바이트(byte)</code>, <code>킬로바이트(KB)</code>, <code>메가바이트(MB)</code>, <code>기가바이트(GB)</code>, <code>테라바이트(TB)</code>, <code>페타바이트(PB)</code>, <code>엑사바이트(EB)</code>, <code>제타바이트(ZB)</code>, <code>요타바이트(YB)</code></li>
 <li>유형:
 <ul>
 <li><code>정성적 데이터</code>: 비정형 데이터, 주관적 내용, 통계분석이 어려움</li>
@@ -146,6 +542,20 @@
 </ul></li>
 <li>지식 경영의 핵심 이슈인 <code>암묵지</code>와 <code>형식지</code>를 연결하는 역할을 함</li>
 </ul>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<ul>
+<li><code>정형</code> 데이터: 표 형태로 정리된 데이터</li>
+<li><code>반정형</code> 데이터: HTML, XML, JSON 등의 형태(스키마, 메타데이터)가 있고, 연산이 불가능한 데이터</li>
+<li><code>비정형</code> 데이터: 형태가 없고, 연산이 불가능한 데이터</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -168,7 +578,9 @@
 </div>
 </div>
 </div>
-<p><strong>2. 데이터와 정보의 관계</strong></p>
+</section>
+<section id="데이터와-정보의-관계" class="level3">
+<h3 class="anchored" data-anchor-id="데이터와-정보의-관계">2. 데이터와 정보의 관계</h3>
 <ul>
 <li><p><code>데이터(data)</code>: 그 자체로는 의미가 중요하지 않은 객관적인 사실</p>
 <p>ex) A마트는 100원, B마트는 200원에 휴지를 판다.</p></li>
@@ -181,16 +593,20 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-11-19-56.png" class="img-fluid figure-img"></p>
 <figcaption>DIKW 피라미드</figcaption>
 </figure>
 </div>
 </section>
-<section id="데이터베이스-정의와-특징" class="level3">
-<h3 class="anchored" data-anchor-id="데이터베이스-정의와-특징">데이터베이스 정의와 특징</h3>
-<p><strong>1. 데이터베이스의 정의</strong></p>
+</section>
+<section id="데이터베이스-정의와-특징" class="level2">
+<h2 class="anchored" data-anchor-id="데이터베이스-정의와-특징">데이터베이스 정의와 특징</h2>
+<section id="데이터베이스의-정의" class="level3">
+<h3 class="anchored" data-anchor-id="데이터베이스의-정의">1. 데이터베이스의 정의</h3>
 <p>기존에는 정형 데이터 관리의 의미로 사용되다가, 빅데이터의 출현으로 비정형 데이터까지 포함하는 개념으로 확장됨</p>
-<p><strong>2. 데이터베이스의 일반적인 특징</strong></p>
+</section>
+<section id="데이터베이스의-일반적인-특징" class="level3">
+<h3 class="anchored" data-anchor-id="데이터베이스의-일반적인-특징">2. 데이터베이스의 일반적인 특징</h3>
 <ol type="1">
 <li><code>통합된 데이터</code>: 동일한 내용의 데이터가 중복되어 있지 않다.</li>
 <li><code>저장된 데이터</code></li>
@@ -198,37 +614,41 @@
 <li><code>변화되는 데이터</code>: 데이터베이스에는 항상 현재의 정확한 데이터를 유지한다.</li>
 </ol>
 </section>
-<section id="데이터베이스의-활용" class="level3">
-<h3 class="anchored" data-anchor-id="데이터베이스의-활용">데이터베이스의 활용</h3>
-<p><strong>1. 1980년대 기업 내부 데이터베이스</strong></p>
+</section>
+<section id="데이터베이스의-활용" class="level2">
+<h2 class="anchored" data-anchor-id="데이터베이스의-활용">데이터베이스의 활용</h2>
+<section id="년대-기업-내부-데이터베이스" class="level3">
+<h3 class="anchored" data-anchor-id="년대-기업-내부-데이터베이스">1. 1980년대 기업 내부 데이터베이스</h3>
 <ul>
 <li><code>OLTP(On-Line Transaction Processing)</code>
 <ul>
 <li>데이터베이스의 데이터를 실시간으로 <code>갱신</code>하는 프로세싱.</li>
-<li><code>복잡한 구조</code></li>
+<li><code>구조가 복잡</code>하고, <code>현재의 단기간</code> 데이터.</li>
 <li><code>갱신이 동적</code>이고, <code>엑세스 빈도가 높다</code>.</li>
-<li><code>질의 결과가 주기적, 예측 가능</code>하다.</li>
-<li><code>현재의 단기간</code> 데이터.</li>
+<li><code>질의가 단순하고, 주기적</code>이다.</li>
 </ul></li>
 <li><code>OLAP(On-Line Analytical Processing)</code>
 <ul>
 <li>데이터 <code>조회, 분석</code> 위주.</li>
-<li><code>단순한 구조</code></li>
+<li><code>구조가 단순</code>하고, <code>과거의 장기간 요약</code> 데이터.</li>
 <li><code>갱신이 정적</code>이고, <code>엑세스 빈도가 보통이다</code>.</li>
-<li><code>질의 결과가 예측하기 어렵다</code>.</li>
-<li><code>오랜기간 저장</code>되는 <code>요약</code> 데이터.</li>
+<li><code>질의가 복잡하다</code>.</li>
 </ul></li>
 </ul>
-<p><strong>2. 2000년대 기업 내부 데이터베이스</strong></p>
+</section>
+<section id="년대-기업-내부-데이터베이스-1" class="level3">
+<h3 class="anchored" data-anchor-id="년대-기업-내부-데이터베이스-1">2. 2000년대 기업 내부 데이터베이스</h3>
 <ul>
 <li><code>CRM(Customer Relationship Management)</code>: 고객 관리 시스템</li>
 <li><code>SCM(Supply Chain Management)</code>: 공급망 관리 시스템</li>
 </ul>
-<p><strong>3. 각 분야별 내부 데이터베이스</strong></p>
+</section>
+<section id="각-분야별-내부-데이터베이스" class="level3">
+<h3 class="anchored" data-anchor-id="각-분야별-내부-데이터베이스">3. 각 분야별 내부 데이터베이스</h3>
 <ul>
 <li>제조부문
 <ul>
-<li><code>ERP(Enterprise Resource Planning)</code>: 인사, 재무, 생산 등의 경영 자원을 하나의 통합 시스템으로 재구축</li>
+<li><code>ERP(Enterprise Resource Planning)</code>: 기업 내부 자료를 하나의 통합 시스템으로 재구축</li>
 <li><code>BI(Business Intelligence)</code>: 기업의 수많은 데이터를 정리, 분석해 의사결정에 활용하는 프로세스</li>
 <li>CRM</li>
 <li><code>RTE(Real-Time Enterprise)</code>: ERP, SCM, CRM 등의 부문별 전산화 시스템을 하나로 통합</li>
@@ -244,21 +664,62 @@
 <li><code>RFID(Radio Frequency Identification)</code>: 주파수를 이용해 ID를 식별</li>
 </ul></li>
 </ul>
-<p><strong>4. 사회기반구조로서의 데이터베이스</strong></p>
+</section>
+<section id="사회기반구조로서의-데이터베이스" class="level3">
+<h3 class="anchored" data-anchor-id="사회기반구조로서의-데이터베이스">4. 사회기반구조로서의 데이터베이스</h3>
+<ul>
+<li><code>EDI(Electronic Data Interchange)</code>: 전자상거래를 위한 표준화된 데이터 포맷</li>
+<li><code>VAN(Value Added Network)</code>: EDI를 위한 통신망 (카드 결제 시, 가맹점과 카드사 사이에서 승인 요청 및 결과 전달을 중계함.)</li>
+<li><code>CALS(Commerce At Light Speed)</code>: 제품의 설계, 생산, 유통, 판매 등의 모든 과정을 통합한 경영정보시스템</li>
+</ul>
+
+
 </section>
 </section>
-<section id="데이터의-가치와-미래" class="level2">
-<h2 class="anchored" data-anchor-id="데이터의-가치와-미래">데이터의 가치와 미래</h2>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/00.html</guid>
+  <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>1 - 가치 창조를 위한 데이터 사이언스와 전략 인사이트</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/02.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="빅데이터-분석과-전략-인사이트" class="level2">
+<h2 class="anchored" data-anchor-id="빅데이터-분석과-전략-인사이트">빅데이터 분석과 전략 인사이트</h2>
+<p>빅테이터 분석은 분석을 통해 <code>가치를 창출</code>하는 것이 목적이다.</p>
+<ul>
+<li>일차원적인 분석: 해당 부서나 업무 영역에만 효과가 있다. 변화하는 환경에서 새로운 기회를 포착하기 어려움.</li>
+<li>전략도출 가치기반 분석: 일차원적인 분석을 통해 얻은 가치를 기반으로 활용 범위를 더 넓고 전략적으로 확장해야한다.</li>
+</ul>
 </section>
-<section id="가치창조를-위한-데이터-사이언스와-전략-인사이트" class="level2">
-<h2 class="anchored" data-anchor-id="가치창조를-위한-데이터-사이언스와-전략-인사이트">가치창조를 위한 데이터 사이언스와 전략 인사이트</h2>
+<section id="전략-인사이트-도출을-위한-필요-역량" class="level2">
+<h2 class="anchored" data-anchor-id="전략-인사이트-도출을-위한-필요-역량">전략 인사이트 도출을 위한 필요 역량</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-12-48-06.png" class="img-fluid figure-img"></p>
+<figcaption>데이터 사이언티스트의 요구 역량</figcaption>
+</figure>
+</div>
+<p><code>외부 환경</code>이 다음과 같이 <code>변화</code>함에 따라 인사이트 도출을 위한 <code>인문학적 역량</code>이 요구됨.</p>
+<ul>
+<li><code>컨버전스 → 디버전스</code></li>
+<li><code>생산 → 서비스</code></li>
+<li><code>생상 → 시장창조</code></li>
+</ul>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>adp</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/00.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/02.html</guid>
   <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
@@ -2403,7 +2864,7 @@ font-style: inherit;">@</span>example.com</span></code></pre></div>
 </item>
 <item>
   <title>자기 소개서</title>
-  <link>https://cryscham123.github.io/posts/01_projects/3_1_장학금_신청/notes/1.html</link>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/scholarships/1.html</link>
   <description><![CDATA[ 
 
 
@@ -2428,7 +2889,7 @@ font-style: inherit;">@</span>example.com</span></code></pre></div>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>자기 소개서</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/3_1_장학금_신청/notes/1.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/scholarships/1.html</guid>
   <pubDate>Thu, 16 Jan 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
@@ -5557,3520 +6018,6 @@ font-style: inherit;">return</span> res</span></code></pre></div>
   <category>42 seoul</category>
   <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/2.html</guid>
   <pubDate>Thu, 16 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>ft_printf</title>
-  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/0.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>아직 작성중인 노트입니다.</p>
-</div>
-</div>
-</div>
-<section id="intro" class="level2">
-<h2 class="anchored" data-anchor-id="intro">Intro</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/img/42-course-2.png" class="img-fluid figure-img"></p>
-<figcaption>42 seoul 공통과정 2서클 과제</figcaption>
-</figure>
-</div>
-<p>ft_printf는 42 Seoul 공통과정 초반에 수행했던 과제입니다. 2년이라는 시간이 지나 코드의 세부 내용은 많이 희미해졌지만, C언어에 대한 기억을 되살려가며 코드를 하나씩 설명해보도록 하겠습니다.</p>
-</section>
-<section id="프로젝트-설명" class="level2">
-<h2 class="anchored" data-anchor-id="프로젝트-설명">프로젝트 설명</h2>
-<section id="개요" class="level3">
-<h3 class="anchored" data-anchor-id="개요">개요</h3>
-<p><a href="https://cdn.intra.42.fr/pdf/pdf/143719/en.subject.pdf">과제 명세서</a></p>
-<p>이 프로젝트는 C언어의 printf 함수를 직접 구현하는 과제입니다. 얼핏 단순해 보이지만, printf의 작동 원리를 깊이 이해해야 하는 복잡한 과제입니다. (사실 어느정도 타협을 해서 구현을 해도 된다고 생각하지만, 이 부분을 납득하지 못하는 평가자를 만나면 곤란해질 수 있습니다.)</p>
-<p>구현 시 반드시 <a href="https://github.com/taeng42/norminette/blob/master/pdf/ko.norm.pdf">norminette 규칙</a>을 준수해야 하는데, 이는 코드의 가독성을 위한 것이고, 대표적인 예시는 다음과 같습니다.</p>
-<ul>
-<li>파일당 함수 5개 이하</li>
-<li>함수당 코드 25줄 이하</li>
-<li>한 줄당 80자 이하</li>
-</ul>
-<p>구현의 정확성을 위해 <a href="https://www.dii.uchile.cl/~daespino/files/Iso_C_1999_definition.pdf">ISO C99 표준 문서</a>의 285페이지를 참고했습니다. 자세한 내용은 코드와 함께 설명드리겠습니다.</p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>이 포스팅에서 makefile과 ar 명령어에 대한 설명은 생략하겠습니다.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="mandatory" class="level3">
-<h3 class="anchored" data-anchor-id="mandatory">Mandatory</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/img/printf-man.png" class="img-fluid figure-img"></p>
-<figcaption>Mandatory 요구 내용</figcaption>
-</figure>
-</div>
-<p>허용 함수부터 보겠습니다.</p>
-<ul>
-<li>malloc</li>
-<li>free</li>
-<li>write</li>
-<li>va_start, va_arg, va_copy, va_end</li>
-</ul>
-<p>buffer는 따로 구현하지 않을 예정이기 때문에 malloc과 free 함수는 사용하지 않았습니다.</p>
-<p>이중 눈여겨볼 함수는 va_ … 함수들인데, 각각의 설명은 <a href="https://linux.die.net/man/3/va_start">이 문서</a>를 참조했습니다. 간단히 설명하자면 이런겁니다. (c언어 프로그램의 메모리 구조, buffer 설명)</p>
-</section>
-<section id="bonus" class="level3">
-<h3 class="anchored" data-anchor-id="bonus">Bonus</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/img/printf-bonus.png" class="img-fluid figure-img"></p>
-<figcaption>Bonus 요구 내용</figcaption>
-</figure>
-</div>
-<p>flag에 대한 내용이 나옵니다. 이제 여기서부터 과제가 애매해지기 시작하는데, 구현 범위를 확실하게 정해야합니다. 그래야 undefined behavior가 발생시, 적절한 답변을 할 수 있습니다. 저는 ISO c99 문서를 기준으로 구현했습니다.</p>
-<p>과제에서 제시한 flag들에 대한 설명이 나오는 부분을 한번 보겠습니다.</p>
-</section>
-</section>
-<section id="코드-설명" class="level2">
-<h2 class="anchored" data-anchor-id="코드-설명">코드 설명</h2>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>전체 코드는 <a href="https://github.com/cryscham123/my_printf">github repo</a>에서 확인 가능합니다.</p>
-</div>
-</div>
-</div>
-<p>header 먼저 살펴보도록 하겠습니다.<br>
-변수명이 마음에 안들지만, 협업 경험이 전혀 없던 시기에 작성한 코드임을 감안해주시길 바랍니다.</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">#ifndef FT_PRINTF_H</span></span>
-<span id="cb1-2"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># define FT_PRINTF_H</span></span>
-<span id="cb1-3"></span>
-<span id="cb1-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*printf에서 사용할 함수들을 macro로 설정해주었습니다. */</span></span>
-<span id="cb1-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*이 당시엔 enum을 몰라서 이렇게 구현을 했습니다..*/</span></span>
-<span id="cb1-6"></span>
-<span id="cb1-7"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># define F_WDTH </span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">64</span></span>
-<span id="cb1-8"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># define F_PREC </span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">32</span></span>
-<span id="cb1-9"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># define F_ZERO </span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">16</span></span>
-<span id="cb1-10"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># define F_LEFT </span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span></span>
-<span id="cb1-11"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># define F_PLUS </span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span></span>
-<span id="cb1-12"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># define F_SHAP </span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span></span>
-<span id="cb1-13"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># define F_SPACE </span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span></span>
-<span id="cb1-14"></span>
-<span id="cb1-15"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># include </span><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">&lt;stdarg.h&gt;</span></span>
-<span id="cb1-16"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;"># include </span><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">&lt;unistd.h&gt;</span></span>
-<span id="cb1-17"></span>
-<span id="cb1-18"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*specifier 문자를 만났을 때, 어떻게 출력을 해야되는지에 대한 정보를 저장할 구조체입니다.*/</span></span>
-<span id="cb1-19"></span>
-<span id="cb1-20"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">typedef</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">struct</span> s_info</span>
-<span id="cb1-21"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb1-22">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">unsigned</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>    flag<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*이 변수에 flag 정보를 비트연산으로 저장합니다.*/</span></span>
-<span id="cb1-23">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>             field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">];</span> # 이건 뭐였지</span>
-<span id="cb1-24">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>             cnt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*specifier 문자를 처리할 때, 출력하는 문자의 갯수를 저장합니다.*/</span></span>
-<span id="cb1-25">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span>            cmd<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*어떤 specifier를 처리하는지 저장합니다.*/</span></span>
-<span id="cb1-26"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span>   t_info<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-27"></span>
-<span id="cb1-28"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_printf<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">const</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">...);</span></span>
-<span id="cb1-29"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> c<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb1-30"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_printstr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb1-31"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_putnum<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> num<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> cur<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb1-32"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_puthex<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">unsigned</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> cur<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb1-33"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_max<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> a<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> b<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb1-34"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb1-35"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_precision<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> num<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> target<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb1-36"></span>
-<span id="cb1-37"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">#endif</span></span></code></pre></div>
-<p>다음으로, ft_printf.c 파일의 함수들을 살펴보겠습니다.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_printf<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">const</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">...)</span></span>
-<span id="cb2-2"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb2-3">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">va_list</span> ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb2-4">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>     cnt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb2-5">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>     tmp<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb2-6"></span>
-<span id="cb2-7">    va_start<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span> # 변수 초기화</span>
-<span id="cb2-8">    cnt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb2-9">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\0</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb2-10">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb2-11">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'%'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> # format 문자를 만날 경우</span>
-<span id="cb2-12">        <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb2-13">            s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">++;</span></span>
-<span id="cb2-14">            tmp <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ft_convert<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(&amp;</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span> # format 문자를 ft_convert 함수에서 처리해줍니다<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span></span>
-<span id="cb2-15">        <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb2-16">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span></span>
-<span id="cb2-17">            tmp <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> write<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span> # format 문자가 아닐 경우 그대로 출력합니다<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span></span>
-<span id="cb2-18">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>tmp <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb2-19">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span> # 출력에 실패하면 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>을 반환합니다<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span> 동적할당을 하지 않았기때문에 다른 조치는 취하지 않습니다<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span></span>
-<span id="cb2-20">        cnt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+=</span> tmp<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span> # 출력한 문자 갯수만큼 계속 저장해줍니다<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span></span>
-<span id="cb2-21">        s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">++;</span></span>
-<span id="cb2-22">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb2-23">    va_end<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb2-24">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>cnt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span> # 최종적으로 출력에 성공한 문자의 갯수를 반환합니다<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span></span>
-<span id="cb2-25"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*flag에 대한 정보를 먼저 처리해줍니다.*/</span></span>
-<span id="cb3-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*코드가 조금 특이하죠. 사실 norminette 때문에 이렇게 구현했습니다.*/</span></span>
-<span id="cb3-3"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">static</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>  ft_convert<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">va_list</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">const</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">**</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb3-4"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb3-5">    t_info  i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-6">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>     tmp<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-7"></span>
-<span id="cb3-8">    i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span> # 변수들을 초기화 해줍니다<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span></span>
-<span id="cb3-9">    i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>cnt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-10">    i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-11">    i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-12">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'#'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">' '</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'-'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'+'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb3-13">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb3-14">        tmp <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0!!1!!!!!!!2!3!!4"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)**</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">];</span></span>
-<span id="cb3-15">        i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;&lt;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>tmp <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb3-16">        <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)++;</span></span>
-<span id="cb3-17">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb3-18">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'.'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'1'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'9'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb3-19">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb3-20">        tmp <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'.'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb3-21">        <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+=</span> tmp<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-22">        i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>F_WDTH <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;</span> tmp<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb3-23">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'9'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb3-24">        <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb3-25">            i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>tmp<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>tmp<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(**</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb3-26">            <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)++;</span></span>
-<span id="cb3-27">        <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb3-28">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb3-29">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_parse<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">**</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb3-30"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">static</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">void</span> ft_flag_validate<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-2"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb4-3">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_LEFT<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb4-4">        i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span>F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb4-5">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_PREC<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb4-6">        i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span>F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb4-7">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_SPACE<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_PLUS<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb4-8">        i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span>F_SPACE<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb4-9"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb4-10"></span>
-<span id="cb4-11"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*본격적으로 specifier를 처리해주는 로직입니다.*/</span></span>
-<span id="cb4-12"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">static</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>  ft_parse<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">va_list</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> c<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-13"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb4-14">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> status<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb4-15"></span>
-<span id="cb4-16">    i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> c<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb4-17">    ft_flag_validate<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-18">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>c <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'c'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-19">        status <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)(</span>va_arg<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">size_t</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)),</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-20">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>c <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'%'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-21">        status <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'%'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-22">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>c <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'s'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-23">        status <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ft_printstr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>va_arg<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*),</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-24">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>c <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'d'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> c <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'i'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-25">        status <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ft_putnum<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>va_arg<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">),</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-26">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>c <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'u'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-27">        status <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ft_putnum<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>va_arg<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">unsigned</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">),</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-28">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>c <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'p'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-29">        status <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ft_puthex<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">unsigned</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>va_arg<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">void</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*),</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-30">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span></span>
-<span id="cb4-31">        status <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ft_puthex<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>va_arg<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(*</span>ap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">unsigned</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">),</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-32">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>status <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> ft_padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(&amp;</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>cnt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-33">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-34">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>cnt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb4-35"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span></code></pre></div>
-<p>다음으로, parse.c 파일의 함수들을 입니다.</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> c<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-2"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb5-3">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*이 로직은 아래에서 사용됩니다.*/</span></span>
-<span id="cb5-4">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>c <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'!'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'c'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'s'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-5">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-6">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'c'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'%'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_LEFT<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb5-7">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-8">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-9">    i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cnt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">++;</span></span>
-<span id="cb5-10">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>write<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>c<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb5-11"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb5-12"></span>
-<span id="cb5-13"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_printstr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-14"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb5-15">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> len<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-16"></span>
-<span id="cb5-17">    len <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-18">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*printf에서는 null이 오면 (null)을 출력한다는 점을 바탕으로 작성했습니다.*/</span></span>
-<span id="cb5-19">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> NULL<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-20">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_printstr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"(null)"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb5-21">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>len<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_PREC<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> len <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]))</span></span>
-<span id="cb5-22">        len<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">++;</span></span>
-<span id="cb5-23">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(!(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_LEFT<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb5-24">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> len<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-25">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-26">    len <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-27">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>len<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_PREC<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> len <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]))</span></span>
-<span id="cb5-28">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb5-29">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>len<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">],</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-30">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-31">        len<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">++;</span></span>
-<span id="cb5-32">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb5-33">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-34"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb5-35"></span>
-<span id="cb5-36"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_putnum<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> num<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> cur<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-37"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb5-38">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> is_sign<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-39">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> is_put<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-40"></span>
-<span id="cb5-41">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-42">        i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>F_PLUS <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> F_SPACE<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-43">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/*norminette 때문에 삼항연산자를 쓸 수 없어서 아래와 같이 작성했습니다.*/</span></span>
-<span id="cb5-44">    num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span> </span>
-<span id="cb5-45">    is_sign <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>F_PLUS <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> F_SPACE<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-46">    is_put <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> cur <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_PREC<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb5-47">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-48">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb5-49">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"! !!+-"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">],</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-50">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-51">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(!(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_LEFT<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb5-52">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> ft_max<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>cur <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> is_put<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">])</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> is_sign<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-53">                <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-54">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(!(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"! !!+-"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">],</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-55">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-56">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_PREC<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb5-57">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_precision<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> num<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> cur<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb5-58">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb5-59">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb5-60">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_putnum<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> cur <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-61">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-62">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-63"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb5-64"></span>
-<span id="cb5-65"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_puthex<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">unsigned</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">long</span> num<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> cur<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-66"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb5-67">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span>    s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-68">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span>     is_sign<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-69"></span>
-<span id="cb5-70">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* %x나 %p specifier의 경우 소문자로 출력 */</span></span>
-<span id="cb5-71">    s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"0123456789ABCDEF"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">16</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">32</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'x'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'p'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-72">    is_sign <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'p'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(!(</span>cur <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)))</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb5-73">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">16</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-74">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb5-75">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> is_sign <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-76">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"xX"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'X'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">],</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-77">                <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-78">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(!(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_LEFT<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb5-79">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> ft_max<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>cur <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">])</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> is_sign<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-80">                <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-81">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(!(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> is_sign <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-82">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"xX"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cmd <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'X'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">],</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-83">                <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-84">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_PREC<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">))</span></span>
-<span id="cb5-85">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_precision<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> num<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> cur<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb5-86">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb5-87">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb5-88">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_puthex<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">16</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> cur <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">||</span> ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>s<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-89">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-90">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb5-91"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span></code></pre></div>
-<p>마지막으로 flag_utils.c 함수입니다.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">#include </span><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">"ft_printf.h"</span></span>
-<span id="cb6-2"></span>
-<span id="cb6-3"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_max<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> a<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> b<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-4"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb6-5">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>a <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> b<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-6">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>a<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb6-7">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>b<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb6-8"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb6-9"></span>
-<span id="cb6-10"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-11"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb6-12">    <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">char</span>    padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb6-13"></span>
-<span id="cb6-14">    padding <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">' '</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb6-15">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_ZERO<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-16">        padding <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb6-17">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_WDTH<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> n <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">])</span></span>
-<span id="cb6-18">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb6-19">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>write<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span>padding<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-20">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb6-21">        i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>cnt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">++;</span></span>
-<span id="cb6-22">        n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">++;</span></span>
-<span id="cb6-23">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb6-24">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb6-25"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb6-26"></span>
-<span id="cb6-27"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> ft_precision<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>t_info <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> num<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">int</span> target<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-28"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb6-29">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>num <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> n <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-30">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb6-31">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">((</span>i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>flag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> F_PREC<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> n <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span>field<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-32">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb6-33">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'0'</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb6-34">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">);</span></span>
-<span id="cb6-35">        n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">++;</span></span>
-<span id="cb6-36">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb6-37">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>ft_putchr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>target<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">));</span></span>
-<span id="cb6-38"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span></code></pre></div>
-</section>
-<section id="결과" class="level2">
-<h2 class="anchored" data-anchor-id="결과">결과</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/img/printf-score.png" class="img-fluid figure-img"></p>
-<figcaption>최종 점수</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/02_areas/42_seoul/notes/img/2025-01-13-20-07-29.png" class="img-fluid figure-img"></p>
-<figcaption>최종 평가</figcaption>
-</figure>
-</div>
-</section>
-<section id="outro" class="level2">
-<h2 class="anchored" data-anchor-id="outro">Outro</h2>
-<p>C언어의 깊이 있는 매력을 경험할 수 있었던 과제라고 생각합니다. 특히 프로그램의 메모리 구조를 이해하는 과정에서 많은 것을 배울 수 있었습니다. 과제 구현의 범위가 난해하고, norminette을 지키는 것 때문에 어려움이 조금 있었지만, 그래도 흥미롭게 했던걸로 기억합니다.</p>
-<p>사실 솔직히 말하면 제가 제출한 코드는 norminette을 아주 완벽하게 위반하고 있습니다. norminette에서는 한 줄에 여러 동작을 하는 코드를 작성하지 말라고 나와있는데, 뭐..네 그렇습니다. 그래도 소설로 비유하면 가끔은 비유법과 은유법이 들어가줘야 재미가 있는것 아니겠습니까? 남들이 조금 못 알아보면 어떻습니까? 가끔은 이런 재미있는 코드도 존재해야 발전이라는게 있는거죠.</p>
-<p>..농담이고 협업할때는 절대 이렇게 코드를 작성하지 않습니다. 어쨌든 긴 글 읽어주셔서 감사합니다!</p>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>printf</category>
-  <category>c</category>
-  <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/0.html</guid>
-  <pubDate>Sat, 11 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>2-기초(2)</title>
-  <link>https://cryscham123.github.io/posts/02_areas/선형대수/notes/2.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<blockquote class="blockquote">
-<p>행렬의 곱은 교환법칙이 성립하지 않는다.</p>
-</blockquote>
-<section id="행렬의-곱을-바라보는-관점" class="level2">
-<h2 class="anchored" data-anchor-id="행렬의-곱을-바라보는-관점">행렬의 곱을 바라보는 관점</h2>
-<ol type="1">
-<li>내적으로 바라보기</li>
-</ol>
-<p><img src="https://latex.codecogs.com/png.latex?%0AA%20=%20%5Cbegin%7Bbmatrix%7D%0Aa_1%5ET%20%5C%5C%0Aa_2%5ET%20%5C%5C%0Aa_3%5ET%0A%5Cend%7Bbmatrix%7D%0A%5Cquad%20(a_x%20=%20%5Ctext%7Bcolumn%20vector%7D)%0A"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%0AAB%20=%20%5Cbegin%7Bbmatrix%7D%0Aa_1%5ET%20%5C%5C%0Aa_2%5ET%20%5C%5C%0Aa_3%5ET%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Ab_1%20&amp;%20b_2%20&amp;%20b_3%0A%5Cend%7Bbmatrix%7D%20=%0A%5Cbegin%7Bbmatrix%7D%0Aa_1%5ETb_1%20&amp;%20a_1%5ETb_2%20&amp;%20a_1%5ETb_3%20%5C%5C%0Aa_2%5ETb_1%20&amp;%20a_2%5ETb_2%20&amp;%20a_2%5ETb_3%20%5C%5C%0Aa_3%5ETb_1%20&amp;%20a_3%5ETb_2%20&amp;%20a_3%5ETb_3%0A%5Cend%7Bbmatrix%7D%0A"></p>
-<ol start="2" type="1">
-<li>rank-1 matrix의 합</li>
-</ol>
-<p><img src="https://latex.codecogs.com/png.latex?%0AAB%20=%20%5Cbegin%7Bbmatrix%7D%0Aa_1%20&amp;%20a_2%20&amp;%20a_3%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Ab_1%5ET%20%5C%5C%0Ab_2%5ET%20%5C%5C%0Ab_3%5ET%0A%5Cend%7Bbmatrix%7D%20=%0Aa_1%5ETb_1%20+%20a_2%5ETb_2%20+%20a_3%5ETb_3%0A"></p>
-<ol start="3" type="1">
-<li>Column space로 바라보기</li>
-</ol>
-<p><img src="https://latex.codecogs.com/png.latex?%0AAx%20=%20%5Cbegin%7Bbmatrix%7D%0Aa_1%20&amp;%20a_2%20&amp;%20a_3%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Ax_1%20%5C%5C%0Ax_2%20%5C%5C%0Ax_3%0A%5Cend%7Bbmatrix%7D%20=%20a_1x_1%20+%20a_2x_2%20+%20a_3x_3%0A"></p>
-<ol start="4" type="1">
-<li>Row space로 바라보기</li>
-</ol>
-<p><img src="https://latex.codecogs.com/png.latex?%0Ax%5ETA%20=%20%5Cbegin%7Bbmatrix%7D%0Ax_1%20&amp;%20x_2%20&amp;%20x_3%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Aa_1%5ET%20%5C%5C%0Aa_2%5ET%20%5C%5C%0Aa_3%5ET%0A%5Cend%7Bbmatrix%7D%20=%20x_1a_1%5ET%20+%20x_2a_2%5ET%20+%20x_3a_3%5ET%0A"></p>
-</section>
-<section id="span과-column-space" class="level2">
-<h2 class="anchored" data-anchor-id="span과-column-space">span과 column space</h2>
-<ul>
-<li><p>column space: column vector들이 span하는 영역</p></li>
-<li><p>span: linear combination으로 만들어지는 모든 벡터들의 집합</p></li>
-<li><p>linear combination: vector들을 scalar 배 하고 더한 것</p></li>
-<li><p>linear independent: span하는 vector들이 서로 독립적인 경우</p>
-<p>수학적 정의: <img src="https://latex.codecogs.com/png.latex?a_1v_1%20+%20a_2v_2%20+%20%5Ccdots%20+%20a_nv_n%20=%200"> 일 때 <img src="https://latex.codecogs.com/png.latex?a_1%20=%20a_2%20=%20%5Ccdots%20=%20a_n%20=%200"> 인 경우</p></li>
-<li><p>basis: 어떤 공간을 이루는 필수적인 구성요소 (<code>linear independent</code>, <code>span</code>)</p></li>
-</ul>
-</section>
-<section id="항등행렬" class="level2">
-<h2 class="anchored" data-anchor-id="항등행렬">항등행렬</h2>
-<p><img src="https://latex.codecogs.com/png.latex?AI%20=%20IA%20=%20A">를 만족하는 행렬 <img src="https://latex.codecogs.com/png.latex?I"></p>
-</section>
-<section id="역행렬" class="level2">
-<h2 class="anchored" data-anchor-id="역행렬">역행렬</h2>
-<p><img src="https://latex.codecogs.com/png.latex?Ax%20=%20b">를 만족하는 <img src="https://latex.codecogs.com/png.latex?x">를 찾는 것은 <img src="https://latex.codecogs.com/png.latex?A%5E%7B-1%7DAx%20=%20A%5E%7B-1%7Db">를 만족하는 <img src="https://latex.codecogs.com/png.latex?x">를 찾는 것과 같다.</p>
-</section>
-<section id="대각-행렬" class="level2">
-<h2 class="anchored" data-anchor-id="대각-행렬">대각 행렬</h2>
-<p>diagonal을 제외한 모든 요소가 0인 행렬 (square, rectangular 모두 가능)</p>
-</section>
-<section id="orthogonal-행렬" class="level2">
-<h2 class="anchored" data-anchor-id="orthogonal-행렬">Orthogonal 행렬</h2>
-<p>행렬의 모든 column들이 orthonormal vector인 경우</p>
-<p><img src="https://latex.codecogs.com/png.latex?Q%5E%7B-1%7D%20=%20Q%5ET"></p>
-</section>
-<section id="행렬의-rank" class="level2">
-<h2 class="anchored" data-anchor-id="행렬의-rank">행렬의 rank</h2>
-<p>rank: 행렬이 가지는 independent한 column의 개수 → column space의 차원</p>
-<p><code>rank(A) = rank(A^T)</code></p>
-<ul>
-<li>full-column rank: 해가 없거나 한 개 존재</li>
-<li>full-row rank: 해가 무한하다</li>
-<li>full rank: 해가 한 개 있다.</li>
-<li>rank-deficient: b가 column space에 속하지 않는 경우 해가 없고, 그렇지 않으면 해가 무한하다.</li>
-</ul>
-</section>
-<section id="null-space" class="level2">
-<h2 class="anchored" data-anchor-id="null-space">Null space</h2>
-<p><img src="https://latex.codecogs.com/png.latex?Ax%20=%200">을 만족하는 모든 <img src="https://latex.codecogs.com/png.latex?x">의 집합</p>
-<p>A가 m x n 행렬이라면, dim(N(A)) = n - rank(A)</p>
-<p>null space와 row space는 orthogonal하다.</p>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>선형 대수</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/선형대수/notes/2.html</guid>
-  <pubDate>Fri, 10 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Nonlinear Programming</title>
-  <link>https://cryscham123.github.io/posts/01_projects/OR_예습/notes/3.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="nonlinear-programming-example" class="level2">
-<h2 class="anchored" data-anchor-id="nonlinear-programming-example">Nonlinear Programming Example</h2>
-<ul>
-<li><p>Pricing</p></li>
-<li><p>Inventory</p></li>
-<li><p>Portfolio optimization (finance)</p>
-<p>→ <code>Balance</code> (margin vs price, ordering cost vs inventory cost, return vs risk, …)</p></li>
-</ul>
-<p>Because <code>trade off</code> can only be modeled in a nonlinear way, the programs are by nature <code>nonlinear</code></p>
-<blockquote class="blockquote">
-<p>At least one of fumular is nonlinear, Nonlinear Program.<br>
-But some people says that NLP contents LP</p>
-</blockquote>
-<section id="example-pricing-a-single-good" class="level3">
-<h3 class="anchored" data-anchor-id="example-pricing-a-single-good">Example: Pricing a single good</h3>
-<ul>
-<li>A retailer buys one product at a unit cost <img src="https://latex.codecogs.com/png.latex?c"></li>
-<li>It chooses a unit retail price <img src="https://latex.codecogs.com/png.latex?p"></li>
-<li>The demand is a function of <img src="https://latex.codecogs.com/png.latex?p">: <img src="https://latex.codecogs.com/png.latex?D(p)%20=%20a%20-%20bp"></li>
-<li>Find profit-maximizing price</li>
-</ul>
-<img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%5Cunderset%7Bp%7D%7Bmax%7D%20%5Cquad%20%20&amp;(p-c)(a-bp)%20%5C%5C%0As.t.%20%5Cquad%20%20&amp;p%20%E2%89%A5%200%20%5C%5C%0A%5Cend%7Baligned%7D">
-<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7Bor%7D%0A"></p>
-<img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%5Cunderset%7Bp%5Cge0%7D%7Bmax%7D%20%5Cquad%20%20&amp;(p-c)(a-bp)%20%5C%5C%0A%5Cend%7Baligned%7D">
-<p><img src="https://latex.codecogs.com/png.latex?p%20-%20c"> is <code>sales margin</code>, <img src="https://latex.codecogs.com/png.latex?a-bp"> is <code>Demand</code> (how many sales)</p>
-</section>
-<section id="example-folding-a-piece-of-paper" class="level3">
-<h3 class="anchored" data-anchor-id="example-folding-a-piece-of-paper">Example: Folding a piece of paper</h3>
-<p><img src="https://cryscham123.github.io/img/example-or-1.png" class="img-fluid"></p>
-</section>
-<section id="example-locating-a-hospital" class="level3">
-<h3 class="anchored" data-anchor-id="example-locating-a-hospital">Example: locating a hospital</h3>
-<p><img src="https://cryscham123.github.io/img/yo2.png" class="img-fluid"></p>
-</section>
-</section>
-<section id="eoq-model-economic-order-quantity" class="level2">
-<h2 class="anchored" data-anchor-id="eoq-model-economic-order-quantity">EOQ Model (Economic Order Quantity)</h2>
-<p><img src="https://cryscham123.github.io/img/yo3.png" class="img-fluid"> <img src="https://cryscham123.github.io/img/yo4.png" class="img-fluid"></p>
-<ul>
-<li><p>Parameters</p>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?D">: annual demand</li>
-<li><img src="https://latex.codecogs.com/png.latex?K">: unit ordering cost</li>
-<li><img src="https://latex.codecogs.com/png.latex?h">: unit holding cost per year</li>
-<li><img src="https://latex.codecogs.com/png.latex?p">: unit purchasing cost</li>
-</ul></li>
-<li><p>Decision varaible</p>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?q">: order quantity per order</li>
-</ul></li>
-<li><p>Objective: Minimizing annual total cost</p></li>
-</ul>
-<p><img src="https://cryscham123.github.io/img/yo5.png" class="img-fluid"></p>
-</section>
-<section id="portfolio-model" class="level2">
-<h2 class="anchored" data-anchor-id="portfolio-model">Portfolio Model</h2>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>Operational Research</category>
-  <category>1차</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/OR_예습/notes/3.html</guid>
-  <pubDate>Thu, 09 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>2-기초(1)</title>
-  <link>https://cryscham123.github.io/posts/02_areas/선형대수/notes/1.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="vector" class="level2">
-<h2 class="anchored" data-anchor-id="vector">Vector</h2>
-<p>vector는 크기와 방향을 가지고 있다.</p>
-<section id="example" class="level3">
-<h3 class="anchored" data-anchor-id="example">Example</h3>
-<img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%0A3%20%5C%5C%0A2%0A%5Cend%7Bbmatrix%7D">
-<div id="325eb4e1" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/02_areas/선형대수/notes/1_files/figure-html/cell-2-output-1.png" width="591" height="434" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>크기: <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7B9%20+%204%7D%20=%20%5Csqrt%7B13%7D"></li>
-<li>방향: <img src="https://latex.codecogs.com/png.latex?tan%5E%7B-1%7D(%5Cfrac%7B2%7D%7B3%7D)"></li>
-</ul>
-<p>크기와 방향이 같으면 같은 벡터이다.</p>
-</section>
-<section id="덧셈" class="level3">
-<h3 class="anchored" data-anchor-id="덧셈">덧셈</h3>
-<p>벡터의 덧셈을 기하학적으로 알아보자</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0A3%20%5C%5C%0A2%0A%5Cend%7Bbmatrix%7D%20+%0A%5Cbegin%7Bbmatrix%7D%0A-2%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%0A"></p>
-<p>위의 수식을 좌표평면에 나타나면 다음과 같다.</p>
-<div id="dd193b2c" class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/02_areas/선형대수/notes/1_files/figure-html/cell-3-output-1.png" width="591" height="434" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>끝점을 다 더한 좌표와 시작 점을 연결한 벡터인 <code>초록색 화살표</code>가 두 벡터의 합이 된다.</p>
-</section>
-<section id="scalar-배" class="level3">
-<h3 class="anchored" data-anchor-id="scalar-배">Scalar 배</h3>
-<p>vector에 scalar, 즉 숫자 하나를 곱하면 무슨 일이 생길까?</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A2%20*%20%5Cbegin%7Bbmatrix%7D%0A2%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20=%0A%5Cbegin%7Bbmatrix%7D%0A4%20%5C%5C%0A2%0A%5Cend%7Bbmatrix%7D%0A"> <img src="https://latex.codecogs.com/png.latex?%0A-2%20*%20%5Cbegin%7Bbmatrix%7D%0A2%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20=%0A%5Cbegin%7Bbmatrix%7D%0A-4%20%5C%5C%0A-2%0A%5Cend%7Bbmatrix%7D%0A"></p>
-<p>마찬가지로 좌표평면으로 나타내는건 귀찮아서 생략하겠다.</p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Scalar 배를 한 벡터끼리 더하면 모든 2차원 좌표를 표현할 수 있다.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="전치-transpose" class="level2">
-<h2 class="anchored" data-anchor-id="전치-transpose">전치 (Transpose)</h2>
-<p>행렬 <img src="https://latex.codecogs.com/png.latex?A">의 요소 <img src="https://latex.codecogs.com/png.latex?a_%7Bij%7D">는 A의 Transpose인 <img src="https://latex.codecogs.com/png.latex?A%5ET">의 <img src="https://latex.codecogs.com/png.latex?a_%7Bji%7D">가 된다. 즉, 행렬 <img src="https://latex.codecogs.com/png.latex?A">를 전치하면 diagnal(대각선 요소)를 제외한 모든 요소가 대각선을 기준으로 서로 뒤바뀐다.</p>
-<blockquote class="blockquote">
-<p><code>Symmetrix matrix</code>: <img src="https://latex.codecogs.com/png.latex?A%20=%20A%5ET">인 행렬, 즉 대각선을 기준으로 값이 전부 같은 행렬 <code>Hermitian matrix</code>: <img src="https://latex.codecogs.com/png.latex?(A%5E*)%5ET%20=%20A%5EH(conjugate%20transpose)%20=%20A">를 만족하는 행렬</p>
-</blockquote>
-<p>Vector의 경우에는 Column Vector의 경우, Transpose시 Row Vector로, Row Vector의 경우도 반대로 작용한다.</p>
-<section id="properties" class="level3">
-<h3 class="anchored" data-anchor-id="properties">Properties</h3>
-<ol type="1">
-<li><p><img src="https://latex.codecogs.com/png.latex?(A%5ET)%5ET%20=%20A"></p></li>
-<li><p><img src="https://latex.codecogs.com/png.latex?(A+B)%5ET%20=%20A%5ET%20+%20B%5ET"></p></li>
-<li><p><img src="https://latex.codecogs.com/png.latex?%5Ccolor%7Bred%7D%7B(AB)%5ET%20=%20B%5ETA%5ET%7D"></p>
-<p><img src="https://latex.codecogs.com/png.latex?(A%5ETA)%5ET">와 <img src="https://latex.codecogs.com/png.latex?(AA%5ET)%5ET">의 결과는 항상 자기 자신이 된다. → <code>Symmetrix matrix</code></p></li>
-<li><p><img src="https://latex.codecogs.com/png.latex?C(A)%5ET%20=%20CA%5ET"></p></li>
-<li><p><img src="https://latex.codecogs.com/png.latex?det(A%5ET)%20=%20det(A)"></p></li>
-<li><p><img src="https://latex.codecogs.com/png.latex?(A%5ET)%5E%7B-1%7D%20=%20(A%5E%7B-1%7D)%5ET"></p></li>
-</ol>
-</section>
-</section>
-<section id="inner-product-projection" class="level2">
-<h2 class="anchored" data-anchor-id="inner-product-projection">Inner Product &amp; Projection</h2>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cunderset%7Ba%7D%7B%5Cbegin%7Bbmatrix%7D%0A1%20%5C%5C%0A3%0A%5Cend%7Bbmatrix%7D%7D%20*%0A%5Cunderset%7Bb%7D%7B%5Cbegin%7Bbmatrix%7D%0A5%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%7D%20=%201%20*%205%20+%203%20*%201%20=%208%20=%20a%5ETb%20=%20b%5ETa%0A"></p>
-<p>갑자기 등장한 <img src="https://latex.codecogs.com/png.latex?a%5ETb">가 의미하는건 아래와 같다.</p>
-<p><img src="https://latex.codecogs.com/png.latex?a%5ETb%20=%20%7C%7Ca%7C%7C*%7C%7Cb%7C%7Ccos%CE%B8"></p>
-<blockquote class="blockquote">
-<p>||a||는 a 벡터의 크기를 의미한다.</p>
-</blockquote>
-<p>위의 식을 그림으로 표현해보자</p>
-<div id="ce38d323" class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/02_areas/선형대수/notes/1_files/figure-html/cell-4-output-1.png" width="648" height="490" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>내적은 초록색 화살표와 파란색 화살표의 곱으로 표현할 수 있다.<br>
-이는 a 벡터가 b 벡터의 방향에 대해 얼마나 투영되었는지를 나타낸다.<br>
-두 벡터의 방향이 일치할 때 내적의 값이 가장 크고, 수직일 때 0 (안 닮음을 의미), 반대 방향일 때 가장 작은 값이 된다.</p>
-<section id="단위-벡터크기가-1인-벡터-계산" class="level3">
-<h3 class="anchored" data-anchor-id="단위-벡터크기가-1인-벡터-계산">단위 벡터(크기가 1인 벡터) 계산</h3>
-<p>위의 식으로 부터 다음의 추론 과정을 통해 단위 벡터를 계산할 수 있다.</p>
-<p><img src="https://latex.codecogs.com/png.latex?a%5ETa%20=%20%7C%7Ca%7C%7C%5E2"><br>
-∴ <img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C%20=%20%5Csqrt%7Ba%5ETa%7D"><br>
-∴ 단위 벡터는 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba%7D%7B%7C%7Ca%7C%7C%7D"> = <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba%7D%7B%5Csqrt%7Ba%5ETa%7D%7D"></p>
-</section>
-<section id="정사형-벡터의-좌표-계산" class="level3">
-<h3 class="anchored" data-anchor-id="정사형-벡터의-좌표-계산">정사형 벡터의 좌표 계산</h3>
-<p>벡터의 <code>좌표</code>는 <code>방향과 크기의 곱</code>으로 표현할 수 있다.<br>
-<img src="https://latex.codecogs.com/png.latex?a%5ETb%20=%20%7C%7Ca%7C%7C*%7C%7Cb%7C%7Ccos%CE%B8"><br>
-정사형 벡터의 크기는 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba%5ETb%7D%7B%7C%7Cb%7C%7C%7D%20=%20%5Cfrac%7Ba%5ETb%7D%7B%5Csqrt%7Bb%5ETb%7D%7D"><br>
-장사형 벡터의 방향은 b의 단위 벡터와 같다.<br>
-즉, 정사형 벡터의 좌표는 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba%5ETb%7D%7B%5Csqrt%7Bb%5ETb%7D%7D%20*%20%5Cfrac%7Bb%7D%7B%5Csqrt%7Bb%5ETb%7D%7D%20=%20%5Cfrac%7Ba%5ETb%7D%7Bb%5ETb%7Db"></p>
-<p><img src="https://latex.codecogs.com/png.latex?a%5ET%5Cfrac%7Bb%7D%7B%5Csqrt%7Bb%5ETb%7D%7D*%5Cfrac%7Bb%7D%7B%5Csqrt%7Bb%5ETb%7D%7D">로도 구할 수 있다.</p>
-<blockquote class="blockquote">
-<p>a와 수직으로 연결되는 정사형 벡터 <img src="https://latex.codecogs.com/png.latex?%5Chat%7Bx%7D"><br>
-<img src="https://latex.codecogs.com/png.latex?(a-b%5Chat%7Bx%7D)%5ETb%5Chat%7Bx%7D%20=%200"><br>
-<img src="https://latex.codecogs.com/png.latex?a%5ETb%20-%20b%5ETbb%5Chat%7Bx%7D%20=%200"><br>
-<img src="https://latex.codecogs.com/png.latex?%5Chat%7Bx%7D%20=%20%5Cfrac%7Ba%5ETb%7D%7Bb%5ETb%7D"></p>
-</blockquote>
-</section>
-</section>
-<section id="norm" class="level2">
-<h2 class="anchored" data-anchor-id="norm">Norm</h2>
-<p>크기를 나타내는 것(0 포함, 양 음수 scalar)</p>
-<section id="norm-l_2-norm" class="level3">
-<h3 class="anchored" data-anchor-id="norm-l_2-norm">2-Norm (<img src="https://latex.codecogs.com/png.latex?l_2">-norm)</h3>
-<p>벡터의 물리적인 길이.</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0Aa%20=%20%5Cbegin%7Bbmatrix%7D%0A1%20%5C%5C%0A2%20%5C%5C%0A3%0A%5Cend%7Bbmatrix%7D%0A"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C_2%20=%20%5Csqrt%7B1%5E2+2%5E2+3%5E2%7D%20=%20(%7C1%7C%5E%7B%5Ccolor%7Bred%7D%7B2%7D%7D+%7C2%7C%5E%7B%5Ccolor%7Bred%7D%7B2%7D%7D+%7C3%7C%5E%7B%5Ccolor%7Bred%7D%7B2%7D%7D)%5E%7B%5Ccolor%7Bred%7D%7B%5Cfrac%7B1%7D%7B2%7D%7D%7D"></p>
-<p>2 제곱에, <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B2%7D">여서 2-norm이다.</p>
-<blockquote class="blockquote">
-<p>두 벡터 사이의 거리는 두 벡터의 차이의 2-norm이다.</p>
-</blockquote>
-</section>
-<section id="norm-l_1-norm" class="level3">
-<h3 class="anchored" data-anchor-id="norm-l_1-norm">1-Norm (<img src="https://latex.codecogs.com/png.latex?l_1">-norm)</h3>
-<p>1 제곱에 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B1%7D">을 계산해주면 된다.</p>
-<p><img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C_1%20=%20(%7C1%7C%5E1+%7C2%7C%5E1+%7C3%7C%5E1)%5E%7B%5Cfrac%7B1%7D%7B1%7D%7D"></p>
-</section>
-<section id="p-norm-l_p-norm" class="level3">
-<h3 class="anchored" data-anchor-id="p-norm-l_p-norm">p-Norm (<img src="https://latex.codecogs.com/png.latex?l_p">-norm)</h3>
-<p><img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C_p%20=%20(%7Cx_1%7C%5Ep+%7Cx_2%7C%5Ep+%7Cx_3%7C%5Ep+...)%5E%7B%5Cfrac%7B1%7D%7Bp%7D%7D%20=%20(%5Cunderset%7Bt%7D%7B%5CSigma%7D%20%7Cx_t%7C%5Ep)%5E%7B%5Cfrac%7B1%7D%7Bp%7D%7D%20%5Cquad%20(p%20%E2%89%A5%201)"></p>
-</section>
-<section id="infinity-norm" class="level3">
-<h3 class="anchored" data-anchor-id="infinity-norm">infinity-Norm</h3>
-<p><img src="https://latex.codecogs.com/png.latex?%7C%7Ca%7C%7C_%E2%88%9E%20=%20%5Cunderset%7Bt%7D%7Bmax%7D%7Cx_t%7C"></p>
-<p>1-norm, 2-norm, infinity-norm의 값이 1이 되는 모든 벡터들을 좌표평면에 나타내면 다음과 같다.</p>
-<div id="fdb7c30d" class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/02_areas/선형대수/notes/1_files/figure-html/cell-5-output-1.png" width="592" height="579" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>같은 벡터일 때, 1-norm ≥ 2-norm ≥ ∞-norm 순으로 크다.</p>
-
-
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>선형 대수</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/선형대수/notes/1.html</guid>
-  <pubDate>Thu, 09 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Second Brain - 티아고 포르테</title>
-  <link>https://cryscham123.github.io/posts/02_areas/blog/notes/1.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791165347048.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:30.0%"></p>
-</figure>
-</div>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>도서 <a href="https://product.kyobobook.co.kr/detail/S000201140661">Second Brain</a> 정리 노트입니다.</p>
-</div>
-</div>
-</div>
-<section id="second-brain의-핵심-기능" class="level2">
-<h2 class="anchored" data-anchor-id="second-brain의-핵심-기능">Second Brain의 핵심 기능</h2>
-<ol type="1">
-<li><p><code>아이디어를 구체화한다</code></p>
-<p>머릿속에서 아이디어를 <code>분리</code>하여 구체적인 형태로 만들어야 한다.</p></li>
-<li><p><code>아이디어 사이의 연관성을 새롭게 밝혀낸다.</code></p>
-<p>다양한 자료를 한곳에 보관하면 자료간 연결 작업이 촉진되며, 생각지 못한 연관성을 찾아낼 가능성을 높일 수 있다.</p></li>
-<li><p><code>시간을 두고 아이디어를 발전시킨다.</code></p>
-<p>사람들은 줄곧 아이디어를 떠올릴 때 최신 정보에 중요성을 더 부여하는 경향이 있다.<br>
-몇년 간 축적된 아이디어를 마음껏 이용할 수 있다면 더 좋을 것이다.</p></li>
-<li><p><code>나만의 독특한 관점을 정교하게 다듬는다.</code></p>
-<p>작가의 벽에 부딪히는 것은 적절한 단어를 떠올릴 수 없다는 것이 아니라, 글을 쓸 탄약이 부족하다는 것이다.<br>
-자신의 견해를 지지할 수 있는 자료를 지속적으로 모아야한다.</p></li>
-</ol>
-<blockquote class="blockquote">
-<p>머리는 아이디어를 생각하는 곳이지 보관하는 곳이어선 안된다.</p>
-</blockquote>
-</section>
-<section id="중요한-것을-기억하는-4-단계-code" class="level2">
-<h2 class="anchored" data-anchor-id="중요한-것을-기억하는-4-단계-code">중요한 것을 기억하는 4 단계 (CODE)</h2>
-<ol type="1">
-<li><p><strong>Capture: 공명하는 내용을 수집하라</strong></p>
-<p>당신과 마음에 닿는 내용을 분별하여 보관하고 나머지는 버려라</p></li>
-<li><p><strong>Organazie: 실행을 목표로 정리하라</strong></p>
-<p><code>실행</code>을 염두에 두고 정리하라.</p></li>
-<li><p><strong>Distill: 핵심을 찾아 추출하라</strong></p>
-<p>메모의 요점을 정리하라.<br>
-<code>메모를 저장한 이유</code>, <code>생각하던 내용</code>, <code>무엇이 당신의 관심을 끌었는지에 대한 설명</code></p></li>
-<li><p><strong>Express: 작업한 결과물을 표현하라</strong></p>
-<p>개인적이고 구체적이며 검증된 정보는 실제로 사용할 때에 비로소 <code>지식</code>이 된다.<br>
-당신이 아는 내용을 다른 사람과 공유하기 전까지는 그저 <code>이론</code>에 불과하다.</p></li>
-</ol>
-<section id="capture" class="level3">
-<h3 class="anchored" data-anchor-id="capture">Capture</h3>
-<p>미래에 어떻게 될지 전혀 모르는데 무엇을 저장할지 어떻게 결정할 수 있을까? 어떤 정보가 보관할 가치가 있는지 정확히 알아내도록 통찰력을 키우기 위해 리처드 파인만의 <code>좋아하는 12가지 문제</code> 방법을 제시한다. 자신에게 흥미를 불러일으키는 <code>열린 질문들</code>을 자유롭게 적어보자. 그후 해당 질문들을 학습의 방향을 제시하는 북극성으로 삼아 활용한다.</p>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-직접 적어본 질문들
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>쇠퇴하지 않는 사람이 되기 위해 꾸준히 해야하는 활동에는 어떤게 있을까?</li>
-<li>운에 좌절하지 않기 위해 어떤걸 준비해야 할까?</li>
-<li>학점을 잘 받으려면 어떻게 공부해야 할까?</li>
-<li>소중한 인연은 무엇인가?</li>
-<li>무엇을 위해 발전해야 하는가?</li>
-<li>시간이 지나도 가치있는건 무엇일까?</li>
-<li>공명하는 지식이 매번 진실일까?</li>
-<li>돈을 잘 벌려면 어떻게 해야할까?</li>
-</ol>
-</div>
-</div>
-<p>그런 다음, 해당 주제와 관련된 자료에서 아래의 기준에 해당하는 내용들을 선별한다. 수집하는 자료는 외부에 존재하는 자료뿐만 아니라 자료를 수집하면서 얻은 내면 세계의 아이디어 역시 그 대상이될 수 있다.</p>
-<ol type="1">
-<li><p><strong>영감을 불러일으키는가</strong></p></li>
-<li><p><strong>나와 내 일에 유용한가</strong></p></li>
-<li><p><strong>개인적인 정보인가</strong></p>
-<p>가족이나 친구들과 나눈 문자 메세지들도 수집의 대상이 될 수 있다.</p></li>
-<li><p><strong>놀랄 만한 사실인가</strong></p>
-<p>기존의 알고있는 자료만 수집하면 <code>확증편향</code>의 위험이 있다.<br>
-second brain은 이미 알고 있는 내용을 또 확인하는 방법이 되어서는 안 된다.</p></li>
-</ol>
-<p>다음과 같은 유형들은 보관하기에 적합하지 않다.</p>
-<ol type="1">
-<li><strong>민감한 정보</strong></li>
-<li><strong>포토샵 파일이나 비디오 영상처럼 전용 앱이 필요한 경우</strong></li>
-<li><strong>대용량 파일</strong></li>
-<li><strong>공동 편집이 필요한 경우</strong></li>
-</ol>
-</section>
-<section id="organize" class="level3">
-<h3 class="anchored" data-anchor-id="organize">Organize</h3>
-<p>수집한 자료를 정리할 때, 종류별로 나누지 않고, 얼마나 실행 가능한지에 따라 정리할 수 있다. 주제와 하위 항목으로 연달아 이루어진 복잡한 계층 체계에 따라 메모를 정리하는 대신, <code>이것은 어떤 프로젝트에 가장 도움이 될까?</code>라는 간단한 질문 하나에만 답하면 된다.</p>
-<section id="para" class="level4">
-<h4 class="anchored" data-anchor-id="para">PARA</h4>
-<ol type="1">
-<li><p><code>Project</code>: 일이나 생활에서 현재 진행 중이며 단기간 노력이 필요한 일</p>
-<p>시작과 끝이 존재. <code>완성</code>, <code>승인</code>, <code>착수</code>, <code>발표</code>처럼 구체적이고 확실한 결과가 있어야 한다.</p></li>
-<li><p><code>Area</code>: 오랫동안 관리하고 싶고 장기적으로 책임지는 일</p>
-<p>정해진 종료 날짜와 최종 목표가 없음.</p></li>
-<li><p><code>Resource</code>: 향후 도움이 될 수 있는 주제 혹은 관심사</p>
-<p><code>현재 진행하는 프로젝트 혹은 영역과 관련 없는 자료</code>, 당분간 실행할 수 없는 메모나 파일 등을 보관할 수 있다.</p></li>
-<li><p><code>Archive</code>: 전에는 위의 세 가지 유형에 속했지만, 지금은 비활성화된 항목</p>
-<p>완료하거나 취소된 프로젝트, 이제는 관리하지 않는 책임 영역, 흥미를 잃은 자원 등을 보관할 수 있다.</p></li>
-</ol>
-<p>PARA 정리 방식은 부엌 정리 방식과 유사하다. 부엌에 있는 물건들은 전부 식사를 준비하도록 설계되고 정리된다. 각각의 상위 폴더들을 비유하면, archive는 냉동고, resource는 식료품 저장고, 영역은 냉장고, 프로젝트는 불 위에서 끓고 있는 냄비나 팬과 같다.</p>
-<p>부엌을 음식 종류에 따라 정리하면 얼마나 터무니없을지 상상해보라. 신선한 과일과 말린 과일, 과일 주스와 냉동 과일은 모두 과일로 만들었다는 이유로 같은 장소에 보관될 것이다. 그런데 이것이 바로 대부분의 사람들이 파일과 메모를 정리하는 방식이다. 책을 읽으며 메모했다는 이유만으로 책 메모는 책 메모끼리, 다른 사람의 말을 인용했다는 이유만으로 인용문은 인용문끼리 보관한다.</p>
-</section>
-</section>
-<section id="distill" class="level3">
-<h3 class="anchored" data-anchor-id="distill">Distill</h3>
-<p>메모는 단순한 수집을 넘어 실제 활용이 가능한 형태로 정제되어야 한다. 이를 위해 다음과 같은 단계별 요약 과정을 거친다.</p>
-<ol type="1">
-<li><strong>메모 수집</strong>: 먼저 빠르게 수집, 정리 이후 정제는 나중에 진행</li>
-<li><strong>굵게 처리</strong>: 중요한 문장이나 구절을 표시</li>
-<li><strong>하이라이트 처리</strong>: 굵게 처리된 내용 중 핵심을 강조</li>
-<li><strong>핵심 요약</strong>: 최종적으로 메모의 핵심을 추출</li>
-</ol>
-<p>이 과정에서 주의할 점들</p>
-<ol type="1">
-<li><strong>과다 하이라이트 처리</strong>: 이전 단계 내용의 10-20% 정도만 선별</li>
-<li><strong>목적 없는 하이라이트 처리</strong>: 무작정 시작하지 않고, 메모를 어떻게 사용할지 알게 될 때까지 기다린 후, 필요에 따라 하이라이트 한다.</li>
-<li><strong>어려운 방식의 하이라이트 처리</strong>: 본인의 직관에 맞게 흥미로운 구절들을 하이라이트 한다.</li>
-</ol>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>메모의 생존 여부는 ’얼마나 쉽게 찾을 수 있는가’에 달려있다.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="express" class="level3">
-<h3 class="anchored" data-anchor-id="express">Express</h3>
-<p>맡은일을 중간 단계로 나누어서 최대한 빠르게 결과물을 도출하라 도출한 작업물들을 중간단계로써 다른 프로젝트에 사용할 때, 도움을 얻을 수 있다. 도출한 결과물들을 다른사람들과 공유를 해서 피드백을 받아라</p>
-</section>
-</section>
-<section id="창조력을-완성하는-과정" class="level2">
-<h2 class="anchored" data-anchor-id="창조력을-완성하는-과정">창조력을 완성하는 과정</h2>
-<p>언제든 참신한 아이디어를 떠올릴 수 있다고 기대해서는 안된다. 혁신과 문제 해결은 흥미로운 아이디어를 체계적으로 불러일으켜 우리가 인식하게 하는 일상에 달려 있다.</p>
-<p>세컨드브레인은 창의적인 과정들을 아이디어 수집, 정리, 핵심 추출, 조립의 단계로 표준화하여 우리의 뇌 활동을 돕는다.</p>
-<section id="창의적인-프로젝트를-완료할-때-도움이-되는-전략" class="level3">
-<h3 class="anchored" data-anchor-id="창의적인-프로젝트를-완료할-때-도움이-되는-전략">창의적인 프로젝트를 완료할 때 도움이 되는 전략</h3>
-<ol type="1">
-<li><p>아이디어 군도: 프로젝트 수행에 필요한 모든 문서를 모은다. 그리고 해당 문서들을 연결하라.</p></li>
-<li><p>헤밍웨이 다리: 현재 진행중인 프로젝트에서 다음과 같은 사항들을 메모에 기록하라.</p>
-<ol type="1">
-<li>다음 단계에는 어떤 이야기를 쓸 지</li>
-<li>현재 상황</li>
-<li>잊어버리기 쉬운 세부 사항</li>
-<li>다음 작업 시간의 목표</li>
-</ol></li>
-<li><p>범위 조금씩 축소하기: 프로젝트의 복잡한 문제가 드러나면 과감하게 범위를 축소하라</p></li>
-</ol>
-</section>
-<section id="효율적인-실행을-위한-세-가지-습관" class="level3">
-<h3 class="anchored" data-anchor-id="효율적인-실행을-위한-세-가지-습관">효율적인 실행을 위한 세 가지 습관</h3>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>정리정돈은 타고난 특성이 아닌 습관이다.</p>
-</div>
-</div>
-</div>
-<section id="체크리스트-습관" class="level4">
-<h4 class="anchored" data-anchor-id="체크리스트-습관">체크리스트 습관</h4>
-<ol type="1">
-<li>수집: 프로젝트에 대한 내 생각을 수집하라
-<ol type="1">
-<li>이 프로젝트에 대해 이미 알고 있는 것은 무엇인가?</li>
-<li>알아내야 하지만 아직 모르는 것은 무엇인가?</li>
-<li>목표나 목적은 무엇인가?</li>
-<li>통찰력을 얻으려면 누구와 대화해야 하는가?</li>
-<li>아이디어를 얻으려면 어떤 것을 읽거나 들어야 하는가?</li>
-</ol></li>
-<li>검토: 관련 메모가 있을 만한 폴더나 태그를 검토하라</li>
-<li>검색: 모든 폴더에서 관련 용어를 검색하라</li>
-<li>이동: 관련 메모를 프로젝트 폴더로 이동하거나 태그를 설정하라</li>
-<li>작성: 수집한 메모로 개요를 작성하고 프로젝트를 계획하라</li>
-</ol>
-</section>
-<section id="리뷰-습관" class="level4">
-<h4 class="anchored" data-anchor-id="리뷰-습관">리뷰 습관</h4>
-<ol type="1">
-<li><p>주간 리뷰</p>
-<p>일주일 동안 작업한 모든 메체의 메모를 검토하라 그리고 이번 주 할 과제를 정하라</p></li>
-<li><p>월간 리뷰</p>
-<p>솔직히 이런건 잘 안할거 같다.</p></li>
-</ol>
-</section>
-<section id="알아차리는-습관" class="level4">
-<h4 class="anchored" data-anchor-id="알아차리는-습관">알아차리는 습관</h4>
-
-
-</section>
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>학습</category>
-  <category>독서</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/blog/notes/1.html</guid>
-  <pubDate>Wed, 08 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>what is linear algebra</title>
-  <link>https://cryscham123.github.io/posts/02_areas/선형대수/notes/0.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="what-is-linear-algebra" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-linear-algebra">what is linear algebra</h2>
-<p>선형 방정식을 matrix와 vector로 표현해서 다루는 수학</p>
-<p><img src="https://latex.codecogs.com/png.latex?ax%5E2%20+%20bx%20+%20c%20=%200"> (x)</p>
-<p><img src="https://latex.codecogs.com/png.latex?ax_1%20+%20bx_2%20+%20c%20=%200"> (0)</p>
-</section>
-<section id="what-is-vector" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-vector">what is vector</h2>
-<p>vector는 크기(magnitude)와 방향(direction)을 가지고 있다.</p>
-<p>2, 3, 4 차원 너머를 수학적으로 표현할 수 있다.</p>
-<p>vector는 수학적으로, 아래와 같이 표현할 수 있다.</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cvec%7Bv%7D%20=%0A%5Cbegin%7Bbmatrix%7D%0A3%20%5C%5C%0A4%0A%5Cend%7Bbmatrix%7D%0A"></p>
-</section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">Example</h2>
-<img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0Ax%20+%202y%20%5Cquad%20%20&amp;=%204%20%5C%5C%0A2x%20+%205y%20%5Cquad%20&amp;=%209%0A%5Cend%7Baligned%7D">
-<p>위의 연립 1차 방정식을 matrix와 vector로 표현해보자</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cunderset%7BA%7D%7B%5Cbegin%7Bbmatrix%7D%0A1%20&amp;%202%20%5C%5C%0A2%20&amp;%205%0A%5Cend%7Bbmatrix%7D%7D%0A%5Cunderset%7Bx%7D%7B%5Cbegin%7Bbmatrix%7D%0Ax%20%5C%5C%0Ay%0A%5Cend%7Bbmatrix%7D%7D%20=%0A%5Cbegin%7Bbmatrix%7D%0A1x%20+%202y%20%5C%5C%0A2x%20+%205y%0A%5Cend%7Bbmatrix%7D%20=%0A%5Cunderset%7Bb%7D%7B%5Cbegin%7Bbmatrix%7D%0A4%20%5C%5C%0A9%0A%5Cend%7Bbmatrix%7D%7D%0A"></p>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>선형 대수</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/선형대수/notes/0.html</guid>
-  <pubDate>Mon, 06 Jan 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

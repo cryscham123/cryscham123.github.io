@@ -1,0 +1,1852 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>김형훈의 학습 블로그</title>
+<link>https://cryscham123.github.io/posts/04_archives/aws_saa/</link>
+<atom:link href="https://cryscham123.github.io/posts/04_archives/aws_saa/index.xml" rel="self" type="application/rss+xml"/>
+<description>AWS SAA를 준비해 봅시다.</description>
+<image>
+<url>https://cryscham123.github.io/profile.jpg</url>
+<title>김형훈의 학습 블로그</title>
+<link>https://cryscham123.github.io/posts/04_archives/aws_saa/</link>
+</image>
+<generator>quarto-1.5.56</generator>
+<lastBuildDate>Mon, 29 Apr 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/03_ebs.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="what-is-ebs" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-ebs">what is ebs</h2>
+<ul>
+<li>EBS is a network device designed to work with AWS EC2 instances.</li>
+<li>EBS volumes are placed in a specific AZ and are automatically replicated to protect you from component failure.</li>
+<li>EBS volumes attached only to one instance at a time.</li>
+<li>EBS volumes can be detached from one instance and attached to another.</li>
+<li>EBS volumes can be used as a boot volume.</li>
+<li>EBS volumes have a provisioned size and IOPS can be resized.</li>
+<li>EBS volumes can exist independently of an EC2 instance.</li>
+<li>multiple EBS volumes can be attached to a single EC2 instance.</li>
+</ul>
+<section id="delete-on-termination" class="level3">
+<h3 class="anchored" data-anchor-id="delete-on-termination">delete on termination</h3>
+<ul>
+<li>By default, the root EBS volume is deleted when the EC2 instance is terminated.</li>
+<li>Additional EBS volumes are not deleted when the EC2 instance is terminated.</li>
+</ul>
+</section>
+<section id="ebs-snapshots-features" class="level3">
+<h3 class="anchored" data-anchor-id="ebs-snapshots-features">EBS snapshots features</h3>
+<ul>
+<li>EBS snapshots archive tier:<br>
+75% cheaper than the general-purpose tier.<br>
+takes 24 to 72 hours to restore.</li>
+<li>recycle bin:<br>
+set up rule to retain deleted snapshots<br>
+can specify period</li>
+<li>Fast Snapshot Restore(FSR):<br>
+force full initialization of the EBS volume to have no latency<br>
+takes money</li>
+</ul>
+</section>
+<section id="ami" class="level3">
+<h3 class="anchored" data-anchor-id="ami">AMI</h3>
+<p>Amazon Machine Image - AMI is a template that contains a software configuration (OS, application server, and applications) required to launch an EC2 instance. - AMI is built for a <code>specific region</code>. - can be copied to other regions.</p>
+</section>
+<section id="ec2-instance-store" class="level3">
+<h3 class="anchored" data-anchor-id="ec2-instance-store">EC2 instance store</h3>
+<ul>
+<li><code>better IO performance</code> than EBS volumes</li>
+<li><code>data is lost</code> when the instance is stopped or terminated.</li>
+<li>can’t be resized.</li>
+</ul>
+</section>
+<section id="ebs-volume-types" class="level3">
+<h3 class="anchored" data-anchor-id="ebs-volume-types">EBS volume types</h3>
+<ul>
+<li>General Purpose SSD (gp2, gp3): <code>can be used for boot volumes</code>
+<ul>
+<li>generally used for system boot volumes, virtual desktops, low-latency interactive apps, development, and test environments</li>
+<li>gp2: 1GiB - 16TiB, burst up to 3000 IOPS <code>linked to volume size</code></li>
+<li>gp3: 1GiB - 16TiB, 3000 IOPS, 125MiB/s, burst up to 16000 IOPS, 1000MiB/s <code>independently</code></li>
+</ul></li>
+<li>High Performance SSD (io1, io2): <code>can be used for boot volumes</code>
+<ul>
+<li>critical business applications that require sustained IOPS performance</li>
+<li><code>more than 16000 IOPS</code></li>
+<li>generally used for databases</li>
+<li>4GiB - 16TiB</li>
+<li>Max PIOPS: <code>64000 for Nitro EC2</code>, 32000 for other EC2</li>
+<li>Can increase PIOPS independently from volume size</li>
+<li>io2 have more durability and more IOPS per GiB</li>
+<li>io2 Block Express: 4GiB - 64TiB, <code>256000 IOPS</code></li>
+<li><code>support Multi-Attach</code>
+<ul>
+<li>bound in AZ</li>
+<li>up to 16 EC2 instances</li>
+<li>Must use a file system that is cluster-aware (GFS, OCFS2, NTFS)</li>
+</ul></li>
+</ul></li>
+<li>Low cost, designed for <code>frequently accessed</code> HDD (st1)
+<ul>
+<li>125MiB - 16TiB</li>
+<li>500MiB/s - 500MiB/s</li>
+<li>used for big data, data warehouses, log processing</li>
+</ul></li>
+<li>Low cost, designed for <code>less frequently accessed</code> HDD (sc1)
+<ul>
+<li>125MiB - 16TiB</li>
+<li>250MiB/s - 250MiB/s</li>
+<li>used for file servers, infrequently accessed workloads</li>
+</ul></li>
+</ul>
+</section>
+<section id="efs" class="level3">
+<h3 class="anchored" data-anchor-id="efs">EFS</h3>
+<ul>
+<li>Elastic File System</li>
+<li><code>scalable</code> storage solution for EC2 instances</li>
+<li><code>can be shared</code> across multiple instances <code>in multi-AZ</code></li>
+<li><code>can be accessed</code> by multiple instances simultaneously</li>
+<li>expensive than EBS</li>
+<li>can be used for `<code>content management</code>, <code>web serving</code></li>
+<li>use NFSv4.1 protocol</li>
+<li>use <code>security group</code> to control access</li>
+<li>compatible with <code>Linux-based AMI</code></li>
+<li>Performance Mode:
+<ul>
+<li>General Purpose: latency-sensitive use cases</li>
+<li>Max I/O: higher latency, higher throughput</li>
+</ul></li>
+<li>Throughput Mode:
+<ul>
+<li>Bursting: burstable throughput</li>
+<li>Provisioned: provisioned throughput</li>
+<li>Elastic: elastic throughput</li>
+</ul></li>
+<li>storage classes:
+<ul>
+<li>Standard: frequently accessed</li>
+<li>Infrequent Access: infrequently accessed</li>
+<li>One Zone: infrequently accessed, stored in a single AZ. 90% cheaper than Regional</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/03_ebs.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/02_ec2.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="what-is-ec2" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-ec2">what is EC2</h2>
+<p>EC2 stands for Elastic Compute Cloud. It is a web service provided by Amazon Web Services (AWS) that allows users to rent virtual servers in the cloud.<br>
+EC2 instances can be easily scaled up or down based on the user’s needs, providing flexibility and cost efficiency.<br>
+These instances can be used to run applications, host websites, process large amounts of data, and perform various other computing tasks.<br>
+EC2 offers a wide range of instance types to cater to different workloads, and users have full control over the configuration and management of their instances.</p>
+<section id="capabilities" class="level3">
+<h3 class="anchored" data-anchor-id="capabilities">capabilities</h3>
+<ul>
+<li>launch virtual servers</li>
+<li>manage storage (EBS, EFS, S3)</li>
+<li>scale up or down based on demand (ASG)</li>
+<li>distribute traffic across multiple instances (ELB)</li>
+</ul>
+</section>
+<section id="configure-options" class="level3">
+<h3 class="anchored" data-anchor-id="configure-options">configure options</h3>
+<ul>
+<li>os</li>
+<li>CPU</li>
+<li>memory</li>
+<li>storage</li>
+<li>network</li>
+<li>security (IAM, security groups, key pairs)</li>
+<li>bootstrap scripts (user data)</li>
+</ul>
+</section>
+<section id="instance-types" class="level3">
+<h3 class="anchored" data-anchor-id="instance-types">instance types</h3>
+<ul>
+<li>general purpose (t2, m5)</li>
+<li>compute optimized (c5)</li>
+<li>memory optimized (r5)</li>
+<li>storage optimized (i3)</li>
+<li>accelerated computing (p3, g4)</li>
+</ul>
+</section>
+<section id="security-groups" class="level3">
+<h3 class="anchored" data-anchor-id="security-groups">security groups</h3>
+<ul>
+<li>act as a virtual firewall for your EC2 instances</li>
+<li>control inbound and outbound traffic</li>
+<li>can be associated with multiple instances</li>
+<li>locked down to a region/VPC combination</li>
+<li>does live outside the EC2 - if traffic is blocked, the EC2 instance won’t see it (time out)</li>
+<li>can reference other security groups</li>
+</ul>
+</section>
+<section id="pricing" class="level3">
+<h3 class="anchored" data-anchor-id="pricing">pricing</h3>
+<ul>
+<li>on-demand: pay for what you use</li>
+<li>reserved: capacity reservation for 1 or 3 years</li>
+</ul>
+<ol type="1">
+<li>reserved</li>
+<li>convertible reserved instances<br>
+good for steady-state usage application(db)<br>
+reserve a specific instance attributes (instance type, region, tenancy, os)<br>
+you can buy and sell in marketplace</li>
+</ol>
+<ul>
+<li><p>spot: bid for unused capacity</p></li>
+<li><p>savings plan: commit to a consistent amount of usage for a discount<br>
+if beyond pay, converted to on-demand<br>
+locked to a specific instance family, aws region<br>
+flexible: instance size, os, tenancy</p></li>
+<li><p>dedicated hosts: physical server dedicated for your use</p></li>
+<li><p>dedicated instances: instance running on a dedicated host</p></li>
+<li><p>capacity reservation: reserve capacity for specific instance type in a specific AZ</p></li>
+</ul>
+</section>
+<section id="placement-groups" class="level3">
+<h3 class="anchored" data-anchor-id="placement-groups">placement groups</h3>
+<ul>
+<li>cluster: low latency, high throughput</li>
+<li>partition: multiple EC2 instances within a single AZ</li>
+<li>spread: EC2 instances on distinct hardware, <code>maximum 7</code></li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/02_ec2.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/12_database.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="database-choice-in-aws" class="level1">
+
+<section id="database-types" class="level2">
+
+<ul>
+<li>RDBMS(RDS, aurora): SQL, OLTP</li>
+<li>NoSQL: DynamoDB(JSON), ElasticCache(key / value), Neptune(graphs), DocumentDB(MongoDB), Keyspaces(Cassandra)</li>
+<li>Object storage: S3(for big), Glacier(for backup, archive)</li>
+<li>Data warehouse: SQL analytics, Redshift(OLAP), athena, EMR</li>
+<li>Search: openSearch(JSON)</li>
+<li>Graphs: Amazon Neptune</li>
+<li>Ledger: QLDB</li>
+<li>Time series: Timestream</li>
+</ul>
+<section id="documentdb" class="level3">
+
+<ul>
+<li>MongoDB compatible</li>
+<li>Fully managed</li>
+<li>highly available with replication across 3 AZs</li>
+<li>Automatically scales up to 10GB storage, millions of requests per seconds workloads</li>
+</ul>
+</section>
+<section id="amazon-neptune" class="level3">
+
+<ul>
+<li>Graph database</li>
+<li>Fully managed</li>
+<li>Highl available with replication across 3 AZs, up to 15 read replicas</li>
+<li>Supports up to billions of relations</li>
+</ul>
+</section>
+<section id="amazon-keyspaces" class="level3">
+
+<ul>
+<li>Cassandra compatible</li>
+<li>Fully managed</li>
+<li>Automatically scale tables based on traffic</li>
+<li>tables replicated across 3 times across multiple AZs</li>
+<li>ondemand, provisioned</li>
+</ul>
+</section>
+<section id="qldb" class="level3">
+
+<ul>
+<li>Ledger database</li>
+<li>Fully managed</li>
+<li>immutable, transparent, cryptographically verifiable transaction log</li>
+<li>high performance, low latency</li>
+<li>serverless, pay as you go</li>
+<li>no decentralized consensus, no blockchain</li>
+</ul>
+</section>
+<section id="timestream" class="level3">
+
+<ul>
+<li>Time series database</li>
+<li>Fully managed</li>
+<li>store and analyze trillions of events per day</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/12_database.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/00_region.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="aws-global-infrastructure" class="level2">
+
+<section id="kind-of-infra" class="level3">
+
+<ol type="1">
+<li>regions:<br>
+cluster of data center</li>
+<li>availability zone (AZ)</li>
+</ol>
+<ul>
+<li>usually 3, min 3, max 6</li>
+<li>one or more discrete data center</li>
+<li>separate from each others, so that isolated from disasters</li>
+</ul>
+<ol start="3" type="1">
+<li>Data center</li>
+</ol>
+<ul>
+<li>rack</li>
+<li>host</li>
+<li>instance</li>
+</ul>
+<ol start="4" type="1">
+<li><dl>
+<dt>aws edge locations / points of presence</dt>
+<dd>
+400+ points of presence(400+ edge locations, 10+ regional cathes) in 90+ cities across 40+ contries
+</dd>
+</dl></li>
+</ol>
+</section>
+<section id="global-scope-services-region-scope-services" class="level3">
+
+<ol type="1">
+<li>global</li>
+</ol>
+<ul>
+<li>IAM</li>
+<li>DNS services</li>
+<li>CDN</li>
+<li>WAF</li>
+</ul>
+<ol start="2" type="1">
+<li>region</li>
+</ol>
+<ul>
+<li>ec2</li>
+<li>lambda</li>
+<li>rekognition</li>
+</ul>
+</section>
+<section id="how-to-choose-region" class="level3">
+
+<ol type="1">
+<li>compliance with data governance and legal requirements</li>
+<li>proximity to customers</li>
+<li>available services within a region</li>
+<li>pricing</li>
+</ol>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/00_region.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/18_VPC.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="vpc" class="level1">
+<h1>VPC</h1>
+<section id="nat-gateway" class="level2">
+<h2 class="anchored" data-anchor-id="nat-gateway">NAT GATEWAY</h2>
+<p>: AWS managed NAT instance, use specific AZ, elastic IP only for another subnet</p>
+</section>
+<section id="nacls" class="level2">
+<h2 class="anchored" data-anchor-id="nacls">NACLs</h2>
+<p>: stateless, allow/deny traffic in/out of subnet default, <code>it allows all traffic</code> <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/6.png" class="img-fluid" alt="VPC"></p>
+</section>
+<section id="vpc-peering" class="level2">
+<h2 class="anchored" data-anchor-id="vpc-peering">VPC peering</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/7.png" class="img-fluid figure-img"></p>
+<figcaption>VPC</figcaption>
+</figure>
+</div>
+</section>
+<section id="vpc-endpoint" class="level2">
+<h2 class="anchored" data-anchor-id="vpc-endpoint">VPC endpoint</h2>
+<p>: <code>private</code> connection between VPC and AWS services - Gateway endpoint: S3, DynamoDB. taget of route table - Interface endpoint: API Gateway, CloudWatch, KMS, SSM, S3, DynamoDB, etc.</p>
+</section>
+<section id="vpc-flow-logs" class="level2">
+<h2 class="anchored" data-anchor-id="vpc-flow-logs">VPC flow logs</h2>
+<p>: VPC flow logs, capture information about IP traffic going to and from network interfaces in your VPC</p>
+</section>
+<section id="site-to-site-vpn" class="level2">
+<h2 class="anchored" data-anchor-id="site-to-site-vpn">site-to-site VPN</h2>
+<p>: connect on-premises network to AWS VPC <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/8.png" class="img-fluid" alt="VPC"></p>
+</section>
+<section id="direct-connectdx" class="level2">
+<h2 class="anchored" data-anchor-id="direct-connectdx">direct connect(DX)</h2>
+<p>: dedicated network connection between on-premises and AWS</p>
+</section>
+<section id="egress-only-internet-gateway" class="level2">
+<h2 class="anchored" data-anchor-id="egress-only-internet-gateway">Egress-only Internet Gateway</h2>
+<p>: IPv6 only, allow outbound traffic to the internet</p>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/18_VPC.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/06_route53.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="route53" class="level1">
+
+<ul>
+<li>Domain/subdomain</li>
+<li>Record type (A, AAAA, CNAME, NS)
+<ul>
+<li>A: IPv4</li>
+<li>AAAA: IPv6</li>
+<li>CNAME: Canonical name. cant be used for root domain</li>
+<li>NS: Name server (another DNS server)</li>
+<li>alias: Route53 specific. can be used for root domain. free. health check. no TTL, can’t be used for ec2 instance</li>
+</ul></li>
+<li>Value</li>
+<li>Routing policy
+<ul>
+<li>Simple: one record with multiple values, choose randomly by client, no health check, if alias then specify only one</li>
+<li>Weighted: split traffic based on weight</li>
+<li>Latency based: split traffic based on latency</li>
+<li>Failover: primary and secondary</li>
+<li>Geolocation</li>
+<li>Multivalue answer: multiple values, health check, choose randomly by client</li>
+<li>Geo-proximity</li>
+</ul></li>
+<li>TTL</li>
+</ul>
+<section id="health-check" class="level2">
+
+<ul>
+<li>Endpoint</li>
+<li>Calculated</li>
+<li>CloudWatch alarm</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/06_route53.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/13_data_analytics.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>SQL<code>queries -</code>S3<code>as data source - supports</code>CSV<code>,</code>JSON<code>,</code>Parquet<code>,</code>ORC<code>data formats - 5$ per TB scanned ## Performance Improvement - use</code>columnar<code>data formats (less scan) =&gt;</code>Parquet<code>,</code>ORC<code>by using</code>AWS Glue<code>- compress data =&gt;</code>GZIP<code>,</code>Snappy<code>,</code>LZO<code>-</code>partition datasets<code>in S3 for easy querying on virtual columns (path) -</code>Use larger files` (&gt; 128MB) to minimize overhead</p>
+<section id="federated-query" class="level2">
+<h2 class="anchored" data-anchor-id="federated-query">Federated Query</h2>
+<p>allows you to query data in relational, non-relational, object, … in a single query on AWS or on-premises</p>
+</section>
+<section id="amazon-redshift" class="level1">
+<h1>Amazon Redshift</h1>
+<p>based on postgres, <code>not used for OLTP</code> but <code>OLAP</code> copies data from <code>S3</code>, <code>DynamoDB</code>, <code>RDS</code>, <code>Kinesis</code>, <code>EMR</code>, <code>Data Pipeline</code>, <code>Glue</code>, <code>Redshift Spectrum</code></p>
+<section id="cluster" class="level2">
+<h2 class="anchored" data-anchor-id="cluster">cluster</h2>
+<ul>
+<li>leader node</li>
+<li>compute node</li>
+</ul>
+</section>
+<section id="snapshots-and-dr" class="level2">
+<h2 class="anchored" data-anchor-id="snapshots-and-dr">snapshots and DR</h2>
+<ul>
+<li>Multi-AZ for some cluster</li>
+<li>snapshots are point-in-time backups in S3</li>
+<li>change is saved</li>
+<li>automate snapshot, manual snapshote</li>
+</ul>
+</section>
+<section id="loading-data-into-redshift" class="level2">
+<h2 class="anchored" data-anchor-id="loading-data-into-redshift">loading data into redshift</h2>
+<ol type="1">
+<li>Amazon Kinesis Data Firehose</li>
+<li>Amazon S3 copy</li>
+<li>EC2 instance JDBC driver</li>
+</ol>
+</section>
+<section id="redshift-spectrum" class="level2">
+<h2 class="anchored" data-anchor-id="redshift-spectrum">Redshift Spectrum</h2>
+<p>: <code>query data directly in S3</code> without loading it into Redshift</p>
+</section>
+</section>
+<section id="amazon-opensearch-service" class="level1">
+<h1>Amazon openSearch Service</h1>
+<p>: <code>managed</code> <code>Elasticsearch</code> and <code>Kibana</code> service # Amazon EMR : <code>managed</code> <code>Hadoop</code> and <code>Spark</code> service # AWS Glue : <code>managed</code> serverless <code>ETL</code> service <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/19.png" class="img-fluid" alt="AWS Glue"></p>
+</section>
+<section id="kinesis" class="level1">
+<h1>Kinesis</h1>
+<ul>
+<li><code>real-time</code> data streaming</li>
+<li><code>Kinesis Data Streams</code>: <code>real-time</code> data streaming</li>
+<li><code>Kinesis Data Firehose</code>: <code>load</code> data into <code>S3</code>, <code>Redshift</code>, <code>ElasticSearch</code>, <code>Splunk</code></li>
+<li><code>Kinesis Data Analytics</code>: <code>real-time</code> data analytics</li>
+<li><code>Kinesis Video Streams</code>: <code>real-time</code> video streaming</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/13_data_analytics.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/17_AWS_secure.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="kmskey-management-service" class="level2">
+
+<ul>
+<li><code>managed</code> service to create and control encryption keys</li>
+<li>Able to audit key usage with <code>CloudTrail</code></li>
+<li>attached to region =&gt; can replicate across regions</li>
+</ul>
+<section id="types" class="level3">
+
+<ul>
+<li>symmetric key: same key for encryption and decryption</li>
+<li>asymmetric key: public and private key</li>
+</ul>
+</section>
+<section id="kms-key-type" class="level3">
+
+<ul>
+<li>AWS owned key: managed by AWS</li>
+<li>AWS Managed key: managed by AWS but you have control over the key policy</li>
+<li>Customer managed key: managed by you, but AWS manages the underlying infrastructure, not free</li>
+</ul>
+</section>
+<section id="kms-key-policy" class="level3">
+
+<ul>
+<li><code>key policy</code> is attached to the key</li>
+<li>Default key policy: complete access to the key</li>
+<li>custom key policy: define who can use the key and roles and who can administer the key</li>
+</ul>
+</section>
+</section>
+<section id="aws-wafweb-application-firewall" class="level2">
+<h2 class="anchored" data-anchor-id="aws-wafweb-application-firewall">AWS WAF(Web Application Firewall)</h2>
+<section id="deploy-on" class="level3">
+<h3 class="anchored" data-anchor-id="deploy-on">deploy on</h3>
+<ul>
+<li>CloudFront <code>(global)</code></li>
+<li>Application Load Balancer (regional)</li>
+<li>API Gateway (regional)</li>
+<li>AppSync GraphQL API (regional)</li>
+<li>cognito (regional)</li>
+</ul>
+</section>
+<section id="features" class="level3">
+<h3 class="anchored" data-anchor-id="features">features</h3>
+<ul>
+<li>protect from SQL injection, cross-site scripting, and other web attacks</li>
+<li>IP blacklisting and whitelisting</li>
+<li>filter HTTP headers / body / URI</li>
+<li>limit the size of requests</li>
+<li>geo-blocking</li>
+<li>rate limiting (DDoS protection) <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/5.png" class="img-fluid" alt="cloudwatch agent"></li>
+</ul>
+</section>
+</section>
+<section id="aws-shield" class="level2">
+<h2 class="anchored" data-anchor-id="aws-shield">AWS Shield</h2>
+<ul>
+<li><code>DDoS</code> protection service</li>
+<li><code>Standard</code> and <code>Advanced</code> plan</li>
+</ul>
+</section>
+<section id="aws-firewall-manager" class="level2">
+<h2 class="anchored" data-anchor-id="aws-firewall-manager">AWS Firewall Manager</h2>
+<ul>
+<li><code>central</code> management service to configure and manage WAF rules across accounts and applications</li>
+</ul>
+</section>
+<section id="amazon-guardduty" class="level2">
+<h2 class="anchored" data-anchor-id="amazon-guardduty">Amazon GuardDuty</h2>
+<ul>
+<li><code>threat detection</code> service</li>
+<li>good for detect crypto currency mining</li>
+</ul>
+</section>
+<section id="amazon-inspector" class="level2">
+<h2 class="anchored" data-anchor-id="amazon-inspector">Amazon Inspector</h2>
+<ul>
+<li><code>security assessment</code> service</li>
+<li><code>continuous assessment</code> of applications for vulnerabilities and deviations from best practices</li>
+</ul>
+</section>
+<section id="amazon-macie" class="level2">
+<h2 class="anchored" data-anchor-id="amazon-macie">Amazon Macie</h2>
+<ul>
+<li><code>data security</code> and <code>data privacy</code> service</li>
+<li><code>detect</code> and <code>protect</code> sensitive data</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/17_AWS_secure.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/04_elb_asg.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="elb" class="level1">
+
+<section id="types-of-elb" class="level2">
+
+<section id="application-load-balancer-alb" class="level3">
+
+<ul>
+<li>HTTP, HTTPS, WebSockets<br>
+</li>
+<li>Layer 7</li>
+<li><code>fixed hostname</code> in every AZ</li>
+<li>client IP address preservation in the <code>X-Forwarded-For</code> header</li>
+<li>can use <code>sticky sessions</code> through <code>cookies</code> #### target group</li>
+<li>EC2 instances</li>
+<li>ECS tasks</li>
+<li>Lambda functions</li>
+<li>IP addresses (private) #### routing routing to diffrent target or same machine different application based on:</li>
+<li>routing based on URL</li>
+<li>routing based on hostname</li>
+<li>routing based on path</li>
+<li>routing based on query string</li>
+<li>routing based on HTTP header</li>
+<li>routing based on port</li>
+</ul>
+</section>
+<section id="network-load-balancer-nlb" class="level3">
+
+<ul>
+<li>TCP, TLS, UDP<br>
+</li>
+<li>Layer 4</li>
+<li><code>fixed IP address</code> per AZ and support assigning Elastic IP address</li>
+<li><code>high throughput</code> and <code>low latency</code> #### target group</li>
+<li>EC2 instances</li>
+<li>IP addresses (private)</li>
+<li>Lambda functions</li>
+<li>ALB</li>
+</ul>
+</section>
+<section id="gateway-load-balancer-gwlb" class="level3">
+
+<ul>
+<li>ip</li>
+<li>Layer 3</li>
+<li>Deploy, scale, and manage third-party virtual appliances</li>
+<li>example: firewall, intrusion detection and prevention, deep packet inspection, and security analytics</li>
+<li>Transparent Network Gateway: single endpoint for all traffic</li>
+<li>Load Balancer Gateway: distribute traffic across multiple virtual appliances</li>
+<li>Use GENEVE tunneling protocol on port 6081 #### target group</li>
+<li>EC2 instances</li>
+<li>IP addresses (private)</li>
+</ul>
+</section>
+</section>
+<section id="cross-zone-load-balancing" class="level2">
+
+<ul>
+<li>distribute traffic evenly across all registered instances in all enabled AZs</li>
+<li><code>enabled</code> by default for ALB and no charge for inter AZ data transfer (can be disabled in target group)</li>
+<li><code>disabled</code> by default for NLB, GWLB and charge for inter AZ data transfer</li>
+</ul>
+</section>
+<section id="ssltls" class="level2">
+
+<section id="sni" class="level3">
+
+<ul>
+<li>Server Name Indication</li>
+<li><code>ALB</code> and <code>NLB</code> and <code>cloudFront</code> support SNI</li>
+</ul>
+</section>
+</section>
+<section id="connection-draining" class="level2">
+
+<ul>
+<li><code>ALB</code> and <code>NLB</code> support connection draining (deregestration delay)</li>
+</ul>
+</section>
+<section id="asg" class="level2">
+
+<section id="policy" class="level3">
+
+<ul>
+<li>Target tracking scaling policy</li>
+<li>Simple / Step scaling policy</li>
+<li>Scheduled scaling policy</li>
+<li>Predictive scaling policy</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/04_elb_asg.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/19_DR.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="disaster-recoverydr" class="level1">
+
+<ul>
+<li>RPO: Recovery Point Objective
+<ul>
+<li>the maximum acceptable amount of data loss measured in time</li>
+</ul></li>
+<li>RTO: Recovery Time Objective
+<ul>
+<li>the maximum acceptable amount of time to recover the system <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/21.png" class="img-fluid"> ## DR Strategies</li>
+</ul></li>
+<li>Backup and Restore: Simple but RPO and RTO are high</li>
+<li>Pilot Light: Minimal version of the environment is always running</li>
+<li>Warm Standby: A scaled-down version of a fully functional environment is always running</li>
+<li>Hot-site / Multi-Site Approach: Fully functional environment is always running</li>
+</ul>
+</section>
+<section id="database-migration-servicedms" class="level1">
+<h1>Database Migration Service(DMS)</h1>
+<ul>
+<li>migrate data from one database to another</li>
+<li>source is available during migration</li>
+<li>Homogeneous Migration: same database engine</li>
+<li>Heterogeneous Migration: different database engine. must use Schema Conversion Tool(SCT)</li>
+<li>Continuous Data Replication using CDC</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/19_DR.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/01_IAM.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="define-iam" class="level2">
+<h2 class="anchored" data-anchor-id="define-iam">Define IAM</h2>
+<section id="what-is-iam" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-iam">what is IAM</h3>
+<p>: identity access management (Global service)</p>
+</section>
+<section id="groups" class="level3">
+<h3 class="anchored" data-anchor-id="groups">Groups</h3>
+<p>group by users (not group itself)</p>
+</section>
+<section id="users" class="level3">
+<h3 class="anchored" data-anchor-id="users">Users</h3>
+<p>root account created by default each users can have multi groups</p>
+</section>
+</section>
+<section id="iampolicies" class="level2">
+<h2 class="anchored" data-anchor-id="iampolicies">IAM:Policies</h2>
+<ul>
+<li>Users or Groups can be assigned JSON documents called policies</li>
+<li>policies define permissions of the users(inline) or groups</li>
+<li>AWS apply the least privilege principle</li>
+</ul>
+<section id="json-exe" class="level3">
+<h3 class="anchored" data-anchor-id="json-exe">JSON exe</h3>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-2">    <span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-3">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Version"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2012-10-17"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-4">        <span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">//</span> <span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">optional</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"id"</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"..."</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-5">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Statement"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span></span>
+<span id="cb1-6">            <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-7">                <span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">//</span> <span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">optional</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sid"</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"..."</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-8">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Effect"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Allow"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-9">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Action"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"s3:ListBucket"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-10">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Resource"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"arn:aws:s3:::example-bucket"</span></span>
+<span id="cb1-11">            <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-12">            <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-13">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Effect"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Allow"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-14">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Action"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span></span>
+<span id="cb1-15">                    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"s3:GetObject"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-16">                    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"s3:PutObject"</span></span>
+<span id="cb1-17">                <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-18">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Resource"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"arn:aws:s3:::example-bucket/*"</span></span>
+<span id="cb1-19">            <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-20">        <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span id="cb1-21">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-22"><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+<ul>
+<li>Effect: Allow/Deny</li>
+<li>Principle: who can perform the action (account, user, role)</li>
+<li>Action: list of actions that are allowed or denied</li>
+<li>Resource: list of resources that are allowed or denied</li>
+<li>Condition: when the policy is in effect (optional)</li>
+</ul>
+</section>
+</section>
+<section id="iamroles-for-services" class="level2">
+<h2 class="anchored" data-anchor-id="iamroles-for-services">IAM:Roles for Services</h2>
+<ul>
+<li>Roles are used to delegate permissions to entities that you trust</li>
+</ul>
+<section id="trusted-entities" class="level3">
+<h3 class="anchored" data-anchor-id="trusted-entities">trusted entities</h3>
+<ul>
+<li>AWS account</li>
+<li><dl>
+<dt>AWS services</dt>
+<dd>
+EC2, Lambda, CodeBuild, CodePipeline, etc.
+</dd>
+</dl></li>
+</ul>
+</section>
+</section>
+<section id="iamsecurity-tools" class="level2">
+<h2 class="anchored" data-anchor-id="iamsecurity-tools">IAM:Security Tools</h2>
+<ul>
+<li><p>IAM Credentials Report (account level):<br>
+list of all users and their various credentials</p></li>
+<li><p>IAM Access Advisor (user level):<br>
+how long each service has been active and when it was last used</p></li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/01_IAM.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/08_cloudfront.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="cloudfront" class="level2">
+
+<ul>
+<li><code>CDN</code>: Content Delivery Network</li>
+<li><code>edge location</code>: cache content</li>
+<li>TTL: Time To Live. Cache Invalidation</li>
+<li><code>origin</code>: source of the file the CDN will distribute
+<ul>
+<li><code>S3 bucket</code>: also used as ingress</li>
+<li><code>EC2 instance</code></li>
+<li><code>ELB</code></li>
+<li><code>any HTTP server</code></li>
+</ul></li>
+<li><code>distribution</code>: the name given to the CDN which consists of a collection of edge locations <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/11.png" class="img-fluid" alt="CloudFront"> ### price class</li>
+<li><code>price class</code>: the number of edge locations used
+<ul>
+<li><code>all</code>: all edge locations</li>
+<li><code>200</code>: all edge locations except the most expensive</li>
+<li><code>100</code>: only the least expensive edge locations</li>
+</ul></li>
+</ul>
+<section id="aws-global-accelerator" class="level3">
+
+<ul>
+<li><code>AWS Global Accelerator</code>: improve the availability and performance of your applications with local or global users</li>
+<li><code>Anycast IP</code>: route user traffic to the nearest edge location</li>
+<li><code>static IP</code>: anycast IP</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/08_cloudfront.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/14_machine_learning.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="amazon-rekognition" class="level1">
+<h1>Amazon Rekognition</h1>
+<ul>
+<li>find objects, people, text, scenes in <code>image</code> and <code>video</code> analysis ## content moderation</li>
+<li>detect <code>explicit</code> and <code>suggestive</code> content</li>
+<li>a2i for human review</li>
+</ul>
+</section>
+<section id="amazon-transcribe" class="level1">
+<h1>Amazon Transcribe</h1>
+<p>: <code>speech-to-text</code> service</p>
+</section>
+<section id="amazon-polly" class="level1">
+<h1>Amazon Polly</h1>
+<p>: <code>text-to-speech</code> service</p>
+</section>
+<section id="amazon-translate" class="level1">
+<h1>Amazon Translate</h1>
+<p>: <code>language translation</code> service</p>
+</section>
+<section id="amazon-comprehend" class="level1">
+<h1>Amazon Comprehend</h1>
+<p>: <code>natural language processing</code> service</p>
+</section>
+<section id="amazon-lex" class="level1">
+<h1>Amazon Lex</h1>
+<p>: <code>chatbot</code> service</p>
+</section>
+<section id="amazon-sagemaker" class="level1">
+<h1>Amazon SageMaker</h1>
+<p>: <code>machine learning</code> service</p>
+</section>
+<section id="amazon-forecast" class="level1">
+<h1>Amazon Forecast</h1>
+<p>: <code>time series</code> forecasting service</p>
+</section>
+<section id="kendra" class="level1">
+<h1>kendra</h1>
+<p>: <code>document search</code> service</p>
+</section>
+<section id="amazon-personalize" class="level1">
+<h1>Amazon Personalize</h1>
+<p>: <code>personalized</code> recommendation service</p>
+</section>
+<section id="textract" class="level1">
+<h1>Textract</h1>
+<p>: <code>OCR</code> service</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/14_machine_learning.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/05_RDS_aurora_elasticCache.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="amazon-rds" class="level1">
+
+<ul>
+<li>Amazon RDS is a managed relational database service that provides a highly available, scalable, and secure database.</li>
+<li>Amazon RDS supports multiple database engines:
+<ul>
+<li>Amazon Aurora</li>
+<li>MySQL</li>
+<li>MariaDB</li>
+<li>PostgreSQL</li>
+<li>Oracle</li>
+<li>Microsoft SQL Server</li>
+</ul></li>
+<li>Amazon RDS provides the following features:
+<ul>
+<li>Automated backups</li>
+<li>Multi-AZ deployments</li>
+<li>Read replicas</li>
+<li>Monitoring</li>
+<li>Security</li>
+<li>Scalability</li>
+<li>High availability ### auto scaling</li>
+</ul></li>
+<li>must set <code>maximum storage threshold</code></li>
+</ul>
+<ol type="1">
+<li>free storage is less then 10% of allocated storage</li>
+<li>low-storage lasts at least 5 minutes</li>
+<li>6 hours have passed since last modification</li>
+</ol>
+<section id="rds-read-replicas-for-read-scalibity" class="level2">
+
+<ul>
+<li>up to 15 read replicas</li>
+<li>within AZ, cross AZ, cross region (<code>dont pay for data transfer across AZ, not across region</code>)</li>
+<li>read replicas can be promoted to a standalone database</li>
+</ul>
+<section id="cross-az" class="level3">
+
+<ul>
+<li>used for disaster recovery(not used for scaling)</li>
+<li>synchronous replication</li>
+<li>failover to standby in case of primary failure</li>
+<li>no manual intervention ### from single AZ to multi AZ</li>
+<li>zero downtime</li>
+<li>just modify for the database instance</li>
+</ul>
+</section>
+</section>
+<section id="amazon-aurora" class="level2">
+
+<ul>
+<li>MySQL and PostgreSQL compatible</li>
+<li>cloud optimized (5 times faster than MySQL, 3 times faster than PostgreSQL)</li>
+<li>storage auto scaling</li>
+<li>15 read replicas (cross region)</li>
+<li>failover instantaneously (less than 30 seconds through master node)</li>
+<li>cost more but effective ### High Availability and Read Scalability</li>
+<li>6 copies of data across 3 AZs (4 copies is needed for write, 3 copies is needed for read)</li>
+<li>self-healing storage</li>
+<li>storage is striped across 100s of volumes</li>
+</ul>
+<section id="global-aurora" class="level3">
+
+<ul>
+<li>1 primary region</li>
+<li>5 read-only secondary regions</li>
+<li>replication lag is less than 1 second</li>
+<li>up to 16 read replicas per secondary region</li>
+<li>failover to secondary region</li>
+<li><code>cross-region replication takes less than 1 second</code></li>
+</ul>
+</section>
+</section>
+<section id="backup" class="level2">
+
+<section id="rds" class="level3">
+
+<ul>
+<li>Automated backup (can disable, 5 minutes backup window)</li>
+<li>Manual snapshot (retention as log as you want)</li>
+<li>snapshot restore =&gt; new database</li>
+<li>s3 restore</li>
+</ul>
+</section>
+<section id="aurora" class="level3">
+
+<ul>
+<li>Automated backup (cannot disable, point-in-time recovery)</li>
+<li>Manual snapshot (retention as log as you want)</li>
+<li>snapshot restore =&gt; new database</li>
+<li>Percona XtraBackup, s3 restore</li>
+</ul>
+</section>
+</section>
+<section id="security" class="level2">
+
+</section>
+<section id="elasticcache" class="level2">
+
+<ul>
+<li>in-memory caching service</li>
+<li>Redis or Memcached (no high availability and backup)</li>
+<li>heavy application code change</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/05_RDS_aurora_elasticCache.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/15_monitoring.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="amazon-cloudwatch" class="level1">
+
+<section id="matrics" class="level2">
+
+<ul>
+<li>every service sends metrics to CloudWatch</li>
+<li><code>namespace</code> is a container for metrics</li>
+<li><code>metric</code> is a variable to monitor</li>
+<li><code>dimension</code> is a name/value pair that is attributed to a metric</li>
+<li>up to 30 dimensions per metric</li>
+<li><code>timestamp</code> is the time of the data point</li>
+<li>stream data to destination <code>near real-time</code></li>
+</ul>
+</section>
+<section id="logs" class="level2">
+
+<ul>
+<li>log data is stored indefinitely</li>
+<li><code>log group</code> is a container for logs</li>
+<li><code>log stream</code> is a sequence of log events</li>
+<li><code>log event</code> is a record of some activity</li>
+<li>SDK, Elastic Beanstalk, ECS, Lambda, CloudTrail, VPC Flow Logs, Route 53, API Gateway, CloudWatch Unified Agent can send logs to CloudWatch Logs</li>
+<li>log subscription: send logs to Lambda, Kinesis, ElasticSearch, S3</li>
+</ul>
+</section>
+<section id="cloudwatch-agent" class="level2">
+
+<ul>
+<li>collect more system-level metrics <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/1.png" class="img-fluid" alt="cloudwatch agent"></li>
+</ul>
+</section>
+<section id="cloudwatch-alarms" class="level2">
+
+<ul>
+<li><code>alarm</code> is a notification that is sent when a metric is in <code>breach</code> of the threshold</li>
+<li>state: <code>OK</code>, <code>ALARM</code>, <code>INSUFFICIENT_DATA</code></li>
+<li>target: stop, terminate, reboot, recover, start, or snapshot an instance / trigger an Auto Scaling action / send a notification to an SNS topic</li>
+<li>single metric alarm, composite alarm, anomaly detection alarm</li>
+</ul>
+</section>
+<section id="cloudwatch-events-eventbridge" class="level2">
+
+<ul>
+<li>cron jobs</li>
+<li><code>event</code> is a change in state</li>
+<li><code>rule</code> is a description of an event pattern</li>
+<li><code>target</code> is a resource that is invoked when a rule is triggered</li>
+<li><code>event bus</code> is a container for events</li>
+<li><code>event pattern</code> is a JSON object that describes a set of events to match</li>
+</ul>
+</section>
+</section>
+<section id="aws-cloudtrail" class="level1">
+<h1>AWS CloudTrail</h1>
+<ul>
+<li><code>CloudTrail</code> is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account in all region or single region</li>
+<li><code>trail</code> is a configuration that enables delivery of events as log files to an Amazon S3 bucket</li>
+<li>90 days retention period ## Management Events</li>
+<li><code>management events</code> provide information about management operations that are performed on resources in your AWS account ## Data Events</li>
+<li><code>data events</code> provide information about the resource operations performed on or within a resource</li>
+<li>by default, data events are not logged</li>
+</ul>
+<section id="insights-events" class="level2">
+<h2 class="anchored" data-anchor-id="insights-events">Insights Events</h2>
+<ul>
+<li><code>insights events</code> provide insights into the performance and availability of your AWS Account</li>
+</ul>
+</section>
+</section>
+<section id="aws-config" class="level1">
+<h1>AWS Config</h1>
+<ul>
+<li><code>config</code> is a service that enables you to assess, audit, and evaluate the configurations of your AWS resources</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/15_monitoring.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/09_aws_storage.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="aws-snow-family" class="level2">
+
+<ul>
+<li>AWS Snow Family is a collection of physical devices designed for use in edge locations, data centers, and in disconnected environments.</li>
+<li>Data Migration: snowcone, snowball edge, snowmobile</li>
+<li>Edge Computing: snowcone, snowball edge <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/12.png" class="img-fluid" alt="AWS Snow Family"> ### use process</li>
+</ul>
+<ol type="1">
+<li>Order: Order a Snow device from the AWS Management Console.</li>
+<li>install: Install the Snow client / AWS ops hub on your server</li>
+<li>Transfer: Transfer data to the Snow device using the Snow client.</li>
+<li>Ship: Ship the Snow device back to AWS.</li>
+<li>Load: Load the data into your S3 bucket.</li>
+</ol>
+</section>
+<section id="aws-fsx" class="level2">
+<h2 class="anchored" data-anchor-id="aws-fsx">AWS FSx</h2>
+<ul>
+<li>Amazon FSx for Windows File Server: fully managed Windows file system</li>
+<li>Amazon FSx for Lustre: fully managed Lustre file system, seamlessly integrated with S3 (can read and write data directly to S3)</li>
+<li>Amazon FSx for NetApp ONTAP: fully managed NetApp ONTAP file system, point-in-time snapshots, data deduplication, and data compression</li>
+<li>Amazon FSx for OpenZFS: fully managed OpenZFS file system, point-in-time snapshots, data deduplication, and data compression</li>
+</ul>
+<section id="file-system-deployment-options" class="level3">
+<h3 class="anchored" data-anchor-id="file-system-deployment-options">File System Deployment Options</h3>
+<ul>
+<li>Scratch File System: temporary storage for data processing. no replication.</li>
+<li>Persistent File System: long-term storage for data processing. replicate data across multiple Availability Zones.</li>
+</ul>
+</section>
+</section>
+<section id="aws-storage-gateway" class="level2">
+<h2 class="anchored" data-anchor-id="aws-storage-gateway">AWS Storage Gateway</h2>
+<ul>
+<li>AWS Storage Gateway is a hybrid cloud storage service that gives you on-premises access to virtually unlimited cloud storage.</li>
+<li>S3 File Gateway: store and retrieve objects in Amazon S3 using file protocols (NFS, SMB), cache data locally, not glacier.</li>
+<li>FSx File Gateway: store and retrieve objects in Amazon FSx using file protocols (NFS, SMB) for window file server.</li>
+<li>Volume Gateway: store and retrieve objects in Amazon S3, EBS Snapshot using iSCSI protocol.
+<ul>
+<li>cached volume: cache frequently accessed data locally.</li>
+<li>stored volume: entire dataset stored locally, asynchronously backed up to S3.</li>
+</ul></li>
+<li>Tape Gateway: store and retrieve objects in Amazon S3 using virtual tape library (VTL) interface <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/13.png" class="img-fluid" alt="AWS Storage Gateway"></li>
+</ul>
+</section>
+<section id="aws-datasync" class="level2">
+<h2 class="anchored" data-anchor-id="aws-datasync">AWS DataSync</h2>
+<ul>
+<li>AWS DataSync is a data transfer service that makes it easy for you to automate moving data between on-premises storage and Amazon S3, Amazon Elastic File System (Amazon EFS), or Amazon FSx for Windows File Server.</li>
+<li>File permissions and metadata are preserved during transfer.</li>
+<li>if not aws to aws, need agent to transfer data.</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/09_aws_storage.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/10_message_queue.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="aws-sqs" class="level2">
+<h2 class="anchored" data-anchor-id="aws-sqs">AWS SQS</h2>
+<ul>
+<li>Amazon Simple Queue Service (SQS) is a fully managed message queuing service that makes it easy to decouple and scale microservices, distributed systems, and serverless applications.</li>
+<li>unlimited throughput, no limit on the number of messages</li>
+<li>message retention period: default 4 days, maximum 14 days.</li>
+<li>limit on message size 256kb</li>
+<li>can have duplicate messages, out of order messages =&gt; need to handle in application or use FIFO queue</li>
+<li>SQS Access Policy</li>
+</ul>
+<section id="message-visibility-timeout" class="level3">
+<h3 class="anchored" data-anchor-id="message-visibility-timeout">Message Visibility Timeout</h3>
+<ul>
+<li>the amount of time that the message is invisible in the queue after a reader picks up the message.</li>
+<li>can increase timeout by calling ChangeMessageVisibility API</li>
+</ul>
+</section>
+<section id="long-polling" class="level3">
+<h3 class="anchored" data-anchor-id="long-polling">long polling</h3>
+<ul>
+<li>if no message in queue, the request will wait for a message to arrive for a certain amount of time.</li>
+</ul>
+</section>
+</section>
+<section id="aws-sns" class="level2">
+<h2 class="anchored" data-anchor-id="aws-sns">AWS SNS</h2>
+<ul>
+<li>publish/subscribe messaging service</li>
+<li>SNS FIFO (only SQS can subscribe)</li>
+<li>message filtering</li>
+</ul>
+<section id="fanout" class="level3">
+<h3 class="anchored" data-anchor-id="fanout">Fanout</h3>
+<p>SNS + multiple SQS</p>
+</section>
+</section>
+<section id="amazon-kinesis" class="level2">
+<h2 class="anchored" data-anchor-id="amazon-kinesis">Amazon Kinesis</h2>
+<section id="kinesis-data-streams" class="level3">
+<h3 class="anchored" data-anchor-id="kinesis-data-streams">Kinesis Data Streams</h3>
+<ul>
+<li>real-time data streaming service</li>
+<li>data retention: default 24 hours, maximum 365 days</li>
+<li>once data inserted, cannot be deleted</li>
+<li>provisioned mode, on-demand mode</li>
+<li>VPC endpoint available <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/16.png" class="img-fluid" alt="Kinesis Data Firehose"></li>
+</ul>
+</section>
+<section id="kinensis-data-firehose" class="level3">
+<h3 class="anchored" data-anchor-id="kinensis-data-firehose">Kinensis Data Firehose</h3>
+<ul>
+<li>data transformation, compression, encryption</li>
+<li>batch data delivery</li>
+<li>serverless <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/14.png" class="img-fluid" alt="Kinesis Data Firehose"> <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/15.png" class="img-fluid" alt="Kinesis Data Firehose"></li>
+</ul>
+</section>
+<section id="kinesis-data-analytics" class="level3">
+<h3 class="anchored" data-anchor-id="kinesis-data-analytics">Kinesis Data Analytics</h3>
+</section>
+<section id="kinesis-video-streams" class="level3">
+<h3 class="anchored" data-anchor-id="kinesis-video-streams">Kinesis Video Streams</h3>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/10_message_queue.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/07_S3.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="aws-s3" class="level2">
+<h2 class="anchored" data-anchor-id="aws-s3">AWS S3</h2>
+<ul>
+<li><code>Simple Storage Service</code></li>
+<li><code>object storage</code> service</li>
+<li><code>unlimited storage</code></li>
+<li>defined at <code>region</code> level</li>
+<li>max object size: <code>5TB</code> (larger objects than 5GB can be stored using <code>multipart upload</code>)</li>
+<li>key: full path</li>
+<li>value: body</li>
+<li>version ID: enabled at the bucket level</li>
+<li>metadata</li>
+<li>tags</li>
+</ul>
+<section id="security" class="level3">
+<h3 class="anchored" data-anchor-id="security">security</h3>
+<ul>
+<li>user-based
+<ul>
+<li>IAM policies</li>
+</ul></li>
+<li>resource-based
+<ul>
+<li>bucket policies: allows cross account</li>
+<li>bucket ACL(Access Control List)</li>
+<li>object ACL</li>
+</ul></li>
+<li>block public access</li>
+</ul>
+</section>
+<section id="replication" class="level3">
+<h3 class="anchored" data-anchor-id="replication">replication</h3>
+<ul>
+<li><code>CRR</code>: Cross-Region Replication</li>
+<li><code>SRR</code>: Same-Region Replication</li>
+<li><code>versioning</code> must be enabled on both source and destination buckets</li>
+<li><code>replication</code> is <code>asynchronous</code></li>
+<li><code>replication</code> is <code>cross-account</code></li>
+</ul>
+<section id="delete-marker-replication" class="level4">
+<h4 class="anchored" data-anchor-id="delete-marker-replication">delete marker replication</h4>
+<ul>
+<li><code>delete marker</code> is replicated</li>
+<li>optional setting</li>
+</ul>
+</section>
+<section id="s3-batch-replication" class="level4">
+<h4 class="anchored" data-anchor-id="s3-batch-replication">S3 batch replication</h4>
+<ul>
+<li>can replicate existing objects and failed replication</li>
+</ul>
+</section>
+</section>
+<section id="storage-classes" class="level3">
+<h3 class="anchored" data-anchor-id="storage-classes">storage classes</h3>
+<ul>
+<li><p><code>S3 Standard</code>: <code>99.99%</code> availability, general purpose #### infrequent access : for data that is less frequently accessed but requires rapid access when needed</p></li>
+<li><p><code>S3 Standard-IA</code>: <code>99.9%</code> availability</p></li>
+<li><p><code>S3 One Zone-IA</code>: <code>99.5%</code> availability #### Glacier : lower cost, for archive / backup</p></li>
+<li><p><code>S3 Glacier instant retrieval</code>: milliseconds retrieval, 90 days minimum storage</p></li>
+<li><p><code>S3 Glacier flexible retireval</code>: minutes to hours retrieval, 90 days minimum storage</p></li>
+<li><p><code>S3 Glacier Deep Archive</code>: 12 hours to 48 hours retrieval, 180 days minimum storage</p></li>
+<li><p><code>S3 Intelligent-Tiering</code>: auto pricing, auto move between IA and Standard</p></li>
+</ul>
+</section>
+<section id="lifecycle-rule" class="level3">
+<h3 class="anchored" data-anchor-id="lifecycle-rule">lifecycle rule</h3>
+<p>: automate moving objects between storage classes - transition action - expriation action</p>
+</section>
+<section id="event-notification" class="level3">
+<h3 class="anchored" data-anchor-id="event-notification">event notification</h3>
+<ul>
+<li><code>S3 event notification</code>: <code>SNS</code>, <code>SQS</code>, <code>Lambda</code></li>
+</ul>
+</section>
+<section id="s3-baseline-performance" class="level3">
+<h3 class="anchored" data-anchor-id="s3-baseline-performance">S3 baseline performance</h3>
+<ul>
+<li><code>3,500 PUT/COPY/POST/DELETE</code> and <code>5,500 GET/HEAD</code> requests per second <code>per prefix</code> in a bucket</li>
+</ul>
+</section>
+<section id="s3-transfer-acceleration" class="level3">
+<h3 class="anchored" data-anchor-id="s3-transfer-acceleration">S3 Transfer Acceleration</h3>
+<ul>
+<li><code>CloudFront</code> edge locations</li>
+<li><code>multipart upload</code> is compatible</li>
+</ul>
+</section>
+<section id="s3-byte-range-fetches" class="level3">
+<h3 class="anchored" data-anchor-id="s3-byte-range-fetches">S3 byte-range fetches</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/9.png" class="img-fluid figure-img"></p>
+<figcaption>S3 byte-range fetches</figcaption>
+</figure>
+</div>
+</section>
+<section id="s3-select-and-glacier-select" class="level3">
+<h3 class="anchored" data-anchor-id="s3-select-and-glacier-select">S3 select and Glacier select</h3>
+<ul>
+<li><code>S3 select</code>: SQL query on S3 objects</li>
+<li><code>Glacier select</code>: SQL query on Glacier objects</li>
+</ul>
+</section>
+<section id="s3-batch-operations" class="level3">
+<h3 class="anchored" data-anchor-id="s3-batch-operations">S3 Batch Operations</h3>
+<ul>
+<li><code>S3 Batch Operations</code>: <code>S3</code> operations on <code>large number</code> of objects use cases: encrypt unencrypted objects, copy objects, … <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/10.png" class="img-fluid" alt="S3 Batch Operations"></li>
+</ul>
+</section>
+<section id="storage-lens" class="level3">
+<h3 class="anchored" data-anchor-id="storage-lens">storage lens</h3>
+<ul>
+<li>multi-account, multi-region analyze dashboard</li>
+</ul>
+</section>
+<section id="s3-encryption" class="level3">
+<h3 class="anchored" data-anchor-id="s3-encryption">S3 encryption</h3>
+<ul>
+<li>SSE
+<ul>
+<li><code>SSE-S3</code>: <code>S3</code> managed keys, enabled by default, must set request header <code>x-amz-server-side-encryption: AES256</code></li>
+<li><code>SSE-KMS</code>: <code>KMS</code> managed, must set request header <code>x-amz-server-side-encryption: aws:kms</code>, request limits</li>
+<li><code>SSE-C</code>: <code>customer</code> managed, must set request header <code>x-amz-server-side-encryption-customer-algorithm: AES256</code>, must provide encryption key</li>
+</ul></li>
+<li>CSE
+<ul>
+<li><code>client-side</code> encryption</li>
+</ul></li>
+</ul>
+</section>
+<section id="mfa" class="level3">
+<h3 class="anchored" data-anchor-id="mfa">MFA</h3>
+<ul>
+<li>permanently delete objects</li>
+<li>suspend versioning on bucket</li>
+<li>to enable, must enable versioning on bucket and only the bucket owner(root account) can enable MFA</li>
+</ul>
+</section>
+<section id="s3-glacier-vault-lock" class="level3">
+<h3 class="anchored" data-anchor-id="s3-glacier-vault-lock">S3 glacier vault lock</h3>
+<ul>
+<li><code>compliance</code> and <code>WORM</code> (Write Once Read Many) model</li>
+<li>bucket level lock</li>
+</ul>
+</section>
+<section id="s3-object-lock" class="level3">
+<h3 class="anchored" data-anchor-id="s3-object-lock">S3 Object Lock</h3>
+<ul>
+<li><code>compliance</code> and <code>WORM</code> (Write Once Read Many) model</li>
+<li>block object deletion for a specified retention period</li>
+<li>must set versioning</li>
+<li><code>compliance</code> and <code>governance</code> mode</li>
+<li>legal hold: protect object from deletion indefinitely</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/07_S3.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/16_IAM.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="aws-organization" class="level1">
+<h1>AWS Organization</h1>
+<ul>
+<li>global service</li>
+<li><code>control</code> over multiple AWS accounts</li>
+<li><code>consolidated billing</code></li>
+<li>shared reserved instances and savings plans across accounts ## service control policies (SCPs)</li>
+<li>IAM policy applied to OU or account except management account</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/2.png" class="img-fluid figure-img"></p>
+<figcaption>cloudwatch agent</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/3.png" class="img-fluid figure-img"></p>
+<figcaption>cloudwatch agent</figcaption>
+</figure>
+</div>
+<section id="iam-role-vs-resource-based-policy" class="level2">
+<h2 class="anchored" data-anchor-id="iam-role-vs-resource-based-policy">IAM role vs Resource-based policy</h2>
+<ul>
+<li>IAM role: <code>cross-account</code> access</li>
+<li>Resource-based policy: <code>cross-service</code> access <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/20.png" class="img-fluid" alt="cloudwatch agent"></li>
+</ul>
+</section>
+<section id="iam-permission-boundaries" class="level2">
+<h2 class="anchored" data-anchor-id="iam-permission-boundaries">IAM Permission boundaries</h2>
+<ul>
+<li>supported for users and roles(not groups)</li>
+<li>maximum permissions that an entity can have</li>
+<li><code>IAM policy</code> + <code>permission boundary</code> = <code>effective permissions</code> <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/4.png" class="img-fluid" alt="cloudwatch agent"></li>
+</ul>
+</section>
+<section id="aws-iam-identity-center-aws-single-sign-on" class="level2">
+<h2 class="anchored" data-anchor-id="aws-iam-identity-center-aws-single-sign-on">AWS IAM Identity center (AWS Single Sign-On)</h2>
+</section>
+<section id="aws-directory-service" class="level2">
+<h2 class="anchored" data-anchor-id="aws-directory-service">AWS Directory Service</h2>
+<ul>
+<li><code>AD Connector</code>: on-premises AD, redirect to on-premises AD (proxy)</li>
+<li><code>Simple AD</code>: standalone AD</li>
+<li><code>AWS Managed Microsoft AD</code>: managed AD, trust relationship</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/16_IAM.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/11_serverless.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="aws-lambda" class="level2">
+<h2 class="anchored" data-anchor-id="aws-lambda">AWS Lambda</h2>
+<ul>
+<li>AWS Lambda is a serverless compute service that lets you run code without provisioning or managing servers.</li>
+<li>Lambda runs your code only when needed and scales automatically, from a few requests per day to thousands per second.</li>
+<li>You pay only for the compute time you consume - there is no charge when your code is not running. ### limitation (per region)</li>
+<li>memory: 128MB - 10GB (more memory, need more vCPU)</li>
+<li>max execution time: 15 minutes</li>
+<li>environment variables: 4KB</li>
+<li>/tmp directory storage: 512MB to 10GB</li>
+<li>concurrent executions: 1000</li>
+<li>deployment package: 50MB (zipped)</li>
+<li>deployment package: 250MB (unzipped)</li>
+</ul>
+<section id="snapstart" class="level3">
+<h3 class="anchored" data-anchor-id="snapstart">snapstart</h3>
+</section>
+<section id="lambdaedge-cloudfront-functions" class="level3">
+<h3 class="anchored" data-anchor-id="lambdaedge-cloudfront-functions">lambda@edge / cloudfront functions</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/17.png" class="img-fluid figure-img"></p>
+<figcaption>Lambda@Edge</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="dynamodb" class="level2">
+<h2 class="anchored" data-anchor-id="dynamodb">DynamoDB</h2>
+<ul>
+<li>Amazon DynamoDB is a fully managed, serverless, key-value and document database that delivers single-digit millisecond performance at any scale.</li>
+<li>standard table: high availability, durability, and performance</li>
+<li>IA table: infrequently accessed data</li>
+<li>max item size: 400KB</li>
+<li>provisioned mode, on-demand mode</li>
+</ul>
+<section id="dynamodb-accelerator-dax" class="level3">
+<h3 class="anchored" data-anchor-id="dynamodb-accelerator-dax">DynamoDB Accelerator (DAX)</h3>
+<ul>
+<li>Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for DynamoDB that delivers up to a 10x performance improvement - from milliseconds to microseconds - even at millions of requests per second.</li>
+<li>microseconds latency</li>
+<li>no need to modify application <img src="https://cryscham123.github.io/posts/04_archives/aws_saa/notes/img/18.png" class="img-fluid" alt="DAX"></li>
+</ul>
+</section>
+<section id="dynamodb-streams" class="level3">
+<h3 class="anchored" data-anchor-id="dynamodb-streams">DynamoDB Streams</h3>
+<ul>
+<li>DynamoDB Streams is an optional feature that captures data modification events in DynamoDB tables.</li>
+<li>can trigger lambda function, SQS, Kinesis</li>
+<li>24 hours retention period</li>
+<li>limit: 5 active streams per table</li>
+</ul>
+</section>
+<section id="global-tables" class="level3">
+<h3 class="anchored" data-anchor-id="global-tables">Global Tables</h3>
+<ul>
+<li>Amazon DynamoDB global tables provide a fully managed solution for deploying a multi-region, multi-master database, without having to build and maintain your own replication solution.</li>
+<li>automatic replication</li>
+<li>must enable DynamoDB Streams</li>
+</ul>
+</section>
+<section id="backup-and-restore" class="level3">
+<h3 class="anchored" data-anchor-id="backup-and-restore">backup and restore</h3>
+<ul>
+<li>Point-in-Time Recovery
+<ul>
+<li>Point-in-time recovery helps protect your DynamoDB tables from accidental write or delete operations.</li>
+<li>restore to any point in time within 35 days</li>
+<li>the recovery process creates a new table</li>
+</ul></li>
+<li>on-demand backup
+<ul>
+<li>restore to any point</li>
+<li>the recovery process creates a new table</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="api-gateway" class="level2">
+<h2 class="anchored" data-anchor-id="api-gateway">API Gateway</h2>
+<ul>
+<li>Amazon API Gateway is a fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale.</li>
+<li>Edge-optimized API: global, use CloudFront</li>
+<li>Regional API: regional, use API Gateway</li>
+<li>Private API: VPC endpoint</li>
+</ul>
+</section>
+<section id="step-functions" class="level2">
+<h2 class="anchored" data-anchor-id="step-functions">Step Functions</h2>
+<ul>
+<li>AWS Step Functions is a serverless function orchestrator that makes it easy to sequence AWS Lambda functions and multiple AWS services into business-critical applications.</li>
+</ul>
+</section>
+<section id="amazon-cognito" class="level2">
+<h2 class="anchored" data-anchor-id="amazon-cognito">Amazon Cognito</h2>
+<ul>
+<li>Amazon Cognito lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily.</li>
+<li>User Pools: user directory</li>
+<li>Identity Pools: federated identity, temporary access AWS resources</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/04_archives/aws_saa/notes/11_serverless.html</guid>
+  <pubDate>Mon, 29 Apr 2024 15:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
