@@ -15,10 +15,282 @@
 <link>https://cryscham123.github.io/posts/01_projects/adp_필기/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Mon, 03 Feb 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 07 Feb 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>3 - 분석 마스터 플랜</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/06.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/06.html</guid>
+  <pubDate>Fri, 07 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>3 - 데이터 분석 기획의 이해</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/05.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/05.html</guid>
+  <pubDate>Fri, 07 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>2 - 데이터 처리 프로세스</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/03.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="etl" class="level2">
+<h2 class="anchored" data-anchor-id="etl">ETL</h2>
+<section id="etl-개요" class="level3">
+<h3 class="anchored" data-anchor-id="etl-개요">1. ETL 개요</h3>
+<ul>
+<li><code>ETL(Extract, Transformation, Load)</code>: 데이터 이동 및 변환 절차</li>
+<li><code>batch ETL</code>, <code>real-time ETL</code>으로 나뉨</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-14-25-19.png" class="img-fluid figure-img"></p>
+<figcaption>ETL 작업 단계</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li><code>Interface</code>: 다양한 소스로부터 데이터 휙득을 위한 인터페이스(OLEDB, ODBC, FTP)</li>
+<li><code>Staging</code>: 정기적으로 데이터 원천으로 부터 저장. 아직은 정규화 x</li>
+<li><code>Profiling</code>: staging table의 데이터 특성을 식별하고, 품질 측정</li>
+<li><code>Cleansing</code>: profiling된 데이터를 보정</li>
+<li><code>Integration</code>: 데이터 충돌을 해소하고, 데이터를 통합. 아마 여기서 정규화가 이루어질듯(왜 책에 설명 똑바로 안해놓지)</li>
+<li><code>Export</code>: 운영보고서 생성, 데이터웨어하우스 / 데이터마트에 적재하기 위한 최적화(denormalization) 진행</li>
+</ol>
+</section>
+<section id="ods-구성" class="level3">
+<h3 class="anchored" data-anchor-id="ods-구성">2. ODS 구성</h3>
+<ul>
+<li>통합된 데이터를 저정하는 중간 저장소</li>
+<li><code>실시간</code>, <code>거의 실시간</code>으로 데이터 적재</li>
+</ul>
+</section>
+<section id="데이터-웨어하우스" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-웨어하우스">3. 데이터 웨어하우스</h3>
+<ul>
+<li>ODS를 통해 정제 / 통합된 데이터를 분석 및 보고서 생성을 위해 저장</li>
+</ul>
+<p><strong>특징</strong></p>
+<ul>
+<li><code>주제중심성</code></li>
+<li><code>영속성/비휘발성</code></li>
+<li><code>통합성</code></li>
+<li><code>시계열성</code></li>
+</ul>
+<p><strong>모델링 기법</strong></p>
+<ul>
+<li><code>스타 스키마(조인 스키마)</code>
+<ul>
+<li>제 3정규형의 fact 테이블과 제 2정규형의 차원 테이블로 구성</li>
+<li>복잡성이 낮지만, 데이터 무결성이 떨어짐</li>
+</ul></li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-14-42-58.png" class="img-fluid"></p>
+<ul>
+<li><code>스노우플레이크 스키마</code>
+<ul>
+<li>스타 스키마의 차원 테이블을 제 3정규형으로 정규화한 상태</li>
+<li>데이터 무결성이 높지만, 복잡성이 높음</li>
+</ul></li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-14-44-11.png" class="img-fluid"></p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>제 1 정규형: 반복되는 record나 다치 attribute를 포함하지 않음 제 2 정규형: 부분 종속성(primary key의 일부가 다른 일부를 종속함)이 없음 제 3 정규형: 이행적 종속성(primary key가 아닌 attribute의 종속성)이 없음</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ods-vs-dw" class="level3">
+<h3 class="anchored" data-anchor-id="ods-vs-dw">4. ODS vs DW</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-15-16-42.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="cdcchange-data-capture" class="level2">
+<h2 class="anchored" data-anchor-id="cdcchange-data-capture">CDC(change data capture)</h2>
+<section id="cdc-개념-및-특징" class="level3">
+<h3 class="anchored" data-anchor-id="cdc-개념-및-특징">1. CDC 개념 및 특징</h3>
+<ul>
+<li>데이터 변경을 감지하고, 변경된 데이터를 추출하는 기술</li>
+<li>하드웨어 계층부터 어플리케이션 계층까지 다양한 수준에서 적용 가능</li>
+</ul>
+</section>
+<section id="cdc-구현-기법" class="level3">
+<h3 class="anchored" data-anchor-id="cdc-구현-기법">2. CDC 구현 기법</h3>
+<ol type="1">
+<li><code>Time Stamp on Rows</code></li>
+<li><code>Version Numbers on Rows</code>: 참조테이블을 같이 사용하는게 일반적이라고 한다.</li>
+<li><code>Status on Rows</code>: time stamp, version number 보완 용도로, 사람이 레코드 반영 여부를 직접 판단할 수 있게 적용할 수 있음</li>
+<li><code>Time/Version/Status on Rows</code></li>
+<li><code>Triggers on Tables</code>: message queue로 변경 발생시 subscribe 된 대상에 publish하는 방식. 시스템 관리 복잡도가 높아짐</li>
+<li><code>Event Programming</code>: 어플리케이션에 데이터 변경 식별 기능을 추가</li>
+<li><code>Log Scanner on Database</code>: 데이터 스키마 변경 불필요, 어플리케이션 영향 최소화, 지연시간 최소화</li>
+</ol>
+</section>
+<section id="cdc-구현-방식" class="level3">
+<h3 class="anchored" data-anchor-id="cdc-구현-방식">3. CDC 구현 방식</h3>
+<ul>
+<li><code>Push</code>: 데이터 원천에서 변경 식별(agent)</li>
+<li><code>Pull</code>: 대상 시스템에서 원천을 주기적으로 모니터링</li>
+</ul>
+</section>
+</section>
+<section id="eai" class="level2">
+<h2 class="anchored" data-anchor-id="eai">EAI</h2>
+<section id="eai의-개념-및-특징" class="level3">
+<h3 class="anchored" data-anchor-id="eai의-개념-및-특징">1. EAI의 개념 및 특징</h3>
+<ul>
+<li>기업 내 혹은 기업 간 정보시스템을 연계하여 동기화.</li>
+<li>ETL은 <code>batch 처리</code> 중심, EAI는 <code>실시간 혹은 근접 실시간 처리</code> 중심</li>
+</ul>
+</section>
+<section id="데이터-연계-방식" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-연계-방식">2. 데이터 연계 방식</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-16-02-51.png" class="img-fluid"></p>
+<ul>
+<li>ETL/CDC는 운영 데이터와 분석을 위한 데이터베이스가 <code>구분</code>되지만, EAI는 <code>그냥 통합</code></li>
+</ul>
+</section>
+<section id="eai-구성요소" class="level3">
+<h3 class="anchored" data-anchor-id="eai-구성요소">3. EAI 구성요소</h3>
+<ul>
+<li><code>Adapter</code>: 시스템 간 데이터 변환</li>
+<li><code>Broker</code>: 데이터 전송</li>
+<li><code>Bus</code>: 데이터 전송 경로 설정</li>
+<li><code>Transformer</code>: 데이터 형식 변환</li>
+</ul>
+</section>
+<section id="eai-구현-유형" class="level3">
+<h3 class="anchored" data-anchor-id="eai-구현-유형">4. EAI 구현 유형</h3>
+<ol type="1">
+<li><code>Mediation</code>: Publish/Subscribe 방식</li>
+<li><code>Federaion</code>: Request/Reply 방식</li>
+</ol>
+</section>
+<section id="eai-활용-효과" class="level3">
+<h3 class="anchored" data-anchor-id="eai-활용-효과">5. EAI 활용 효과</h3>
+<ul>
+<li>협력사, 파트너, 고객과의 상호 협력 프로세스 연계</li>
+<li>그룹 및 지주 회사 계열사들 간 상호 관련 데이터 동기화 등을 위한 데이터 표준화 기반 제공</li>
+</ul>
+</section>
+<section id="eai-vs-esb" class="level3">
+<h3 class="anchored" data-anchor-id="eai-vs-esb">6. EAI vs ESB</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-16-13-57.png" class="img-fluid"></p>
+<p><a href="https://bcho.tistory.com/1292">추가적인 자료</a></p>
+</section>
+</section>
+<section id="데이터-통합-및-연계-기법" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-통합-및-연계-기법">데이터 통합 및 연계 기법</h2>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-16-32-24.png" class="img-fluid"></p>
+</section>
+<section id="대용량의-비정형-데이터-처리-방법" class="level2">
+<h2 class="anchored" data-anchor-id="대용량의-비정형-데이터-처리-방법">대용량의 비정형 데이터 처리 방법</h2>
+<section id="대규모-분산-병렬-처리" class="level3">
+<h3 class="anchored" data-anchor-id="대규모-분산-병렬-처리">2. 대규모 분산 병렬 처리</h3>
+</section>
+<section id="데이터-연동" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-연동">3. 데이터 연동</h3>
+</section>
+<section id="데이터-질의-기술" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-질의-기술">4. 데이터 질의 기술</h3>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/03.html</guid>
+  <pubDate>Fri, 07 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>2 - 데이터 처리 기술</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/04.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="분산-데이터-저장-기술" class="level2">
+<h2 class="anchored" data-anchor-id="분산-데이터-저장-기술">분산 데이터 저장 기술</h2>
+<section id="분산-파일-시스템" class="level3">
+<h3 class="anchored" data-anchor-id="분산-파일-시스템">1. 분산 파일 시스템</h3>
+</section>
+<section id="데이터베이스-클러스터" class="level3">
+<h3 class="anchored" data-anchor-id="데이터베이스-클러스터">2. 데이터베이스 클러스터</h3>
+</section>
+<section id="nosql" class="level3">
+<h3 class="anchored" data-anchor-id="nosql">3. NoSQL</h3>
+</section>
+</section>
+<section id="분산-컴퓨팅-기술" class="level2">
+<h2 class="anchored" data-anchor-id="분산-컴퓨팅-기술">분산 컴퓨팅 기술</h2>
+<section id="mapreduce" class="level3">
+<h3 class="anchored" data-anchor-id="mapreduce">1. MapReduce</h3>
+</section>
+<section id="병렬-쿼리-시스템" class="level3">
+<h3 class="anchored" data-anchor-id="병렬-쿼리-시스템">2. 병렬 쿼리 시스템</h3>
+</section>
+<section id="sql-on-hadoop" class="level3">
+<h3 class="anchored" data-anchor-id="sql-on-hadoop">3. SQL on Hadoop</h3>
+</section>
+</section>
+<section id="클라우드-인프라-기술" class="level2">
+<h2 class="anchored" data-anchor-id="클라우드-인프라-기술">클라우드 인프라 기술</h2>
+<section id="클라우드-컴퓨팅" class="level3">
+<h3 class="anchored" data-anchor-id="클라우드-컴퓨팅">1. 클라우드 컴퓨팅</h3>
+</section>
+<section id="cpu-가상화" class="level3">
+<h3 class="anchored" data-anchor-id="cpu-가상화">2. CPU 가상화</h3>
+</section>
+<section id="메모리-가상화" class="level3">
+<h3 class="anchored" data-anchor-id="메모리-가상화">3. 메모리 가상화</h3>
+</section>
+<section id="io-가상화" class="level3">
+<h3 class="anchored" data-anchor-id="io-가상화">4. I/O 가상화</h3>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/04.html</guid>
+  <pubDate>Fri, 07 Feb 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>통계 기초</title>
-  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/01.html</link>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/통계/01.html</link>
   <description><![CDATA[ 
 
 
@@ -79,12 +351,12 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>통계</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/01.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/통계/01.html</guid>
   <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>통계 기초</title>
-  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/02.html</link>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/통계/02.html</link>
   <description><![CDATA[ 
 
 
@@ -101,25 +373,149 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>통계</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/02.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/통계/02.html</guid>
   <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>1 - 데이터 이해</title>
-  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/00.html</link>
+  <title>1 - 데이터의 가치와 미래</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/01.html</link>
   <description><![CDATA[ 
 
 
 
 
 <p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="데이터의-이해" class="level2">
-<h2 class="anchored" data-anchor-id="데이터의-이해">데이터의 이해</h2>
-<section id="데이터와-정보" class="level3">
-<h3 class="anchored" data-anchor-id="데이터와-정보">데이터와 정보</h3>
-<p><strong>1. 데이터</strong></p>
+<section id="빅데이터의-이해" class="level2">
+<h2 class="anchored" data-anchor-id="빅데이터의-이해">빅데이터의 이해</h2>
+<section id="빅데이터의-정의" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터의-정의">1. 빅데이터의 정의</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-12-15-57.png" class="img-fluid"></p>
+<ul>
+<li>좁은 범위
+<ul>
+<li>데이터 자체의 특성에 초점을 맞춘 정의</li>
+<li><code>3V(다양성, 속도, 규모)</code>를 강조</li>
+</ul></li>
+<li>중간 범위
+<ul>
+<li>데이터 자체뿐 아니라 처리, 분석 방법도 포함하는 정의</li>
+</ul></li>
+<li>넓은 관점
+<ul>
+<li>인재, 조직 변화까지 포함한 정의</li>
+</ul></li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-12-16-09.png" class="img-fluid"></p>
+<p>∴ 기존 방식으로는 얻을 수 없는 통찰 및 가치 창출</p>
+</section>
+<section id="출현-배경과-변화" class="level3">
+<h3 class="anchored" data-anchor-id="출현-배경과-변화">2. 출현 배경과 변화</h3>
+<ol type="1">
+<li>산업계: 고객 데이터가 축적되며 새로운 가치 활용</li>
+<li>학계: 거대 데이터 활용 분야가 늘어나며 통계 도구들이 발전</li>
+<li>기술발전: 관련기술의 발전</li>
+</ol>
+</section>
+<section id="빅데이터의-기능" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터의-기능">3. 빅데이터의 기능</h3>
+<ol type="1">
+<li><code>산업혁명의 석탄, 철</code>: 산업 전반에 혁명적 변화를 가져옴</li>
+<li><code>21세기의 원유</code>: 생산성을 향상시키고, 기존에 없던 새로운 범주의 산업을 만들어낼 것으로 전망</li>
+<li><code>렌즈</code>: 데이터가 산업에 영향을 미침</li>
+<li><code>플랫폼</code></li>
+</ol>
+</section>
+<section id="빅데이터가-만들어-내는-본질적인-변화" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터가-만들어-내는-본질적인-변화">4. 빅데이터가 만들어 내는 본질적인 변화</h3>
+<ol type="1">
+<li><code>사전처리 → 사후처리</code></li>
+<li><code>표본조사 → 전수조사</code></li>
+<li><code>질 → 양</code></li>
+<li><code>인과관계 → 상관관계</code></li>
+</ol>
+</section>
+</section>
+<section id="빅데이터의-가치와-영향" class="level2">
+<h2 class="anchored" data-anchor-id="빅데이터의-가치와-영향">빅데이터의 가치와 영향</h2>
+<section id="빅데이터의-가치" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터의-가치">1. 빅데이터의 가치</h3>
+<p>빅데이터는 아래와 같은 이유로 가치 선정이 어렵다.</p>
+<ul>
+<li>데이터 활용방식: 데이터를 언제 어디서 누가 사용할지 미리 예측하기 어려움</li>
+<li>새로운 가치 창출: 기존에 없던 가치를 창출하기 때문에 가치를 예측하기 어려움</li>
+<li>분석 기술 발전: 현재 가치가 없더라도, 추후 기술이 발전하면 가치가 생길 수 있음</li>
+</ul>
+</section>
+<section id="빅데이터의-영향" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터의-영향">2. 빅데이터의 영향</h3>
+<p>빅데이터는 다양한 주체(기업, 정부, 개인)에 영향을 미친다.</p>
+</section>
+</section>
+<section id="비즈니스-모델" class="level2">
+<h2 class="anchored" data-anchor-id="비즈니스-모델">비즈니스 모델</h2>
+<section id="빅데이터-활용-사례" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터-활용-사례">1. 빅데이터 활용 사례</h3>
+<p>여러가지 활용 사례가 있다.</p>
+</section>
+<section id="빅데이터-활용-기본-테크닉" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터-활용-기본-테크닉">2. 빅데이터 활용 기본 테크닉</h3>
+<ul>
+<li><code>연관규칙학습</code>: 범주형 데이터의 변인들간의 규칙을 발견 (ex. 장바구니 분석)</li>
+<li><code>유형(군집)분석</code>: 데이터를 분류하거나 군집화. 비지도 학습 (not 분류분석)</li>
+<li><code>유전자 알고리즘</code>: 최적해를 찾는 알고리즘</li>
+<li><code>기계학습</code>: 훈련한 데이터로 예측</li>
+<li><code>회귀분석</code>: 연속형 데이터의 독립변수와 종속변수의 관계를 수학적으로 모델링해서 예측</li>
+<li><code>감정분석</code>: 비정형 데이터 분석</li>
+<li><code>소셜네트워크분석(사회관계망분석)</code>: 비정형 데이터 분석</li>
+</ul>
+</section>
+</section>
+<section id="위기-요인과-통제-방안" class="level2">
+<h2 class="anchored" data-anchor-id="위기-요인과-통제-방안">위기 요인과 통제 방안</h2>
+<section id="빅데이터-시대의-위기-요인과-통제-방안" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터-시대의-위기-요인과-통제-방안">1. 빅데이터 시대의 위기 요인과 통제 방안</h3>
+<ul>
+<li><code>사생활 침해</code>: 동의에서 책임으로</li>
+<li><code>책임 원칙 훼손</code>: 결과 기반 책임 원칙 고수</li>
+<li><code>데이터 오용</code>: 알고리즘 접근 허용, <code>알고리즈미스트</code></li>
+</ul>
+</section>
+</section>
+<section id="미래의-빅데이터" class="level2">
+<h2 class="anchored" data-anchor-id="미래의-빅데이터">미래의 빅데이터</h2>
+<section id="빅데이터-활용의-3요소" class="level3">
+<h3 class="anchored" data-anchor-id="빅데이터-활용의-3요소">1. 빅데이터 활용의 3요소</h3>
+<ul>
+<li><code>데이터</code>: 모든것의 데이터화</li>
+<li><code>기술</code>: 인공지능</li>
+<li><code>인력</code>: 데이터 사이언티스트, 알고리즈미스트</li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/01.html</guid>
+  <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>1 - 데이터 이해</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="데이터와-정보" class="level2">
+<h2 class="anchored" data-anchor-id="데이터와-정보">데이터와 정보</h2>
+<section id="데이터" class="level3">
+<h3 class="anchored" data-anchor-id="데이터">1. 데이터</h3>
 <ul>
 <li><code>객관적 사실</code>을 나타내는 <code>존재적 특성</code>과, <code>추론 예측 전망 추정을 위한 근거</code>가 되는 <code>당위적 특성</code>을 모두 포함하는 개념</li>
+<li>단위: <code>바이트(byte)</code>, <code>킬로바이트(KB)</code>, <code>메가바이트(MB)</code>, <code>기가바이트(GB)</code>, <code>테라바이트(TB)</code>, <code>페타바이트(PB)</code>, <code>엑사바이트(EB)</code>, <code>제타바이트(ZB)</code>, <code>요타바이트(YB)</code></li>
 <li>유형:
 <ul>
 <li><code>정성적 데이터</code>: 비정형 데이터, 주관적 내용, 통계분석이 어려움</li>
@@ -127,6 +523,20 @@
 </ul></li>
 <li>지식 경영의 핵심 이슈인 <code>암묵지</code>와 <code>형식지</code>를 연결하는 역할을 함</li>
 </ul>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<ul>
+<li><code>정형</code> 데이터: 표 형태로 정리된 데이터</li>
+<li><code>반정형</code> 데이터: HTML, XML, JSON 등의 형태(스키마, 메타데이터)가 있고, 연산이 불가능한 데이터</li>
+<li><code>비정형</code> 데이터: 형태가 없고, 연산이 불가능한 데이터</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -149,7 +559,9 @@
 </div>
 </div>
 </div>
-<p><strong>2. 데이터와 정보의 관계</strong></p>
+</section>
+<section id="데이터와-정보의-관계" class="level3">
+<h3 class="anchored" data-anchor-id="데이터와-정보의-관계">2. 데이터와 정보의 관계</h3>
 <ul>
 <li><p><code>데이터(data)</code>: 그 자체로는 의미가 중요하지 않은 객관적인 사실</p>
 <p>ex) A마트는 100원, B마트는 200원에 휴지를 판다.</p></li>
@@ -162,16 +574,20 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-11-19-56.png" class="img-fluid figure-img"></p>
 <figcaption>DIKW 피라미드</figcaption>
 </figure>
 </div>
 </section>
-<section id="데이터베이스-정의와-특징" class="level3">
-<h3 class="anchored" data-anchor-id="데이터베이스-정의와-특징">데이터베이스 정의와 특징</h3>
-<p><strong>1. 데이터베이스의 정의</strong></p>
+</section>
+<section id="데이터베이스-정의와-특징" class="level2">
+<h2 class="anchored" data-anchor-id="데이터베이스-정의와-특징">데이터베이스 정의와 특징</h2>
+<section id="데이터베이스의-정의" class="level3">
+<h3 class="anchored" data-anchor-id="데이터베이스의-정의">1. 데이터베이스의 정의</h3>
 <p>기존에는 정형 데이터 관리의 의미로 사용되다가, 빅데이터의 출현으로 비정형 데이터까지 포함하는 개념으로 확장됨</p>
-<p><strong>2. 데이터베이스의 일반적인 특징</strong></p>
+</section>
+<section id="데이터베이스의-일반적인-특징" class="level3">
+<h3 class="anchored" data-anchor-id="데이터베이스의-일반적인-특징">2. 데이터베이스의 일반적인 특징</h3>
 <ol type="1">
 <li><code>통합된 데이터</code>: 동일한 내용의 데이터가 중복되어 있지 않다.</li>
 <li><code>저장된 데이터</code></li>
@@ -179,37 +595,41 @@
 <li><code>변화되는 데이터</code>: 데이터베이스에는 항상 현재의 정확한 데이터를 유지한다.</li>
 </ol>
 </section>
-<section id="데이터베이스의-활용" class="level3">
-<h3 class="anchored" data-anchor-id="데이터베이스의-활용">데이터베이스의 활용</h3>
-<p><strong>1. 1980년대 기업 내부 데이터베이스</strong></p>
+</section>
+<section id="데이터베이스의-활용" class="level2">
+<h2 class="anchored" data-anchor-id="데이터베이스의-활용">데이터베이스의 활용</h2>
+<section id="년대-기업-내부-데이터베이스" class="level3">
+<h3 class="anchored" data-anchor-id="년대-기업-내부-데이터베이스">1. 1980년대 기업 내부 데이터베이스</h3>
 <ul>
 <li><code>OLTP(On-Line Transaction Processing)</code>
 <ul>
 <li>데이터베이스의 데이터를 실시간으로 <code>갱신</code>하는 프로세싱.</li>
-<li><code>복잡한 구조</code></li>
+<li><code>구조가 복잡</code>하고, <code>현재의 단기간</code> 데이터.</li>
 <li><code>갱신이 동적</code>이고, <code>엑세스 빈도가 높다</code>.</li>
-<li><code>질의 결과가 주기적, 예측 가능</code>하다.</li>
-<li><code>현재의 단기간</code> 데이터.</li>
+<li><code>질의가 단순하고, 주기적</code>이다.</li>
 </ul></li>
 <li><code>OLAP(On-Line Analytical Processing)</code>
 <ul>
 <li>데이터 <code>조회, 분석</code> 위주.</li>
-<li><code>단순한 구조</code></li>
+<li><code>구조가 단순</code>하고, <code>과거의 장기간 요약</code> 데이터.</li>
 <li><code>갱신이 정적</code>이고, <code>엑세스 빈도가 보통이다</code>.</li>
-<li><code>질의 결과가 예측하기 어렵다</code>.</li>
-<li><code>오랜기간 저장</code>되는 <code>요약</code> 데이터.</li>
+<li><code>질의가 복잡하다</code>.</li>
 </ul></li>
 </ul>
-<p><strong>2. 2000년대 기업 내부 데이터베이스</strong></p>
+</section>
+<section id="년대-기업-내부-데이터베이스-1" class="level3">
+<h3 class="anchored" data-anchor-id="년대-기업-내부-데이터베이스-1">2. 2000년대 기업 내부 데이터베이스</h3>
 <ul>
 <li><code>CRM(Customer Relationship Management)</code>: 고객 관리 시스템</li>
 <li><code>SCM(Supply Chain Management)</code>: 공급망 관리 시스템</li>
 </ul>
-<p><strong>3. 각 분야별 내부 데이터베이스</strong></p>
+</section>
+<section id="각-분야별-내부-데이터베이스" class="level3">
+<h3 class="anchored" data-anchor-id="각-분야별-내부-데이터베이스">3. 각 분야별 내부 데이터베이스</h3>
 <ul>
 <li>제조부문
 <ul>
-<li><code>ERP(Enterprise Resource Planning)</code>: 인사, 재무, 생산 등의 경영 자원을 하나의 통합 시스템으로 재구축</li>
+<li><code>ERP(Enterprise Resource Planning)</code>: 기업 내부 자료를 하나의 통합 시스템으로 재구축</li>
 <li><code>BI(Business Intelligence)</code>: 기업의 수많은 데이터를 정리, 분석해 의사결정에 활용하는 프로세스</li>
 <li>CRM</li>
 <li><code>RTE(Real-Time Enterprise)</code>: ERP, SCM, CRM 등의 부문별 전산화 시스템을 하나로 통합</li>
@@ -225,22 +645,300 @@
 <li><code>RFID(Radio Frequency Identification)</code>: 주파수를 이용해 ID를 식별</li>
 </ul></li>
 </ul>
-<p><strong>4. 사회기반구조로서의 데이터베이스</strong></p>
+</section>
+<section id="사회기반구조로서의-데이터베이스" class="level3">
+<h3 class="anchored" data-anchor-id="사회기반구조로서의-데이터베이스">4. 사회기반구조로서의 데이터베이스</h3>
+<ul>
+<li><code>EDI(Electronic Data Interchange)</code>: 전자상거래를 위한 표준화된 데이터 포맷</li>
+<li><code>VAN(Value Added Network)</code>: EDI를 위한 통신망 (카드 결제 시, 가맹점과 카드사 사이에서 승인 요청 및 결과 전달을 중계함.)</li>
+<li><code>CALS(Commerce At Light Speed)</code>: 제품의 설계, 생산, 유통, 판매 등의 모든 과정을 통합한 경영정보시스템</li>
+</ul>
+
+
 </section>
 </section>
-<section id="데이터의-가치와-미래" class="level2">
-<h2 class="anchored" data-anchor-id="데이터의-가치와-미래">데이터의 가치와 미래</h2>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/00.html</guid>
+  <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>1 - 가치 창조를 위한 데이터 사이언스와 전략 인사이트</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/02.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="빅데이터-분석과-전략-인사이트" class="level2">
+<h2 class="anchored" data-anchor-id="빅데이터-분석과-전략-인사이트">빅데이터 분석과 전략 인사이트</h2>
+<p>빅테이터 분석은 분석을 통해 <code>가치를 창출</code>하는 것이 목적이다.</p>
+<ul>
+<li>일차원적인 분석: 해당 부서나 업무 영역에만 효과가 있다. 변화하는 환경에서 새로운 기회를 포착하기 어려움.</li>
+<li>전략도출 가치기반 분석: 일차원적인 분석을 통해 얻은 가치를 기반으로 활용 범위를 더 넓고 전략적으로 확장해야한다.</li>
+</ul>
 </section>
-<section id="가치창조를-위한-데이터-사이언스와-전략-인사이트" class="level2">
-<h2 class="anchored" data-anchor-id="가치창조를-위한-데이터-사이언스와-전략-인사이트">가치창조를 위한 데이터 사이언스와 전략 인사이트</h2>
+<section id="전략-인사이트-도출을-위한-필요-역량" class="level2">
+<h2 class="anchored" data-anchor-id="전략-인사이트-도출을-위한-필요-역량">전략 인사이트 도출을 위한 필요 역량</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-08-12-48-06.png" class="img-fluid figure-img"></p>
+<figcaption>데이터 사이언티스트의 요구 역량</figcaption>
+</figure>
+</div>
+<p><code>외부 환경</code>이 다음과 같이 <code>변화</code>함에 따라 인사이트 도출을 위한 <code>인문학적 역량</code>이 요구됨.</p>
+<ul>
+<li><code>컨버전스 → 디버전스</code></li>
+<li><code>생산 → 서비스</code></li>
+<li><code>생상 → 시장창조</code></li>
+</ul>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>adp</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/00.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/02.html</guid>
   <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp/2_데이터_처리_기술_이해/2_데이터_처리_기술.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="분산-데이터-저장-기술" class="level1">
+<h1>분산 데이터 저장 기술</h1>
+<section id="분산-파일-시스템" class="level2">
+<h2 class="anchored" data-anchor-id="분산-파일-시스템">분산 파일 시스템</h2>
+<ul>
+<li>구글 파일 시스템(GFS): master(단일), chunk server, client(POSIX x)<br>
+트리 구조가 아닌 해시 테이블 구조 사용<br>
+메타데이터를 메모리상에서 관리. 설계 가정:
+<ol type="1">
+<li>서버의 고장이 빈번히 발생</li>
+<li>대용량 파일을 다루는 경우가 많음</li>
+<li>동시에 여러 클라이언트가 파일을 읽고 쓰는 경우가 많음 =? atomicity</li>
+<li><code>파일에 대한 쓰기 연산은 순차적</code>으로 이루어짐 =&gt; 직접 수정 x, <code>append only</code></li>
+<li>낮은 응답 지연시간보다 <code>높은 처리량</code>이 중다</li>
+</ol></li>
+<li>하둡 분산 파일 시스템(HDFS): 네임노드(단일), 데이터노드, 보조네임노드</li>
+<li>러스터 파일 시스템(Lusture): 메타데이터 서버, 오브젝트 서버(not chunk), 클라이언트(POSIX o)
+<ul>
+<li>client는 write back cache 사용</li>
+</ul></li>
+</ul>
+</section>
+<section id="데이터베이스-클러스터" class="level2">
+<h2 class="anchored" data-anchor-id="데이터베이스-클러스터">데이터베이스 클러스터</h2>
+<ul>
+<li><p>무공유 디스크: 수동 failover, fault-tolerance 필요</p></li>
+<li><p>공유 디스크</p></li>
+</ul>
+<p>mysql은 운영 중 노드 추가 삭제 불가. failover는 지원. ## NoSQL - google bigtable: row key, column family, column qualifier, timestamp, value - HBase: HDFS에 저장, bigtable과 유사. sql 지원 x - Amazon SimpleDB: key-value store, partition key, sort key, secondary index - Microsoft SSDS: key-value store, partition key, row key, value</p>
+</section>
+</section>
+<section id="분산-컴퓨팅-기술" class="level1">
+<h1>분산 컴퓨팅 기술</h1>
+<section id="mapreduce" class="level2">
+<h2 class="anchored" data-anchor-id="mapreduce">MapReduce</h2>
+</section>
+<section id="병렬-쿼리-시스템" class="level2">
+<h2 class="anchored" data-anchor-id="병렬-쿼리-시스템">병렬 쿼리 시스템</h2>
+</section>
+<section id="sql-on-hadoop" class="level2">
+<h2 class="anchored" data-anchor-id="sql-on-hadoop">SQL on Hadoop</h2>
+<ol type="1">
+<li><p>3</p></li>
+<li><p>2</p></li>
+<li><p>1</p></li>
+<li><p>1</p></li>
+<li><p>4</p></li>
+<li><p>3</p></li>
+<li><p>2</p></li>
+<li><p>=&gt; 3</p></li>
+<li><p>2</p></li>
+<li><p>3</p></li>
+<li><p>4</p></li>
+<li><p>3</p></li>
+<li><p>3(?) =&gt; 4</p></li>
+<li><p>1</p></li>
+<li><p>4 (1번 뭐임) =&gt;3</p></li>
+<li><p>2</p></li>
+<li><p>4</p></li>
+<li><p>2</p></li>
+<li><p>4</p></li>
+<li><p>1</p></li>
+<li><p>chunk</p></li>
+<li><p>master node</p></li>
+<li><p>HDFS</p></li>
+<li><p>lusture</p></li>
+<li><p>mysql</p></li>
+<li><p>item? =&gt; entity</p></li>
+<li><p>가상화</p></li>
+<li><p>컨테이너</p></li>
+<li><p>병목</p></li>
+<li><p>hypervisor</p></li>
+</ol>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp/2_데이터_처리_기술_이해/2_데이터_처리_기술.html</guid>
+  <pubDate>Sun, 09 Feb 2025 02:21:46 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp/2_데이터_처리_기술_이해/1_데이터_처리_프로세스.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="etl" class="level1">
+<h1>ETL</h1>
+<section id="etl-개요" class="level2">
+<h2 class="anchored" data-anchor-id="etl-개요">ETL 개요</h2>
+<section id="etl-개념-및-특징" class="level3">
+<h3 class="anchored" data-anchor-id="etl-개념-및-특징">ETL 개념 및 특징</h3>
+</section>
+<section id="etl의-기능" class="level3">
+<h3 class="anchored" data-anchor-id="etl의-기능">ETL의 기능</h3>
+</section>
+<section id="etl의-작업-단계" class="level3">
+<h3 class="anchored" data-anchor-id="etl의-작업-단계">ETL의 작업 단계</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp/img/2.png" class="img-fluid"> 1. 수립된 일정에 따라 데이터 원천으로부터 트랜잭션 데이터 휙득 작업 수행 후, 휙득된 데이터를 스테이징 테이블에 저장 2. 스테이징 테이블에서 데이터 특성을 식별하고 품질 측정 3. 다양한 규칙들을 활용해 프로파일링된 데이터의 보정작업을 수행 4. 데이터 충돌을 해소하고, 클렌징된 데이터 통합 5. 운영 보고서 생성 및 데이터 웨어하우스 또는 데이터 마트에 대한 데이터 적재를 위해 데이터 비정규화 수행</p>
+</section>
+</section>
+<section id="odsoperational-data-store-구성" class="level2">
+<h2 class="anchored" data-anchor-id="odsoperational-data-store-구성">ODS(Operational Data Store) 구성</h2>
+<section id="ods의-개념-및-특징" class="level3">
+<h3 class="anchored" data-anchor-id="ods의-개념-및-특징">ODS의 개념 및 특징</h3>
+<ul>
+<li>일반적으로 실시간, 혹은 실시간 근접 트렌랜잭션 데이터, 가격 등의 원자성을 지닌 하위 수준 데이터들을 저장하기 위해 설계됨.</li>
+</ul>
+</section>
+<section id="ods-구성-단계" class="level3">
+<h3 class="anchored" data-anchor-id="ods-구성-단계">ODS 구성 단계</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp/img/3.png" class="img-fluid"> 1. interface 단계 - 다양한 데이터 원천으로부터 데이터를 휙득 - OLEDB, ODBC, FTP 등이 사용됨. 2. staging 단계 - 휙득된 데이터를 스테이징 테이블에 저장 - 데이터의 특성을 식별하고 품질 측정 - 실시간 혹은 batch 작업을 혼용할 수 있다. 3. profiling 단계 - 범위, 도메인, 유일성 확보 등의 규칙을 기준으로 데이터의 품질 측정 - 데이터 프로파일링 수행 -&gt; 데이터 프로파일링 결과 통계 처리 -&gt; 데이터 품질 보고서 생성 및 공유의 절차를 거친다. 4. cleansing 단계 - 다양한 규칙을 활용해 프로파일링된 데이터의 보정작업을 수행 5. integration 단계 - 데이터 충돌을 해소하고, 클렌징된 데이터 통합 6. export 단계 - 운영 보고서 생성 및 데이터 웨어하우스 또는 데이터 마트에 대한 데이터 적재를 위해 데이터 비정규화 수행</p>
+</section>
+</section>
+<section id="데이터-웨어하우스" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-웨어하우스">데이터 웨어하우스</h2>
+<section id="데이터-웨어하우스란" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-웨어하우스란">데이터 웨어하우스란?</h3>
+</section>
+<section id="데이터-웨어하우스의-특징" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-웨어하우스의-특징">데이터 웨어하우스의 특징</h3>
+<ol type="1">
+<li>주제 중심성: 데이터 웨어하우스의 데이터는 실 업무 상황의 특정 이벤트나 업무 항목을 기준으로 구조화되므로, 최종 사용자도 이해하기 쉬운 형태를 지님.</li>
+<li>영속성 / 비휘발성: 데이터 웨어하우스의 데이터는 최초 저장 이후에는 읽기 전용의 속성을 가지며, 삭제되지 않음.</li>
+<li>통합성: 데이터 웨어하우스의 데이터는 기관 조직이 보유한 대부분의 운영 시스템들에 의해 생성된 데이터들의 통합본</li>
+<li>시계열성: 운영 시스템들은 최신 데이터를 보유하고 있지만, 데이터 웨어하우스는 시간 순에 의한 이력 데이터를 보유 ### 데이터 웨어하우스의 테이블 모델링 기법</li>
+</ol>
+<ul>
+<li>스타 스키마: 데이터 웨어하우스의 테이블 모델링 기법 중 하나로, 중심 테이블을 중심으로 여러 차원 테이블들이 연결된 형태</li>
+<li>스노우플레이크 스키마: 스타 스키마의 확장형으로, 차원 테이블들이 정규화된 형태로 구성된다 ### ODS와 DW의 비교</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="cdcchange-data-capture" class="level1">
+<h1>CDC(change data capture)</h1>
+</section>
+<section id="eaienterprise-application-integration" class="level1">
+<h1>EAI(Enterprise Application Integration)</h1>
+</section>
+<section id="데이터-통합-및-연계-기법" class="level1">
+<h1>데이터 통합 및 연계 기법</h1>
+</section>
+<section id="대용량의-비정형-데이터-처리방법" class="level1">
+<h1>대용량의 비정형 데이터 처리방법</h1>
+<section id="대용량-로그-데이터-수집" class="level2">
+<h2 class="anchored" data-anchor-id="대용량-로그-데이터-수집">대용량 로그 데이터 수집</h2>
+<ul>
+<li>수집 시스템 예: 아파치 Flume-NG, 페이스북 Scribe, 아파치 Chunkwa (예시가 왜 이따윈데) ## 대규모 분산 병렬 처리 ### 하둡</li>
+<li>맵리듀스 시스템과 분산 파일시스템인 HDFS를 핵심 구성요소로 가지는 플랫폼 기술</li>
+<li>비공유 분산 아키텍처</li>
+</ul>
+<section id="하둡의-특징" class="level3">
+<h3 class="anchored" data-anchor-id="하둡의-특징">하둡의 특징</h3>
+<ol type="1">
+<li>선형적인 성능과 용량 확장: 하둡은 수평적 확장이 가능하며, 클러스터에 노드를 추가함으로써 선형적인 성능 향상을 기대할 수 있다.</li>
+<li>고장 감내성: HDFS에 저장되는 데이터는 3중복제로 저장되므로, 노드의 고장에도 데이터의 손실이 없다제</li>
+<li>핵심 비즈니스 로직에 집중</li>
+<li>하둡 에코 시스템
+<ul>
+<li>비정형 데이터 수집: 척와, 플럼, 스크라이브</li>
+<li>정형 데이터 수집: 스쿱, 히호</li>
+<li>분산 데이터 저장: HDFS</li>
+<li>분산 데이터베이스: HBase</li>
+<li>분산 데이터 처리: 맵리듀스</li>
+<li>리소스 관리: YARN</li>
+<li>인메모리 처리: 아파치 스파크</li>
+<li>데이터 가공: 피그, 하이브</li>
+<li>데이터 마이닝: 머하웃</li>
+<li>실시간 SQL 질의: 임팔라, 타조</li>
+<li>워크플로우 관리: 우지</li>
+<li>분산 코디네이션: 주키퍼 ## 데이터 연동 ### 데이터 연동의 개요 ### 스쿱</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="대용량-질의-기술" class="level2">
+<h2 class="anchored" data-anchor-id="대용량-질의-기술">대용량 질의 기술</h2>
+<section id="대용량-질의-기술의-개요" class="level3">
+<h3 class="anchored" data-anchor-id="대용량-질의-기술의-개요">대용량 질의 기술의 개요</h3>
+</section>
+<section id="sql-on-하둡-기술" class="level3">
+<h3 class="anchored" data-anchor-id="sql-on-하둡-기술">SQL on 하둡 기술</h3>
+<ol type="1">
+<li><p>3</p></li>
+<li><p>3 (2)</p></li>
+<li><p>3 (?) (2)</p></li>
+<li><p>3 (2)</p></li>
+<li><p>4</p></li>
+<li><p>3 (구글이 처음 고안한 기술?)</p></li>
+<li><p>2 (3은 뭐야)</p></li>
+<li><p>1</p></li>
+<li><p>1</p></li>
+<li><p>4</p></li>
+<li><p>4</p></li>
+<li><p>1</p></li>
+<li><p>3</p></li>
+<li><p>2</p></li>
+<li><p>3</p></li>
+<li><p>4</p></li>
+<li><p>3 (4)</p></li>
+<li><p>2</p></li>
+<li><p>1</p></li>
+<li><p>2</p></li>
+<li><p>extract</p></li>
+<li><p>영속성 / 비 휘발성</p></li>
+<li><p>EAI</p></li>
+<li><p>로그</p></li>
+<li><p>멥 리듀스</p></li>
+<li><p>스쿱</p></li>
+<li><p>hive</p></li>
+<li><p>페이스북 스크라이브 (프레스토)</p></li>
+<li><p>ODC</p></li>
+<li><p>스노우 플레이크 스키마</p></li>
+</ol>
+
+
+</section>
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp/2_데이터_처리_기술_이해/1_데이터_처리_프로세스.html</guid>
+  <pubDate>Sun, 09 Feb 2025 02:21:46 GMT</pubDate>
 </item>
 </channel>
 </rss>
