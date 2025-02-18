@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>inception-of-things – 김형훈의 학습 블로그</title>
+<title>inception-of-things part 1 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,7 +142,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/blog/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/4.html">inception-of-things</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/blog/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/4.html">inception-of-things part 1</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -501,7 +501,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/02_areas/42_seoul/notes/4.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">inception-of-things</span></a>
+ <span class="menu-text">inception-of-things part 1</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1213,9 +1213,9 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/blog/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/4.html">inception-of-things</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/blog/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/index.html">42 Seoul</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/0.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/42_seoul/notes/4.html">inception-of-things part 1</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">inception-of-things</h1>
+<h1 class="title">inception-of-things part 1</h1>
   <div class="quarto-categories">
     <div class="quarto-category">vagrant</div>
     <div class="quarto-category">k8s</div>
@@ -1290,8 +1290,14 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </div>
 <p>cluster는 노드(컴퓨터)들의 논리적인 집합을 의미합니다. 일반적으로, 하나의 컴퓨터로 처리하기 어려운 방대한 양의 작업을 처리하기 위해 도입을 합니다.</p>
 <p>클러스터는 특정한 목적을 가지고 있고, 그 안의 노드들을 각자 맡은 역할을 수행합니다. 이때, k8s는 분산된 노드(컴퓨터)들을 하나의 클러스터로 묶어주고, 관리해주는 도구로써 사용할 수 있습니다.</p>
-<p>한 가지 주의해야 하는 것은, k8s 자체는 노드를 생성(provision)해주는 도구가 아니라는 것입니다. 즉, provision 단계는 k8s clusting 이전에 진행되어야 합니다.</p>
-<p>Part 1에서는 <code>vagrant</code> tool을 이용해서 master, agent 역할을 하는 두 대의 가상 머신을 local에서 <code>provision</code>하고, <code>k3s</code>를 이용해서 <code>clusting</code> 하는 것을 목표로 합니다. 참고로 k3s는 k8s의 경량화 버전입니다.</p>
+<p>한 가지 주의해야 하는 것은, k8s 자체는 노드를 생성(provision)해주는 도구가 아니라는 것입니다. 즉, provision 단계는 k8s clustering 이전에 진행되어야 합니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-02-18-17-01-26.png" class="img-fluid figure-img"></p>
+<figcaption>Part 1 구조</figcaption>
+</figure>
+</div>
+<p>Part 1에서는 <code>vagrant</code> tool을 이용해서 master, agent 역할을 하는 두 대의 가상 머신을 local에서 <code>provision</code>하고, <code>k3s</code>를 이용해서 <code>clustering</code> 하는 것을 목표로 합니다. 참고로 k3s는 k8s의 경량화 버전입니다.</p>
 <p>파일 구조는 아래와 같습니다.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">p1/</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> scripts/</span>
@@ -1300,7 +1306,11 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> Vagrantfile</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>vagrant는 local에서 가상 머신을 생성하고, provision을 할 수 있는 도구입니다. 사용자가 원하는 스펙을 Vagrantfile 이름의 파일에 정의하면, <code>vagrant up</code> 명령어를 통해 간단하게 가상머신을 생성할 수 있습니다.</p>
 <p>과제 요구사항에 맞게 spec을 정의해줍니다.</p>
-<div class="sourceCode" id="cb2" data-filaename="Vagrantfile"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Vagrant.configure(<span class="st">"2"</span>) do <span class="op">|</span>config<span class="op">|</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Vagrantfile</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="Vagrantfile"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Vagrant.configure(<span class="st">"2"</span>) do <span class="op">|</span>config<span class="op">|</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  config.vm.box <span class="op">=</span> <span class="st">"bento/ubuntu-24.04"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  config.vm.box_version <span class="op">=</span> <span class="st">"202404.26.0"</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1335,8 +1345,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    control.vm.provision <span class="st">"shell"</span>, path: <span class="st">"scripts/agent.sh"</span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  end</span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>end</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>저 just for evaluation 부분은 아마 과제 명세서에 ifconfig 명령어를 입력해보는 부분 때문에 추가한 것 같습니다. (사실 이 글을 쓰는 시점은 과제를 수행하고 1년이 지난 시점입니다.)</p>
-<div class="sourceCode" id="cb3" data-filaename="server.sh"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+</div>
+<p>저 just for evaluation 부분은 아마 과제 명세서에 ifconfig 명령어를 입력해보는 부분 때문에 추가한 것 같습니다. (사실 이 글을 쓰는 시점은 과제를 수행하고 1년이 지난 시점이라 기억이 가물가물 합니다.)</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>server.sh</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="server.sh"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">'alias k=kubectl'</span> <span class="op">&gt;&gt;</span> <span class="op">/</span>home<span class="op">/</span>vagrant<span class="op">/</span>.bashrc</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>source <span class="op">/</span>home<span class="op">/</span>vagrant<span class="op">/</span>.bashrc</span>
@@ -1344,13 +1359,19 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>curl <span class="op">-</span>sfL https:<span class="op">//</span>get.k3s.io <span class="op">|</span> K3S_KUBECONFIG_MODE<span class="op">=</span><span class="st">"644"</span> sh <span class="op">-</span>s <span class="op">-</span> server <span class="op">--</span>node<span class="op">-</span>ip <span class="fl">192.168.56.110</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>K3S_TOKEN<span class="op">=</span>$(sudo cat <span class="op">/</span>var<span class="op">/</span>lib<span class="op">/</span>rancher<span class="op">/</span>k3s<span class="op">/</span>server<span class="op">/</span>node<span class="op">-</span>token)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>echo $K3S_TOKEN <span class="op">&gt;</span> <span class="op">/</span>vagrant<span class="op">/</span>k3s_token <span class="co"># vagrant 공유 폴더에 master token 정보를 저장해주었습니다.</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb4" data-filaename="agent.sh"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>agent.sh</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="agent.sh"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">'alias k=kubectl'</span> <span class="op">&gt;&gt;</span> <span class="op">/</span>home<span class="op">/</span>vagrant<span class="op">/</span>.bashrc</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>source <span class="op">/</span>home<span class="op">/</span>vagrant<span class="op">/</span>.bashrc</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>K3S_TOKEN<span class="op">=</span>$(cat <span class="op">/</span>vagrant<span class="op">/</span>k3s_token) <span class="co"># vagrant 공유 폴더에 저장된 master token 정보를 읽어옵니다.</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>curl <span class="op">-</span>sfL https:<span class="op">//</span>get.k3s.io <span class="op">|</span> K3S_URL<span class="op">=</span>https:<span class="op">//</span><span class="fl">192.168.56.110</span>:<span class="dv">6443</span> K3S_TOKEN<span class="op">=</span>$K3S_TOKEN sh <span class="op">-</span>s <span class="op">-</span> <span class="op">--</span>node<span class="op">-</span>ip <span class="fl">192.168.56.111</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><a href="https://docs.k3s.io/quick-start">k3s 공식 문서</a>를 참고해서 master와 agent를 clustering 해주는 스크립트를 작성해주었습니다. 각각 노드 안에서 로직이 실행되어, 하나는 master로, 하나는 agent로 역할을 수행하게 됩니다.</p>
 </section>
 </section>

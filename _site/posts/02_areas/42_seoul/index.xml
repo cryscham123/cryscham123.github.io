@@ -17,7 +17,7 @@
 <generator>quarto-1.5.56</generator>
 <lastBuildDate>Sun, 16 Feb 2025 15:00:00 GMT</lastBuildDate>
 <item>
-  <title>inception-of-things</title>
+  <title>inception-of-things part 1</title>
   <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/4.html</link>
   <description><![CDATA[ 
 
@@ -69,8 +69,14 @@
 </div>
 <p>cluster는 노드(컴퓨터)들의 논리적인 집합을 의미합니다. 일반적으로, 하나의 컴퓨터로 처리하기 어려운 방대한 양의 작업을 처리하기 위해 도입을 합니다.</p>
 <p>클러스터는 특정한 목적을 가지고 있고, 그 안의 노드들을 각자 맡은 역할을 수행합니다. 이때, k8s는 분산된 노드(컴퓨터)들을 하나의 클러스터로 묶어주고, 관리해주는 도구로써 사용할 수 있습니다.</p>
-<p>한 가지 주의해야 하는 것은, k8s 자체는 노드를 생성(provision)해주는 도구가 아니라는 것입니다. 즉, provision 단계는 k8s clusting 이전에 진행되어야 합니다.</p>
-<p>Part 1에서는 <code>vagrant</code> tool을 이용해서 master, agent 역할을 하는 두 대의 가상 머신을 local에서 <code>provision</code>하고, <code>k3s</code>를 이용해서 <code>clusting</code> 하는 것을 목표로 합니다. 참고로 k3s는 k8s의 경량화 버전입니다.</p>
+<p>한 가지 주의해야 하는 것은, k8s 자체는 노드를 생성(provision)해주는 도구가 아니라는 것입니다. 즉, provision 단계는 k8s clustering 이전에 진행되어야 합니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/02_areas/42_seoul/notes/img/2025-02-18-17-01-26.png" class="img-fluid figure-img"></p>
+<figcaption>Part 1 구조</figcaption>
+</figure>
+</div>
+<p>Part 1에서는 <code>vagrant</code> tool을 이용해서 master, agent 역할을 하는 두 대의 가상 머신을 local에서 <code>provision</code>하고, <code>k3s</code>를 이용해서 <code>clustering</code> 하는 것을 목표로 합니다. 참고로 k3s는 k8s의 경량화 버전입니다.</p>
 <p>파일 구조는 아래와 같습니다.</p>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
@@ -89,7 +95,11 @@ background-color: null;
 font-style: inherit;">└──</span> Vagrantfile</span></code></pre></div>
 <p>vagrant는 local에서 가상 머신을 생성하고, provision을 할 수 있는 도구입니다. 사용자가 원하는 스펙을 Vagrantfile 이름의 파일에 정의하면, <code>vagrant up</code> 명령어를 통해 간단하게 가상머신을 생성할 수 있습니다.</p>
 <p>과제 요구사항에 맞게 spec을 정의해줍니다.</p>
-<div class="sourceCode" id="cb2" data-filaename="Vagrantfile" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">Vagrant.configure(<span class="st" style="color: #20794D;
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Vagrantfile</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="Vagrantfile" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">Vagrant.configure(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2"</span>) do <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -246,8 +256,13 @@ background-color: null;
 font-style: inherit;">"scripts/agent.sh"</span></span>
 <span id="cb2-34">  end</span>
 <span id="cb2-35">end</span></code></pre></div>
-<p>저 just for evaluation 부분은 아마 과제 명세서에 ifconfig 명령어를 입력해보는 부분 때문에 추가한 것 같습니다. (사실 이 글을 쓰는 시점은 과제를 수행하고 1년이 지난 시점입니다.)</p>
-<div class="sourceCode" id="cb3" data-filaename="server.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+</div>
+<p>저 just for evaluation 부분은 아마 과제 명세서에 ifconfig 명령어를 입력해보는 부분 때문에 추가한 것 같습니다. (사실 이 글을 쓰는 시점은 과제를 수행하고 1년이 지난 시점이라 기억이 가물가물 합니다.)</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>server.sh</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="server.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#!/bin/bash</span></span>
 <span id="cb3-2"></span>
@@ -317,7 +332,12 @@ background-color: null;
 font-style: inherit;">/</span>k3s_token <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># vagrant 공유 폴더에 master token 정보를 저장해주었습니다.</span></span></code></pre></div>
-<div class="sourceCode" id="cb4" data-filaename="agent.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>agent.sh</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="agent.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#!/bin/bash</span></span>
 <span id="cb4-2"></span>
@@ -376,6 +396,7 @@ background-color: null;
 font-style: inherit;">-</span>ip <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">192.168.56.111</span></span></code></pre></div>
+</div>
 <p><a href="https://docs.k3s.io/quick-start">k3s 공식 문서</a>를 참고해서 master와 agent를 clustering 해주는 스크립트를 작성해주었습니다. 각각 노드 안에서 로직이 실행되어, 하나는 master로, 하나는 agent로 역할을 수행하게 됩니다.</p>
 </section>
 </section>
