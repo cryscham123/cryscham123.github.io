@@ -15,9 +15,35 @@
 <link>https://cryscham123.github.io/all.html</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sun, 16 Feb 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 17 Feb 2025 15:00:00 GMT</lastBuildDate>
 <item>
-  <title>inception-of-things</title>
+  <title>5 - 시각화 구현</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/15.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="시각화-구현-개요" class="level2">
+<h2 class="anchored" data-anchor-id="시각화-구현-개요">시각화 구현 개요</h2>
+</section>
+<section id="분석-도구를-이용한-시각화-구현-r" class="level2">
+<h2 class="anchored" data-anchor-id="분석-도구를-이용한-시각화-구현-r">분석 도구를 이용한 시각화 구현: R</h2>
+</section>
+<section id="라이브러리-기반-시각화-구현-d3.js" class="level2">
+<h2 class="anchored" data-anchor-id="라이브러리-기반-시각화-구현-d3.js">라이브러리 기반 시각화 구현: D3.js</h2>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>adp</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/15.html</guid>
+  <pubDate>Mon, 17 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>inception-of-things part 1</title>
   <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/4.html</link>
   <description><![CDATA[ 
 
@@ -69,8 +95,14 @@
 </div>
 <p>cluster는 노드(컴퓨터)들의 논리적인 집합을 의미합니다. 일반적으로, 하나의 컴퓨터로 처리하기 어려운 방대한 양의 작업을 처리하기 위해 도입을 합니다.</p>
 <p>클러스터는 특정한 목적을 가지고 있고, 그 안의 노드들을 각자 맡은 역할을 수행합니다. 이때, k8s는 분산된 노드(컴퓨터)들을 하나의 클러스터로 묶어주고, 관리해주는 도구로써 사용할 수 있습니다.</p>
-<p>한 가지 주의해야 하는 것은, k8s 자체는 노드를 생성(provision)해주는 도구가 아니라는 것입니다. 즉, provision 단계는 k8s clusting 이전에 진행되어야 합니다.</p>
-<p>Part 1에서는 <code>vagrant</code> tool을 이용해서 master, agent 역할을 하는 두 대의 가상 머신을 local에서 <code>provision</code>하고, <code>k3s</code>를 이용해서 <code>clusting</code> 하는 것을 목표로 합니다. 참고로 k3s는 k8s의 경량화 버전입니다.</p>
+<p>한 가지 주의해야 하는 것은, k8s 자체는 노드를 생성(provision)해주는 도구가 아니라는 것입니다. 즉, provision 단계는 k8s clustering 이전에 진행되어야 합니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/02_areas/42_seoul/notes/img/2025-02-18-17-01-26.png" class="img-fluid figure-img"></p>
+<figcaption>Part 1 구조</figcaption>
+</figure>
+</div>
+<p>Part 1에서는 <code>vagrant</code> tool을 이용해서 master, agent 역할을 하는 두 대의 가상 머신을 local에서 <code>provision</code>하고, <code>k3s</code>를 이용해서 <code>clustering</code> 하는 것을 목표로 합니다. 참고로 k3s는 k8s의 경량화 버전입니다.</p>
 <p>파일 구조는 아래와 같습니다.</p>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
@@ -89,7 +121,11 @@ background-color: null;
 font-style: inherit;">└──</span> Vagrantfile</span></code></pre></div>
 <p>vagrant는 local에서 가상 머신을 생성하고, provision을 할 수 있는 도구입니다. 사용자가 원하는 스펙을 Vagrantfile 이름의 파일에 정의하면, <code>vagrant up</code> 명령어를 통해 간단하게 가상머신을 생성할 수 있습니다.</p>
 <p>과제 요구사항에 맞게 spec을 정의해줍니다.</p>
-<div class="sourceCode" id="cb2" data-filaename="Vagrantfile" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">Vagrant.configure(<span class="st" style="color: #20794D;
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Vagrantfile</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="Vagrantfile" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">Vagrant.configure(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2"</span>) do <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -246,8 +282,13 @@ background-color: null;
 font-style: inherit;">"scripts/agent.sh"</span></span>
 <span id="cb2-34">  end</span>
 <span id="cb2-35">end</span></code></pre></div>
-<p>저 just for evaluation 부분은 아마 과제 명세서에 ifconfig 명령어를 입력해보는 부분 때문에 추가한 것 같습니다. (사실 이 글을 쓰는 시점은 과제를 수행하고 1년이 지난 시점입니다.)</p>
-<div class="sourceCode" id="cb3" data-filaename="server.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+</div>
+<p>저 just for evaluation 부분은 아마 과제 명세서에 ifconfig 명령어를 입력해보는 부분 때문에 추가한 것 같습니다. (사실 이 글을 쓰는 시점은 과제를 수행하고 1년이 지난 시점이라 기억이 가물가물 합니다.)</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>server.sh</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="server.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#!/bin/bash</span></span>
 <span id="cb3-2"></span>
@@ -317,7 +358,12 @@ background-color: null;
 font-style: inherit;">/</span>k3s_token <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># vagrant 공유 폴더에 master token 정보를 저장해주었습니다.</span></span></code></pre></div>
-<div class="sourceCode" id="cb4" data-filaename="agent.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>agent.sh</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="agent.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#!/bin/bash</span></span>
 <span id="cb4-2"></span>
@@ -376,6 +422,7 @@ background-color: null;
 font-style: inherit;">-</span>ip <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">192.168.56.111</span></span></code></pre></div>
+</div>
 <p><a href="https://docs.k3s.io/quick-start">k3s 공식 문서</a>를 참고해서 master와 agent를 clustering 해주는 스크립트를 작성해주었습니다. 각각 노드 안에서 로직이 실행되어, 하나는 master로, 하나는 agent로 역할을 수행하게 됩니다.</p>
 </section>
 </section>
@@ -637,6 +684,24 @@ font-style: inherit;">192.168.56.111</span></span></code></pre></div>
 </section>
 <section id="시계열-분석" class="level2">
 <h2 class="anchored" data-anchor-id="시계열-분석">시계열 분석</h2>
+<ol type="1">
+<li>시계열 데이터 생성</li>
+<li>탐색적 분석을 통해 데이터 이해
+<ul>
+<li>시각화 작업으로 변통 패턴 관찰</li>
+<li>성분분해 작업으로 추세, 계절성분, 불규칙성분 분리
+<ul>
+<li>추세</li>
+<li>계절</li>
+<li>불규칙</li>
+</ul></li>
+</ul></li>
+<li>미래 관측값에 대한 예측
+<ul>
+<li>지수 모델링 기법</li>
+<li>ARIMA 기법</li>
+</ul></li>
+</ol>
 
 
 </section>
@@ -994,36 +1059,95 @@ font-style: inherit;">192.168.56.111</span></span></code></pre></div>
 <h2 class="anchored" data-anchor-id="시각화-프로세스">시각화 프로세스</h2>
 <section id="정보-디자인-프로세스" class="level3">
 <h3 class="anchored" data-anchor-id="정보-디자인-프로세스">1. 정보 디자인 프로세스</h3>
+<ol type="1">
+<li>데이터 수집</li>
+<li>모든 것을 읽기</li>
+<li>내리티브 찾기</li>
+<li>문제의 정의</li>
+<li>계층 구조 만들기</li>
+<li>와이어프레임 그리기</li>
+<li>포맷 선택하기</li>
+<li>시각 접근 방법 결정하기</li>
+<li>정제와 테스트</li>
+<li>세상에 선보이기</li>
+</ol>
 </section>
 <section id="빅데이터-시각화-프로세스" class="level3">
 <h3 class="anchored" data-anchor-id="빅데이터-시각화-프로세스">2. 빅데이터 시각화 프로세스</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-18-15-47-12.png" class="img-fluid figure-img"></p>
+<figcaption>시각화 프로세스</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-18-15-26-10.png" class="img-fluid figure-img"></p>
+<figcaption>방법론</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-18-16-43-13.png" class="img-fluid figure-img"></p>
+<figcaption>에드워드 터프티 시각 정보 디자인 7원칙</figcaption>
+</figure>
+</div>
 </section>
 </section>
 <section id="시각화-방법" class="level2">
 <h2 class="anchored" data-anchor-id="시각화-방법">시각화 방법</h2>
-<section id="시각화-방법의-개념" class="level3">
-<h3 class="anchored" data-anchor-id="시각화-방법의-개념">1. 시각화 방법의 개념</h3>
-</section>
 <section id="정보-구조화" class="level3">
 <h3 class="anchored" data-anchor-id="정보-구조화">2. 정보 구조화</h3>
+<ol type="1">
+<li>데이터 수집 및 탐색</li>
+<li>데이터 분류: 확장자 맞게 분류</li>
+<li>데이터 배열: LATCH
+<ul>
+<li>Location</li>
+<li>Alphabet</li>
+<li>Time</li>
+<li>Category</li>
+<li>Hierarchy: 정보의 변화에 따라 데이터의 값이나 중요도 순서로 정렬</li>
+</ul></li>
+<li>데이터 재배열(관계 맺기):</li>
+</ol>
 </section>
 <section id="정보-시각화" class="level3">
 <h3 class="anchored" data-anchor-id="정보-시각화">3. 정보 시각화</h3>
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-18-16-27-34.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/img/2025-02-18-16-31-52.png" class="img-fluid figure-img"></p>
+<figcaption>좋은 그래프 디자인</figcaption>
+</figure>
+</div>
+<ul>
+<li>범례 만들지 말고, 직접 그려 넣은거</li>
+<li>테두리, 보조선 없는거</li>
+<li>굵은 글씨 대신 글자를 흐리게</li>
+<li>색깔은 최대한 적게 사용</li>
+</ul>
 </section>
 <section id="정보-시각-표현" class="level3">
 <h3 class="anchored" data-anchor-id="정보-시각-표현">4. 정보 시각 표현</h3>
-</section>
-</section>
-<section id="빅데이터-시각화-디자인" class="level2">
-<h2 class="anchored" data-anchor-id="빅데이터-시각화-디자인">빅데이터 시각화 디자인</h2>
-<section id="빅데이터와-시각화-이슈" class="level3">
-<h3 class="anchored" data-anchor-id="빅데이터와-시각화-이슈">1. 빅데이터와 시각화 이슈</h3>
-</section>
-<section id="빅데이터와-시각화-디자인-사례" class="level3">
-<h3 class="anchored" data-anchor-id="빅데이터와-시각화-디자인-사례">2. 빅데이터와 시각화 디자인 사례</h3>
-</section>
-<section id="빅데이터와-시각화-디자인의-방향" class="level3">
-<h3 class="anchored" data-anchor-id="빅데이터와-시각화-디자인의-방향">3. 빅데이터와 시각화 디자인의 방향</h3>
+<ol type="1">
+<li>자크 베르탱의 그래픽 7요소
+<ol type="1">
+<li>위치: 가장 중요한거는 좌측 상단에 배치</li>
+<li>크기</li>
+<li>모양</li>
+<li>색</li>
+<li>명도</li>
+<li>기울기</li>
+<li>질감</li>
+</ol></li>
+<li>타이포그래피
+<ul>
+<li>산세리프: 돌기가 없음. 제목에 적합</li>
+<li>세리프: 돌기가 있음. 본문에 적합</li>
+</ul></li>
+<li>아이소타이프</li>
+</ol>
 
 
 </section>
@@ -2282,122 +2406,6 @@ font-style: inherit;">192.168.56.111</span></span></code></pre></div>
   <category>adp</category>
   <guid>https://cryscham123.github.io/posts/01_projects/adp_필기/notes/adp_자습서/02.html</guid>
   <pubDate>Mon, 03 Feb 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>인간 관계론 - 데일 카네기</title>
-  <link>https://cryscham123.github.io/posts/00_inboxes/notes/01.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791164459667.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:30.0%"></p>
-</figure>
-</div>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>도서 <a href="https://product.kyobobook.co.kr/detail/S000213900397">인간 관계론</a> 정리 노트입니다.</p>
-</div>
-</div>
-</div>
-<section id="사람을-대하는-기본-기술" class="level2">
-<h2 class="anchored" data-anchor-id="사람을-대하는-기본-기술">사람을 대하는 기본 기술</h2>
-<section id="꿀을-얻으려면-벌집을-걷어차지-마라" class="level3">
-<h3 class="anchored" data-anchor-id="꿀을-얻으려면-벌집을-걷어차지-마라">꿀을 얻으려면 벌집을 걷어차지 마라</h3>
-<p>남을 비난하고 원망하며 불평하는 것은 어떤 바보라도 할 수 있다. 실제로 바보들은 그렇게 한다. 하지만 남을 이해하고 용서하려면 인격과 자제력이 필요하다.</p>
-<p><code>사람을 비난하는 대신 그들을 이해하려고 노력해 보자</code>. 그들이 왜 그런 행동을 하는지 곰곰이 생각해 보자. 그편이 비난하는 것보다 훨씬 이롭고 흥미롭다.</p>
-</section>
-<section id="사람을-대하는-핵심-비결" class="level3">
-<h3 class="anchored" data-anchor-id="사람을-대하는-핵심-비결">사람을 대하는 핵심 비결</h3>
-<p>누군가에게 어떤 일을 하게 만드는 방법은 상대방이 그 일을 하고 싶게 만드는 것 뿐이다. 강제적인 방법들은 반드시 역효과를 일으킨다.</p>
-<p>타인에게 어떤 일을 하게 하려면 그 사람이 원하는 것을 주는 방법밖에 없다. <code>인간의 본성이 지닌 가장 깊은 충동이 바로 중요한 사람이 되고자 하는 욕망이다.</code></p>
-<p>이러한 갈망을 제대로 충족시켜 주는 사람은 다른 사람의 마음을 사로잡을 수 있다. <code>타인을 진실된 마음으로 칭찬하자.</code> 이는 이기적이고 거짓인 아첨과는 다르다.</p>
-</section>
-<section id="이-일을-해내는-사람은-세상을-얻을-것이고-그렇지-못한-사람은-외로운-길을-걸을-것이다." class="level3">
-<h3 class="anchored" data-anchor-id="이-일을-해내는-사람은-세상을-얻을-것이고-그렇지-못한-사람은-외로운-길을-걸을-것이다.">이 일을 해내는 사람은 세상을 얻을 것이고, 그렇지 못한 사람은 외로운 길을 걸을 것이다.</h3>
-<p><code>상대방에게 영향을 미치는  방법은 그사람이 원하는 것을 이야기하고, 이를 얻는 방법을 보여 주는 것이다.</code></p>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>…이 부분 예시로 드는 것들이 조금 오버스럽다고 느껴진다.<br>
-문화가 달라서 그런가? 아니면 번역 이슈인가?<br>
-무슨 말을 하는진 알겠는데, 몇몇 부분은 별로 공감이 안 된다.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="사람들에게-호감을-얻는-6가지-방법" class="level2">
-<h2 class="anchored" data-anchor-id="사람들에게-호감을-얻는-6가지-방법">사람들에게 호감을 얻는 6가지 방법</h2>
-<section id="이렇게-하면-어디서든-환영받을-것이다." class="level3">
-<h3 class="anchored" data-anchor-id="이렇게-하면-어디서든-환영받을-것이다.">이렇게 하면 어디서든 환영받을 것이다.</h3>
-<p>다른 사람에게 관심이 없는 사람은 인생에서 가장 큰 어려움을 겪고, 다른 사람에게 가장 큰 상처를 준다. <code>상대방에게 진심으로 관심을 가져라</code></p>
-</section>
-<section id="좋은-첫인상을-남기는-간단한-방법" class="level3">
-<h3 class="anchored" data-anchor-id="좋은-첫인상을-남기는-간단한-방법">좋은 첫인상을 남기는 간단한 방법</h3>
-<p>미소를 지어라</p>
-</section>
-<section id="이렇게-하지-않으면-문제가-생길-것이다." class="level3">
-<h3 class="anchored" data-anchor-id="이렇게-하지-않으면-문제가-생길-것이다.">이렇게 하지 않으면 문제가 생길 것이다.</h3>
-<p>사람의 이름을 기억하라</p>
-</section>
-<section id="좋은-대화-상대가-되는-쉬운-방법" class="level3">
-<h3 class="anchored" data-anchor-id="좋은-대화-상대가-되는-쉬운-방법">좋은 대화 상대가 되는 쉬운 방법</h3>
-<p>상대의 이야기를 경청하고, 상대가 자신에 관해 이야기하도록 격려하라</p>
-</section>
-<section id="사람들의-관심을-얻는-방법" class="level3">
-<h3 class="anchored" data-anchor-id="사람들의-관심을-얻는-방법">사람들의 관심을 얻는 방법</h3>
-<p>상대방의 관심사에 대해 이야기하라</p>
-</section>
-<section id="사람들에게-즉시-호감을-얻는-방법" class="level3">
-<h3 class="anchored" data-anchor-id="사람들에게-즉시-호감을-얻는-방법">사람들에게 즉시 호감을 얻는 방법</h3>
-<p>모든 사람은 자신이 상대보다 우월하다고 생각한다. 항상 상대방이 자신을 중요하다고 느끼게 하라</p>
-</section>
-</section>
-<section id="사람들의-마음을-사로잡는-12가지-방법" class="level2">
-<h2 class="anchored" data-anchor-id="사람들의-마음을-사로잡는-12가지-방법">사람들의 마음을 사로잡는 12가지 방법</h2>
-<section id="논쟁으로는-이길-수-없다" class="level3">
-<h3 class="anchored" data-anchor-id="논쟁으로는-이길-수-없다">논쟁으로는 이길 수 없다</h3>
-<p>자기 의사에 반하여 설득당한 사람은 여전히 자기 생각을 바꾸지 않는 법이다. 논쟁에서 최선의 결과를 얻는 유일한 방법은 논쟁을 피하는 것뿐이다.</p>
-</section>
-<section id="적을-만드는-확실한-방법과-이를-피하는-방법" class="level3">
-<h3 class="anchored" data-anchor-id="적을-만드는-확실한-방법과-이를-피하는-방법">적을 만드는 확실한 방법과 이를 피하는 방법</h3>
-<p>되도록 남들보다 지혜로운 사람이 되거라. 하지만 남들에게 그렇다고 말하지 않도록 해라.</p>
-<p>상대가 틀린 말을 해도 굳이 지적하지 마라</p>
-</section>
-<section id="틀렸다면-인정하라" class="level3">
-<h3 class="anchored" data-anchor-id="틀렸다면-인정하라">틀렸다면, 인정하라</h3>
-<p>조금 잘못했는데, 상대가 비난할거 같으면 오바해서 자기 잘못을 시인하라</p>
-</section>
-<section id="이성에-호소하는-확실한-방법" class="level3">
-<h3 class="anchored" data-anchor-id="이성에-호소하는-확실한-방법">이성에 호소하는 확실한 방법</h3>
-<p>우호적인 방식으로 시작하라</p>
-</section>
-<section id="소크라테스의-비결" class="level3">
-<h3 class="anchored" data-anchor-id="소크라테스의-비결">소크라테스의 비결</h3>
-<p>상대방이 동의할 수 밖에 없는 질문을 유도하라.</p>
-</section>
-<section id="불만을-잠재우는-안전밸브" class="level3">
-<h3 class="anchored" data-anchor-id="불만을-잠재우는-안전밸브">불만을 잠재우는 안전밸브</h3>
-
-
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>독서</category>
-  <category>인간 관계</category>
-  <guid>https://cryscham123.github.io/posts/00_inboxes/notes/01.html</guid>
-  <pubDate>Sat, 01 Feb 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
