@@ -18,7 +18,7 @@
 <lastBuildDate>Sun, 16 Feb 2025 15:00:00 GMT</lastBuildDate>
 <item>
   <title>inception-of-things part 1</title>
-  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/4.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/04.html</link>
   <description><![CDATA[ 
 
 
@@ -26,7 +26,7 @@
 
 <p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <section id="intro" class="level2">
-<h2 class="anchored" data-anchor-id="intro">intro</h2>
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://cryscham123.github.io/img/42-outer-1.png" class="img-fluid figure-img"></p>
@@ -36,10 +36,8 @@
 <p>42 Seoul의 공통 과정을 마무리하면, 원하는 분야를 선택하여 심화 과제를 수행할 수 있습니다. 그중에서도 ’Inception-of-Things’는 인프라 관련 심화 과제로, 가장 많은 경험치를 얻을 수 있는 과제입니다.</p>
 <p>얼핏 보면 매우 어려운 과제처럼 느껴질 수 있지만, 개념을 확실히 이해하고 공부한다면 누구나 빠르게 완료할 수 있다고 생각합니다. 저의 경우, CKA 자격증 취득을 목표로 k8s를 공부하던 중 우연히 팀원을 구하게 되어 이 과제를 수행하게 되었습니다. 배경지식이 어느 정도 있는 상태에서 진행하다 보니, 크게 어렵지 않게 잘 마무리할 수 있었던 것 같습니다.</p>
 </section>
-<section id="프로젝트-및-구현-설명" class="level2">
-<h2 class="anchored" data-anchor-id="프로젝트-및-구현-설명">프로젝트 및 구현 설명</h2>
-<section id="개요" class="level3">
-<h3 class="anchored" data-anchor-id="개요">개요</h3>
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
 <p><a href="https://cdn.intra.42.fr/pdf/pdf/143948/en.subject.pdf">과제 명세서</a></p>
 <p>참고한 자료는 다음과 같습니다:</p>
 <ul>
@@ -59,14 +57,8 @@
 </div>
 </div>
 </section>
-<section id="part-1" class="level3">
-<h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/02_areas/42_seoul/notes/img/2025-01-17-14-00-34.png" class="img-fluid figure-img"></p>
-<figcaption>Part 1 요구사항</figcaption>
-</figure>
-</div>
+<section id="개념-설명" class="level2">
+<h2 class="anchored" data-anchor-id="개념-설명">개념 설명</h2>
 <p>cluster는 노드(컴퓨터)들의 논리적인 집합을 의미합니다. 일반적으로, 하나의 컴퓨터로 처리하기 어려운 방대한 양의 작업을 처리하기 위해 도입을 합니다.</p>
 <p>클러스터는 특정한 목적을 가지고 있고, 그 안의 노드들을 각자 맡은 역할을 수행합니다. (보통 클러스터 내부의 노드들을 관리하는 master, 작업을 수행하는 worker로 구분할 수 있습니다.) 이때, k8s는 분산된 노드(컴퓨터)들을 하나의 클러스터로 묶어주고, 관리해주는 도구로써 사용할 수 있습니다.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -91,7 +83,10 @@
 <figcaption>Part 1 구조</figcaption>
 </figure>
 </div>
-<p>Part 1에서는 <code>vagrant</code> tool을 이용해서 master, agent 역할을 하는 두 대의 가상 머신을 local에서 <code>provision</code>하고, <code>k3s</code>를 이용해서 <code>clustering</code> 하는 것을 목표로 합니다. 참고로 k3s는 k8s의 경량화 버전입니다.</p>
+<p>Part 1에서는 <code>vagrant</code> tool을 이용해서 master, agent 역할을 하는 두 대의 가상 머신을 local에서 <code>provision</code>하고, <code>k3s</code>를 이용해서 <code>clustering</code> 하는 것을 요구합니다. 참고로 k3s는 k8s의 경량화 버전입니다.</p>
+</section>
+<section id="코드-설명" class="level2">
+<h2 class="anchored" data-anchor-id="코드-설명">코드 설명</h2>
 <p>파일 구조는 아래와 같습니다.</p>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
@@ -414,9 +409,8 @@ font-style: inherit;">192.168.56.111</span></span></code></pre></div>
 </div>
 <p><a href="https://docs.k3s.io/quick-start">k3s 공식 문서</a>를 참고해서 master와 agent를 clustering 해주는 스크립트를 작성해주었습니다. 각각 노드 안에서 로직이 실행되어, 하나는 master로, 하나는 agent로 역할을 수행하게 됩니다.</p>
 </section>
-</section>
 <section id="outro" class="level2">
-<h2 class="anchored" data-anchor-id="outro">outro</h2>
+<h2 class="anchored" data-anchor-id="outro">Outro</h2>
 <p>오랜만에 해당 과제의 로직을 다시 보니까 기억이 잘 안납니다.</p>
 <p>남은 부분은 천천히 포스팅하겠습니다.</p>
 
@@ -429,12 +423,12 @@ font-style: inherit;">192.168.56.111</span></span></code></pre></div>
   <category>argoCD</category>
   <category>gitlab</category>
   <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/4.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/04.html</guid>
   <pubDate>Sun, 16 Feb 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>cloud-1 코드 설명</title>
-  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/6.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/09.html</link>
   <description><![CDATA[ 
 
 
@@ -449,7 +443,7 @@ font-style: inherit;">192.168.56.111</span></span></code></pre></div>
 <figcaption>42 seoul outer 과제</figcaption>
 </figure>
 </div>
-<p><a href="../../../../posts/02_areas/42_seoul/notes/5.html">개념 설명</a>에 이어서 진행하도록 하겠습니다.</p>
+<p><a href="../../../../posts/02_areas/42_seoul/notes/08.html">개념 설명</a>에 이어서 진행하도록 하겠습니다.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -2139,12 +2133,12 @@ font-style: inherit;">@</span>example.com</span></code></pre></div>
   <category>terraform</category>
   <category>ansible</category>
   <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/6.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/09.html</guid>
   <pubDate>Wed, 29 Jan 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>cloud-1 개념 설명</title>
-  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/5.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/08.html</link>
   <description><![CDATA[ 
 
 
@@ -2242,12 +2236,12 @@ font-style: inherit;">@</span>example.com</span></code></pre></div>
   <category>terraform</category>
   <category>ansible</category>
   <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/5.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/08.html</guid>
   <pubDate>Mon, 27 Jan 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>ft_transcendence - github action</title>
-  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/1.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/01.html</link>
   <description><![CDATA[ 
 
 
@@ -3343,7 +3337,7 @@ font-style: inherit;">#       - ex) closes #&lt;issue 번호&gt; closes #&lt;iss
   <category>agile</category>
   <category>github action</category>
   <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/1.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/42_seoul/notes/01.html</guid>
   <pubDate>Thu, 16 Jan 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>

@@ -1,0 +1,62 @@
+---
+title: "Multiple Linear Regression"
+date: 2025-02-26
+categories: ["machine learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## preprocessing
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+dataset = pd.read_csv('_data/03.csv')
+x = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+```
+
+```{python}
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+
+# model automatically avoid dummy variable trap
+ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [3])], remainder='passthrough')
+x = np.array(ct.fit_transform(x))
+
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(x, y, train_size=0.2)
+
+# in multiple linear regression, we don't need to apply feature scaling
+```
+
+## modeling
+
+```{python}
+from sklearn.linear_model import LinearRegression
+
+# model automatically choose best model (dont need to apply 후진제거법)
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+```
+
+## predict
+
+```{python}
+y_pred = regressor.predict(X_test)
+np.set_printoptions(precision=2)
+print(np.concatenate((y_pred.reshape(len(y_pred), 1), 
+                      y_test.reshape(len(y_test), 1)), 1))
+```
+
+## evaluate
+
+```{python}
+from sklearn.metrics import r2_score
+
+r2_score(y_test, y_pred)
+```
+

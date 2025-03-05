@@ -1,0 +1,57 @@
+---
+title: "Support Vector Regression"
+date: 2025-03-01
+categories: ["machine learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## preprocessing
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+dataset = pd.read_csv('_data/04.csv')
+x = dataset.iloc[:, 1:-1].values
+y = dataset.iloc[:, -1].values
+y = y.reshape(len(y), 1)
+```
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+
+sc_x = StandardScaler()
+sc_y = StandardScaler()
+
+x = sc_x.fit_transform(x)
+y = sc_y.fit_transform(y)
+```
+
+## Train
+
+```{python}
+from sklearn.svm import SVR
+
+regressor = SVR(kernel='rbf')
+regressor.fit(x, y)
+```
+
+## Visualize
+
+```{python}
+plt.scatter(sc_x.inverse_transform(x), sc_y.inverse_transform(y), color='red')
+plt.plot(sc_x.inverse_transform(x), sc_y.inverse_transform(regressor.predict(x).reshape(-1, 1)))
+plt.show()
+```
+
+## High resolution
+
+```{python}
+x_grid = np.arange(min(sc_x.inverse_transform(x)), max(sc_x.inverse_transform(x)), 0.1)
+x_grid = x_grid.reshape((len(x_grid), 1))
+plt.scatter(sc_x.inverse_transform(x), sc_y.inverse_transform(y), color='red')
+plt.plot(x_grid, sc_y.inverse_transform(regressor.predict(sc_x.transform(x_grid)).reshape(-1, 1)))
+plt.show()
+```
