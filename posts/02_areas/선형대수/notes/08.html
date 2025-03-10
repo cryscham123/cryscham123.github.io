@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Subspaces and the basis – 김형훈의 학습 블로그</title>
+<title>vector dot product – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../posts/02_areas/선형대수/notes/08.html" rel="next">
-<link href="../../../../posts/02_areas/선형대수/notes/06.html" rel="prev">
+<link href="../../../../posts/02_areas/terraform/index.html" rel="next">
+<link href="../../../../posts/02_areas/선형대수/notes/07.html" rel="prev">
 <link href="../../../../favicon" rel="icon">
 <script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../site_libs/quarto-html/quarto.js"></script>
@@ -137,7 +137,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/blog/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/index.html">선형대수</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/notes/00.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/notes/07.html">Subspaces and the basis</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/blog/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/index.html">선형대수</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/notes/00.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/notes/08.html">vector dot product</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -482,13 +482,13 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/02_areas/선형대수/notes/07.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../posts/02_areas/선형대수/notes/07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Subspaces and the basis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/02_areas/선형대수/notes/08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../posts/02_areas/선형대수/notes/08.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">vector dot product</span></a>
   </div>
 </li>
@@ -1409,17 +1409,27 @@ window.Quarto = {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#subspaces" id="toc-subspaces" class="nav-link active" data-scroll-target="#subspaces">Subspaces</a></li>
-  <li><a href="#basis" id="toc-basis" class="nav-link" data-scroll-target="#basis">Basis</a></li>
+  <li><a href="#dot-product" id="toc-dot-product" class="nav-link active" data-scroll-target="#dot-product">Dot Product</a>
+  <ul class="collapse">
+  <li><a href="#properties" id="toc-properties" class="nav-link" data-scroll-target="#properties">Properties</a></li>
+  </ul></li>
+  <li><a href="#length-of-vector" id="toc-length-of-vector" class="nav-link" data-scroll-target="#length-of-vector">Length of vector</a></li>
+  <li><a href="#some-properties" id="toc-some-properties" class="nav-link" data-scroll-target="#some-properties">Some properties</a>
+  <ul class="collapse">
+  <li><a href="#cauchy-schwarz-inequality" id="toc-cauchy-schwarz-inequality" class="nav-link" data-scroll-target="#cauchy-schwarz-inequality">cauchy-schwarz inequality</a></li>
+  <li><a href="#triangle-inequality" id="toc-triangle-inequality" class="nav-link" data-scroll-target="#triangle-inequality">Triangle inequality</a></li>
+  <li><a href="#angle-between-vectors" id="toc-angle-between-vectors" class="nav-link" data-scroll-target="#angle-between-vectors">Angle between vectors</a></li>
+  </ul></li>
+  <li><a href="#cross-product" id="toc-cross-product" class="nav-link" data-scroll-target="#cross-product">Cross Product</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/blog/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/index.html">선형대수</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/notes/00.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/notes/07.html">Subspaces and the basis</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/blog/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/index.html">선형대수</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/notes/00.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/선형대수/notes/08.html">vector dot product</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Subspaces and the basis</h1>
+<h1 class="title">vector dot product</h1>
   <div class="quarto-categories">
     <div class="quarto-category">선형 대수</div>
   </div>
@@ -1433,7 +1443,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 3월 3일</p>
+      <p class="date">2025년 3월 9일</p>
     </div>
   </div>
   
@@ -1446,31 +1456,56 @@ window.Quarto = {
 
 
 <p><img src="../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="subspaces" class="level2">
-<h2 class="anchored" data-anchor-id="subspaces">Subspaces</h2>
+<section id="dot-product" class="level2">
+<h2 class="anchored" data-anchor-id="dot-product">Dot Product</h2>
 <ul>
-<li><span class="math inline">\(S\)</span> is a subset of <span class="math inline">\(V\)</span>.
-<ol type="1">
-<li>S ⊆ V</li>
-<li>S is a vector space
-<ol type="1">
-<li>include zero vector</li>
-<li>closed under addition</li>
-<li>closed under scalar multiplication</li>
-</ol></li>
-</ol></li>
+<li><span class="math inline">\(v ⋅ w = \sum_{i=1}^{n} v_i w_i\)</span></li>
+</ul>
+<section id="properties" class="level3">
+<h3 class="anchored" data-anchor-id="properties">Properties</h3>
+<ul>
+<li><span class="math inline">\(v ⋅ w = w ⋅ v\)</span></li>
+<li><span class="math inline">\(v ⋅ (w + u) = v ⋅ w + v ⋅ u\)</span></li>
+<li><span class="math inline">\(v ⋅ (c w) = c (v ⋅ w)\)</span></li>
 </ul>
 </section>
-<section id="basis" class="level2">
-<h2 class="anchored" data-anchor-id="basis">Basis</h2>
+</section>
+<section id="length-of-vector" class="level2">
+<h2 class="anchored" data-anchor-id="length-of-vector">Length of vector</h2>
 <ul>
-<li>minimum set of vectors that spans the subset</li>
-<li><span class="math inline">\(S\)</span> is a basis of <span class="math inline">\(V\)</span> ⟺
-<ol type="1">
-<li>elements of <span class="math inline">\(S\)</span> are linearly independent</li>
-<li><span class="math inline">\(S\)</span> spans <span class="math inline">\(V\)</span></li>
-</ol></li>
-<li>특정 부분집합의 basis의 linear combination으로 표현되는 모든 벡터는 유일하다.</li>
+<li><span class="math inline">\(||v|| = \sqrt{v ⋅ v}\)</span></li>
+</ul>
+</section>
+<section id="some-properties" class="level2">
+<h2 class="anchored" data-anchor-id="some-properties">Some properties</h2>
+<p>for non-zero vectors <span class="math inline">\(v\)</span> and <span class="math inline">\(w\)</span>:</p>
+<section id="cauchy-schwarz-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="cauchy-schwarz-inequality">cauchy-schwarz inequality</h3>
+<ul>
+<li><span class="math inline">\(|v ⋅ w| ≤ ||v|| ||w||\)</span></li>
+<li><span class="math inline">\(|v ⋅ w| = ||v|| ||w||\)</span> ⟺ <span class="math inline">\(v = cw\)</span></li>
+</ul>
+</section>
+<section id="triangle-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="triangle-inequality">Triangle inequality</h3>
+<ul>
+<li><span class="math inline">\(||v + w|| ≤ ||v|| + ||w||\)</span></li>
+</ul>
+</section>
+<section id="angle-between-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="angle-between-vectors">Angle between vectors</h3>
+<ul>
+<li><span class="math inline">\(cosθ = \frac{v ⋅ w}{||v|| ||w||}\)</span></li>
+<li>if <span class="math inline">\(v\)</span> and <span class="math inline">\(w\)</span> are orthogonal, then <span class="math inline">\(v ⋅ w = 0\)</span></li>
+</ul>
+</section>
+</section>
+<section id="cross-product" class="level2">
+<h2 class="anchored" data-anchor-id="cross-product">Cross Product</h2>
+<ul>
+<li><p>only for 3D vectors</p></li>
+<li><p>get a vector that is orthogonal to both <span class="math inline">\(v\)</span> and <span class="math inline">\(w\)</span></p></li>
+<li><p><span class="math inline">\(v × w = (v_2 w_3 - v_3 w_2, v_3 w_1 - v_1 w_3, v_1 w_2 - v_2 w_1)\)</span></p></li>
 </ul>
 
 
@@ -1903,13 +1938,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../posts/02_areas/선형대수/notes/06.html" class="pagination-link" aria-label="linear independence">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">linear independence</span>
+      <a href="../../../../posts/02_areas/선형대수/notes/07.html" class="pagination-link" aria-label="Subspaces and the basis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Subspaces and the basis</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/02_areas/선형대수/notes/08.html" class="pagination-link" aria-label="vector dot product">
-        <span class="nav-page-text">vector dot product</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../posts/02_areas/terraform/index.html" class="pagination-link" aria-label="Terraform">
+        <span class="nav-page-text">Terraform</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
