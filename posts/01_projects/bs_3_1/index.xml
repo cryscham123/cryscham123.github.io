@@ -15,7 +15,557 @@
 <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sun, 09 Mar 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 13 Mar 2025 09:45:41 GMT</lastBuildDate>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/06.pdf</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>보고서</category>
+  <category>OR</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/06.pdf</guid>
+  <pubDate>Thu, 13 Mar 2025 09:45:41 GMT</pubDate>
+</item>
+<item>
+  <title>통계적 추정</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/statistics/01.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="통계적-추론" class="level2">
+<h2 class="anchored" data-anchor-id="통계적-추론">통계적 추론</h2>
+<p>표본으로부터 모수를 추론하는 것:</p>
+<ul>
+<li>추정
+<ul>
+<li>점추정</li>
+<li>구간추정</li>
+</ul></li>
+<li>가설 검정</li>
+</ul>
+</section>
+<section id="추정" class="level2">
+<h2 class="anchored" data-anchor-id="추정">추정</h2>
+<p>추정량의 결정 기준:</p>
+<section id="불편성" class="level3">
+<h3 class="anchored" data-anchor-id="불편성">불편성</h3>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?E(%5Chat%7B%5Ctheta%7D)%20=%20%CE%B8"></li>
+<li>bias = <img src="https://latex.codecogs.com/png.latex?E(%5Chat%7B%5Ctheta%7D)%20-%20%5Ctheta">
+<ul>
+<li>보통 sample size가 커질수록 bias는 0에 수렴</li>
+</ul></li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cbar%7BX%7D,%20X_n">은 μ의 불편추정량이다.</li>
+</ul>
+</section>
+<section id="최소분산" class="level3">
+<h3 class="anchored" data-anchor-id="최소분산">최소분산</h3>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?Var(%5Cbar%7BX%7D)">가 <img src="https://latex.codecogs.com/png.latex?Var(X_n)">보다 분산이 작아서 더 좋은 추정량</li>
+<li><img src="https://latex.codecogs.com/png.latex?MSE(%5Chat%7B%5Ctheta%7D)%20=%20E%5B(%5Chat%7B%5Ctheta%7D%20-%20%5Ctheta)%5E2%5D%20=%20Var(%5Chat%7B%5Ctheta%7D)%20+%20bias%5E2">
+<ul>
+<li>큰 오차에 더 큰 페널티를 주기 위해 제곱</li>
+</ul></li>
+</ul>
+</section>
+<section id="대표적인-불편추정량" class="level3">
+<h3 class="anchored" data-anchor-id="대표적인-불편추정량">대표적인 불편추정량</h3>
+<ol type="1">
+<li>모평균</li>
+<li>모비율</li>
+<li>모평균 차이</li>
+<li>모비율 차이</li>
+</ol>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>확률과 통계</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/statistics/01.html</guid>
+  <pubDate>Wed, 12 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>pandas</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/02.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="series" class="level2">
+<h2 class="anchored" data-anchor-id="series">Series</h2>
+<ul>
+<li>index, value로 이루어진 데이터 구조</li>
+</ul>
+<div id="e7d5b85c" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Series([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'1'</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>])</span></code></pre></div>
+</div>
+<div id="08e3672e" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb2-2">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'yo'</span>: {</span>
+<span id="cb2-3">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'hey'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span></span>
+<span id="cb2-4">  },</span>
+<span id="cb2-5">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'hey'</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>],</span>
+<span id="cb2-6">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'haha'</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>]</span>
+<span id="cb2-7">}</span>
+<span id="cb2-8">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Series(data)</span>
+<span id="cb2-9">data.name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'what'</span></span>
+<span id="cb2-10">data.index.name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'kiki'</span></span>
+<span id="cb2-11">data</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>kiki
+yo      {'hey': 300}
+hey       [200, 500]
+haha       [100, 90]
+Name: what, dtype: object</code></pre>
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/02.html</guid>
+  <pubDate>Tue, 11 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>organization을 process 관점에서 바라보기</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/02.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="수업-요약" class="level2">
+<h2 class="anchored" data-anchor-id="수업-요약">수업 요약</h2>
+<ul>
+<li><p>시험 시간 9시-10시</p></li>
+<li><p>왜 공급을 할 수 있는 비즈니스 프로세스는 즉각적이지 않은가</p></li>
+</ul>
+</section>
+<section id="예시" class="level2">
+<h2 class="anchored" data-anchor-id="예시">예시</h2>
+<section id="방사선조영실-작업-간트-차트" class="level3">
+<h3 class="anchored" data-anchor-id="방사선조영실-작업-간트-차트">방사선조영실 작업 간트 차트</h3>
+<ul>
+<li>작업</li>
+<li>대기: 수요와 공급의 불일치, 작업들에 존재하는 불확실성으로 생기는 것</li>
+<li>흐름(flow): 작업이 진행되는 것을 tracking
+<ul>
+<li>단위</li>
+</ul></li>
+<li>자원: 노동력, 설비</li>
+</ul>
+</section>
+<section id="프로세스-평가를-위한-3가지-요소" class="level3">
+<h3 class="anchored" data-anchor-id="프로세스-평가를-위한-3가지-요소">프로세스 평가를 위한 3가지 요소</h3>
+<ul>
+<li>흐름률: 처리 능력. 생산 능력
+<ul>
+<li>흐름률이 오르면 생산 능력이 오른다.</li>
+</ul></li>
+<li>흐름시간
+<ul>
+<li>흐름시간이 줄어들면 수요-공급 사이의 시간도 줄어든다.</li>
+</ul></li>
+<li>재고
+<ul>
+<li>제일 다루기 간편함</li>
+</ul></li>
+</ul>
+</section>
+<section id="리틀의-법칙" class="level3">
+<h3 class="anchored" data-anchor-id="리틀의-법칙">리틀의 법칙</h3>
+<p>위의 세개와 수요 공급간의 관계가 있다.</p>
+<ul>
+<li><code>I = R * T</code> (항상 성립)
+<ul>
+<li>I: 평균 재고 (flow time 동안 들어온 input)</li>
+<li>R: 평균 흐름률</li>
+<li>T: 평균 흐름시간</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>생산시스템관리</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/02.html</guid>
+  <pubDate>Tue, 11 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Numpy-2</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/01.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="masking" class="level2">
+<h2 class="anchored" data-anchor-id="masking">Masking</h2>
+<div id="99b0958d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>]])</span>
+<span id="cb1-4">bool_indexing <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(bool_indexing)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[False  True False]
+ [ True False  True]
+ [False  True False]]</code></pre>
+</div>
+</div>
+<div id="8afd59e2" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(a[bool_indexing])</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[2 4 6 8]</code></pre>
+</div>
+</div>
+<div id="b1cf0faf" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.randn(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb5-2">np.around(data, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) </span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>array([[-0.  ,  1.1 ,  0.01, -0.11, -0.52],
+       [-0.89,  0.52, -0.83, -0.96, -0.13],
+       [-1.07, -1.03, -1.04, -0.14, -0.18],
+       [-1.51, -2.27, -0.79, -1.82, -1.29]])</code></pre>
+</div>
+</div>
+<div id="8a5c7c72" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[ <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.87883804</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.39056004</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.18374625</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.91699153</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.23666417</span>],</span>
+<span id="cb7-2">[ <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.28408269</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.14786861</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.54178089</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12426074</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.54734241</span>],</span>
+<span id="cb7-3">[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.67396474</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.88974809</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.09876402</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.05047587</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.31776863</span>],</span>
+<span id="cb7-4">[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.27404289</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.73640766</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.16014918</span>,</span>
+<span id="cb7-5"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.03578294</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.62956063</span>]])</span>
+<span id="cb7-6">data[data[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span></span></code></pre></div>
+</div>
+<div id="75101174" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">a[::<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([[7, 8, 9],
+       [4, 5, 6],
+       [1, 2, 3]])</code></pre>
+</div>
+</div>
+<div id="533c7a4d" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>]])</span>
+<span id="cb10-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(a.reshape(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1 2]
+ [3 4]
+ [5 6]]</code></pre>
+</div>
+</div>
+<div id="3687fb20" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(a.T)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1 4]
+ [2 5]
+ [3 6]]</code></pre>
+</div>
+</div>
+<div id="dd866e43" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb14-2"></span>
+<span id="cb14-3">x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.arange(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>)</span>
+<span id="cb14-4">x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.sin(x1)</span>
+<span id="cb14-5"></span>
+<span id="cb14-6">plt.plot(x1, x2)</span>
+<span id="cb14-7">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/01_files/figure-html/cell-9-output-1.png" width="590" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="dec5c7c9" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">y1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.sin(x1)</span>
+<span id="cb15-2">y2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.cos(x1)</span>
+<span id="cb15-3">plt.plot(x1, y1, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sin'</span>)</span>
+<span id="cb15-4">plt.plot(x1, y2, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cos'</span>)</span>
+<span id="cb15-5">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'x'</span>)</span>
+<span id="cb15-6">plt.ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>)</span>
+<span id="cb15-7">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sin and cos'</span>)</span>
+<span id="cb15-8">plt.legend()</span>
+<span id="cb15-9">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/01_files/figure-html/cell-10-output-1.png" width="608" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/01.html</guid>
+  <pubDate>Tue, 11 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>자료구조와 알고리즘</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/structure/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>데이터구조및알고리즘</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/structure/00.html</guid>
+  <pubDate>Mon, 10 Mar 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Matching Supply with Demand</title>
   <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/01.html</link>
@@ -88,7 +638,7 @@
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>optimization</category>
+  <category>생산시스템관리</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/01.html</guid>
   <pubDate>Sun, 09 Mar 2025 15:00:00 GMT</pubDate>
 </item>
@@ -543,7 +1093,7 @@ font-style: inherit;">+</span> b</span></code></pre></div>
 <ul>
 <li>정규 모집단으로 부터 나온 표본의 분산 S에 대하여, <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B(n-1)S%5E2%7D%7B%CF%83%5E2%7D">은 자유도가 n-1인 카이제곱 분포를 따른다.
 <ul>
-<li>모집단이 정규분포를 따르지 않을 경우, 못 구함</li>
+<li>모집단이 정규분포를 따르지 않을 경우, 비모수적인 방법을 사용해야 한다.</li>
 </ul></li>
 <li>두 정규 모집단으로부터 계산되는 표본분산의 비율은 f-분포를 따른다.</li>
 </ul>
@@ -579,7 +1129,7 @@ font-style: inherit;">+</span> b</span></code></pre></div>
 
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>optimization</category>
+  <category>생산시스템관리</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/00.html</guid>
   <pubDate>Tue, 04 Mar 2025 15:00:00 GMT</pubDate>
 </item>
