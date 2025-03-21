@@ -15,7 +15,1396 @@
 <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Thu, 13 Mar 2025 09:45:41 GMT</lastBuildDate>
+<lastBuildDate>Fri, 21 Mar 2025 04:28:32 GMT</lastBuildDate>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/07.pdf</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>보고서</category>
+  <category>OR</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/07.pdf</guid>
+  <pubDate>Fri, 21 Mar 2025 04:28:32 GMT</pubDate>
+</item>
+<item>
+  <title>pandas</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/04.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<div id="249898bd" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb1-5">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'name'</span>: [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'John'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Anna'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Peter'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Linda'</span>],</span>
+<span id="cb1-6">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'location'</span>: [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'New York'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Paris'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Berlin'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'London'</span>],</span>
+<span id="cb1-7">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'age'</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">53</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">33</span>]</span>
+<span id="cb1-8">}</span>
+<span id="cb1-9">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(data)</span></code></pre></div>
+</div>
+<div id="d463cd85" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df.loc[(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'age'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'age'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'location'</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>0    New York
+3      London
+Name: location, dtype: object</code></pre>
+</div>
+</div>
+<div id="78feb95e" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(np.random.randn(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb4-2">df</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>-1.260874</td>
+<td>-0.424196</td>
+<td>-0.489728</td>
+<td>-0.708260</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>-0.071878</td>
+<td>-1.327910</td>
+<td>-0.366269</td>
+<td>-0.244294</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.990349</td>
+<td>-0.810813</td>
+<td>1.092014</td>
+<td>0.541679</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.289344</td>
+<td>-0.526430</td>
+<td>1.418070</td>
+<td>0.873226</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.411642</td>
+<td>0.019485</td>
+<td>0.480180</td>
+<td>-0.894480</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2.338172</td>
+<td>0.983774</td>
+<td>-0.029658</td>
+<td>-1.131598</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="60241d28" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df.columns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'A'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'B'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'C'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'D'</span>]</span>
+<span id="cb5-2">df.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.date_range(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'20250101'</span>, periods<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>)</span>
+<span id="cb5-3">df</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-01</td>
+<td>-1.260874</td>
+<td>-0.424196</td>
+<td>-0.489728</td>
+<td>-0.708260</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-02</td>
+<td>-0.071878</td>
+<td>-1.327910</td>
+<td>-0.366269</td>
+<td>-0.244294</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-03</td>
+<td>0.990349</td>
+<td>-0.810813</td>
+<td>1.092014</td>
+<td>0.541679</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-04</td>
+<td>0.289344</td>
+<td>-0.526430</td>
+<td>1.418070</td>
+<td>0.873226</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-05</td>
+<td>0.411642</td>
+<td>0.019485</td>
+<td>0.480180</td>
+<td>-0.894480</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-06</td>
+<td>2.338172</td>
+<td>0.983774</td>
+<td>-0.029658</td>
+<td>-1.131598</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="e1644efd" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'F'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, np.nan, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.1</span>, np.nan, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.0</span>]</span>
+<span id="cb6-2">df</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-01</td>
+<td>-1.260874</td>
+<td>-0.424196</td>
+<td>-0.489728</td>
+<td>-0.708260</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-02</td>
+<td>-0.071878</td>
+<td>-1.327910</td>
+<td>-0.366269</td>
+<td>-0.244294</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-03</td>
+<td>0.990349</td>
+<td>-0.810813</td>
+<td>1.092014</td>
+<td>0.541679</td>
+<td>3.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-04</td>
+<td>0.289344</td>
+<td>-0.526430</td>
+<td>1.418070</td>
+<td>0.873226</td>
+<td>6.1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-05</td>
+<td>0.411642</td>
+<td>0.019485</td>
+<td>0.480180</td>
+<td>-0.894480</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-06</td>
+<td>2.338172</td>
+<td>0.983774</td>
+<td>-0.029658</td>
+<td>-1.131598</td>
+<td>7.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cfe13ef7" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">df.dropna()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-01</td>
+<td>-1.260874</td>
+<td>-0.424196</td>
+<td>-0.489728</td>
+<td>-0.708260</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-03</td>
+<td>0.990349</td>
+<td>-0.810813</td>
+<td>1.092014</td>
+<td>0.541679</td>
+<td>3.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-04</td>
+<td>0.289344</td>
+<td>-0.526430</td>
+<td>1.418070</td>
+<td>0.873226</td>
+<td>6.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-06</td>
+<td>2.338172</td>
+<td>0.983774</td>
+<td>-0.029658</td>
+<td>-1.131598</td>
+<td>7.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="4050f189" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">df.dropna(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, subset<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2025-01-02'</span>])</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-01</td>
+<td>-1.260874</td>
+<td>-0.424196</td>
+<td>-0.489728</td>
+<td>-0.708260</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-02</td>
+<td>-0.071878</td>
+<td>-1.327910</td>
+<td>-0.366269</td>
+<td>-0.244294</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-03</td>
+<td>0.990349</td>
+<td>-0.810813</td>
+<td>1.092014</td>
+<td>0.541679</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-04</td>
+<td>0.289344</td>
+<td>-0.526430</td>
+<td>1.418070</td>
+<td>0.873226</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-05</td>
+<td>0.411642</td>
+<td>0.019485</td>
+<td>0.480180</td>
+<td>-0.894480</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-06</td>
+<td>2.338172</td>
+<td>0.983774</td>
+<td>-0.029658</td>
+<td>-1.131598</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="4866a693" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'F'</span>].dropna()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>2025-01-01    1.0
+2025-01-03    3.5
+2025-01-04    6.1
+2025-01-06    7.0
+Name: F, dtype: float64</code></pre>
+</div>
+</div>
+<div id="520ec6f5" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">df.loc[df.isnull()[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'F'</span>], :]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-02</td>
+<td>-0.071878</td>
+<td>-1.327910</td>
+<td>-0.366269</td>
+<td>-0.244294</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-05</td>
+<td>0.411642</td>
+<td>0.019485</td>
+<td>0.480180</td>
+<td>-0.894480</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="dba010c4" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">df.drop([pd.to_datetime(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2025-01-02'</span>), pd.to_datetime(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2025-01-04'</span>)])</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-01</td>
+<td>-1.260874</td>
+<td>-0.424196</td>
+<td>-0.489728</td>
+<td>-0.708260</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-03</td>
+<td>0.990349</td>
+<td>-0.810813</td>
+<td>1.092014</td>
+<td>0.541679</td>
+<td>3.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2025-01-05</td>
+<td>0.411642</td>
+<td>0.019485</td>
+<td>0.480180</td>
+<td>-0.894480</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2025-01-06</td>
+<td>2.338172</td>
+<td>0.983774</td>
+<td>-0.029658</td>
+<td>-1.131598</td>
+<td>7.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/04.html</guid>
+  <pubDate>Tue, 18 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>공급 프로세스의 이해: 프로세스 처리능력 평가</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/03.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="수업-요약" class="level2">
+<h2 class="anchored" data-anchor-id="수업-요약">수업 요약</h2>
+<ul>
+<li>process capacity: 생산률의 upper bound(유량)</li>
+</ul>
+<section id="프로세스-흐름도" class="level3">
+<h3 class="anchored" data-anchor-id="프로세스-흐름도">프로세스 흐름도</h3>
+<ul>
+<li>블랙박스적 관점: 정보 안보여줌</li>
+<li>공학적 관점: 정보가 정적임. 얻을 수 있는 정보가 제한적</li>
+</ul>
+<p>→ 생산자 관점에서 둘 다 도움 안됨<br>
+input이 어떤 순서를 거쳐 output이 되는지 알아야 함</p>
+<ul>
+<li>작업(네모)
+<ul>
+<li>리소스에 의하여 수행 된다.</li>
+<li>하위 작업에도 흐름단위가 있다: 생산 할 수 있는 양 (생산 한 양 x)</li>
+</ul></li>
+<li>화살표</li>
+<li>재고/버퍼(세모): input이 output이 되기 위해 반드시 필요한건 아님</li>
+</ul>
+</section>
+<section id="프로세스-처리-능력" class="level3">
+<h3 class="anchored" data-anchor-id="프로세스-처리-능력">프로세스 처리 능력</h3>
+<ul>
+<li>제일 낮은 처리능력의 자원: 병목(bottleneck)</li>
+<li>전체 프로세스의 처리 능력 = 병목 (단 작업이 일렬로 수행될 때)</li>
+<li>product mix:
+<ul>
+<li>다양한 제품이 input으로 들어와 처리능력이 달라짐</li>
+<li>계산하기는 어려움: 비율이 매번 달라질 수도 있어서</li>
+</ul></li>
+<li>실제 생산한 양(흐름률)은 capacity에서만 결정되지 않는다.
+<ul>
+<li>수요(market + 계절 / 안전 재고 같은 내부적 수요)</li>
+<li>원자재 투입량</li>
+</ul></li>
+<li>흐름률 = min(시간 당 투입량, 시간 당 수요, 프로세스 처리 능력)</li>
+<li>공급능력: 투입량, 처리 능력</li>
+</ul>
+</section>
+<section id="수요-공급-제약적-상황" class="level3">
+<h3 class="anchored" data-anchor-id="수요-공급-제약적-상황">수요 / 공급 제약적 상황</h3>
+<ul>
+<li>수요 제약적: 수요 &lt; 공급
+<ul>
+<li>bottleneck 활용률 &lt; 100%</li>
+</ul></li>
+<li>공급 제약적: 수요 &gt; 공급
+<ul>
+<li>bottleneck 활용률 == 100% (투입량이 충분하다면)</li>
+</ul></li>
+</ul>
+</section>
+<section id="프로세스-처리능력-찾기" class="level3">
+<h3 class="anchored" data-anchor-id="프로세스-처리능력-찾기">프로세스 처리능력 찾기</h3>
+<ul>
+<li><p>X 단위 생산에 걸리는 시간</p>
+<ul>
+<li>일정 시점에서 vs 처음부터(비어있는 상태에서) 시작</li>
+<li>일정 시점: X/Flow rate</li>
+</ul></li>
+<li><p>활용률: 실제 생산하는 양을 capacity로 나눈 것</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%ED%9D%90%EB%A6%84%EB%A5%A0%7D%7B%EC%B2%98%EB%A6%AC%EB%8A%A5%EB%A0%A5%7D"></li>
+<li>활용률을 100% 달성하려면 쉬지 않고 프로세스가 돌아가야하지만 현실적으로 쉽지 않다.
+<ul>
+<li>수요가 공급보다 적을 수 있다.</li>
+<li>투입물이 충분하지 않다.</li>
+<li>몇몇 공정의 사용이 공장이나 수리로 제한될 수 있다.</li>
+<li>불확실성</li>
+</ul></li>
+</ul></li>
+<li><p>하위 작업에 대해서도 활용률을 계산할 수 있다.</p></li>
+<li><p>병목을 제외한 다른 하위 작업은 활용률이 떨어질 수 있다.</p></li>
+<li><p>공급 제약적 상황에서 수요가 얼마나 많은지 알 수 없음. → implied utilization</p></li>
+</ul>
+</section>
+<section id="implied-utilization" class="level3">
+<h3 class="anchored" data-anchor-id="implied-utilization">implied utilization</h3>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?U%20=%20%5Cfrac%7BR%7D%7BCapacity%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?IU%20=%20%5Cfrac%7BDemand%7D%7BCapacity%7D%20(%E2%89%A4100%25%20or%20%3E%20100%25)"></li>
+<li>if min(demmand, capacity, input) = demand then U = IU</li>
+<li>이 외에도 잠재적 수요 못따라가는 작업도 알 수 있음
+<ul>
+<li>IU 100 넘는거 개선 필요</li>
+</ul></li>
+<li>또, 작업이 sequential하게 진행되지 않을 때 병목현상을 확인할 수 있음</li>
+</ul>
+<p>질문: 왜 전체 프로세스 능력이 안 더해지고 min임?</p>
+<p>같은 속도로 진행되야해서일듯</p>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>생산시스템관리</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/03.html</guid>
+  <pubDate>Tue, 18 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>pandas</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/03.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<div id="c0c6801f" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb1-5">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'name'</span>: [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'John'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Anna'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Peter'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Linda'</span>],</span>
+<span id="cb1-6">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'location'</span>: [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'New York'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Paris'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Berlin'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'London'</span>],</span>
+<span id="cb1-7">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'age'</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">53</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">33</span>]</span>
+<span id="cb1-8">}</span>
+<span id="cb1-9">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(data)</span></code></pre></div>
+</div>
+<div id="03b4a8b5" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df.index.name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Num'</span></span>
+<span id="cb2-2">df.columns.name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Info'</span></span>
+<span id="cb2-3">df</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Info</th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">location</th>
+<th data-quarto-table-cell-role="th">age</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Num</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>John</td>
+<td>New York</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Anna</td>
+<td>Paris</td>
+<td>13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Peter</td>
+<td>Berlin</td>
+<td>53</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Linda</td>
+<td>London</td>
+<td>33</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="3368ca14" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">df2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(data, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'name'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'location'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'age'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'yo'</span>], index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'one'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'two'</span>,  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'three'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'four'</span>])</span>
+<span id="cb3-2">df2</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">location</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">yo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">one</td>
+<td>John</td>
+<td>New York</td>
+<td>24</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">two</td>
+<td>Anna</td>
+<td>Paris</td>
+<td>13</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">three</td>
+<td>Peter</td>
+<td>Berlin</td>
+<td>53</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">four</td>
+<td>Linda</td>
+<td>London</td>
+<td>33</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>index는 갯수 맞춰야함</li>
+</ul>
+<div id="a0c926c6" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># df2['yo'] = [10, 20]</span></span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 얘는 broadcast 안됨</span></span>
+<span id="cb4-3">df2[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'yo'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span>
+<span id="cb4-4">df2</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">location</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">yo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">one</td>
+<td>John</td>
+<td>New York</td>
+<td>24</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">two</td>
+<td>Anna</td>
+<td>Paris</td>
+<td>13</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">three</td>
+<td>Peter</td>
+<td>Berlin</td>
+<td>53</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">four</td>
+<td>Linda</td>
+<td>London</td>
+<td>33</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="ee691013" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df2.describe()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">yo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>4.000000</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>30.750000</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>16.938615</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>13.000000</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>21.250000</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>28.500000</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>38.000000</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>53.000000</td>
+<td>10.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="8d0f9f1d" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">df2[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'name'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'yo'</span>]]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">yo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">one</td>
+<td>John</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">two</td>
+<td>Anna</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">three</td>
+<td>Peter</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">four</td>
+<td>Linda</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="7b789925" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">df2[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'penalty'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>]</span>
+<span id="cb7-2">df2</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">location</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">yo</th>
+<th data-quarto-table-cell-role="th">penalty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">one</td>
+<td>John</td>
+<td>New York</td>
+<td>24</td>
+<td>10</td>
+<td>0.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">two</td>
+<td>Anna</td>
+<td>Paris</td>
+<td>13</td>
+<td>10</td>
+<td>0.2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">three</td>
+<td>Peter</td>
+<td>Berlin</td>
+<td>53</td>
+<td>10</td>
+<td>0.3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">four</td>
+<td>Linda</td>
+<td>London</td>
+<td>33</td>
+<td>10</td>
+<td>0.4</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="53458846" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">df2[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'zeros'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.arange(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb8-2">df2</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">location</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">yo</th>
+<th data-quarto-table-cell-role="th">penalty</th>
+<th data-quarto-table-cell-role="th">zeros</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">one</td>
+<td>John</td>
+<td>New York</td>
+<td>24</td>
+<td>10</td>
+<td>0.1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">two</td>
+<td>Anna</td>
+<td>Paris</td>
+<td>13</td>
+<td>10</td>
+<td>0.2</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">three</td>
+<td>Peter</td>
+<td>Berlin</td>
+<td>53</td>
+<td>10</td>
+<td>0.3</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">four</td>
+<td>Linda</td>
+<td>London</td>
+<td>33</td>
+<td>10</td>
+<td>0.4</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="32471f4e" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">del</span> df2[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'zeros'</span>]</span>
+<span id="cb9-2">df2</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">location</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">yo</th>
+<th data-quarto-table-cell-role="th">penalty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">one</td>
+<td>John</td>
+<td>New York</td>
+<td>24</td>
+<td>10</td>
+<td>0.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">two</td>
+<td>Anna</td>
+<td>Paris</td>
+<td>13</td>
+<td>10</td>
+<td>0.2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">three</td>
+<td>Peter</td>
+<td>Berlin</td>
+<td>53</td>
+<td>10</td>
+<td>0.3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">four</td>
+<td>Linda</td>
+<td>London</td>
+<td>33</td>
+<td>10</td>
+<td>0.4</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="3b898080" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">df2[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">location</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">yo</th>
+<th data-quarto-table-cell-role="th">penalty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">one</td>
+<td>John</td>
+<td>New York</td>
+<td>24</td>
+<td>10</td>
+<td>0.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">two</td>
+<td>Anna</td>
+<td>Paris</td>
+<td>13</td>
+<td>10</td>
+<td>0.2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">three</td>
+<td>Peter</td>
+<td>Berlin</td>
+<td>53</td>
+<td>10</td>
+<td>0.3</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="ac2543cf" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">df2.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'one'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'three'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'name'</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>one       John
+two       Anna
+three    Peter
+Name: name, dtype: object</code></pre>
+</div>
+</div>
+<div id="45d716ea" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">df2.iloc[[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">location</th>
+<th data-quarto-table-cell-role="th">age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">one</td>
+<td>New York</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">two</td>
+<td>Paris</td>
+<td>13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">four</td>
+<td>London</td>
+<td>33</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/03.html</guid>
+  <pubDate>Sun, 16 Mar 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title></title>
   <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/06.pdf</link>
@@ -72,12 +1461,40 @@
 </section>
 <section id="대표적인-불편추정량" class="level3">
 <h3 class="anchored" data-anchor-id="대표적인-불편추정량">대표적인 불편추정량</h3>
+<ul>
+<li>전부 중심극한의정리를 적용할 수 있다.</li>
+</ul>
 <ol type="1">
 <li>모평균</li>
 <li>모비율</li>
 <li>모평균 차이</li>
 <li>모비율 차이</li>
 </ol>
+</section>
+</section>
+<section id="구간-추정" class="level2">
+<h2 class="anchored" data-anchor-id="구간-추정">구간 추정</h2>
+<ol type="1">
+<li>(<img src="https://latex.codecogs.com/png.latex?%CE%B8_L,%20%CE%B8_U">) 이 충분이 높은 가능성으로 미지의 모수 θ를 포함해야 한다</li>
+<li>구간이 충분히 좁아야 한다</li>
+</ol>
+<ul>
+<li>α: 유의수준</li>
+<li>1 - α: 신뢰수준</li>
+<li>(θ_L, θ_U) = (1 - α) × 100% 신뢰구간</li>
+</ul>
+<section id="신뢰-구간의-확률적인-의미" class="level3">
+<h3 class="anchored" data-anchor-id="신뢰-구간의-확률적인-의미">신뢰 구간의 확률적인 의미</h3>
+<ul>
+<li>샘플링을 무한히 반복했을 때, 이들의 신뢰 구간 중 95%의 구간이 실제 모수를 포함한다. → 구간이 확률 변수이다.</li>
+</ul>
+</section>
+<section id="신뢰구간은-대칭이여야-하는가" class="level3">
+<h3 class="anchored" data-anchor-id="신뢰구간은-대칭이여야-하는가">신뢰구간은 대칭이여야 하는가</h3>
+<ul>
+<li>0을 중심으로 대칭일 때 길이가 짧다.</li>
+<li>고로 대칭이여야함</li>
+</ul>
 
 
 </section>
@@ -218,6 +1635,7 @@ Name: what, dtype: object</code></pre>
 <li>흐름률: 처리 능력. 생산 능력
 <ul>
 <li>흐름률이 오르면 생산 능력이 오른다.</li>
+<li>유량: 특정한 시간동안 관찰하는 양</li>
 </ul></li>
 <li>흐름시간
 <ul>
@@ -226,6 +1644,7 @@ Name: what, dtype: object</code></pre>
 <li>재고
 <ul>
 <li>제일 다루기 간편함</li>
+<li>저량(stock): 특정 시점에서 관찰하는 양</li>
 </ul></li>
 </ul>
 </section>
@@ -548,23 +1967,6 @@ font-style: inherit;">'sin and cos'</span>)</span>
   <category>data mining</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/01.html</guid>
   <pubDate>Tue, 11 Mar 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>자료구조와 알고리즘</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/structure/00.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-
-
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>데이터구조및알고리즘</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/structure/00.html</guid>
-  <pubDate>Mon, 10 Mar 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Matching Supply with Demand</title>
@@ -1353,182 +2755,6 @@ ex) knapsack problem → 아이템을 0.8개 넣을 수 없다</p>
   <category>1차</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/02.html</guid>
   <pubDate>Mon, 30 Dec 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Linear Programming</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/01.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="terminology" class="level2">
-<h2 class="anchored" data-anchor-id="terminology">Terminology</h2>
-<ul>
-<li>process of <code>fomulating and solving</code> linear programs</li>
-<li><code>mathematical program</code> with some special properties
-<ol type="1">
-<li>objective function</li>
-<li>constraints (<img src="https://latex.codecogs.com/png.latex?b_1,%20b_2,%20...,%20b_m">)</li>
-<li>decision variables (<img src="https://latex.codecogs.com/png.latex?x_1,%20x_2,%20...,%20x_n,%20x_i%20%E2%88%88%20%E2%84%9D">)<br>
-→ also expressed as a <img src="https://latex.codecogs.com/png.latex?x"> that means vector of <img src="https://latex.codecogs.com/png.latex?n"> variables</li>
-</ol></li>
-</ul>
-<section id="constraints" class="level3">
-<h3 class="anchored" data-anchor-id="constraints">constraints</h3>
-<ul>
-<li><p>Sign constraints: single variable</p>
-<ul>
-<li>nonnegative: <img src="https://latex.codecogs.com/png.latex?x_i%20%E2%89%A5%200"></li>
-<li>nonpositive: <img src="https://latex.codecogs.com/png.latex?x_i%20%E2%89%A4%200"></li>
-<li>unrestricted in sign or free: no sign constraints</li>
-</ul></li>
-<li><p>Functional constraints: other cases</p></li>
-<li><p>equality constraints: <img src="https://latex.codecogs.com/png.latex?a_1x_1%20+%20a_2x_2%20+%20...%20+%20a_nx_n%20=%20b"></p></li>
-<li><p>inequality constraints: <img src="https://latex.codecogs.com/png.latex?a_1x_1%20+%20a_2x_2%20+%20...%20+%20a_nx_n%20%E2%89%A4%20b"></p></li>
-<li><p>binding constraints (or active constraints)<br>
-no matter <img src="https://latex.codecogs.com/png.latex?g(x)"> is equality or not, if <img src="https://latex.codecogs.com/png.latex?g(a)%20=%20b,%20a"> is binding</p></li>
-<li><p>strict constraints: <img src="https://latex.codecogs.com/png.latex?a_1x_1%20+%20a_2x_2%20+%20...%20+%20a_nx_n%20%3C%20b"></p></li>
-<li><p>weak constraints: <img src="https://latex.codecogs.com/png.latex?a_1x_1%20+%20a_2x_2%20+%20...%20+%20a_nx_n%20%E2%89%A4%20b"></p>
-<p>→ practical mathematical program’s inequalities are <code>all weak</code></p></li>
-</ul>
-</section>
-<section id="solution" class="level3">
-<h3 class="anchored" data-anchor-id="solution">solution</h3>
-<ul>
-<li>feasible solution: satisfies all constraints
-<ul>
-<li>feasible region: set of all feasible solutions</li>
-</ul></li>
-<li>optimal solution: maximizes or minimizes the objective function<br>
-there may be <code>multiple</code> or <code>no</code> optimal solutions</li>
-</ul>
-</section>
-</section>
-<section id="three-types-of-lps" class="level2">
-<h2 class="anchored" data-anchor-id="three-types-of-lps">Three types of LPs</h2>
-<ol type="1">
-<li>Infeasible</li>
-<li>Unbounded: unbounded feasible region <code>does not imply</code> an unbounded LP</li>
-<li>Finitely optimal
-<ul>
-<li>Unique optimal solutions</li>
-<li>Multiple optimal solutions</li>
-</ul></li>
-</ol>
-<blockquote class="blockquote">
-<p>Parameter: we know. <img src="https://latex.codecogs.com/png.latex?C_1,%20C_2,%20..."><br>
-Variables: do not know. <img src="https://latex.codecogs.com/png.latex?x_1,%20x_2,%20..."></p>
-</blockquote>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>Operational Research</category>
-  <category>1차</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/01.html</guid>
-  <pubDate>Sun, 22 Dec 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Overview</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/00.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="motivation" class="level1">
-<h1>motivation</h1>
-<ol type="1">
-<li>organizational goals</li>
-<li>organizational resources</li>
-</ol>
-<p>→ Resource allocation uses <code>operational research</code></p>
-<ul>
-<li>names of simmilar subjects:
-<ul>
-<li>management science</li>
-<li>decision science</li>
-<li>optimization method/algorithms</li>
-<li>mathematical programming</li>
-</ul></li>
-</ul>
-</section>
-<section id="business-analytics" class="level1">
-<h1>business analytics</h1>
-<ul>
-<li>Data Analysis
-<ol type="1">
-<li>Descriptive analytics: what happened?</li>
-<li>Predictive analytics: what will happen?</li>
-</ol></li>
-<li>Operational Research
-<ol type="1">
-<li>Prescriptive analytics: what should we do? (Allocate resources and solve problems)</li>
-</ol></li>
-</ul>
-<section id="process-of-conducting-an-or-study" class="level2">
-<h2 class="anchored" data-anchor-id="process-of-conducting-an-or-study">process of conducting an OR study</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-  A(Collect data) --&gt; B(Define the problem)
-  B --&gt; C{Data are sufficient?}
-  C --&gt;|No| A
-  C --&gt;|Yes| D(Formulate a model)
-  D --&gt; E(Solve the model)
-  E --&gt; F{Model is good?}
-  F --&gt;|Yes| G(Interpret results make suggestions)
-  F --&gt;|No| D
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<section id="or-cant-solve-everything" class="level3">
-<h3 class="anchored" data-anchor-id="or-cant-solve-everything">OR cant solve everything</h3>
-<p>Aim of course: know <code>what may be solved by OR</code> and <code>what cannot be solve by OR</code></p>
-</section>
-</section>
-</section>
-<section id="mathematical-programming" class="level1">
-<h1>mathematical programming</h1>
-<p>we need Model 1. describe the problem 2. better solution</p>
-<section id="model" class="level2">
-<h2 class="anchored" data-anchor-id="model">model</h2>
-<ol type="1">
-<li>descision variables</li>
-<li>objective function</li>
-<li>constraints</li>
-</ol>
-<section id="knapsackbackpack-problem" class="level3">
-<h3 class="anchored" data-anchor-id="knapsackbackpack-problem">KnapSack(backpack) Problem</h3>
-<ol type="1">
-<li>Linear Programming</li>
-</ol>
-<img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0Amax%20&amp;%20%5Csum_%7Bi=1%7D%5E%7Bn%7D%20v_i%20x_i%20%5C%5C%0As.t.%20&amp;%20%5Csum_%7Bi=1%7D%5E%7Bn%7D%20w_i%20x_i%20%5Cleq%20B%20%5C%5C%0A&amp;%200%20%5Cleq%20x_i%20%5Cleq%201%0A%5Cend%7Baligned%7D">
-<ol start="2" type="1">
-<li>Integer Programming</li>
-</ol>
-<img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0Amax%20&amp;%20%5Csum_%7Bi=1%7D%5E%7Bn%7D%20v_i%20x_i%20%5C%5C%0As.t.%20&amp;%20%5Csum_%7Bi=1%7D%5E%7Bn%7D%20w_i%20x_i%20%5Cleq%20B%20%5C%5C%0A&amp;%20x_i%20%5Cin%20%5C%7B0,%201%5C%7D%0A%5Cend%7Baligned%7D">
-
-
-</section>
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>Operational Research</category>
-  <category>1차</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/00.html</guid>
-  <pubDate>Fri, 20 Dec 2024 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
