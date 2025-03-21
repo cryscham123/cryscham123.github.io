@@ -45,6 +45,8 @@ if posts:
                 <div class="project-dates">
                     Started: {post.get('date', 'Unknown')}
                     <br>
+                     {"Ends" if post.get('status', '') == 'on-going' else "Ended"}: {post.get('end_date', 'Unknown')}
+                    <br>
                     <span class="days-left" data-end-date="{post.get('end_date', '')}">Calculating...</span>
                 </div>
                 <div class="project-tags">

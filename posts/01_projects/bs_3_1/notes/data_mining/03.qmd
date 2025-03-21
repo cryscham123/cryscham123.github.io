@@ -1,0 +1,75 @@
+---
+title: "pandas"
+date: 2025-03-17
+categories: ["data mining"]
+---
+
+![](/img/human-thumb.jpg){.post-thumbnail}
+
+```{python}
+import pandas as pd
+import numpy as np
+
+data = {
+    'name': ['John', 'Anna', 'Peter', 'Linda'],
+    'location': ['New York', 'Paris', 'Berlin', 'London'],
+    'age': [24, 13, 53, 33]
+}
+df = pd.DataFrame(data)
+```
+
+```{python}
+df.index.name = 'Num'
+df.columns.name = 'Info'
+df
+```
+
+```{python}
+df2 = pd.DataFrame(data, columns=['name', 'location', 'age', 'yo'], index=['one', 'two',  'three', 'four'])
+df2
+```
+- index는 갯수 맞춰야함
+
+```{python}
+# df2['yo'] = [10, 20]
+# 얘는 broadcast 안됨
+df2['yo'] = 10
+df2
+```
+
+```{python}
+df2.describe()
+```
+
+```{python}
+df2[['name', 'yo']]
+```
+
+```{python}
+df2['penalty'] = [0.1, 0.2, 0.3, 0.4]
+df2
+```
+
+```{python}
+df2['zeros'] = np.arange(4)
+df2
+```
+
+```{python}
+del df2['zeros']
+df2
+```
+
+```{python}
+df2[:3]
+```
+
+```{python}
+df2.loc['one':'three', 'name']
+```
+
+```{python}
+df2.iloc[[0, 1, 3], [1, 2]]
+```
+
+발표 주제?

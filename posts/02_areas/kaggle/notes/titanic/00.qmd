@@ -1,0 +1,68 @@
+---
+title: "titanic"
+date: 2025-03-16
+categories: ["machine learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## Data 이해
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings
+
+warnings.filterwarnings('ignore')
+
+train = pd.read_csv('_data/train.csv')
+test = pd.read_csv('_data/test.csv')
+```
+
+```{python}
+train.describe()
+```
+
+- Age 결측치 177개
+
+```{python}
+test.describe()
+```
+
+- Age 결측치 86개
+- Fare 결측치 1개: 이 정도는 그냥 삭제해도 될듯
+
+```{python}
+plt.figure(figsize=(15, 10))
+
+# Age 분포 확인
+plt.subplot(2, 2, 1)
+sns.boxplot(x='Survived', y='Age', data=train)
+plt.title('Age 분포 (생존 여부별)')
+
+# Fare 분포 확인
+plt.subplot(2, 2, 2)
+sns.boxplot(x='Survived', y='Fare', data=train)
+plt.title('Fare 분포 (생존 여부별)')
+
+# Pclass에 따른 Age 분포
+plt.subplot(2, 2, 3)
+sns.boxplot(x='Pclass', y='Age', data=train)
+plt.title('Age 분포 (객실 등급별)')
+
+# Pclass에 따른 Fare 분포
+plt.subplot(2, 2, 4)
+sns.boxplot(x='Pclass', y='Fare', data=train)
+plt.title('Fare 분포 (객실 등급별)')
+
+plt.tight_layout()
+plt.show()
+```
+
+```{python}
+train_x = train.drop('Survived', axis=1).values
+train_y = train['Survived'].values
+test_x = test.values
+```

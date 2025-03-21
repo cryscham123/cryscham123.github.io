@@ -1,0 +1,284 @@
+---
+title: OR 과제 - 2
+subtitle: 20192208 김형훈
+categories: ["보고서", "OR"]
+date: last-modified
+format: 
+  pdf:
+    fig-pos: 'H'
+    fig-width: 6
+    fig-height: 4
+    documentclass: report
+    papersize: a4
+    top-level-division: chapter
+    fontsize: 17pt
+    toc: false
+    geometry:
+      - top=20mm
+    indent-size: 2
+include-in-header: 
+  text: |
+    \date{}
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{0.8em}{\huge}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{0pt}{-20pt}{5pt}
+    \titlespacing*{\section}{0pt}{10pt}{10pt}
+    \newcommand{\chapterbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{1.5}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
+    \usepackage{float}
+    \usepackage{multirow}
+    \usepackage{booktabs}
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+---
+
+# 4.3-5
+
+수식을 다시 재구성해보면 아래와 같다.
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & Z - 3x_1 - 4x_2 - 5x_3 = 0 \\
+\text{Subject to} \quad & x_4 = 150 - 3x_1 - x_2 - 5x_3 \\
+& x_5 = 120 - x_1 - 4x_2 - x_3 \\
+& x_6 = 105 - 2x_1 - 2x_3 \\
+& x_1, x_2, x_3, x_4, x_5, x_6 \geq 0
+\end{aligned}
+$$
+
+reduce cost 중 가장 작은 값은 $x_3$. 따라서 $x_3$를 pivot variable로 선택한다.
+
+이후 min ratio test를 진행한다.
+
+선택하지 않은 $x_1$과 $x_2$는 0을 대입하고 진행한다.
+
+$$
+\begin{aligned}
+x_4 &= 150 - 5x_3 ≥ 0 \quad &x_3 ≤ 30 \\
+x_5 &= 120 - x_3 ≥ 0 \quad &x_3 ≤ 120\\
+x_6 &= 105 - 2x_3 ≥ 0 \quad &x_3 ≤ 52.5
+\end{aligned}
+$$
+
+$x_4$ 채택. $x_3 = 30 - \frac{3}{5}x_1 - \frac{1}{5}x_2 - \frac{1}{5}x_4$.
+
+다시 수식을 재구성하면 아래와 같다.
+
+$$
+\begin{aligned}
+Z& - 3x_2 + x_4 - 150 = 0 \\
+x_3 &= 30 - \frac{3}{5}x_1 - \frac{1}{5}x_2 - \frac{1}{5}x_4 \\
+x_5 &= 90 - \frac{2}{5}x_1 - \frac{19}{5}x_2 + \frac{1}{5}x_4  \\
+x_6 &= 45 - \frac{4}{5}x_1 + \frac{2}{5}x_2 + \frac{2}{5}x_4  \\
+\end{aligned}
+$$
+
+reduce cost 중 $x_2$가 가장 작다. 따라서 $x_2$를 pivot variable로 선택한다.
+
+다시 한번 min ratio test 진행.
+
+$$
+\begin{aligned}
+x_3 &= 30 - \frac{1}{5}x_2 ≥ 0 \quad &x_2 ≤ 150 \\
+x_5 &= 90 - \frac{19}{5}x_2 ≥ 0 \quad &x_2 ≤ 23.68 \\
+x_6 &= 45 + \frac{2}{5}x_2 ≥ 0 \quad &x_2 ≤ 112.5 \\
+\end{aligned}
+$$
+
+$x_5$ 채택. $x_2 = \frac{450}{19} - \frac{2}{19}x_1 + \frac{1}{19}x_4 - \frac{5}{19}x_5$.
+
+다시 수식을 재구성 해보자.
+
+$$
+\begin{aligned}
+Z &+ \frac{6}{19}x_1 + \frac{16}{19}x_4 + \frac{15}{19}x_5 - \frac{1500}{19} \\
+x_2 &= \frac{450}{19} - \frac{2}{19}x_1 + \frac{1}{19}x_4 - \frac{5}{19}x_5 \\
+x_3 &= \frac{480}{19} - \frac{11}{19}x_1 - \frac{4}{19}x_4 + \frac{1}{19}x_5 \\
+x_6 &= \frac{630}{19} - \frac{16}{19}x_1 + \frac{8}{19}x_4 - \frac{2}{19}x_5 \\
+\end{aligned}
+$$
+
+이제 reduced cost를 확인해보면, 모든 변수의 계수가 음수가 아니므로 최적해에 도달했다. 
+
+따라서 최적해는 아래와 같다.
+
+- $x_1 = 0$
+- $x_2 = \frac{450}{19}$
+- $x_3 = \frac{480}{19}$
+- $x_4 = 0$
+- $x_5 = 0$
+- $x_6 = \frac{630}{19}$
+- $Z = \frac{1500}{19}$
+
+# 4.3-6
+
+## a
+
+수식을 다시 재구성해보면 아래와 같다.
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & Z - 5x_1 - 3x_2 - 4x_3 = 0 \\
+\text{Subject to} \quad & x_4 = 20 - 2x_1 - x_2 - x_3 \\
+& x_5 = 30 - 3x_1 - x_2 - 2x_3 \\
+& x_1, x_2, x_3, x_4, x_5 \geq 0
+\end{aligned}
+$$
+
+$x_2$와 $x_3$는 0이 아니고, 5개의 변수 중 2개는 0이므로, $x_1$, $x_4$, $x_5$ 중 하나는 0이 아니다.
+
+## b
+
+# 4.3-7
+
+## a
+
+## b
+
+# 4.4-6
+
+## a
+
+수식을 다시 재구성해보면 아래와 같다.
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & Z - 3x_1 - 5x_2 - 6x_3 = 0 \\
+\text{Subject to} \quad & x_4 = 4 - 2x_1 - x_2 - x_3 \\
+& x_5 = 4 - x_1 - 2x_2 - x_3 \\
+& x_6 = 4 - x_1 - x_2 - 2x_3 \\
+& x_7 = 3 - x_1 - x_2 - x_3 \\
+& x_1, x_2, x_3, x_4, x_5, x_6, x_7 \geq 0
+\end{aligned}
+$$
+
+reduce cost 중 가장 작은 값은 $x_3$. 따라서 $x_3$를 pivot variable로 선택한다.
+
+이후 min ratio test를 진행한다.
+
+선택하지 않은 $x_1$과 $x_2$는 0을 대입하고 진행한다.
+
+$$
+\begin{aligned}
+x_4 &= 4 - x_3 ≥ 0 \quad &x_3 ≤ 4 \\
+x_5 &= 4 - x_3 ≥ 0 \quad &x_3 ≤ 4\\
+x_6 &= 4 - 2x_3 ≥ 0 \quad &x_3 ≤ 2 \\
+x_7 &= 3 - x_3 ≥ 0 \quad &x_3 ≤ 3
+\end{aligned}
+$$
+
+$x_6$ 채택. $x_3 = 2 - \frac{1}{2}x_1 - \frac{1}{2}x_2 - \frac{1}{2}x_6$.
+
+다시 수식을 재구성하면 아래와 같다.
+
+$$
+\begin{aligned}
+Z &- 2x_2 + 3x_6 - 12 = 0 \\
+x_3 &= 2 - \frac{1}{2}x_1 - \frac{1}{2}x_2 - \frac{1}{2}x_6 \\
+x_4 &= 2 - \frac{3}{2}x_1 - \frac{1}{2}x_2 + \frac{1}{2}x_6 \\
+x_5 &= 2 - \frac{1}{2}x_1 - \frac{3}{2}x_2 + \frac{1}{2}x_6 \\
+x_7 &= 1 - \frac{1}{2}x_1 - \frac{1}{2}x_2 + \frac{1}{2}x_6
+\end{aligned}
+$$
+
+역시 한 번에 끝나지 않았다.
+다음 pivot variable은 $x_2$. 
+부연설명 없이 계속 진행해보겠다.
+
+- min ratio test
+
+$$
+\begin{aligned}
+x_3 &= 2 - \frac{1}{2}x_2 ≥ 0 \quad &x_2 ≤ 4  \\
+x_4 &= 2 - \frac{1}{2}x_2 ≥ 0 \quad &x_2 ≤ 4  \\
+x_5 &= 2 - \frac{3}{2}x_2 ≥ 0 \quad &x_2 ≤ \frac{4}{3}  \\
+x_7 &= 1 - \frac{1}{2}x_2 ≥ 0 \quad &x_2 ≤ 3
+\end{aligned}
+$$
+
+- $x_5$
+
+$$
+\begin{aligned}
+Z &-\frac{44}{3} + \frac{2}{3}x_1 + \frac{7}{3}x_6 + \frac{4}{3}x_5 = 0 \\
+x_2 &= \frac{4}{3} - \frac{1}{3}x_1 + \frac{1}{3}x_6 - \frac{2}{3}x_5 \\
+x_3 &= \frac{4}{3} - \frac{1}{3}x_1 - \frac{4}{6}x_6 + \frac{1}{3}x_5 \\
+x_4 &= \frac{4}{3} - \frac{4}{3}x_1 + \frac{1}{3}x_6 + \frac{1}{3}x_5 \\
+x_7 &= \frac{1}{3} - \frac{1}{3}x_1 + \frac{1}{3}x_6 + \frac{1}{3}x_5
+\end{aligned}
+$$
+
+종료.
+
+- $x_1 = 0$
+- $x_2 = \frac{4}{3}$
+- $x_3 = \frac{4}{3}$
+- $x_4 = \frac{4}{3}$
+- $x_5 = 0$
+- $x_6 = 0$
+- $x_7 = \frac{1}{3}$
+- $Z = \frac{44}{3}$
+
+## b
+
+## c
+
+gurobi를 이용해서 최적해를 구해보자.
+
+```{python}
+#| echo: true
+
+from gurobipy import *
+
+model = Model("ex4.4-6")
+model.setParam('OutputFlag', 0)
+```
+
+CPU랑 OS 정보가 출력되서 로그는 꺼줬습니다.
+
+```{python}
+#| echo: true
+
+x1 = model.addVar(vtype=GRB.CONTINUOUS, name="x1")
+x2 = model.addVar(vtype=GRB.CONTINUOUS, name="x2")
+x3 = model.addVar(vtype=GRB.CONTINUOUS, name="x3")
+
+model.setObjective(3 * x1 + 5 * x2 + 6 * x3, GRB.MAXIMIZE)
+
+model.addConstr(2 * x1 + x2 + x3 <= 4)
+model.addConstr(x1 + 2 * x2 + x3 <= 4)
+model.addConstr(x1 + x2 + 2 * x3 <= 4)
+model.addConstr(x1 + x2 + x3 <= 3)
+
+model.optimize()
+
+for var in model.getVars():
+    print(f"{var.varName}: {var.x}")
+print("Obj: ", model.objVal)
+```
+
+알맞게 나오는 모습.
+
+# 4.4-8
+
+
