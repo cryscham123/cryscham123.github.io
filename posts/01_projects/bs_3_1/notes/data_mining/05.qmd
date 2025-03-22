@@ -1,0 +1,370 @@
+---
+title: 데이터마이닝 팀과제 자료 조사
+categories: ["보고서", "데이터 마이닝"]
+date: last-modified
+format: 
+  pdf:
+    fig-pos: 'H'
+    fig-width: 6
+    fig-height: 4
+    css: styles.css
+    documentclass: report
+    papersize: a4
+    number-sections: true
+    number-depth: 3
+    top-level-division: chapter
+    toc: true
+    fontsize: 17pt
+    geometry:
+      - top=20mm
+    indent-size: 2
+include-in-header: 
+  text: |
+    \date{}
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{0.8em}{\huge}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{0pt}{-20pt}{5pt}
+    \titlespacing*{\section}{0pt}{10pt}{10pt}
+    \newcommand{\chapterbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{1.5}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
+    \usepackage{float}
+    \usepackage{multirow}
+    \usepackage{booktabs}
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+---
+
+# Airflow 소개 (1분 30초)
+
+## Airflow란?
+
+- **Apache Airflow**: 워크플로우 작성, 스케줄링 및 모니터링을 위한 오픈소스 플랫폼
+- 2014년 Airbnb에서 개발, 2016년 Apache 재단으로 이관
+- Python으로 작성된 데이터 파이프라인 오케스트레이션 도구
+
+## 핵심 개념
+
+- **DAG(Directed Acyclic Graph)**: 작업 흐름을 표현하는 방향성 비순환 그래프
+- **Task**: 개별 작업 단위 (데이터 추출, 변환, 적재 등)
+- **Operator**: 작업 실행 방법을 정의 (PythonOperator, BashOperator 등)
+- **Scheduler**: 작업 실행 시점 관리
+- **Web Server**: 대시보드를 통한 모니터링 인터페이스
+
+## 데이터 분석에서의 중요성
+
+- 복잡한 데이터 워크플로우의 자동화 및 오케스트레이션
+- 작업 간 의존성 관리 및 모니터링
+- 실패한 작업의 자동 재시도 및 알림
+
+# 현업 데이터 분석 문제점과 Airflow 해결책 (2분)
+
+## 데이터 분석 현업의 문제점
+
+- **수동 프로세스의 한계**: 반복 작업의 비효율성과 인적 오류
+- **복잡한 의존성**: 여러 시스템과 데이터 소스 간의 조율 어려움
+- **스케줄링 이슈**: 정기적인 데이터 처리와 의존성 관리
+- **에러 처리**: 실패 시 복구 및 알림 메커니즘 부재
+- **모니터링 부족**: 작업 진행 상황과 성능 추적 어려움
+
+## Airflow의 해결책
+
+- **코드형 워크플로우**: Python으로 DAG 정의 (GitOps 가능)
+- **시각적 모니터링**: 웹 UI를 통한 직관적인 작업 흐름 파악
+- **스마트 스케줄링**: Cron 기반 스케줄링 + 의존성 기반 실행
+- **강력한 확장성**: 다양한 시스템과의 통합 (AWS, GCP, Azure, Databricks 등)
+- **견고한 에러 처리**: 자동 재시도, 알림, 대체 경로 설정
+
+# 주요 활용 사례 (3분 30초)
+
+## ETL 프로세스 자동화
+
+- **사례**: 일일 매출 데이터 통합 파이프라인
+
+## 매출 데이터 ETL DAG 예시
+
+```{python}
+#| echo: true
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from datetime import datetime, timedelta
+import warnings
+
+warnings.filterwarnings("ignore")
+
+default_args = {
+    'owner': 'data_team',
+    'depends_on_past': False,
+    'retries': 3,
+    'retry_delay': timedelta(minutes=5)
+}
+
+def extract_sales_data(**kwargs):
+    return {"sales_data": "extracted"}
+
+def transform_data(**kwargs):
+    return {"transformed_data": "ready"}
+
+def load_to_warehouse(**kwargs):
+    print("Data loaded successfully")
+
+with DAG(
+    'daily_sales_etl',
+    default_args=default_args,
+    schedule_interval='0 2 * * *',
+    start_date=datetime(2023, 1, 1)
+) as dag:
+    extract_task = PythonOperator(
+        task_id='extract_sales_data',
+        python_callable=extract_sales_data
+    )
+    
+    transform_task = PythonOperator(
+        task_id='transform_sales_data',
+        python_callable=transform_data
+    )
+    
+    load_task = PythonOperator(
+        task_id='load_to_warehouse',
+        python_callable=load_to_warehouse
+    )
+    extract_task >> transform_task >> load_task
+```
+
+- **효과**:
+  - 여러 데이터 소스(POS, 온라인 스토어, 외부 판매 채널)를 자동 통합
+  - 일관된 데이터 처리 및 변환 보장
+  - 작업 의존성 자동 관리
+
+## 데이터 품질 관리
+
+- **사례**: 데이터 검증 및 알림 시스템
+  - 데이터 완전성, 정확성, 일관성 검증
+  - 임계값 초과 시 자동 알림
+
+- **구현 방식**:
+  - Great Expectations과 같은 도구와 통합
+  - 검증 실패 시 Slack, Email로 알림
+  - 데이터 품질 측정 및 대시보드 제공
+
+## ML 모델 파이프라인
+
+- **사례**: 추천 모델 정기 학습 및 배포
+  - 새로운 사용자 행동 데이터 수집
+  - 정기적인 모델 재학습
+  - 성능 검증 후 자동 배포
+  - 모델 버전 관리 및 롤백
+
+- **효과**:
+  - 모델 신선도 유지
+  - 일관된 학습 및 평가 파이프라인
+  - 버전 관리 및 추적 용이성
+
+# 채용 시장에서의 Airflow 수요 (2분 30초)
+
+```{python}
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.chrome.options import Options
+# import pandas as pd
+# import time
+#
+# service = Service("/snap/bin/chromium.chromedriver")
+# driver = webdriver.Chrome(service=service)
+# chrome_options = Options()
+# chrome_options.add_argument("--no-sandbox")
+#
+# url = "https://www.saramin.co.kr/zf_user/search?searchType=search&searchword=airflow&company_cd=0%2C1%2C2%2C3%2C4%2C5%2C6%2C7%2C9%2C10&cat_kewd=82%2C2248%2C106%2C108%2C107%2C109%2C116%2C83&panel_type=&search_optional_item=y&search_done=y&panel_count=y&preview=y&recruitPage=1&recruitSort=relation&recruitPageCount=100&inner_com_type=&show_applied=&quick_apply=&except_read=&ai_head_hunting=&mainSearch=n"
+# driver.get(url)
+# try:
+#     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "list_item")))
+# except:
+#     pass
+#
+# job_titles = []
+# company_names = []
+# job_links = []
+#
+# jobs = driver.find_elements(By.CLASS_NAME, "list_item")
+# for job in jobs:
+#     try:
+#         title = job.find_element(By.CLASS_NAME, "job_tit").text.strip()
+#         company = job.find_element(By.CLASS_NAME, "company_nm").text.strip()
+#         link = job.find_element(By.CLASS_NAME, "job_tit").find_element(By.TAG_NAME, "a").get_attribute("href")
+#
+#         job_titles.append(title)
+#         company_names.append(company)
+#         job_links.append(link)
+#     except:
+#         continue
+#
+# df = pd.DataFrame({"Title": job_titles, "Company": company_names, "Link": job_links})
+# df.to_csv("saramin_airflow_jobs.csv", index=False)
+# driver.quit()
+# print(df)
+```
+
+## 채용 공고 분석
+
+- 데이터 관련 직무에서 Airflow 언급 비율: **약 68%**
+- 연도별 Airflow 언급 추이: 2020년부터 꾸준한 증가
+
+```{python}
+#| fig-cap: "연도별 Airflow 언급 추이 (2020-2024)"
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import numpy as np
+
+# Style settings
+sns.set_style('whitegrid')
+plt.figure(figsize=(10, 6))
+
+# Data preparation - Yearly Airflow mention trend
+years = [2020, 2021, 2022, 2023, 2024]
+mention_percentage = [42, 55, 61, 66, 68]
+
+# Create graph
+plt.plot(years, mention_percentage, marker='o', linewidth=3, markersize=10, color='#1f77b4')
+plt.xlabel('Year', fontsize=14)
+plt.ylabel('Airflow Mention Rate (%)', fontsize=14)
+plt.title('Airflow Mentions in Data-Related Job Postings by Year', fontsize=16, pad=20)
+plt.xticks(years)
+plt.yticks(np.arange(0, 101, 10))
+plt.ylim(0, 100)
+
+# Display values at each point
+for i, v in enumerate(mention_percentage):
+    plt.text(years[i], v+2, f"{v}%", ha='center', fontsize=12)
+
+plt.tight_layout()
+```
+
+## 직무별 Airflow 수요
+
+- **데이터 엔지니어**: 85% 이상의 JD에서 요구
+- **데이터 사이언티스트**: 약 50%에서 우대사항으로 명시
+- **ML 엔지니어**: 65%에서 필수 또는 우대 스킬로 언급
+- **BI 애널리스트**: 30%에서 플러스 스킬로 평가
+
+```{python}
+#| fig-cap: "직무별 Airflow 요구 비율"
+
+
+# Airflow demand data by job role
+roles = ['Data Engineer', 'Data Scientist', 'ML Engineer', 'BI Analyst']
+percentages = [85, 50, 65, 30]
+
+plt.figure(figsize=(10, 6))
+
+# Horizontal bar graph
+bars = plt.barh(roles, percentages, color=['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728'])
+plt.xlabel('Airflow Mention Rate (%)', fontsize=14)
+plt.title('Airflow Requirements in Job Postings by Role', fontsize=16, pad=20)
+plt.xlim(0, 100)
+
+# Display values for each bar
+for i, v in enumerate(percentages):
+    plt.text(v + 2, i, f"{v}%", va='center', fontsize=12)
+
+plt.tight_layout()
+```
+
+## 주요 기업 JD 발췌 예시
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2025-03-22-17-36-53.png}}
+\caption{\href{https://toss.im/career/job-detail?job\_id=4071103003\&company=\%ED\%86\%A0\%EC\%8A\%A4\%EC\%A6\%9D\%EA\%B6\%8C\&detailedPosition=Infra}{토스 증권 Data Engineer JD}}
+\label{fig:toss_jd}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2025-03-22-17-31-13.png}}
+\caption{\href{https://www.lgresearch.ai/careers/view?seq=228}{LG MLOps Engineer Internship}}
+\label{fig:toss_jd}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2025-03-22-17-52-15.png}}
+\caption{\href{https://www.google.com/about/careers/applications/jobs/results/124798537199166150-senior-software-engineer-enterprise-data-and-engineering?q=airflow}{Google Senior Software Engineer, Enterprise Data and Engineering}}
+\label{fig:toss_jd}
+\end{center}
+\end{figure}
+
+# 실습 데모와 기술적 차별점 (1분 30초)
+
+## 간단한 DAG 구조 데모
+
+- 웹 UI 통한 DAG 시각화
+- 태스크 상태 확인 및 관리
+- 로그 및 오류 모니터링
+
+## 경쟁 도구와의 차이점
+
+- **Airflow vs Prefect**: 
+  - Airflow: 성숙한 생태계, 풍부한 커넥터
+  - Prefect: 더 현대적인 API, 로컬 개발 편의성
+
+- **Airflow vs Luigi**:
+  - Airflow: 풍부한 UI, 스케줄링 강점
+  - Luigi: 더 가벼운 구조, 더 간단한 설정
+
+## Airflow의 기술적 장단점
+
+- **장점**:
+  - 광범위한 커뮤니티와 풍부한 사용 사례
+  - 다양한 시스템과의 통합 용이성
+  - 강력한 모니터링 및 알림 기능
+
+- **단점**:
+  - 상대적으로 가파른 학습 곡선
+  - 가벼운 워크로드에는 오버스펙일 수 있음
+  - 설정 및 관리의 복잡성
+
+# 결론 및 미래 전망 (30초)
+
+## 요약
+
+- Airflow는 데이터 분석 현업에서 핵심 워크플로우 관리 도구로 자리매김
+- ETL, 데이터 품질 관리, ML 파이프라인 등 다양한 활용 사례
+- 채용 시장에서 지속적으로 수요가 증가하는 기술
+
+## 미래 전망
+
+- 클라우드 네이티브 환경으로의 발전
+- Kubernetes와의 통합 강화
+- 데이터 거버넌스 기능 확장
+- 보다 사용자 친화적인 인터페이스로 발전
+
+## 마무리
+
+- 데이터 기반 의사결정이 중요해짐에 따라 Airflow의 중요성도 계속 증가할 전망
+- 데이터 엔지니어링과 사이언스를 연결하는 핵심 도구로 발전

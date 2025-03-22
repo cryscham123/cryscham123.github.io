@@ -1,0 +1,200 @@
+---
+title: 데이터마이닝 팀 과제 주제
+subtitle: 현재 데이터 분석 업종에서 Airflow 기술이 얼마나 요구되는지만 조사해봤습니다.
+categories: ["보고서", "데이터 마이닝"]
+date: last-modified
+format: 
+  pdf:
+    fig-pos: 'H'
+    fig-width: 6
+    fig-height: 4
+    css: styles.css
+    documentclass: report
+    papersize: a4
+    number-sections: true
+    number-depth: 3
+    top-level-division: chapter
+    toc: false
+    fontsize: 17pt
+    geometry:
+      - top=20mm
+    indent-size: 2
+include-in-header: 
+  text: |
+    \date{}
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{0.8em}{\huge}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{0pt}{-20pt}{5pt}
+    \titlespacing*{\section}{0pt}{10pt}{10pt}
+    \newcommand{\chapterbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{1.5}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
+    \usepackage{float}
+    \usepackage{multirow}
+    \usepackage{booktabs}
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# 간단한 Airflow 소개
+
+데이터 분석 및 엔지니어링 분야에서는 복잡한 데이터 처리 작업을 자동화하고 관리하기 위해 워크플로우 관리 도구를 도입합니다.
+특히 대규모 데이터 처리 환경에서는 거의 필수적으로 사용하죠.
+
+Apache Airflow는 현재 가장 널리 사용되는 워크플로우 관리 도구 중 하나로, Python으로 작업 흐름을 정의하고 스케줄링, 모니터링, 오류 처리 등의 기능을 제공합니다. (자세한 내용은 이후에 발표 내용 정리할 때 추가로 조사해보겠습니다.)
+
+# Airflow 트랜드
+
+PyPI 다운로드 통계를 통해 경쟁 기술과 비교한 상대적인 Airflow의 사용 비율을 조사해 보았습니다.
+
+## Workflow Tool 다운로드 통계
+
+```{python}
+#| fig-cap: "2024.03~2025.02 데이터 관련 Workflow tool 다운로드 수 비교"
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+# 저장된 이미지 파일 경로
+image_path = "monthly_downloads.png"
+
+# 이미지 불러오기 및 표시
+plt.figure(figsize=(12, 6))
+img = mpimg.imread(image_path)
+plt.imshow(img)
+plt.axis("off")  # 축 숨기기
+plt.tight_layout()
+
+# 이미지 출력
+plt.show()
+```
+
+- Airflow는 데이터 분석 workflow 툴 중에서도 가장 많은 다운로드 수를 기록하고 있습니다.
+- 물론 다운로드가 반드시 실사용으로 이어진다고 보장할 수는 없지만 다른 tool에 비해 상대적으로 많은 관심을 받고 있다는 것을 알 수 있습니다.
+
+## Airflow를 사용하는 직종 비율
+
+```{python}
+#| fig-cap: "2024 Airflow 이용자 중 직종별 비율"
+
+import numpy as np
+
+# Airflow demand data by job role
+roles = ['Data Engineer', 'Analytics Engineer', 'Solutions Architect', 'DevOps Engineer', 'Software Enginner', 'Data Scientist', 'Data Analyst', 'ML Engineer', 'Business Analyst']
+percentages = [61.5, 6.4, 5.3, 5.1, 4.7, 4.4, 4.1, 2.2, 1]
+
+# 파이 차트 설정
+plt.figure(figsize=(10, 8))
+colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22']
+explode = [0.1, 0, 0, 0, 0, 0, 0, 0, 0]  # Data Engineer 부분만 강조
+
+# 파이 차트 생성
+wedges, texts, autotexts = plt.pie(
+    percentages,
+    explode=explode,
+    labels=None, 
+    colors=colors,
+    autopct='%1.1f%%',  # 퍼센트 표시 형식
+    startangle=90,
+    shadow=True,
+    textprops={'fontsize': 12}
+)
+
+# 텍스트 스타일 설정
+plt.setp(autotexts, size=10, weight='bold')
+plt.axis('equal')  # 원형으로 보이게 설정
+
+# 레이블 위치 수동 조정
+bbox_props = dict(boxstyle="round,pad=0.3", fc="w", ec="k", lw=0.72, alpha=0.8)
+kw = dict(arrowprops=dict(arrowstyle="-"), bbox=bbox_props, zorder=0, va="center")
+
+for i, p in enumerate(wedges):
+    ang = (p.theta2 - p.theta1) / 2. + p.theta1
+    y = np.sin(np.deg2rad(ang))
+    x = np.cos(np.deg2rad(ang))
+    
+    # 작은 조각들의 경우 레이블을 더 바깥쪽으로 배치
+    connectionstyle = "angle,angleA=0,angleB={}".format(ang)
+    
+    # ML Engineer와 Business Analyst는 작은 조각이므로 특별히 조정
+    if roles[i] == "Business Analyst":
+        horizontalalignment = "left" if x < 0 else "right"
+        dist = 1.1  # 더 멀리 배치
+    elif roles[i] == "Solutions Architect":
+        horizontalalignment = "left" if x < 0 else "right"
+        dist = 1.45  # 더 멀리 배치
+    elif roles[i] == "Data Engineer":
+        horizontalalignment = "left" if x < 0 else "right"
+        dist = 1.45  # 더 멀리 배치
+    else:
+        horizontalalignment = "center"
+        dist = 1.2  # 기본 거리
+    
+    plt.annotate(roles[i], 
+                xy=(x, y), 
+                xytext=(x * dist, y * dist), 
+                horizontalalignment=horizontalalignment,
+                **kw)
+
+plt.tight_layout()
+```
+
+- [Airflow 공식 사이트 2024 설문조사 결과](https://airflow.apache.org/blog/airflow-survey-2024/)를 참고해서 작성했습니다.
+- airflow 기술을 요구하는 직종 중 **데이터 엔지니어** 직무에서 요구되는 비율이 높습니다.
+- 생각보다 data engineer의 비율이 아주 높지는 않습니다. Airflow 기술을 익힌다면 데이터 분야의 다양한 직무에서 활동할 수 있는 기회가 높아질 것으로 기대됩니다.
+
+# 채용 시장에서의 Airflow 수요
+
+학생 입장에서 실제 기업에서 활용하고 있는 기술 현황에 대해 조사하기에는 채용 공고가 가장 직접적인 정보 제공원이라고 판단해서 이쪽으로 조사해봤습니다.
+
+뭔가 대규모로 분석해보고 싶었는데 볼 수 있는 정보가 길어봤자 2주가 끝이더라고요.
+그래서 가볍게 Job Description 예시 몇개 가져왔습니다.
+
+## 주요 기업 JD 발췌 예시
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2025-03-22-18-23-30.png}}
+\caption{\href{https://toss.im/career/job-detail?job\_id=4071103003\&company=\%ED\%86\%A0\%EC\%8A\%A4\%EC\%A6\%9D\%EA\%B6\%8C\&detailedPosition=Infra}{토스 증권 Data Engineer JD}}
+\label{fig:toss_jd}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2025-03-22-17-31-13.png}}
+\caption{\href{https://www.lgresearch.ai/careers/view?seq=228}{LG MLOps Engineer Internship}}
+\label{fig:toss_jd}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics{img/2025-03-22-18-24-36.png}}
+\caption{\href{https://www.google.com/about/careers/applications/jobs/results/124798537199166150-senior-software-engineer-enterprise-data-and-engineering?q=airflow}{Google Senior Software Engineer, Enterprise Data and Engineering}}
+\label{fig:toss_jd}
+\end{center}
+\end{figure}
+
+국내 뿐만 아니라 해외 주요 기업에서도 Airflow를 활용한 데이터 파이프라인 구축 및 관리 역할에 수요가 있습니다. (그래봤자 3개만 발췌했지만요)
+
+이상의 내용들을 통해 Airflow는 데이터 분석 workflow tool 중에서 높은 위상을 가지며, 현재 다양한 데이터 분석 직무에서 Airflow 기술을 활용하고 있음을 알 수 있습니다.
