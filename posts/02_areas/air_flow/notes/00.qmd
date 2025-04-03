@@ -1,0 +1,60 @@
+---
+title: "Getting Started"
+date: 2025-03-26
+categories: ["Air flow"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## What is Airflow
+
+- open source platform to pragramatically author, schedule and monitor workflows
+
+- Not a data processing framework
+- Not a Real time streaming solution (only for batch processing)
+- Not a data storage system
+- and simple linear workflow might overkill
+
+## Why Airflow
+
+1. automation
+1. visibility
+1. flexibility and scalability
+1. extensibility
+
+## Core Components
+
+- Webserver: provides UI
+- Scheduler: triggers tasks. ensure that task runs in correct time and order
+- meta database: memmory, communication between components
+- trigger: daemon that listens to external events and triggers tasks
+- executer: traffic controller that decide how tasks are executed (sequential or parallel, local or remote)
+- queue
+- worker
+
+## Core Concepts
+
+### DAG
+
+- Directed Acyclic Graph
+- collection of all the tasks you want to run, organized in a way that reflects their relationships and dependencies
+- no cycles in dependencies graph
+
+### Operator
+
+- defines a single task in a workflow
+- e.g. BashOperator, PythonOperator, EmailOperator, etc.
+
+### Task / Task Instance
+
+- specific instance of an operator
+- when operator assigned to a DAG, it becomes a task
+
+### Workflow
+
+- entire process defined by DAG
+- DAG = workflow
+
+## Arcitecture
+
+

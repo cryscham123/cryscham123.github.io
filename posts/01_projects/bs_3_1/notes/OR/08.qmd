@@ -1,0 +1,311 @@
+---
+title: OR 과제 - 3
+subtitle: 20192208 김형훈
+categories: ["보고서", "OR"]
+date: last-modified
+format: 
+  pdf:
+    fig-pos: 'H'
+    fig-width: 6
+    fig-height: 4
+    documentclass: report
+    papersize: a4
+    top-level-division: chapter
+    fontsize: 17pt
+    toc: false
+    geometry:
+      - top=20mm
+    indent-size: 2
+include-in-header: 
+  text: |
+    \date{}
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{0.8em}{\huge}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{0pt}{-20pt}{5pt}
+    \titlespacing*{\section}{0pt}{10pt}{10pt}
+    \newcommand{\chapterbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{1.5}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
+    \usepackage{float}
+    \usepackage{multirow}
+    \usepackage{booktabs}
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+---
+
+# 4.6-2
+
+수식을 다시 재구성해보면 아래와 같다.
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & Z - 4x_1 - 2x_2 - 3x_3 - 5x_4 + M\bar{x}_5 + M\bar{x}_6 = 0 \\
+\text{Subject to} \quad & 2x_1 + 3x_2 + 4x_3 + 2x_4 + \bar{x}_5 = 300\\
+& 8x_1 + x_2 + x_3 + 5x_4 + \bar{x}_6 = 300 \\
+\text{and} \\
+& x_j ≥ 0, for j = 1, 2, 3, 4 \\
+& \bar{x}_5 ≥ 0, \bar{x}_6 ≥ 0
+\end{aligned}
+$$
+
+## a
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & -4 & -2 & -3 & -5 & M & M & 0 \\
+\bar{x}_5 & 0 & 2 & 3 & 4 & 2 & 1 & 0 & 300 \\
+\bar{x}_6 & 0 & 8 & 1 & 1 & 5 & 0 & 1 & 300 \\
+\hline
+\end{array}
+$$
+
+basic 변수가 0이 되도록 다시 계산해준다.
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & -4 - 10M & -2 - 4M & -3 - 5M & -5 - 7M & 0 & 0 & -600M \\
+\bar{x}_5 & 0 & 2 & 3 & 4 & 2 & 1 & 0 & 300 \\
+\bar{x}_6 & 0 & 8 & 1 & 1 & 5 & 0 & 1 & 300 \\
+\hline
+\end{array}
+$$
+
+- 초기 BFS: (0, 0, 0, 0, 300, 300)
+- 초기 진입 변수: $x_1$
+- 초기 퇴출 변수: $\bar{x}_6$
+
+## b
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & 0 & -\frac{3}{2} - \frac{11}{4}M & -\frac{5}{2} - \frac{15}{4}M & -\frac{5}{2} - \frac{3}{4}M & 0 & \frac{1}{2} + \frac{5}{4}M & 150-225M \\
+\bar{x}_5 & 0 & 0 & \frac{11}{4} & \frac{15}{4} & \frac{3}{4} & 1 & -\frac{1}{4} & \frac{900}{4} \\
+x_1 & 0 & 1 & \frac{1}{8} & \frac{1}{8} & \frac{5}{8} & 0 & \frac{1}{8} & \frac{300}{8} \\
+\hline
+\end{array}
+$$
+
+- 진입 변수: $x_3$
+- 퇴출 변수: $\bar{x}_5$
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & 0 & \frac{1}{3} & 0 & -2 & \frac{2}{3} + M & \frac{1}{3} + M & 300 \\
+x_3 & 0 & 0 & \frac{11}{15} & 1 & \frac{1}{5} & \frac{4}{15} & -\frac{1}{15} & 60 \\
+x_1 & 0 & 1 & \frac{1}{30} & 0 & \frac{3}{5} & -\frac{1}{30} & \frac{2}{15} & 30 \\
+\hline
+\end{array}
+$$
+
+- 진입 변수: $x_4$
+- 퇴출 변수: $x_1$
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & \frac{10}{3} & \frac{4}{9} & 0 & 0 & \frac{5}{9} + M & \frac{7}{9} + M & 400 \\
+x_3 & 0 & -\frac{1}{3} & \frac{13}{18} & 1 & 0 & \frac{5}{18} & -\frac{1}{9} & 50 \\
+x_4 & 0 & \frac{5}{3} & \frac{1}{18} & 0 & 1 & -\frac{1}{18} & \frac{2}{9} & 50 \\
+\hline
+\end{array}
+$$
+
+종료.
+
+- $x_1$ = 0
+- $x_2$ = 0
+- $x_3$ = 50
+- $x_4$ = 50
+- $x_5$ = 0
+- $x_6$ = 0
+- $Z$ = 400
+
+## c
+
+$$
+\begin{aligned}
+\text{Minimize} \quad & Z - \bar{x}_5 - \bar{x}_6 = 0 \\
+\text{Subject to} \quad & 2x_1 + 3x_2 + 4x_3 + 2x_4 + \bar{x}_5 = 300\\
+& 8x_1 + x_2 + x_3 + 5x_4 + \bar{x}_6 = 300 \\
+\text{and} \\
+& x_j ≥ 0, for j = 1, 2, 3, 4 \\
+& \bar{x}_5 ≥ 0, \bar{x}_6 ≥ 0
+\end{aligned}
+$$
+
+Minimize를 Maximize로 바꿔주자.
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & -Z + \bar{x}_5 + \bar{x}_6 = 0 \\
+\text{Subject to} \quad & 2x_1 + 3x_2 + 4x_3 + 2x_4 + \bar{x}_5 = 300\\
+& 8x_1 + x_2 + x_3 + 5x_4 + \bar{x}_6 = 300 \\
+\text{and} \\
+& x_j ≥ 0, for j = 1, 2, 3, 4 \\
+& \bar{x}_5 ≥ 0, \bar{x}_6 ≥ 0
+\end{aligned}
+$$
+
+표로 작성하면
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & -Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+\bar{x}_5 & 0 & 2 & 3 & 4 & 2 & 1 & 0 & 300 \\
+\bar{x}_6 & 0 & 8 & 1 & 1 & 5 & 0 & 1 & 300 \\
+\hline
+\end{array}
+$$
+
+basic 변수를 0이 되도록 다시 계산하면
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & -Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & -10 & -4 & -5 & -7 & 0 & 0 & -600 \\
+\bar{x}_5 & 0 & 2 & 3 & 4 & 2 & 1 & 0 & 300 \\
+\bar{x}_6 & 0 & 8 & 1 & 1 & 5 & 0 & 1 & 300 \\
+\hline
+\end{array}
+$$
+
+자 이제 표를 완성해보자.
+
+- 진입변수: $x_1$
+- 퇴출변수: $\bar{x}_6$
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & -Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & 0 & -\frac{11}{4} & -\frac{15}{4} & -\frac{3}{4} & 0 & \frac{5}{4} & -225 \\
+\bar{x}_5 & 0 & 0 & \frac{11}{4} & \frac{15}{4} & \frac{3}{4} & 1 & -\frac{1}{4} & 225 \\
+x_1 & 0 & 1 & \frac{1}{8} & \frac{1}{8} & \frac{5}{8} & 0 & \frac{1}{8} & \frac{75}{2} \\
+\hline
+\end{array}
+$$
+
+- 진입변수: $x_3$
+- 퇴출변수: $\bar{x}_5$
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & -Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & \bar{x}_6 &\text{RHS} \\
+\hline
+ & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+x_3 & 0 & 0 & \frac{11}{15} & 1 & \frac{1}{5} & \frac{4}{15} & -\frac{1}{15} & 60 \\
+x_1 & 0 & 1 & \frac{1}{30} & 0 & \frac{3}{5} & -\frac{1}{30} & \frac{2}{15} & 30 \\
+\hline
+\end{array}
+$$
+
+Phase 1 종료.
+
+이제 필요없는 인공변수를 제거하고, 기존의 obj를 가져와서 다시 표를 만들어보자.
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & -Z & x_1 & x_2 & x_3 & x_4 &\text{RHS} \\
+\hline
+ & 1 & 0 & 0 & 0 & 0 & 0 \\
+x_3 & 0 & 0 & \frac{11}{15} & 1 & \frac{1}{5} & 60 \\
+x_1 & 0 & 1 & \frac{1}{30} & 0 & \frac{3}{5} & 30 \\
+\hline
+\end{array}
+$$
+
+뭐야 어떻게 해
+
+# 4.6-3
+
+## a
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & -Z = -2x_1 - 3x_2 - x_3 - M\bar{x}_5 - M\bar{x}_7 \\
+\text{Subject to} \quad & x_1 + 4x_2 + 2x_3 - x_4 + \bar{x}_5 = 8 \\
+& 3x_1 + 2x_2 - x_6 + \bar{x}_7 = 6 \\
+\text{and} \\
+& x_j ≥ 0, for j = 1, 2, 3, 4, 6 \\
+& \bar{x}_5 ≥ 0, \bar{x}_7 ≥ 0
+\end{aligned}
+$$
+
+## b
+
+먼저 basic 변수를 0으로 만들어주자.
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & -Z & x_1 & x_2 & x_3 & x_4 & \bar{x}_5 & x_6 & \bar{X}_7 &\text{RHS} \\
+\hline
+ & 1 & 2 - 4M & 3 - 6M & 1 - 2M & M & 0 & M & 0 & -14M \\
+\bar{x}_5 & 0 & 1 & 4 & 2 & -1 & 1 & 0 & 0  & 8 \\
+\bar{x}_7 & 0 & 3 & 2 & 0 & 0 & 0 & -1 & 1 & 6 \\
+\hline
+\end{array}
+$$
+
+## c
+
+## d
+
+# 4.6-8
+
+## a
+
+# 4.7-4
+
+## a
+
+## b
+
+# 5.1-6
+
+# 5.1-20
+
+# 5.2-1
+
+# 5.2-2
