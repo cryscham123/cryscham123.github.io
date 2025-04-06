@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The important views of the Airflow UI – 김형훈의 학습 블로그</title>
+<title>Coding pipeline – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -108,7 +142,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/deep_learning/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/index.html">AirFlow</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/notes/00.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/notes/01.html">The important views of the Airflow UI</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/deep_learning/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/index.html">AirFlow</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/notes/00.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/notes/01.html">Coding pipeline</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -806,7 +840,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">The important views of the Airflow UI</span></a>
+ <span class="menu-text">Coding pipeline</span></a>
   </div>
 </li>
       </ul>
@@ -1688,16 +1722,22 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#the-dags-view" id="toc-the-dags-view" class="nav-link active" data-scroll-target="#the-dags-view">The DAGs View</a></li>
+  <li><a href="#dag-skeleton" id="toc-dag-skeleton" class="nav-link active" data-scroll-target="#dag-skeleton">DAG skeleton</a></li>
+  <li><a href="#operator" id="toc-operator" class="nav-link" data-scroll-target="#operator">Operator</a>
+  <ul class="collapse">
+  <li><a href="#operator-type" id="toc-operator-type" class="nav-link" data-scroll-target="#operator-type">operator type</a></li>
+  </ul></li>
+  <li><a href="#providers" id="toc-providers" class="nav-link" data-scroll-target="#providers">Providers</a></li>
+  <li><a href="#hook" id="toc-hook" class="nav-link" data-scroll-target="#hook">Hook</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/deep_learning/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/index.html">AirFlow</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/notes/00.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/notes/01.html">The important views of the Airflow UI</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/02_areas/deep_learning/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/index.html">AirFlow</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/notes/00.html">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/02_areas/air_flow/notes/01.html">Coding pipeline</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The important views of the Airflow UI</h1>
+<h1 class="title">Coding pipeline</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Air flow</div>
   </div>
@@ -1711,7 +1751,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 3월 27일</p>
+      <p class="date">2025년 4월 5일</p>
     </div>
   </div>
   
@@ -1724,8 +1764,73 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 
 
 <p><img src="../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="the-dags-view" class="level2">
-<h2 class="anchored" data-anchor-id="the-dags-view">The DAGs View</h2>
+<section id="dag-skeleton" class="level2">
+<h2 class="anchored" data-anchor-id="dag-skeleton">DAG skeleton</h2>
+<div id="8ad61bde" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow <span class="im">import</span> DAG</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> DAG(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    dag_id<span class="op">=</span><span class="st">'example_dag'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    schedule<span class="op">=</span><span class="st">'@daily'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    start_date<span class="op">=</span>datetime(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    catchup<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>) <span class="im">as</span> dag:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>DAG는 start_date / last_execution time + schedule_interval에 실행된다.</li>
+</ul>
+</section>
+<section id="operator" class="level2">
+<h2 class="anchored" data-anchor-id="operator">Operator</h2>
+<ul>
+<li>operator 하나 당 하나의 task만 실행하는게 좋다.</li>
+</ul>
+<section id="operator-type" class="level3">
+<h3 class="anchored" data-anchor-id="operator-type">operator type</h3>
+<ul>
+<li>Action operators
+<ul>
+<li>BashOperator</li>
+<li>PythonOperator</li>
+</ul></li>
+<li>Transfer operators</li>
+<li>Sensor operators</li>
+</ul>
+</section>
+</section>
+<section id="providers" class="level2">
+<h2 class="anchored" data-anchor-id="providers">Providers</h2>
+<ul>
+<li>Airflow providers are a set of packages that contain operators, sensors, hooks, and other utilities to interact with external platforms and services.</li>
+<li>Providers are installed separately from Airflow and can be added to your environment as needed.</li>
+<li>In Airflow core, Bash and Python operators, … are included</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.providers.postgres.operators.postgres <span class="im">import</span> PostgresOperator</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> DAG(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dag_id<span class="op">=</span><span class="st">'example_db'</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    schedule<span class="op">=</span><span class="st">'@daily'</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    start_date<span class="op">=</span>datetime(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    catchup<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>) <span class="im">as</span> dag:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    create_table <span class="op">=</span> PostgresOperator(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        task_id<span class="op">=</span><span class="st">'create_table'</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        postgres_conn_id<span class="op">=</span><span class="st">'postgres'</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        sql<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">            CREATE TABLE IF NOT EXISTS example_table (</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">                id SERIAL PRIMARY KEY,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">                name VARCHAR(50)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="st">            );</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>DB에 접속하기 위해서 connection을 설정해야 한다.</li>
+</ul>
+</section>
+<section id="hook" class="level2">
+<h2 class="anchored" data-anchor-id="hook">Hook</h2>
 
 
 </section>

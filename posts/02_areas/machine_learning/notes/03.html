@@ -843,7 +843,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The important views of the Airflow UI</span></a>
+ <span class="menu-text">Coding pipeline</span></a>
   </div>
 </li>
       </ul>
@@ -1766,7 +1766,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <p><img src="../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <section id="preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="preprocessing">preprocessing</h2>
-<div id="57037940" class="cell" data-execution_count="1">
+<div id="07d4c7e2" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1775,7 +1775,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> dataset.iloc[:, :<span class="op">-</span><span class="dv">1</span>].values</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dataset.iloc[:, <span class="op">-</span><span class="dv">1</span>].values</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="399fd1ac" class="cell" data-execution_count="2">
+<div id="37be69cd" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1792,7 +1792,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </section>
 <section id="modeling" class="level2">
 <h2 class="anchored" data-anchor-id="modeling">modeling</h2>
-<div id="c48e8c81" class="cell" data-execution_count="3">
+<div id="a329a53a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># model automatically choose best model (dont need to apply 후진제거법)</span></span>
@@ -2209,63 +2209,63 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="predict" class="level2">
 <h2 class="anchored" data-anchor-id="predict">predict</h2>
-<div id="48a9e00e" class="cell" data-execution_count="4">
+<div id="4c0c3ef8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> regressor.predict(X_test)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(precision<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.concatenate((y_pred.reshape(<span class="bu">len</span>(y_pred), <span class="dv">1</span>), </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                      y_test.reshape(<span class="bu">len</span>(y_test), <span class="dv">1</span>)), <span class="dv">1</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[[ 76135.93  49490.75]
- [179030.44 166187.94]
- [114773.97 108552.04]
- [144082.28 152211.77]
- [145031.01 146121.95]
- [ 65737.74  69758.98]
- [145722.23 156122.51]
- [ 49708.84  42559.73]
- [153046.35 132602.65]
- [ 53075.88  14681.4 ]
- [ 95554.82  89949.14]
- [108661.28 103282.38]
- [112830.61  99937.59]
- [ 74779.53  71498.49]
- [112948.19 126992.93]
- [ 85285.45  96712.8 ]
- [ 94630.06  77798.83]
- [111199.29 122776.86]
- [ 76442.44  78239.91]
- [ 91280.9   90708.19]
- [ 63712.52  65200.33]
- [113777.45 111313.02]
- [120771.87 134307.35]
- [ 96077.28  97483.56]
- [ 63065.21  35673.41]
- [147158.53 149759.96]
- [ 98104.92 107404.34]
- [141534.74 129917.04]
- [ 55074.18  64926.08]
- [166130.81 182901.99]
- [113852.55 105008.31]
- [181080.09 192261.83]
- [113132.75  96778.92]
- [131792.15 144259.4 ]
- [139330.18 124266.9 ]
- [123685.15 108733.99]
- [120013.91 105733.54]
- [126184.82 110352.25]
- [ 96557.17  96479.51]
- [173411.73 191792.06]]</code></pre>
+<pre><code>[[ 93771.16 101004.64]
+ [ 74466.6   78239.91]
+ [ 50652.19  69758.98]
+ [105956.49  99937.59]
+ [145441.49 129917.04]
+ [ 37211.29  64926.08]
+ [ 71764.09  71498.49]
+ [111249.19 108552.04]
+ [ 59299.22  65200.33]
+ [120840.79 118474.03]
+ [162627.18 149759.96]
+ [120230.67 126992.93]
+ [166842.52 156991.12]
+ [119593.28 108733.99]
+ [123155.58 110352.25]
+ [170183.11 155752.6 ]
+ [198552.13 191050.39]
+ [157465.39 132602.65]
+ [ 98810.02  97427.84]
+ [195490.18 192261.83]
+ [142926.02 144259.4 ]
+ [106210.25  96778.92]
+ [ 89245.08  97483.56]
+ [ 45068.42  14681.4 ]
+ [ 41277.39  42559.73]
+ [115735.66 105733.54]
+ [176218.16 182901.99]
+ [137986.12 141585.52]
+ [ 88264.34  96479.51]
+ [ 96578.58  89949.14]
+ [ 82567.67  77798.83]
+ [196724.5  191792.06]
+ [111704.   111313.02]
+ [102560.86 103282.38]
+ [139310.55 124266.9 ]
+ [ 87261.82  81005.76]
+ [ 86587.2   96712.8 ]
+ [107978.65 122776.86]
+ [130333.68 134307.35]
+ [188346.5  166187.94]]</code></pre>
 </div>
 </div>
 </section>
 <section id="evaluate" class="level2">
 <h2 class="anchored" data-anchor-id="evaluate">evaluate</h2>
-<div id="b251d060" class="cell" data-execution_count="5">
+<div id="c56fcba8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>r2_score(y_test, y_pred)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>0.8864833028122199</code></pre>
+<pre><code>0.913139010635797</code></pre>
 </div>
 </div>
 

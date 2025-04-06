@@ -840,7 +840,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The important views of the Airflow UI</span></a>
+ <span class="menu-text">Coding pipeline</span></a>
   </div>
 </li>
       </ul>
@@ -1760,7 +1760,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <p><img src="../../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <section id="masking" class="level2">
 <h2 class="anchored" data-anchor-id="masking">Masking</h2>
-<div id="e848f92b" class="cell" data-execution_count="1">
+<div id="c59f3468" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>], [<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>]])</span>
@@ -1772,23 +1772,23 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  [False  True False]]</code></pre>
 </div>
 </div>
-<div id="30c15262" class="cell" data-execution_count="2">
+<div id="e68d311f" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a[bool_indexing])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[2 4 6 8]</code></pre>
 </div>
 </div>
-<div id="f8c6e1da" class="cell" data-execution_count="3">
+<div id="75575439" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.randn(<span class="dv">4</span>, <span class="dv">5</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>np.around(data, <span class="dv">2</span>) </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>array([[ 0.79, -2.74, -0.08,  2.44, -0.06],
-       [ 0.35, -2.61,  0.45, -0.94, -0.31],
-       [-1.23, -0.05,  1.63, -0.77, -0.35],
-       [ 0.56,  0.58, -1.82, -1.56, -0.12]])</code></pre>
+<pre><code>array([[ 1.48, -0.78,  1.11,  0.38, -1.24],
+       [-0.  , -0.25, -0.08,  0.62, -1.12],
+       [-2.27,  2.39, -0.85,  0.95, -1.6 ],
+       [ 1.72, -0.29,  1.04,  0.48, -0.14]])</code></pre>
 </div>
 </div>
-<div id="c552580b" class="cell" data-execution_count="4">
+<div id="04806472" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.array([[ <span class="fl">1.87883804</span>, <span class="op">-</span><span class="fl">0.39056004</span>, <span class="fl">1.18374625</span>, <span class="op">-</span><span class="fl">0.91699153</span>, <span class="fl">0.23666417</span>],</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>[ <span class="fl">0.28408269</span>, <span class="fl">1.14786861</span>, <span class="op">-</span><span class="fl">1.54178089</span>, <span class="fl">0.12426074</span>, <span class="fl">0.54734241</span>],</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>[<span class="op">-</span><span class="fl">1.67396474</span>, <span class="op">-</span><span class="fl">1.88974809</span>, <span class="op">-</span><span class="fl">0.09876402</span>, <span class="fl">1.05047587</span>, <span class="fl">1.31776863</span>],</span>
@@ -1796,7 +1796,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="fl">1.03578294</span>, <span class="fl">0.62956063</span>]])</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>data[data[:, <span class="dv">0</span>] <span class="op">&lt;</span><span class="dv">0</span>, <span class="dv">1</span>:<span class="dv">3</span>] <span class="op">=</span> <span class="fl">1.0</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bce3411e" class="cell" data-execution_count="5">
+<div id="e1ab55fb" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>a[::<span class="op">-</span><span class="dv">1</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>array([[7, 8, 9],
@@ -1804,7 +1804,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
        [1, 2, 3]])</code></pre>
 </div>
 </div>
-<div id="6a9d931a" class="cell" data-execution_count="6">
+<div id="9a99e17a" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a.reshape(<span class="dv">3</span>, <span class="dv">2</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1813,7 +1813,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  [5 6]]</code></pre>
 </div>
 </div>
-<div id="9d51dacc" class="cell" data-execution_count="7">
+<div id="3a92be60" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a.T)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1 4]
@@ -1821,7 +1821,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  [3 6]]</code></pre>
 </div>
 </div>
-<div id="a73540c3" class="cell" data-execution_count="8">
+<div id="3728316e" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</span>
@@ -1837,7 +1837,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<div id="e55e5260" class="cell" data-execution_count="9">
+<div id="84cf8fbc" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>y1<span class="op">=</span>np.sin(x1)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>y2<span class="op">=</span>np.cos(x1)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x1, y1, label<span class="op">=</span><span class="st">'sin'</span>)</span>

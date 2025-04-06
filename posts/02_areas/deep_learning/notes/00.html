@@ -872,7 +872,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The important views of the Airflow UI</span></a>
+ <span class="menu-text">Coding pipeline</span></a>
   </div>
 </li>
       </ul>
@@ -1816,12 +1816,12 @@ y = \begin{cases} 0 &amp; (w_1x_1 + w_2x_2 \leq \theta) \\ 1 &amp; (w_1x_1 + w_2
 <h2 class="anchored" data-anchor-id="퍼셉트론-구현">퍼셉트론 구현</h2>
 <section id="and-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="and-게이트">AND 게이트</h3>
-<div id="ec5c06cf" class="cell" data-execution_count="1">
+<div id="14b3846d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> AND(x1, x2):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    w1, w2, theta <span class="op">=</span> <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span> <span class="co"># parameter</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (x1<span class="op">*</span>w1 <span class="op">+</span> x2<span class="op">*</span>w2 <span class="op">&gt;</span> theta)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="3b40ffa0" class="cell" data-execution_count="2">
+<div id="c8a47281" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(AND(<span class="dv">0</span>, <span class="dv">0</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(AND(<span class="dv">1</span>, <span class="dv">0</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(AND(<span class="dv">0</span>, <span class="dv">1</span>))</span>
@@ -1842,7 +1842,7 @@ y = \begin{cases} 0 &amp; (b + w_1x_1 + w_2x_2 ≤ 0) \\ 1 &amp; (b + w_1x_1 + w
 </section>
 <section id="nand-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="nand-게이트">NAND 게이트</h3>
-<div id="c8a43172" class="cell" data-execution_count="3">
+<div id="d9349019" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> NAND(x1, x2):</span>
@@ -1851,7 +1851,7 @@ y = \begin{cases} 0 &amp; (b + w_1x_1 + w_2x_2 ≤ 0) \\ 1 &amp; (b + w_1x_1 + w
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> <span class="fl">0.7</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (b <span class="op">+</span> np.<span class="bu">sum</span>(x <span class="op">*</span> w) <span class="op">&gt;</span> <span class="dv">0</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="3a9e988a" class="cell" data-execution_count="4">
+<div id="ca8ebb2a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> OR(x1, x2):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> np.array([x1, x2])</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  w <span class="op">=</span> np.array([<span class="fl">0.5</span>, <span class="fl">0.5</span>])</span>
@@ -1888,13 +1888,13 @@ y = \begin{cases} 0 &amp; (b + w_1x_1 + w_2x_2 ≤ 0) \\ 1 &amp; (b + w_1x_1 + w
 <p>이와 같이 여러 퍼셉트론을 연결한 형태를 다층 퍼센트론이라고 한다.</p>
 <section id="xor-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="xor-게이트">XOR 게이트</h3>
-<div id="9376459c" class="cell" data-execution_count="5">
+<div id="5afc6fb8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> XOR(x1, x2):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  s1 <span class="op">=</span> OR(x1, x2)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  s2 <span class="op">=</span> NAND(x1, x2)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> AND(s1, s2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6d8331a5" class="cell" data-execution_count="6">
+<div id="211385bc" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(XOR(<span class="dv">0</span>, <span class="dv">0</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(XOR(<span class="dv">0</span>, <span class="dv">1</span>))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(XOR(<span class="dv">1</span>, <span class="dv">0</span>))</span>

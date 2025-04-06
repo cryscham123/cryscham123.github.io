@@ -843,7 +843,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The important views of the Airflow UI</span></a>
+ <span class="menu-text">Coding pipeline</span></a>
   </div>
 </li>
       </ul>
@@ -1763,7 +1763,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <section id="data-이해" class="level2">
 <h2 class="anchored" data-anchor-id="data-이해">Data 이해</h2>
-<div id="626ab637" class="cell" data-execution_count="1">
+<div id="ba7fd984" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1775,7 +1775,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> pd.read_csv(<span class="st">'_data/train.csv'</span>)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> pd.read_csv(<span class="st">'_data/test.csv'</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="952a1665" class="cell" data-execution_count="2">
+<div id="93c8b9fb" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>train.describe()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -1884,7 +1884,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <ul>
 <li>Age 결측치 177개</li>
 </ul>
-<div id="da7a530a" class="cell" data-execution_count="3">
+<div id="5f79d27c" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>test.describe()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
@@ -1985,7 +1985,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <li>Age 결측치 86개</li>
 <li>Fare 결측치 1개: 이 정도는 그냥 삭제해도 될듯</li>
 </ul>
-<div id="0a85b9b9" class="cell" data-execution_count="4">
+<div id="7f585ad4" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Age 분포 확인</span></span>
@@ -2018,7 +2018,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<div id="2cc07459" class="cell" data-execution_count="5">
+<div id="a1b9d8d9" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>train_x <span class="op">=</span> train.drop(<span class="st">'Survived'</span>, axis<span class="op">=</span><span class="dv">1</span>).values</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>train_y <span class="op">=</span> train[<span class="st">'Survived'</span>].values</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>test_x <span class="op">=</span> test.values</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>

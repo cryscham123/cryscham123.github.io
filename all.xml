@@ -15,7 +15,16 @@
 <link>https://cryscham123.github.io/all.html</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Thu, 03 Apr 2025 05:44:43 GMT</lastBuildDate>
+<lastBuildDate>Sun, 06 Apr 2025 13:43:49 GMT</lastBuildDate>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>보고서</category>
+  <category>데이터 마이닝</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</guid>
+  <pubDate>Sun, 06 Apr 2025 13:43:49 GMT</pubDate>
+</item>
 <item>
   <title></title>
   <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/08.pdf</link>
@@ -23,7 +32,181 @@
   <category>보고서</category>
   <category>OR</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/08.pdf</guid>
-  <pubDate>Thu, 03 Apr 2025 05:44:43 GMT</pubDate>
+  <pubDate>Sat, 05 Apr 2025 06:16:03 GMT</pubDate>
+</item>
+<item>
+  <title>Coding pipeline</title>
+  <link>https://cryscham123.github.io/posts/02_areas/air_flow/notes/01.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="dag-skeleton" class="level2">
+<h2 class="anchored" data-anchor-id="dag-skeleton">DAG skeleton</h2>
+<div id="8ad61bde" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> airflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> DAG</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> datetime <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> datetime</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> DAG(</span>
+<span id="cb1-5">    dag_id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'example_dag'</span>,</span>
+<span id="cb1-6">    schedule<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'@daily'</span>,</span>
+<span id="cb1-7">    start_date<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>datetime(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2022</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>),</span>
+<span id="cb1-8">    catchup<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>,</span>
+<span id="cb1-9">) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> dag:</span>
+<span id="cb1-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">pass</span></span></code></pre></div>
+</div>
+<ul>
+<li>DAG는 start_date / last_execution time + schedule_interval에 실행된다.</li>
+</ul>
+</section>
+<section id="operator" class="level2">
+<h2 class="anchored" data-anchor-id="operator">Operator</h2>
+<ul>
+<li>operator 하나 당 하나의 task만 실행하는게 좋다.</li>
+</ul>
+<section id="operator-type" class="level3">
+<h3 class="anchored" data-anchor-id="operator-type">operator type</h3>
+<ul>
+<li>Action operators
+<ul>
+<li>BashOperator</li>
+<li>PythonOperator</li>
+</ul></li>
+<li>Transfer operators</li>
+<li>Sensor operators</li>
+</ul>
+</section>
+</section>
+<section id="providers" class="level2">
+<h2 class="anchored" data-anchor-id="providers">Providers</h2>
+<ul>
+<li>Airflow providers are a set of packages that contain operators, sensors, hooks, and other utilities to interact with external platforms and services.</li>
+<li>Providers are installed separately from Airflow and can be added to your environment as needed.</li>
+<li>In Airflow core, Bash and Python operators, … are included</li>
+</ul>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> airflow.providers.postgres.operators.postgres <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> PostgresOperator</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> DAG(</span>
+<span id="cb2-4">    dag_id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'example_db'</span>,</span>
+<span id="cb2-5">    schedule<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'@daily'</span>,</span>
+<span id="cb2-6">    start_date<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>datetime(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2022</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>),</span>
+<span id="cb2-7">    catchup<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>,</span>
+<span id="cb2-8">) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> dag:</span>
+<span id="cb2-9">    create_table <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PostgresOperator(</span>
+<span id="cb2-10">        task_id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'create_table'</span>,</span>
+<span id="cb2-11">        postgres_conn_id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'postgres'</span>,</span>
+<span id="cb2-12">        sql<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-13"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">            CREATE TABLE IF NOT EXISTS example_table (</span></span>
+<span id="cb2-14"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">                id SERIAL PRIMARY KEY,</span></span>
+<span id="cb2-15"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">                name VARCHAR(50)</span></span>
+<span id="cb2-16"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">            );</span></span>
+<span id="cb2-17"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">        """</span>,</span>
+<span id="cb2-18">    )</span></code></pre></div>
+<ul>
+<li>DB에 접속하기 위해서 connection을 설정해야 한다.</li>
+</ul>
+</section>
+<section id="hook" class="level2">
+<h2 class="anchored" data-anchor-id="hook">Hook</h2>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>Air flow</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/air_flow/notes/01.html</guid>
+  <pubDate>Fri, 04 Apr 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Simplex 표 계산</title>
@@ -39,7 +222,7 @@
 </ul>
 <section id="general" class="level2">
 <h2 class="anchored" data-anchor-id="general">General</h2>
-<div id="274ee308" class="cell" data-execution_count="1">
+<div id="b1b107bb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -95,7 +278,15 @@ font-style: inherit;">=</span> [<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">10</span>, <span class="op" style="color: #5E5E5E;
+font-style: inherit;">5</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
@@ -103,19 +294,13 @@ font-style: inherit;">4</span>, <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>, <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7</span>, <span class="dv" style="color: #AD0000;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">0</span>, <span class="op" style="color: #5E5E5E;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">600</span>]</span>
+font-style: inherit;">0</span>]</span>
 <span id="cb1-11">A <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [</span>
@@ -125,7 +310,9 @@ font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -133,30 +320,32 @@ font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">300</span>],</span>
+font-style: inherit;">20</span>],</span>
 <span id="cb1-13">    [<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">300</span>]</span>
+font-style: inherit;">30</span>]</span>
 <span id="cb1-14">]</span>
 <span id="cb1-15">basic <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.array([<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">6</span>]) <span class="op" style="color: #5E5E5E;
+font-style: inherit;">7</span>]) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -171,7 +360,9 @@ font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">4</span>]) <span class="op" style="color: #5E5E5E;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>]) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -741,62 +932,63 @@ Iteration 1
 ============================================================
 
 Current Simplex Tableau:
-+----+-----+------+------+------+------+------+------+-------+
-|    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   x6 |   RHS |
-+====+=====+======+======+======+======+======+======+=======+
-| Z  |   1 |  -10 |   -4 |   -5 |   -7 |    0 |    0 |  -600 |
-+----+-----+------+------+------+------+------+------+-------+
-| x5 |   0 |    2 |    3 |    4 |    2 |    1 |    0 |   300 |
-+----+-----+------+------+------+------+------+------+-------+
-| x6 |   0 |    8 |    1 |    1 |    5 |    0 |    1 |   300 |
-+----+-----+------+------+------+------+------+------+-------+
-Entering variable: x1
-Leaving variable: x6
++----+-----+------+------+------+------+------+------+------+-------+
+|    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   x6 |   x7 |   RHS |
++====+=====+======+======+======+======+======+======+======+=======+
+| Z  |   1 |   -5 |   -8 |   -7 |   -4 |   -6 |    0 |    0 |     0 |
++----+-----+------+------+------+------+------+------+------+-------+
+| x6 |   0 |    2 |    3 |    3 |    2 |    2 |    1 |    0 |    20 |
++----+-----+------+------+------+------+------+------+------+-------+
+| x7 |   0 |    3 |    5 |    4 |    2 |    4 |    0 |    1 |    30 |
++----+-----+------+------+------+------+------+------+------+-------+
+Entering variable: x2
+Leaving variable: x7
 
 Iteration 2
 ============================================================
 
 Current Simplex Tableau:
-+----+-----+------+-------+-------+------+------+------+-------+
-|    |   Z |   x1 | x2    | x3    | x4   |   x5 | x6   | RHS   |
-+====+=====+======+=======+=======+======+======+======+=======+
-| Z  |   1 |    0 | -11/4 | -15/4 | -3/4 |    0 | 5/4  | -225  |
-+----+-----+------+-------+-------+------+------+------+-------+
-| x5 |   0 |    0 | 11/4  | 15/4  | 3/4  |    1 | -1/4 | 225   |
-+----+-----+------+-------+-------+------+------+------+-------+
-| x1 |   0 |    1 | 1/8   | 1/8   | 5/8  |    0 | 1/8  | 75/2  |
-+----+-----+------+-------+-------+------+------+------+-------+
-Entering variable: x3
-Leaving variable: x5
++----+-----+------+------+------+------+------+------+------+-------+
+|    |   Z | x1   |   x2 | x3   | x4   | x5   |   x6 | x7   |   RHS |
++====+=====+======+======+======+======+======+======+======+=======+
+| Z  |   1 | -1/5 |    0 | -3/5 | -4/5 | 2/5  |    0 | 8/5  |    48 |
++----+-----+------+------+------+------+------+------+------+-------+
+| x6 |   0 | 1/5  |    0 | 3/5  | 4/5  | -2/5 |    1 | -3/5 |     2 |
++----+-----+------+------+------+------+------+------+------+-------+
+| x2 |   0 | 3/5  |    1 | 4/5  | 2/5  | 4/5  |    0 | 1/5  |     6 |
++----+-----+------+------+------+------+------+------+------+-------+
+Entering variable: x4
+Leaving variable: x6
 
 Iteration 3
 ============================================================
 
 Current Simplex Tableau:
-+----+-----+------+-------+------+------+-------+-------+-------+
-|    |   Z |   x1 | x2    |   x3 | x4   | x5    | x6    |   RHS |
-+====+=====+======+=======+======+======+=======+=======+=======+
-| Z  |   1 |    0 | 0     |    0 | 0    | 1     | 1     |     0 |
-+----+-----+------+-------+------+------+-------+-------+-------+
-| x3 |   0 |    0 | 11/15 |    1 | 1/5  | 4/15  | -1/15 |    60 |
-+----+-----+------+-------+------+------+-------+-------+-------+
-| x1 |   0 |    1 | 1/30  |    0 | 3/5  | -1/30 | 2/15  |    30 |
-+----+-----+------+-------+------+------+-------+-------+-------+
++----+-----+------+------+------+------+------+------+------+-------+
+|    |   Z | x1   |   x2 | x3   |   x4 | x5   | x6   | x7   | RHS   |
++====+=====+======+======+======+======+======+======+======+=======+
+| Z  |   1 | 0    |    0 | 0    |    0 | 0    | 1    | 1    | 50    |
++----+-----+------+------+------+------+------+------+------+-------+
+| x4 |   0 | 1/4  |    0 | 3/4  |    1 | -1/2 | 5/4  | -3/4 | 5/2   |
++----+-----+------+------+------+------+------+------+------+-------+
+| x2 |   0 | 1/2  |    1 | 1/2  |    0 | 1    | -1/2 | 1/2  | 5     |
++----+-----+------+------+------+------+------+------+------+-------+
 Optimal solution reached.
 Optimal Solution:
-x1 = 30
-x2 = 0
-x3 = 60
-x4 = 0
+x1 = 0
+x2 = 5
+x3 = 0
+x4 = 5/2
 x5 = 0
 x6 = 0
-Objective Value = 0</code></pre>
+x7 = 0
+Objective Value = 50</code></pre>
 </div>
 </div>
 </section>
 <section id="big-m-method" class="level2">
 <h2 class="anchored" data-anchor-id="big-m-method">Big M Method</h2>
-<div id="b3819433" class="cell" data-execution_count="2">
+<div id="b5d6aa7d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -1630,7 +1822,7 @@ Objective Value = -7</code></pre>
 </section>
 <section id="grubi" class="level2">
 <h2 class="anchored" data-anchor-id="grubi">Grubi</h2>
-<div id="85424425" class="cell" data-execution_count="3">
+<div id="6e9baf6d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> gurobipy <span class="im" style="color: #00769E;
@@ -1684,88 +1876,123 @@ background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"x4"</span>)</span>
-<span id="cb5-10"></span>
-<span id="cb5-11">model.setObjective(<span class="dv" style="color: #AD0000;
+<span id="cb5-10">x5 <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> model.addVar(vtype<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">*</span> x1 <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span>GRB.CONTINUOUS, name<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x2 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x3 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+font-style: inherit;">"x5"</span>)</span>
+<span id="cb5-11"></span>
+<span id="cb5-12">model.setObjective(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">*</span> x4, GRB.MAXIMIZE)</span>
-<span id="cb5-12"></span>
-<span id="cb5-13">model.addConstr(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
 font-style: inherit;">*</span> x1 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x2 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x3 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x4 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">300</span>)</span>
-<span id="cb5-14">model.addConstr(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">8</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
+font-style: inherit;">*</span> x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x4 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x5, GRB.MAXIMIZE)</span>
+<span id="cb5-13"></span>
+<span id="cb5-14">model.addConstr(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">*</span> x1 <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">+</span> x2 <span class="op" style="color: #5E5E5E;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">+</span> x3 <span class="op" style="color: #5E5E5E;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x4 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x5 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>)</span>
+<span id="cb5-15">model.addConstr(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x1 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
+font-style: inherit;">*</span> x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">*</span> x4 <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">300</span>)</span>
-<span id="cb5-15"></span>
-<span id="cb5-16">model.optimize()</span>
-<span id="cb5-17"></span>
-<span id="cb5-18"><span class="cf" style="color: #003B4F;
+font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x5 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>)</span>
+<span id="cb5-16"></span>
+<span id="cb5-17">model.optimize()</span>
+<span id="cb5-18"></span>
+<span id="cb5-19"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> var <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> model.getVars():</span>
-<span id="cb5-19">    <span class="bu" style="color: null;
+<span id="cb5-20">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -1786,7 +2013,7 @@ background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb5-20"><span class="bu" style="color: null;
+<span id="cb5-21"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -1795,9 +2022,10 @@ font-style: inherit;">"Obj: "</span>, model.objVal)</span></code></pre></div>
 <pre><code>Restricted license - for non-production use only - expires 2026-11-23
 x1: 0.0
 x2: 0.0
-x3: 50.0
-x4: 50.0
-Obj:  400.0</code></pre>
+x3: 0.0
+x4: 5.0
+x5: 5.0
+Obj:  50.0</code></pre>
 </div>
 </div>
 
@@ -1910,7 +2138,7 @@ Obj:  400.0</code></pre>
 <section id="data의-특성" class="level2">
 <h2 class="anchored" data-anchor-id="data의-특성">data의 특성</h2>
 <p>volume - Data size big - Data size small(long data) velocity variety veracity(정확성) value</p>
-<div id="15930592" class="cell" data-execution_count="1">
+<div id="e5249bf7" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -1953,7 +2181,7 @@ font-style: inherit;">=</span> LeaveOneOut()</span>
 <pre><code>3</code></pre>
 </div>
 </div>
-<div id="9acf8ba3" class="cell" data-execution_count="2">
+<div id="fd598cd2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
@@ -2054,7 +2282,7 @@ TRAIN: [0 1 2 3] TEST: [4 5]</code></pre>
 
 
 
-<div id="4aba434f" class="cell" data-execution_count="1">
+<div id="5c6c0723" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -2199,7 +2427,7 @@ font-style: inherit;">"_data/class/carprices.csv"</span>)</span>
 </div>
 <p>scatter plot을 이용해 선형성을 확인하겠습니다.</p>
 <p>연속형 변수인 <strong>Mileage</strong>와 <strong>Sell Price($)</strong>에 대해 확인하겠습니다.</p>
-<div id="498424b7" class="cell" data-execution_count="2">
+<div id="66c9b208" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">fig, axes <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
@@ -2279,7 +2507,7 @@ font-style: inherit;">"Age(yrs) vs Price($)"</span>)</span>
 </div>
 <p>선형성이 보입니다.<br>
 두 변수 모두 linear regression을 적용할 수 있어 보입니다.</p>
-<div id="754c5d7d" class="cell" data-execution_count="3">
+<div id="902dce37" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> dataset.drop(<span class="st" style="color: #20794D;
@@ -2296,7 +2524,7 @@ background-color: null;
 font-style: inherit;">2</span>].values</span></code></pre></div>
 </div>
 <p>독립 변수와 종속 변수를 저장해줍니다.</p>
-<div id="6c6fc087" class="cell" data-execution_count="4">
+<div id="25682816" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.compose <span class="im" style="color: #00769E;
@@ -2326,7 +2554,7 @@ background-color: null;
 font-style: inherit;">=</span> np.array(ct.fit_transform(x))</span></code></pre></div>
 </div>
 <p>범주형 변수 <strong>Car Model</strong>에 대해 <strong>one hot encoding</strong>을 적용하였습니다.</p>
-<div id="4349a17a" class="cell" data-execution_count="5">
+<div id="3567fea8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
@@ -2342,19 +2570,19 @@ background-color: null;
 font-style: inherit;">0.2</span>)</span>
 <span id="cb5-4">X_train</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>array([[0.0, 0.0, 1.0, 59000, 5],
-       [0.0, 1.0, 0.0, 57000, 5],
+<pre><code>array([[0.0, 1.0, 0.0, 46000, 4],
        [1.0, 0.0, 0.0, 91000, 8],
-       [1.0, 0.0, 0.0, 72000, 6],
+       [0.0, 0.0, 1.0, 59000, 5],
        [0.0, 1.0, 0.0, 35000, 3],
-       [1.0, 0.0, 0.0, 59000, 5],
-       [0.0, 1.0, 0.0, 69000, 6],
-       [0.0, 0.0, 1.0, 67000, 6],
        [0.0, 1.0, 0.0, 22500, 2],
-       [0.0, 0.0, 1.0, 79000, 7]], dtype=object)</code></pre>
+       [0.0, 0.0, 1.0, 67000, 6],
+       [1.0, 0.0, 0.0, 52000, 5],
+       [0.0, 0.0, 1.0, 79000, 7],
+       [1.0, 0.0, 0.0, 72000, 6],
+       [0.0, 1.0, 0.0, 57000, 5]], dtype=object)</code></pre>
 </div>
 </div>
-<div id="aec992ab" class="cell" data-execution_count="6">
+<div id="e0465df1" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
@@ -2380,21 +2608,21 @@ background-color: null;
 font-style: inherit;">3</span>:])</span>
 <span id="cb7-6">X_train</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>array([[0.0, 0.0, 1.0, -0.10763824620580391, -0.17896499588156797],
-       [0.0, 1.0, 0.0, -0.2126511693334175, -0.17896499588156797],
-       [1.0, 0.0, 0.0, 1.5725685238360132, 1.610684962934113],
-       [1.0, 0.0, 0.0, 0.5749457541236843, 0.41758499039032565],
-       [0.0, 1.0, 0.0, -1.3677933237371669, -1.3720649684253552],
-       [1.0, 0.0, 0.0, -0.10763824620580391, -0.17896499588156797],
-       [0.0, 1.0, 0.0, 0.41742636943226397, 0.41758499039032565],
-       [0.0, 0.0, 1.0, 0.3124134463046504, 0.41758499039032565],
-       [0.0, 1.0, 0.0, -2.0241240932847515, -1.968614954697249],
-       [0.0, 0.0, 1.0, 0.9424909850703318, 1.0141349766622192]],
+<pre><code>array([[0.0, 1.0, 0.0, -0.6199306919491117, -0.6470588235294114],
+       [1.0, 0.0, 0.0, 1.695163178400268, 1.7058823529411762],
+       [0.0, 0.0, 1.0, 0.048874203929598015, -0.05882352941176448],
+       [0.0, 1.0, 0.0, -1.1858425269234045, -1.2352941176470584],
+       [0.0, 1.0, 0.0, -1.82892415757601, -1.8235294117647052],
+       [0.0, 0.0, 1.0, 0.46044644754726555, 0.5294117647058825],
+       [1.0, 0.0, 0.0, -0.31125150923586103, -0.05882352941176448],
+       [0.0, 0.0, 1.0, 1.0778048129737667, 1.1176470588235294],
+       [1.0, 0.0, 0.0, 0.7176790998083077, 0.5294117647058825],
+       [0.0, 1.0, 0.0, -0.05401885697481886, -0.05882352941176448]],
       dtype=object)</code></pre>
 </div>
 </div>
 <p>train set과 test set을 나눈 뒤 연속형 변수에 대해 feature scailing을 진행해줍니다.</p>
-<div id="8dbb91e6" class="cell" data-execution_count="7">
+<div id="38a3376c" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.linear_model <span class="im" style="color: #00769E;
@@ -2816,7 +3044,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <p>모델을 학습시킵니다.</p>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">1</h2>
-<div id="0485be34" class="cell" data-execution_count="8">
+<div id="12b4baf0" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">target <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> ct.transform([[<span class="st" style="color: #20794D;
@@ -2840,13 +3068,13 @@ font-style: inherit;">=</span> regressor.predict(target)</span>
 background-color: null;
 font-style: inherit;">print</span>(y_pred)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[35939.18495298]</code></pre>
+<pre><code>[36216.12684278]</code></pre>
 </div>
 </div>
 </section>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1">2</h2>
-<div id="1551d79f" class="cell" data-execution_count="9">
+<div id="61989431" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">target <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> ct.transform([[<span class="st" style="color: #20794D;
@@ -2870,18 +3098,18 @@ font-style: inherit;">=</span> regressor.predict(target)</span>
 background-color: null;
 font-style: inherit;">print</span>(y_pred)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14181.12452478]</code></pre>
+<pre><code>[11152.07829935]</code></pre>
 </div>
 </div>
 </section>
 <section id="section-2" class="level2">
 <h2 class="anchored" data-anchor-id="section-2">3</h2>
-<div id="2d91c736" class="cell" data-execution_count="10">
+<div id="76cd0041" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(regressor.score(X_test, y_test))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.639714372718696</code></pre>
+<pre><code>0.8409834346492212</code></pre>
 </div>
 </div>
 
@@ -3025,26 +3253,6 @@ font-style: inherit;">print</span>(regressor.score(X_test, y_test))</span></code
   <pubDate>Wed, 26 Mar 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>The important views of the Airflow UI</title>
-  <link>https://cryscham123.github.io/posts/02_areas/air_flow/notes/01.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="the-dags-view" class="level2">
-<h2 class="anchored" data-anchor-id="the-dags-view">The DAGs View</h2>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>Air flow</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/air_flow/notes/01.html</guid>
-  <pubDate>Wed, 26 Mar 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
   <title>제품 설계 기법 및 기업 프로세스 유형</title>
   <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/04.html</link>
   <description><![CDATA[ 
@@ -3160,7 +3368,7 @@ font-style: inherit;">print</span>(regressor.score(X_test, y_test))</span></code
 
 
 <p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<div id="e50bf87b" class="cell" data-execution_count="1">
+<div id="ea21ad9f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> chardet</span>
@@ -3184,7 +3392,7 @@ font-style: inherit;">print</span>(chardet.detect(f.read()))</span></code></pre>
 <pre><code>{'encoding': 'EUC-KR', 'confidence': 0.99, 'language': 'Korean'}</code></pre>
 </div>
 </div>
-<div id="ba81af94" class="cell" data-execution_count="2">
+<div id="cd8ebb07" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -3404,7 +3612,7 @@ font-style: inherit;">"EUC-KR"</span></span>
 </div>
 </div>
 </div>
-<div id="b5d4f8b7" class="cell" data-execution_count="3">
+<div id="0c1963b5" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">df <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
@@ -3582,7 +3790,7 @@ font-style: inherit;">"_data/class/vote.csv"</span>)</span>
 </div>
 </div>
 </div>
-<div id="66c574e2" class="cell" data-execution_count="4">
+<div id="8429638d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> df.iloc[:, :<span class="dv" style="color: #AD0000;
@@ -3736,7 +3944,7 @@ font-style: inherit;">8</span>]</span>
 </div>
 </div>
 </div>
-<div id="1ac8f925" class="cell" data-execution_count="5">
+<div id="46c5cc81" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">y <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
@@ -3758,7 +3966,7 @@ font-style: inherit;">"vote"</span>]</span>
 Name: vote, Length: 211, dtype: int64</code></pre>
 </div>
 </div>
-<div id="c12c2bd3" class="cell" data-execution_count="6">
+<div id="311d08f3" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
@@ -3911,7 +4119,7 @@ font-style: inherit;">"_data/class/Car-selling price.csv"</span>)</span>
 </div>
 </div>
 </div>
-<div id="b960c2b0" class="cell" data-execution_count="7">
+<div id="eef02a28" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">plt.title(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Scatter Diagram"</span>)</span>
@@ -3934,7 +4142,7 @@ font-style: inherit;">"Sell Price($)"</span>])</span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="96b1f004" class="cell" data-execution_count="8">
+<div id="5384c7bc" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
@@ -3962,7 +4170,7 @@ font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.2</span>)</span></code></pre></div>
 </div>
-<div id="af302ca4" class="cell" data-execution_count="9">
+<div id="0deac85d" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
@@ -4007,7 +4215,7 @@ font-style: inherit;">=</span> scaler.transform(data)</span>
        [1.]])</code></pre>
 </div>
 </div>
-<div id="3057c558" class="cell" data-execution_count="10">
+<div id="f1883459" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
@@ -4030,7 +4238,7 @@ font-style: inherit;">=</span> scaler.transform(data)</span>
        [1.  ]])</code></pre>
 </div>
 </div>
-<div id="0c7f0a8f" class="cell" data-execution_count="11">
+<div id="8deacbb8" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -4085,7 +4293,7 @@ font-style: inherit;">=</span> scaler.fit_transform(data.T).T</span>
        [0.67419986, 0.63245553]])</code></pre>
 </div>
 </div>
-<div id="aefa7af0" class="cell" data-execution_count="12">
+<div id="00037616" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
@@ -4109,7 +4317,7 @@ font-style: inherit;">1</span>))</span>
        [1.  , 1.  ]])</code></pre>
 </div>
 </div>
-<div id="b2fc085b" class="cell" data-execution_count="13">
+<div id="b3f95cc0" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1">data <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
@@ -4270,7 +4478,7 @@ font-style: inherit;">'columns'</span>)</span>
 </div>
 </div>
 </div>
-<div id="2eb8a431" class="cell" data-execution_count="14">
+<div id="6c3acc55" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1">final <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> merged.drop([<span class="st" style="color: #20794D;
@@ -4395,7 +4603,7 @@ font-style: inherit;">'columns'</span>)</span>
 </div>
 </div>
 </div>
-<div id="9bae2eb2" class="cell" data-execution_count="15">
+<div id="94d8fbde" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1">X <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> final.drop(<span class="st" style="color: #20794D;
@@ -4504,7 +4712,7 @@ font-style: inherit;">'columns'</span>)</span>
 </div>
 </div>
 </div>
-<div id="98e242df" class="cell" data-execution_count="16">
+<div id="6678a247" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">y <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> final.price</span>
@@ -4526,7 +4734,7 @@ font-style: inherit;">=</span> final.price</span>
 Name: price, dtype: int64</code></pre>
 </div>
 </div>
-<div id="a7550da8" class="cell" data-execution_count="17">
+<div id="067a6f13" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.linear_model <span class="im" style="color: #00769E;
@@ -4553,13 +4761,13 @@ X does not have valid feature names, but LinearRegression was fitted with featur
 <pre><code>array([590775.63964739])</code></pre>
 </div>
 </div>
-<div id="6eab57e2" class="cell" data-execution_count="18">
+<div id="7796f570" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1">model.score(X, y)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>0.9573929037221873</code></pre>
 </div>
 </div>
-<div id="7e41e244" class="cell" data-execution_count="19">
+<div id="4ac58b85" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
@@ -4767,15 +4975,6 @@ font-style: inherit;">=</span> le.fit_transform(dfle.town)</span>
 </item>
 <item>
   <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>보고서</category>
-  <category>데이터 마이닝</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</guid>
-  <pubDate>Tue, 25 Mar 2025 00:42:44 GMT</pubDate>
-</item>
-<item>
-  <title></title>
   <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/06.pdf</link>
   <description><![CDATA[ undefined ]]></description>
   <category>보고서</category>
@@ -4792,7 +4991,7 @@ font-style: inherit;">=</span> le.fit_transform(dfle.town)</span>
 
 
 <p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<div id="9077e28a" class="cell" data-execution_count="1">
+<div id="478dad29" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -4883,7 +5082,7 @@ font-style: inherit;">'d'</span>])</span>
 </div>
 </div>
 </div>
-<div id="ebffa100" class="cell" data-execution_count="2">
+<div id="0588af7e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df.<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">sum</span>(axis<span class="op" style="color: #5E5E5E;
@@ -4897,7 +5096,7 @@ two   -5.80
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="b02e3e9b" class="cell" data-execution_count="3">
+<div id="1b1bc79b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">df.<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">sum</span>(axis<span class="op" style="color: #5E5E5E;
@@ -4913,7 +5112,7 @@ d   -0.55
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="60b6b998" class="cell" data-execution_count="4">
+<div id="080d79db" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">df.mean(axis<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
@@ -4931,7 +5130,7 @@ d   -0.275
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="2a7e8523" class="cell" data-execution_count="5">
+<div id="3bba8348" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">df[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'one'</span>].<span class="bu" style="color: null;
@@ -4941,7 +5140,7 @@ font-style: inherit;">sum</span>()</span></code></pre></div>
 <pre><code>9.25</code></pre>
 </div>
 </div>
-<div id="95520bde" class="cell" data-execution_count="6">
+<div id="9034fe93" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">df.loc[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'b'</span>].<span class="bu" style="color: null;
@@ -4955,7 +5154,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 <pre><code>2.6</code></pre>
 </div>
 </div>
-<div id="885d771c" class="cell" data-execution_count="7">
+<div id="5506ede8" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">df2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame(np.random.randn(<span class="dv" style="color: #AD0000;
@@ -4999,45 +5198,45 @@ font-style: inherit;">6</span>))</span>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-03-24</td>
-<td>-0.008816</td>
-<td>-0.036150</td>
-<td>0.407986</td>
-<td>1.521193</td>
+<td>-2.067944</td>
+<td>0.005654</td>
+<td>-0.247531</td>
+<td>0.415550</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-03-25</td>
-<td>1.199485</td>
-<td>0.331736</td>
-<td>0.015044</td>
-<td>0.614092</td>
+<td>-0.060965</td>
+<td>2.243269</td>
+<td>0.130425</td>
+<td>-1.306482</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-03-26</td>
-<td>-0.030811</td>
-<td>-0.584271</td>
-<td>1.169733</td>
-<td>1.181741</td>
+<td>0.694764</td>
+<td>-1.074375</td>
+<td>1.032794</td>
+<td>-0.562044</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-03-27</td>
-<td>1.171625</td>
-<td>-0.997487</td>
-<td>2.470017</td>
-<td>-1.169988</td>
+<td>0.095192</td>
+<td>-0.074051</td>
+<td>-0.285623</td>
+<td>0.045712</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-03-28</td>
-<td>1.851051</td>
-<td>-0.028082</td>
-<td>0.664495</td>
-<td>-0.711981</td>
+<td>-2.189070</td>
+<td>0.637167</td>
+<td>1.609518</td>
+<td>0.632818</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-03-29</td>
-<td>-0.130271</td>
-<td>-2.053978</td>
-<td>0.936937</td>
-<td>1.744921</td>
+<td>-0.941798</td>
+<td>-0.413012</td>
+<td>-0.463396</td>
+<td>0.260044</td>
 </tr>
 </tbody>
 </table>
@@ -5045,27 +5244,27 @@ font-style: inherit;">6</span>))</span>
 </div>
 </div>
 </div>
-<div id="2d9754b7" class="cell" data-execution_count="8">
+<div id="56c76b77" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">df2[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'A'</span>].corr(df2[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'B'</span>])</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>0.47674450667111984</code></pre>
+<pre><code>-0.13561373135141022</code></pre>
 </div>
 </div>
-<div id="2416c5cb" class="cell" data-execution_count="9">
+<div id="1b6721e9" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">df2[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'B'</span>].cov(df2[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'C'</span>])</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>-0.38407749606448155</code></pre>
+<pre><code>0.005500285499809432</code></pre>
 </div>
 </div>
-<div id="2ab37e2e" class="cell" data-execution_count="10">
+<div id="f558f429" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">df2[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'A'</span>].isin([<span class="st" style="color: #20794D;
@@ -5257,7 +5456,7 @@ Freq: D, Name: A, dtype: bool</code></pre>
 
 
 <p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<div id="35203d31" class="cell" data-execution_count="1">
+<div id="a4784658" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -5310,7 +5509,7 @@ font-style: inherit;">33</span>]</span>
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame(data)</span></code></pre></div>
 </div>
-<div id="29898919" class="cell" data-execution_count="2">
+<div id="f6729016" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df.loc[(df[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'age'</span>] <span class="op" style="color: #5E5E5E;
@@ -5334,7 +5533,7 @@ font-style: inherit;">'location'</span>]</span></code></pre></div>
 Name: location, dtype: object</code></pre>
 </div>
 </div>
-<div id="116cff61" class="cell" data-execution_count="3">
+<div id="f37b3fda" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">df <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame(np.random.randn(<span class="dv" style="color: #AD0000;
@@ -5360,45 +5559,45 @@ font-style: inherit;">4</span>))</span>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>1.704735</td>
-<td>0.683092</td>
-<td>-0.424073</td>
-<td>-0.628196</td>
+<td>1.204059</td>
+<td>-0.335996</td>
+<td>-0.818220</td>
+<td>0.861070</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>-0.093018</td>
-<td>-0.359163</td>
-<td>-1.055367</td>
-<td>-1.170232</td>
+<td>0.868450</td>
+<td>-0.164946</td>
+<td>0.917664</td>
+<td>-1.945286</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>-0.407244</td>
-<td>-0.531147</td>
-<td>1.930247</td>
-<td>-0.622153</td>
+<td>0.291923</td>
+<td>-0.328159</td>
+<td>1.166051</td>
+<td>-0.479075</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>-1.821026</td>
-<td>2.260635</td>
-<td>0.298555</td>
-<td>0.198113</td>
+<td>0.766692</td>
+<td>0.123853</td>
+<td>0.487815</td>
+<td>-0.161050</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>-1.179875</td>
-<td>0.306917</td>
-<td>-0.000765</td>
-<td>-0.846165</td>
+<td>-1.695214</td>
+<td>-0.001611</td>
+<td>-0.631717</td>
+<td>-0.148206</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>2.658130</td>
-<td>-0.874704</td>
-<td>0.250519</td>
-<td>-0.071677</td>
+<td>-0.354958</td>
+<td>0.263346</td>
+<td>-0.822940</td>
+<td>0.523039</td>
 </tr>
 </tbody>
 </table>
@@ -5406,7 +5605,7 @@ font-style: inherit;">4</span>))</span>
 </div>
 </div>
 </div>
-<div id="4335ece9" class="cell" data-execution_count="4">
+<div id="7ea61d8a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df.columns <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
@@ -5445,45 +5644,45 @@ font-style: inherit;">6</span>)</span>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.704735</td>
-<td>0.683092</td>
-<td>-0.424073</td>
-<td>-0.628196</td>
+<td>1.204059</td>
+<td>-0.335996</td>
+<td>-0.818220</td>
+<td>0.861070</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-02</td>
-<td>-0.093018</td>
-<td>-0.359163</td>
-<td>-1.055367</td>
-<td>-1.170232</td>
+<td>0.868450</td>
+<td>-0.164946</td>
+<td>0.917664</td>
+<td>-1.945286</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>-0.407244</td>
-<td>-0.531147</td>
-<td>1.930247</td>
-<td>-0.622153</td>
+<td>0.291923</td>
+<td>-0.328159</td>
+<td>1.166051</td>
+<td>-0.479075</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-04</td>
-<td>-1.821026</td>
-<td>2.260635</td>
-<td>0.298555</td>
-<td>0.198113</td>
+<td>0.766692</td>
+<td>0.123853</td>
+<td>0.487815</td>
+<td>-0.161050</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.179875</td>
-<td>0.306917</td>
-<td>-0.000765</td>
-<td>-0.846165</td>
+<td>-1.695214</td>
+<td>-0.001611</td>
+<td>-0.631717</td>
+<td>-0.148206</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>2.658130</td>
-<td>-0.874704</td>
-<td>0.250519</td>
-<td>-0.071677</td>
+<td>-0.354958</td>
+<td>0.263346</td>
+<td>-0.822940</td>
+<td>0.523039</td>
 </tr>
 </tbody>
 </table>
@@ -5491,7 +5690,7 @@ font-style: inherit;">6</span>)</span>
 </div>
 </div>
 </div>
-<div id="a734924f" class="cell" data-execution_count="5">
+<div id="56fd0558" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">df[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'F'</span>] <span class="op" style="color: #5E5E5E;
@@ -5524,50 +5723,50 @@ font-style: inherit;">7.0</span>]</span>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.704735</td>
-<td>0.683092</td>
-<td>-0.424073</td>
-<td>-0.628196</td>
+<td>1.204059</td>
+<td>-0.335996</td>
+<td>-0.818220</td>
+<td>0.861070</td>
 <td>1.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-02</td>
-<td>-0.093018</td>
-<td>-0.359163</td>
-<td>-1.055367</td>
-<td>-1.170232</td>
+<td>0.868450</td>
+<td>-0.164946</td>
+<td>0.917664</td>
+<td>-1.945286</td>
 <td>NaN</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>-0.407244</td>
-<td>-0.531147</td>
-<td>1.930247</td>
-<td>-0.622153</td>
+<td>0.291923</td>
+<td>-0.328159</td>
+<td>1.166051</td>
+<td>-0.479075</td>
 <td>3.5</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-04</td>
-<td>-1.821026</td>
-<td>2.260635</td>
-<td>0.298555</td>
-<td>0.198113</td>
+<td>0.766692</td>
+<td>0.123853</td>
+<td>0.487815</td>
+<td>-0.161050</td>
 <td>6.1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.179875</td>
-<td>0.306917</td>
-<td>-0.000765</td>
-<td>-0.846165</td>
+<td>-1.695214</td>
+<td>-0.001611</td>
+<td>-0.631717</td>
+<td>-0.148206</td>
 <td>NaN</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>2.658130</td>
-<td>-0.874704</td>
-<td>0.250519</td>
-<td>-0.071677</td>
+<td>-0.354958</td>
+<td>0.263346</td>
+<td>-0.822940</td>
+<td>0.523039</td>
 <td>7.0</td>
 </tr>
 </tbody>
@@ -5576,7 +5775,7 @@ font-style: inherit;">7.0</span>]</span>
 </div>
 </div>
 </div>
-<div id="7d86d67a" class="cell" data-execution_count="6">
+<div id="9e58c3f8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">df.dropna()</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
@@ -5596,34 +5795,34 @@ font-style: inherit;">7.0</span>]</span>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.704735</td>
-<td>0.683092</td>
-<td>-0.424073</td>
-<td>-0.628196</td>
+<td>1.204059</td>
+<td>-0.335996</td>
+<td>-0.818220</td>
+<td>0.861070</td>
 <td>1.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>-0.407244</td>
-<td>-0.531147</td>
-<td>1.930247</td>
-<td>-0.622153</td>
+<td>0.291923</td>
+<td>-0.328159</td>
+<td>1.166051</td>
+<td>-0.479075</td>
 <td>3.5</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-04</td>
-<td>-1.821026</td>
-<td>2.260635</td>
-<td>0.298555</td>
-<td>0.198113</td>
+<td>0.766692</td>
+<td>0.123853</td>
+<td>0.487815</td>
+<td>-0.161050</td>
 <td>6.1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>2.658130</td>
-<td>-0.874704</td>
-<td>0.250519</td>
-<td>-0.071677</td>
+<td>-0.354958</td>
+<td>0.263346</td>
+<td>-0.822940</td>
+<td>0.523039</td>
 <td>7.0</td>
 </tr>
 </tbody>
@@ -5632,7 +5831,7 @@ font-style: inherit;">7.0</span>]</span>
 </div>
 </div>
 </div>
-<div id="584fb5ed" class="cell" data-execution_count="7">
+<div id="2b02ccf2" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">df.dropna(axis<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
@@ -5659,45 +5858,45 @@ font-style: inherit;">'2025-01-02'</span>])</span></code></pre></div>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.704735</td>
-<td>0.683092</td>
-<td>-0.424073</td>
-<td>-0.628196</td>
+<td>1.204059</td>
+<td>-0.335996</td>
+<td>-0.818220</td>
+<td>0.861070</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-02</td>
-<td>-0.093018</td>
-<td>-0.359163</td>
-<td>-1.055367</td>
-<td>-1.170232</td>
+<td>0.868450</td>
+<td>-0.164946</td>
+<td>0.917664</td>
+<td>-1.945286</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>-0.407244</td>
-<td>-0.531147</td>
-<td>1.930247</td>
-<td>-0.622153</td>
+<td>0.291923</td>
+<td>-0.328159</td>
+<td>1.166051</td>
+<td>-0.479075</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-04</td>
-<td>-1.821026</td>
-<td>2.260635</td>
-<td>0.298555</td>
-<td>0.198113</td>
+<td>0.766692</td>
+<td>0.123853</td>
+<td>0.487815</td>
+<td>-0.161050</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.179875</td>
-<td>0.306917</td>
-<td>-0.000765</td>
-<td>-0.846165</td>
+<td>-1.695214</td>
+<td>-0.001611</td>
+<td>-0.631717</td>
+<td>-0.148206</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>2.658130</td>
-<td>-0.874704</td>
-<td>0.250519</td>
-<td>-0.071677</td>
+<td>-0.354958</td>
+<td>0.263346</td>
+<td>-0.822940</td>
+<td>0.523039</td>
 </tr>
 </tbody>
 </table>
@@ -5705,7 +5904,7 @@ font-style: inherit;">'2025-01-02'</span>])</span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="2b6c65bb" class="cell" data-execution_count="8">
+<div id="3369f932" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">df[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'F'</span>].dropna()</span></code></pre></div>
@@ -5717,7 +5916,7 @@ font-style: inherit;">'F'</span>].dropna()</span></code></pre></div>
 Name: F, dtype: float64</code></pre>
 </div>
 </div>
-<div id="8b35c930" class="cell" data-execution_count="9">
+<div id="93965aeb" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">df.loc[df.isnull()[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'F'</span>], :]</span></code></pre></div>
@@ -5739,18 +5938,18 @@ font-style: inherit;">'F'</span>], :]</span></code></pre></div>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-02</td>
-<td>-0.093018</td>
-<td>-0.359163</td>
-<td>-1.055367</td>
-<td>-1.170232</td>
+<td>0.868450</td>
+<td>-0.164946</td>
+<td>0.917664</td>
+<td>-1.945286</td>
 <td>NaN</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.179875</td>
-<td>0.306917</td>
-<td>-0.000765</td>
-<td>-0.846165</td>
+<td>-1.695214</td>
+<td>-0.001611</td>
+<td>-0.631717</td>
+<td>-0.148206</td>
 <td>NaN</td>
 </tr>
 </tbody>
@@ -5759,7 +5958,7 @@ font-style: inherit;">'F'</span>], :]</span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="88fdf727" class="cell" data-execution_count="10">
+<div id="d676baa5" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">df.drop([pd.to_datetime(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'2025-01-02'</span>), pd.to_datetime(<span class="st" style="color: #20794D;
@@ -5783,34 +5982,34 @@ font-style: inherit;">'2025-01-04'</span>)])</span></code></pre></div>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.704735</td>
-<td>0.683092</td>
-<td>-0.424073</td>
-<td>-0.628196</td>
+<td>1.204059</td>
+<td>-0.335996</td>
+<td>-0.818220</td>
+<td>0.861070</td>
 <td>1.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>-0.407244</td>
-<td>-0.531147</td>
-<td>1.930247</td>
-<td>-0.622153</td>
+<td>0.291923</td>
+<td>-0.328159</td>
+<td>1.166051</td>
+<td>-0.479075</td>
 <td>3.5</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.179875</td>
-<td>0.306917</td>
-<td>-0.000765</td>
-<td>-0.846165</td>
+<td>-1.695214</td>
+<td>-0.001611</td>
+<td>-0.631717</td>
+<td>-0.148206</td>
 <td>NaN</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>2.658130</td>
-<td>-0.874704</td>
-<td>0.250519</td>
-<td>-0.071677</td>
+<td>-0.354958</td>
+<td>0.263346</td>
+<td>-0.822940</td>
+<td>0.523039</td>
 <td>7.0</td>
 </tr>
 </tbody>
@@ -5853,7 +6052,7 @@ font-style: inherit;">'2025-01-04'</span>)])</span></code></pre></div>
 <ul>
 <li>계단 함수(step function): 앞서 살펴본 함수</li>
 </ul>
-<div id="51d9674e" class="cell" data-execution_count="1">
+<div id="2fd10247" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -5892,7 +6091,7 @@ font-style: inherit;">2.0</span>])))</span></code></pre></div>
 <pre><code>[0 1 1]</code></pre>
 </div>
 </div>
-<div id="11ab78d7" class="cell" data-execution_count="2">
+<div id="c08ddbe3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
@@ -5933,7 +6132,7 @@ font-style: inherit;">1.1</span>)</span>
 <ul>
 <li>시그모이드 함수: <img src="https://latex.codecogs.com/png.latex?h(x)%20=%20%5Cfrac%7B1%7D%7B1%20+%20%5Cexp(-x)%7D"></li>
 </ul>
-<div id="caff4d0b" class="cell" data-execution_count="3">
+<div id="73e3f68b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -5997,7 +6196,7 @@ font-style: inherit;">1.1</span>)</span>
 </ul></li>
 <li>ReLU 함수: <img src="https://latex.codecogs.com/png.latex?h(x)%20=%20%5Cbegin%7Bcases%7D%20x%20&amp;%20(x%20%3E%200)%20%5C%5C%200%20&amp;%20(x%20%E2%89%A4%200)%20%5Cend%7Bcases%7D"></li>
 </ul>
-<div id="c496a829" class="cell" data-execution_count="4">
+<div id="5672af6a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -6012,7 +6211,7 @@ font-style: inherit;">0</span>, x)</span></code></pre></div>
 <ul>
 <li>SoftMax 함수: <img src="https://latex.codecogs.com/png.latex?y_k%20=%20%5Cfrac%7B%5Cexp(a_k)%7D%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D%20%5Cexp(a_i)%7D"></li>
 </ul>
-<div id="65e09928" class="cell" data-execution_count="5">
+<div id="bd728533" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -6037,7 +6236,7 @@ font-style: inherit;">return</span> y</span></code></pre></div>
 </div>
 <p>softmax 함수는 값이 기하급수적으로 증가하기 때문에 쉽게 overflow가 발생할 수 있음.</p>
 <p>따라서 다음과 같이 개선이 필요함</p>
-<div id="acfe5ecd" class="cell" data-execution_count="6">
+<div id="0b39cb84" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -6074,7 +6273,7 @@ font-style: inherit;">return</span> y</span></code></pre></div>
 <section id="층-신경망-구성" class="level2">
 <h2 class="anchored" data-anchor-id="층-신경망-구성">3층 신경망 구성</h2>
 <p>입력층에서 1층으로 신호 전달</p>
-<div id="c44af988" class="cell" data-execution_count="7">
+<div id="2944fce8" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">X <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.array([<span class="fl" style="color: #AD0000;
@@ -6128,7 +6327,7 @@ font-style: inherit;">print</span>(Z1)</span></code></pre></div>
 </div>
 </div>
 <p>1층에서 2층으로 신호 전달</p>
-<div id="a66f0e41" class="cell" data-execution_count="8">
+<div id="c6141385" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">W2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
@@ -6173,7 +6372,7 @@ font-style: inherit;">print</span>(Z2)</span></code></pre></div>
 </div>
 </div>
 <p>2층에서 출력층으로 신호 전달</p>
-<div id="a95cabe6" class="cell" data-execution_count="9">
+<div id="41d4a956" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -6249,7 +6448,7 @@ font-style: inherit;">=</span> identity_function(A3)</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="퍼셉트론-구현">퍼셉트론 구현</h2>
 <section id="and-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="and-게이트">AND 게이트</h3>
-<div id="ec5c06cf" class="cell" data-execution_count="1">
+<div id="14b3846d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -6278,7 +6477,7 @@ font-style: inherit;">*</span>w2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span> theta)</span></code></pre></div>
 </div>
-<div id="3b40ffa0" class="cell" data-execution_count="2">
+<div id="c8a47281" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(AND(<span class="dv" style="color: #AD0000;
@@ -6321,7 +6520,7 @@ True</code></pre>
 </section>
 <section id="nand-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="nand-게이트">NAND 게이트</h3>
-<div id="c8a43172" class="cell" data-execution_count="3">
+<div id="d9349019" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -6366,7 +6565,7 @@ font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span></code></pre></div>
 </div>
-<div id="3a9e988a" class="cell" data-execution_count="4">
+<div id="ca8ebb2a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -6433,7 +6632,7 @@ font-style: inherit;">0</span>)</span></code></pre></div>
 <p>이와 같이 여러 퍼셉트론을 연결한 형태를 다층 퍼센트론이라고 한다.</p>
 <section id="xor-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="xor-게이트">XOR 게이트</h3>
-<div id="9376459c" class="cell" data-execution_count="5">
+<div id="5afc6fb8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -6449,7 +6648,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> AND(s1, s2)</span></code></pre></div>
 </div>
-<div id="6d8331a5" class="cell" data-execution_count="6">
+<div id="211385bc" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(XOR(<span class="dv" style="color: #AD0000;
@@ -6504,7 +6703,7 @@ False</code></pre>
 
 
 <p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<div id="c66356ec" class="cell" data-execution_count="1">
+<div id="981470d3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -6557,7 +6756,7 @@ font-style: inherit;">33</span>]</span>
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame(data)</span></code></pre></div>
 </div>
-<div id="e34a81e0" class="cell" data-execution_count="2">
+<div id="321f22b1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df.index.name <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
@@ -6619,7 +6818,7 @@ font-style: inherit;">'Info'</span></span>
 </div>
 </div>
 </div>
-<div id="567589ea" class="cell" data-execution_count="3">
+<div id="4a9b0f87" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">df2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame(data, columns<span class="op" style="color: #5E5E5E;
@@ -6696,7 +6895,7 @@ font-style: inherit;">'four'</span>])</span>
 <ul>
 <li>index는 갯수 맞춰야함</li>
 </ul>
-<div id="2253fc4c" class="cell" data-execution_count="4">
+<div id="2cba2d4a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># df2['yo'] = [10, 20]</span></span>
@@ -6760,7 +6959,7 @@ font-style: inherit;">10</span></span>
 </div>
 </div>
 </div>
-<div id="4c46ff83" class="cell" data-execution_count="5">
+<div id="afd5a1dd" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df2.describe()</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -6821,7 +7020,7 @@ font-style: inherit;">10</span></span>
 </div>
 </div>
 </div>
-<div id="61c43b28" class="cell" data-execution_count="6">
+<div id="dd1eb865" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">df2[[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'name'</span>, <span class="st" style="color: #20794D;
@@ -6866,7 +7065,7 @@ font-style: inherit;">'yo'</span>]]</span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="01f3e7d8" class="cell" data-execution_count="7">
+<div id="35e2f834" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">df2[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'penalty'</span>] <span class="op" style="color: #5E5E5E;
@@ -6935,7 +7134,7 @@ font-style: inherit;">0.4</span>]</span>
 </div>
 </div>
 </div>
-<div id="36cbf94d" class="cell" data-execution_count="8">
+<div id="84168a40" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">df2[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'zeros'</span>] <span class="op" style="color: #5E5E5E;
@@ -7003,7 +7202,7 @@ font-style: inherit;">4</span>)</span>
 </div>
 </div>
 </div>
-<div id="cc7a824a" class="cell" data-execution_count="9">
+<div id="223d4381" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -7065,7 +7264,7 @@ font-style: inherit;">'zeros'</span>]</span>
 </div>
 </div>
 </div>
-<div id="bec41bcf" class="cell" data-execution_count="10">
+<div id="9a0caf04" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">df2[:<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>]</span></code></pre></div>
@@ -7115,7 +7314,7 @@ font-style: inherit;">3</span>]</span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="cdedd92f" class="cell" data-execution_count="11">
+<div id="161d6af7" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">df2.loc[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'one'</span>:<span class="st" style="color: #20794D;
@@ -7130,7 +7329,7 @@ three    Peter
 Name: name, dtype: object</code></pre>
 </div>
 </div>
-<div id="f47ca54d" class="cell" data-execution_count="12">
+<div id="6cd54ca0" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">df2.iloc[[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;

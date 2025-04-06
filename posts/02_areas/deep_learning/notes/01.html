@@ -869,7 +869,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The important views of the Airflow UI</span></a>
+ <span class="menu-text">Coding pipeline</span></a>
   </div>
 </li>
       </ul>
@@ -1810,7 +1810,7 @@ h(x) = \begin{cases} 0 &amp; (x ≤ 0) \\ 1 &amp; (x &gt; 0) \end{cases}
 <ul>
 <li>계단 함수(step function): 앞서 살펴본 함수</li>
 </ul>
-<div id="51d9674e" class="cell" data-execution_count="1">
+<div id="2fd10247" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step_function(x):</span>
@@ -1821,7 +1821,7 @@ h(x) = \begin{cases} 0 &amp; (x ≤ 0) \\ 1 &amp; (x &gt; 0) \end{cases}
 <pre><code>[0 1 1]</code></pre>
 </div>
 </div>
-<div id="11ab78d7" class="cell" data-execution_count="2">
+<div id="c08ddbe3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="op">-</span><span class="fl">5.0</span>, <span class="fl">5.0</span>, <span class="fl">0.1</span>)</span>
@@ -1840,7 +1840,7 @@ h(x) = \begin{cases} 0 &amp; (x ≤ 0) \\ 1 &amp; (x &gt; 0) \end{cases}
 <ul>
 <li>시그모이드 함수: <span class="math inline">\(h(x) = \frac{1}{1 + \exp(-x)}\)</span></li>
 </ul>
-<div id="caff4d0b" class="cell" data-execution_count="3">
+<div id="73e3f68b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sigmoid(x):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>x))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1870,14 +1870,14 @@ h(x) = \begin{cases} 0 &amp; (x ≤ 0) \\ 1 &amp; (x &gt; 0) \end{cases}
 </ul></li>
 <li>ReLU 함수: <span class="math inline">\(h(x) = \begin{cases} x &amp; (x &gt; 0) \\ 0 &amp; (x ≤ 0) \end{cases}\)</span></li>
 </ul>
-<div id="c496a829" class="cell" data-execution_count="4">
+<div id="5672af6a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> relu(x):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.maximum(<span class="dv">0</span>, x)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>SoftMax 함수: <span class="math inline">\(y_k = \frac{\exp(a_k)}{\sum_{i=1}^{n} \exp(a_i)}\)</span></li>
 </ul>
-<div id="65e09928" class="cell" data-execution_count="5">
+<div id="bd728533" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(a):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    exp_a <span class="op">=</span> np.exp(a)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    sum_exp_a <span class="op">=</span> np.<span class="bu">sum</span>(exp_a)</span>
@@ -1886,7 +1886,7 @@ h(x) = \begin{cases} 0 &amp; (x ≤ 0) \\ 1 &amp; (x &gt; 0) \end{cases}
 </div>
 <p>softmax 함수는 값이 기하급수적으로 증가하기 때문에 쉽게 overflow가 발생할 수 있음.</p>
 <p>따라서 다음과 같이 개선이 필요함</p>
-<div id="acfe5ecd" class="cell" data-execution_count="6">
+<div id="0b39cb84" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(a):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> np.<span class="bu">max</span>(a)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    exp_a <span class="op">=</span> np.exp(a <span class="op">-</span> c)</span>
@@ -1901,7 +1901,7 @@ h(x) = \begin{cases} 0 &amp; (x ≤ 0) \\ 1 &amp; (x &gt; 0) \end{cases}
 <section id="층-신경망-구성" class="level2">
 <h2 class="anchored" data-anchor-id="층-신경망-구성">3층 신경망 구성</h2>
 <p>입력층에서 1층으로 신호 전달</p>
-<div id="c44af988" class="cell" data-execution_count="7">
+<div id="2944fce8" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array([<span class="fl">1.0</span>, <span class="fl">0.5</span>])</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>W1 <span class="op">=</span> np.array([[<span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span>], [<span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>]])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>B1 <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>])</span>
@@ -1917,7 +1917,7 @@ h(x) = \begin{cases} 0 &amp; (x ≤ 0) \\ 1 &amp; (x &gt; 0) \end{cases}
 </div>
 </div>
 <p>1층에서 2층으로 신호 전달</p>
-<div id="a66f0e41" class="cell" data-execution_count="8">
+<div id="c6141385" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>W2 <span class="op">=</span> np.array([[<span class="fl">0.1</span>, <span class="fl">0.4</span>], [<span class="fl">0.2</span>, <span class="fl">0.5</span>], [<span class="fl">0.3</span>, <span class="fl">0.6</span>]])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>B2 <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.2</span>])</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1932,7 +1932,7 @@ h(x) = \begin{cases} 0 &amp; (x ≤ 0) \\ 1 &amp; (x &gt; 0) \end{cases}
 </div>
 </div>
 <p>2층에서 출력층으로 신호 전달</p>
-<div id="a95cabe6" class="cell" data-execution_count="9">
+<div id="41d4a956" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> identity_function(x):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>

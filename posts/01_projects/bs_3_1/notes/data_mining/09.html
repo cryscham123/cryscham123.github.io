@@ -843,7 +843,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The important views of the Airflow UI</span></a>
+ <span class="menu-text">Coding pipeline</span></a>
   </div>
 </li>
       </ul>
@@ -1762,7 +1762,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </header>
 
 
-<div id="4aba434f" class="cell" data-execution_count="1">
+<div id="5c6c0723" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1887,7 +1887,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </div>
 <p>scatter plot을 이용해 선형성을 확인하겠습니다.</p>
 <p>연속형 변수인 <strong>Mileage</strong>와 <strong>Sell Price($)</strong>에 대해 확인하겠습니다.</p>
-<div id="498424b7" class="cell" data-execution_count="2">
+<div id="66c9b208" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(dataset.iloc[:, <span class="dv">1</span>], dataset.iloc[:, <span class="dv">2</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
@@ -1911,12 +1911,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </div>
 <p>선형성이 보입니다.<br>
 두 변수 모두 linear regression을 적용할 수 있어 보입니다.</p>
-<div id="754c5d7d" class="cell" data-execution_count="3">
+<div id="902dce37" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> dataset.drop(<span class="st">'Sell Price($)'</span>, axis<span class="op">=</span><span class="dv">1</span>).values</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dataset.iloc[:, <span class="dv">2</span>].values</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>독립 변수와 종속 변수를 저장해줍니다.</p>
-<div id="6c6fc087" class="cell" data-execution_count="4">
+<div id="25682816" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1924,25 +1924,25 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array(ct.fit_transform(x))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>범주형 변수 <strong>Car Model</strong>에 대해 <strong>one hot encoding</strong>을 적용하였습니다.</p>
-<div id="4349a17a" class="cell" data-execution_count="5">
+<div id="3567fea8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x, y, test_size<span class="op">=</span><span class="fl">0.2</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>X_train</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>array([[0.0, 0.0, 1.0, 59000, 5],
-       [0.0, 1.0, 0.0, 57000, 5],
+<pre><code>array([[0.0, 1.0, 0.0, 46000, 4],
        [1.0, 0.0, 0.0, 91000, 8],
-       [1.0, 0.0, 0.0, 72000, 6],
+       [0.0, 0.0, 1.0, 59000, 5],
        [0.0, 1.0, 0.0, 35000, 3],
-       [1.0, 0.0, 0.0, 59000, 5],
-       [0.0, 1.0, 0.0, 69000, 6],
-       [0.0, 0.0, 1.0, 67000, 6],
        [0.0, 1.0, 0.0, 22500, 2],
-       [0.0, 0.0, 1.0, 79000, 7]], dtype=object)</code></pre>
+       [0.0, 0.0, 1.0, 67000, 6],
+       [1.0, 0.0, 0.0, 52000, 5],
+       [0.0, 0.0, 1.0, 79000, 7],
+       [1.0, 0.0, 0.0, 72000, 6],
+       [0.0, 1.0, 0.0, 57000, 5]], dtype=object)</code></pre>
 </div>
 </div>
-<div id="aec992ab" class="cell" data-execution_count="6">
+<div id="e0465df1" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> StandardScaler()</span>
@@ -1950,21 +1950,21 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>X_test[:, <span class="dv">3</span>:] <span class="op">=</span> sc.transform(X_test[:, <span class="dv">3</span>:])</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>X_train</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>array([[0.0, 0.0, 1.0, -0.10763824620580391, -0.17896499588156797],
-       [0.0, 1.0, 0.0, -0.2126511693334175, -0.17896499588156797],
-       [1.0, 0.0, 0.0, 1.5725685238360132, 1.610684962934113],
-       [1.0, 0.0, 0.0, 0.5749457541236843, 0.41758499039032565],
-       [0.0, 1.0, 0.0, -1.3677933237371669, -1.3720649684253552],
-       [1.0, 0.0, 0.0, -0.10763824620580391, -0.17896499588156797],
-       [0.0, 1.0, 0.0, 0.41742636943226397, 0.41758499039032565],
-       [0.0, 0.0, 1.0, 0.3124134463046504, 0.41758499039032565],
-       [0.0, 1.0, 0.0, -2.0241240932847515, -1.968614954697249],
-       [0.0, 0.0, 1.0, 0.9424909850703318, 1.0141349766622192]],
+<pre><code>array([[0.0, 1.0, 0.0, -0.6199306919491117, -0.6470588235294114],
+       [1.0, 0.0, 0.0, 1.695163178400268, 1.7058823529411762],
+       [0.0, 0.0, 1.0, 0.048874203929598015, -0.05882352941176448],
+       [0.0, 1.0, 0.0, -1.1858425269234045, -1.2352941176470584],
+       [0.0, 1.0, 0.0, -1.82892415757601, -1.8235294117647052],
+       [0.0, 0.0, 1.0, 0.46044644754726555, 0.5294117647058825],
+       [1.0, 0.0, 0.0, -0.31125150923586103, -0.05882352941176448],
+       [0.0, 0.0, 1.0, 1.0778048129737667, 1.1176470588235294],
+       [1.0, 0.0, 0.0, 0.7176790998083077, 0.5294117647058825],
+       [0.0, 1.0, 0.0, -0.05401885697481886, -0.05882352941176448]],
       dtype=object)</code></pre>
 </div>
 </div>
 <p>train set과 test set을 나눈 뒤 연속형 변수에 대해 feature scailing을 진행해줍니다.</p>
-<div id="8dbb91e6" class="cell" data-execution_count="7">
+<div id="38a3376c" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>regressor <span class="op">=</span> LinearRegression()</span>
@@ -2380,34 +2380,34 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <p>모델을 학습시킵니다.</p>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">1</h2>
-<div id="0485be34" class="cell" data-execution_count="8">
+<div id="12b4baf0" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> ct.transform([[<span class="st">'Mercedez Benz C class'</span>, <span class="dv">45000</span>, <span class="dv">4</span>]])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>target[:, <span class="dv">3</span>:] <span class="op">=</span> sc.transform(target[:, <span class="dv">3</span>:])</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> regressor.predict(target)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_pred)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[35939.18495298]</code></pre>
+<pre><code>[36216.12684278]</code></pre>
 </div>
 </div>
 </section>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1">2</h2>
-<div id="1551d79f" class="cell" data-execution_count="9">
+<div id="61989431" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> ct.transform([[<span class="st">'BMW X5'</span>, <span class="dv">86000</span>, <span class="dv">7</span>]])</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>target[:, <span class="dv">3</span>:] <span class="op">=</span> sc.transform(target[:, <span class="dv">3</span>:])</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> regressor.predict(target)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_pred)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14181.12452478]</code></pre>
+<pre><code>[11152.07829935]</code></pre>
 </div>
 </div>
 </section>
 <section id="section-2" class="level2">
 <h2 class="anchored" data-anchor-id="section-2">3</h2>
-<div id="2d91c736" class="cell" data-execution_count="10">
+<div id="76cd0041" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(regressor.score(X_test, y_test))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.639714372718696</code></pre>
+<pre><code>0.8409834346492212</code></pre>
 </div>
 </div>
 
