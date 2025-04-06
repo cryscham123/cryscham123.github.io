@@ -1,0 +1,92 @@
+---
+title: "data preprocessing"
+date: 2025-02-26
+categories: ["machine learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## Load Library and data
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+dataset = pd.read_csv('_data/00-data.csv')
+x = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+```
+
+```{python}
+x
+```
+
+```{python}
+y
+```
+
+## Taking care of Missing data
+
+1. delete
+1. replace
+
+```{python}
+from sklearn.impute import SimpleImputer
+
+imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
+imputer.fit(x[:, 1:3])
+x[:, 1:3] = imputer.transform(x[:, 1:3])
+print(x)
+```
+
+## Encoding Cagegorical data
+
+- 단순히 categorical 변수를 1, 2, 3으로 변형하면 순서가 고려된 것으로 간주될 수 있다.
+- 그래서 [0, 0, 1], [1, 0, 1] 이런 식으로 one hot encoding을 진행한다.
+
+```{python}
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+
+ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [0])], remainder='passthrough')
+x = np.array(ct.fit_transform(x))
+print(x)
+```
+
+```{python}
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+y = le.fit_transform(y)
+print(y)
+```
+
+## Split dataset into training set and test set
+
+- feature scaling 이전에 진행되어야함. (test set은 모델이 모르는 정보가 되야하기 때문)
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+```
+
+## feature scaling
+
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+
+sc = StandardScaler()
+X_train[:, 3:] = sc.fit_transform(X_train[:, 3:])
+X_test[:, 3:] = sc.transform(X_test[:, 3:])
+```
+
+```{python}
+print(X_train)
+```
+
+```{python}
+print(X_test)
+```

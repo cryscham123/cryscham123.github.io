@@ -1,0 +1,12 @@
+{
+  "hash": "66934a2de363068a5bc7ccf96b0f0438",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"hierarchical clustering\"\ndate: 2025-03-09\ncategories: [\"machine learning\"]\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n## preprocessing\n\n::: {#17eb0d47 .cell execution_count=1}\n``` {.python .cell-code}\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport warnings\n\nwarnings.filterwarnings('ignore')\n\ndataset = pd.read_csv('_data/14.csv')\nx = dataset.iloc[:, [3, 4]].values\n```\n:::\n\n\n## Modeling\n\n::: {#a75e70d2 .cell execution_count=2}\n``` {.python .cell-code}\nimport scipy.cluster.hierarchy as sch\n\ndendogram = sch.dendrogram(sch.linkage(x, method='ward'))\nplt.title('dendogram')\nplt.xlabel('Customers')\nplt.ylabel('Distance')\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![](15_files/figure-html/cell-3-output-1.png){width=595 height=449}\n:::\n:::\n\n\n::: {#79f7d340 .cell execution_count=3}\n``` {.python .cell-code}\nfrom sklearn.cluster import AgglomerativeClustering\n\nhc = AgglomerativeClustering(n_clusters=5, metric='euclidean', linkage='ward')\nyh = hc.fit_predict(x)\n```\n:::\n\n\n## Visualize\n\n::: {#03e98417 .cell execution_count=4}\n``` {.python .cell-code}\nplt.scatter(x[yh == 0, 0], x[yh == 0, 1], c='red', label='Cluster 1')\nplt.scatter(x[yh == 1, 0], x[yh == 1, 1], c='pink', label='Cluster 2')\nplt.scatter(x[yh == 2, 0], x[yh == 2, 1], c='blue', label='Cluster 3')\nplt.scatter(x[yh == 3, 0], x[yh == 3, 1], c='purple', label='Cluster 4')\nplt.scatter(x[yh == 4, 0], x[yh == 4, 1], c='cyan', label='Cluster 5')\nplt.legend()\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![](15_files/figure-html/cell-5-output-1.png){width=575 height=411}\n:::\n:::\n\n\n",
+    "supporting": [
+      "15_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

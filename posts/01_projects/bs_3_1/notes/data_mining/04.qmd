@@ -1,0 +1,60 @@
+---
+title: "pandas"
+date: 2025-03-19
+categories: ["data mining"]
+---
+
+![](/img/human-thumb.jpg){.post-thumbnail}
+
+
+```{python}
+import pandas as pd
+import numpy as np
+
+data = {
+    'name': ['John', 'Anna', 'Peter', 'Linda'],
+    'location': ['New York', 'Paris', 'Berlin', 'London'],
+    'age': [24, 13, 53, 33]
+}
+df = pd.DataFrame(data)
+```
+
+```{python}
+df.loc[(df['age'] > 20) & (df['age'] < 50), 'location']
+```
+
+```{python}
+df = pd.DataFrame(np.random.randn(6, 4))
+df
+```
+
+```{python}
+df.columns = ['A', 'B', 'C', 'D']
+df.index = pd.date_range('20250101', periods=6)
+df
+```
+
+```{python}
+df['F'] = [1.0, np.nan, 3.5, 6.1, np.nan, 7.0]
+df
+```
+
+```{python}
+df.dropna()
+```
+
+```{python}
+df.dropna(axis=1, subset=['2025-01-02'])
+```
+
+```{python}
+df['F'].dropna()
+```
+
+```{python}
+df.loc[df.isnull()['F'], :]
+```
+
+```{python}
+df.drop([pd.to_datetime('2025-01-02'), pd.to_datetime('2025-01-04')])
+```

@@ -1,0 +1,12 @@
+{
+  "hash": "729dc29029e08ef11fedccc03d9ba21d",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Data Transformation\"\ndate: 2025-04-02\ncategories: [\"data mining\"]\n---\n\n\n\n\n![](/img/human-thumb.jpg){.post-thumbnail}\n\n1. concat\n\n- axis=0 row\n- axis=1 column\n\n2. to_csv\n\n## train test split\n\n1. Hold out method: sub sampling\n  - validation data set: 하이퍼파라미터를 튜닝\n  - 층화추출법: stratified sampling\n1. resampling method: Hold out을 여러번 반복. variance 극복 bias 극복 x\n    1. cross validation\n      - k-fold\n      - leave-one-out: \n    1. bootstrap\n\n## data의 특성\n\nvolume\n  - Data size big\n  - Data size small(long data)\nvelocity\nvariety\nveracity(정확성)\nvalue\n\n::: {#e5249bf7 .cell execution_count=1}\n``` {.python .cell-code}\nimport numpy as np\nfrom sklearn.model_selection import LeaveOneOut\nX = np.array([[1, 2], [3, 4], [5, 6]])\ny = np.array(['a', 'b', 'c'])\nloo = LeaveOneOut()\nloo.get_n_splits(X)\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n3\n```\n:::\n:::\n\n\n::: {#fd598cd2 .cell execution_count=2}\n``` {.python .cell-code}\nfrom sklearn.model_selection import KFold\n\nX = np.array([[10, 20], [30, 40], [15, 19], [34, 41], [11, 21], [33, 39]])\ny = np.array([0, 1, 0, 1, 0, 1])\nkf = KFold(n_splits=3)\n\nkf.get_n_splits(X)\nfor train_index, test_index in kf.split(X):\n    print(\"TRAIN:\", train_index, \"TEST:\", test_index)\n    X_train, X_test = X[train_index], X[test_index]\n    y_train, y_test = y[train_index], y[test_index]\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nTRAIN: [2 3 4 5] TEST: [0 1]\nTRAIN: [0 1 4 5] TEST: [2 3]\nTRAIN: [0 1 2 3] TEST: [4 5]\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "10_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

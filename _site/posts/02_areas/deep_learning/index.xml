@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>김형훈의 학습 블로그</title>
+<link>https://cryscham123.github.io/posts/02_areas/deep_learning/</link>
+<atom:link href="https://cryscham123.github.io/posts/02_areas/deep_learning/index.xml" rel="self" type="application/rss+xml"/>
+<description>안녕하세요. 김형훈의 학습 블로그 입니다.</description>
+<image>
+<url>https://cryscham123.github.io/profile.jpg</url>
+<title>김형훈의 학습 블로그</title>
+<link>https://cryscham123.github.io/posts/02_areas/deep_learning/</link>
+</image>
+<generator>quarto-1.5.56</generator>
+<lastBuildDate>Mon, 17 Mar 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>신경망</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/01.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="신경망이란" class="level2">
+<h2 class="anchored" data-anchor-id="신경망이란">신경망이란</h2>
+<ul>
+<li>퍼셉트론에서 가중치를 자동으로 학습하는 방법이다.</li>
+<li>입력층, 은닉층, 출력층으로 구성된다.</li>
+</ul>
+<p>앞에서 살펴본 퍼셉트론 함수를 다시 살펴보자.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ay%20=%20%5Cbegin%7Bcases%7D%200%20&amp;%20(b%20+%20w_1x_1%20+%20w_2x_2%20%E2%89%A4%200)%20%5C%5C%201%20&amp;%20(b%20+%20w_1x_1%20+%20w_2x_2%20%3E%200)%20%5Cend%7Bcases%7D%0A"></p>
+<p>이때, <img src="https://latex.codecogs.com/png.latex?y%20=%20h(b%20+%20w_1x_1%20+%20w_2x_2)">로 표현하면 다음과 같이 표현할 수 있다.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ah(x)%20=%20%5Cbegin%7Bcases%7D%200%20&amp;%20(x%20%E2%89%A4%200)%20%5C%5C%201%20&amp;%20(x%20%3E%200)%20%5Cend%7Bcases%7D%0A"></p>
+<p>이때 <img src="https://latex.codecogs.com/png.latex?h(x)">는 활성화 함수(activation function)라고 한다.</p>
+</section>
+<section id="활성화-함수" class="level2">
+<h2 class="anchored" data-anchor-id="활성화-함수">활성화 함수</h2>
+<ul>
+<li>계단 함수(step function): 앞서 살펴본 함수</li>
+</ul>
+<div id="2fd10247" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> step_function(x):</span>
+<span id="cb1-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> np.array(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>)</span>
+<span id="cb1-5"></span>
+<span id="cb1-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(step_function(np.array([<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>])))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0 1 1]</code></pre>
+</div>
+</div>
+<div id="c08ddbe3" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb3-2"></span>
+<span id="cb3-3">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.arange(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>)</span>
+<span id="cb3-4">y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> step_function(x)</span>
+<span id="cb3-5">plt.plot(x, y)</span>
+<span id="cb3-6">plt.ylim(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>)</span>
+<span id="cb3-7">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/02_areas/deep_learning/notes/01_files/figure-html/cell-3-output-1.png" width="571" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>시그모이드 함수: <img src="https://latex.codecogs.com/png.latex?h(x)%20=%20%5Cfrac%7B1%7D%7B1%20+%20%5Cexp(-x)%7D"></li>
+</ul>
+<div id="73e3f68b" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> sigmoid(x):</span>
+<span id="cb4-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> np.exp(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>x))</span>
+<span id="cb4-3"></span>
+<span id="cb4-4">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.arange(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>)</span>
+<span id="cb4-5">y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sigmoid(x)</span>
+<span id="cb4-6">plt.plot(x, y)</span>
+<span id="cb4-7">plt.ylim(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>)</span>
+<span id="cb4-8">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/02_areas/deep_learning/notes/01_files/figure-html/cell-4-output-1.png" width="571" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>계단 함수와의 차이점
+<ul>
+<li>시그모이드가 더 부드러움</li>
+</ul></li>
+<li>계단 함수와의 공통점
+<ul>
+<li>입력이 작을 때는 0에 가깝고, 입력이 커지면 1에 가까워짐</li>
+<li>입력이 아무리 작거나 커도 출력은 0에서 1 사이</li>
+<li>비선형 함수 (선형 함수는 은닉층 업싱도 똑같이 구현할 수 있기 때문에 신경망에서 활성화 함수는 반드시 비선형 함수여야 함)</li>
+</ul></li>
+<li>ReLU 함수: <img src="https://latex.codecogs.com/png.latex?h(x)%20=%20%5Cbegin%7Bcases%7D%20x%20&amp;%20(x%20%3E%200)%20%5C%5C%200%20&amp;%20(x%20%E2%89%A4%200)%20%5Cend%7Bcases%7D"></li>
+</ul>
+<div id="5672af6a" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> relu(x):</span>
+<span id="cb5-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> np.maximum(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, x)</span></code></pre></div>
+</div>
+<ul>
+<li>SoftMax 함수: <img src="https://latex.codecogs.com/png.latex?y_k%20=%20%5Cfrac%7B%5Cexp(a_k)%7D%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D%20%5Cexp(a_i)%7D"></li>
+</ul>
+<div id="bd728533" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> softmax(a):</span>
+<span id="cb6-2">    exp_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.exp(a)</span>
+<span id="cb6-3">    sum_exp_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(exp_a)</span>
+<span id="cb6-4">    y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> exp_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> sum_exp_a</span>
+<span id="cb6-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> y</span></code></pre></div>
+</div>
+<p>softmax 함수는 값이 기하급수적으로 증가하기 때문에 쉽게 overflow가 발생할 수 있음.</p>
+<p>따라서 다음과 같이 개선이 필요함</p>
+<div id="0b39cb84" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> softmax(a):</span>
+<span id="cb7-2">    c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(a)</span>
+<span id="cb7-3">    exp_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.exp(a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> c)</span>
+<span id="cb7-4">    sum_exp_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(exp_a)</span>
+<span id="cb7-5">    y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> exp_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> sum_exp_a</span>
+<span id="cb7-6">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> y</span></code></pre></div>
+</div>
+<p>sofrmax 함수 출력의 총합은 1이고, 개별 출력은 0에서 1 사이이다.</p>
+<p>따라서 softmax 함수의 출력을 확률로 해석할 수 있다.</p>
+<p>추론 단계에서 출력층의 softmax 함수는 생략하는 것이 일반적이다.</p>
+</section>
+<section id="층-신경망-구성" class="level2">
+<h2 class="anchored" data-anchor-id="층-신경망-구성">3층 신경망 구성</h2>
+<p>입력층에서 1층으로 신호 전달</p>
+<div id="2944fce8" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>])</span>
+<span id="cb8-2">W1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>]])</span>
+<span id="cb8-3">B1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>])</span>
+<span id="cb8-4"></span>
+<span id="cb8-5">A1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(X, W1) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> B1</span>
+<span id="cb8-6">Z1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sigmoid(A1)</span>
+<span id="cb8-7"></span>
+<span id="cb8-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(A1)</span>
+<span id="cb8-9"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(Z1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0.3 0.7 1.1]
+[0.57444252 0.66818777 0.75026011]</code></pre>
+</div>
+</div>
+<p>1층에서 2층으로 신호 전달</p>
+<div id="c6141385" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">W2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>]])</span>
+<span id="cb10-2">B2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>])</span>
+<span id="cb10-3"></span>
+<span id="cb10-4">A2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(Z1, W2) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> B2</span>
+<span id="cb10-5">Z2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sigmoid(A2)</span>
+<span id="cb10-6"></span>
+<span id="cb10-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(A2)</span>
+<span id="cb10-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(Z2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0.51615984 1.21402696]
+[0.62624937 0.7710107 ]</code></pre>
+</div>
+</div>
+<p>2층에서 출력층으로 신호 전달</p>
+<div id="41d4a956" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> identity_function(x):</span>
+<span id="cb12-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x</span>
+<span id="cb12-3"></span>
+<span id="cb12-4">W3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>]])</span>
+<span id="cb12-5">B3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>])</span>
+<span id="cb12-6"></span>
+<span id="cb12-7">A3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(Z2, W3) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> B3</span>
+<span id="cb12-8">Y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> identity_function(A3)</span></code></pre></div>
+</div>
+<p>출력층의 활성화 함수는 보통 풀고자 하는 문제의 성질에 맞게 정함</p>
+<ul>
+<li>회귀: 항등 함수</li>
+<li>2클래스 분류: 시그모이드 함수</li>
+<li>다중 클래스 분류: 소프트맥스 함수</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/01.html</guid>
+  <pubDate>Mon, 17 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>퍼셉트론</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="퍼셉트론이란" class="level2">
+<h2 class="anchored" data-anchor-id="퍼셉트론이란">퍼셉트론이란</h2>
+<p>다수의 신호를 입력으로 받아 하나의 신호를 출력하는 것</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ay%20=%20%5Cbegin%7Bcases%7D%200%20&amp;%20(w_1x_1%20+%20w_2x_2%20%5Cleq%20%5Ctheta)%20%5C%5C%201%20&amp;%20(w_1x_1%20+%20w_2x_2%20%3E%20%5Ctheta)%20%5Cend%7Bcases%7D%0A"></p>
+</section>
+<section id="논리-회로" class="level2">
+<h2 class="anchored" data-anchor-id="논리-회로">논리 회로</h2>
+<p>파라미터 <img src="https://latex.codecogs.com/png.latex?(w_1,%20w_2,%20%CE%B8)">의 값을 조정하여 AND, OR, NAND 게이트를 구현할 수 있다.</p>
+<p>머신 러닝의 목적은, 기계가 알아서 파라미터의 값을 적절히 조정하는 것이다.</p>
+</section>
+<section id="퍼셉트론-구현" class="level2">
+<h2 class="anchored" data-anchor-id="퍼셉트론-구현">퍼셉트론 구현</h2>
+<section id="and-게이트" class="level3">
+<h3 class="anchored" data-anchor-id="and-게이트">AND 게이트</h3>
+<div id="14b3846d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> AND(x1, x2):</span>
+<span id="cb1-2">    w1, w2, theta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># parameter</span></span>
+<span id="cb1-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> (x1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>w1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> x2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>w2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> theta)</span></code></pre></div>
+</div>
+<div id="c8a47281" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(AND(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb2-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(AND(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb2-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(AND(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb2-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(AND(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>False
+False
+False
+True</code></pre>
+</div>
+</div>
+<p>여기서 θ를 <img src="https://latex.codecogs.com/png.latex?-b">로 치환하고 식을 다시 정리하면 다음과 같다.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ay%20=%20%5Cbegin%7Bcases%7D%200%20&amp;%20(b%20+%20w_1x_1%20+%20w_2x_2%20%E2%89%A4%200)%20%5C%5C%201%20&amp;%20(b%20+%20w_1x_1%20+%20w_2x_2%20%3E%200)%20%5Cend%7Bcases%7D%0A"></p>
+<p>이때 <img src="https://latex.codecogs.com/png.latex?w_1">과 <img src="https://latex.codecogs.com/png.latex?w_2">(가중치)는 각각의 입력신호가 결과에 주는 영향력을 조절하고, <img src="https://latex.codecogs.com/png.latex?b">(편향)은 뉴런이 얼마나 쉽게 활성화되는지를 조정한다. (가중치 합이 -b를 초과할 때만 뉴런이 활성화된다.)</p>
+<p>이제 재구성한 식과, numpy를 이용하여 NAND와 OR 게이트를 구현해보자.</p>
+</section>
+<section id="nand-게이트" class="level3">
+<h3 class="anchored" data-anchor-id="nand-게이트">NAND 게이트</h3>
+<div id="d9349019" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> NAND(x1, x2):</span>
+<span id="cb4-4">  x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([x1, x2])</span>
+<span id="cb4-5">  w <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>])</span>
+<span id="cb4-6">  b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span></span>
+<span id="cb4-7">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> (b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> w) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span></code></pre></div>
+</div>
+<div id="ca8ebb2a" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> OR(x1, x2):</span>
+<span id="cb5-2">  x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([x1, x2])</span>
+<span id="cb5-3">  w <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>])</span>
+<span id="cb5-4">  b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span></span>
+<span id="cb5-5">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> (b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> w) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span></code></pre></div>
+</div>
+<p>세 게이트의 차이는 오직 파라미터의 값이다.</p>
+</section>
+</section>
+<section id="퍼셉트론의-한계" class="level2">
+<h2 class="anchored" data-anchor-id="퍼셉트론의-한계">퍼셉트론의 한계</h2>
+<p>AND, NAND, OR 게이트는 만들 수 있지만, XOR 게이트는 만들 수 없다. 다른 게이트들과 다르게 선형적으로 구분이 안되기 때문이다.</p>
+<p>하지만 AND NAND OR 게이트를 다음과 같이 배치하면 XOR 게이트를 만들 수 있다.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    x1((x1)) --&gt; OR
+    x2((x2)) --&gt; OR
+    x1 --&gt; NAND
+    x2 --&gt; NAND
+    OR[OR 게이트] --&gt; AND
+    NAND[NAND 게이트] --&gt; AND
+    AND[AND 게이트] --&gt; output((XOR 출력))
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>(mermaid로는 이렇게 그리는게 최선이다.)</p>
+<p>이와 같이 여러 퍼셉트론을 연결한 형태를 다층 퍼센트론이라고 한다.</p>
+<section id="xor-게이트" class="level3">
+<h3 class="anchored" data-anchor-id="xor-게이트">XOR 게이트</h3>
+<div id="5afc6fb8" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> XOR(x1, x2):</span>
+<span id="cb6-2">  s1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> OR(x1, x2)</span>
+<span id="cb6-3">  s2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> NAND(x1, x2)</span>
+<span id="cb6-4">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> AND(s1, s2)</span></code></pre></div>
+</div>
+<div id="211385bc" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(XOR(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb7-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(XOR(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb7-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(XOR(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb7-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(XOR(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>False
+True
+True
+False</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/00.html</guid>
+  <pubDate>Sun, 16 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

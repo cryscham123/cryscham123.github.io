@@ -1,0 +1,95 @@
+---
+title: "Naive Bayes"
+date: 2025-03-05
+categories: ["machine learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+- 알고리즘은 모든 특성(feature)들이 서로 독립적이라고 "순진하게" 가정합니다. 즉, 한 특성의 존재가 다른 특성의 존재에 영향을 미치지 않는다고 가정합니다.
+
+- 이것은 실제로는 대부분의 경우에 성립하지 않는 비현실적인 가정입니다. 예를 들어 문서 분류에서 단어들은 서로 연관되어 있지만, Naive Bayes는 이러한 연관성을 무시하고 각 단어가 독립적으로 문서의 분류에 기여한다고 가정합니다. 이러한 "naive(순진한)" 가정에도 불구하고, 실제로는 많은 실제 상황에서 놀랍도록 좋은 성능을 보입니다.
+
+- 이 "naive(순진한)" 가정 덕분에 계산이 매우 단순해지고 빨라지며, 적은 데이터로도 학습이 가능하다는 장점이 있습니다.
+
+## 독립성 가정이 필요한 수학적 이유
+
+Naive Bayes는 베이즈 정리를 기반으로 합니다. 클래스 $C$와 특성 벡터 $X = (x_1, x_2, ..., x_n)$이 있을 때, 베이즈 정리는 다음과 같습니다:
+
+$$P(C|X) = \frac{P(X|C) \cdot P(C)}{P(X)}$$
+
+여기서 $P(C|X)$는 특성 $X$가 주어졌을 때 클래스 $C$일 확률입니다. 문제는 $P(X|C)$를 계산하기가 어렵다는 점입니다. 특성이 많을수록 가능한 $X$ 조합의 수가 기하급수적으로 증가하기 때문입니다.
+
+이 문제를 해결하기 위해 Naive Bayes는 모든 특성이 서로 조건부 독립이라고 가정합니다. 즉:
+
+$$P(x_i|C, x_1, x_2, ..., x_{i-1}, x_{i+1}, ..., x_n) = P(x_i|C)$$
+
+이 독립성 가정을 통해 $P(X|C)$를 다음과 같이 단순화할 수 있습니다:
+
+$$P(X|C) = P(x_1, x_2, ..., x_n|C) = P(x_1|C) \cdot P(x_2|C) \cdot ... \cdot P(x_n|C) = \prod_{i=1}^{n} P(x_i|C)$$
+
+이렇게 특성 간 독립성을 가정함으로써 복잡한 결합 확률을 개별 특성의 확률들의 곱으로 계산할 수 있게 되어 계산이 매우 단순해집니다. 이것이 바로 Naive Bayes에서 "naive(순진한)" 독립성 가정이 반드시 필요한 이유입니다.
+
+이제 Naive Bayes에서 독립성 가정이 필요한 이유가 수학적으로 명확하게 설명되었습니다. 이 설명을 통해 알 수 있듯이:
+
+1. Naive Bayes는 베이즈 정리를 사용하여 P(C|X)를 계산합니다.
+2. 문제는 P(X|C)를 계산하는 것이 복잡하다는 점입니다.
+3. 독립성 가정을 통해 P(X|C)를 개별 특성들의 조건부 확률 곱으로 단순화할 수 있습니다.
+4. 이 단순화가 없다면, 특성의 조합이 많아질수록 계산이 기하급수적으로 복잡해집니다.
+
+## preprocessing
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import warnings
+
+warnings.filterwarnings('ignore')
+
+dataset = pd.read_csv('_data/08.csv')
+x = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+```
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
+```
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+
+sc = StandardScaler()
+
+x_train = sc.fit_transform(x_train)
+x_test = sc.transform(x_test)
+```
+
+## Modeling - linear
+
+```{python}
+from sklearn.naive_bayes import GaussianNB
+
+classifier = GaussianNB()
+classifier.fit(x_train, y_train)
+```
+
+## Predict
+
+```{python}
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+y_pred = classifier.predict(x_test)
+print(confusion_matrix(y_test, y_pred))
+accuracy_score(y_test, y_pred)
+```
+
+## Predict
+
+```{python}
+y_pred = classifier.predict(x_test)
+print(confusion_matrix(y_test, y_pred))
+accuracy_score(y_test, y_pred)
+```

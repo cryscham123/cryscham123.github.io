@@ -1,0 +1,71 @@
+---
+title: "Coding pipeline"
+date: 2025-04-05
+categories: ["Air flow"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## DAG skeleton
+
+
+```{python}
+from airflow import DAG
+from datetime import datetime
+
+with DAG(
+    dag_id='example_dag',
+    schedule='@daily',
+    start_date=datetime(2022, 4, 5),
+    catchup=False,
+) as dag:
+    pass
+```
+
+- DAG는 start_date / last_execution time + schedule_interval에 실행된다.
+
+## Operator
+
+- operator 하나 당 하나의 task만 실행하는게 좋다.
+
+### operator type
+
+- Action operators
+  - BashOperator
+  - PythonOperator
+- Transfer operators
+- Sensor operators
+
+## Providers
+
+- Airflow providers are a set of packages that contain operators, sensors, hooks, and other utilities to interact with external platforms and services.
+- Providers are installed separately from Airflow and can be added to your environment as needed.
+- In Airflow core, Bash and Python operators, ... are included
+
+```python
+from airflow.providers.postgres.operators.postgres import PostgresOperator
+
+with DAG(
+    dag_id='example_db',
+    schedule='@daily',
+    start_date=datetime(2022, 4, 5),
+    catchup=False,
+) as dag:
+    create_table = PostgresOperator(
+        task_id='create_table',
+        postgres_conn_id='postgres',
+        sql="""
+            CREATE TABLE IF NOT EXISTS example_table (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(50)
+            );
+        """,
+    )
+```
+
+- DB에 접속하기 위해서 connection을 설정해야 한다.
+
+## Hook
+
+
+

@@ -15,7 +15,24 @@
 <link>https://cryscham123.github.io/posts/04_archives/adp_실기/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Wed, 01 Jan 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 24 Feb 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>머신 러닝</title>
+  <link>https://cryscham123.github.io/posts/04_archives/adp_실기/notes/04.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>데이터 분석</category>
+  <guid>https://cryscham123.github.io/posts/04_archives/adp_실기/notes/04.html</guid>
+  <pubDate>Mon, 24 Feb 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>데이터 전처리</title>
   <link>https://cryscham123.github.io/posts/04_archives/adp_실기/notes/03.html</link>
@@ -40,7 +57,7 @@
 <h2 class="anchored" data-anchor-id="이상치-확인-및-정제">이상치 확인 및 정제</h2>
 <section id="이상치-확인" class="level3">
 <h3 class="anchored" data-anchor-id="이상치-확인">이상치 확인</h3>
-<div id="2f10903e" class="cell" data-execution_count="1">
+<div id="4f457b88" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -53,24 +70,29 @@ background-color: null;
 font-style: inherit;">as</span> plt</span>
 <span id="cb1-3"><span class="im" style="color: #00769E;
 background-color: null;
+font-style: inherit;">from</span> pandas.core.common <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> random_state</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
 font-style: inherit;">from</span> sklearn.datasets <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> load_wine</span>
-<span id="cb1-4"></span>
-<span id="cb1-5">wine_load <span class="op" style="color: #5E5E5E;
+<span id="cb1-5"></span>
+<span id="cb1-6">wine_load <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> load_wine()</span>
-<span id="cb1-6">wine <span class="op" style="color: #5E5E5E;
+<span id="cb1-7">wine <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame(wine_load.data, columns<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>wine_load.feature_names)</span>
-<span id="cb1-7">wine[<span class="st" style="color: #20794D;
+<span id="cb1-8">wine[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'class'</span>] <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> wine_load.target</span>
-<span id="cb1-8">wine[<span class="st" style="color: #20794D;
+<span id="cb1-9">wine[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'class'</span>] <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -91,18 +113,18 @@ background-color: null;
 font-style: inherit;">2</span>: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'class_2'</span>})</span>
-<span id="cb1-9"></span>
-<span id="cb1-10">plt.boxplot(wine[<span class="st" style="color: #20794D;
+<span id="cb1-10"></span>
+<span id="cb1-11">plt.boxplot(wine[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'color_intensity'</span>], whis<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1.5</span>)</span>
-<span id="cb1-11">plt.title(<span class="st" style="color: #20794D;
+<span id="cb1-12">plt.title(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'Boxplot of color_intensity'</span>)</span>
-<span id="cb1-12">plt.show()</span></code></pre></div>
+<span id="cb1-13">plt.show()</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -111,7 +133,7 @@ font-style: inherit;">'Boxplot of color_intensity'</span>)</span>
 </div>
 </div>
 </div>
-<div id="b2a68752" class="cell" data-execution_count="2">
+<div id="4a714c6b" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -274,7 +296,7 @@ font-style: inherit;">'color_intensity'</span>)</span>
 <ol type="1">
 <li>이상치 제거</li>
 </ol>
-<div id="d2f5c212" class="cell" data-execution_count="3">
+<div id="1e5358e9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">drop_outliers <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> wine.drop(index<span class="op" style="color: #5E5E5E;
@@ -300,7 +322,7 @@ Drop outliers: (174, 14)</code></pre>
 <li>이상치 대체</li>
 </ol>
 <p>이상치를 NULL로 만든 후, 결측치와 함께 대체</p>
-<div id="74926706" class="cell" data-execution_count="4">
+<div id="ea78d11a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">wine.loc[outliers.index, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'color_intensity'</span>] <span class="op" style="color: #5E5E5E;
@@ -320,7 +342,7 @@ font-style: inherit;">True</span>)</span>
 background-color: null;
 font-style: inherit;">'color_intensity'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_18659/3568685677.py:3: FutureWarning:
+<pre><code>/tmp/ipykernel_13054/3568685677.py:3: FutureWarning:
 
 A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
 The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
@@ -338,9 +360,508 @@ For example, when doing 'df[col].method(value, inplace=True)', try using 'df.met
 Name: color_intensity, dtype: float64</code></pre>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="범주형-데이터-처리" class="level2">
+<h2 class="anchored" data-anchor-id="범주형-데이터-처리">범주형 데이터 처리</h2>
+<div id="1a11037f" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.datasets <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_iris</span>
+<span id="cb8-2"></span>
+<span id="cb8-3">iris <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> load_iris()</span>
+<span id="cb8-4">iris <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(iris.data, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris.feature_names)</span>
+<span id="cb8-5">iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> load_iris().target</span>
+<span id="cb8-6">iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>({<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Setosa'</span>, </span>
+<span id="cb8-7">                                   <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Versicolour'</span>, </span>
+<span id="cb8-8">                                   <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Virginica'</span>})</span></code></pre></div>
+</div>
+</section>
+<section id="데이터-분할" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-분할">데이터 분할</h2>
+<div id="f19e897c" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> train_test_split</span>
+<span id="cb9-2"></span>
+<span id="cb9-3">X_train, X_test, y_train, y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(iris.drop(</span>
+<span id="cb9-4">  columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>), iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>], test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, random_state<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1004</span>)</span>
+<span id="cb9-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'X_train: '</span>, X_train.shape, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'X_test: '</span>, X_test.shape)</span>
+<span id="cb9-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y_train: '</span>, y_train.shape, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y_test: '</span>, y_test.shape)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>X_train:  (120, 4) X_test:  (30, 4)
+y_train:  (120,) y_test:  (30,)</code></pre>
+</div>
+</div>
+<div id="394f46f6" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">X_train.head(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">sepal length (cm)</th>
+<th data-quarto-table-cell-role="th">sepal width (cm)</th>
+<th data-quarto-table-cell-role="th">petal length (cm)</th>
+<th data-quarto-table-cell-role="th">petal width (cm)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">87</td>
+<td>6.3</td>
+<td>2.3</td>
+<td>4.4</td>
+<td>1.3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">67</td>
+<td>5.8</td>
+<td>2.7</td>
+<td>4.1</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">131</td>
+<td>7.9</td>
+<td>3.8</td>
+<td>6.4</td>
+<td>2.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="0caf27f7" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">y_train.head(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>87     Versicolour
+67     Versicolour
+131      Virginica
+Name: Class, dtype: object</code></pre>
+</div>
+</div>
+<div id="cbad7763" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>].value_counts()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>Class
+Setosa         50
+Versicolour    50
+Virginica      50
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="98872734" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">y_train.value_counts()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>Class
+Versicolour    41
+Setosa         40
+Virginica      39
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="데이터-스케일링" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-스케일링">데이터 스케일링</h2>
+<section id="standard-scaler" class="level3">
+<h3 class="anchored" data-anchor-id="standard-scaler">Standard Scaler</h3>
+<ul>
+<li>평균이 0, 분산이 1이 되도록 변환</li>
+<li>이상치에 민감하다.</li>
+<li>회귀분석보다는 분류분석에 적합</li>
+</ul>
+<div id="815e234c" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> RobustScaler, StandardScaler</span>
+<span id="cb18-2"></span>
+<span id="cb18-3">StdScaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> StandardScaler()</span>
+<span id="cb18-4"></span>
+<span id="cb18-5">StdScaler.fit(X_train)</span>
+<span id="cb18-6">X_train_sc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> StdScaler.transform(X_train)</span>
+<span id="cb18-7">X_test_sc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> StdScaler.transform(X_test)</span></code></pre></div>
+</div>
+</section>
+<section id="min-max-scaler" class="level3">
+<h3 class="anchored" data-anchor-id="min-max-scaler">Min-Max Scaler</h3>
+<ul>
+<li>0 ~ 1 사이의 값으로 변환</li>
+<li>이상치에 민감하다.</li>
+<li>회귀분석에 적합</li>
+</ul>
+<div id="4b8cae33" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> MinMaxScaler</span>
+<span id="cb19-2"></span>
+<span id="cb19-3">MinMaxScaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> MinMaxScaler()</span>
+<span id="cb19-4"></span>
+<span id="cb19-5">MinMaxScaler.fit(X_train)</span>
+<span id="cb19-6">X_train_sc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> MinMaxScaler.transform(X_train)</span>
+<span id="cb19-7"></span>
+<span id="cb19-8">X_test_sc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> MinMaxScaler.transform(X_test)</span></code></pre></div>
+</div>
+</section>
+<section id="max-abs-scaler" class="level3">
+<h3 class="anchored" data-anchor-id="max-abs-scaler">Max Abs Scaler</h3>
+<ul>
+<li>-1 ~ 1 사이의 값으로 변환</li>
+<li>이상치에 민감하다.</li>
+<li>회귀분석에 적합</li>
+</ul>
+<div id="c3c62c1c" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> MaxAbsScaler</span>
+<span id="cb20-2"></span>
+<span id="cb20-3">MaxAbsScaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> MaxAbsScaler()</span>
+<span id="cb20-4"></span>
+<span id="cb20-5">MaxAbsScaler.fit(X_train)</span>
+<span id="cb20-6">X_train_sc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> MaxAbsScaler.transform(X_train)</span>
+<span id="cb20-7"></span>
+<span id="cb20-8">X_test_sc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> MaxAbsScaler.transform(X_test)</span></code></pre></div>
+</div>
+</section>
+<section id="robust-scaler" class="level3">
+<h3 class="anchored" data-anchor-id="robust-scaler">Robust Scaler</h3>
+<ul>
+<li>중앙값을 0으로 설정하고, IQR을 사용하여 잉상치 영향을 최소화함</li>
+</ul>
+<div id="06c29bbb" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> RobustScaler</span>
+<span id="cb21-2"></span>
+<span id="cb21-3">RobustScaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> RobustScaler()</span>
+<span id="cb21-4"></span>
+<span id="cb21-5">RobustScaler.fit(X_train)</span>
+<span id="cb21-6">X_train_sc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> RobustScaler.transform(X_train)</span>
+<span id="cb21-7"></span>
+<span id="cb21-8">X_test_sc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> RobustScaler.transform(X_test)</span></code></pre></div>
+</div>
+</section>
+<section id="다시-완본으로-변경" class="level3">
+<h3 class="anchored" data-anchor-id="다시-완본으로-변경">다시 완본으로 변경</h3>
+<ul>
+<li><code>scaler.inverse_transform()</code></li>
+</ul>
+<div id="dcc3e633" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">pd.DataFrame(X_train_sc).head(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.384615</td>
+<td>-1.4</td>
+<td>0.028369</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.000000</td>
+<td>-0.6</td>
+<td>-0.056738</td>
+<td>-0.200000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1.615385</td>
+<td>1.6</td>
+<td>0.595745</td>
+<td>0.466667</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="4a09735a" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">X_original <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> RobustScaler.inverse_transform(X_train_sc)</span>
+<span id="cb23-2"></span>
+<span id="cb23-3">pd.DataFrame(X_original).head(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>6.3</td>
+<td>2.3</td>
+<td>4.4</td>
+<td>1.3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>5.8</td>
+<td>2.7</td>
+<td>4.1</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>7.9</td>
+<td>3.8</td>
+<td>6.4</td>
+<td>2.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="차원-축소" class="level2">
+<h2 class="anchored" data-anchor-id="차원-축소">차원 축소</h2>
+<div id="df55cca4" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">features <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb24-2">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris.drop(columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>)</span>
+<span id="cb24-3"></span>
+<span id="cb24-4">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> StandardScaler().fit_transform(x)</span>
+<span id="cb24-5"></span>
+<span id="cb24-6">pd.DataFrame(x).head(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>-0.900681</td>
+<td>1.019004</td>
+<td>-1.340227</td>
+<td>-1.315444</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>-1.143017</td>
+<td>-0.131979</td>
+<td>-1.340227</td>
+<td>-1.315444</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>-1.385353</td>
+<td>0.328414</td>
+<td>-1.397064</td>
+<td>-1.315444</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="3fadf900" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.decomposition <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> PCA</span>
+<span id="cb25-2"></span>
+<span id="cb25-3">pca <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PCA(n_components<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb25-4">pca_fit <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pca.fit(x)</span>
+<span id="cb25-5"></span>
+<span id="cb25-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(pca.singular_values_)</span>
+<span id="cb25-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(pca.explained_variance_ratio_.cumsum())</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[20.92306556 11.7091661   4.69185798  1.76273239]
+[0.72962445 0.95813207 0.99482129 1.        ]</code></pre>
+</div>
+</div>
+<div id="6f525d73" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Scree Plot'</span>)</span>
+<span id="cb27-2">plt.plot(pca.explained_variance_ratio_, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'o-'</span>)</span>
+<span id="cb27-3">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/04_archives/adp_실기/notes/03_files/figure-html/cell-20-output-1.png" width="571" height="431" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="데이터-불균형-문제-처리" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-불균형-문제-처리">데이터 불균형 문제 처리</h2>
+
+
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
@@ -373,7 +894,7 @@ Name: color_intensity, dtype: float64</code></pre>
 <section id="막대-그래프" class="level2">
 <h2 class="anchored" data-anchor-id="막대-그래프">막대 그래프</h2>
 <p><code>범주형 데이터</code>를 요약하고 시각적으로 비교하는 데 활용</p>
-<div id="f0827311" class="cell" data-execution_count="1">
+<div id="5800ac0c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -440,7 +961,7 @@ class_2    48
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="fb4a8ed4" class="cell" data-execution_count="2">
+<div id="c3e9feaa" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 수직 막대</span></span>
@@ -466,7 +987,7 @@ font-style: inherit;">'center'</span>)</span>
 </div>
 </div>
 </div>
-<div id="e028dcb1" class="cell" data-execution_count="3">
+<div id="0ef77ef7" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 수평 막대</span></span>
@@ -497,7 +1018,7 @@ font-style: inherit;">'center'</span>)</span>
 <section id="히스토그램" class="level2">
 <h2 class="anchored" data-anchor-id="히스토그램">히스토그램</h2>
 <p><code>연속형 데이터</code>의 분포를 확인하는 데 활용</p>
-<div id="d6df35d9" class="cell" data-execution_count="4">
+<div id="34f1e1be" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">plt.title(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'Wine alcohol histogram'</span>)</span>
@@ -535,7 +1056,7 @@ font-style: inherit;">=</span>wine)</span>
 <section id="box-plot" class="level2">
 <h2 class="anchored" data-anchor-id="box-plot">box plot</h2>
 <p><code>수치형 변수</code>의 분포를 확인하는 그래프</p>
-<div id="ba357869" class="cell" data-execution_count="5">
+<div id="195202ef" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.datasets <span class="im" style="color: #00769E;
@@ -591,7 +1112,7 @@ font-style: inherit;">'class'</span>))</span>
 </div>
 </div>
 </div>
-<div id="a5bb689a" class="cell" data-execution_count="6">
+<div id="3f9f5e77" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
@@ -622,7 +1143,7 @@ font-style: inherit;">=</span>iris)</span>
 <section id="산점도" class="level2">
 <h2 class="anchored" data-anchor-id="산점도">산점도</h2>
 <p>두 개의 <code>수치형 변수</code>의 <code>분포와 관계</code>를 확인하는 그래프</p>
-<div id="ac36aa84" class="cell" data-execution_count="7">
+<div id="4d43f52b" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">plt.title(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'iris scatter'</span>)</span>
@@ -653,7 +1174,7 @@ font-style: inherit;">0.5</span>)</span>
 </div>
 </div>
 </div>
-<div id="200248be" class="cell" data-execution_count="8">
+<div id="b2d82b85" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">sns.scatterplot(x<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
@@ -687,7 +1208,7 @@ font-style: inherit;">'class'</span>)</span>
 <h2 class="anchored" data-anchor-id="선그래프">선그래프</h2>
 <section id="수평-수직-선" class="level3">
 <h3 class="anchored" data-anchor-id="수평-수직-선">수평 / 수직 선</h3>
-<div id="7b8dfff5" class="cell" data-execution_count="9">
+<div id="1244e0d2" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">plt.hlines(y<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
@@ -741,7 +1262,7 @@ font-style: inherit;">'dashed'</span>)</span></code></pre></div>
 </section>
 <section id="함수식" class="level3">
 <h3 class="anchored" data-anchor-id="함수식">함수식</h3>
-<div id="24a6e367" class="cell" data-execution_count="10">
+<div id="3dbfcac4" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -781,7 +1302,7 @@ font-style: inherit;">'red'</span>)</span>
 </section>
 <section id="회귀선" class="level3">
 <h3 class="anchored" data-anchor-id="회귀선">회귀선</h3>
-<div id="1326be39" class="cell" data-execution_count="11">
+<div id="fa5bad03" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -824,7 +1345,7 @@ font-style: inherit;">'red'</span>)</span>
 </div>
 </div>
 <p>2차 이상의 그래프는 X값에 대하여 정렬해야 한다.</p>
-<div id="23203beb" class="cell" data-execution_count="12">
+<div id="9dfc8eb9" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">iris2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> iris.sort_values(by<span class="op" style="color: #5E5E5E;
@@ -878,7 +1399,7 @@ font-style: inherit;">'red'</span>)</span>
 </section>
 <section id="꺾은선" class="level3">
 <h3 class="anchored" data-anchor-id="꺾은선">꺾은선</h3>
-<div id="4763634f" class="cell" data-execution_count="13">
+<div id="7d2b23a4" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">plt.plot(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'sepal length (cm)'</span>, <span class="st" style="color: #20794D;
@@ -901,7 +1422,7 @@ font-style: inherit;">=</span>iris2)</span>
 <h2 class="anchored" data-anchor-id="상관관계-시각화">상관관계 시각화</h2>
 <section id="산점도-행렬" class="level3">
 <h3 class="anchored" data-anchor-id="산점도-행렬">산점도 행렬</h3>
-<div id="fdb38cad" class="cell" data-execution_count="14">
+<div id="886974fd" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> pandas.plotting <span class="im" style="color: #00769E;
@@ -932,7 +1453,7 @@ font-style: inherit;">'hist'</span>)</span>
 </div>
 </div>
 </div>
-<div id="af1f7f0d" class="cell" data-execution_count="15">
+<div id="fcde566f" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">sns.pairplot(iris, diag_kind<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
@@ -954,7 +1475,7 @@ font-style: inherit;">'class'</span>)</span>
 </section>
 <section id="상관계수-행렬-그래프" class="level3">
 <h3 class="anchored" data-anchor-id="상관계수-행렬-그래프">상관계수 행렬 그래프</h3>
-<div id="065b03ee" class="cell" data-execution_count="16">
+<div id="6748649c" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">iris_corr <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> iris.drop(columns<span class="op" style="color: #5E5E5E;
@@ -991,7 +1512,7 @@ font-style: inherit;">True</span>)</span></code></pre></div>
 </section>
 <section id="pandas-profiling" class="level2">
 <h2 class="anchored" data-anchor-id="pandas-profiling">Pandas Profiling</h2>
-<div id="cf24ede9" class="cell" data-execution_count="17">
+<div id="ff8ad8b8" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># from pandas_profiling import ProfileReport</span></span>
@@ -1024,7 +1545,7 @@ font-style: inherit;"># ProfileReport(iris)</span></span></code></pre></div>
 <section id="series" class="level1">
 <h1>Series</h1>
 <p>1차원 배열 구조, 이름과 형식을 가지고 모든 값에 고유한 인덱스를 가짐</p>
-<div id="1772091d" class="cell" data-execution_count="1">
+<div id="7c26af7d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -1053,7 +1574,7 @@ haha     2
 Name: class, dtype: int64</code></pre>
 </div>
 </div>
-<div id="e97b7d5d" class="cell" data-execution_count="2">
+<div id="3a179798" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">data1 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.Series({<span class="st" style="color: #20794D;
@@ -1075,7 +1596,7 @@ font-style: inherit;">'class'</span>)</span>
 Name: class, dtype: int64</code></pre>
 </div>
 </div>
-<div id="2c55156f" class="cell" data-execution_count="3">
+<div id="e0ba7a29" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">data2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.Series([<span class="dv" style="color: #AD0000;
@@ -1108,7 +1629,7 @@ Name: class, dtype: int64</code></pre>
 <li>라이브러리 설치</li>
 <li>라이브러리 호출</li>
 </ol>
-<div id="378ffbc2" class="cell" data-execution_count="4">
+<div id="9e010b25" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -1124,7 +1645,7 @@ font-style: inherit;">10</span>)</span></code></pre></div>
 </section>
 <section id="dataframe-선언" class="level3">
 <h3 class="anchored" data-anchor-id="dataframe-선언">DataFrame 선언</h3>
-<div id="228076df" class="cell" data-execution_count="5">
+<div id="275add4f" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -1224,7 +1745,7 @@ font-style: inherit;">80</span>]})</span>
 </section>
 <section id="dataframe-읽고-저장" class="level3">
 <h3 class="anchored" data-anchor-id="dataframe-읽고-저장">DataFrame 읽고 저장</h3>
-<div id="0fa68c75" class="cell" data-execution_count="6">
+<div id="90994a4b" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># filepath = '../book/data/data.csv'</span></span>
@@ -1238,7 +1759,7 @@ font-style: inherit;"># data.to_csv('result.csv', header=True, index=True, encod
 </section>
 <section id="dataframe-출력" class="level3">
 <h3 class="anchored" data-anchor-id="dataframe-출력">DataFrame 출력</h3>
-<div id="bca13b39" class="cell" data-execution_count="7">
+<div id="ba4ef5fc" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.datasets <span class="im" style="color: #00769E;
@@ -1418,7 +1939,7 @@ font-style: inherit;">=</span> load_iris()</span>
  'data_module': 'sklearn.datasets.data'}</code></pre>
 </div>
 </div>
-<div id="5b0a372f" class="cell" data-execution_count="8">
+<div id="23cdc8fa" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">iris <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame(iris.data, columns<span class="op" style="color: #5E5E5E;
@@ -1524,7 +2045,7 @@ font-style: inherit;">=</span>iris.feature_names)</span>
 </div>
 </div>
 </div>
-<div id="424f8c9c" class="cell" data-execution_count="9">
+<div id="556d971f" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">iris.info()</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -1540,7 +2061,7 @@ dtypes: float64(4)
 memory usage: 4.8 KB</code></pre>
 </div>
 </div>
-<div id="a52918ea" class="cell" data-execution_count="10">
+<div id="f79fa00e" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">iris.describe()</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
@@ -1624,13 +2145,13 @@ memory usage: 4.8 KB</code></pre>
 </section>
 <section id="index-column-명-변경" class="level3">
 <h3 class="anchored" data-anchor-id="index-column-명-변경">index / column 명 변경</h3>
-<div id="44407268" class="cell" data-execution_count="11">
+<div id="70b9e7a6" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">df.index</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>RangeIndex(start=0, stop=2, step=1)</code></pre>
 </div>
 </div>
-<div id="baa5d225" class="cell" data-execution_count="12">
+<div id="5c860c41" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">list</span>(df.index)</span></code></pre></div>
@@ -1638,7 +2159,7 @@ font-style: inherit;">list</span>(df.index)</span></code></pre></div>
 <pre><code>[0, 1]</code></pre>
 </div>
 </div>
-<div id="16a320fd" class="cell" data-execution_count="13">
+<div id="768b86b5" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1">df.index <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
@@ -1651,7 +2172,7 @@ font-style: inherit;">'B'</span>]</span>
 <pre><code>Index(['A', 'B'], dtype='object')</code></pre>
 </div>
 </div>
-<div id="cb877072" class="cell" data-execution_count="14">
+<div id="81935398" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">df</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -1682,7 +2203,7 @@ font-style: inherit;">'B'</span>]</span>
 </div>
 </div>
 </div>
-<div id="f17fe008" class="cell" data-execution_count="15">
+<div id="324b711a" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">df.set_index(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'class'</span>, drop<span class="op" style="color: #5E5E5E;
@@ -1729,7 +2250,7 @@ font-style: inherit;">True</span>)</span>
 </div>
 </div>
 </div>
-<div id="f5d53aef" class="cell" data-execution_count="16">
+<div id="f05d4cc9" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">df.reset_index(drop<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="va" style="color: #111111;
@@ -1769,7 +2290,7 @@ font-style: inherit;">True</span>)</span>
 </div>
 </div>
 </div>
-<div id="f53f0d61" class="cell" data-execution_count="17">
+<div id="43969090" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1">iris.columns</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>Index(['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)',
@@ -1777,7 +2298,7 @@ font-style: inherit;">True</span>)</span>
       dtype='object')</code></pre>
 </div>
 </div>
-<div id="179b36aa" class="cell" data-execution_count="18">
+<div id="8b732b2d" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1">iris.columns <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
@@ -1889,7 +2410,7 @@ font-style: inherit;">'petal width'</span>]</span>
 </div>
 </div>
 </div>
-<div id="3cea7979" class="cell" data-execution_count="19">
+<div id="c3d7a877" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1">iris.columns <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> iris.columns.<span class="bu" style="color: null;
@@ -2011,7 +2532,7 @@ font-style: inherit;">'_'</span>)</span>
 <li>category</li>
 <li>object</li>
 </ul>
-<div id="7c82145d" class="cell" data-execution_count="20">
+<div id="c16cedfa" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1">iris.dtypes</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>sepal_length    float64
@@ -2021,7 +2542,7 @@ petal_width     float64
 dtype: object</code></pre>
 </div>
 </div>
-<div id="69722f86" class="cell" data-execution_count="21">
+<div id="4d0cf636" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1">iris[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'sepal_length'</span>] <span class="op" style="color: #5E5E5E;
@@ -2153,7 +2674,7 @@ font-style: inherit;">'int'</span>)</span>
 <h2 class="anchored" data-anchor-id="row-coumn-선택-추가-삭제">row / coumn 선택 추가 삭제</h2>
 <section id="row-선택" class="level3">
 <h3 class="anchored" data-anchor-id="row-선택">row 선택</h3>
-<div id="77d8d9f0" class="cell" data-execution_count="22">
+<div id="dd375a41" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1">iris[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>:<span class="dv" style="color: #AD0000;
@@ -2212,7 +2733,7 @@ font-style: inherit;">4</span>]</span></code></pre></div>
 <section id="column-선택" class="level3">
 <h3 class="anchored" data-anchor-id="column-선택">column 선택</h3>
 <p>Series 형식으로 출력</p>
-<div id="d5958a61" class="cell" data-execution_count="23">
+<div id="b00b4008" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1">iris[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'sepal_length'</span>]</span></code></pre></div>
@@ -2232,7 +2753,7 @@ Name: sepal_length, Length: 150, dtype: int64</code></pre>
 </div>
 </div>
 <p>DataFrame 형식으로 출력</p>
-<div id="0aa66126" class="cell" data-execution_count="24">
+<div id="b79b9f35" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1">iris[[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'sepal_length'</span>, <span class="st" style="color: #20794D;
@@ -2316,7 +2837,7 @@ font-style: inherit;">'sepal_width'</span>]]</span></code></pre></div>
 </section>
 <section id="column-row-선택" class="level3">
 <h3 class="anchored" data-anchor-id="column-row-선택">column, row 선택</h3>
-<div id="f2a86bbc" class="cell" data-execution_count="25">
+<div id="d72c0520" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1">iris.loc[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>:<span class="dv" style="color: #AD0000;
@@ -2370,7 +2891,7 @@ font-style: inherit;">'sepal_width'</span>]]</span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="9f861d80" class="cell" data-execution_count="26">
+<div id="001ceb0a" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1">iris.iloc[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>:<span class="dv" style="color: #AD0000;
@@ -2422,7 +2943,7 @@ font-style: inherit;">2</span>]]</span></code></pre></div>
 </section>
 <section id="row-추가" class="level3">
 <h3 class="anchored" data-anchor-id="row-추가">row 추가</h3>
-<div id="bbd604ae" class="cell" data-execution_count="27">
+<div id="17589b2e" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 방법 1: concat 사용</span></span>
@@ -2484,7 +3005,7 @@ font-style: inherit;">90</span>}</span>
 </section>
 <section id="column-추가" class="level3">
 <h3 class="anchored" data-anchor-id="column-추가">column 추가</h3>
-<div id="edd3182d" class="cell" data-execution_count="28">
+<div id="582c3bca" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1">df[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'yo'</span>] <span class="op" style="color: #5E5E5E;
@@ -2538,7 +3059,7 @@ font-style: inherit;">10</span></span>
 </section>
 <section id="row-삭제" class="level3">
 <h3 class="anchored" data-anchor-id="row-삭제">row 삭제</h3>
-<div id="c77f7e45" class="cell" data-execution_count="29">
+<div id="83dd2228" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1">df.drop(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>, inplace<span class="op" style="color: #5E5E5E;
@@ -2582,7 +3103,7 @@ font-style: inherit;">True</span>)</span>
 </section>
 <section id="column-삭제" class="level3">
 <h3 class="anchored" data-anchor-id="column-삭제">column 삭제</h3>
-<div id="1eca7748" class="cell" data-execution_count="30">
+<div id="f9688ca8" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1">df.drop(columns<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
@@ -2626,7 +3147,7 @@ font-style: inherit;">True</span>)</span>
 </section>
 <section id="조건-선택" class="level2">
 <h2 class="anchored" data-anchor-id="조건-선택">조건 선택</h2>
-<div id="7b763279" class="cell" data-execution_count="31">
+<div id="b3996427" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1">iris[(iris[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'sepal_length'</span>] <span class="op" style="color: #5E5E5E;
@@ -2741,7 +3262,7 @@ font-style: inherit;">3</span>)]</span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="9c8ec093" class="cell" data-execution_count="32">
+<div id="a6815611" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1">df.loc[df[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'score'</span>] <span class="op" style="color: #5E5E5E;
@@ -2801,7 +3322,7 @@ font-style: inherit;">'Fail'</span></span>
 </div>
 </div>
 </div>
-<div id="7156dadc" class="cell" data-execution_count="33">
+<div id="31b99779" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -2895,7 +3416,7 @@ font-style: inherit;">'F'</span>)</span>
 </div>
 <section id="결측치-탐색" class="level3">
 <h3 class="anchored" data-anchor-id="결측치-탐색">결측치 탐색</h3>
-<div id="698066fb" class="cell" data-execution_count="34">
+<div id="f00dbe80" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1">df.isna().<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">sum</span>()</span></code></pre></div>
@@ -2907,7 +3428,7 @@ grade    0
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="a71f0b9b" class="cell" data-execution_count="35">
+<div id="1f62b957" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1">df.notna().<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">sum</span>(<span class="dv" style="color: #AD0000;
@@ -2924,7 +3445,7 @@ dtype: int64</code></pre>
 </section>
 <section id="결측치-제거" class="level3">
 <h3 class="anchored" data-anchor-id="결측치-제거">결측치 제거</h3>
-<div id="781d2031" class="cell" data-execution_count="36">
+<div id="b5c8d0b7" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># dropna(axis=0, how='any' or 'all', thresh=None, subset=None, inplace=False)</span></span>
@@ -2967,7 +3488,7 @@ font-style: inherit;"># dropna(axis=0, how='any' or 'all', thresh=None, subset=N
 </section>
 <section id="결측치-대체" class="level3">
 <h3 class="anchored" data-anchor-id="결측치-대체">결측치 대체</h3>
-<div id="d49fbcaa" class="cell" data-execution_count="37">
+<div id="c6ae0eb1" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb50" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># fillna(value=None, method=None ('pad', 'ffill', 'backfill', 'bfill'), axis=None, inplace=False, limit=None)</span></span></code></pre></div>

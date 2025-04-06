@@ -2,7 +2,6 @@
 title: "데이터 전처리"
 date: 2025-01-02
 categories: ["데이터 분석"]
-directories: ["adp_실기"]
 ---
 
 ![](/img/stat-thumb.jpg){.post-thumbnail}
@@ -23,6 +22,7 @@ directories: ["adp_실기"]
 ```{python}
 import pandas as pd
 import matplotlib.pyplot as plt
+from pandas.core.common import random_state
 from sklearn.datasets import load_wine
 
 wine_load = load_wine()
@@ -70,3 +70,155 @@ wine.loc[outliers.index, 'color_intensity'] = np.NaN
 wine['color_intensity'].fillna(wine['color_intensity'].mean(), inplace=True)
 wine.loc[outliers.index, 'color_intensity']
 ```
+
+## 범주형 데이터 처리
+
+```{python}
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+iris = pd.DataFrame(iris.data, columns=iris.feature_names)
+iris['Class'] = load_iris().target
+iris['Class'] = iris['Class'].map({0: 'Setosa', 
+                                   1:'Versicolour', 
+                                   2: 'Virginica'})
+```
+
+## 데이터 분할
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(iris.drop(
+  columns='Class'), iris['Class'], test_size=0.2, random_state=1004)
+print('X_train: ', X_train.shape, 'X_test: ', X_test.shape)
+print('y_train: ', y_train.shape, 'y_test: ', y_test.shape)
+```
+
+```{python}
+X_train.head(3)
+```
+
+```{python}
+y_train.head(3)
+```
+
+```{python}
+iris['Class'].value_counts()
+```
+
+```{python}
+y_train.value_counts()
+```
+
+## 데이터 스케일링
+
+### Standard Scaler
+
+- 평균이 0, 분산이 1이 되도록 변환
+- 이상치에 민감하다.
+- 회귀분석보다는 분류분석에 적합
+
+```{python}
+from sklearn.preprocessing import RobustScaler, StandardScaler
+
+StdScaler = StandardScaler()
+
+StdScaler.fit(X_train)
+X_train_sc = StdScaler.transform(X_train)
+X_test_sc = StdScaler.transform(X_test)
+```
+
+### Min-Max Scaler
+
+- 0 ~ 1 사이의 값으로 변환
+- 이상치에 민감하다.
+- 회귀분석에 적합
+
+```{python}
+from sklearn.preprocessing import MinMaxScaler
+
+MinMaxScaler = MinMaxScaler()
+
+MinMaxScaler.fit(X_train)
+X_train_sc = MinMaxScaler.transform(X_train)
+
+X_test_sc = MinMaxScaler.transform(X_test)
+```
+
+### Max Abs Scaler
+
+- -1 ~ 1 사이의 값으로 변환
+- 이상치에 민감하다.
+- 회귀분석에 적합
+
+```{python}
+from sklearn.preprocessing import MaxAbsScaler
+
+MaxAbsScaler = MaxAbsScaler()
+
+MaxAbsScaler.fit(X_train)
+X_train_sc = MaxAbsScaler.transform(X_train)
+
+X_test_sc = MaxAbsScaler.transform(X_test)
+```
+
+### Robust Scaler
+
+- 중앙값을 0으로 설정하고, IQR을 사용하여 잉상치 영향을 최소화함
+
+```{python}
+from sklearn.preprocessing import RobustScaler
+
+RobustScaler = RobustScaler()
+
+RobustScaler.fit(X_train)
+X_train_sc = RobustScaler.transform(X_train)
+
+X_test_sc = RobustScaler.transform(X_test)
+```
+
+### 다시 완본으로 변경
+
+- `scaler.inverse_transform()`
+
+```{python}
+pd.DataFrame(X_train_sc).head(3)
+```
+
+```{python}
+X_original = RobustScaler.inverse_transform(X_train_sc)
+
+pd.DataFrame(X_original).head(3)
+```
+
+## 차원 축소
+
+```{python}
+
+features = []
+x = iris.drop(columns='Class')
+
+x = StandardScaler().fit_transform(x)
+
+pd.DataFrame(x).head(3)
+```
+
+```{python}
+from sklearn.decomposition import PCA
+
+pca = PCA(n_components=4)
+pca_fit = pca.fit(x)
+
+print(pca.singular_values_)
+print(pca.explained_variance_ratio_.cumsum())
+```
+
+```{python}
+plt.title('Scree Plot')
+plt.plot(pca.explained_variance_ratio_, 'o-')
+plt.show()
+```
+
+## 데이터 불균형 문제 처리
+

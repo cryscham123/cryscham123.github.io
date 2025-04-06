@@ -1,0 +1,109 @@
+---
+title: "Homework"
+date: last-modified
+categories: ["data mining"]
+---
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import warnings
+
+warnings.filterwarnings('ignore')
+
+dataset = pd.read_csv("_data/class/carprices.csv")
+
+dataset
+```
+
+scatter plot을 이용해 선형성을 확인하겠습니다.
+
+연속형 변수인 **Mileage**와 **Sell Price($)**에 대해 확인하겠습니다.
+
+```{python}
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+axes[0].scatter(dataset.iloc[:, 1], dataset.iloc[:, 2], alpha=0.7)
+axes[0].set_xlabel("Mileage")
+axes[0].set_ylabel("Sell Price($)")
+axes[0].set_title("Mileage vs Sell Price($)")
+
+axes[1].scatter(dataset.iloc[:, 3], dataset.iloc[:, 2], alpha=0.7)
+axes[1].set_xlabel("Age(yrs)")
+axes[1].set_ylabel("Price($)")
+axes[1].set_title("Age(yrs) vs Price($)")
+
+plt.show()
+```
+
+선형성이 보입니다.  
+두 변수 모두 linear regression을 적용할 수 있어 보입니다.
+
+```{python}
+x = dataset.drop('Sell Price($)', axis=1).values
+y = dataset.iloc[:, 2].values
+```
+
+독립 변수와 종속 변수를 저장해줍니다.
+
+```{python}
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+
+ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [0])], remainder='passthrough')
+x = np.array(ct.fit_transform(x))
+```
+
+범주형 변수 **Car Model**에 대해 **one hot encoding**을 적용하였습니다.
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+X_train
+```
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+
+sc = StandardScaler()
+X_train[:, 3:] = sc.fit_transform(X_train[:, 3:])
+X_test[:, 3:] = sc.transform(X_test[:, 3:])
+X_train
+```
+
+train set과 test set을 나눈 뒤 연속형 변수에 대해 feature scailing을 진행해줍니다.
+
+```{python}
+from sklearn.linear_model import LinearRegression
+
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+```
+
+모델을 학습시킵니다.
+
+## 1
+
+```{python}
+target = ct.transform([['Mercedez Benz C class', 45000, 4]])
+target[:, 3:] = sc.transform(target[:, 3:])
+y_pred = regressor.predict(target)
+print(y_pred)
+```
+
+## 2
+
+```{python}
+target = ct.transform([['BMW X5', 86000, 7]])
+target[:, 3:] = sc.transform(target[:, 3:])
+y_pred = regressor.predict(target)
+print(y_pred)
+```
+
+## 3
+
+```{python}
+print(regressor.score(X_test, y_test))
+```

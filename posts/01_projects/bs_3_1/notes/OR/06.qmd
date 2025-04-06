@@ -1,0 +1,922 @@
+---
+title: OR 과제 - 1
+subtitle: 20192208 김형훈
+categories: ["보고서", "OR"]
+date: last-modified
+format: 
+  pdf:
+    fig-pos: 'H'
+    fig-width: 6
+    fig-height: 4
+    documentclass: report
+    papersize: a4
+    top-level-division: chapter
+    fontsize: 17pt
+    toc: false
+    geometry:
+      - top=20mm
+    indent-size: 2
+include-in-header: 
+  text: |
+    \date{}
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{0.8em}{\huge}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{0pt}{-20pt}{5pt}
+    \titlespacing*{\section}{0pt}{10pt}{10pt}
+    \newcommand{\chapterbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{1.5}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
+    \usepackage{float}
+    \usepackage{multirow}
+    \usepackage{booktabs}
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+---
+
+# 3.1.5
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 20, 1000)
+x2 = np.linspace(0, 20, 1000)
+X1, X2 = np.meshgrid(x1, x2)
+
+# 제약 조건 경계선 그리기
+# x2 ≤ 10
+plt.plot([0, 40], [10, 10], 'r-', label='$x_2 = 10$')
+
+# x1 + 5x2 ≤ 60
+x2_constraint2 = (60 - x1) / 5
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$x_1 + 5x_2 = 60$')
+
+# x1 + x2 ≤ 18
+x2_constraint3 = 18 - x1
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$x_1 + x_2 = 18$')
+
+# 3x1 + x2 ≤ 44
+x2_constraint4 = 44 - 3*x1
+valid_x1 = x1[x2_constraint4 >= 0]
+valid_x2 = x2_constraint4[x2_constraint4 >= 0]
+plt.plot(valid_x1, valid_x2, 'm-', label='$3x_1 + x_2 = 44$')
+
+vector = np.array([2, 1])
+plt.quiver(0, 0, 8 * vector[0], 8 * vector[1], angles='xy', scale_units='xy', scale=1, color='red')
+plt.text(vector[0]+0.1, vector[1]+1, f'c({vector[0]}, {vector[1]})', fontsize=12)
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [44/3, 0], [13, 5], [8, 10], [0, 10]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 그래프 설정
+plt.title('Feasible Area and Object vector', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 20)
+plt.ylim(-1, 15)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+가능해 영역과 obj function의 vector를 그래프로 그려보았다.
+
+이제 최적해를 찾기 위해 obj function과 수직한 직선을 그린 후, 가능해 영역과 만나는 점을 찾아보자.
+
+obj function과 수직인 직선은 vector (2, 1)과 dot product시 0인 vector(1, -2)의 기울기를 가진다.
+
+고로 직선의 방정식은 $x_2 = -2x_1 + z$이다.
+
+$z$의 값이 최대가 되는 경우를 찾아보자.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 20, 1000)
+x2 = np.linspace(0, 20, 1000)
+X1, X2 = np.meshgrid(x1, x2)
+
+# 제약 조건 경계선 그리기
+# x2 ≤ 10
+plt.plot([0, 40], [10, 10], 'r-', label='$x_2 = 10$')
+
+# x1 + x2 ≤ 18
+x2_constraint3 = 18 - x1
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$x_1 + x_2 = 18$')
+
+# 3x1 + x2 ≤ 44
+x2_constraint4 = 44 - 3*x1
+valid_x1 = x1[x2_constraint4 >= 0]
+valid_x2 = x2_constraint4[x2_constraint4 >= 0]
+plt.plot(valid_x1, valid_x2, 'm-', label='$3x_1 + x_2 = 44$')
+
+vector = np.array([2, 1])
+plt.quiver(0, 0, 8 * vector[0], 8 * vector[1], angles='xy', scale_units='xy', scale=1, color='red')
+
+# 목적함수 벡터와 수직인 직선들 그리기 (등고선)
+# 직선의 기울기: -2/1 = -2 (벡터 [2,1]과 수직인 직선의 기울기)
+# 등고선 방정식: x₂ = -(-2)x₁ + b = 2x₁ + b
+
+# 여러 개의 등고선 그리기
+z_values = [13, 26, 30, 31]  # 목적함수 값
+for z in z_values:
+    # 2x₁ + x₂ = z 일 때 x₂ = z - 2x₁
+    b = z  # y절편
+    
+    # x₁ 범위에서 직선 계산
+    iso_x1 = np.linspace(-1, 20, 100)
+    iso_x2 = -2 * iso_x1 + b  # 수직 직선의 방정식 (기울기가 -2)
+    
+    # 등고선 그리기
+    plt.plot(iso_x1, iso_x2, 'k--', alpha=0.5)
+    
+    # 목적함수 값 표시
+    plt.text((z - 1) / 2, 2 + (z == 31), f'z = {z}', fontsize=9, color='navy',
+            bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [44/3, 0], [13, 5], [8, 10], [0, 10]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 그래프 설정
+plt.title('Oxogonal Lines', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 20)
+plt.ylim(-1, 15)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+가능해 영역에서 목적함수는 최대 31의 값을 가진다.
+
+고로 답은 31
+
+# 3.1.12
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 12, 1000)
+x2 = np.linspace(0, 12, 1000)
+X1, X2 = np.meshgrid(x1, x2)
+
+# 제약 조건 경계선 그리기
+
+# x1 + x2 ≤ 6
+x2_constraint2 = 6 - x1
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$x_1 + x_2 = 6$')
+
+# x1 + 2x2 ≤ 10
+x2_constraint3 = (10 - x1) / 2
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$x_1 + 2x_2 = 10$')
+
+plt.plot([-1, 12], [1, 1], 'm--', label='$x_2 = 1$')
+
+c_values = [-1, 2, 4, 10]
+for c in c_values:
+    vector = np.array([c, 1])
+    plt.quiver(0, 0, vector[0], vector[1], angles='xy', scale_units='xy', scale=1, color='orange')
+    plt.text(vector[0]+0.1, vector[1]+0.2, f'({vector[0]}, {vector[1]})', fontsize=12)
+
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [6, 0], [2, 4], [0, 5]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+cpf_points = [(0, 5), (2, 4), (6, 0)]
+cpf_x, cpf_y = zip(*cpf_points)
+plt.scatter(cpf_x, cpf_y, color='black', s=80, zorder=5)
+
+# CPF 점 라벨 추가
+for i, point in enumerate(cpf_points):
+    plt.annotate(f'$P_{i+1}$: {point}', 
+                 (point[0], point[1]), 
+                 xytext=(10, 10), 
+                 textcoords='offset points',
+                 fontsize=12)
+
+# 그래프 설정
+plt.title('Feasible Area and Object vector', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 12)
+plt.ylim(-1, 8)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+위의 그래프와 같이, $c_1$의 값에 따라 목적함수의 벡터의 방향이 달라지고, 벡터의 방향이 달라지면 최적해도 매번 달라질 수 있다.
+
+이때 $(x_1, x_2)$의 최적해는 CPF의 edge와 수직이 되는 목적함수의 vector를 분기로 달라진다.
+따라서 각각의 edge와 목적함수 벡터가 수직이 되게 하는 $c_1$의 값을 파악해야 한다.
+
+점 (0, 5)에서 점 (2, 4)를 지나는 벡터는 (2 - 0, 4 - 5) = (2, -1)이다.
+이와 수직한 방향 벡터는 (1, 2)이고, $x_2$가 1이 되도록 scaling하면 $(\frac{1}{2}, 1)$이 된다.
+
+점 (2, 4)에서 점 (6, 0)을 지나는 벡터는 (6 - 2, 0 - 4) = (4, -4)이다.
+이와 수직한 방향 벡터는 (1, 1)이다.
+
+이제 $c_1$의 값이 $\frac{1}{2}$와 1을 지날 때, 각각 최적해가 어떻게 변하는지 그래프로 살펴보자.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 12, 1000)
+x2 = np.linspace(0, 12, 1000)
+X1, X2 = np.meshgrid(x1, x2)
+
+# 제약 조건 경계선 그리기
+
+# x1 + x2 ≤ 6
+x2_constraint2 = 6 - x1
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$x_1 + x_2 = 6$')
+
+# x1 + 2x2 ≤ 10
+x2_constraint3 = (10 - x1) / 2
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$x_1 + 2x_2 = 10$')
+
+vector = np.array([1/2, 1])
+plt.quiver(0, 0, 5*vector[0], 5*vector[1], angles='xy', scale_units='xy', scale=1, color='orange')
+plt.text(vector[0]+0.1, vector[1]+0.2, f'c({vector[0]}, {vector[1]})', fontsize=12)
+
+# 여러 개의 등고선 그리기
+z_values = [3, 4, 5]  # 목적함수 값
+for z in z_values:
+    b = z  # y절편
+    
+    # x₁ 범위에서 직선 계산
+    iso_x1 = np.linspace(-1, 20, 100)
+    iso_x2 = -1/2 * iso_x1 + b  # 수직 직선의 방정식 (기울기가 -2)
+    
+    # 등고선 그리기
+    plt.plot(iso_x1, iso_x2, 'k--', alpha=0.5)
+    
+    # 목적함수 값 표시
+    plt.text((z - 1) / 2, z + 0.01, f'z = {z}', fontsize=9, color='navy',
+            bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [6, 0], [2, 4], [0, 5]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 그래프 설정
+plt.title('$c_1 = 1/2$', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 12)
+plt.ylim(-1, 8)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+위 그래프와 같이 $c_1$이 $\frac{1}{2}$일 때 최적해는 제약 함수와 정확히 일치하여, ∞개의 optimal solution을 가지게 된다.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 12, 1000)
+x2 = np.linspace(0, 12, 1000)
+X1, X2 = np.meshgrid(x1, x2)
+
+# 제약 조건 경계선 그리기
+
+# x1 + x2 ≤ 6
+x2_constraint2 = 6 - x1
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$x_1 + x_2 = 6$')
+
+# x1 + 2x2 ≤ 10
+x2_constraint3 = (10 - x1) / 2
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$x_1 + 2x_2 = 10$')
+
+vector = np.array([1/3, 1])
+plt.quiver(0, 0, 5*vector[0], 5*vector[1], angles='xy', scale_units='xy', scale=1, color='orange')
+plt.text(vector[0]+0.1, vector[1]+0.2, f'c(1/3, {vector[1]})', fontsize=12)
+
+# 여러 개의 등고선 그리기
+z_values = [3, 4, 5]  # 목적함수 값
+for z in z_values:
+    b = z  # y절편
+    
+    # x₁ 범위에서 직선 계산
+    iso_x1 = np.linspace(-1, 20, 100)
+    iso_x2 = -1/3 * iso_x1 + b  # 수직 직선의 방정식 (기울기가 -2)
+    
+    # 등고선 그리기
+    plt.plot(iso_x1, iso_x2, 'k--', alpha=0.5)
+    
+    # 목적함수 값 표시
+    plt.text((z - 1) / 2, z + 0.01, f'z = {z}', fontsize=9, color='navy',
+            bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [6, 0], [2, 4], [0, 5]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+cpf_points = [(0, 5)]
+cpf_x, cpf_y = zip(*cpf_points)
+plt.scatter(cpf_x, cpf_y, color='black', s=80, zorder=5)
+
+# CPF 점 라벨 추가
+for i, point in enumerate(cpf_points):
+    plt.annotate(f'$P$: {point}', 
+                 (point[0], point[1]), 
+                 xytext=(10, 10), 
+                 textcoords='offset points',
+                 fontsize=12)
+# 그래프 설정
+plt.title('$c_1 < 1/2$', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 12)
+plt.ylim(-1, 8)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+만약 $c_1$이 $\frac{1}{2}$보다 작은 경우, 최적해는 (0, 5)가 된다.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 12, 1000)
+x2 = np.linspace(0, 12, 1000)
+X1, X2 = np.meshgrid(x1, x2)
+
+# 제약 조건 경계선 그리기
+
+# x1 + x2 ≤ 6
+x2_constraint2 = 6 - x1
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$x_1 + x_2 = 6$')
+
+# x1 + 2x2 ≤ 10
+x2_constraint3 = (10 - x1) / 2
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$x_1 + 2x_2 = 10$')
+
+vector = np.array([2/3, 1])
+plt.quiver(0, 0, 5*vector[0], 5*vector[1], angles='xy', scale_units='xy', scale=1, color='orange')
+plt.text(vector[0]+0.1, vector[1]+0.2, f'c(2/3, {vector[1]})', fontsize=12)
+
+# 여러 개의 등고선 그리기
+z_values = [3, 4, round(16/3, 2)]  # 목적함수 값
+for z in z_values:
+    b = z  # y절편
+    
+    # x₁ 범위에서 직선 계산
+    iso_x1 = np.linspace(-1, 20, 100)
+    iso_x2 = -2/3 * iso_x1 + b  # 수직 직선의 방정식 (기울기가 -2)
+    
+    # 등고선 그리기
+    plt.plot(iso_x1, iso_x2, 'k--', alpha=0.5)
+    
+    # 목적함수 값 표시
+    plt.text(z / 10, z + 0.01, f'z = {z}', fontsize=9, color='navy',
+            bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [6, 0], [2, 4], [0, 5]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+cpf_points = [(2, 4)]
+cpf_x, cpf_y = zip(*cpf_points)
+plt.scatter(cpf_x, cpf_y, color='black', s=80, zorder=5)
+
+# CPF 점 라벨 추가
+for i, point in enumerate(cpf_points):
+    plt.annotate(f'$P$: {point}', 
+                 (point[0], point[1]), 
+                 xytext=(10, 10), 
+                 textcoords='offset points',
+                 fontsize=12)
+# 그래프 설정
+plt.title('$c_1 > 1/2$', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 12)
+plt.ylim(-1, 8)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+반면 $c_1$이 $\frac{1}{2}$보다 큰 경우, 최적해는 (2, 4)가 된다.
+
+위와 같이 $c_1$의 값을 (6, 0), (2, 4)의 edge에 대해서도 조정을 해보면 최종적으로 아래와 같은 수식을 구할 수 있다.
+
+$$
+\begin{cases}
+(0, 5) & \text{if } c_1 < \frac{1}{2} \\
+∞ & \text{if } c_1 = \frac{1}{2} \\
+(2, 4) & \text{if } \frac{1}{2} < c_1 < 1 \\
+∞ & \text{if } c_1 = 1 \\
+(6, 0) & \text{if } c_1 > 1
+\end{cases}
+$$
+
+# 3.2.5
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 20, 1000)
+x2 = np.linspace(0, 20, 1000)
+
+# 제약 조건 경계선 그리기
+
+# 2x1 - x2 ≤ -1
+x2_constraint2 = 2 * x1 + 1
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$2x_1 - x_2 = -1$')
+
+# -x1 + 2x2 ≤ -1
+x2_constraint3 = (x1 - 1) / 2
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$-x_1 + 2x_2 = -1$')
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 1], [0, 15], [7 , 15]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 가능해 영역 색칠하기
+vertices = np.array([[1, 0], [20, 0], [20, 19 / 2]])
+polygon = Polygon(vertices, alpha=0.3, color='pink')
+plt.gca().add_patch(polygon)
+
+# 그래프 설정
+plt.title('Feasible Area', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 20)
+plt.ylim(-1, 15)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+제약식의 공통 영역이 존재하지 않는다. 
+따라서 feasible area가 존재하지 않는다.
+
+# 3.2.6
+
+## a
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(-1, 70, 1000)
+x2 = np.linspace(-1, 70, 1000)
+
+# 제약 조건 경계선 그리기
+
+# -x1 + 2x2 ≤ 50
+x2_constraint2 = (50 + x1) / 2
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$-x_1 + 2x_2 = 50$')
+
+# -2x1 + x2 ≤ 50
+x2_constraint3 = 50 + 2*x1
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$-2x_1 + x_2 = 50$')
+
+# vector = np.array([2, 1])
+# plt.quiver(0, 0, 8 * vector[0], 8 * vector[1], angles='xy', scale_units='xy', scale=1, color='red')
+# plt.text(vector[0]+0.1, vector[1]+1, f'c({vector[0]}, {vector[1]})', fontsize=12)
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [70, 0], [70, 60], [0, 25]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 그래프 설정
+plt.title('Feasible Area', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 70)
+plt.ylim(-1, 70)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+$-x_1+2x_2 = 50$ 아래의 영역이 모두 feasible area 이므로 한계가 없다.
+
+## b
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(-45, 45, 1000)
+x2 = np.linspace(-1, 60, 1000)
+
+# 제약 조건 경계선 그리기
+
+# -x1 + 2x2 ≤ 50
+x2_constraint2 = (50 + x1) / 2
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$-x_1 + 2x_2 = 50$')
+
+# -2x1 + x2 ≤ 50
+x2_constraint3 = 50 + 2*x1
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$-2x_1 + x_2 = 50$')
+
+vector = np.array([-1, 1])
+plt.quiver(0, 0, 20 * vector[0], 20 * vector[1], angles='xy', scale_units='xy', scale=1, color='red')
+plt.text(vector[0]+0.1, vector[1]+1, f'c({vector[0]}, {vector[1]})', fontsize=12)
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [70, 0], [70, 60], [0, 25]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 여러 개의 등고선 그리기
+z_values = [3, 10, 25]  # 목적함수 값
+for z in z_values:
+    b = z  # y절편
+    
+    # x₁ 범위에서 직선 계산
+    iso_x1 = np.linspace(-45, 45, 100)
+    iso_x2 = iso_x1 + b  # 수직 직선의 방정식 (기울기가 1)
+    
+    # 등고선 그리기
+    plt.plot(iso_x1, iso_x2, 'k--', alpha=0.5)
+    
+    # 목적함수 값 표시
+    plt.text((z - 1) / 2, z + 0.01, f'z = {z}', fontsize=9, color='navy',
+            bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+# CPF 점들 표시
+cpf_points = [(0, 25)]
+cpf_x, cpf_y = zip(*cpf_points)
+plt.scatter(cpf_x, cpf_y, color='black', s=80, zorder=5)
+
+# CPF 점 라벨 추가
+for i, point in enumerate(cpf_points):
+    plt.annotate(f'$P_{i+1}$: {point}', 
+                 (point[0], point[1]), 
+                 xytext=(10, 10), 
+                 textcoords='offset points',
+                 fontsize=12)
+
+# 그래프 설정
+plt.title('Feasible Area', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-45, 45)
+plt.ylim(-1, 60)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+(0, 25)에서 최적해를 가진다.
+
+## c
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 100, 1000)
+x2 = np.linspace(-10, 50, 1000)
+
+# 제약 조건 경계선 그리기
+
+# -x1 + 2x2 ≤ 50
+x2_constraint2 = (50 + x1) / 2
+valid_x1 = x1[x2_constraint2 >= 0]
+valid_x2 = x2_constraint2[x2_constraint2 >= 0]
+plt.plot(valid_x1, valid_x2, 'g-', label='$-x_1 + 2x_2 = 50$')
+
+# -2x1 + x2 ≤ 50
+x2_constraint3 = 50 + 2*x1
+valid_x1 = x1[x2_constraint3 >= 0]
+valid_x2 = x2_constraint3[x2_constraint3 >= 0]
+plt.plot(valid_x1, valid_x2, 'b-', label='$-2x_1 + x_2 = 50$')
+
+vector = np.array([1, -1])
+plt.quiver(0, 0, 20 * vector[0], 20 * vector[1], angles='xy', scale_units='xy', scale=1, color='red')
+plt.text(vector[0]+0.1, vector[1]+1, f'c({vector[0]}, {vector[1]})', fontsize=12)
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [100, 0], [100, 75], [0, 25]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 여러 개의 등고선 그리기
+z_values = [0]  # 목적함수 값
+for z in z_values:
+    b = z  # y절편
+    
+    # x₁ 범위에서 직선 계산
+    iso_x1 = np.linspace(-20, 100, 100)
+    iso_x2 = iso_x1 + b  # 수직 직선의 방정식 (기울기가 1)
+    
+    # 등고선 그리기
+    plt.plot(iso_x1, iso_x2, 'k--', alpha=0.5)
+    
+    # 목적함수 값 표시
+    plt.text((z - 1) / 2, z + 0.01, f'z = {z}', fontsize=9, color='navy',
+            bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+plt.axis('equal')
+# CPF 점들 표시
+cpf_points = [(50, 50)]
+cpf_x, cpf_y = zip(*cpf_points)
+plt.scatter(cpf_x, cpf_y, color='black', s=80, zorder=5)
+
+# CPF 점 라벨 추가
+for i, point in enumerate(cpf_points):
+    plt.annotate(f'$P_{i+1}$: {point}', 
+                 (point[0], point[1]), 
+                 xytext=(10, 10), 
+                 textcoords='offset points',
+                 fontsize=12)
+
+# 그래프 설정
+plt.title('Feasible Area', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 30)
+plt.ylim(-20, 60)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+(50, 50)에서 최적해를 가진다.
+
+## d
+
+일단 part b, c에서 제시된 목적함수에 대한 최적해는 존재한다.
+
+하지만, 여기서 모델링한 모형은 feasible area가 무한하기 때문에 최적해가 무한대로 나올 수 있다. (목적 함수 벡터가 양의 방향이면 무한한 최적해가 나올 수 있을듯 하다.)
+
+이런 경우는 제약조건이 누락되었거나 잘못되었을 가능성이 높아보인다.
+
+# 4.1.1
+
+## a
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(8, 6))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# 제약 조건 경계선 그리기
+x = np.linspace(0, 10, 1000)
+
+# x1 ≤ 5 경계
+plt.plot([5, 5], [0, 10], 'r-', label='$x_1 ≤ 5$')
+
+# x2 ≤ 6 경계
+plt.plot([0, 10], [6, 6], 'g-', label='$x_2 ≤ 6$')
+
+# x1 + x2 ≤ 8 경계
+x1_for_constraint3 = np.linspace(0, 8, 100)
+x2_for_constraint3 = 8 - x1_for_constraint3
+plt.plot(x1_for_constraint3, x2_for_constraint3, 'b-', label='$x_1 + x_2 ≤ 8$')
+
+# 가능해 영역 색칠하기
+vertices = np.array([[0, 0], [5, 0], [5, 3], [2, 6], [0, 6]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# CPF 점들 표시
+cpf_points = [(0, 0), (5, 0), (5, 3), (2, 6), (0, 6)]
+cpf_x, cpf_y = zip(*cpf_points)
+plt.scatter(cpf_x, cpf_y, color='black', s=80, zorder=5)
+
+# CPF 점 라벨 추가
+for i, point in enumerate(cpf_points):
+    plt.annotate(f'$P_{i+1}$: {point}', 
+                 (point[0], point[1]), 
+                 xytext=(10, 10), 
+                 textcoords='offset points',
+                 fontsize=12)
+
+# 그래프 설정
+plt.title('Feasible Area and CPF', fontsize=14)
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(-1, 8)
+plt.ylim(-1, 8)
+plt.legend(loc='upper right')
+plt.tight_layout()
+plt.show()
+```
+
+## b
+
+\begin{table}[h]
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{10pt}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{CPF} & \textbf{경계선 방정식} \\
+\hline
+$P_1(0, 0)$ & $x_1 = 0$, $x_2 = 0$ \\
+\hline
+$P_2(5, 0)$ & $x_1 = 5$, $x_2 = 0$ \\
+\hline
+$P_3(5, 3)$ & $x_1 = 5$, $x_1 + x_2 = 8$ \\
+\hline
+$P_4(2, 6)$ & $x_2 = 6$, $x_1 + x_2 = 8$ \\
+\hline
+$P_5(0, 6)$ & $x_1 = 0$, $x_2 = 6$ \\
+\hline
+\end{tabularx}
+\end{table}
+
+## c
+
+그냥 각 CPF의 좌표가 경계선의 방정식을 푼 $x_1, x_2$ 값이다.
+
+\clearpage
+
+## d
+
+\begin{table}[h]
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{10pt}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{CPF} & \textbf{인접 CPF} \\
+\hline
+$P_1(0, 0)$ &  $P_2(5, 0)$, $P_5(0, 6)$ \\
+\hline
+$P_2(5, 0)$ &  $P_1(0, 0)$, $P_3(5, 3)$ \\
+\hline
+$P_3(5, 3)$ &  $P_2(5, 0)$, $P_4(2, 6)$ \\
+\hline
+$P_4(2, 6)$ &  $P_3(5, 3)$, $P_5(0, 6)$ \\
+\hline
+$P_5(0, 6)$ &  $P_1(0, 0)$, $P_4(2, 6)$ \\
+\hline
+\end{tabularx}
+\end{table}
+
+## e
+
+\begin{table}[h]
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{10pt}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{CPF 쌍} & \textbf{공유 제약식 경계선} \\
+\hline
+$P_1(0, 0)$, $P_2(5, 0)$ & $x_2 = 0$  \\
+\hline
+$P_1(0, 0)$, $P_5(0, 6)$ & $x_1 = 0$ \\
+\hline
+$P_2(5, 0)$, $P_3(5, 3)$ & $x_1 = 5$ \\
+\hline
+$P_3(5, 3)$, $P_4(2, 6)$ & $x_1 + x_2 = 8$ \\
+\hline
+$P_4(2, 6)$, $P_5(0, 6)$ & $x_2 = 6$ \\
+\hline
+\end{tabularx}
+\end{table}

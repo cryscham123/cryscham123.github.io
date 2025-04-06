@@ -1,0 +1,69 @@
+---
+title: "Intro"
+date: 2025-03-07
+categories: ["OR", "학부 정리"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## Business Analytics
+
+- Data Analysis
+    - Descriptive Analytics: What happened?
+    - Predictive Analytics: What will happen?
+- Operations Research
+    - Prescriptive Analytics: What should we do? (Optimization)
+
+## Process of OR Study
+
+```{mermaid}
+flowchart LR
+  A(Collect data) --> B(Define the problem)
+  B --> C{Data are sufficient?}
+  C -->|No| A
+  C -->|Yes| D(Formulate a model)
+  D --> E(Solve the model)
+  E --> F{Model is good?}
+  F -->|Yes| G(Interpret results make suggestions)
+  F -->|No| D
+```
+
+## LP Model (표준형)
+
+- 제한된 자원을 경쟁하는 활동들에게 가능한 최적으로 분배하거나 이와 비슷한 수학적 구조를 가진 문제를 다루는 방법
+
+\begin{aligned}
+max & \sum_{i=1}^{n} c_i x_i \\
+s.t. & \sum_{i=1}^{n} a_{ij} x_i \leq b_j, j ≤ m \\
+& x_1, x_2, ..., x_n ≥ 0
+\end{aligned}
+
+## LP의 가정
+
+- 선형계획은 현실을 단순화한 모델로, 아래의 네 가지 가정이 완벽히 맞지 않을 수 있음.
+- 작은 불일치는 허용 가능하며, 민감도 분석으로 보완.
+- 심각한 위반 시 대안 모델(비선형계획, 정수계획 등)을 사용하나, 선형계획의 강력한 알고리즘이 유리하므로 초기 분석에 활용 후 필요 시 복잡한 모델로 전환.
+
+1. 비례성(Proportionality)
+    - 정의: 목적함수와 제약식에서 활동 수준(예: xx)에 대한 기여도가 선형(비례적)으로 표현됨.
+    - 위반 사례:
+        1. 초기 투자비용(고정비용)이 있어 $Z=3x_1−1$이 되는 경우, 비례성이 깨짐.
+        1. 규모의 경제로 한계 이익이 증가하면 비례성이 위반됨.
+        1. 한계 이익이 감소(예: 마케팅 비용 증가)하면 역시 비례성이 깨짐.
+    - 대안: 비례성이 깨지면 비선형계획(12장)이나 혼합정수계획(11장)을 고려.
+
+2. 가합성(Additivity)
+    - 정의: 목적함수와 제약식의 값이 각 활동의 개별 기여도의 합으로 표현됨. 즉, 변수 간 교차곱이 없음.
+    - 위반 사례:
+        1. 제품 간 보완적 상호작용(예: 공동 광고 효과)으로 $Z=3x_1+5x_2+x_1x_2$가 됨.
+        1. 경쟁적 상호작용(예: 설비 공유로 비효율 발생)으로 $Z=3x_1+5x_2−x_1x_2$가 됨.
+    - 대안: 가합성이 위반되면 비선형계획(12장)으로 전환.
+
+3. 가분성(Divisibility)
+    - 정의: 의사결정 변수가 실수 값을 가질 수 있음. 즉, 활동 수준이 정수로 제한되지 않음.
+    - 위반 사례: 변수가 정수로 제한되면(예: 배치 단위가 1, 2, 3만 가능) 가분성이 깨짐.
+    - 대안: 정수계획(11장) 사용.
+
+4. 확실성(Certainty)
+    - 정의: 모델의 매개변수(예: $c_j, a_{ij}, b_i$)가 알려진 상수로 고정. 해당 상수는 미래 예측에 기반하므로 불확실성이 존재.
+    - 대응: 불확실성이 크면 민감도 분석(6.7절)으로 최적해의 변화를 확인하거나, 확률변수를 도입한 모델(23장) 사용.

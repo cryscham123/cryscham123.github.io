@@ -1,0 +1,61 @@
+---
+title: "Polynorminal Linear Regression"
+date: 2025-02-27
+categories: ["machine learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## preprocessing
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+dataset = pd.read_csv('_data/04.csv')
+x = dataset.iloc[:, 1:-1].values
+y = dataset.iloc[:, -1].values
+```
+
+## Linear Regression Model
+
+```{python}
+from sklearn.linear_model import LinearRegression
+
+regressor = LinearRegression()
+regressor.fit(x, y)
+```
+
+## Polynorminal Linear Regression
+
+```{python}
+from sklearn.preprocessing import PolynomialFeatures
+
+poly = PolynomialFeatures(degree=4)
+x_poly = poly.fit_transform(x)
+regressor2 = LinearRegression()
+regressor2.fit(x_poly, y)
+```
+
+## Visualize Linear Regression
+
+```{python}
+plt.scatter(x, y, color='red')
+plt.plot(x, regressor.predict(x), color='blue')
+plt.title('Linear Regression Model')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.show()
+```
+
+## Visualize Poly Linear Regression
+
+```{python}
+plt.scatter(x, y, color='red')
+plt.plot(x, regressor2.predict(x_poly), color='blue')
+plt.title('Poly Linear Regression Model')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.show()
+```
