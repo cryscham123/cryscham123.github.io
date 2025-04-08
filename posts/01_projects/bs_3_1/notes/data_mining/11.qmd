@@ -1,0 +1,32 @@
+---
+title: "Homework - 2"
+date: last-modified
+categories: ["data mining"]
+---
+
+```{python}
+import pandas as pd
+import warnings
+
+warnings.filterwarnings('ignore')
+
+dataset = pd.read_csv("_data/class/FFvote.csv")
+x = dataset.loc[:, 'gender_female':'score_intention'].values
+y = dataset['vote'].values
+```
+
+```{python}
+from sklearn.model_selection import KFold
+
+kf = KFold(n_splits=10, shuffle=True, random_state=42)
+
+```
+
+```{python}
+# from sklearn.neighbors import KNeighborsClassifier
+#
+# for i in (3, 4, 5):
+#     classifier = KNeighborsClassifier(n_neighbors=i)
+#     accuracies = cross_val_score(estimator=classifier, X=x, y=y, cv=kf, scoring='accuracy')
+#     print(f"Accuracy for {i} neighbors: {accuracies}")
+```

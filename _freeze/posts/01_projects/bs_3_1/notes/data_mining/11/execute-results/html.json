@@ -1,0 +1,12 @@
+{
+  "hash": "5aaac6e659b6cd299d1d3282f73354b8",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Homework - 2\"\ndate: last-modified\ncategories: [\"data mining\"]\n---\n\n::: {#93135004 .cell execution_count=1}\n``` {.python .cell-code}\nimport pandas as pd\nimport warnings\n\nwarnings.filterwarnings('ignore')\n\ndataset = pd.read_csv(\"_data/class/FFvote.csv\")\nx = dataset.loc[:, 'gender_female':'score_intention'].values\ny = dataset['vote'].values\n```\n:::\n\n\n::: {#504f5577 .cell execution_count=2}\n``` {.python .cell-code}\nfrom sklearn.model_selection import KFold\n\nkf = KFold(n_splits=10, shuffle=True, random_state=42)\n```\n:::\n\n\n::: {#2da4441a .cell execution_count=3}\n``` {.python .cell-code}\n# from sklearn.neighbors import KNeighborsClassifier\n#\n# for i in (3, 4, 5):\n#     classifier = KNeighborsClassifier(n_neighbors=i)\n#     accuracies = cross_val_score(estimator=classifier, X=x, y=y, cv=kf, scoring='accuracy')\n#     print(f\"Accuracy for {i} neighbors: {accuracies}\")\n```\n:::\n\n\n",
+    "supporting": [
+      "11_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
