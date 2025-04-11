@@ -10,23 +10,32 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-dataset = pd.read_csv("_data/class/FFvote.csv")
-x = dataset.loc[:, 'gender_female':'score_intention'].values
+dataset = pd.read_csv("./_data/class/FFvote.csv", encoding='utf-8')
+dataset.head()
+```
+
+```{python}
+X = dataset.loc[:, 'gender_female':'score_intention'].values
 y = dataset['vote'].values
 ```
 
+어떻게 하면 scaling을 간단하게 처리할 수 있을까 고민하던 중
+[sklearn pipeline 문서](https://scikit-learn.org/stable/modules/compose.html#pipeline-chaining-estimators)의 Safety 부분을 참고해서 작성해봤습니다.
+
 ```{python}
 from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
 
-kf = KFold(n_splits=10, shuffle=True, random_state=42)
+pipeline = make_pipeline(
+      StandardScaler(),
+      KNeighborsClassifier(n_neighbors=42)
+)
 
-```
-
-```{python}
-# from sklearn.neighbors import KNeighborsClassifier
-#
-# for i in (3, 4, 5):
-#     classifier = KNeighborsClassifier(n_neighbors=i)
-#     accuracies = cross_val_score(estimator=classifier, X=x, y=y, cv=kf, scoring='accuracy')
-#     print(f"Accuracy for {i} neighbors: {accuracies}")
+for k in (3, 4, 5):
+      kf = KFold(n_splits=k, shuffle=False)
+      accuracies = cross_val_score(pipeline, X, y, cv=kf, scoring='accuracy')
+      print(f"Accuracy for K={k}: {round(accuracies.mean(), 2)}")
 ```

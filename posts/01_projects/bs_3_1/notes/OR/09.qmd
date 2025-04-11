@@ -64,6 +64,7 @@ execute:
   0 & 1 & 1 \\
   1 & 2 & 0
 \end{bmatrix}$
+
 - $N = \begin{bmatrix}
   2 & 1 & 0 \\
   1 & 0 & 1 \\
@@ -99,7 +100,7 @@ execute:
   11
 \end{bmatrix}$
 
-- $NB^{-1} = \begin{bmatrix}
+- $B^{-1}N = \begin{bmatrix}
   2 & 1 & 0 \\
   1 & 0 & 1 \\
   1 & 0 & 0
@@ -108,9 +109,9 @@ execute:
   0 & 1 & 1 \\
   1 & 2 & 0
 \end{bmatrix} = \begin{bmatrix}
-  2 & 8 & 1 \\
-  2 & 5 & 0 \\
-  1 & 3 & 0
+  5 & 1 & 3 \\
+  2 & 0 & 1 \\
+  4 & 1 & 2
 \end{bmatrix}$
 
 - $c_BB^{-1}b = [-1, 0, 2] \begin{bmatrix}
@@ -130,25 +131,457 @@ $$
 \hline
  & Z & x_1 & x_2 & x_3 & x_4 & x_5 & x_6 &\text{RHS} \\
 \hline
-    & 1 & 2 & 0 & 0 & 1 & 1 & & 0 & 5 \\
-x_2 & 0 & 2 & 1 & 0 & 8 & 1 & 0 & 14 \\
-x_6 & 0 & 2 & 0 & 0 & 5 & 0 & 1 & 5 \\
-x_3 & 0 & 1 & 0 & 1 & 3 & 0 & 0 & 11 \\
+    & 1 & 2 & 0 & 0 & 1 & 1 & 0 & 8 \\
+x_2 & 0 & 5 & 1 & 0 & 1 & 3 & 0 & 14 \\
+x_6 & 0 & 2 & 0 & 0 & 0 & 1 & 1 & 5 \\
+x_3 & 0 & 4 & 0 & 1 & 1 & 2 & 0 & 11 \\
 \hline
 \end{array}
 $$
 
 ## b
 
+1. $x_1 = 0$
+1. $2x_1 - 2x_2 + 3x_3 = 5$
+1. $x_1 + x_2 - x_3 = 3$
+
 # 5.3-2
 
 ## a
 
+- $x_B = [x_2, x_4]$
+- $c_B = [3, 2]$
+- $c_N = [4, 1, 0, 0]$
+- $B^{-1} = \begin{bmatrix}
+  1 & -1 \\
+  -1 & 2
+\end{bmatrix}$
+- $N = \begin{bmatrix}
+  4 & 1 & 1 & 0 \\
+  3 & 2 & 0 & 1
+\end{bmatrix}$
+- $b = \begin{bmatrix}
+  5 \\
+  4
+\end{bmatrix}$
+
+- Reduced cost = $[3, 2] \begin{bmatrix}
+  1 & -1 \\
+  -1 & 2
+\end{bmatrix} \begin{bmatrix}
+  4 & 1 & 1 & 0 \\
+  3 & 2 & 0 & 1
+\end{bmatrix} - [4, 1, 0, 0] = [3, 2, 1, 1]$
+
+- resouce = $\begin{bmatrix}
+  1 & -1 \\
+  -1 & 2
+\end{bmatrix} \begin{bmatrix}
+  5 \\
+  4
+\end{bmatrix} = \begin{bmatrix}
+  1 \\
+  3
+\end{bmatrix}$
+
+- $B^{-1}N = \begin{bmatrix}
+  1 & -1 \\
+  -1 & 2
+\end{bmatrix} \begin{bmatrix}
+  4 & 1 & 1 & 0 \\
+  3 & 2 & 0 & 1
+\end{bmatrix} = \begin{bmatrix}
+  1 & -1 & 1 & 1 \\
+  2 & 3 & -1 & 3
+\end{bmatrix}$
+
+- $c_BB^{-1}b = [3, 2] \begin{bmatrix}
+  1 & -1 \\
+  -1 & 2
+\end{bmatrix} \begin{bmatrix}
+  5 \\
+  4
+\end{bmatrix} = 9$
+
+위의 정보들을 바탕으로 표를 채우면 다음과 같다.
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & x_5 & x_6 &\text{RHS} \\
+\hline
+    & 1 & 3 & 0 & 2 & 0 & 1 & 1 & 9 \\
+x_2 & 0 & 1 & 1 & -1 & 0 & 1 & -1 & 1 \\
+x_4 & 0 & 2 & 0 & 3 & 1 & -1 & 2 & 3 \\
+\hline
+\end{array}
+$$
+
 ## b
+
+1. $x_1 = 0$
+1. $x_3 = 0$
+1. $4x_1 + 2x_2 + x_3 + x_4 = 5$
+1. $3x_1 + x_2 + 2x_3 + x_4 = 4$
 
 # 5.3-3
 
+- $x_B = [x_5, x_3, x_1]$
+- $c_B = [0, 2, 6]$
+- $c_N = [1, 0, 0]$
+- $B^{-1} = \begin{bmatrix}
+  1 & 1 & 2 \\
+  -2 & 0 & 4 \\
+  1 & 0 & -1
+\end{bmatrix}$
+- $N = \begin{bmatrix}
+  2 & 1 & 0 \\
+  -2 & 0 & 0 \\
+  2 & 0 & 1
+\end{bmatrix}$
+- $b = \begin{bmatrix}
+  2 \\
+  3 \\
+  1
+\end{bmatrix}$
+
+- Reduced cost = $[0, 2, 6] \begin{bmatrix}
+  1 & 1 & 2 \\
+  -2 & 0 & 4 \\
+  1 & 0 & -1
+\end{bmatrix} \begin{bmatrix}
+  2 & 1 & 0 \\
+  -2 & 0 & 0 \\
+  2 & 0 & 1
+\end{bmatrix} - [1, 0, 0] = [7, 2, 2]$
+
+- resouce = $\begin{bmatrix}
+  1 & 1 & 2 \\
+  -2 & 0 & 4 \\
+  1 & 0 & -1
+\end{bmatrix} \begin{bmatrix}
+  2 \\
+  3 \\
+  1
+\end{bmatrix} = \begin{bmatrix}
+  7 \\
+  0 \\
+  1
+\end{bmatrix}$
+
+- $B^{-1}N = \begin{bmatrix}
+  1 & 1 & 2 \\
+  -2 & 0 & 4 \\
+  1 & 0 & -1
+\end{bmatrix} \begin{bmatrix}
+  2 & 1 & 0 \\
+  -2 & 0 & 0 \\
+  2 & 0 & 1
+\end{bmatrix} = \begin{bmatrix}
+  4 & 1 & 2 \\
+  4 & -2 & 4 \\
+  0 & 1 & -1
+\end{bmatrix}$
+
+- $c_BB^{-1}b = [0, 2, 6] \begin{bmatrix}
+  1 & 1 & 2 \\
+  -2 & 0 & 4 \\
+  1 & 0 & -1
+\end{bmatrix} \begin{bmatrix}
+  2 \\
+  3 \\
+  1
+\end{bmatrix} = 6$
+
+위의 정보들을 바탕으로 표를 채우면 다음과 같다.
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & x_5 & x_6 &\text{RHS} \\
+\hline
+    & 1 & 0 & 7 & 0 & 2 & 0 & 2 & 6 \\
+x_5 & 0 & 0 & 4 & 0 & 1 & 1 & 2 & 7 \\
+x_3 & 0 & 0 & 4 & 1 & -2 & 0 & 4 & 0 \\
+x_1 & 0 & 1 & 0 & 0 & 1 & 0 & -1 & 1 \\
+\hline
+\end{array}
+$$
 
 # 5.3-6
 
+- 반복 1
+  - $\text{row}_0$: $\text{row}_0 + \frac{5}{2}\text{row}_2$
+  - $\text{row}_3$: $\text{row}_3 - 2 \text{row}_2$
+- 반복 2
+  - $\text{row}_0$: $\text{row}_0 + \frac{5}{2}\text{row}_2 + \text{row}_3 - 2 \text{row}_2 = \text{row}_0 + \frac{3}{2}\text{row}_2 + \text{row}_3$
 
+최종 $\text{row}_0 = \text{row}_0 + 0 * \text{row}_1 + \frac{3}{2}\text{row}_2 + \text{row}_3$
+
+따라서 문제의 그림과 같은 형태가 나옴.
+
+# 6.1-5
+
+## a
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & W = 15y_1 + 25y_2 \\
+\text{Subject to} \quad & y_1 ≥ 5 \\
+& y_2 ≥ 4 \\
+& y_1 + 2y_2 ≥ 3
+\end{aligned}
+$$
+
+## b
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+plt.figure(figsize=(8, 8))  # 정사각형 비율로 변경
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# y1, y2 범위 설정
+y1 = np.linspace(0, 15, 1000)
+y2 = np.linspace(0, 15, 1000)
+
+# 제약 조건 경계선 그리기
+# y₁ ≥ 5
+plt.plot([5, 5], [0, 15], 'r-', label='$y_1 = 5$')
+
+# y₂ ≥ 4
+plt.plot([0, 15], [4, 4], 'g-', label='$y_2 = 4$')
+
+# y₁ + 2y₂ ≥ 3
+y2_constraint3 = (3 - y1) / 2
+valid_y1 = y1[y1 <= 3]  # y1이 3 이하일 때 y2가 양수
+valid_y2 = y2_constraint3[y1 <= 3]
+plt.plot(valid_y1, valid_y2, 'b-', label='$y_1 + 2y_2 = 3$')
+
+# 목적 함수 방향 벡터 (15, 25)
+vector = np.array([15, 25])
+normalized_vector = vector / np.linalg.norm(vector) * 3  # 벡터 크기 조정
+plt.quiver(0, 0, normalized_vector[0], normalized_vector[1], 
+           angles='xy', scale_units='xy', scale=1, color='red')
+plt.text(normalized_vector[0]+0.1, normalized_vector[1]+0.2, 
+         f'c({vector[0]}, {vector[1]})', fontsize=12)
+
+# 가능 해 영역 색칠하기 (y₁ ≥ 5, y₂ ≥ 4, y₁ + 2y₂ ≥ 3의 교집합)
+# 최적해는 y₁ = 5, y₂ = 4일 것으로 예상됨
+vertices = np.array([[5, 4], [15, 4], [15, 15], [5, 15]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 여러 목적 함수 값에 대한 등고선 그리기
+W_values = [100, 150, 175, 200, 225]  # 목적 함수 값
+for W in W_values:
+    # y₂ = (W - 15y₁) / 25
+    iso_y1 = np.linspace(0, 15, 100)
+    iso_y2 = (W - 15 * iso_y1) / 25
+    valid_indices = (iso_y2 >= 0) & (iso_y2 <= 15)
+    plt.plot(iso_y1[valid_indices], iso_y2[valid_indices], 'k--', alpha=0.5)
+    # 목적 함수 값 표시
+    mid_idx = np.where(valid_indices)[0][len(np.where(valid_indices)[0])//2]
+    plt.text(iso_y1[mid_idx], iso_y2[mid_idx], f'W = {W}', 
+             fontsize=9, color='navy',
+             bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+# 그래프 설정
+plt.xlabel('$y_1$', fontsize=12)
+plt.ylabel('$y_2$', fontsize=12)
+plt.xlim(0, 14)
+plt.ylim(0, 14)
+plt.legend(loc='upper right')
+plt.tight_layout(pad=1.1)
+```
+
+- 최적해는 175.
+- 이때 $y_1 = 5$이고 $y_2 = 4$이다.
+
+## c
+
+자동으로 풀라는 말은 프로그램을 쓰라는 말로 해석해서 gurobi를 사용했습니다.
+
+```{python}
+#| echo: true
+
+from gurobipy import *
+
+model = Model("ex6.1-5")
+model.setParam(GRB.Param.OutputFlag, 0)
+
+x1 = model.addVar(vtype=GRB.CONTINUOUS, name="x1")
+x2 = model.addVar(vtype=GRB.CONTINUOUS, name="x2")
+x3 = model.addVar(vtype=GRB.CONTINUOUS, name="x3")
+
+model.setObjective(5 * x1 + 4 * x2 + 3 * x3, GRB.MAXIMIZE)
+
+model.addConstr(x1 + x3 <= 15)
+model.addConstr(x2 + 2 * x3 <= 25)
+
+model.optimize()
+
+for var in model.getVars():
+    print(f"{var.varName}: {var.x}")
+print("Answer is ", model.objVal)
+```
+
+# 6.1-7
+
+## a
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+# 그래프 설정
+plt.figure(figsize=(10, 7))
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# x1, x2 범위 설정
+x1 = np.linspace(0, 25, 1000)
+x2 = np.linspace(0, 25, 1000)
+
+# 제약 조건 경계선 그리기
+# 4x₁ + x₂ ≤ 20
+x2_constraint1 = 20 - 4 * x1
+valid_x1 = x1[x1 <= 5]  # x1이 5 이하일 때 x2가 양수
+plt.plot(valid_x1, x2_constraint1[x1 <= 5], 'r-', label='$4x_1 + x_2 = 20$')
+
+# -x₁ + x₂ ≤ 10
+x2_constraint2 = 10 + x1
+plt.plot(x1, x2_constraint2, 'g-', label='$-x_1 + x_2 = 10$')
+
+# 영역 제한 x₁ ≥ 0, x₂ ≥ 0
+
+# 목적 함수 방향 벡터 (2, 3)
+vector = np.array([2, 3])
+normalized_vector = vector / np.linalg.norm(vector) * 3  # 벡터 크기 조정
+plt.quiver(0, 0, normalized_vector[0], normalized_vector[1], 
+           angles='xy', scale_units='xy', scale=1, color='red')
+plt.text(normalized_vector[0]+0.1, normalized_vector[1]+0.2, 
+         f'c({vector[0]}, {vector[1]})', fontsize=12)
+
+# 가능 해 영역 색칠하기
+# 제약 조건들의 교집합 영역
+# 두 제약 조건의 교점 계산: 4x₁ + x₂ = 20과 -x₁ + x₂ = 10의 교점
+# 4x₁ + x₂ = 20
+# -x₁ + x₂ = 10
+# 따라서 5x₁ = 10 => x₁ = 2, x₂ = 12
+vertices = np.array([[0, 0], [0, 10], [2, 12], [5, 0]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 여러 목적 함수 값에 대한 등고선 그리기
+Z_values = [10, 20, 30, 40]  # 목적 함수 값
+for Z in Z_values:
+    # x₂ = (Z - 2x₁) / 3
+    iso_x1 = np.linspace(0, 25, 100)
+    iso_x2 = (Z - 2 * iso_x1) / 3
+    valid_indices = (iso_x2 >= 0) & (iso_x2 <= 25)
+    plt.plot(iso_x1[valid_indices], iso_x2[valid_indices], 'k--', alpha=0.5)
+    # 목적 함수 값 표시
+    if np.any(valid_indices):
+        mid_idx = np.where(valid_indices)[0][len(np.where(valid_indices)[0])//2]
+        plt.text(iso_x1[mid_idx], iso_x2[mid_idx], f'Z = {Z}', 
+                fontsize=9, color='navy',
+                bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+# 최적해 표시 (2, 12)
+plt.plot(2, 12, 'ro', markersize=8)
+plt.text(2.1, 12.3, 'Optimal (2, 12)', fontsize=11)
+
+plt.xlabel('$x_1$', fontsize=12)
+plt.ylabel('$x_2$', fontsize=12)
+plt.xlim(0, 8)
+plt.ylim(0, 20)
+plt.axis('equal')
+plt.legend(loc='upper right')
+plt.tight_layout(pad=1.1)
+```
+
+- 문제에서는 가능해들을 가지지 못함을 보이라 했는데 가능해를 가진다.
+
+## b
+
+$$
+\begin{aligned}
+\text{Minimize} \quad & W = 20y_1 + 10y_2 \\
+\text{Subject to} \quad & 4y_1 - y_2 ≥ 2 \\
+& y_1 + y_2 ≥ 3
+\end{aligned}
+$$
+
+## c
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
+plt.figure(figsize=(8, 8))  # 정사각형 비율로 변경
+plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+
+# y1, y2 범위 설정
+y1 = np.linspace(0, 15, 1000)
+y2 = np.linspace(0, 15, 1000)
+
+# 제약 조건 경계선 그리기
+
+# 4y₁ - y₂ ≥ 2
+y2_constraint3 = (4 * y1 - 2)
+valid_y1 = y1[y1 >= 1/2]  # y1이 3 이하일 때 y2가 양수
+valid_y2 = y2_constraint3[y1 >= 1/2]
+plt.plot(valid_y1, valid_y2, 'g-', label='$4y_1 - y_2 = 2$')
+
+# y₁ + y₂ ≥ 3
+y2_constraint3 = 3 - y1
+valid_y1 = y1[y1 <= 3]  # y1이 3 이하일 때 y2가 양수
+valid_y2 = y2_constraint3[y1 <= 3]
+plt.plot(valid_y1, valid_y2, 'b-', label='$y_1 + y_2 = 3$')
+
+# 목적 함수 방향 벡터 (15, 25)
+# 목적 함수 방향 벡터 (20, 10)
+vector = np.array([20, 10])
+normalized_vector = vector / np.linalg.norm(vector) * 3  # 벡터 크기 조정
+plt.quiver(0, 0, normalized_vector[0], normalized_vector[1], 
+           angles='xy', scale_units='xy', scale=1, color='red')
+plt.text(normalized_vector[0]+0.1, normalized_vector[1]+0.2, 
+         f'c({vector[0]}, {vector[1]})', fontsize=12)
+
+# 가능 해 영역 색칠하기 (y₁ ≥ 5, y₂ ≥ 4, y₁ + 2y₂ ≥ 3의 교집합)
+# 최적해는 y₁ = 5, y₂ = 4일 것으로 예상됨
+vertices = np.array([[0, 3], [1, 2], [4, 14], [0, 14]])
+polygon = Polygon(vertices, alpha=0.3, color='skyblue')
+plt.gca().add_patch(polygon)
+
+# 여러 목적 함수 값에 대한 등고선 그리기
+W_values = [20, 40, 60]  # 목적 함수 값
+for W in W_values:
+    # y₂ = (W - 20y₁) / 10
+    iso_y1 = np.linspace(0, 15, 100)
+    iso_y2 = (W - 20 * iso_y1) / 10
+    valid_indices = (iso_y2 >= 0) & (iso_y2 <= 15)
+    plt.plot(iso_y1[valid_indices], iso_y2[valid_indices], 'k--', alpha=0.5)
+    # 목적 함수 값 표시
+    mid_idx = np.where(valid_indices)[0][len(np.where(valid_indices)[0])//2]
+    plt.text(iso_y1[mid_idx], iso_y2[mid_idx], f'W = {W}', 
+             fontsize=9, color='navy',
+             bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
+
+# 그래프 설정
+plt.xlabel('$y_1$', fontsize=12)
+plt.ylabel('$y_2$', fontsize=12)
+plt.xlim(0, 14)
+plt.ylim(0, 14)
+plt.legend(loc='upper right')
+plt.tight_layout(pad=1.1)
+```
+
+- 최적해는 40.

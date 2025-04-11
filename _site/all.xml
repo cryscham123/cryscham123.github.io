@@ -15,15 +15,15 @@
 <link>https://cryscham123.github.io/all.html</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Tue, 08 Apr 2025 11:43:42 GMT</lastBuildDate>
+<lastBuildDate>Thu, 10 Apr 2025 09:49:46 GMT</lastBuildDate>
 <item>
   <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</link>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/09.pdf</link>
   <description><![CDATA[ undefined ]]></description>
   <category>보고서</category>
-  <category>데이터 마이닝</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</guid>
-  <pubDate>Tue, 08 Apr 2025 11:43:42 GMT</pubDate>
+  <category>OR</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/09.pdf</guid>
+  <pubDate>Thu, 10 Apr 2025 09:49:46 GMT</pubDate>
 </item>
 <item>
   <title>Homework - 2</title>
@@ -33,7 +33,7 @@
 
 
 
-<div id="93135004" class="cell" data-execution_count="1">
+<div id="64feb5e7" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -51,62 +51,250 @@ font-style: inherit;">'ignore'</span>)</span>
 background-color: null;
 font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"_data/class/FFvote.csv"</span>)</span>
-<span id="cb1-7">x <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"./_data/class/FFvote.csv"</span>, encoding<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'utf-8'</span>)</span>
+<span id="cb1-7">dataset.head()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th">gender_female</th>
+<th data-quarto-table-cell-role="th">gender_male</th>
+<th data-quarto-table-cell-role="th">region_Chuncheung</th>
+<th data-quarto-table-cell-role="th">region_Honam</th>
+<th data-quarto-table-cell-role="th">region_Sudo</th>
+<th data-quarto-table-cell-role="th">region_Youngnam</th>
+<th data-quarto-table-cell-role="th">region_others</th>
+<th data-quarto-table-cell-role="th">edu</th>
+<th data-quarto-table-cell-role="th">income</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">score_gov</th>
+<th data-quarto-table-cell-role="th">score_progress</th>
+<th data-quarto-table-cell-role="th">score_intention</th>
+<th data-quarto-table-cell-role="th">vote</th>
+<th data-quarto-table-cell-role="th">parties</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1.0</td>
+<td>0.666667</td>
+<td>0.666667</td>
+<td>0.25</td>
+<td>0.25</td>
+<td>0.75</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.5</td>
+<td>0.666667</td>
+<td>0.666667</td>
+<td>0.25</td>
+<td>0.75</td>
+<td>0.50</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.0</td>
+<td>0.333333</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>0.50</td>
+<td>0.45</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.5</td>
+<td>0.000000</td>
+<td>0.666667</td>
+<td>1.00</td>
+<td>0.75</td>
+<td>0.40</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.0</td>
+<td>0.333333</td>
+<td>1.000000</td>
+<td>0.75</td>
+<td>0.50</td>
+<td>0.35</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="50fd98ac" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">X <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> dataset.loc[:, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'gender_female'</span>:<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'score_intention'</span>].values</span>
-<span id="cb1-8">y <span class="op" style="color: #5E5E5E;
+<span id="cb2-2">y <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> dataset[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'vote'</span>].values</span></code></pre></div>
 </div>
-<div id="504f5577" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+<p>어떻게 하면 scaling을 간단하게 처리할 수 있을까 고민하던 중 <a href="https://scikit-learn.org/stable/modules/compose.html#pipeline-chaining-estimators">sklearn pipeline 문서</a>의 Safety 부분을 참고해서 작성해봤습니다.</p>
+<div id="1127f4ac" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> KFold</span>
-<span id="cb2-2"></span>
-<span id="cb2-3">kf <span class="op" style="color: #5E5E5E;
+<span id="cb3-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> cross_val_score</span>
+<span id="cb3-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.neighbors <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> KNeighborsClassifier</span>
+<span id="cb3-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> StandardScaler</span>
+<span id="cb3-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.pipeline <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> make_pipeline</span>
+<span id="cb3-6"></span>
+<span id="cb3-7">pipeline <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> make_pipeline(</span>
+<span id="cb3-8">      StandardScaler(),</span>
+<span id="cb3-9">      KNeighborsClassifier(n_neighbors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>)</span>
+<span id="cb3-10">)</span>
+<span id="cb3-11"></span>
+<span id="cb3-12"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>):</span>
+<span id="cb3-13">      kf <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> KFold(n_splits<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, shuffle<span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span>k, shuffle<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">True</span>, random_state<span class="op" style="color: #5E5E5E;
+font-style: inherit;">False</span>)</span>
+<span id="cb3-14">      accuracies <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+font-style: inherit;">=</span> cross_val_score(pipeline, X, y, cv<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">42</span>)</span></code></pre></div>
+font-style: inherit;">=</span>kf, scoring<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>)</span>
+<span id="cb3-15">      <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Accuracy for K=</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>k<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(accuracies.mean(), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy for K=3: 0.71
+Accuracy for K=4: 0.71
+Accuracy for K=5: 0.72</code></pre>
 </div>
-<div id="2da4441a" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># from sklearn.neighbors import KNeighborsClassifier</span></span>
-<span id="cb3-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#</span></span>
-<span id="cb3-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># for i in (3, 4, 5):</span></span>
-<span id="cb3-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     classifier = KNeighborsClassifier(n_neighbors=i)</span></span>
-<span id="cb3-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     accuracies = cross_val_score(estimator=classifier, X=x, y=y, cv=kf, scoring='accuracy')</span></span>
-<span id="cb3-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     print(f"Accuracy for {i} neighbors: {accuracies}")</span></span></code></pre></div>
 </div>
 
 
@@ -114,16 +302,7 @@ font-style: inherit;">#     print(f"Accuracy for {i} neighbors: {accuracies}")</
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>data mining</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/11.html</guid>
-  <pubDate>Tue, 08 Apr 2025 11:08:05 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/09.pdf</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>보고서</category>
-  <category>OR</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/09.pdf</guid>
-  <pubDate>Mon, 07 Apr 2025 08:16:23 GMT</pubDate>
+  <pubDate>Thu, 10 Apr 2025 00:54:37 GMT</pubDate>
 </item>
 <item>
   <title>프로세스 성과에 미치는 변동성의 영향: 대기시간 문제</title>
@@ -135,13 +314,44 @@ font-style: inherit;">#     print(f"Accuracy for {i} neighbors: {accuracies}")</
 
 <p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <p>다다음주 월요일 - 수업 x</p>
+<ul>
+<li><p>변동성을 고려해야 한다.</p></li>
+<li><p>재고, 대기시간, 산출손실에 영향을 줌</p></li>
+</ul>
+<p>IU가 100 이하여도 대기가 발생할 수 있음</p>
+<ul>
+<li>변동성의 원인
+<ol type="1">
+<li>흐름단위의 input</li>
+<li>processing time의 변동성</li>
+<li>자원의 무작위적 가용성</li>
+<li>복수의 흐름단위가 무작위적 경로결정</li>
+</ol></li>
+</ul>
+<section id="대기시간-예측-단일-자원" class="level2">
+<h2 class="anchored" data-anchor-id="대기시간-예측-단일-자원">대기시간 예측 (단일 자원)</h2>
+<ul>
+<li><p>if D &gt; C, 대기 - 처리능력 부족 (+ 변동성)</p></li>
+<li><p>if D &lt; C, 대기 - 변동성</p></li>
+<li><p>안정적 도착: 평균 고객 수가 시점에 의존하지 않고, 길이에만 의존함</p></li>
+</ul>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>생산시스템관리</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/07.html</guid>
-  <pubDate>Sun, 06 Apr 2025 15:00:00 GMT</pubDate>
+  <pubDate>Tue, 08 Apr 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>보고서</category>
+  <category>데이터 마이닝</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</guid>
+  <pubDate>Tue, 08 Apr 2025 12:08:39 GMT</pubDate>
 </item>
 <item>
   <title></title>
@@ -340,7 +550,7 @@ font-style: inherit;">        """</span>,</span>
 </ul>
 <section id="general" class="level2">
 <h2 class="anchored" data-anchor-id="general">General</h2>
-<div id="784e6e76" class="cell" data-execution_count="1">
+<div id="b01a4c9a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -396,7 +606,9 @@ font-style: inherit;">=</span> [<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+font-style: inherit;">6</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -416,30 +628,36 @@ background-color: null;
 font-style: inherit;">=</span> [</span>
 <span id="cb1-12">    [<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>, <span class="op" style="color: #5E5E5E;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, Fraction(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>],</span>
+<span id="cb1-13">    [<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+font-style: inherit;">4</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>Fraction(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>],</span>
-<span id="cb1-13">    [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+font-style: inherit;">2</span>), <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -450,13 +668,13 @@ background-color: null;
 font-style: inherit;">3</span>],</span>
 <span id="cb1-14">    [<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>, <span class="op" style="color: #5E5E5E;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+font-style: inherit;">2</span>, Fraction(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+font-style: inherit;">2</span>), <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -464,7 +682,7 @@ font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>],</span>
+font-style: inherit;">1</span>]</span>
 <span id="cb1-15">]</span>
 <span id="cb1-16">basic <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -1058,17 +1276,17 @@ Iteration 1
 
 Current Simplex Tableau:
 +----+-----+------+------+------+------+------+------+-------+
-|    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   x6 |   RHS |
+|    |   Z |   x1 |   x2 | x3   |   x4 |   x5 |   x6 |   RHS |
 +====+=====+======+======+======+======+======+======+=======+
-| Z  |   1 |   -1 |    1 |   -2 |    0 |    0 |    0 |     0 |
+| Z  |   1 |   -6 |   -1 | -2   |    0 |    0 |    0 |     0 |
 +----+-----+------+------+------+------+------+------+-------+
-| x4 |   0 |    2 |   -2 |    3 |    1 |    0 |    0 |     5 |
+| x4 |   0 |    2 |    2 | 1/2  |    1 |    0 |    0 |     2 |
 +----+-----+------+------+------+------+------+------+-------+
-| x5 |   0 |    1 |    1 |   -1 |    0 |    1 |    0 |     3 |
+| x5 |   0 |   -4 |   -2 | -3/2 |    0 |    1 |    0 |     3 |
 +----+-----+------+------+------+------+------+------+-------+
-| x6 |   0 |    1 |   -1 |    1 |    0 |    0 |    1 |     2 |
+| x6 |   0 |    1 |    2 | 1/2  |    0 |    0 |    1 |     1 |
 +----+-----+------+------+------+------+------+------+-------+
-Entering variable: x3
+Entering variable: x1
 Leaving variable: x4
 
 Iteration 2
@@ -1076,18 +1294,18 @@ Iteration 2
 
 Current Simplex Tableau:
 +----+-----+------+------+------+------+------+------+-------+
-|    |   Z | x1   | x2   |   x3 | x4   |   x5 |   x6 | RHS   |
+|    |   Z |   x1 |   x2 | x3   | x4   |   x5 |   x6 |   RHS |
 +====+=====+======+======+======+======+======+======+=======+
-| Z  |   1 | 1/3  | -1/3 |    0 | 2/3  |    0 |    0 | 10/3  |
+| Z  |   1 |    0 |    5 | -1/2 | 3    |    0 |    0 |     6 |
 +----+-----+------+------+------+------+------+------+-------+
-| x3 |   0 | 2/3  | -2/3 |    1 | 1/3  |    0 |    0 | 5/3   |
+| x1 |   0 |    1 |    1 | 1/4  | 1/2  |    0 |    0 |     1 |
 +----+-----+------+------+------+------+------+------+-------+
-| x5 |   0 | 5/3  | 1/3  |    0 | 1/3  |    1 |    0 | 14/3  |
+| x5 |   0 |    0 |    2 | -1/2 | 2    |    1 |    0 |     7 |
 +----+-----+------+------+------+------+------+------+-------+
-| x6 |   0 | 1/3  | -1/3 |    0 | -1/3 |    0 |    1 | 1/3   |
+| x6 |   0 |    0 |    1 | 1/4  | -1/2 |    0 |    1 |     0 |
 +----+-----+------+------+------+------+------+------+-------+
-Entering variable: x2
-Leaving variable: x5
+Entering variable: x3
+Leaving variable: x6
 
 Iteration 3
 ============================================================
@@ -1096,29 +1314,29 @@ Current Simplex Tableau:
 +----+-----+------+------+------+------+------+------+-------+
 |    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   x6 |   RHS |
 +====+=====+======+======+======+======+======+======+=======+
-| Z  |   1 |    2 |    0 |    0 |    1 |    1 |    0 |     8 |
+| Z  |   1 |    0 |    7 |    0 |    2 |    0 |    2 |     6 |
 +----+-----+------+------+------+------+------+------+-------+
-| x3 |   0 |    4 |    0 |    1 |    1 |    2 |    0 |    11 |
+| x1 |   0 |    1 |    0 |    0 |    1 |    0 |   -1 |     1 |
 +----+-----+------+------+------+------+------+------+-------+
-| x2 |   0 |    5 |    1 |    0 |    1 |    3 |    0 |    14 |
+| x5 |   0 |    0 |    4 |    0 |    1 |    1 |    2 |     7 |
 +----+-----+------+------+------+------+------+------+-------+
-| x6 |   0 |    2 |    0 |    0 |    0 |    1 |    1 |     5 |
+| x3 |   0 |    0 |    4 |    1 |   -2 |    0 |    4 |     0 |
 +----+-----+------+------+------+------+------+------+-------+
 Optimal solution reached.
 Optimal Solution:
-x1 = 0
-x2 = 14
-x3 = 11
+x1 = 1
+x2 = 0
+x3 = 0
 x4 = 0
-x5 = 0
-x6 = 5
-Objective Value = 8</code></pre>
+x5 = 7
+x6 = 0
+Objective Value = 6</code></pre>
 </div>
 </div>
 </section>
 <section id="big-m-method" class="level2">
 <h2 class="anchored" data-anchor-id="big-m-method">Big M Method</h2>
-<div id="41d1cafa" class="cell" data-execution_count="2">
+<div id="0f230ea8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -1952,7 +2170,7 @@ Objective Value = -7</code></pre>
 </section>
 <section id="grubi" class="level2">
 <h2 class="anchored" data-anchor-id="grubi">Grubi</h2>
-<div id="e66a8016" class="cell" data-execution_count="3">
+<div id="508f36bf" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> gurobipy <span class="im" style="color: #00769E;
@@ -1988,141 +2206,48 @@ background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"x2"</span>)</span>
-<span id="cb5-8">x3 <span class="op" style="color: #5E5E5E;
+<span id="cb5-8"></span>
+<span id="cb5-9">model.setObjective(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">=</span> model.addVar(vtype<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>GRB.CONTINUOUS, name<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x3"</span>)</span>
-<span id="cb5-9">x4 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> model.addVar(vtype<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>GRB.CONTINUOUS, name<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x4"</span>)</span>
-<span id="cb5-10">x5 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> model.addVar(vtype<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>GRB.CONTINUOUS, name<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x5"</span>)</span>
-<span id="cb5-11"></span>
-<span id="cb5-12">model.setObjective(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">20</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> x1 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">8</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">*</span> x2 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x3 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+font-style: inherit;">*</span> x2, GRB.MINIMIZE)</span>
+<span id="cb5-10"></span>
+<span id="cb5-11">model.addConstr(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">*</span> x4 <span class="op" style="color: #5E5E5E;
+font-style: inherit;">*</span> x1 <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+font-style: inherit;">-</span> x2 <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">6</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">*</span> x5, GRB.MAXIMIZE)</span>
+font-style: inherit;">2</span>)</span>
+<span id="cb5-12">model.addConstr(x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
 <span id="cb5-13"></span>
-<span id="cb5-14">model.addConstr(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x1 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x2 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x3 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x4 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x5 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>)</span>
-<span id="cb5-15">model.addConstr(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x1 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x2 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x3 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x4 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x5 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">30</span>)</span>
-<span id="cb5-16"></span>
-<span id="cb5-17">model.optimize()</span>
-<span id="cb5-18"></span>
-<span id="cb5-19"><span class="cf" style="color: #003B4F;
+<span id="cb5-14">model.optimize()</span>
+<span id="cb5-15"></span>
+<span id="cb5-16"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> var <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> model.getVars():</span>
-<span id="cb5-20">    <span class="bu" style="color: null;
+<span id="cb5-17">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -2143,19 +2268,15 @@ background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb5-21"><span class="bu" style="color: null;
+<span id="cb5-18"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Obj: "</span>, model.objVal)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Restricted license - for non-production use only - expires 2026-11-23
-x1: 0.0
-x2: 0.0
-x3: 0.0
-x4: 5.0
-x5: 5.0
-Obj:  50.0</code></pre>
+<pre><code>x1: 1.0
+x2: 2.0
+Obj:  40.0</code></pre>
 </div>
 </div>
 
@@ -2221,6 +2342,14 @@ Obj:  50.0</code></pre>
 <ul>
 <li>외부 공급자에게 부품을 주문하여 생산 및 배송이 이루어지는 경우</li>
 </ul>
+<ol type="1">
+<li>구매비용(purchase cost / variable cost)</li>
+<li>단위 재고 비용</li>
+<li>셋업(주문) 비용 (Fixed cost)</li>
+</ol>
+</section>
+<section id="buffer-or-suffer" class="level2">
+<h2 class="anchored" data-anchor-id="buffer-or-suffer">buffer or suffer</h2>
 
 
 </section>
@@ -2228,6 +2357,23 @@ Obj:  50.0</code></pre>
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>생산시스템관리</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/06.html</guid>
+  <pubDate>Tue, 01 Apr 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Data Transformation</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/12.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/12.html</guid>
   <pubDate>Tue, 01 Apr 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
@@ -3390,6 +3536,12 @@ font-style: inherit;">print</span>(regressor.score(X_test, y_test))</span></code
 </section>
 <section id="소표본-가설검정" class="level2">
 <h2 class="anchored" data-anchor-id="소표본-가설검정">소표본 가설검정</h2>
+<ul>
+<li>쌍체표본: 두 집단이 독립이 아니고 서로 연관되어 있는 경우
+<ul>
+<li>각 쌍의 차이를 계산하여 단일 표본으로 변환 후 분석할 수 있습니다.</li>
+</ul></li>
+</ul>
 
 
 </section>
@@ -5592,585 +5744,6 @@ Freq: D, Name: A, dtype: bool</code></pre>
 </section></div> ]]></description>
   <category>생산시스템관리</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/03.html</guid>
-  <pubDate>Tue, 18 Mar 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>pandas</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/04.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<div id="a4784658" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> pd</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-3"></span>
-<span id="cb1-4">data <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> {</span>
-<span id="cb1-5">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'name'</span>: [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'John'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Anna'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Peter'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Linda'</span>],</span>
-<span id="cb1-6">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'location'</span>: [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'New York'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Paris'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Berlin'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'London'</span>],</span>
-<span id="cb1-7">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'age'</span>: [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">24</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">13</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">53</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">33</span>]</span>
-<span id="cb1-8">}</span>
-<span id="cb1-9">df <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.DataFrame(data)</span></code></pre></div>
-</div>
-<div id="f6729016" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df.loc[(df[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'age'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> (df[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'age'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">50</span>), <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'location'</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>0    New York
-3      London
-Name: location, dtype: object</code></pre>
-</div>
-</div>
-<div id="f37b3fda" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">df <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.DataFrame(np.random.randn(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span>))</span>
-<span id="cb4-2">df</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">0</th>
-<th data-quarto-table-cell-role="th">1</th>
-<th data-quarto-table-cell-role="th">2</th>
-<th data-quarto-table-cell-role="th">3</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>1.204059</td>
-<td>-0.335996</td>
-<td>-0.818220</td>
-<td>0.861070</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>0.868450</td>
-<td>-0.164946</td>
-<td>0.917664</td>
-<td>-1.945286</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>0.291923</td>
-<td>-0.328159</td>
-<td>1.166051</td>
-<td>-0.479075</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>0.766692</td>
-<td>0.123853</td>
-<td>0.487815</td>
-<td>-0.161050</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>-1.695214</td>
-<td>-0.001611</td>
-<td>-0.631717</td>
-<td>-0.148206</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>-0.354958</td>
-<td>0.263346</td>
-<td>-0.822940</td>
-<td>0.523039</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="7ea61d8a" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df.columns <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'A'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'B'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'C'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'D'</span>]</span>
-<span id="cb5-2">df.index <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.date_range(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'20250101'</span>, periods<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>)</span>
-<span id="cb5-3">df</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">A</th>
-<th data-quarto-table-cell-role="th">B</th>
-<th data-quarto-table-cell-role="th">C</th>
-<th data-quarto-table-cell-role="th">D</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.204059</td>
-<td>-0.335996</td>
-<td>-0.818220</td>
-<td>0.861070</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-02</td>
-<td>0.868450</td>
-<td>-0.164946</td>
-<td>0.917664</td>
-<td>-1.945286</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>0.291923</td>
-<td>-0.328159</td>
-<td>1.166051</td>
-<td>-0.479075</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-04</td>
-<td>0.766692</td>
-<td>0.123853</td>
-<td>0.487815</td>
-<td>-0.161050</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.695214</td>
-<td>-0.001611</td>
-<td>-0.631717</td>
-<td>-0.148206</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>-0.354958</td>
-<td>0.263346</td>
-<td>-0.822940</td>
-<td>0.523039</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="56fd0558" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">df[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'F'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1.0</span>, np.nan, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6.1</span>, np.nan, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7.0</span>]</span>
-<span id="cb6-2">df</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">A</th>
-<th data-quarto-table-cell-role="th">B</th>
-<th data-quarto-table-cell-role="th">C</th>
-<th data-quarto-table-cell-role="th">D</th>
-<th data-quarto-table-cell-role="th">F</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.204059</td>
-<td>-0.335996</td>
-<td>-0.818220</td>
-<td>0.861070</td>
-<td>1.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-02</td>
-<td>0.868450</td>
-<td>-0.164946</td>
-<td>0.917664</td>
-<td>-1.945286</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>0.291923</td>
-<td>-0.328159</td>
-<td>1.166051</td>
-<td>-0.479075</td>
-<td>3.5</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-04</td>
-<td>0.766692</td>
-<td>0.123853</td>
-<td>0.487815</td>
-<td>-0.161050</td>
-<td>6.1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.695214</td>
-<td>-0.001611</td>
-<td>-0.631717</td>
-<td>-0.148206</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>-0.354958</td>
-<td>0.263346</td>
-<td>-0.822940</td>
-<td>0.523039</td>
-<td>7.0</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="9e58c3f8" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">df.dropna()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">A</th>
-<th data-quarto-table-cell-role="th">B</th>
-<th data-quarto-table-cell-role="th">C</th>
-<th data-quarto-table-cell-role="th">D</th>
-<th data-quarto-table-cell-role="th">F</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.204059</td>
-<td>-0.335996</td>
-<td>-0.818220</td>
-<td>0.861070</td>
-<td>1.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>0.291923</td>
-<td>-0.328159</td>
-<td>1.166051</td>
-<td>-0.479075</td>
-<td>3.5</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-04</td>
-<td>0.766692</td>
-<td>0.123853</td>
-<td>0.487815</td>
-<td>-0.161050</td>
-<td>6.1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>-0.354958</td>
-<td>0.263346</td>
-<td>-0.822940</td>
-<td>0.523039</td>
-<td>7.0</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="2b02ccf2" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">df.dropna(axis<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, subset<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'2025-01-02'</span>])</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">A</th>
-<th data-quarto-table-cell-role="th">B</th>
-<th data-quarto-table-cell-role="th">C</th>
-<th data-quarto-table-cell-role="th">D</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.204059</td>
-<td>-0.335996</td>
-<td>-0.818220</td>
-<td>0.861070</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-02</td>
-<td>0.868450</td>
-<td>-0.164946</td>
-<td>0.917664</td>
-<td>-1.945286</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>0.291923</td>
-<td>-0.328159</td>
-<td>1.166051</td>
-<td>-0.479075</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-04</td>
-<td>0.766692</td>
-<td>0.123853</td>
-<td>0.487815</td>
-<td>-0.161050</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.695214</td>
-<td>-0.001611</td>
-<td>-0.631717</td>
-<td>-0.148206</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>-0.354958</td>
-<td>0.263346</td>
-<td>-0.822940</td>
-<td>0.523039</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="3369f932" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">df[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'F'</span>].dropna()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>2025-01-01    1.0
-2025-01-03    3.5
-2025-01-04    6.1
-2025-01-06    7.0
-Name: F, dtype: float64</code></pre>
-</div>
-</div>
-<div id="93965aeb" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">df.loc[df.isnull()[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'F'</span>], :]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">A</th>
-<th data-quarto-table-cell-role="th">B</th>
-<th data-quarto-table-cell-role="th">C</th>
-<th data-quarto-table-cell-role="th">D</th>
-<th data-quarto-table-cell-role="th">F</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-02</td>
-<td>0.868450</td>
-<td>-0.164946</td>
-<td>0.917664</td>
-<td>-1.945286</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.695214</td>
-<td>-0.001611</td>
-<td>-0.631717</td>
-<td>-0.148206</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="d676baa5" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">df.drop([pd.to_datetime(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'2025-01-02'</span>), pd.to_datetime(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'2025-01-04'</span>)])</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">A</th>
-<th data-quarto-table-cell-role="th">B</th>
-<th data-quarto-table-cell-role="th">C</th>
-<th data-quarto-table-cell-role="th">D</th>
-<th data-quarto-table-cell-role="th">F</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-01</td>
-<td>1.204059</td>
-<td>-0.335996</td>
-<td>-0.818220</td>
-<td>0.861070</td>
-<td>1.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-03</td>
-<td>0.291923</td>
-<td>-0.328159</td>
-<td>1.166051</td>
-<td>-0.479075</td>
-<td>3.5</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2025-01-05</td>
-<td>-1.695214</td>
-<td>-0.001611</td>
-<td>-0.631717</td>
-<td>-0.148206</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2025-01-06</td>
-<td>-0.354958</td>
-<td>0.263346</td>
-<td>-0.822940</td>
-<td>0.523039</td>
-<td>7.0</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-
-
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>data mining</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/04.html</guid>
   <pubDate>Tue, 18 Mar 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>

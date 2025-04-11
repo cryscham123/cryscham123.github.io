@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
 <link href="../../../../../posts/01_projects/bs_3_1/notes/OR/04.html" rel="next">
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/10.html" rel="prev">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/12.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../../site_libs/quarto-html/quarto.js"></script>
@@ -268,7 +268,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">데이터마이닝 팀과제 자료 조사</span></a>
+ <span class="menu-text">데이터마이닝 1차 팀과제 script</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -298,6 +298,18 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Transformation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework - 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/12.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Transformation</span></a>
   </div>
 </li>
@@ -1778,7 +1790,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </ul>
 <section id="general" class="level2">
 <h2 class="anchored" data-anchor-id="general">General</h2>
-<div id="784e6e76" class="cell" data-execution_count="1">
+<div id="b01a4c9a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fractions <span class="im">import</span> Fraction</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
@@ -1788,11 +1800,11 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [Fraction(x).limit_denominator() <span class="cf">if</span> <span class="bu">isinstance</span>(x, (<span class="bu">int</span>, <span class="bu">float</span>)) <span class="cf">else</span> x <span class="cf">for</span> x <span class="kw">in</span> array]</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 초기 설정</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> [<span class="op">-</span><span class="dv">6</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">2</span>, <span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">5</span>],</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">3</span>],</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">2</span>, <span class="dv">2</span>, Fraction(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>],</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">4</span>, <span class="op">-</span><span class="dv">2</span>, <span class="op">-</span>Fraction(<span class="dv">3</span>, <span class="dv">2</span>), <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">3</span>],</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>, <span class="dv">2</span>, Fraction(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>]</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>basic <span class="op">=</span> np.array([<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]) <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>non_basic <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]) <span class="op">-</span> <span class="dv">1</span></span>
@@ -1884,17 +1896,17 @@ Iteration 1
 
 Current Simplex Tableau:
 +----+-----+------+------+------+------+------+------+-------+
-|    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   x6 |   RHS |
+|    |   Z |   x1 |   x2 | x3   |   x4 |   x5 |   x6 |   RHS |
 +====+=====+======+======+======+======+======+======+=======+
-| Z  |   1 |   -1 |    1 |   -2 |    0 |    0 |    0 |     0 |
+| Z  |   1 |   -6 |   -1 | -2   |    0 |    0 |    0 |     0 |
 +----+-----+------+------+------+------+------+------+-------+
-| x4 |   0 |    2 |   -2 |    3 |    1 |    0 |    0 |     5 |
+| x4 |   0 |    2 |    2 | 1/2  |    1 |    0 |    0 |     2 |
 +----+-----+------+------+------+------+------+------+-------+
-| x5 |   0 |    1 |    1 |   -1 |    0 |    1 |    0 |     3 |
+| x5 |   0 |   -4 |   -2 | -3/2 |    0 |    1 |    0 |     3 |
 +----+-----+------+------+------+------+------+------+-------+
-| x6 |   0 |    1 |   -1 |    1 |    0 |    0 |    1 |     2 |
+| x6 |   0 |    1 |    2 | 1/2  |    0 |    0 |    1 |     1 |
 +----+-----+------+------+------+------+------+------+-------+
-Entering variable: x3
+Entering variable: x1
 Leaving variable: x4
 
 Iteration 2
@@ -1902,18 +1914,18 @@ Iteration 2
 
 Current Simplex Tableau:
 +----+-----+------+------+------+------+------+------+-------+
-|    |   Z | x1   | x2   |   x3 | x4   |   x5 |   x6 | RHS   |
+|    |   Z |   x1 |   x2 | x3   | x4   |   x5 |   x6 |   RHS |
 +====+=====+======+======+======+======+======+======+=======+
-| Z  |   1 | 1/3  | -1/3 |    0 | 2/3  |    0 |    0 | 10/3  |
+| Z  |   1 |    0 |    5 | -1/2 | 3    |    0 |    0 |     6 |
 +----+-----+------+------+------+------+------+------+-------+
-| x3 |   0 | 2/3  | -2/3 |    1 | 1/3  |    0 |    0 | 5/3   |
+| x1 |   0 |    1 |    1 | 1/4  | 1/2  |    0 |    0 |     1 |
 +----+-----+------+------+------+------+------+------+-------+
-| x5 |   0 | 5/3  | 1/3  |    0 | 1/3  |    1 |    0 | 14/3  |
+| x5 |   0 |    0 |    2 | -1/2 | 2    |    1 |    0 |     7 |
 +----+-----+------+------+------+------+------+------+-------+
-| x6 |   0 | 1/3  | -1/3 |    0 | -1/3 |    0 |    1 | 1/3   |
+| x6 |   0 |    0 |    1 | 1/4  | -1/2 |    0 |    1 |     0 |
 +----+-----+------+------+------+------+------+------+-------+
-Entering variable: x2
-Leaving variable: x5
+Entering variable: x3
+Leaving variable: x6
 
 Iteration 3
 ============================================================
@@ -1922,29 +1934,29 @@ Current Simplex Tableau:
 +----+-----+------+------+------+------+------+------+-------+
 |    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   x6 |   RHS |
 +====+=====+======+======+======+======+======+======+=======+
-| Z  |   1 |    2 |    0 |    0 |    1 |    1 |    0 |     8 |
+| Z  |   1 |    0 |    7 |    0 |    2 |    0 |    2 |     6 |
 +----+-----+------+------+------+------+------+------+-------+
-| x3 |   0 |    4 |    0 |    1 |    1 |    2 |    0 |    11 |
+| x1 |   0 |    1 |    0 |    0 |    1 |    0 |   -1 |     1 |
 +----+-----+------+------+------+------+------+------+-------+
-| x2 |   0 |    5 |    1 |    0 |    1 |    3 |    0 |    14 |
+| x5 |   0 |    0 |    4 |    0 |    1 |    1 |    2 |     7 |
 +----+-----+------+------+------+------+------+------+-------+
-| x6 |   0 |    2 |    0 |    0 |    0 |    1 |    1 |     5 |
+| x3 |   0 |    0 |    4 |    1 |   -2 |    0 |    4 |     0 |
 +----+-----+------+------+------+------+------+------+-------+
 Optimal solution reached.
 Optimal Solution:
-x1 = 0
-x2 = 14
-x3 = 11
+x1 = 1
+x2 = 0
+x3 = 0
 x4 = 0
-x5 = 0
-x6 = 5
-Objective Value = 8</code></pre>
+x5 = 7
+x6 = 0
+Objective Value = 6</code></pre>
 </div>
 </div>
 </section>
 <section id="big-m-method" class="level2">
 <h2 class="anchored" data-anchor-id="big-m-method">Big M Method</h2>
-<div id="41d1cafa" class="cell" data-execution_count="2">
+<div id="0f230ea8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fractions <span class="im">import</span> Fraction</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
@@ -2127,7 +2139,7 @@ Objective Value = -7</code></pre>
 </section>
 <section id="grubi" class="level2">
 <h2 class="anchored" data-anchor-id="grubi">Grubi</h2>
-<div id="e66a8016" class="cell" data-execution_count="3">
+<div id="508f36bf" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gurobipy <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model(<span class="st">"ex4.4-6"</span>)</span>
@@ -2135,28 +2147,21 @@ Objective Value = -7</code></pre>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> model.addVar(vtype<span class="op">=</span>GRB.CONTINUOUS, name<span class="op">=</span><span class="st">"x1"</span>)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> model.addVar(vtype<span class="op">=</span>GRB.CONTINUOUS, name<span class="op">=</span><span class="st">"x2"</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>x3 <span class="op">=</span> model.addVar(vtype<span class="op">=</span>GRB.CONTINUOUS, name<span class="op">=</span><span class="st">"x3"</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>x4 <span class="op">=</span> model.addVar(vtype<span class="op">=</span>GRB.CONTINUOUS, name<span class="op">=</span><span class="st">"x4"</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>x5 <span class="op">=</span> model.addVar(vtype<span class="op">=</span>GRB.CONTINUOUS, name<span class="op">=</span><span class="st">"x5"</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>model.setObjective(<span class="dv">5</span> <span class="op">*</span> x1 <span class="op">+</span> <span class="dv">8</span> <span class="op">*</span> x2 <span class="op">+</span> <span class="dv">7</span> <span class="op">*</span> x3 <span class="op">+</span> <span class="dv">4</span> <span class="op">*</span> x4 <span class="op">+</span> <span class="dv">6</span> <span class="op">*</span> x5, GRB.MAXIMIZE)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model.setObjective(<span class="dv">20</span> <span class="op">*</span> x1 <span class="op">+</span> <span class="dv">10</span> <span class="op">*</span> x2, GRB.MINIMIZE)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>model.addConstr(<span class="dv">4</span> <span class="op">*</span> x1 <span class="op">-</span> x2 <span class="op">&gt;=</span> <span class="dv">2</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>model.addConstr(x1 <span class="op">+</span> x2 <span class="op">&gt;=</span> <span class="dv">3</span>)</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>model.addConstr(<span class="dv">2</span> <span class="op">*</span> x1 <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> x2 <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> x3 <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> x4 <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> x5 <span class="op">&lt;=</span> <span class="dv">20</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>model.addConstr(<span class="dv">3</span> <span class="op">*</span> x1 <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> x2 <span class="op">+</span> <span class="dv">4</span> <span class="op">*</span> x3 <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> x4 <span class="op">+</span> <span class="dv">4</span> <span class="op">*</span> x5 <span class="op">&lt;=</span> <span class="dv">30</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>model.optimize()</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var <span class="kw">in</span> model.getVars():</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>var<span class="sc">.</span>varName<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>var<span class="sc">.</span>x<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Obj: "</span>, model.objVal)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>model.optimize()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var <span class="kw">in</span> model.getVars():</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>var<span class="sc">.</span>varName<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>var<span class="sc">.</span>x<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Obj: "</span>, model.objVal)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Restricted license - for non-production use only - expires 2026-11-23
-x1: 0.0
-x2: 0.0
-x3: 0.0
-x4: 5.0
-x5: 5.0
-Obj:  50.0</code></pre>
+<pre><code>x1: 1.0
+x2: 2.0
+Obj:  40.0</code></pre>
 </div>
 </div>
 
@@ -2590,7 +2595,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/10.html" class="pagination-link" aria-label="Data Transformation">
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/12.html" class="pagination-link" aria-label="Data Transformation">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data Transformation</span>
       </a>          
   </div>
