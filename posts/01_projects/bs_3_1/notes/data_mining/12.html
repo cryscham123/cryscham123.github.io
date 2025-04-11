@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>통계적 가설검정 – 김형훈의 학습 블로그</title>
+<title>Data Transformation – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../../posts/02_areas/deep_learning/index.html" rel="next">
-<link href="../../../../../posts/01_projects/bs_3_1/notes/statistics/01.html" rel="prev">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/OR/01.html" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/11.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../../site_libs/quarto-html/quarto.js"></script>
@@ -69,35 +69,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -137,7 +108,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html">Statistics</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/02.html">통계적 가설검정</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/00.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/12.html">Data Transformation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -223,13 +194,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">Data Mining</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth4 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/00.html" class="sidebar-item-text sidebar-link">
@@ -304,7 +275,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/12.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/12.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Data Transformation</span></a>
   </div>
 </li>
@@ -447,13 +418,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
  <span class="menu-text">Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth4 show">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html" class="sidebar-item-text sidebar-link">
@@ -468,7 +439,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/02.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">통계적 가설검정</span></a>
   </div>
 </li>
@@ -1736,25 +1707,17 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of Contents</h2>
-   
-  <ul>
-  <li><a href="#가설검정" id="toc-가설검정" class="nav-link active" data-scroll-target="#가설검정">가설검정</a></li>
-  <li><a href="#대표본-가설검정-표본-크기" id="toc-대표본-가설검정-표본-크기" class="nav-link" data-scroll-target="#대표본-가설검정-표본-크기">대표본 가설검정 표본 크기</a></li>
-  <li><a href="#소표본-가설검정" id="toc-소표본-가설검정" class="nav-link" data-scroll-target="#소표본-가설검정">소표본 가설검정</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html">Statistics</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/02.html">통계적 가설검정</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/00.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/12.html">Data Transformation</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">통계적 가설검정</h1>
+<h1 class="title">Data Transformation</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">확률과 통계</div>
+    <div class="quarto-category">data mining</div>
   </div>
   </div>
 
@@ -1766,7 +1729,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 3월 27일</p>
+      <p class="date">2025년 4월 2일</p>
     </div>
   </div>
   
@@ -1778,36 +1741,9 @@ window.Quarto = {
 </header>
 
 
-<p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="가설검정" class="level2">
-<h2 class="anchored" data-anchor-id="가설검정">가설검정</h2>
-<ul>
-<li><span class="math inline">\(H_0\)</span>: 귀무가설. α의 값을 상한으로 지정하고 보수적으로 고려</li>
-<li>Type 1 error를 보통 보수적으로 지정하기 때문에 Type 2 error는 높아진다.
-<ul>
-<li>둘 다 줄이고 싶다면 n을 늘려야 한다.</li>
-<li>일반적으로 α(Type 1 error)를 고정하고 원하는 β(Type 2 error)를 만족하는 표본의 크기를 결정한다.</li>
-</ul></li>
-</ul>
-</section>
-<section id="대표본-가설검정-표본-크기" class="level2">
-<h2 class="anchored" data-anchor-id="대표본-가설검정-표본-크기">대표본 가설검정 표본 크기</h2>
-<ul>
-<li><p><span class="math inline">\(n = \frac{(z_{1 - \alpha} + z_{1 - \beta})^2\sigma^2}{(\mu_1 - \mu_2)^2}\)</span></p></li>
-<li><p>p-value: <span class="math inline">\(H_0\)</span>를 기각시킬 수 있는 가장 작은 유의수준 α의 값</p></li>
-</ul>
-</section>
-<section id="소표본-가설검정" class="level2">
-<h2 class="anchored" data-anchor-id="소표본-가설검정">소표본 가설검정</h2>
-<ul>
-<li>쌍체표본: 두 집단이 독립이 아니고 서로 연관되어 있는 경우
-<ul>
-<li>각 쌍의 차이를 계산하여 단일 표본으로 변환 후 분석할 수 있습니다.</li>
-</ul></li>
-</ul>
+<p><img src="../../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2236,13 +2172,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/01.html" class="pagination-link" aria-label="통계적 추정">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">통계적 추정</span>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/11.html" class="pagination-link" aria-label="Homework - 2">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Homework - 2</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/02_areas/deep_learning/index.html" class="pagination-link" aria-label="Deep Learning">
-        <span class="nav-page-text">Deep Learning</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/01.html" class="pagination-link" aria-label="Simplex 표 계산">
+        <span class="nav-page-text">Simplex 표 계산</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
