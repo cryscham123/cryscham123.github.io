@@ -555,12 +555,11 @@ docker compose up -d
 
 ```{.python filename=dags/demo.py}
 from airflow import DAG
-from datetime import datetime
 from airflow.operators.python import PythonOperator
 import pandas as pd
+from datetime import datetime
 from airflow.providers.mysql.hooks.mysql import MySqlHook
 from airflow.operators.email import EmailOperator
-
 
 with DAG(
     dag_id='integrate_shopping_factor_data',
@@ -568,9 +567,7 @@ with DAG(
     start_date=datetime(2024, 4, 4),
     catchup=False,
 ) as dag:
-```
 
-```{.python filename=dags/demo.py}
     def extract_shopping_data():
         hook = MySqlHook(mysql_conn_id='shopping_source')
         conn = hook.get_sqlalchemy_engine().connect()
@@ -586,12 +583,18 @@ with DAG(
     def preprocess_and_integrate():
         shopping_df = pd.read_csv('/tmp/shopping_data.csv')
         factor_df = pd.read_csv('/tmp/factor_data.csv')
-        shopping_df['amount'] = shopping_df['amount'].fillna(\
-                                                      shopping_df['amount'].mean())
+        shopping_df['amount'] = shopping_df['amount'].fillna( \
+                                        shopping_df['amount'].mean())
         integrated_df = pd.merge(shopping_df, factor_df, on='date', how='inner')
         integrated_df.to_csv('/tmp/integrated_data.csv', index=False)
         return "Data preprocessed and integrated"
 
+    def generate_report(**kwargs):
+        df = pd.read_csv('/tmp/integrated_data.csv')
+```
+
+
+```{.python filename=dags/demo.py}
     extract_shopping_data_task = PythonOperator(
         task_id='extract_shopping_data',
         python_callable=extract_shopping_data,
@@ -606,9 +609,7 @@ with DAG(
         task_id='preprocess_and_integrate',
         python_callable=preprocess_and_integrate,
     )
-```
 
-```{.python filename=dags/demo.py}
     report_task = PythonOperator(
         task_id='generate_report',
         python_callable=generate_report,
@@ -622,9 +623,7 @@ with DAG(
         html_content="{{ ti.xcom_pull(task_ids='generate_report', \
                                       key='html_report') }}",
     )
-```
 
-```{.python filename=dags/demo.py}
     [extract_shopping_data_task, extract_factor_data_task] >> process_task \
       >> report_task >> email_task
 ```
@@ -691,3 +690,5 @@ Airflow UI에서 Connections 메뉴를 통해 데이터 소스를 위한 Connect
 \caption{메일도 정상적으로 확인해볼 수 있습니다.}
 \end{center}
 \end{figure}
+
+73.333333333333
