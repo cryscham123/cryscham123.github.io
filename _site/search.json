@@ -41,7 +41,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/03.html#프로세스-처리-능력-및-활용률",
     "title": "공급 프로세스의 이해: 프로세스 처리능력 평가",
     "section": "프로세스 처리 능력 및 활용률",
-    "text": "프로세스 처리 능력 및 활용률\n\n병목(bottleneck): 제일 낮은 처리능력의 자원1\n전체 프로세스의 처리 능력 = 병목 (단 작업이 일렬로 수행될 때)\nproduct mix:\n\n다양한 제품이 input으로 들어와 처리능력이 달라짐\nbottleneck을 계산하기는 어려움\n\n비율이 매번 달라질 수도 있어서\n작업이 일렬로만 수행되지 않아서\n\n\n실제 생산한 양(흐름률)은 capacity에서만 결정되지 않는다.\n\n수요(market + 계절 / 안전 재고 같은 내부적 수요)\n원자재 투입량\n\n흐름률 = min(시간 당 투입량, 시간 당 수요, 프로세스 처리 능력)\n공급능력: 투입량, 처리 능력\n\n\n수요 / 공급 제약적 상황\n\n\n수요 제약적: 수요 &lt; 공급\n\nbottleneck 활용률 &lt; 100%\nflow rate == Demand rate\n\n공급 제약적: 수요 &gt; 공급\n\n투입 제약적\n처리능력 제약적\n\nbottleneck 활용률 == 100%\nflow rate = capacity\n\n\n\n\n\n프로세스 capacity 찾기\n\nX 단위 생산에 걸리는 시간\n\n일정 시점에서 vs 처음부터(비어있는 상태에서) 시작\n일정 시점: X/Flow rate\n\n\n\n\n활용률\n\n실제 생산하는 양을 capacity로 나눈 것\n\n\\(\\frac{흐름률}{처리능력}\\)\n활용률을 100% 달성하려면 쉬지 않고 프로세스가 돌아가야하지만 현실적으로 쉽지 않다.\n\n수요가 공급보다 적을 수 있다.\n투입물이 충분하지 않다.\n몇몇 공정의 사용이 공장이나 수리로 제한될 수 있다.\n불확실성\n\n\n병목을 제외한 다른 하위 작업은 활용률이 떨어질 수 있다.\n\n모든 프로세스가 병목인 것이 가장 이상적인 상황 (과도하게 높은 공급능력)\n\n공급 제약적 상황에서 수요가 얼마나 많은지 알 수 없음.\n→ implied utilization\n\n\n\nimplied utilization\n\n\\(U = \\frac{R}{Capacity}\\)\n\\(IU = \\frac{Demand or workload}{Capacity} (≤100% or &gt; 100%)\\)\nif min(demmand, capacity, input) = demand then U = IU\n이 외에도 잠재적 수요 못따라가는 작업도 알 수 있음\n\nIU 100 넘는거 개선 필요\n\n또, 작업이 sequential하게 진행되지 않을 때 병목현상을 확인할 수 있음",
+    "text": "프로세스 처리 능력 및 활용률\n\nprocess capacity: 흐름률의 upper bound(유량).\n병목(bottleneck): 제일 낮은 처리능력의 자원\n전체 프로세스의 처리 능력 = 병목의 처리능력 (단 작업이 일렬로 수행될 때)\nproduct mix:\n\n다양한 제품이 input으로 들어와 처리능력이 달라짐\nbottleneck을 계산하기는 어려움\n\n비율이 매번 달라질 수도 있어서\n작업이 일렬로만 수행되지 않아서\n\n\n실제 생산한 양(흐름률)은 capacity에서만 결정되지 않는다.\n\n수요(market + 계절 / 안전 재고 같은 내부적 수요)\n원자재 투입량\n\n흐름률 = min(시간 당 수요, 프로세스 처리 능력)\n공급능력: 투입량, 처리 능력\n\n\n수요 / 공급 제약적 상황\n\n\n수요(가) 제약적: 수요 &lt; 공급\n\nbottleneck 활용률 &lt; 100%\nflow rate == Demand rate\n\n공급(이) 제약적: 수요 &gt; 공급\n\n투입 제약적\n처리능력 제약적\n\nbottleneck 활용률 == 100%\nflow rate = capacity\n\n\n\n\n\n활용률\n\n\n실제 생산하는 양을 capacity로 나눈 것\n\n\\(\\frac{흐름률}{처리능력}\\)\n활용률을 100% 달성하려면 쉬지 않고 프로세스가 돌아가야하지만 현실적으로 쉽지 않다.\n\n수요가 공급보다 적을 수 있다.\n투입물이 충분하지 않다.\n몇몇 공정의 사용이 공장이나 수리로 제한될 수 있다.\n불확실성\n\n\n병목을 제외한 다른 하위 작업은 활용률이 떨어질 수 있다.\n\n모든 프로세스가 병목인 것이 가장 이상적인 상황 (과도하게 높은 공급능력)\n\n공급 제약적 상황에서 수요가 얼마나 많은지 알 수 없음.\n→ implied utilization\n\n\n\nimplied utilization\n\n\\(U = \\frac{R}{Capacity}\\)\n\\(IU = \\frac{Demand or workload}{Capacity} (≤100% or &gt; 100%)\\)\nif min(demmand, capacity, input) = demand then U = IU\n이 외에도 잠재적 수요 못따라가는 작업도 알 수 있음\n\nIU 100 넘는거 개선 필요\n\n또, 작업이 sequential하게 진행되지 않을 때 병목현상을 확인할 수 있음",
     "crumbs": [
       "PARA",
       "Projects",
@@ -86,7 +86,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/05.html#조립공정의-분석",
     "title": "인건비 추정과 감축",
     "section": "조립공정의 분석",
-    "text": "조립공정의 분석\n\nX개를 생산하는데 걸리는 시간\n\n가동중인 생산 시스템: \\(\\frac{X}{R}\\)\n비어있는 생산 시스템: 비어있는 시스템을 흘러 가는데 걸리는 시간 + \\(\\frac{X - 1}{R}\\)\n\n\n\n비어있는 시스템을 흘러가는데 걸리는 시간\n\nWorker-paced process: 모든 작업의 처리시간의 합\nMachine-paced process: 프로세스상의 단계 수 * 병목공정의 처리시간1\n\n\nWorker-paced process (작업자 중심 공정):\n\n각 작업자가 개별적으로 작업을 완료한 후 다음 작업자에게 제품을 전달합니다.\n각 작업은 순차적으로 발생하고, 서로 독립적인 속도로 진행됩니다.\n따라서 제품이 전체 시스템을 통과하는 시간은 각 작업 단계의 처리 시간의 합입니다.\n예: 수작업 조립 라인, 각 작업자가 자신의 작업을 마치고 다음 작업자에게 전달하는 방식\n\nMachine-paced process (기계 중심 공정):\n\n모든 작업 단계가 동일한 속도(보통 병목 공정의 속도)로 움직입니다.\n컨베이어 벨트와 같이 정해진 사이클 타임으로 모든 작업이 동시에 진행됩니다.\n제품이 시스템을 통과하는 총 시간은 [단계 수 × 사이클 타임]으로 계산됩니다.\n사이클 타임은 보통 병목 공정의 처리 시간에 의해 결정됩니다.\n예: 자동차 조립 라인, 음식 가공 공장의 컨베이어 벨트 시스템",
+    "text": "조립공정의 분석\n\n처리 능력: \\(\\frac{자원의 수}{처리시간}\\)\nbottleneck은 처리능력이 제일 낮은 자원\nX개를 생산하는데 걸리는 시간\n\n가동중인 생산 시스템: \\(\\frac{X}{R}\\)\n비어있는 생산 시스템: 비어있는 시스템을 흘러 가는데 걸리는 시간 + \\(\\frac{X - 1}{R}\\)\n\n\n\n비어있는 시스템을 흘러가는데 걸리는 시간\n\nWorker-paced process: 모든 작업의 처리시간의 합\nMachine-paced process(컨베이어 벨트): 프로세스상의 단계 수 * 병목공정의 처리시간",
     "crumbs": [
       "PARA",
       "Projects",
@@ -101,7 +101,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/05.html#노동량과-유휴시간",
     "title": "인건비 추정과 감축",
     "section": "노동량과 유휴시간",
-    "text": "노동량과 유휴시간\n\n직접 노동 인건비= \\(\\frac{단위시간당 총 임금}{단위시간당 흐름률}\\)\n\n실제 노동시간 + 유휴시간(idle time)\n\n\n\n유휴시간 종류\n\nbottleneck에 맞추기 위한 유휴시간\n수요에 맞추기 위해 발생하는 유휴시간\n\n\n\nCycle time(주기 시간)\n\nflow rate의 역수\n1인 작업자의 유휴시간 = cycle time - 작업시간\n\n\n\n평균 노동 활용률\n\n\\(\\frac{노동량}{노동량 + 모든 작업자의 유휴시간 총합}\\)",
+    "text": "노동량과 유휴시간\n\n이상적인 노동비: 작업자의 처리시간의 합 * 시간당 평균 임금\n\n유휴시간을 고려하지 않았을 때\n\n직접 노동 인건비= \\(\\frac{단위시간당 총 임금}{단위시간당 흐름률}\\)\n\n실제 노동시간 + 유휴시간(idle time)\n흐름률이 높아지면 유휴시간이 줄어들면서 직접 노동 인건비가 줄어든다.\n\n\n\n유휴시간 종류\n\nbottleneck에 맞추기 위한 유휴시간\n수요에 맞추기 위해 발생하는 유휴시간\n\n이런 경우 작업시간을 줄이는 방법을 생각할 수 있다.\n하지만 flexible하게 맞추기는 어려울 것이다.\n\n\n\n\nCycle time(주기 시간)\n\n프로세스에서 산출되는 연속된 두 제품 간의 시간간격\n프로세스가 얼마나 빨리 생산하는지를 나타내는 지표\nflow rate의 역수\n1인 작업자의 유휴시간 = cycle time - 1인 작업자의 작업시간\n\n\n\n평균 노동 활용률\n\n제품 생산에만 들어가는 노동의 양과 실제 인건비 지불의 기준이 되는 노동의 양(노동량 + 유휴시간)을 비교\n\\(\\frac{노동량}{노동량 + 모든 작업자의 유휴시간 총합}\\)\n\\(\\frac{1}{노동자 수}(활용률의 합)\\)",
     "crumbs": [
       "PARA",
       "Projects",
@@ -116,7 +116,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/05.html#line-balancing",
     "title": "인건비 추정과 감축",
     "section": "Line Balancing",
-    "text": "Line Balancing\n\n프로세스 내부적인 수요와 공급을 맞추는 것\n\n\n대량생산으로의 확장\n\n라인의 병렬적 배치\n프로세스 단계별 작업자 추가\n과업의 분화 및 전문화\n\n전문화될수록 라인 밸런싱이 어려워짐",
+    "text": "Line Balancing\n\nbottleneck에 맞추기 위한 유휴시간으로 이상적인 노동비를 산출할 수 없음. → line balancing을 맞춰줌\n프로세스 내부적인 수요(요구되는 노동량)와 공급(작업자의 처리 능력)을 맞추는 것\n\n\n대량생산으로의 확장\n\n라인의 병렬적 배치\n프로세스 단계별 작업자 추가\n과업의 분화 및 전문화\n\n전문화될수록 라인 밸런싱이 어려워지고 평균 노동 활용률이 낮아짐(작업이 평탄하지 않음)\n→ 전문화 정도를 감소시켜 라인 밸런싱을 쉬워지게 한다.\n\n작업 셀: 한 명이 모든 과업을 수행함. 한 명의 작업시간이 노동량에 해당하고, 노동 활용률은 100%",
     "crumbs": [
       "PARA",
       "Projects",
@@ -146,7 +146,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/04.html#제품-설계-및-개발",
     "title": "제품 설계 기법 및 기업 프로세스 유형",
     "section": "제품 설계 및 개발",
-    "text": "제품 설계 및 개발\n\n설계의 중요성\n\n총 제품 비용 중 설계가 치지하는 비중은 적지만, 설계의 영향을 받는 비중이 높다.\n\n\n\n제품 설계 프로세스\n\n\n\n제품 설계 프로세스\n\n\n\n아이디어 선정: 소비자의 니즈, 경쟁사 제품 등 벤치마킹(reverse engineering)\n제품 선정: 시장 분석, 경제성 분석, 기술 분석\n\n\n\n제조 고려 설계\n\n조립 뿐만아니라 재활용, 분해 단계도 고려\nsubtract manufacturing보단 additive manufacturing(적층제조, DFAM)을 고려\n\n\n\n표준화 모듈화\n\n표준화: 부품 호환성 및 운영 효율성\n모듈화: 표준화된 부품의 집합 &lt;-&gt; integral\n\n\n\n지연전략\n\n차별화 지연 전략: 수요를 알기 전까지 많은 종류 생산은 지연",
+    "text": "제품 설계 및 개발\n\n설계의 중요성\n\n총 제품 비용 중 설계가 치지하는 비중은 적지만, 설계의 영향을 받는 비중이 높다.\n\n\n\n제품 설계 프로세스\n\n\n\n제품 설계 프로세스\n\n\n\n아이디어 선정: 소비자의 니즈, 경쟁사 제품 등 벤치마킹(reverse engineering)\n제품 선정: 시장 분석, 경제성 분석, 기술 분석\n\n\n\n제조 고려 설계\n\n제조 과정 단순화 및 비용 절감을 고려해서 설계해야 한다.\n\n부품 개수 최소화\n모듈화 표준화\n조립, 재활용, 분해 고려\n\nsubtract manufacturing보단 additive manufacturing(적층제조, DFAM)을 고려\n\n\n\n표준화 모듈화\n\n표준화: 부품 호환성 및 운영 효율성\n모듈화: 표준화된 부품의 집합 &lt;-&gt; integral\n\n\n\n지연전략\n\n차별화 지연 전략: 수요를 알기 전까지 많은 종류 생산은 지연",
     "crumbs": [
       "PARA",
       "Projects",
@@ -161,7 +161,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/04.html#생산-프로세스의-유형",
     "title": "제품 설계 기법 및 기업 프로세스 유형",
     "section": "생산 프로세스의 유형",
-    "text": "생산 프로세스의 유형\n\n주문충족 방식에 따른 분류\n\nmake to stock: 수요가 발생하기 전에 생산. 수요가 예측이 쉬울 경우 적합 (push)\nassemble / configure / build to order: 제품 구성요소를 재고로 보유. 고객의 요구에 따라 조립하여 생산. 지연 전략에 맞닿아 있다 (pull)\nmake to order: 주문에 따른 생산. 옵션이 많거나 고가 제품에 적합 (push-pull)\nengineer to order1: 고객의 요구에 따라 설계 및 생산. 일회성 프로젝트에 적합 (pull)\n\n위로 갈 수록 제공 시간은 짧아지고, 아래로 갈 수록 유연성이 높아진다.\n\n\n생산 흐름에 따른 분류\n\n프로젝트 프로세스: 일회성 생산. 흐름이라고 할 수는 없다.\n개별작업 프로세스(job shop): 공정별 배치. 높은 유연성, 낮은 규모\n배치 프로세스: job shop과 라인 프로세스의 중간 형태. batch 수가 맞춰지기 전까지 대기 / 유휴시간 존재.\n라인 프로세스2: 제품별 배치. 낮은 유연성, 대규모\n연속 흐름 프로세스: 멈춤, 수정, 변경 최소화\n\n\n\n다양한 유형의 프로세스와 설비배치를 혼합 적용하는 것이 일반적\n\n\n\n다품종소량생산, 개인맞춤생산 시대 도래\n\n\nreconfigurable manufacturing system: 다양한 제품을 생산할 수 있는 유연한 생산 시스템\n\n\n\ncell manufacturing\n\nline process랑 job shop이 혼합된거\n비슷한 작업이 필요한 부품들을 하나의 그룹으로 묶어서 전용 셀에서 생산",
+    "text": "생산 프로세스의 유형\n\n주문충족 방식에 따른 분류\n\nmake to stock: 수요가 발생하기 전에 생산. 수요가 예측이 쉬울 경우 적합 (push)\nassemble / configure / build to order: 제품 구성요소를 재고로 보유. 고객의 요구에 따라 조립하여 생산. 지연 전략에 맞닿아 있다 (pull)\nmake to order: 주문에 따른 생산. 설계가 완료된 걸 다른 옵션으로 제공. 옵션이 많거나 고가 제품에 적합 (push-pull)\nengineer to order: 고객의 요구에 따라 설계 및 생산. 일회성 프로젝트에 적합 (pull)\n\n위로 갈 수록 제공 시간은 짧아지고, 아래로 갈 수록 유연성이 높아진다.\n\n\n생산 흐름에 따른 분류\n\n프로젝트 프로세스: 일회성 생산. 흐름이라고 할 수는 없다.\n개별작업 프로세스(job shop): 공정별 배치. 높은 유연성, 낮은 규모\n배치 프로세스: job shop과 라인 프로세스의 중간 형태. batch 수가 맞춰지기 전까지 대기 / 유휴시간 존재.\n라인 프로세스: 제품별 배치. 낮은 유연성, 대규모\n연속 흐름 프로세스: 멈춤, 수정, 변경 최소화\n\n\n\n다양한 유형의 프로세스와 설비배치를 혼합 적용하는 것이 일반적\n\n\n\n다품종소량생산, 개인맞춤생산 시대 도래\n\n\nreconfigurable manufacturing system: 다양한 제품을 생산할 수 있는 유연한 생산 시스템\n\n\n\ncell manufacturing\n\nline process랑 job shop이 혼합된거\n비슷한 작업이 필요한 부품들을 하나의 그룹으로 묶어서 전용 셀에서 생산",
     "crumbs": [
       "PARA",
       "Projects",
@@ -176,7 +176,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/04.html#footnotes",
     "title": "제품 설계 기법 및 기업 프로세스 유형",
     "section": "각주",
-    "text": "각주\n\n\nmto랑 eto 뭐가 다르지. 그냥 대충 뭐 eto가 더 세부적인 그런 느낌인가↩︎\n라인 프로세스랑 연속흐름 프로세스는 뭐가 다르지 → 연속 흐름은 계속 흘러서 멈추기 힘듦↩︎",
+    "text": "각주\n\n\n라인 프로세스랑 연속흐름 프로세스는 뭐가 다르지 → 연속 흐름은 계속 흘러서 멈추기 힘듦↩︎",
     "crumbs": [
       "PARA",
       "Projects",
@@ -191,7 +191,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/00.html",
     "title": "Intro",
     "section": "",
-    "text": "과목 목표: 전통적인 생산 시스템 관리 방법론을 학습\n\n생산: 유, 무형의 제품을 만드는 것\n\n제조업, 서비스업 등\n\n시스템: 투입물을 산출물로 만드는 구성 요소와 프로세스의 총체적 집합\n관리: 목표를 달성하기 위한 체계적인 의사결정\n\n목표: 비용, 품질, 납품, 유연성\n\n네 가지 모두 고려해야하고, 이 사이에는 trade-off가 존재.\n\n\n\n중간 시험범위: lec2 ~ lec9\n\n\n\n 맨 위로",
+    "text": "과목 목표: 전통적인 생산 시스템 관리 방법론을 학습\n\n생산: 유, 무형의 제품을 만드는 것\n\n제조업, 서비스업 등\n\n시스템: 투입물을 산출물로 만드는 구성 요소와 프로세스의 총체적 집합\n관리: 목표를 달성하기 위한 체계적인 의사결정\n\n목표: 비용, 품질, 납품, 유연성\n\n네 가지 모두 고려해야하고, 이 사이에는 trade-off가 존재.\n\n\n\n중간 시험범위: lec2 ~ lec9\n\n질문:\n\n\n재고 유지의 다섯 가지 이유 - 수송중 vs 안전\n\n\n\n\n\n 맨 위로",
     "crumbs": [
       "PARA",
       "Projects",
@@ -206,7 +206,7 @@
     "href": "posts/01_projects/bs_3_1/notes/OR/01.html#general",
     "title": "Simplex 표 계산",
     "section": "General",
-    "text": "General\n\nimport numpy as np\nfrom fractions import Fraction\nfrom tabulate import tabulate\n\n# Convert all elements to Fraction\ndef to_fraction(array):\n    return [Fraction(x).limit_denominator() if isinstance(x, (int, float)) else x for x in array]\n\n# 초기 설정\nobj = [-6, -1, -2, 0, 0, 0, 0]\nA = [\n    [2, 2, Fraction(1, 2), 1, 0, 0, 2],\n    [-4, -2, -Fraction(3, 2), 0, 1, 0, 3],\n    [1, 2, Fraction(1, 2), 0, 0, 1, 1]\n]\nbasic = np.array([4, 5, 6]) - 1\nnon_basic = np.array([1, 2, 3]) - 1\n\n# 초기 배열을 분수로 변환\nobj = to_fraction(obj)\nA = [to_fraction(row) for row in A]\n\ndef print_table():\n    headers = [\"\", \"Z\"] + [f\"x{i+1}\" for i in range(len(obj)-1)] + [\"RHS\"]\n    table = [[\"Z\", 1] + [str(x) for x in obj]]\n    for i in range(len(A)):\n        row = [f\"x{basic[i]+1}\", 0] + [str(x) for x in A[i]]\n        table.append(row)\n    print(\"\\nCurrent Simplex Tableau:\")\n    print(tabulate(table, headers=headers, tablefmt=\"grid\"))\n\ndef simplex():\n    global obj, A, basic, non_basic\n    \n    iteration = 1\n    while True:\n        print(f\"\\nIteration {iteration}\")\n        print(\"=\" * 60)\n        print_table()\n\n        # 음의 계수 찾기 (entering variable)\n        min_rc_idx = None\n        min_rc = Fraction(0)\n        for j in range(len(obj) - 1):  # RHS 제외\n            if obj[j] &lt; min_rc:\n                min_rc = obj[j]\n                min_rc_idx = j\n        \n        # 종료 조건: 음수 계수가 없으면 최적\n        if min_rc_idx is None or min_rc &gt;= 0:\n            print(\"Optimal solution reached.\")\n            solution = {f\"x{i+1}\": Fraction(0) for i in range(len(obj)-1)}\n            for i, var_idx in enumerate(basic):\n                solution[f\"x{var_idx+1}\"] = A[i][-1]\n            print(\"Optimal Solution:\")\n            for var, val in solution.items():\n                print(f\"{var} = {val}\")\n            print(f\"Objective Value = {obj[-1]}\")\n            break\n\n        # Pivot 열 선택 및 ratio 계산\n        ratios = []\n        for i in range(len(A)):\n            if A[i][min_rc_idx] &gt; 0:\n                ratios.append((A[i][-1] / A[i][min_rc_idx], i))\n            else:\n                ratios.append((float('inf'), i))\n        \n        min_ratio, pivot_row = min(ratios)\n        if min_ratio == float('inf'):\n            print(\"Unbounded solution detected.\")\n            break\n\n        print(f\"Entering variable: x{min_rc_idx + 1}\")\n        print(f\"Leaving variable: x{basic[pivot_row] + 1}\")\n\n        # Pivot 연산\n        pivot = A[pivot_row][min_rc_idx]\n        A[pivot_row] = [x / pivot for x in A[pivot_row]]\n        \n        # 다른 행 업데이트\n        for i in range(len(A)):\n            if i != pivot_row:\n                factor = A[i][min_rc_idx]\n                A[i] = [A[i][j] - factor * A[pivot_row][j] for j in range(len(obj))]\n        \n        # 목적함수 업데이트\n        factor = obj[min_rc_idx]\n        obj = [obj[j] - factor * A[pivot_row][j] for j in range(len(obj))]\n        \n        # 기본 변수 업데이트\n        leaving_var = basic[pivot_row]\n        basic[pivot_row] = min_rc_idx\n        non_basic[non_basic == min_rc_idx] = leaving_var\n        \n        iteration += 1\n\nsimplex()\n\n\nIteration 1\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+------+------+------+-------+\n|    |   Z |   x1 |   x2 | x3   |   x4 |   x5 |   x6 |   RHS |\n+====+=====+======+======+======+======+======+======+=======+\n| Z  |   1 |   -6 |   -1 | -2   |    0 |    0 |    0 |     0 |\n+----+-----+------+------+------+------+------+------+-------+\n| x4 |   0 |    2 |    2 | 1/2  |    1 |    0 |    0 |     2 |\n+----+-----+------+------+------+------+------+------+-------+\n| x5 |   0 |   -4 |   -2 | -3/2 |    0 |    1 |    0 |     3 |\n+----+-----+------+------+------+------+------+------+-------+\n| x6 |   0 |    1 |    2 | 1/2  |    0 |    0 |    1 |     1 |\n+----+-----+------+------+------+------+------+------+-------+\nEntering variable: x1\nLeaving variable: x4\n\nIteration 2\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+------+------+------+-------+\n|    |   Z |   x1 |   x2 | x3   | x4   |   x5 |   x6 |   RHS |\n+====+=====+======+======+======+======+======+======+=======+\n| Z  |   1 |    0 |    5 | -1/2 | 3    |    0 |    0 |     6 |\n+----+-----+------+------+------+------+------+------+-------+\n| x1 |   0 |    1 |    1 | 1/4  | 1/2  |    0 |    0 |     1 |\n+----+-----+------+------+------+------+------+------+-------+\n| x5 |   0 |    0 |    2 | -1/2 | 2    |    1 |    0 |     7 |\n+----+-----+------+------+------+------+------+------+-------+\n| x6 |   0 |    0 |    1 | 1/4  | -1/2 |    0 |    1 |     0 |\n+----+-----+------+------+------+------+------+------+-------+\nEntering variable: x3\nLeaving variable: x6\n\nIteration 3\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+------+------+------+-------+\n|    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   x6 |   RHS |\n+====+=====+======+======+======+======+======+======+=======+\n| Z  |   1 |    0 |    7 |    0 |    2 |    0 |    2 |     6 |\n+----+-----+------+------+------+------+------+------+-------+\n| x1 |   0 |    1 |    0 |    0 |    1 |    0 |   -1 |     1 |\n+----+-----+------+------+------+------+------+------+-------+\n| x5 |   0 |    0 |    4 |    0 |    1 |    1 |    2 |     7 |\n+----+-----+------+------+------+------+------+------+-------+\n| x3 |   0 |    0 |    4 |    1 |   -2 |    0 |    4 |     0 |\n+----+-----+------+------+------+------+------+------+-------+\nOptimal solution reached.\nOptimal Solution:\nx1 = 1\nx2 = 0\nx3 = 0\nx4 = 0\nx5 = 7\nx6 = 0\nObjective Value = 6",
+    "text": "General\n\nimport numpy as np\nfrom fractions import Fraction\nfrom tabulate import tabulate\n\n# Convert all elements to Fraction\ndef to_fraction(array):\n    return [Fraction(x).limit_denominator() if isinstance(x, (int, float)) else x for x in array]\n\n# 초기 설정\nobj = [-10, -20, 0, 0, 0, 0]\nA = [\n    [-1, 2, 1, 0, 0, 15],\n    [1, 1, 0, 1, 0, 12],\n    [5, 3, 0, 0, 1, 45]\n]\nbasic = np.array([3, 4, 5]) - 1\nnon_basic = np.array([1, 2]) - 1\n\n# 초기 배열을 분수로 변환\nobj = to_fraction(obj)\nA = [to_fraction(row) for row in A]\n\ndef print_table():\n    headers = [\"\", \"Z\"] + [f\"x{i+1}\" for i in range(len(obj)-1)] + [\"RHS\"]\n    table = [[\"Z\", 1] + [str(x) for x in obj]]\n    for i in range(len(A)):\n        row = [f\"x{basic[i]+1}\", 0] + [str(x) for x in A[i]]\n        table.append(row)\n    print(\"\\nCurrent Simplex Tableau:\")\n    print(tabulate(table, headers=headers, tablefmt=\"grid\"))\n\ndef simplex():\n    global obj, A, basic, non_basic\n    \n    iteration = 1\n    while True:\n        print(f\"\\nIteration {iteration}\")\n        print(\"=\" * 60)\n        print_table()\n\n        # 음의 계수 찾기 (entering variable)\n        min_rc_idx = None\n        min_rc = Fraction(0)\n        for j in range(len(obj) - 1):  # RHS 제외\n            if obj[j] &lt; min_rc:\n                min_rc = obj[j]\n                min_rc_idx = j\n        \n        # 종료 조건: 음수 계수가 없으면 최적\n        if min_rc_idx is None or min_rc &gt;= 0:\n            print(\"Optimal solution reached.\")\n            solution = {f\"x{i+1}\": Fraction(0) for i in range(len(obj)-1)}\n            for i, var_idx in enumerate(basic):\n                solution[f\"x{var_idx+1}\"] = A[i][-1]\n            print(\"Optimal Solution:\")\n            for var, val in solution.items():\n                print(f\"{var} = {val}\")\n            print(f\"Objective Value = {obj[-1]}\")\n            break\n\n        # Pivot 열 선택 및 ratio 계산\n        ratios = []\n        for i in range(len(A)):\n            if A[i][min_rc_idx] &gt; 0:\n                ratios.append((A[i][-1] / A[i][min_rc_idx], i))\n            else:\n                ratios.append((float('inf'), i))\n        \n        min_ratio, pivot_row = min(ratios)\n        if min_ratio == float('inf'):\n            print(\"Unbounded solution detected.\")\n            break\n\n        print(f\"Entering variable: x{min_rc_idx + 1}\")\n        print(f\"Leaving variable: x{basic[pivot_row] + 1}\")\n\n        # Pivot 연산\n        pivot = A[pivot_row][min_rc_idx]\n        A[pivot_row] = [x / pivot for x in A[pivot_row]]\n        \n        # 다른 행 업데이트\n        for i in range(len(A)):\n            if i != pivot_row:\n                factor = A[i][min_rc_idx]\n                A[i] = [A[i][j] - factor * A[pivot_row][j] for j in range(len(obj))]\n        \n        # 목적함수 업데이트\n        factor = obj[min_rc_idx]\n        obj = [obj[j] - factor * A[pivot_row][j] for j in range(len(obj))]\n        \n        # 기본 변수 업데이트\n        leaving_var = basic[pivot_row]\n        basic[pivot_row] = min_rc_idx\n        non_basic[non_basic == min_rc_idx] = leaving_var\n        \n        iteration += 1\n\nsimplex()\n\n\nIteration 1\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+------+------+-------+\n|    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   RHS |\n+====+=====+======+======+======+======+======+=======+\n| Z  |   1 |  -10 |  -20 |    0 |    0 |    0 |     0 |\n+----+-----+------+------+------+------+------+-------+\n| x3 |   0 |   -1 |    2 |    1 |    0 |    0 |    15 |\n+----+-----+------+------+------+------+------+-------+\n| x4 |   0 |    1 |    1 |    0 |    1 |    0 |    12 |\n+----+-----+------+------+------+------+------+-------+\n| x5 |   0 |    5 |    3 |    0 |    0 |    1 |    45 |\n+----+-----+------+------+------+------+------+-------+\nEntering variable: x2\nLeaving variable: x3\n\nIteration 2\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+------+------+-------+\n|    |   Z | x1   |   x2 | x3   |   x4 |   x5 | RHS   |\n+====+=====+======+======+======+======+======+=======+\n| Z  |   1 | -20  |    0 | 10   |    0 |    0 | 150   |\n+----+-----+------+------+------+------+------+-------+\n| x2 |   0 | -1/2 |    1 | 1/2  |    0 |    0 | 15/2  |\n+----+-----+------+------+------+------+------+-------+\n| x4 |   0 | 3/2  |    0 | -1/2 |    1 |    0 | 9/2   |\n+----+-----+------+------+------+------+------+-------+\n| x5 |   0 | 13/2 |    0 | -3/2 |    0 |    1 | 45/2  |\n+----+-----+------+------+------+------+------+-------+\nEntering variable: x1\nLeaving variable: x4\n\nIteration 3\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+-------+------+-------+\n|    |   Z |   x1 |   x2 | x3   | x4    |   x5 |   RHS |\n+====+=====+======+======+======+=======+======+=======+\n| Z  |   1 |    0 |    0 | 10/3 | 40/3  |    0 |   210 |\n+----+-----+------+------+------+-------+------+-------+\n| x2 |   0 |    0 |    1 | 1/3  | 1/3   |    0 |     9 |\n+----+-----+------+------+------+-------+------+-------+\n| x1 |   0 |    1 |    0 | -1/3 | 2/3   |    0 |     3 |\n+----+-----+------+------+------+-------+------+-------+\n| x5 |   0 |    0 |    0 | 2/3  | -13/3 |    1 |     3 |\n+----+-----+------+------+------+-------+------+-------+\nOptimal solution reached.\nOptimal Solution:\nx1 = 3\nx2 = 9\nx3 = 0\nx4 = 0\nx5 = 3\nObjective Value = 210",
     "crumbs": [
       "PARA",
       "Projects",
@@ -221,7 +221,7 @@
     "href": "posts/01_projects/bs_3_1/notes/OR/01.html#big-m-method",
     "title": "Simplex 표 계산",
     "section": "Big M Method",
-    "text": "Big M Method\n\nimport numpy as np\nfrom fractions import Fraction\nfrom tabulate import tabulate\nfrom sympy import symbols, simplify, oo\n\nM = symbols('M')\n\n# 초기 설정\nobj = [2, 3, 1, 0, M, 0, M, 0]\nA = [\n    [1, 4, 2, -1, 1, 0, 0, 8],\n    [3, 2, 0, 0, 0, -1, 1, 6]\n]\nbasic = np.array([5, 7]) - 1  # x5, x6\nnon_basic = np.array([1, 2, 3, 4, 6]) - 1  # x1, x2, x3, x4\n\ndef to_fraction(array):\n    return [Fraction(x).limit_denominator() if isinstance(x, (int, float)) else x for x in array]\n\n# 초기 배열을 분수로 변환\nobj = to_fraction(obj)\nA = [to_fraction(row) for row in A]\n\ndef print_table():\n    headers = [\"\", \"Z\"] + [f\"x{i+1}\" for i in range(len(obj)-1)] + [\"RHS\"]\n    table = [[\"Z\", 1] + [str(x) for x in obj]]\n    for i in range(len(A)):\n        row = [f\"x{basic[i]+1}\", 0] + [str(x) for x in A[i]]\n        table.append(row)\n    print(\"\\nCurrent Simplex Tableau:\")\n    print(tabulate(table, headers=headers, tablefmt=\"grid\"))\n\ndef adjust_obj_for_big_m():\n    global obj\n    print(\"\\nAdjusting Objective Function for Big M Method\")\n    for i in range(len(basic)):\n        basic_var_idx = basic[i]\n        if obj[basic_var_idx] != 0:  # 인공변수일 경우(M이 포함된 경우)\n            factor = obj[basic_var_idx]\n            obj = [simplify(obj[j] - factor * A[i][j]) for j in range(len(obj))]\n\ndef simplex():\n    global obj, A, basic, non_basic\n    \n    adjust_obj_for_big_m()\n    print_table()\n    \n    iteration = 1\n    while True:\n        print(f\"\\nIteration {iteration}\")\n        print(\"=\" * 60)\n        print_table()\n\n        # 음의 계수 찾기 (entering variable)\n        eval_obj = [x.evalf(subs={M: 1e6}) if x.has(M) else float(x) for x in obj[:-1]]\n        min_rc_idx = min(range(len(obj)-1), key=lambda j: eval_obj[j])\n        \n        if eval_obj[min_rc_idx] &gt;= 0:\n            print(\"Optimal solution reached.\")\n            # 최적 해 출력\n            solution = {f\"x{i+1}\": 0 for i in range(len(obj)-1)}\n            for i, var_idx in enumerate(basic):\n                solution[f\"x{var_idx+1}\"] = A[i][-1]\n            print(\"Optimal Solution:\")\n            for var, val in solution.items():\n                print(f\"{var} = {val}\")\n            print(f\"Objective Value = {obj[-1]}\")\n            break\n\n        # Pivot 열 선택 및 ratio 계산\n        ratios = []\n        for i in range(len(A)):\n            if A[i][min_rc_idx] &gt; 0:\n                ratios.append((A[i][-1] / A[i][min_rc_idx], i))\n            else:\n                ratios.append((oo, i))\n        \n        min_ratio, pivot_row = min(ratios)\n        if min_ratio == oo:\n            print(\"Unbounded solution detected.\")\n            break\n\n        print(f\"Entering variable: x{min_rc_idx + 1}\")\n        print(f\"Leaving variable: x{basic[pivot_row] + 1}\")\n\n        # Pivot 연산\n        pivot = A[pivot_row][min_rc_idx]\n        A[pivot_row] = [simplify(x / pivot) for x in A[pivot_row]]\n        \n        # 다른 행 업데이트\n        for i in range(len(A)):\n            if i != pivot_row:\n                factor = A[i][min_rc_idx]\n                A[i] = [simplify(A[i][j] - factor * A[pivot_row][j]) for j in range(len(obj))]\n        \n        # 목적함수 업데이트\n        factor = obj[min_rc_idx]\n        obj = [simplify(obj[j] - factor * A[pivot_row][j]) for j in range(len(obj))]\n        \n        # 기본 변수 업데이트\n        leaving_var = basic[pivot_row]\n        basic[pivot_row] = min_rc_idx\n        non_basic[non_basic == min_rc_idx] = leaving_var\n        \n        iteration += 1\n\nsimplex()\n\n\nAdjusting Objective Function for Big M Method\n\nCurrent Simplex Tableau:\n+----+-----+---------+---------+---------+------+------+------+------+-------+\n|    |   Z | x1      | x2      | x3      | x4   |   x5 | x6   |   x7 | RHS   |\n+====+=====+=========+=========+=========+======+======+======+======+=======+\n| Z  |   1 | 2 - 4*M | 3 - 6*M | 1 - 2*M | M    |    0 | M    |    0 | -14*M |\n+----+-----+---------+---------+---------+------+------+------+------+-------+\n| x5 |   0 | 1       | 4       | 2       | -1   |    1 | 0    |    0 | 8     |\n+----+-----+---------+---------+---------+------+------+------+------+-------+\n| x7 |   0 | 3       | 2       | 0       | 0    |    0 | -1   |    1 | 6     |\n+----+-----+---------+---------+---------+------+------+------+------+-------+\n\nIteration 1\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+---------+---------+---------+------+------+------+------+-------+\n|    |   Z | x1      | x2      | x3      | x4   |   x5 | x6   |   x7 | RHS   |\n+====+=====+=========+=========+=========+======+======+======+======+=======+\n| Z  |   1 | 2 - 4*M | 3 - 6*M | 1 - 2*M | M    |    0 | M    |    0 | -14*M |\n+----+-----+---------+---------+---------+------+------+------+------+-------+\n| x5 |   0 | 1       | 4       | 2       | -1   |    1 | 0    |    0 | 8     |\n+----+-----+---------+---------+---------+------+------+------+------+-------+\n| x7 |   0 | 3       | 2       | 0       | 0    |    0 | -1   |    1 | 6     |\n+----+-----+---------+---------+---------+------+------+------+------+-------+\nEntering variable: x2\nLeaving variable: x5\n\nIteration 2\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+-------------+------+---------+-----------+-------------+------+------+----------+\n|    |   Z | x1          |   x2 | x3      | x4        | x5          | x6   |   x7 | RHS      |\n+====+=====+=============+======+=========+===========+=============+======+======+==========+\n| Z  |   1 | 5/4 - 5*M/2 |    0 | M - 1/2 | 3/4 - M/2 | 3*M/2 - 3/4 | M    |    0 | -2*M - 6 |\n+----+-----+-------------+------+---------+-----------+-------------+------+------+----------+\n| x2 |   0 | 1/4         |    1 | 1/2     | -1/4      | 1/4         | 0    |    0 | 2        |\n+----+-----+-------------+------+---------+-----------+-------------+------+------+----------+\n| x7 |   0 | 5/2         |    0 | -1      | 1/2       | -1/2        | -1   |    1 | 2        |\n+----+-----+-------------+------+---------+-----------+-------------+------+------+----------+\nEntering variable: x1\nLeaving variable: x7\n\nIteration 3\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+-------+---------+------+---------+-------+\n|    |   Z |   x1 |   x2 | x3   | x4    | x5      | x6   | x7      | RHS   |\n+====+=====+======+======+======+=======+=========+======+=========+=======+\n| Z  |   1 |    0 |    0 | 0    | 1/2   | M - 1/2 | 1/2  | M - 1/2 | -7    |\n+----+-----+------+------+------+-------+---------+------+---------+-------+\n| x2 |   0 |    0 |    1 | 3/5  | -3/10 | 3/10    | 1/10 | -1/10   | 9/5   |\n+----+-----+------+------+------+-------+---------+------+---------+-------+\n| x1 |   0 |    1 |    0 | -2/5 | 1/5   | -1/5    | -2/5 | 2/5     | 4/5   |\n+----+-----+------+------+------+-------+---------+------+---------+-------+\nOptimal solution reached.\nOptimal Solution:\nx1 = 4/5\nx2 = 9/5\nx3 = 0\nx4 = 0\nx5 = 0\nx6 = 0\nx7 = 0\nObjective Value = -7",
+    "text": "Big M Method\n\nimport numpy as np\nfrom fractions import Fraction\nfrom tabulate import tabulate\nfrom sympy import symbols, simplify, oo\n\nM = symbols('M')\n\n# 초기 설정\nobj = [2, -2, -1, 4, -3, 0, 0, M, 0, M, 0]\nA = [\n    [1, -1, 1, 3, 2, 1, 0, 0, 0, 0, 4],\n    [1, -1, 0, -1, 1, 0, -1, 1, 0, 0, -1],\n    [2, -2, 1, 0, 0, 0, 0, 0, 1, 0, 2],\n    [1, -1, 2, 1, 2, 0, 0, 0, 0, 1, 2]\n]\nbasic = np.array([6, 8, 9, 10]) - 1  # x5, x6\nnon_basic = np.array([1, 2, 3, 4, 5, 7]) - 1  # x1, x2, x3, x4\n\ndef to_fraction(array):\n    return [Fraction(x).limit_denominator() if isinstance(x, (int, float)) else x for x in array]\n\n# 초기 배열을 분수로 변환\nobj = to_fraction(obj)\nA = [to_fraction(row) for row in A]\n\ndef print_table():\n    headers = [\"\", \"Z\"] + [f\"x{i+1}\" for i in range(len(obj)-1)] + [\"RHS\"]\n    table = [[\"Z\", 1] + [str(x) for x in obj]]\n    for i in range(len(A)):\n        row = [f\"x{basic[i]+1}\", 0] + [str(x) for x in A[i]]\n        table.append(row)\n    print(\"\\nCurrent Simplex Tableau:\")\n    print(tabulate(table, headers=headers, tablefmt=\"grid\"))\n\ndef adjust_obj_for_big_m():\n    global obj\n    print(\"\\nAdjusting Objective Function for Big M Method\")\n    for i in range(len(basic)):\n        basic_var_idx = basic[i]\n        if obj[basic_var_idx] != 0:  # 인공변수일 경우(M이 포함된 경우)\n            factor = obj[basic_var_idx]\n            obj = [simplify(obj[j] - factor * A[i][j]) for j in range(len(obj))]\n\ndef simplex():\n    global obj, A, basic, non_basic\n    \n    adjust_obj_for_big_m()\n    print_table()\n    \n    iteration = 1\n    while True:\n        print(f\"\\nIteration {iteration}\")\n        print(\"=\" * 60)\n        print_table()\n\n        # 음의 계수 찾기 (entering variable)\n        eval_obj = [x.evalf(subs={M: 1e6}) if x.has(M) else float(x) for x in obj[:-1]]\n        min_rc_idx = min(range(len(obj)-1), key=lambda j: eval_obj[j])\n        \n        if eval_obj[min_rc_idx] &gt;= 0:\n            print(\"Optimal solution reached.\")\n            # 최적 해 출력\n            solution = {f\"x{i+1}\": 0 for i in range(len(obj)-1)}\n            for i, var_idx in enumerate(basic):\n                solution[f\"x{var_idx+1}\"] = A[i][-1]\n            print(\"Optimal Solution:\")\n            for var, val in solution.items():\n                print(f\"{var} = {val}\")\n            print(f\"Objective Value = {obj[-1]}\")\n            break\n\n        # Pivot 열 선택 및 ratio 계산\n        ratios = []\n        for i in range(len(A)):\n            if A[i][min_rc_idx] &gt; 0:\n                ratios.append((A[i][-1] / A[i][min_rc_idx], i))\n            else:\n                ratios.append((oo, i))\n        \n        min_ratio, pivot_row = min(ratios)\n        if min_ratio == oo:\n            print(\"Unbounded solution detected.\")\n            break\n\n        print(f\"Entering variable: x{min_rc_idx + 1}\")\n        print(f\"Leaving variable: x{basic[pivot_row] + 1}\")\n\n        # Pivot 연산\n        pivot = A[pivot_row][min_rc_idx]\n        A[pivot_row] = [simplify(x / pivot) for x in A[pivot_row]]\n        \n        # 다른 행 업데이트\n        for i in range(len(A)):\n            if i != pivot_row:\n                factor = A[i][min_rc_idx]\n                A[i] = [simplify(A[i][j] - factor * A[pivot_row][j]) for j in range(len(obj))]\n        \n        # 목적함수 업데이트\n        factor = obj[min_rc_idx]\n        obj = [simplify(obj[j] - factor * A[pivot_row][j]) for j in range(len(obj))]\n        \n        # 기본 변수 업데이트\n        leaving_var = basic[pivot_row]\n        basic[pivot_row] = min_rc_idx\n        non_basic[non_basic == min_rc_idx] = leaving_var\n        \n        iteration += 1\n\nsimplex()\n\n\nAdjusting Objective Function for Big M Method\n\nCurrent Simplex Tableau:\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n|     |   Z | x1      | x2      | x3       |   x4 | x5       |   x6 | x7   |   x8 |   x9 |   x10 | RHS   |\n+=====+=====+=========+=========+==========+======+==========+======+======+======+======+=======+=======+\n| Z   |   1 | 2 - 2*M | 2*M - 2 | -2*M - 1 |    4 | -3*M - 3 |    0 | M    |    0 |    0 |     0 | -M    |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n| x6  |   0 | 1       | -1      | 1        |    3 | 2        |    1 | 0    |    0 |    0 |     0 | 4     |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n| x8  |   0 | 1       | -1      | 0        |   -1 | 1        |    0 | -1   |    1 |    0 |     0 | -1    |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n| x9  |   0 | 2       | -2      | 1        |    0 | 0        |    0 | 0    |    0 |    1 |     0 | 2     |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n| x10 |   0 | 1       | -1      | 2        |    1 | 2        |    0 | 0    |    0 |    0 |     1 | 2     |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n\nIteration 1\n============================================================\n\nCurrent Simplex Tableau:\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n|     |   Z | x1      | x2      | x3       |   x4 | x5       |   x6 | x7   |   x8 |   x9 |   x10 | RHS   |\n+=====+=====+=========+=========+==========+======+==========+======+======+======+======+=======+=======+\n| Z   |   1 | 2 - 2*M | 2*M - 2 | -2*M - 1 |    4 | -3*M - 3 |    0 | M    |    0 |    0 |     0 | -M    |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n| x6  |   0 | 1       | -1      | 1        |    3 | 2        |    1 | 0    |    0 |    0 |     0 | 4     |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n| x8  |   0 | 1       | -1      | 0        |   -1 | 1        |    0 | -1   |    1 |    0 |     0 | -1    |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n| x9  |   0 | 2       | -2      | 1        |    0 | 0        |    0 | 0    |    0 |    1 |     0 | 2     |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\n| x10 |   0 | 1       | -1      | 2        |    1 | 2        |    0 | 0    |    0 |    0 |     1 | 2     |\n+-----+-----+---------+---------+----------+------+----------+------+------+------+------+-------+-------+\nEntering variable: x5\nLeaving variable: x8\n\nIteration 2\n============================================================\n\nCurrent Simplex Tableau:\n+-----+-----+-------+--------+----------+---------+------+------+----------+---------+------+-------+----------+\n|     |   Z | x1    | x2     | x3       | x4      |   x5 |   x6 | x7       | x8      |   x9 |   x10 | RHS      |\n+=====+=====+=======+========+==========+=========+======+======+==========+=========+======+=======+==========+\n| Z   |   1 | M + 5 | -M - 5 | -2*M - 1 | 1 - 3*M |    0 |    0 | -2*M - 3 | 3*M + 3 |    0 |     0 | -4*M - 3 |\n+-----+-----+-------+--------+----------+---------+------+------+----------+---------+------+-------+----------+\n| x6  |   0 | -1    | 1      | 1        | 5       |    0 |    1 | 2        | -2      |    0 |     0 | 6        |\n+-----+-----+-------+--------+----------+---------+------+------+----------+---------+------+-------+----------+\n| x5  |   0 | 1     | -1     | 0        | -1      |    1 |    0 | -1       | 1       |    0 |     0 | -1       |\n+-----+-----+-------+--------+----------+---------+------+------+----------+---------+------+-------+----------+\n| x9  |   0 | 2     | -2     | 1        | 0       |    0 |    0 | 0        | 0       |    1 |     0 | 2        |\n+-----+-----+-------+--------+----------+---------+------+------+----------+---------+------+-------+----------+\n| x10 |   0 | -1    | 1      | 2        | 3       |    0 |    0 | 2        | -2      |    0 |     1 | 4        |\n+-----+-----+-------+--------+----------+---------+------+------+----------+---------+------+-------+----------+\nEntering variable: x4\nLeaving variable: x6\n\nIteration 3\n============================================================\n\nCurrent Simplex Tableau:\n+-----+-----+--------------+---------------+--------------+------+------+-------------+---------------+--------------+------+-------+---------------+\n|     |   Z | x1           | x2            | x3           |   x4 |   x5 | x6          | x7            | x8           |   x9 |   x10 | RHS           |\n+=====+=====+==============+===============+==============+======+======+=============+===============+==============+======+=======+===============+\n| Z   |   1 | 2*M/5 + 26/5 | -2*M/5 - 26/5 | -7*M/5 - 6/5 |    0 |    0 | 3*M/5 - 1/5 | -4*M/5 - 17/5 | 9*M/5 + 17/5 |    0 |     0 | -2*M/5 - 21/5 |\n+-----+-----+--------------+---------------+--------------+------+------+-------------+---------------+--------------+------+-------+---------------+\n| x4  |   0 | -1/5         | 1/5           | 1/5          |    1 |    0 | 1/5         | 2/5           | -2/5         |    0 |     0 | 6/5           |\n+-----+-----+--------------+---------------+--------------+------+------+-------------+---------------+--------------+------+-------+---------------+\n| x5  |   0 | 4/5          | -4/5          | 1/5          |    0 |    1 | 1/5         | -3/5          | 3/5          |    0 |     0 | 1/5           |\n+-----+-----+--------------+---------------+--------------+------+------+-------------+---------------+--------------+------+-------+---------------+\n| x9  |   0 | 2            | -2            | 1            |    0 |    0 | 0           | 0             | 0            |    1 |     0 | 2             |\n+-----+-----+--------------+---------------+--------------+------+------+-------------+---------------+--------------+------+-------+---------------+\n| x10 |   0 | -2/5         | 2/5           | 7/5          |    0 |    0 | -3/5        | 4/5           | -4/5         |    0 |     1 | 2/5           |\n+-----+-----+--------------+---------------+--------------+------+------+-------------+---------------+--------------+------+-------+---------------+\nEntering variable: x3\nLeaving variable: x10\n\nIteration 4\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+-------+------+------+------+------+-------+----------+------+---------+-------+\n|    |   Z | x1   | x2    |   x3 |   x4 |   x5 | x6   | x7    | x8       |   x9 | x10     | RHS   |\n+====+=====+======+=======+======+======+======+======+=======+==========+======+=========+=======+\n| Z  |   1 | 34/7 | -34/7 |    0 |    0 |    0 | -5/7 | -19/7 | M + 19/7 |    0 | M + 6/7 | -27/7 |\n+----+-----+------+-------+------+------+------+------+-------+----------+------+---------+-------+\n| x4 |   0 | -1/7 | 1/7   |    0 |    1 |    0 | 2/7  | 2/7   | -2/7     |    0 | -1/7    | 8/7   |\n+----+-----+------+-------+------+------+------+------+-------+----------+------+---------+-------+\n| x5 |   0 | 6/7  | -6/7  |    0 |    0 |    1 | 2/7  | -5/7  | 5/7      |    0 | -1/7    | 1/7   |\n+----+-----+------+-------+------+------+------+------+-------+----------+------+---------+-------+\n| x9 |   0 | 16/7 | -16/7 |    0 |    0 |    0 | 3/7  | -4/7  | 4/7      |    1 | -5/7    | 12/7  |\n+----+-----+------+-------+------+------+------+------+-------+----------+------+---------+-------+\n| x3 |   0 | -2/7 | 2/7   |    1 |    0 |    0 | -3/7 | 4/7   | -4/7     |    0 | 5/7     | 2/7   |\n+----+-----+------+-------+------+------+------+------+-------+----------+------+---------+-------+\nEntering variable: x2\nLeaving variable: x3\n\nIteration 5\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+------+------+------+------+-------+------+--------+-------+\n|    |   Z |   x1 |   x2 | x3   |   x4 |   x5 | x6   |   x7 | x8    |   x9 | x10    |   RHS |\n+====+=====+======+======+======+======+======+======+======+=======+======+========+=======+\n| Z  |   1 |    0 |    0 | 17   |    0 |    0 | -8   |    7 | M - 7 |    0 | M + 13 |     1 |\n+----+-----+------+------+------+------+------+------+------+-------+------+--------+-------+\n| x4 |   0 |    0 |    0 | -1/2 |    1 |    0 | 1/2  |    0 | 0     |    0 | -1/2   |     1 |\n+----+-----+------+------+------+------+------+------+------+-------+------+--------+-------+\n| x5 |   0 |    0 |    0 | 3    |    0 |    1 | -1   |    1 | -1    |    0 | 2      |     1 |\n+----+-----+------+------+------+------+------+------+------+-------+------+--------+-------+\n| x9 |   0 |    0 |    0 | 8    |    0 |    0 | -3   |    4 | -4    |    1 | 5      |     4 |\n+----+-----+------+------+------+------+------+------+------+-------+------+--------+-------+\n| x2 |   0 |   -1 |    1 | 7/2  |    0 |    0 | -3/2 |    2 | -2    |    0 | 5/2    |     1 |\n+----+-----+------+------+------+------+------+------+------+-------+------+--------+-------+\nEntering variable: x6\nLeaving variable: x4\n\nIteration 6\n============================================================\n\nCurrent Simplex Tableau:\n+----+-----+------+------+------+------+------+------+------+-------+------+-------+-------+\n|    |   Z |   x1 |   x2 |   x3 |   x4 |   x5 |   x6 |   x7 | x8    |   x9 | x10   |   RHS |\n+====+=====+======+======+======+======+======+======+======+=======+======+=======+=======+\n| Z  |   1 |    0 |    0 |    9 |   16 |    0 |    0 |    7 | M - 7 |    0 | M + 5 |    17 |\n+----+-----+------+------+------+------+------+------+------+-------+------+-------+-------+\n| x6 |   0 |    0 |    0 |   -1 |    2 |    0 |    1 |    0 | 0     |    0 | -1    |     2 |\n+----+-----+------+------+------+------+------+------+------+-------+------+-------+-------+\n| x5 |   0 |    0 |    0 |    2 |    2 |    1 |    0 |    1 | -1    |    0 | 1     |     3 |\n+----+-----+------+------+------+------+------+------+------+-------+------+-------+-------+\n| x9 |   0 |    0 |    0 |    5 |    6 |    0 |    0 |    4 | -4    |    1 | 2     |    10 |\n+----+-----+------+------+------+------+------+------+------+-------+------+-------+-------+\n| x2 |   0 |   -1 |    1 |    2 |    3 |    0 |    0 |    2 | -2    |    0 | 1     |     4 |\n+----+-----+------+------+------+------+------+------+------+-------+------+-------+-------+\nOptimal solution reached.\nOptimal Solution:\nx1 = 0\nx2 = 4\nx3 = 0\nx4 = 0\nx5 = 3\nx6 = 2\nx7 = 0\nx8 = 0\nx9 = 10\nx10 = 0\nObjective Value = 17",
     "crumbs": [
       "PARA",
       "Projects",
@@ -416,7 +416,7 @@
     "href": "posts/01_projects/bs_3_1/notes/statistics/01.html#통계적-추론",
     "title": "통계적 추정",
     "section": "통계적 추론",
-    "text": "통계적 추론\n표본으로부터 모수를 추론하는 것:\n\n추정\n\n점추정\n구간추정\n\n가설 검정",
+    "text": "통계적 추론\n모집단에서 추출된 표본의 통계량으로부터 모수를 추론하는 것\n\n추정\n\n점추정\n구간추정\n\n가설 검정",
     "crumbs": [
       "PARA",
       "Projects",
@@ -431,7 +431,7 @@
     "href": "posts/01_projects/bs_3_1/notes/statistics/01.html#추정",
     "title": "통계적 추정",
     "section": "추정",
-    "text": "추정\n추정량의 결정 기준:\n\n불편성\n\n\\(E(\\hat{\\theta}) = θ\\)\nbias = \\(E(\\hat{\\theta}) - \\theta\\)\n\n보통 sample size가 커질수록 bias는 0에 수렴\n\n\\(\\bar{X}, X_n\\)은 μ의 불편추정량이다.\n\n\n\n최소분산\n\n\\(Var(\\bar{X})\\)가 \\(Var(X_n)\\)보다 분산이 작아서 더 좋은 추정량\n\\(MSE(\\hat{\\theta}) = E[(\\hat{\\theta} - \\theta)^2] = Var(\\hat{\\theta}) + bias^2\\)\n\n큰 오차에 더 큰 페널티를 주기 위해 제곱\n\n\n\n\n대표적인 불편추정량\n\n전부 중심극한의정리를 적용할 수 있다.\n\n\n모평균\n모비율\n모평균 차이\n모비율 차이",
+    "text": "추정\n\n불편성\n\n\\(E(\\hat{\\theta}) = θ\\)\nbias = \\(E(\\hat{\\theta}) - \\theta\\)\n\n보통 sample size가 커질수록 bias는 0에 수렴\n\n\\(\\bar{X}, X_n\\)은 μ의 불편추정량이다.\n\n\n\n최소분산\n\n\\(Var(\\bar{X})\\)가 \\(Var(X_n)\\)보다 분산이 작아서 더 좋은 추정량\n\\(MSE(\\hat{\\theta}) = E[(\\hat{\\theta} - \\theta)^2] = Var(\\hat{\\theta}) + bias^2\\)\n\n큰 오차에 더 큰 페널티를 주기 위해 제곱\n\n\n\n\n대표적인 불편추정량\n\n전부 중심극한의정리를 적용할 수 있다.\n\n\n모평균\n모비율\n모평균 차이 (독립이라는 가정 필요)\n모비율 차이 (독립이라는 가정 필요)",
     "crumbs": [
       "PARA",
       "Projects",
@@ -446,7 +446,7 @@
     "href": "posts/01_projects/bs_3_1/notes/statistics/01.html#구간-추정",
     "title": "통계적 추정",
     "section": "구간 추정",
-    "text": "구간 추정\n\n(\\(θ_L, θ_U\\)) 이 충분이 높은 가능성으로 미지의 모수 θ를 포함해야 한다\n구간이 충분히 좁아야 한다\n\n\nα: 유의수준\n1 - α: 신뢰수준\n(θ_L, θ_U) = (1 - α) × 100% 신뢰구간\n\n\n신뢰 구간의 확률적인 의미\n\n샘플링을 무한히 반복했을 때, 이들의 신뢰 구간 중 95%의 구간이 실제 모수를 포함한다. → 구간이 확률 변수이다.\n\n\n\n신뢰구간은 대칭이여야 하는가\n\n0을 중심으로 대칭일 때 길이가 짧다.\n고로 대칭이여야함\nEmpirical Rule: 68-95-99.7",
+    "text": "구간 추정\n\nα: 유의수준\n1 - α: 신뢰수준\n(θ_L, θ_U) = (1 - α) × 100% 신뢰구간\n\n\n(\\(θ_L, θ_U\\)) 이 충분이 높은 가능성으로 미지의 모수 θ를 포함해야 한다\n구간이 충분히 좁아야 한다\n\n표준 정규분포에서 0을 중심으로 대칭일 때 길이가 짧다.\n고로 신뢰구간이 대칭임\n\n\n\n신뢰 구간의 확률적인 의미\n\n샘플링을 무한히 반복했을 때, 이들의 신뢰 구간 중 95%의 구간이 실제 모수를 포함한다. → 구간이 확률 변수이다.\n\n\n\n표본의 크기 결정\n특정 오차 아래로 하는 표본의 수 구하는 법\n\n그냥 표본오차가 목표 오차보다 작게 하는 값을 구하면 됨.\n모비율을 모를 때는 일단 0.5로 보수적으로 놓고 계산",
     "crumbs": [
       "PARA",
       "Projects",
@@ -461,7 +461,7 @@
     "href": "posts/01_projects/bs_3_1/notes/statistics/01.html#소표본-신뢰구간",
     "title": "통계적 추정",
     "section": "소표본 신뢰구간",
-    "text": "소표본 신뢰구간\n\nt분포를 사용하기 위해서는 모집단이 정규분포를 따른다는 가정이 필요\nσ를 모를때 사용한다기 보다는 표본이 작을 때 사용\n\n표본이 큰데 σ를 모르면 Empirical rule로 추정 가능\n\n정규분포에 비해 신뢰구간은 더 길어짐\n\n\n표본이 작다.\n모집단 정규\nσ 모름\n\\(σ_1 = σ_2\\)\n\n→ t분포",
+    "text": "소표본 신뢰구간\n\n표본이 작다. → 크면 정규분포\n모집단 정규분포를 따른다. → 비모수 검정\nσ 모름 → 알면 그냥 정규 분포\n\\(σ_1 = σ_2\\)\n\n→ t분포\n\n정규분포에 비해 신뢰구간은 더 길어짐",
     "crumbs": [
       "PARA",
       "Projects",
@@ -476,7 +476,7 @@
     "href": "posts/01_projects/bs_3_1/notes/statistics/01.html#모분산-추정",
     "title": "통계적 추정",
     "section": "모분산 추정",
-    "text": "모분산 추정\n\n카이제곱 분포는 가장 짧은 신뢰구간을 구하기 쉽지 않음\n\n그냥 쉽게 구하기 위해 \\((x^2_{α/2}, x^2_{1-α/2})\\)를 사용",
+    "text": "모분산 추정\n\n카이제곱 분포는 가장 짧은 신뢰구간을 구하기 쉽지 않음\n\n그냥 쉽게 구하기 위해 \\((x^2_{α/2}, x^2_{1-α/2})\\)를 사용\n\n모분산의 신뢰구간: \\((\\frac{(n-1)s^2}{x^2_{(1-\\alpha)/2}(n-1)}, \\frac{(n-1)s^2}{x^2_{\\alpha/2}(n-1)})\\)\n표본의 수가 적을수록, 카이제곱 분포의 신뢰구간은 더 길어진다.",
     "crumbs": [
       "PARA",
       "Projects",
@@ -4360,7 +4360,7 @@
     "href": "all.html",
     "title": "전체 게시글",
     "section": "",
-    "text": "정렬\n       디폴트\n         \n          날짜 - 날짜(오름차순)\n        \n         \n          날짜 - 날짜(내림차순)\n        \n         \n          제목\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n제목\n\n\n날짜\n\n\n분류\n\n\n\n\n\n\nDataminig 1차 발표 ppt\n\n\n2025-04-13\n\n\ndata mining, 보고서\n\n\n\n\n데이터마이닝 1차 팀과제 script\n\n\n2025-04-12\n\n\n보고서, 데이터 마이닝\n\n\n\n\nOR 과제 - 4\n\n\n2025-04-10\n\n\n보고서, OR\n\n\n\n\nHomework - 2\n\n\n2025-04-10\n\n\ndata mining\n\n\n\n\n프로세스 성과에 미치는 변동성의 영향: 대기시간 문제\n\n\n2025-04-09\n\n\n생산시스템관리\n\n\n\n\nOR 과제 - 3\n\n\n2025-04-06\n\n\n보고서, OR\n\n\n\n\nCoding pipeline\n\n\n2025-04-05\n\n\nAir flow\n\n\n\n\nSimplex 표 계산\n\n\n2025-04-03\n\n\nOR, 학부 정리\n\n\n\n\n배치 생산 및 경제적 주문량 모형\n\n\n2025-04-02\n\n\n생산시스템관리\n\n\n\n\nData Transformation\n\n\n2025-04-02\n\n\ndata mining\n\n\n\n\nHomework\n\n\n2025-03-31\n\n\ndata mining\n\n\n\n\n인건비 추정과 감축\n\n\n2025-03-31\n\n\n생산시스템관리\n\n\n\n\n통계적 가설검정\n\n\n2025-03-27\n\n\n확률과 통계\n\n\n\n\n제품 설계 기법 및 기업 프로세스 유형\n\n\n2025-03-26\n\n\n생산시스템관리\n\n\n\n\npreprocessing\n\n\n2025-03-26\n\n\ndata mining\n\n\n\n\nGetting Started\n\n\n2025-03-26\n\n\nAir flow\n\n\n\n\n데이터마이닝 팀 과제 주제\n\n\n2025-03-25\n\n\n보고서, 데이터 마이닝\n\n\n\n\npandas\n\n\n2025-03-24\n\n\ndata mining\n\n\n\n\nOR 과제 - 2\n\n\n2025-03-22\n\n\n보고서, OR\n\n\n\n\n공급 프로세스의 이해: 프로세스 처리능력 평가\n\n\n2025-03-19\n\n\n생산시스템관리\n\n\n\n\npandas\n\n\n2025-03-19\n\n\ndata mining\n\n\n\n\n신경망\n\n\n2025-03-18\n\n\ndeep learning\n\n\n\n\n퍼셉트론\n\n\n2025-03-17\n\n\ndeep learning\n\n\n\n\npandas\n\n\n2025-03-17\n\n\ndata mining\n\n\n\n\ntitanic\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nUpper Confidence Bound\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nNull space and Column space\n\n\n2025-03-16\n\n\n선형 대수\n\n\n\n\nEclat\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nApriori\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\n안녕하세요. 데이터 분석 전문가(진)입니다.\n\n\n2025-03-14\n\n\nadp, 후기\n\n\n\n\nOR 과제 - 1\n\n\n2025-03-13\n\n\n보고서, OR\n\n\n\n\n통계적 추정\n\n\n2025-03-13\n\n\n확률과 통계\n\n\n\n\n조직을 프로세스 관점에서 바라보기\n\n\n2025-03-12\n\n\n생산시스템관리\n\n\n\n\npandas\n\n\n2025-03-12\n\n\ndata mining\n\n\n\n\nNumpy-2\n\n\n2025-03-12\n\n\ndata mining\n\n\n\n\n가감법으로 연립방정식을 풀기 위한 행렬\n\n\n2025-03-11\n\n\n선형 대수\n\n\n\n\nintro\n\n\n2025-03-10\n\n\npython\n\n\n\n\nNumpy\n\n\n2025-03-10\n\n\ndata mining\n\n\n\n\nMatching Supply with Demand\n\n\n2025-03-10\n\n\n생산시스템관리\n\n\n\n\nvector dot product, cross product\n\n\n2025-03-09\n\n\n선형 대수\n\n\n\n\nk-means clustering\n\n\n2025-03-09\n\n\nmachine learning\n\n\n\n\nhierarchical clustering\n\n\n2025-03-09\n\n\nmachine learning\n\n\n\n\nLinear Programming Algorithm\n\n\n2025-03-08\n\n\nOperational Research\n\n\n\n\nIntro\n\n\n2025-03-07\n\n\nOR, 학부 정리\n\n\n\n\n확률과 통계 1 정리\n\n\n2025-03-06\n\n\n확률과 통계\n\n\n\n\n나의 단점에 관한 고찰\n\n\n2025-03-06\n\n\n인생\n\n\n\n\nQuantum Programming\n\n\n2025-03-06\n\n\nQuantum Programming\n\n\n\n\nQiskit\n\n\n2025-03-06\n\n\nQuantum Programming\n\n\n\n\nRandom Forest\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nNaive Bayes\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nIntro\n\n\n2025-03-05\n\n\n생산시스템관리\n\n\n\n\nDecision Tree Classification\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nSubspaces and the basis\n\n\n2025-03-03\n\n\n선형 대수\n\n\n\n\nlinear independence\n\n\n2025-03-02\n\n\n선형 대수\n\n\n\n\nSupport Vector Machine\n\n\n2025-03-02\n\n\nmachine learning\n\n\n\n\nK Nearest Neighbors\n\n\n2025-03-02\n\n\nmachine learning\n\n\n\n\nrandom forest\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nSupport Vector Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nLogistic Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nDecision Tree Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nPolynorminal Linear Regression\n\n\n2025-02-27\n\n\nmachine learning\n\n\n\n\noverview\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\ndata preprocessing\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\nSimple Linear Regression\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\nMultiple Linear Regression\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\n머신 러닝\n\n\n2025-02-25\n\n\n데이터 분석\n\n\n\n\n시험을 보고 왔습니다.\n\n\n2025-02-22\n\n\nadp, 후기\n\n\n\n\nwhat is a blockchain?\n\n\n2025-02-22\n\n\n블록 체인\n\n\n\n\n4 - 정형 데이터 마이닝\n\n\n2025-02-20\n\n\nadp\n\n\n\n\n4 - 비정형 데이터 마이닝\n\n\n2025-02-18\n\n\nadp\n\n\n\n\ninception-of-things part 1\n\n\n2025-02-17\n\n\nvagrant, k8s, argoCD, gitlab, 42 seoul\n\n\n\n\n4 - 통계분석\n\n\n2025-02-16\n\n\nadp\n\n\n\n\n4 - 데이터 마트\n\n\n2025-02-15\n\n\nadp\n\n\n\n\nTerraform Cloud\n\n\n2025-02-11\n\n\nterraform, terraform cloud, devops, IaC\n\n\n\n\n5 - 시각화 인사이트 프로세스\n\n\n2025-02-11\n\n\nadp\n\n\n\n\n5 - 시각화 디자인\n\n\n2025-02-11\n\n\nadp\n\n\n\n\n3 - 분석 마스터 플랜\n\n\n2025-02-10\n\n\nadp\n\n\n\n\n3 - 데이터 분석 기획의 이해\n\n\n2025-02-10\n\n\nadp\n\n\n\n\n2 - 데이터 처리 프로세스\n\n\n2025-02-08\n\n\nadp\n\n\n\n\n2 - 데이터 처리 기술\n\n\n2025-02-08\n\n\nadp\n\n\n\n\n성적 장학금\n\n\n2025-02-05\n\n\n장학금\n\n\n\n\n1 - 데이터의 가치와 미래\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n1 - 데이터 이해\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n1 - 가치 창조를 위한 데이터 사이언스와 전략 인사이트\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n인간 관계론 - 데일 카네기\n\n\n2025-02-02\n\n\n독서, 인간 관계\n\n\n\n\n선형결합과 생성\n\n\n2025-01-31\n\n\n선형 대수\n\n\n\n\n벡터와 공간\n\n\n2025-01-30\n\n\n선형 대수\n\n\n\n\ncloud-1 코드 설명\n\n\n2025-01-30\n\n\naws, packer, terraform, ansible, 42 seoul\n\n\n\n\ncloud-1 개념 설명\n\n\n2025-01-28\n\n\naws, packer, terraform, ansible, 42 seoul\n\n\n\n\n3-몰라\n\n\n2025-01-22\n\n\n선형 대수\n\n\n\n\n자기 소개서\n\n\n2025-01-17\n\n\n자기 소개서\n\n\n\n\nft_transcendence - github action\n\n\n2025-01-17\n\n\nagile, github action, 42 seoul\n\n\n\n\n2-기초(2)\n\n\n2025-01-11\n\n\n선형 대수\n\n\n\n\n2-기초(1)\n\n\n2025-01-10\n\n\n선형 대수\n\n\n\n\nSecond Brain - 티아고 포르테\n\n\n2025-01-09\n\n\n학습, 독서\n\n\n\n\nwhat is linear algebra\n\n\n2025-01-07\n\n\n선형 대수\n\n\n\n\n돈의 심리학 - 모건 하우절\n\n\n2025-01-02\n\n\n금융, 독서\n\n\n\n\n데이터 전처리\n\n\n2025-01-02\n\n\n데이터 분석\n\n\n\n\nEDA와 시각화\n\n\n2024-12-30\n\n\n데이터 분석\n\n\n\n\nPARA Blog 제작\n\n\n2024-12-26\n\n\n블로그\n\n\n\n\npandas data 구조\n\n\n2024-12-20\n\n\n데이터 분석\n\n\n\n\n맥도날드 키오스크 UI 개선 보고서\n\n\n2024-11-27\n\n\n보고서, 인간 공학\n\n\n\n\n숭실대학교 학생식당 식자제 SCM 설계\n\n\n2024-11-26\n\n\n보고서, database\n\n\n\n\nControl\n\n\n2024-11-21\n\n\n인간 공학\n\n\n\n\n표본의 분포\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\n중심 극한 정리\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\n정규 분포\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\nDisplay\n\n\n2024-11-14\n\n\n인간 공학\n\n\n\n\n연속형 확률분포\n\n\n2024-11-05\n\n\n확률과 통계\n\n\n\n\nAttention\n\n\n2024-11-05\n\n\n인간 공학\n\n\n\n\nDatabase Design\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\nDatabase Administration\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\nASP.NET\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\n4조 기말과제 제안서\n\n\n2024-10-30\n\n\n보고서, database\n\n\n\n\n이산형 확률분포\n\n\n2024-10-28\n\n\n확률과 통계\n\n\n\n\n데이터베이스설계및활용 개인과제 #2\n\n\n2024-10-27\n\n\n보고서, database\n\n\n\n\n확률변수의 기댓값\n\n\n2024-10-16\n\n\n확률과 통계\n\n\n\n\nSignal Detection Theory\n\n\n2024-10-15\n\n\n인간 공학\n\n\n\n\nAuditory Haptic\n\n\n2024-10-15\n\n\n인간 공학\n\n\n\n\nData Modeling and the Entity-Relationship Model\n\n\n2024-10-14\n\n\ndatabase\n\n\n\n\nSQL\n\n\n2024-09-27\n\n\ndatabase\n\n\n\n\nSensor System (Visual)\n\n\n2024-09-24\n\n\n인간 공학\n\n\n\n\nDatabase Normalization\n\n\n2024-09-24\n\n\ndatabase\n\n\n\n\nThe Relational Model\n\n\n2024-09-17\n\n\ndatabase\n\n\n\n\nHuman Information Processing Model\n\n\n2024-09-17\n\n\n인간 공학\n\n\n\n\nResearch Method in Human Factors\n\n\n2024-09-10\n\n\n인간 공학\n\n\n\n\n확률변수와 확률분포\n\n\n2024-09-03\n\n\n확률과 통계\n\n\n\n\nIntroduction to Human Factors\n\n\n2024-09-03\n\n\n인간 공학\n\n\n\n\nAn Overview of Database\n\n\n2024-09-03\n\n\ndatabase\n\n\n\n\n확률과 통계의 정의\n\n\n2024-09-02\n\n\n확률과 통계\n\n\n\n\nmetrics server\n\n\n2024-05-15\n\n\n \n\n\n\n\nmanual scheduling\n\n\n2024-05-15\n\n\n \n\n\n\n\nk8s cluster architecture\n\n\n2024-05-15\n\n\n \n\n\n\n\nfail tolerance\n\n\n2024-05-15\n\n\n \n\n\n\n\ncore DNS\n\n\n2024-05-15\n\n\n \n\n\n\n\nPersistant volume\n\n\n2024-05-15\n\n\n \n\n\n\n\nHA in master node\n\n\n2024-05-15\n\n\n \n\n\n\n\nAuthentication\n\n\n2024-05-15\n\n\n \n\n\n\n\nwhat is ebs\n\n\n2024-04-30\n\n\n \n\n\n\n\nwhat is EC2\n\n\n2024-04-30\n\n\n \n\n\n\n\ndatabase choice in aws\n\n\n2024-04-30\n\n\n \n\n\n\n\naws global infrastructure\n\n\n2024-04-30\n\n\n \n\n\n\n\nVPC\n\n\n2024-04-30\n\n\n \n\n\n\n\nRoute53\n\n\n2024-04-30\n\n\n \n\n\n\n\nPerformance Improvement\n\n\n2024-04-30\n\n\n \n\n\n\n\nOverview\n\n\n2024-04-30\n\n\nvault, devops\n\n\n\n\nKMS(Key Management Service)\n\n\n2024-04-30\n\n\n \n\n\n\n\nELB\n\n\n2024-04-30\n\n\n \n\n\n\n\nDisaster Recovery(DR)\n\n\n2024-04-30\n\n\n \n\n\n\n\nDefine IAM\n\n\n2024-04-30\n\n\n \n\n\n\n\nCloudFront\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon Rekognition\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon RDS\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon CloudWatch\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Snow Family\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS SQS\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS S3\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Organization\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Lambda\n\n\n2024-04-30\n\n\n \n\n\n\n\n\n일치 없음"
+    "text": "정렬\n       디폴트\n         \n          날짜 - 날짜(오름차순)\n        \n         \n          날짜 - 날짜(내림차순)\n        \n         \n          제목\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n제목\n\n\n날짜\n\n\n분류\n\n\n\n\n\n\nOR 과제 - 5\n\n\n2025-04-20\n\n\n보고서, OR\n\n\n\n\nOR 과제 - 2\n\n\n2025-04-19\n\n\n보고서, OR\n\n\n\n\n쌍대이론과 민감도 분석 (part 6)\n\n\n2025-04-19\n\n\nOR, 학부 정리\n\n\n\n\nSimplex Method (part 5)\n\n\n2025-04-18\n\n\nOR, 학부 정리\n\n\n\n\nANOVA\n\n\n2025-04-15\n\n\n확률과 통계\n\n\n\n\nclassification with tree\n\n\n2025-04-14\n\n\ndata mining\n\n\n\n\nDataminig 1차 발표 ppt\n\n\n2025-04-13\n\n\ndata mining, 보고서\n\n\n\n\n데이터마이닝 1차 팀과제 script\n\n\n2025-04-12\n\n\n보고서, 데이터 마이닝\n\n\n\n\nOR 과제 - 4\n\n\n2025-04-10\n\n\n보고서, OR\n\n\n\n\nHomework - 2\n\n\n2025-04-10\n\n\ndata mining\n\n\n\n\n프로세스 성과에 미치는 변동성의 영향: 대기시간 문제\n\n\n2025-04-09\n\n\n생산시스템관리\n\n\n\n\nOR 과제 - 3\n\n\n2025-04-06\n\n\n보고서, OR\n\n\n\n\nCoding pipeline\n\n\n2025-04-05\n\n\nAir flow\n\n\n\n\n시험 범위\n\n\n2025-04-03\n\n\nData Structure, 학부 정리\n\n\n\n\nSimplex 표 계산\n\n\n2025-04-03\n\n\nOR, 학부 정리\n\n\n\n\n배치 생산 및 경제적 주문량 모형\n\n\n2025-04-02\n\n\n생산시스템관리\n\n\n\n\nData Transformation\n\n\n2025-04-02\n\n\ndata mining\n\n\n\n\nHomework\n\n\n2025-03-31\n\n\ndata mining\n\n\n\n\n인건비 추정과 감축\n\n\n2025-03-31\n\n\n생산시스템관리\n\n\n\n\n통계적 가설검정\n\n\n2025-03-27\n\n\n확률과 통계\n\n\n\n\n제품 설계 기법 및 기업 프로세스 유형\n\n\n2025-03-26\n\n\n생산시스템관리\n\n\n\n\npreprocessing\n\n\n2025-03-26\n\n\ndata mining\n\n\n\n\nGetting Started\n\n\n2025-03-26\n\n\nAir flow\n\n\n\n\n데이터마이닝 팀 과제 주제\n\n\n2025-03-25\n\n\n보고서, 데이터 마이닝\n\n\n\n\npandas\n\n\n2025-03-24\n\n\ndata mining\n\n\n\n\n공급 프로세스의 이해: 프로세스 처리능력 평가\n\n\n2025-03-19\n\n\n생산시스템관리\n\n\n\n\npandas\n\n\n2025-03-19\n\n\ndata mining\n\n\n\n\n신경망\n\n\n2025-03-18\n\n\ndeep learning\n\n\n\n\n퍼셉트론\n\n\n2025-03-17\n\n\ndeep learning\n\n\n\n\npandas\n\n\n2025-03-17\n\n\ndata mining\n\n\n\n\ntitanic\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nUpper Confidence Bound\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nNull space and Column space\n\n\n2025-03-16\n\n\n선형 대수\n\n\n\n\nEclat\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nApriori\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\n안녕하세요. 데이터 분석 전문가(진)입니다.\n\n\n2025-03-14\n\n\nadp, 후기\n\n\n\n\nOR 과제 - 1\n\n\n2025-03-13\n\n\n보고서, OR\n\n\n\n\n통계적 추정\n\n\n2025-03-13\n\n\n확률과 통계\n\n\n\n\n조직을 프로세스 관점에서 바라보기\n\n\n2025-03-12\n\n\n생산시스템관리\n\n\n\n\npandas\n\n\n2025-03-12\n\n\ndata mining\n\n\n\n\nNumpy-2\n\n\n2025-03-12\n\n\ndata mining\n\n\n\n\n가감법으로 연립방정식을 풀기 위한 행렬\n\n\n2025-03-11\n\n\n선형 대수\n\n\n\n\nintro\n\n\n2025-03-10\n\n\npython\n\n\n\n\nNumpy\n\n\n2025-03-10\n\n\ndata mining\n\n\n\n\nMatching Supply with Demand\n\n\n2025-03-10\n\n\n생산시스템관리\n\n\n\n\nvector dot product, cross product\n\n\n2025-03-09\n\n\n선형 대수\n\n\n\n\nk-means clustering\n\n\n2025-03-09\n\n\nmachine learning\n\n\n\n\nhierarchical clustering\n\n\n2025-03-09\n\n\nmachine learning\n\n\n\n\nLinear Programming Algorithm\n\n\n2025-03-08\n\n\nOperational Research\n\n\n\n\nIntro\n\n\n2025-03-07\n\n\nOR, 학부 정리\n\n\n\n\n확률과 통계 1 정리\n\n\n2025-03-06\n\n\n확률과 통계\n\n\n\n\n나의 단점에 관한 고찰\n\n\n2025-03-06\n\n\n인생\n\n\n\n\nQuantum Programming\n\n\n2025-03-06\n\n\nQuantum Programming\n\n\n\n\nQiskit\n\n\n2025-03-06\n\n\nQuantum Programming\n\n\n\n\nRandom Forest\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nNaive Bayes\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nIntro\n\n\n2025-03-05\n\n\n생산시스템관리\n\n\n\n\nDecision Tree Classification\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nSubspaces and the basis\n\n\n2025-03-03\n\n\n선형 대수\n\n\n\n\nlinear independence\n\n\n2025-03-02\n\n\n선형 대수\n\n\n\n\nSupport Vector Machine\n\n\n2025-03-02\n\n\nmachine learning\n\n\n\n\nK Nearest Neighbors\n\n\n2025-03-02\n\n\nmachine learning\n\n\n\n\nrandom forest\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nSupport Vector Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nLogistic Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nDecision Tree Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nPolynorminal Linear Regression\n\n\n2025-02-27\n\n\nmachine learning\n\n\n\n\noverview\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\ndata preprocessing\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\nSimple Linear Regression\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\nMultiple Linear Regression\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\n머신 러닝\n\n\n2025-02-25\n\n\n데이터 분석\n\n\n\n\n시험을 보고 왔습니다.\n\n\n2025-02-22\n\n\nadp, 후기\n\n\n\n\nwhat is a blockchain?\n\n\n2025-02-22\n\n\n블록 체인\n\n\n\n\n4 - 정형 데이터 마이닝\n\n\n2025-02-20\n\n\nadp\n\n\n\n\n4 - 비정형 데이터 마이닝\n\n\n2025-02-18\n\n\nadp\n\n\n\n\ninception-of-things part 1\n\n\n2025-02-17\n\n\nvagrant, k8s, argoCD, gitlab, 42 seoul\n\n\n\n\n4 - 통계분석\n\n\n2025-02-16\n\n\nadp\n\n\n\n\n4 - 데이터 마트\n\n\n2025-02-15\n\n\nadp\n\n\n\n\nTerraform Cloud\n\n\n2025-02-11\n\n\nterraform, terraform cloud, devops, IaC\n\n\n\n\n5 - 시각화 인사이트 프로세스\n\n\n2025-02-11\n\n\nadp\n\n\n\n\n5 - 시각화 디자인\n\n\n2025-02-11\n\n\nadp\n\n\n\n\n3 - 분석 마스터 플랜\n\n\n2025-02-10\n\n\nadp\n\n\n\n\n3 - 데이터 분석 기획의 이해\n\n\n2025-02-10\n\n\nadp\n\n\n\n\n2 - 데이터 처리 프로세스\n\n\n2025-02-08\n\n\nadp\n\n\n\n\n2 - 데이터 처리 기술\n\n\n2025-02-08\n\n\nadp\n\n\n\n\n성적 장학금\n\n\n2025-02-05\n\n\n장학금\n\n\n\n\n1 - 데이터의 가치와 미래\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n1 - 데이터 이해\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n1 - 가치 창조를 위한 데이터 사이언스와 전략 인사이트\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n인간 관계론 - 데일 카네기\n\n\n2025-02-02\n\n\n독서, 인간 관계\n\n\n\n\n선형결합과 생성\n\n\n2025-01-31\n\n\n선형 대수\n\n\n\n\n벡터와 공간\n\n\n2025-01-30\n\n\n선형 대수\n\n\n\n\ncloud-1 코드 설명\n\n\n2025-01-30\n\n\naws, packer, terraform, ansible, 42 seoul\n\n\n\n\ncloud-1 개념 설명\n\n\n2025-01-28\n\n\naws, packer, terraform, ansible, 42 seoul\n\n\n\n\n3-몰라\n\n\n2025-01-22\n\n\n선형 대수\n\n\n\n\n자기 소개서\n\n\n2025-01-17\n\n\n자기 소개서\n\n\n\n\nft_transcendence - github action\n\n\n2025-01-17\n\n\nagile, github action, 42 seoul\n\n\n\n\n2-기초(2)\n\n\n2025-01-11\n\n\n선형 대수\n\n\n\n\n2-기초(1)\n\n\n2025-01-10\n\n\n선형 대수\n\n\n\n\nSecond Brain - 티아고 포르테\n\n\n2025-01-09\n\n\n학습, 독서\n\n\n\n\nwhat is linear algebra\n\n\n2025-01-07\n\n\n선형 대수\n\n\n\n\n돈의 심리학 - 모건 하우절\n\n\n2025-01-02\n\n\n금융, 독서\n\n\n\n\n데이터 전처리\n\n\n2025-01-02\n\n\n데이터 분석\n\n\n\n\nEDA와 시각화\n\n\n2024-12-30\n\n\n데이터 분석\n\n\n\n\nPARA Blog 제작\n\n\n2024-12-26\n\n\n블로그\n\n\n\n\npandas data 구조\n\n\n2024-12-20\n\n\n데이터 분석\n\n\n\n\n맥도날드 키오스크 UI 개선 보고서\n\n\n2024-11-27\n\n\n보고서, 인간 공학\n\n\n\n\n숭실대학교 학생식당 식자제 SCM 설계\n\n\n2024-11-26\n\n\n보고서, database\n\n\n\n\nControl\n\n\n2024-11-21\n\n\n인간 공학\n\n\n\n\n표본의 분포\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\n중심 극한 정리\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\n정규 분포\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\nDisplay\n\n\n2024-11-14\n\n\n인간 공학\n\n\n\n\n연속형 확률분포\n\n\n2024-11-05\n\n\n확률과 통계\n\n\n\n\nAttention\n\n\n2024-11-05\n\n\n인간 공학\n\n\n\n\nDatabase Design\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\nDatabase Administration\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\nASP.NET\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\n4조 기말과제 제안서\n\n\n2024-10-30\n\n\n보고서, database\n\n\n\n\n이산형 확률분포\n\n\n2024-10-28\n\n\n확률과 통계\n\n\n\n\n데이터베이스설계및활용 개인과제 #2\n\n\n2024-10-27\n\n\n보고서, database\n\n\n\n\n확률변수의 기댓값\n\n\n2024-10-16\n\n\n확률과 통계\n\n\n\n\nSignal Detection Theory\n\n\n2024-10-15\n\n\n인간 공학\n\n\n\n\nAuditory Haptic\n\n\n2024-10-15\n\n\n인간 공학\n\n\n\n\nData Modeling and the Entity-Relationship Model\n\n\n2024-10-14\n\n\ndatabase\n\n\n\n\nSQL\n\n\n2024-09-27\n\n\ndatabase\n\n\n\n\nSensor System (Visual)\n\n\n2024-09-24\n\n\n인간 공학\n\n\n\n\nDatabase Normalization\n\n\n2024-09-24\n\n\ndatabase\n\n\n\n\nThe Relational Model\n\n\n2024-09-17\n\n\ndatabase\n\n\n\n\nHuman Information Processing Model\n\n\n2024-09-17\n\n\n인간 공학\n\n\n\n\nResearch Method in Human Factors\n\n\n2024-09-10\n\n\n인간 공학\n\n\n\n\n확률변수와 확률분포\n\n\n2024-09-03\n\n\n확률과 통계\n\n\n\n\nIntroduction to Human Factors\n\n\n2024-09-03\n\n\n인간 공학\n\n\n\n\nAn Overview of Database\n\n\n2024-09-03\n\n\ndatabase\n\n\n\n\n확률과 통계의 정의\n\n\n2024-09-02\n\n\n확률과 통계\n\n\n\n\nmetrics server\n\n\n2024-05-15\n\n\n \n\n\n\n\nmanual scheduling\n\n\n2024-05-15\n\n\n \n\n\n\n\nk8s cluster architecture\n\n\n2024-05-15\n\n\n \n\n\n\n\nfail tolerance\n\n\n2024-05-15\n\n\n \n\n\n\n\ncore DNS\n\n\n2024-05-15\n\n\n \n\n\n\n\nPersistant volume\n\n\n2024-05-15\n\n\n \n\n\n\n\nHA in master node\n\n\n2024-05-15\n\n\n \n\n\n\n\nAuthentication\n\n\n2024-05-15\n\n\n \n\n\n\n\nwhat is ebs\n\n\n2024-04-30\n\n\n \n\n\n\n\nwhat is EC2\n\n\n2024-04-30\n\n\n \n\n\n\n\ndatabase choice in aws\n\n\n2024-04-30\n\n\n \n\n\n\n\naws global infrastructure\n\n\n2024-04-30\n\n\n \n\n\n\n\nVPC\n\n\n2024-04-30\n\n\n \n\n\n\n\nRoute53\n\n\n2024-04-30\n\n\n \n\n\n\n\nPerformance Improvement\n\n\n2024-04-30\n\n\n \n\n\n\n\nOverview\n\n\n2024-04-30\n\n\nvault, devops\n\n\n\n\nKMS(Key Management Service)\n\n\n2024-04-30\n\n\n \n\n\n\n\nELB\n\n\n2024-04-30\n\n\n \n\n\n\n\nDisaster Recovery(DR)\n\n\n2024-04-30\n\n\n \n\n\n\n\nDefine IAM\n\n\n2024-04-30\n\n\n \n\n\n\n\nCloudFront\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon Rekognition\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon RDS\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon CloudWatch\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Snow Family\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS SQS\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS S3\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Organization\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Lambda\n\n\n2024-04-30\n\n\n \n\n\n\n\n\n일치 없음"
   },
   {
     "objectID": "posts/00_inboxes/notes/01.html#사람을-대하는-기본-기술",
@@ -8555,7 +8555,7 @@
     "href": "posts/01_projects/bs_3_1/notes/statistics/02.html#가설검정",
     "title": "통계적 가설검정",
     "section": "가설검정",
-    "text": "가설검정\n\n\\(H_0\\): 귀무가설. α의 값을 상한으로 지정하고 보수적으로 고려\nType 1 error를 보통 보수적으로 지정하기 때문에 Type 2 error는 높아진다.\n\n둘 다 줄이고 싶다면 n을 늘려야 한다.\n일반적으로 α(Type 1 error)를 고정하고 원하는 β(Type 2 error)를 만족하는 표본의 크기를 결정한다.",
+    "text": "가설검정\n\n귀무가설(\\(H_0\\)): α의 값을 상한으로 지정하고 보수적으로 고려\n대립가설(\\(H_1\\))\n검정 통계량: \\(H_0\\)가 참이라고 가정했을 때, 표본에서 계산된 통계량\n기각역: \\(H_0\\)를 기각할 수 있는 범위\nType 1 error를 보통 보수적으로 지정하기 때문에 Type 2 error는 높아진다. (상충 관계)\n\n둘 다 줄이고 싶다면 n을 늘려야 한다.\n일반적으로 α(Type 1 error)를 고정하고 원하는 β(Type 2 error)를 만족하는 표본의 크기를 결정한다.\n\n상단측 검정\n하단측 검정\n양측 검정\n\n→ 기각역 계산에 주의하자\n\n모비율 차이 검정\n\n\\(\\frac{(\\hat{p}_1 - \\hat{p}_2) - D_0}{\\sqrt{\\hat{p}(1-\\hat{p})(\\frac{1}{n_1} + \\frac{1}{n_2})}}\\)\n\\(\\hat{p} = \\frac{x_1 + x_2}{n_1 + n_2}\\)\n\n\n\nβ 계산\n\\(H_0\\)를 이용해 검정 통계량을 계산하고, 이를 이용해 기각역을 구한 후, \\(H_1\\)을 이용해 계산.\n\n\n대표본 단측 가설검정 표본 크기1\n\n\\(n = \\frac{(z_{1 - \\alpha} + z_{1 - \\beta})^2\\sigma^2}{(\\mu_1 - \\mu_2)^2}\\)\n\n\n\n가설 검정 절차와 신뢰구간의 관계\n\n\\(\\hat{θ} - z_{1-α/2}σ_{\\hat{θ}} ≤ θ_0 ≤ \\hat{θ} + z_{1-α/2}σ_{\\hat{θ}}\\)\n100(1-α)% 신뢰구간은 유의수준 α에서 귀무가설 \\(H_0: θ = θ_0\\)가 채택되는 모든 \\(θ_0\\) 값의 집합.\n\n\n\np-value\n\np-value: \\(H_0\\)를 기각시킬 수 있는 가장 작은 유의수준 α의 값 (즉 확률)",
     "crumbs": [
       "PARA",
       "Projects",
@@ -8690,7 +8690,7 @@
     "href": "posts/01_projects/bs_3_1/notes/computer/00.html",
     "title": "intro",
     "section": "",
-    "text": "개별 과제는 없음\n8주차 ,9주차도 안나옴\n11주차 시험. LMS로 봄\n14주차 발표는 유튜브로 찍어서\n15주차 학교 안나옴\n\n\n\n 맨 위로",
+    "text": "개별 과제는 없음\n8주차, 9주차 안나옴\n11주차 시험. LMS로 봄\n14주차 발표는 유튜브로 찍어서\n15주차 학교 안나옴\n\n\n\n 맨 위로",
     "crumbs": [
       "PARA",
       "Projects",
@@ -8825,7 +8825,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/02.html#리틀의-법칙",
     "title": "조직을 프로세스 관점에서 바라보기",
     "section": "리틀의 법칙",
-    "text": "리틀의 법칙\n위의 세개와 수요 공급간의 관계가 있다.\n\n\n\n기울기는 흐름률\n\n\n\nI = R * T (항상 성립)3\n\nI: 평균 재고 (flow time 동안 들어온 input)\nR: 평균 흐름률\nT: 평균 흐름시간",
+    "text": "리틀의 법칙\n위의 세개와 수요 공급간의 관계가 있다.\n\n\n\n기울기는 흐름률\n\n\n\nI = R * T (항상 성립)1\n\nI: 평균 재고 (flow time 동안 들어온 input)\nR: 평균 흐름률\nT: 평균 흐름시간",
     "crumbs": [
       "PARA",
       "Projects",
@@ -8870,7 +8870,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/02.html#footnotes",
     "title": "조직을 프로세스 관점에서 바라보기",
     "section": "각주",
-    "text": "각주\n\n\n간트차트를 왜 설명한거지?↩︎\n간트차트에서 대기시간은 표현 안하나? 일단 별로 중요한건 아닌듯 하다.↩︎\n시험문제에 더 복잡하게 낸다고 하시긴 함↩︎\n이자비용은 계산 안 하는건가? 뭐 안 하는거 같긴 하지만 중요하지 않아 보인다.↩︎\n이것들의 차이와 의미하는 바, 사례를 보고 어떤걸 의미하는지 알아야 한다.↩︎",
+    "text": "각주\n\n\n시험문제에 더 복잡하게 낸다고 하시긴 함↩︎\n이것들의 차이와 의미하는 바, 사례를 보고 어떤걸 의미하는지 알아야 한다.↩︎\n수송중 재고랑 안전재고랑 비슷해보이는데?↩︎",
     "crumbs": [
       "PARA",
       "Projects",
@@ -8885,7 +8885,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/06.html#setup과-생산주기",
     "title": "배치 생산 및 경제적 주문량 모형",
     "section": "setup과 생산주기",
-    "text": "setup과 생산주기\n\nMilling machine: 깎아서 만드는 기계\nsetup: 기계를 준비하는데 필요한 것\n\n정확히 하나의 제품을 만드는 경우에도 setup이 필요함\n생산하는 양에 관계없이 setup 시간이 일정함\nsequence dependent setup: 순서에 따라 setup 시간이 달라짐\n\n생산주기(production cycle): setup + 생산의 과정을 반복\n\nsetup은 아무것도 못하고 시간을 버림",
+    "text": "setup과 생산주기\n\nsetup: 기계를 준비하는데 필요한 것\n\n정확히 하나의 제품을 만드는 경우에도 setup이 필요함\n생산하는 양에 관계없이 setup 시간이 일정함\nsequence dependent setup: 순서에 따라 setup 시간이 달라짐\n\n생산주기(production cycle): setup + 생산의 과정을 반복\n\nsetup은 아무것도 못하고 시간을 버림",
     "crumbs": [
       "PARA",
       "Projects",
@@ -8900,7 +8900,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/06.html#배치-생산과정",
     "title": "배치 생산 및 경제적 주문량 모형",
     "section": "배치 생산과정",
-    "text": "배치 생산과정\n\nbatch: 흐름 단위들의 집합\n\n처리능력: \\(\\frac{batch size}{setup time + (batch size x processing time per unit)}\\)\n\nbatch size가 무한히 커질수록 \\(\\frac{1}{p}\\)로 수렴\nsetuptime이 0이여도 \\(\\frac{1}{p}\\)\n\n\nbatch는 클 수록 좋은가?\n\nbatch size가 커질수록 처리능력이 증가하지만 재고가 많아짐\n→ bottleneck의 경우 batch size를 늘리고, non-bottleneck의 경우 batch size를 줄이는게 좋음\n→ \\(frac{B}{S + Bp} = R → B = \\frac{SR}{1 - Rp}\\)\n\n생산주기와 demand를 맞추지 못하면 재고가 무한히 늘어남",
+    "text": "배치 생산과정\n\nbatch1: 부품 집합을 흐름 단위로 사용\n생산 주기: batch size만큼 생산하는 주기\n처리능력: \\(\\frac{batch size}{setup time + (batch size * processing time per unit)}\\)\n\nbatch size가 무한히 커질수록 \\(\\frac{1}{p}\\)로 수렴\nsetuptime이 0이여도 \\(\\frac{1}{p}\\)\n\n\n\n\nbatch는 클 수록 좋은가?\n\nbatch size가 커질수록 처리능력이 증가하지만 재고가 많아짐\n→ 처리능력 제약적 상황에서 bottleneck의 batch size를 늘리고, 수요 제약적 상황에서 non-bottleneck의 batch size를 줄이는게 좋음\n→ \\(\\frac{B}{S + Bp} = R → B = \\frac{SR}{1 - Rp}\\)\nR보다 크면 쓸데없이 제고가 쌓이고, 작으면 capacity가 낮아짐\n\nS가 늘어나면 Batch size를 키우고, 낮아지면 Batch size를 줄여도 됨\np가 늘어나면 Batch size를 키우고, 낮아지면 Batch size를 줄여도 됨",
     "crumbs": [
       "PARA",
       "Projects",
@@ -8954,7 +8954,7 @@
     "href": "posts/01_projects/bs_3_1/index.html#tasks",
     "title": "학부 3학년 1학기",
     "section": "Tasks",
-    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    푸른등대 기부장학금 - 두나무UDC 신청 (~2025-01-20 18:00)\n                \n                신청 완료. 결과 4월 중순\n            \n            \n            \n                \n                \n                    2025 DB 드림리더 장학생 신청 (~2025-01-10)\n                \n                잘할 자신이 없다\n            \n            \n            \n                \n                \n                    경기도 학자금대출 이자 지원 신청 (~2025.02.14 18:00)\n                \n                신청 완료\n            \n            \n            \n                \n                    \n                    학과 근로 신청\n                \n                신청 완료\n            \n\n            \n            \n                \n                \n                    연재장학재단 지원금 신청 (~2025-02-06 15:00)\n                \n                1명만 뽑는 장학금에 학과장님 추천서 받기 망설여진다\n            \n            \n            \n                \n                    \n                    KMOOC 학점 인정 신청 (2025-03-10~)\n                \n                하나는 기간이 지나 버렸다. 종강 전에 하나만 더 듣자.\n            \n\n            \n            \n                \n                    \n                    봉사활동 계획서 작성 (2025-03-11~)\n                \n                작성 완료\n            \n\n            \n            \n                \n                \n                    OR 과제 1 (~2025-03-16 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                \n                    OR 과제 2 (~2025-03-23 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                    \n                    교수님과 커피\n                \n                나 커피 못 마시는데\n            \n\n            \n            \n                \n                \n                    데이터마이닝 팀과제 주제 제안\n                \n                일단 완성\n            \n            \n            \n                \n                \n                    OR 과제 3 (~2025-04-06 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                \n                    OR 과제 4 (~2025-04-13 23:59)\n                \n                그만...\n            \n            \n            \n                \n                \n                    data mining 1차 과제 ppt 완성\n                \n                done\n            \n            \n            \n                \n                    \n                    진로 지도 상담",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    푸른등대 기부장학금 - 두나무UDC 신청 (~2025-01-20 18:00)\n                \n                신청 완료. 결과 4월 중순\n            \n            \n            \n                \n                \n                    2025 DB 드림리더 장학생 신청 (~2025-01-10)\n                \n                잘할 자신이 없다\n            \n            \n            \n                \n                \n                    경기도 학자금대출 이자 지원 신청 (~2025.02.14 18:00)\n                \n                신청 완료\n            \n            \n            \n                \n                    \n                    학과 근로 신청\n                \n                신청 완료\n            \n\n            \n            \n                \n                \n                    연재장학재단 지원금 신청 (~2025-02-06 15:00)\n                \n                1명만 뽑는 장학금에 학과장님 추천서 받기 망설여진다\n            \n            \n            \n                \n                    \n                    KMOOC 학점 인정 신청 (2025-03-10~)\n                \n                하나는 기간이 지나 버렸다. 종강 전에 하나만 더 듣자.\n            \n\n            \n            \n                \n                    \n                    봉사활동 계획서 작성 (2025-03-11~)\n                \n                작성 완료\n            \n\n            \n            \n                \n                \n                    OR 과제 1 (~2025-03-16 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                \n                    OR 과제 2 (~2025-03-23 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                    \n                    교수님과 커피\n                \n                나 커피 못 마시는데\n            \n\n            \n            \n                \n                \n                    데이터마이닝 팀과제 주제 제안\n                \n                일단 완성\n            \n            \n            \n                \n                \n                    OR 과제 3 (~2025-04-06 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                \n                    OR 과제 4 (~2025-04-13 23:59)\n                \n                그만...\n            \n            \n            \n                \n                \n                    data mining 1차 과제 ppt 완성\n                \n                done\n            \n            \n            \n                \n                    \n                    진로 지도 상담\n                \n                \n            \n\n            \n            \n                \n                    \n                    OR 과제 5 (~2025-04-20 23:59)",
     "crumbs": [
       "PARA",
       "Projects",
@@ -9002,7 +9002,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/06.html#경제적-주문량-모형",
     "title": "배치 생산 및 경제적 주문량 모형",
     "section": "경제적 주문량 모형",
-    "text": "경제적 주문량 모형\n\n외부 공급자에게 부품을 주문하여 생산 및 배송이 이루어지는 경우\n\n\n구매비용(purchase cost / variable cost)\n단위 재고 비용\n셋업(주문) 비용 (Fixed cost)",
+    "text": "경제적 주문량 모형\n\n외부 공급자에게 부품을 주문하여 생산 및 배송이 이루어지는 경우\n단위시간당 발생하는 비용이 적을수록 좋다\n\n\n\n\n재고량 패턴(재고가 0이 되었을 때 정확히 도착하도록 주문할 수 있다고 가정)\n\n\n\nQ: 한 번에 주문하는 양\nR: 수요(기울기)\n주문 주기: \\(\\frac{Q}{R}\\)\n평균 재고량: \\(\\frac{Q}{2}\\)\n\n\n구매비용(purchase cost / variable cost): 단위 시간 당 구매비용은 Q에 영향을 받지 않음\n단위 재고 비용(h)\n\n단위 시간 당 발생하는 재고 비용: \\(h\\frac{Q}{2}\\)\n\n셋업(주문) 비용 (Fixed cost) (k): 주문량과 무관\n\n단위 시간 당 발생하는 셋업 비용: \\(\\frac{k}{\\frac{Q}{R}}\\)\n\n\n\n목적 함수: \\(C(Q) = \\frac{KR}{Q} + \\frac{hQ}{2}\\)\n경제적 주문량(EOQ): \\(Q^* = \\sqrt{\\frac{2KR}{h}}\\)\n\nK: 주문비용\nR: 수요량\nh: 단위 재고비용\n\nEOQ만큼 주문할 때 단위 시간당 비용\n\n\\(C(Q^*) = \\sqrt{2KhR}\\)\n\n단위당 비용 = \\(\\frac{C(Q^*)}{R} = \\sqrt{\\frac{2Kh}{R}}\\)\n수요가 증가함에 따라 EOQ는 늘어나는데 단위 당 비용은 감소\n\\(\\frac{C(Q)}{C(Q^*)} = \\frac{1}{2}(\\frac{Q^*}{Q} + \\frac{Q}{Q^*})\\)\n\\(\\frac{1}{주문 주기} ≠ 재고 회전율\\)\n\n주문 주기는 Q개가 다 없어지는 시간\n회전율은 Q/2개의 재고가 다 없어지는 시간",
     "crumbs": [
       "PARA",
       "Projects",
@@ -9047,7 +9047,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/07.html#대기시간-예측-단일-자원",
     "title": "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제",
     "section": "대기시간 예측 (단일 자원)",
-    "text": "대기시간 예측 (단일 자원)\n\nif D &gt; C, 대기 - 처리능력 부족 (+ 변동성)\nif D &lt; C, 대기 - 변동성\n안정적 도착: 평균 고객 수가 시점에 의존하지 않고, 길이에만 의존함",
+    "text": "대기시간 예측 (단일 자원)\n\nif D &gt; C, 대기 - 처리능력 부족 (+ 변동성)\nif D &lt; C, 대기 - 변동성\n\n\n내재활용률은 100% 미만\n안정적 도착: 평균 고객 수가 시점에 의존하지 않고, 길이에만 의존함\n지수분포를 따르는 도착간격",
     "crumbs": [
       "PARA",
       "Projects",
@@ -9077,7 +9077,7 @@
     "href": "posts/01_projects/bs_3_1/notes/product/06.html#buffer-or-suffer",
     "title": "배치 생산 및 경제적 주문량 모형",
     "section": "buffer or suffer",
-    "text": "buffer or suffer",
+    "text": "buffer or suffer\n\nbuffer 제고가 없으면 처리능력이 떨어질 수 있다.",
     "crumbs": [
       "PARA",
       "Projects",
@@ -9115,6 +9115,501 @@
       "Notes",
       "Statistics",
       "통계적 가설검정"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/13.html",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/13.html",
+    "title": "classification with tree",
+    "section": "",
+    "text": "gini 지수가 낮을수록, misclassification error가 낮을수록, entropy가 낮을수록 Information gain이 높을수록, gain ratio가 클수록 순도가 높고 좋다. 최댓값은 0.5. entropy는 최댓값 1.\n과적합 pruning 할 때 misclassification error를 기준으로 한다.\n\n\n\n 맨 위로",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "classification with tree"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/statistics/02.html#분산-검정",
+    "href": "posts/01_projects/bs_3_1/notes/statistics/02.html#분산-검정",
+    "title": "통계적 가설검정",
+    "section": "분산 검정",
+    "text": "분산 검정",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Statistics",
+      "통계적 가설검정"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/statistics/03.html#여러-모집단의-평균-비교",
+    "href": "posts/01_projects/bs_3_1/notes/statistics/03.html#여러-모집단의-평균-비교",
+    "title": "ANOVA",
+    "section": "여러 모집단의 평균 비교",
+    "text": "여러 모집단의 평균 비교\n\n여러 모집단에 대해 2개씩 비교를 하면 α가 커짐\n\\(t(n_1 + n_2 - 2)^2 = F(1, n_1 + n_2 -2)\\)",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Statistics",
+      "ANOVA"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/statistics/02.html#통계적-검정",
+    "href": "posts/01_projects/bs_3_1/notes/statistics/02.html#통계적-검정",
+    "title": "통계적 가설검정",
+    "section": "통계적 검정",
+    "text": "통계적 검정\n\n가설 수립\n표본 추출\n통계량 계산\n가설 채택 / 기각",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Statistics",
+      "통계적 가설검정"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/statistics/02.html#footnotes",
+    "href": "posts/01_projects/bs_3_1/notes/statistics/02.html#footnotes",
+    "title": "통계적 가설검정",
+    "section": "각주",
+    "text": "각주\n\n\n양측은?↩︎",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Statistics",
+      "통계적 가설검정"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/dsa/00.html",
+    "href": "posts/01_projects/bs_3_1/notes/dsa/00.html",
+    "title": "시험 범위",
+    "section": "",
+    "text": "2주차\n\n순서, 시간복잡도 Big O 계산하는거. python code 5줄 이내로 간단한거로 나옴.\n재귀 알고리즘 간단한 소스코드, 결과 물어봄\n\n3~5주차\n\n연결리스트\n\n이중 연결리스트: 객관식\n원형: 시간복잡도, method 일부분? 전체 빈칸?\n\n\n5~6주차\n\nstack\n\nt자 철로 출력\nstack을 이용하는 응용\nstack을 이용하지 않는 중위 -&gt; 후위, 전위 표기\n\n\n7주차\n\n원형 queue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n 맨 위로",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Dsa",
+      "시험 범위"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/07.html#intro",
+    "href": "posts/01_projects/bs_3_1/notes/product/07.html#intro",
+    "title": "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제",
+    "section": "Intro",
+    "text": "Intro\n\n지금까지는 변동성을 고려하지 않았지만 프로세스 성과 평가에 중요한 영향을 미친다.\n변동성이 대기시간에 미치는 영향을 살펴본다.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/07.html#example",
+    "href": "posts/01_projects/bs_3_1/notes/product/07.html#example",
+    "title": "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제",
+    "section": "Example",
+    "text": "Example\n\n\n변동성\n\n불규칙한 도착 간격\n서비스 시간의 변동성\n\nIU가 100 이하여도 대기가 발생할 수 있음",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/07.html#변동성의-원인",
+    "href": "posts/01_projects/bs_3_1/notes/product/07.html#변동성의-원인",
+    "title": "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제",
+    "section": "변동성의 원인",
+    "text": "변동성의 원인\n\n흐름단위의 input (\\(CV_a\\))\nprocessing time의 변동성 (\\(CV_p\\))\n자원의 무작위적 가용성\n복수의 흐름단위가 무작위적 경로결정",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/07.html#변동성의-측정",
+    "href": "posts/01_projects/bs_3_1/notes/product/07.html#변동성의-측정",
+    "title": "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제",
+    "section": "변동성의 측정",
+    "text": "변동성의 측정\n\n표준편차에 근거하여 측정",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/07.html#풀링의-효과",
+    "href": "posts/01_projects/bs_3_1/notes/product/07.html#풀링의-효과",
+    "title": "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제",
+    "section": "풀링의 효과",
+    "text": "풀링의 효과\n\n대기할 수 있는 방법은 여러가지가 있다\n대기시간을 줄일 수 있는 방법에 사람을 많이 뽑는것 외에 다른 고려 요소\n풀링: 대기열이 독립적이냐 아니냐",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/02.html#프로세스-흐름-분석",
+    "href": "posts/01_projects/bs_3_1/notes/product/02.html#프로세스-흐름-분석",
+    "title": "조직을 프로세스 관점에서 바라보기",
+    "section": "프로세스 흐름 분석",
+    "text": "프로세스 흐름 분석\n\n간트 차트\n\n\n\n방사선조영실 작업 칸트 차트\n\n\n\n작업시간을 표현\n프로세스 상의 작업 순서와 소요시간, 상호관계를 볼 수 있음\n대기: 수요와 공급의 불일치, 작업들에 존재하는 불확실성으로 생기는 것\n\n\n\n프로세스 평가를 위한 3가지 요소\n\n흐름률(flow rate / throughput): 실제 흐름 단위가 프로세스에 진입, 떠나는 비율\n\n\\(\\frac{흐름단위 수}{단위 시간}\\)\n흐름률이 오르면 생산 능력이 오른다.\n유량: 특정한 시간동안 관찰하는 양\n매출 원가(들어온 가격 기준)를 흐름률로 바라볼 수 있다.\n\n흐름시간(flow time): 하나의 흐름단위가 프로세스상에 머무는 시간\n\n흐름시간이 줄어들면 수요-공급 사이의 시간도 줄어든다.\n\n재고(inventory): 프로세스 상에 존재하는 흐름단위 수\n\n매출 원가 기준\n가공중인 제품 WIP(work-in-process)도 재고에 포함\n저량(stock): 특정 시점에서 관찰하는 양\n\n\n\n\n\n\n\n\n\n\n\n프로세스\n\n\n\n흐름(flow): 작업이 진행되는 것을 tracking\n\n단위: 일반적으로 산출물의 단위로 정의\n\n위의 그림에서 흐름 단위는 상품 1개, 서비스 받은 고객 1명",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "조직을 프로세스 관점에서 바라보기"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/02.html#재고-관리-메커니즘",
+    "href": "posts/01_projects/bs_3_1/notes/product/02.html#재고-관리-메커니즘",
+    "title": "조직을 프로세스 관점에서 바라보기",
+    "section": "재고 관리 메커니즘",
+    "text": "재고 관리 메커니즘\n\n재고를 카운트 하는 방법\n\ninput이 여러개일 경우 단순히 흐름단위만으로 재고를 표현하기 어려울 수 있다.\n\n\nIn terms of $s: I. 원가 기준\nIn terms of days-of-supply(DOS, 공급일수): \\(\\frac{I}{R} = T\\)\nIn terms of inventory turns(재고 회전율): \\(\\frac{R}{I} = \\frac{1}{T}\\)\n\n\n\nTurns and DOS at Kohl’s and Walmart\n\n\n\n두 회사의 재무재표\n\n\n\n위의 사례에서 두 기업의 전략을 볼 수 있음.\nKohl’s: 회전률이 낮은 대신 마진을 높임\nWalmart: 마진이 낮은 대신 회전률을 높임\n공급 일수와 회전율은 반비례 관계에 있다.\n\n\n\n재고가 부담이 되는 이유\n\n이자비용\n유지비용\n\n재고가 구식으로 변함\n물리적으로 부식됨\n사라질 수 있음\n저장공간과 추가적인 간접비 유발\n품질의 저하에 따르는 추가적인 비용 존재\n\n제품 당 재고 비용: \\(\\frac{단위 시간 당 재고 유지 비용}{단위 시간 당 재고 회전율}\\)\n\n\n\n재고 유지의 다섯 가지 이유2\n\n재고 유지는 기업 입장에서 부담이 되지만 그럼에도 불구하고 유지하는 이유가 있다.\n\n\n수송중재고(pipeline): 프로세스에 존재하는 재고\n계절재고(seasonal): 공급 능력은 고정되어 있는데 수요는 변동하는 경우(예측 가능한 수요), 미리 만들어둠\n주기재고(cycle): 한 번에 많이 사는게 싸다. 규모의 경제 이용한 비용 절감\n완충재고(buffer, decoupling): 프로세스상의 작업 사이의 지속적 공급을 가능하게 해줌. 단 제고가 계속 쌓이지 않게 line balancing(각 프로세스에서 진행하는 일의 양의 밸런스)을 해줘야 함\n안전재고(safety)3: 불확실성에 대비해 예측된 수요보다 더 많이 재고를 유지함",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "조직을 프로세스 관점에서 바라보기"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/03.html#선형-계획을-푸는-알고리즘",
+    "href": "posts/01_projects/bs_3_1/notes/OR/03.html#선형-계획을-푸는-알고리즘",
+    "title": "Linear Programming Algorithm",
+    "section": "선형 계획을 푸는 알고리즘",
+    "text": "선형 계획을 푸는 알고리즘\n\n그래프를 사용하는 방법\n변수가 3개 이하인 경우, 그래프를 그려서 해를 찾을 수 있다.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Linear Programming Algorithm"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/03.html#simplex-method",
+    "href": "posts/01_projects/bs_3_1/notes/OR/03.html#simplex-method",
+    "title": "Linear Programming Algorithm",
+    "section": "Simplex Method",
+    "text": "Simplex Method\n\n기하학적 이해\n\n\nInitialization: Collect 1 CFP. 일반적으로 원점을 선택\nOptimality test: find better adj\n\nObj ⋅ (adj - cur) &gt; 0: better\nObj ⋅ (adj - cur) = 0: not changed\nObj ⋅ (adj - cur) &lt; 0: worse\n\n\n\n\n대수적 풀이\n\nbasic solution: 제약식의 변수 중 일부를 기저 변수로 선택하고, 나머지를 0으로 설정하여 얻는 해.\n\n만약 기저변수가 0인 경우, 이를 퇴화라고 부른다.\n\nbasic feasible solution: 모든 변수가 0 이상인 basic solution. 즉, 제약식을 모두 만족하는 해.\n비 기저변수(non basic variable): free variable. 변수의 수 - 방정식의 수 만큼 존재.\n기저 변수(bais variable): pivot variable.\n풀이는 생략\n\n\n\nSimplex Tableau\n\n풀이는 생략\n\n\n\n비 표준형 모델에서의 적용\n\n제약식이 = 인 경우: 인공 변수 추가. 목적 함수에 Big-M 방법을 사용하여 표현.\n\nTableau에서 인공변수의 계수를 0으로 만들어서 진행.\n\n제약식이 ≥ 인 경우: slack 변수랑 surplus variable 추가. surplus variable에 대하여 목적 함수에 Big-M 방법을 사용하여 표현.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Linear Programming Algorithm"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/05.html#쌍대이론의-본질",
+    "href": "posts/01_projects/bs_3_1/notes/OR/05.html#쌍대이론의-본질",
+    "title": "쌍대이론과 민감도 분석 (part 6)",
+    "section": "쌍대이론의 본질",
+    "text": "쌍대이론의 본질\n\n모든 선형계획 문제는 쌍대문제를 가진다:\n\n원문제(Primal): 예를 들어 이익 최대화.\n쌍대문제(Dual): 자원비용 최소화.\n\n\n\n\n\n원 문제와 쌍대 문제의 관계\n\n\n\n원-쌍대 관계의 성질\n\n원문제의 최적해가 존재하면 쌍대문제의 최적해도 존재하며, 두 목적함수값은 같다.\n원문제의 해로부터 쌍대해를 읽을 수 있고, 그 역도 성립한다.\n쌍대해는 자원의 경제적 가치(잠재가격, shadow price)를 의미한다",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "쌍대이론과 민감도 분석 (part 6)"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/05.html#원-쌍대-관계와-상보기저해",
+    "href": "posts/01_projects/bs_3_1/notes/OR/05.html#원-쌍대-관계와-상보기저해",
+    "title": "쌍대이론과 민감도 분석 (part 6)",
+    "section": "원-쌍대 관계와 상보기저해",
+    "text": "원-쌍대 관계와 상보기저해\n\n상보해(Complementary Solutions)\n\n원문제의 기저해와 쌍대문제의 기저해는 서로 직접적으로 대응한다.\n최적해에서는 원문제와 쌍대문제의 목적함수값이 같다.\n\n\n\n상보여유성\n\n원문제의 기저변수가 0이 아니면, 대응 쌍대변수는 0이고, 그 반대도 성립한다.\n이 속성은 심플렉스 방법의 반복과정에서 두 문제의 해가 어떻게 연동되는지 설명한다.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "쌍대이론과 민감도 분석 (part 6)"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/05.html#다른-원문제-형태의-쌍대문제",
+    "href": "posts/01_projects/bs_3_1/notes/OR/05.html#다른-원문제-형태의-쌍대문제",
+    "title": "쌍대이론과 민감도 분석 (part 6)",
+    "section": "다른 원문제 형태의 쌍대문제",
+    "text": "다른 원문제 형태의 쌍대문제\n\n비표준형(등식제약식, 변수의 음수 허용 등)에서도 쌍대문제는 항상 존재\n\n등식제약식은 쌍대에서 해당 쌍대변수의 부호제약을 제거(음수 허용)한다.\n변수의 음수 허용은 쌍대에서 등식제약식으로 나타난다.\n\n\n\nSOB(Sensible-Odd-Bizarre) 법칙\n\n원문제의 제약식 및 변수의 형태(≤, =, ≥, 비음, 무제약 등)에 따라 쌍대문제의 대응 형태를 쉽게 결정하는 규칙.\n대칭성: 쌍대문제의 쌍대는 원문제이므로, 두 문제의 관계는 완전히 대칭적이다.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "쌍대이론과 민감도 분석 (part 6)"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/02.html#business-analytics",
+    "href": "posts/01_projects/bs_3_1/notes/OR/02.html#business-analytics",
+    "title": "Intro",
+    "section": "Business Analytics",
+    "text": "Business Analytics\n\nData Analysis\n\nDescriptive Analytics: What happened?\nPredictive Analytics: What will happen?\n\nOperations Research\n\nPrescriptive Analytics: What should we do? (Optimization)",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Intro"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/02.html#process-of-or-study",
+    "href": "posts/01_projects/bs_3_1/notes/OR/02.html#process-of-or-study",
+    "title": "Intro",
+    "section": "Process of OR Study",
+    "text": "Process of OR Study\n\n\n\n\n\nflowchart LR\n  A(Collect data) --&gt; B(Define the problem)\n  B --&gt; C{Data are sufficient?}\n  C --&gt;|No| A\n  C --&gt;|Yes| D(Formulate a model)\n  D --&gt; E(Solve the model)\n  E --&gt; F{Model is good?}\n  F --&gt;|Yes| G(Interpret results make suggestions)\n  F --&gt;|No| D",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Intro"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/02.html#lp-model-표준형",
+    "href": "posts/01_projects/bs_3_1/notes/OR/02.html#lp-model-표준형",
+    "title": "Intro",
+    "section": "LP Model (표준형)",
+    "text": "LP Model (표준형)\n\n제한된 자원을 경쟁하는 활동들에게 가능한 최적으로 분배하거나 이와 비슷한 수학적 구조를 가진 문제를 다루는 방법\n\n\\[\\begin{aligned}\nmax & \\sum_{i=1}^{n} c_i x_i \\\\\ns.t. & \\sum_{i=1}^{n} a_{ij} x_i \\leq b_j, j ≤ m \\\\\n& x_1, x_2, ..., x_n ≥ 0\n\\end{aligned}\\]",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Intro"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/02.html#lp의-가정",
+    "href": "posts/01_projects/bs_3_1/notes/OR/02.html#lp의-가정",
+    "title": "Intro",
+    "section": "LP의 가정",
+    "text": "LP의 가정\n\n선형계획은 현실을 단순화한 모델로, 아래의 네 가지 가정이 완벽히 맞지 않을 수 있음.\n작은 불일치는 허용 가능하며, 민감도 분석으로 보완.\n심각한 위반 시 대안 모델(비선형계획, 정수계획 등)을 사용하나, 선형계획의 강력한 알고리즘이 유리하므로 초기 분석에 활용 후 필요 시 복잡한 모델로 전환.\n\n\n비례성(Proportionality)\n\n정의: 목적함수와 제약식에서 활동 수준(예: xx)에 대한 기여도가 선형(비례적)으로 표현됨.\n위반 사례:\n\n초기 투자비용(고정비용)이 있어 \\(Z=3x_1−1\\)이 되는 경우, 비례성이 깨짐.\n규모의 경제로 한계 이익이 증가하면 비례성이 위반됨.\n한계 이익이 감소(예: 마케팅 비용 증가)하면 역시 비례성이 깨짐.\n\n대안: 비례성이 깨지면 비선형계획(12장)이나 혼합정수계획(11장)을 고려.\n\n가합성(Additivity)\n\n정의: 목적함수와 제약식의 값이 각 활동의 개별 기여도의 합으로 표현됨. 즉, 변수 간 교차곱이 없음.\n위반 사례:\n\n제품 간 보완적 상호작용(예: 공동 광고 효과)으로 \\(Z=3x_1+5x_2+x_1x_2\\)가 됨.\n경쟁적 상호작용(예: 설비 공유로 비효율 발생)으로 \\(Z=3x_1+5x_2−x_1x_2\\)가 됨.\n\n대안: 가합성이 위반되면 비선형계획(12장)으로 전환.\n\n가분성(Divisibility)\n\n정의: 의사결정 변수가 실수 값을 가질 수 있음. 즉, 활동 수준이 정수로 제한되지 않음.\n위반 사례: 변수가 정수로 제한되면(예: 배치 단위가 1, 2, 3만 가능) 가분성이 깨짐.\n대안: 정수계획(11장) 사용.\n\n확실성(Certainty)\n\n정의: 모델의 매개변수(예: \\(c_j, a_{ij}, b_i\\))가 알려진 상수로 고정. 해당 상수는 미래 예측에 기반하므로 불확실성이 존재.\n대응: 불확실성이 크면 민감도 분석(6.7절)으로 최적해의 변화를 확인하거나, 확률변수를 도입한 모델(23장) 사용.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Intro"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/04.html#overview",
+    "href": "posts/01_projects/bs_3_1/notes/OR/04.html#overview",
+    "title": "Simplex Method (part 5)",
+    "section": "Overview",
+    "text": "Overview\n\n심플렉스 방법의 기하학적·대수적 원리, 행렬형 알고리즘, 그리고 그 실용적 응용(민감도 분석 등)을 체계적으로 설명\n심플렉스 방법은 선형계획 문제에서 최적해를 꼭짓점 가능해(CPF)에서 찾으며, 행렬 연산을 통해 컴퓨터로 효율적으로 구현할 수 있다.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Simplex Method (part 5)"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/04.html#simplex-방법의-기초",
+    "href": "posts/01_projects/bs_3_1/notes/OR/04.html#simplex-방법의-기초",
+    "title": "Simplex Method (part 5)",
+    "section": "Simplex 방법의 기초",
+    "text": "Simplex 방법의 기초\n\n꼭짓점 가능해와 제약식 경계\n\n선형계획 문제의 해는 가능해 영역(feasible region)의 경계에 존재한다.\n이 제약식들을 등호(=)로 바꾼 제약식 경계식을 만들 수 있다.\n\n함수 제약식\n\n≤: slack variable\n=: artificial variable\n≥: surplus variable, artificial variable\n\n비음 제약식\n\nnon-restricted: \\(x_i = x_i^{+} - x_i^{-}\\)\n≤ 0: \\(x_i = -x_i^{+}\\)\n\n\n이 경계식들은 2차원에서는 선, 3차원에서는 평면, n차원에서는 초평면(hyperplane)을 형성한다.\n\n\n\n꼭짓점 가능해의 세 가지 주요 속성\n\n최적해의 위치\n\n최적해가 유일하면, 그것은 꼭짓점 가능해이다.\n최적해가 여러 개라면, 그 중 적어도 두 개는 인접 꼭짓점 가능해이다.\n즉, 최적해는 항상 꼭짓점 가능해(혹은 그 선분)에 존재한다.\n\n유한성\n\n꼭짓점 가능해의 개수는 유한합니다.\nm+n개의 제약식 중 n개를 선택하는 조합의 수는 유한하므로, 이론적으로 모든 꼭짓점 가능해를 열거해 비교할 수도 있습니다. 하지만 실제로는 심플렉스 방법이 훨씬 적은 수만 탐색한다.\n\n최적성의 충분조건\n\n인접 꼭짓점 중 더 좋은 해가 없으면, 현재 해가 최적해임이 보장된다.\n\n\n\n\n심플렉스 방법의 핵심 알고리즘 구조\n심플렉스 방법은 다음과 같은 반복 구조를 가진다\n\n초기 꼭짓점 가능해(기저해) 선택\n인접 꼭짓점으로 이동(목적함수 값이 개선되는 방향)\n더 이상 개선이 불가능하면 종료, 그 해가 최적해임을 보장",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Simplex Method (part 5)"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/04.html#행렬형의-simplex",
+    "href": "posts/01_projects/bs_3_1/notes/OR/04.html#행렬형의-simplex",
+    "title": "Simplex Method (part 5)",
+    "section": "행렬형의 Simplex",
+    "text": "행렬형의 Simplex\n\n행렬형 심플렉스 방법의 기본 구조\n표준형 선형계획 문제를 다음과 같이 쓸 수 있다.\n\\[\n\\begin{aligned}\n\\text{Maximize} \\quad &Z=c^Tx \\\\\n\\text{Subject to} \\quad &Ax=b, x≥0 \\\\\n\\end{aligned}\n\\]\n\n여기서 A는 m×n 행렬, x는 n차원 변수 벡터, b는 m차원 상수 벡터, c는 n차원 계수 벡터이다.\n여유변수(slack variable)등을 도입해 모든 제약식을 등식으로 바꾼다.\n\n\n\n행렬 연산을 활용한 반복 과정\n\n(제일 처음 단계의 경우 3, 4단계 먼저 진행)\n\n\n진입기저변수(Entering Variable) 선택\n탈락기저변수(Leaving Variable) 선택\n\n최소비율법(minimum ratio test) 사용\n\n새로운 기저 가능해 결정\n\n기저변수 식별\n기저행렬(Basic Matrix, B): m개의 기저변수에 대해 m×m 행렬 \\(B\\)와 \\(B^{-1}\\)를 만든다. 1\n기저해(Basic Solution) 계산: \\(x_B=B^{-1}b\\)\n목적함수 값 계산: \\(Z=c_B^TB^{−1}b\\)\n\n최적화 검사\n\n비기저변수의 계수(감소계수, reduced cost)를 계산\n\n계산식: \\(c_B^TB^{−1}a_n - c_n\\)\nslack 변수: \\(c_B^TB^{-1}\\)\n\n최적일 경우 종료",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Simplex Method (part 5)"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/OR/04.html#footnotes",
+    "href": "posts/01_projects/bs_3_1/notes/OR/04.html#footnotes",
+    "title": "Simplex Method (part 5)",
+    "section": "각주",
+    "text": "각주\n\n\n역행렬 구하는 법. 2차원 말고는 그냥 그 방식으로 풀자.↩︎",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "OR",
+      "Simplex Method (part 5)"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/06.html#footnotes",
+    "href": "posts/01_projects/bs_3_1/notes/product/06.html#footnotes",
+    "title": "배치 생산 및 경제적 주문량 모형",
+    "section": "각주",
+    "text": "각주\n\n\nbatch 1개는 부품 집합 1 단위 의미↩︎",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "배치 생산 및 경제적 주문량 모형"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/07.html#대기시간-예측-복수-자원",
+    "href": "posts/01_projects/bs_3_1/notes/product/07.html#대기시간-예측-복수-자원",
+    "title": "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제",
+    "section": "대기시간 예측 (복수 자원)",
+    "text": "대기시간 예측 (복수 자원)\n\ncapacity: \\(\\frac{m}{p}\\)\nflow rate: \\(\\frac{p}{am}\\)\n\\(I = I_q + I_p = I_q + mu\\)\n\\(T_q = \\frac{p}{m} * \\frac{u^{\\sqrt{2(m+1)} - 1}}{1-u} * \\frac{CV_a^2 + CV_p^2}{2}\\)\n\n근사치만을 제공\n\nservice level: \\(P(T_q ≤ TWT)\\)",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/product/07.html#풀링",
+    "href": "posts/01_projects/bs_3_1/notes/product/07.html#풀링",
+    "title": "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제",
+    "section": "풀링",
+    "text": "풀링\n\n대기할 수 있는 방법은 여러가지가 있다\n대기시간을 줄일 수 있는 방법에 사람을 많이 뽑는것 외에 다른 고려 요소\n\n\n\n풀링의 효과\n\n풀링되는 시스템이 서로 완전히 독립\n다양한 input을 처리할 수 있어야 함.\n→ 대기시간, 대기 인원 감소",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Product",
+      "프로세스 성과에 미치는 변동성의 영향: 대기시간 문제"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/statistics/00.html#질문",
+    "href": "posts/01_projects/bs_3_1/notes/statistics/00.html#질문",
+    "title": "확률과 통계 1 정리",
+    "section": "질문",
+    "text": "질문\n\n\n\n이 공식은 무조건 t분포에서만 쓰이는건가?\n\n\n\n\n\n이거 어떻게 푸는거야\n\n\n\n모분산을 모르고 표본분산을 쓰면 무조건 t분포?\n쌍체표본은 무조건 t분포?\n적당한 β값은 존재하지 않은건가? 아니면 10%가 너무 큰건가?\n분모에서 분산 어떻게 추정함?\n모집단의 분포와 관계없이 표본분산 \\(S^2\\)은 \\(σ^2\\)의 불편추정량이다",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Statistics",
+      "확률과 통계 1 정리"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/dsa/00.html#single-linked-list",
+    "href": "posts/01_projects/bs_3_1/notes/dsa/00.html#single-linked-list",
+    "title": "시험 범위",
+    "section": "single linked list",
+    "text": "single linked list\n\n안 나오지만 그냥 외우셈",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Dsa",
+      "시험 범위"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/dsa/00.html#doubly-linked-list",
+    "href": "posts/01_projects/bs_3_1/notes/dsa/00.html#doubly-linked-list",
+    "title": "시험 범위",
+    "section": "doubly linked list",
+    "text": "doubly linked list",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Dsa",
+      "시험 범위"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/dsa/00.html#circular-linked-list",
+    "href": "posts/01_projects/bs_3_1/notes/dsa/00.html#circular-linked-list",
+    "title": "시험 범위",
+    "section": "circular linked list",
+    "text": "circular linked list\n\n\n\n\n\n5~6주차\n\nstack\n\nt자 철로 출력\nstack을 이용하는 응용\nstack을 이용하지 않는 중위 -&gt; 후위, 전위 표기\n\n\n7주차\n\n원형 queue",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Dsa",
+      "시험 범위"
     ]
   }
 ]
