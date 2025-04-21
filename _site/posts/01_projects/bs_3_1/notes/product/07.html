@@ -331,6 +331,12 @@ window.Quarto = {
  <span class="menu-text">시험 범위</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/dsa/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">잘 외웠는지 체크</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -590,44 +596,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/02_areas/42_seoul/notes/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">ft_printf</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/42_seoul/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ft_transcendence - github action</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/02_areas/42_seoul/notes/02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">ft_transcendence - JWT</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/02_areas/42_seoul/notes/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">ft_transcendence - block chain</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/42_seoul/notes/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">inception-of-things part 1</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/02_areas/42_seoul/notes/05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">inception-of-things part 2</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/02_areas/42_seoul/notes/06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">inception-of-things part 3</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1821,9 +1797,17 @@ window.Quarto = {
   <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
   <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
   <li><a href="#변동성의-원인" id="toc-변동성의-원인" class="nav-link" data-scroll-target="#변동성의-원인">변동성의 원인</a></li>
-  <li><a href="#변동성의-측정" id="toc-변동성의-측정" class="nav-link" data-scroll-target="#변동성의-측정">변동성의 측정</a></li>
-  <li><a href="#대기시간-예측-단일-자원" id="toc-대기시간-예측-단일-자원" class="nav-link" data-scroll-target="#대기시간-예측-단일-자원">대기시간 예측 (단일 자원)</a></li>
+  <li><a href="#대기시간-예측-단일-자원" id="toc-대기시간-예측-단일-자원" class="nav-link" data-scroll-target="#대기시간-예측-단일-자원">대기시간 예측 (단일 자원)</a>
+  <ul class="collapse">
+  <li><a href="#가정" id="toc-가정" class="nav-link" data-scroll-target="#가정">가정</a></li>
+  <li><a href="#변수" id="toc-변수" class="nav-link" data-scroll-target="#변수">변수</a></li>
+  <li><a href="#공식" id="toc-공식" class="nav-link" data-scroll-target="#공식">공식</a></li>
+  </ul></li>
+  <li><a href="#대기시간-예측-복수-자원" id="toc-대기시간-예측-복수-자원" class="nav-link" data-scroll-target="#대기시간-예측-복수-자원">대기시간 예측 (복수 자원)</a></li>
+  <li><a href="#풀링" id="toc-풀링" class="nav-link" data-scroll-target="#풀링">풀링</a>
+  <ul class="collapse">
   <li><a href="#풀링의-효과" id="toc-풀링의-효과" class="nav-link" data-scroll-target="#풀링의-효과">풀링의 효과</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1868,12 +1852,13 @@ window.Quarto = {
 </section>
 <section id="example" class="level2">
 <h2 class="anchored" data-anchor-id="example">Example</h2>
-<p><img src=".png" class="img-fluid"></p>
+<p><img src="img/2025-04-20-12-44-59.png" class="img-fluid"></p>
 <ul>
 <li>변동성
 <ul>
 <li>불규칙한 도착 간격</li>
 <li>서비스 시간의 변동성</li>
+<li>영향: 재고, 대기시간, 산출 손실</li>
 </ul></li>
 <li>IU가 100 이하여도 대기가 발생할 수 있음</li>
 </ul>
@@ -1881,39 +1866,114 @@ window.Quarto = {
 <section id="변동성의-원인" class="level2">
 <h2 class="anchored" data-anchor-id="변동성의-원인">변동성의 원인</h2>
 <ol type="1">
-<li>흐름단위의 input (<span class="math inline">\(CV_a\)</span>)</li>
-<li>processing time의 변동성 (<span class="math inline">\(CV_p\)</span>)</li>
-<li>자원의 무작위적 가용성</li>
-<li>복수의 흐름단위가 무작위적 경로결정</li>
-</ol>
-</section>
-<section id="변동성의-측정" class="level2">
-<h2 class="anchored" data-anchor-id="변동성의-측정">변동성의 측정</h2>
+<li>흐름단위의 input (<span class="math inline">\(CV_a\)</span>)
 <ul>
-<li>표준편차에 근거하여 측정</li>
+<li>random arrival</li>
+<li>incoming quality</li>
+<li>product mix</li>
+</ul></li>
+<li>processing time의 변동성 (<span class="math inline">\(CV_p\)</span>)
+<ul>
+<li>그냥 내재적인 변동성</li>
+<li>숙련도 (일을 못해서 오래걸림)</li>
+<li>품질 (재작업)</li>
+</ul></li>
+<li>자원의 무작위적 가용성
+<ul>
+<li>자원 고장</li>
+<li>작업자 출근 안함</li>
+<li>setup time</li>
+</ul></li>
+<li>복수의 흐름단위가 무작위적 경로결정
+<ul>
+<li>경로의 변동성</li>
+</ul></li>
+</ol>
+<ul>
+<li>변동성의 측정: <span class="math inline">\(\frac{표준편차}{평균}\)</span></li>
 </ul>
 </section>
 <section id="대기시간-예측-단일-자원" class="level2">
 <h2 class="anchored" data-anchor-id="대기시간-예측-단일-자원">대기시간 예측 (단일 자원)</h2>
+<section id="가정" class="level3">
+<h3 class="anchored" data-anchor-id="가정">가정</h3>
+<ol type="1">
+<li>내재활용률은 100% 미만
 <ul>
 <li>if D &gt; C, 대기 - 처리능력 부족 (+ 변동성)</li>
 <li>if D &lt; C, 대기 - 변동성</li>
-</ul>
-<ol type="1">
-<li>내재활용률은 100% 미만</li>
-<li>안정적 도착: 평균 고객 수가 시점에 의존하지 않고, 길이에만 의존함</li>
-<li>지수분포를 따르는 도착간격</li>
+</ul></li>
+<li>안정적 도착: 평균 고객 수가 시점에 의존하지 않고, 길이에만 의존함
+<ul>
+<li>만약 프로세스가 안정적이지 않다면 더 짧은 시간간격으로 나누어 접근</li>
+</ul></li>
+<li>지수분포를 따르는 도착간격
+<ul>
+<li><span class="math inline">\(CV_a = 1\)</span></li>
+<li>비기억 특성</li>
+</ul></li>
 </ol>
 </section>
-<section id="풀링의-효과" class="level2">
-<h2 class="anchored" data-anchor-id="풀링의-효과">풀링의 효과</h2>
+<section id="변수" class="level3">
+<h3 class="anchored" data-anchor-id="변수">변수</h3>
 <ul>
-<li><p>대기할 수 있는 방법은 여러가지가 있다</p></li>
-<li><p>대기시간을 줄일 수 있는 방법에 사람을 많이 뽑는것 외에 다른 고려 요소</p></li>
-<li><p>풀링: 대기열이 독립적이냐 아니냐</p></li>
+<li>a: 평균 도착 간격 (줄 기준)</li>
+<li>p: 평균 서비스 시간</li>
+<li><span class="math inline">\(CV_a\)</span>: 도착간격의 변동계수</li>
+<li><span class="math inline">\(CV_p\)</span>: 서비스 시간의 변동계수</li>
+<li><span class="math inline">\(T_q\)</span>: 대기 시간</li>
+<li><span class="math inline">\(I_q\)</span>: 대기열의 재고</li>
+<li><span class="math inline">\(I_p\)</span>: 서비스 중 재고</li>
+</ul>
+<p><img src="img/2025-04-20-13-18-55.png" class="img-fluid"></p>
+</section>
+<section id="공식" class="level3">
+<h3 class="anchored" data-anchor-id="공식">공식</h3>
+<ul>
+<li>capacity: <span class="math inline">\(\frac{1}{p}\)</span></li>
+<li>flow rate = demand(수요 제약적 상황을 가정하니까): <span class="math inline">\(\frac{1}{a}\)</span></li>
+<li>utilization: <span class="math inline">\(\frac{p}{a}\)</span></li>
+<li>T: <span class="math inline">\(T_q\)</span> + p</li>
+<li><span class="math inline">\(I_p\)</span>: (1 - u) * 0 + u * 1 = u</li>
+<li>I = <span class="math inline">\(I_q\)</span> + <span class="math inline">\(I_p\)</span> = <span class="math inline">\(I_q\)</span> + utilization</li>
+<li><span class="math inline">\(T_q = p * \frac{u}{1-u} * \frac{CV_a^2 + CV_p^2}{2}\)</span>
+<ul>
+<li>도착 간격이 지수분포를 따르지 않는 경우 근사치만을 제공</li>
+</ul></li>
+<li><span class="math inline">\(I_q = \frac{1}{a} * T_q = \frac{T_q}{a}\)</span></li>
+</ul>
+</section>
+</section>
+<section id="대기시간-예측-복수-자원" class="level2">
+<h2 class="anchored" data-anchor-id="대기시간-예측-복수-자원">대기시간 예측 (복수 자원)</h2>
+<ul>
+<li>capacity: <span class="math inline">\(\frac{m}{p}\)</span></li>
+<li>flow rate: <span class="math inline">\(\frac{p}{am}\)</span></li>
+<li><span class="math inline">\(I = I_q + I_p = I_q + mu\)</span></li>
+<li><span class="math inline">\(T_q = \frac{p}{m} * \frac{u^{\sqrt{2(m+1)} - 1}}{1-u} * \frac{CV_a^2 + CV_p^2}{2}\)</span>
+<ul>
+<li>근사치만을 제공</li>
+</ul></li>
+<li>service level: <span class="math inline">\(P(T_q ≤ TWT)\)</span></li>
+</ul>
+</section>
+<section id="풀링" class="level2">
+<h2 class="anchored" data-anchor-id="풀링">풀링</h2>
+<ul>
+<li>대기할 수 있는 방법은 여러가지가 있다</li>
+<li>대기시간을 줄일 수 있는 방법에 사람을 많이 뽑는것 외에 다른 고려 요소</li>
+</ul>
+<p><img src="img/2025-04-20-14-17-46.png" class="img-fluid"></p>
+<section id="풀링의-효과" class="level3">
+<h3 class="anchored" data-anchor-id="풀링의-효과">풀링의 효과</h3>
+<ul>
+<li><p>풀링되는 시스템이 서로 완전히 독립</p></li>
+<li><p>다양한 input을 처리할 수 있어야 함.</p></li>
+<li><p>→ 대기시간, 대기 인원 감소</p></li>
 </ul>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
