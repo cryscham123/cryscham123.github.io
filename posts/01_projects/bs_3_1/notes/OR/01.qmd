@@ -20,14 +20,14 @@ def to_fraction(array):
     return [Fraction(x).limit_denominator() if isinstance(x, (int, float)) else x for x in array]
 
 # 초기 설정
-obj = [-10, -20, 0, 0, 0, 0]
+obj = [-6, -8, 0, 0, 0]
 A = [
-    [-1, 2, 1, 0, 0, 15],
-    [1, 1, 0, 1, 0, 12],
-    [5, 3, 0, 0, 1, 45]
+    [5, 2, 1, 0, 20],
+    [1, 2, 0, 1, 10],
 ]
-basic = np.array([3, 4, 5]) - 1
-non_basic = np.array([1, 2]) - 1
+basic = np.array([3, 4]) - 1  # x5, x6
+non_basic = np.array([1, 2]) - 1  # x1, x2, x3, x4
+
 
 # 초기 배열을 분수로 변환
 obj = to_fraction(obj)
@@ -122,15 +122,13 @@ from sympy import symbols, simplify, oo
 M = symbols('M')
 
 # 초기 설정
-obj = [2, -2, -1, 4, -3, 0, 0, M, 0, M, 0]
+obj = [20, 10, 0, M, 0, M, 0]
 A = [
-    [1, -1, 1, 3, 2, 1, 0, 0, 0, 0, 4],
-    [1, -1, 0, -1, 1, 0, -1, 1, 0, 0, -1],
-    [2, -2, 1, 0, 0, 0, 0, 0, 1, 0, 2],
-    [1, -1, 2, 1, 2, 0, 0, 0, 0, 1, 2]
+    [5, 1, -1, 1, 0, 0, 6],
+    [2, 2, 0, 0, -1, 1, 8],
 ]
-basic = np.array([6, 8, 9, 10]) - 1  # x5, x6
-non_basic = np.array([1, 2, 3, 4, 5, 7]) - 1  # x1, x2, x3, x4
+basic = np.array([4, 6]) - 1  # x5, x6
+non_basic = np.array([1, 2, 3, 5]) - 1  # x1, x2, x3, x4
 
 def to_fraction(array):
     return [Fraction(x).limit_denominator() if isinstance(x, (int, float)) else x for x in array]
@@ -236,10 +234,10 @@ model.setParam(GRB.Param.OutputFlag, 0)
 x1 = model.addVar(vtype=GRB.CONTINUOUS, name="x1")
 x2 = model.addVar(vtype=GRB.CONTINUOUS, name="x2")
 
-model.setObjective(20 * x1 + 10 * x2, GRB.MINIMIZE)
+model.setObjective(6 * x1 + 8 * x2, GRB.MAXIMIZE)
 
-model.addConstr(4 * x1 - x2 >= 2)
-model.addConstr(x1 + x2 >= 3)
+model.addConstr(5 * x1 + 2 * x2 <= 20)
+model.addConstr(x1 + 2 * x2 <= 10)
 
 model.optimize()
 
