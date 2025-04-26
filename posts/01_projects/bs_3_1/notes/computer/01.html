@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Learning – 김형훈의 학습 블로그</title>
+<title>1차 발표 script – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,20 +23,21 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../favicon" rel="icon">
-<script src="../../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/00.html" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/computer/00.html" rel="prev">
+<link href="../../../../../favicon" rel="icon">
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "일치 없음",
@@ -52,35 +53,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "검색"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-GRXCD70RKK"></script>
 
 <script type="text/javascript">
@@ -95,42 +67,11 @@ gtag('js', new Date());
   });
 gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<style>html{ scroll-behavior: smooth; }</style>
 
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../../../styles.css">
-<link rel="alternate" type="application/rss+xml" title="김형훈의 학습 블로그" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../../../../styles.css">
+</head>
 
 <body class="nav-sidebar floating nav-fixed">
 
@@ -139,7 +80,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../../index.html">
+    <a class="navbar-brand" href="../../../../../index.html">
     <span class="navbar-title">김형훈의 학습 블로그</span>
     </a>
   </div>
@@ -149,11 +90,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../index.html"> 
+    <a class="nav-link" href="../../../../../index.html"> 
 <span class="menu-text">PARA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../all.html"> 
+    <a class="nav-link" href="../../../../../all.html"> 
 <span class="menu-text">전체 게시글</span></a>
   </li>  
 </ul>
@@ -167,7 +108,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../posts/02_areas/deep_learning/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../posts/02_areas/deep_learning/index.html">Deep Learning</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/computer/00.html">Computer</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/computer/01.html">1차 발표 script</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -199,7 +140,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/00_inboxes/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/00_inboxes/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">인간 관계론 - 데일 카네기</span></a>
   </div>
 </li>
@@ -209,44 +150,50 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Projects</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/01_projects/bs_3_1/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/01_projects/bs_3_1/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">학부 3학년 1학기</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth3 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Computer</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/computer/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1차 발표 script</span></a>
   </div>
 </li>
       </ul>
@@ -262,85 +209,85 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numpy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numpy-2</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pandas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pandas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pandas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/05.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">데이터마이닝 1차 팀과제 script</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/06.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">데이터마이닝 팀 과제 주제</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pandas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/08.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">preprocessing</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Homework</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/10.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Transformation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/11.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Homework - 2</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/12.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/12.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dataminig 1차 발표 ppt</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/data_mining/13.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/13.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">classification with tree</span></a>
   </div>
 </li>
@@ -357,7 +304,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/dsa/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/dsa/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">시험 범위</span></a>
   </div>
 </li>
@@ -374,55 +321,55 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Simplex 표 계산</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Intro</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Programming Algorithm</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Simplex Method (part 5)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">쌍대이론과 민감도 분석 (part 6)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/06.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/06.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">OR 과제 - 1</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/07.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/07.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">OR 과제 - 2</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/08.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/08.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">OR 과제 - 3</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/OR/09.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/09.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">OR 과제 - 4</span></a>
   </div>
 </li>
@@ -439,19 +386,19 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/others/1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/others/1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">자기 소개서</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/others/2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/others/2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">성적 장학금</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/others/3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/others/3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">봉사</span></a>
   </div>
 </li>
@@ -468,49 +415,49 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/product/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Intro</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/product/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Matching Supply with Demand</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/product/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">조직을 프로세스 관점에서 바라보기</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/product/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">공급 프로세스의 이해: 프로세스 처리능력 평가</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/product/04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">제품 설계 기법 및 기업 프로세스 유형</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/product/05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">인건비 추정과 감축</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/product/06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">배치 생산 및 경제적 주문량 모형</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/product/07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">프로세스 성과에 미치는 변동성의 영향: 대기시간 문제</span></a>
   </div>
 </li>
@@ -527,25 +474,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/statistics/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률과 통계 1 정리</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/statistics/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">통계적 추정</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/statistics/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">통계적 가설검정</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/01_projects/bs_3_1/notes/statistics/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ANOVA</span></a>
   </div>
 </li>
@@ -559,22 +506,22 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
  <span class="menu-text">Areas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/02_areas/deep_learning/index.html" class="sidebar-item-text sidebar-link active">
+            <a href="../../../../../posts/02_areas/deep_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
@@ -586,13 +533,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/deep_learning/notes/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/deep_learning/notes/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">퍼셉트론</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/deep_learning/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/deep_learning/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">신경망</span></a>
   </div>
 </li>
@@ -602,7 +549,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/02_areas/42_seoul/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/02_areas/42_seoul/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">42 Seoul</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -620,25 +567,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/42_seoul/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/42_seoul/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ft_transcendence - github action</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/42_seoul/notes/04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/42_seoul/notes/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">inception-of-things part 1</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/42_seoul/notes/08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/42_seoul/notes/08.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">cloud-1 개념 설명</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/42_seoul/notes/09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/42_seoul/notes/09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">cloud-1 코드 설명</span></a>
   </div>
 </li>
@@ -648,7 +595,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/02_areas/kaggle/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/02_areas/kaggle/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Kaggle</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -675,7 +622,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/kaggle/notes/titanic/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/kaggle/notes/titanic/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">titanic</span></a>
   </div>
 </li>
@@ -687,7 +634,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/02_areas/선형대수/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/02_areas/선형대수/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">선형대수</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -705,67 +652,67 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">what is linear algebra</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2-기초(1)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2-기초(2)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3-몰라</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">벡터와 공간</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">선형결합과 생성</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">linear independence</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Subspaces and the basis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/08.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">vector dot product, cross product</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">가감법으로 연립방정식을 풀기 위한 행렬</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/선형대수/notes/10.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/선형대수/notes/10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Null space and Column space</span></a>
   </div>
 </li>
@@ -775,7 +722,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/02_areas/machine_learning/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/02_areas/machine_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Machine Learning</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -793,115 +740,115 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">data preprocessing</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Simple Linear Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multiple Linear Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Polynorminal Linear Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Support Vector Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Decision Tree Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">random forest</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/08.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">K Nearest Neighbors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/10.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Support Vector Machine</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/11.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Naive Bayes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/12.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/12.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Decision Tree Classification</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/13.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/13.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Random Forest</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/14.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/14.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">k-means clustering</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/15.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/15.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">hierarchical clustering</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/16.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Apriori</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/17.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/17.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Eclat</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/machine_learning/notes/18.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/machine_learning/notes/18.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Upper Confidence Bound</span></a>
   </div>
 </li>
@@ -911,7 +858,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/02_areas/air_flow/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/02_areas/air_flow/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">AirFlow</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -929,13 +876,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/air_flow/notes/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/air_flow/notes/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/02_areas/air_flow/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Coding pipeline</span></a>
   </div>
 </li>
@@ -956,19 +903,19 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/tofel_준비/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/tofel_준비/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">TOFEL 준비</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/problem_solve/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/problem_solve/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Problem Solving</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/03_resources/blog/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/03_resources/blog/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Blog</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -986,13 +933,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/blog/notes/0.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/blog/notes/0.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">PARA Blog 제작</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/blog/notes/1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/blog/notes/1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Second Brain - 티아고 포르테</span></a>
   </div>
 </li>
@@ -1002,7 +949,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/03_resources/인생/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/03_resources/인생/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">인생</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1020,7 +967,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/인생/notes/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/인생/notes/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">나의 단점에 관한 고찰</span></a>
   </div>
 </li>
@@ -1030,7 +977,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/03_resources/terraform/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/03_resources/terraform/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Terraform</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1057,7 +1004,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-34" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/terraform/notes/tfc/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/terraform/notes/tfc/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Terraform Cloud</span></a>
   </div>
 </li>
@@ -1069,7 +1016,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/03_resources/smart_contract/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/03_resources/smart_contract/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Smart Contract</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1096,7 +1043,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/smart_contract/notes/block_chain_basic/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/smart_contract/notes/block_chain_basic/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">what is a blockchain?</span></a>
   </div>
 </li>
@@ -1108,7 +1055,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/03_resources/금융/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/03_resources/금융/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">금융</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1126,7 +1073,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-39" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/금융/notes/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/금융/notes/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">돈의 심리학 - 모건 하우절</span></a>
   </div>
 </li>
@@ -1136,7 +1083,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/03_resources/quantum_programming/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/03_resources/quantum_programming/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Quantum Programming</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1154,13 +1101,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-41" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/quantum_programming/notes/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/quantum_programming/notes/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Quantum Programming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/03_resources/quantum_programming/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/03_resources/quantum_programming/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Qiskit</span></a>
   </div>
 </li>
@@ -1181,7 +1128,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-42" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/04_archives/adp_필기/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/04_archives/adp_필기/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ADP 필기 준비</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1199,91 +1146,91 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-44" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/00.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1 - 데이터 이해</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1 - 데이터의 가치와 미래</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1 - 가치 창조를 위한 데이터 사이언스와 전략 인사이트</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2 - 데이터 처리 프로세스</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2 - 데이터 처리 기술</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3 - 데이터 분석 기획의 이해</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3 - 분석 마스터 플랜</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4 - 데이터 마트</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/10.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4 - 통계분석</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/11.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4 - 정형 데이터 마이닝</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/12.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/12.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4 - 비정형 데이터 마이닝</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/13.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/13.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">5 - 시각화 인사이트 프로세스</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/14.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/14.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">5 - 시각화 디자인</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/15.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/15.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">시험을 보고 왔습니다.</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_필기/notes/16.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_필기/notes/16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">안녕하세요. 데이터 분석 전문가(진)입니다.</span></a>
   </div>
 </li>
@@ -1293,7 +1240,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/04_archives/vault/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/04_archives/vault/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">vault</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-45" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1311,7 +1258,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-46" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/vault/notes/0_overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/vault/notes/0_overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
@@ -1321,7 +1268,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/04_archives/k8s/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/04_archives/k8s/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">k8s</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-47" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1339,49 +1286,49 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-48" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/k8s/notes/0_core_concept.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/k8s/notes/0_core_concept.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">k8s cluster architecture</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/k8s/notes/1_scheduler.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/k8s/notes/1_scheduler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">manual scheduling</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/k8s/notes/2_logging_monitoring.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/k8s/notes/2_logging_monitoring.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">metrics server</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/k8s/notes/3_cluster_maintainance.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/k8s/notes/3_cluster_maintainance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">fail tolerance</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/k8s/notes/4_security.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/k8s/notes/4_security.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Authentication</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/k8s/notes/5_storage.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/k8s/notes/5_storage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Persistant volume</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/k8s/notes/6_network.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/k8s/notes/6_network.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">core DNS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/k8s/notes/7_design_cluster.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/k8s/notes/7_design_cluster.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HA in master node</span></a>
   </div>
 </li>
@@ -1391,7 +1338,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/04_archives/adp_실기/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/04_archives/adp_실기/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ADP 실기 준비</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-49" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1409,25 +1356,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-50" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_실기/notes/01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_실기/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pandas data 구조</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">EDA와 시각화</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_실기/notes/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_실기/notes/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">데이터 전처리</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/adp_실기/notes/04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/adp_실기/notes/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">머신 러닝</span></a>
   </div>
 </li>
@@ -1437,7 +1384,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/04_archives/aws_saa/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/04_archives/aws_saa/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">AWS SAA 준비</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-51" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1455,121 +1402,121 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-52" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/00_region.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/00_region.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">aws global infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/01_IAM.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/01_IAM.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Define IAM</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/02_ec2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/02_ec2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">what is EC2</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/03_ebs.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/03_ebs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">what is ebs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/04_elb_asg.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/04_elb_asg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ELB</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/05_RDS_aurora_elasticCache.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/05_RDS_aurora_elasticCache.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Amazon RDS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/06_route53.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/06_route53.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Route53</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/07_S3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/07_S3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">AWS S3</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/08_cloudfront.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/08_cloudfront.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CloudFront</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/09_aws_storage.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/09_aws_storage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">AWS Snow Family</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/10_message_queue.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/10_message_queue.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">AWS SQS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/11_serverless.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/11_serverless.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">AWS Lambda</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/12_database.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/12_database.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">database choice in aws</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/13_data_analytics.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/13_data_analytics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Performance Improvement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/14_machine_learning.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/14_machine_learning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Amazon Rekognition</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/15_monitoring.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/15_monitoring.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Amazon CloudWatch</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/16_IAM.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/16_IAM.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">AWS Organization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/17_AWS_secure.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/17_AWS_secure.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">KMS(Key Management Service)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/18_VPC.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/18_VPC.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">VPC</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/aws_saa/notes/19_DR.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/aws_saa/notes/19_DR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Disaster Recovery(DR)</span></a>
   </div>
 </li>
@@ -1579,7 +1526,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../posts/04_archives/bs_2_2/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../../posts/04_archives/bs_2_2/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2학년 2학기 학부 정리</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-53" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -1606,67 +1553,67 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-55" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/01-2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/01-2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">An Overview of Database</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Relational Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/04-1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/04-1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Database Normalization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/04-2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/04-2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Modeling and the Entity-Relationship Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Database Design</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/11.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Database Administration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/13.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/13.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ASP.NET</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/work1.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/work1.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">데이터베이스설계및활용 개인과제 #2</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/work2.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/work2.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4조 기말과제 제안서</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_database/work4.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_database/work4.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">숭실대학교 학생식당 식자제 SCM 설계</span></a>
   </div>
 </li>
@@ -1683,61 +1630,61 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-56" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/0_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/0_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction to Human Factors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/1_reaserch_method.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/1_reaserch_method.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Research Method in Human Factors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/2_human_information_processing_model.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/2_human_information_processing_model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Human Information Processing Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/3_sensory_system.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/3_sensory_system.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sensor System (Visual)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/4_Auditory_Haptic.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/4_Auditory_Haptic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Auditory Haptic</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/5_signal_detction.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/5_signal_detction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Signal Detection Theory</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/6_attention.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/6_attention.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Attention</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/7_display.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/7_display.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Display</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/8_control.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/8_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_human/인간공학-보고서-초안.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_human/인간공학-보고서-초안.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">맥도날드 키오스크 UI 개선 보고서</span></a>
   </div>
 </li>
@@ -1754,49 +1701,49 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-57" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_statistics/1-통계학의-개념.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_statistics/1-통계학의-개념.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률과 통계의 정의</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_statistics/2-확률변수와-분포.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_statistics/2-확률변수와-분포.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률변수와 확률분포</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_statistics/3-확률변수의-기댓값.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_statistics/3-확률변수의-기댓값.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률변수의 기댓값</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_statistics/4-이산형 확률분포.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_statistics/4-이산형 확률분포.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">이산형 확률분포</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_statistics/5-연속형-확률분포.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_statistics/5-연속형-확률분포.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">연속형 확률분포</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_statistics/6-정규분포.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_statistics/6-정규분포.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">정규 분포</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_statistics/7-표본의-분포.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_statistics/7-표본의-분포.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">표본의 분포</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/04_archives/bs_2_2/notes/bs_statistics/8-central-limit-theorem.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/04_archives/bs_2_2/notes/bs_statistics/8-central-limit-theorem.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">중심 극한 정리</span></a>
   </div>
 </li>
@@ -1814,20 +1761,36 @@ window.Quarto = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">분류</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">전체 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="deep learning">deep learning <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#카페인-과다섭취-모니터링-앱" id="toc-카페인-과다섭취-모니터링-앱" class="nav-link active" data-scroll-target="#카페인-과다섭취-모니터링-앱">카페인 과다섭취 모니터링 앱</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../posts/02_areas/deep_learning/index.html">Areas</a></li><li class="breadcrumb-item"><a href="../../../posts/02_areas/deep_learning/index.html">Deep Learning</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/computer/00.html">Computer</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/computer/01.html">1차 발표 script</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Deep Learning</h1>
-</div>
+<h1 class="title">1차 발표 script</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">학부 개념 정리</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">공개</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2025년 4월 25일</p>
+    </div>
+  </div>
   
     
   </div>
@@ -1837,97 +1800,38 @@ window.Quarto = {
 </header>
 
 
-<section id="details" class="level2">
-<h2 data-anchor-id="details">Details</h2>
-<p>Deep Learning 관련 노트입니다.</p>
-</section>
-<section id="tasks" class="level2">
-<h2 data-anchor-id="tasks">Tasks</h2>
-<div id="b1e1758f" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display">
-<p>No tasks defined.</p>
-</div>
-</div>
-</section>
-<section id="참고-자료" class="level2">
-<h2 data-anchor-id="참고-자료">참고 자료</h2>
+<p><img src="../../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="카페인-과다섭취-모니터링-앱" class="level2">
+<h2 class="anchored" data-anchor-id="카페인-과다섭취-모니터링-앱">카페인 과다섭취 모니터링 앱</h2>
+<ol type="1">
+<li>사람마다 카페인 민감도가 다르기 때문에 개인에 맞춰 학습 -&gt; 초기에는 일반적인 사용자에 맞춰, 이후 개인화 모델로 전환 1. 일반 모델 학습 2. 일반 모델로 진행하다가 2주 정도 데이터가 쌓이면 fine-tuning 시작</li>
+<li>하루 하루가 독립적이지 않으므로, Stateful LSTM 기반 시계열 모델 적용</li>
+<li>한계점:
 <ul>
-<li><a href="">밑바닥 부터 시작하는 딥러닝</a></li>
+<li>카페인 외 수면에 영향을 미치는 요인(오늘 기준)은 고려하지 않음.</li>
+<li>사용자가 꾸준히 데이터를 입력한다는 가정 필요</li>
+<li>사용자 별 맞춤 학습을 하려면 서버 과부화가 생길 수 있음. (근데 이건 뭐 llm들 그런식으로 동작하니까…내장 ai 같은게 개발된다면 괜찮을지도?)</li>
+<li>사용자의 패턴이 갑자기 변하면 예측력이 떨어질 수 있음. (최근 데이터에 더 높은 가중치를 부여하지만 여전히 한계점이 있음)</li>
+<li>생물학적 메커니즘을 학습한게 아니라, 단순히 카페인 섭취량을 바탕으로 수면의 질을 판단하는 것이기 때문에 예측력이 빈약할 수있음.</li>
+<li>수면의 질 지수가 주관적임</li>
+</ul></li>
+</ol>
+<ul>
+<li><p>변수:</p>
+<ol type="1">
+<li>전날 수면의 질(카페인 외 다른 요인들의 영향도 반영할 수 있다) (설문조사를 통해)</li>
+<li>00~23시 카페인 섭취 량</li>
+<li>수면 시작 시간</li>
+<li>수면 종료 시간</li>
+</ol></li>
+<li><p>예측: 오늘 수면의 질</p></li>
+<li><p>사용자가 전날 수면의 질, 오늘 카페인 섭취 량과 목표 수면 시작 시간, 목표 수면 종료 시간을 알려주면 몇시에 커피 몇잔까지 가능한지 알려준다.</p></li>
 </ul>
-</section>
-<section id="related-posts" class="level2">
-<h2 data-anchor-id="related-posts">Related Posts</h2>
-
 
 
 </section>
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="정렬" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">정렬</option>
-       <option value="index" data-direction="asc">디폴트</option>
-         <option value="listing-date-sort" data-direction="asc">
-          날짜 - 날짜(오름차순)
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          날짜 - 날짜(내림차순)
-        </option>
-         <option value="listing-title-sort" data-direction="asc">
-          제목
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="필터">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">제목</a>
-</th>
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">날짜</a>
-</th>
-<th>
-분류
-</th>
-</tr>
-</thead>
-<tbody class="list">
-<tr data-index="0" data-categories="deep learning" data-listing-date-sort="1742223600000" data-listing-file-modified-sort="1742555395926" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="406" data-listing-title-sort="신경망" data-listing-filename-sort="01.qmd">
-<td>
-<a href="../../../posts/02_areas/deep_learning/notes/01.html" class="title listing-title">신경망</a>
-</td>
-<td>
-<span class="listing-date">2025-03-18</span>
-</td>
-<td>
-<span class="listing-categories">deep learning</span>
-</td>
-</tr>
-<tr data-index="1" data-categories="deep learning" data-listing-date-sort="1742137200000" data-listing-file-modified-sort="1742209752505" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="309" data-listing-title-sort="퍼셉트론" data-listing-filename-sort="00.qmd">
-<td>
-<a href="../../../posts/02_areas/deep_learning/notes/00.html" class="title listing-title">퍼셉트론</a>
-</td>
-<td>
-<span class="listing-date">2025-03-17</span>
-</td>
-<td>
-<span class="listing-categories">deep learning</span>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="listing-no-matching d-none">
-일치 없음
-</div>
-</div><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1948,6 +1852,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
@@ -2345,6 +2256,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <input type="hidden" id="giscus-base-theme" value="light">
 <input type="hidden" id="giscus-alt-theme" value="light">
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/00.html" class="pagination-link" aria-label="intro">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">intro</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/00.html" class="pagination-link" aria-label="Numpy">
+        <span class="nav-page-text">Numpy</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -2363,4 +2286,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
