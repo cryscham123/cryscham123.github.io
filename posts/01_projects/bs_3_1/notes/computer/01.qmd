@@ -1,0 +1,99 @@
+---
+title: 컴퓨팅적 사고 1차 발표 구현 raw script
+categories: ["보고서"]
+date: last-modified
+format: 
+  pdf:
+    fig-pos: 'H'
+    fig-width: 6
+    fig-height: 4
+    css: styles.css
+    documentclass: report
+    papersize: a4
+    number-sections: true
+    number-depth: 3
+    top-level-division: chapter
+    toc: false
+    fontsize: 17pt
+    geometry:
+      - top=20mm
+    indent-size: 2
+include-in-header: 
+  text: |
+    \date{}
+    \usepackage{fontspec}
+    \setmainfont{Noto Sans KR}
+    \usepackage{titlesec}
+    \titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{0.8em}{\huge}
+    \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
+    \titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{}{0pt}{}
+    \titlespacing*{\chapter}{0pt}{-20pt}{5pt}
+    \titlespacing*{\section}{0pt}{10pt}{10pt}
+    \newcommand{\chapterbreak}{\clearpage}
+    \usepackage{setspace}
+    \setstretch{1.5}
+    \usepackage{tabularx}
+    \newcolumntype{Y}{>{\centering\arraybackslash}X}
+    \usepackage[bottom]{footmisc}
+    \usepackage{setspace}
+    \renewcommand{\footnotesize}{\setstretch{1.2}\fontsize{9pt}{11pt}\selectfont}
+    \setlength{\skip\footins}{10pt}
+    \setlength{\footnotesep}{8pt}
+    \renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.5\linewidth\vspace{1em}}
+    \makeatletter
+    \renewcommand{\@makefntext}[1]{\noindent\makebox[1.5em][r]{\@makefnmark}\hspace{0.5em}#1}
+    \makeatother
+    \usepackage{float}
+    \usepackage{multirow}
+    \usepackage{booktabs}
+
+execute:
+  warning: false
+  message: false
+
+---
+
+# 카페인 과다섭취 모니터링 앱
+
+## 앱 개요
+
+- 사용자가 전날 수면의 질, 오늘 카페인 섭취 량과 목표 수면 시작 시간, 목표 수면 종료 시간을 알려주면 카페인을 얼마나 더 섭취 가능한지 알려준다.
+- 목표 수면의 질을 7(임의로 정한 값)으로 설정해서 남은 카페인 섭취 량 계산
+- 단순히 카페인 섭취량을 보여주는 것이 아닌, 카페인 섭취량에 따라 커피 몇 잔, 초콜릿 몇 g 까지 가능한지 등등...세세하게 알려줌
+
+## 모델
+
+1. 사람마다 카페인 민감도가 다르기 때문에 개인에 맞춰 학습 (chat gpt 생각하면 됨)
+    - 초기에는 일반적인 사용자에 맞춰, 이후 개인화 모델로 전환
+        1. 일반 모델 학습
+		2. 일반 모델로 진행하다가 2주 정도(임의로 정한 기간) 데이터가 쌓일때마다 fine-tuning 시작
+2. 하루 하루 섭취량이 독립적이지 않으므로, Stateful LSTM 기반 시계열 모델 적용
+
+### 변수
+
+- 독립 변수
+    1. 전날 수면의 질(카페인 외 다른 요인들의 영향도 반영할 수 있다): 설문조사를 통해
+    2. 00~23시 카페인 섭취 량
+    3. 수면 시작 시간
+    4. 수면 종료 시간
+
+- 예측 변수: 오늘 수면의 질
+
+### 구현
+
+근데 나는 Stateful LSTM 기반 시계열 모델을 구현할 수 있는 방법을 모른다.
+
+그냥 ai 딸깍해서 코드를 짰다.
+
+대충 중요한 부분만 추려서 발표자료에 넣으면 될 듯.
+
+[이 곳](./02.html) 참고
+
+## 한계점:
+
+- 카페인 외 수면에 영향을 미치는 요인(오늘 기준)은 고려하지 않음.
+- 사용자가 꾸준히 데이터를 입력하지 않으면 예측력이 떨어질 수 있음.
+- 사용자 별 맞춤 학습을 하려면 서버 과부화가 생길 수 있음. (근데 이건 뭐 다른 llm들도 그런식으로 동작하니까)
+- 사용자의 패턴이 갑자기 변하면 예측력이 떨어질 수 있음. (최근 데이터에 더 높은 가중치를 부여하지만 여전히 한계점이 있음)
+- 생물학적 메커니즘을 학습한게 아니라, 단순히 카페인 섭취량과 수면의 질 변수의 관계를 바탕으로 판단하는 것이기 때문에 예측력이 빈약할 수있음.
+- 수면의 질 지수가 주관적임
