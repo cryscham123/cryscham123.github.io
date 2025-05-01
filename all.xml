@@ -25,20 +25,21 @@
 
 
 <p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="프로젝트-vs-프로세스" class="level2">
+<h2 class="anchored" data-anchor-id="프로젝트-vs-프로세스">프로젝트 vs 프로세스</h2>
+<ul>
+<li>프로젝트: 일회성, 하나의 흐름단위</li>
+<li>프로세스: 지속적, 여러 흐름 단위</li>
+</ul>
+</section>
 <section id="주경로-기법critical-path-method-cpm" class="level2">
 <h2 class="anchored" data-anchor-id="주경로-기법critical-path-method-cpm">주경로 기법(Critical Path Method, CPM)</h2>
 <ul>
-<li>프로젝트: 일회성, 하나의 흐름단위
-<ul>
-<li>프로세스: 지속적, 여러 흐름 단위</li>
-</ul></li>
-<li>종속성 행렬: 직접적인 선후관계만 표시
-<ul>
-<li>x 가 없다 ≠ 선후관계가 없다</li>
-</ul></li>
-<li>종속성 path 중 가장 긴 path가 critial path
+<li>프로젝트 완료 시간 계산</li>
+<li>종속성 path(가장 짧은 시간) 중 가장 긴 path가 critial path
 <ul>
 <li>이 path의 활동이 지연되면 프로젝트 전체가 지연됨</li>
+<li>프로세스 흐름도에서 개별작업의 처리능력이 중요했던것과 달리 프로젝트 종료 시간이 중요.</li>
 </ul></li>
 </ul>
 
@@ -114,17 +115,31 @@
 </ul>
 </section>
 </section>
-<section id="erlang-loss-table1" class="level2">
-<h2 class="anchored" data-anchor-id="erlang-loss-table1">Erlang Loss Table<sup>1</sup></h2>
-<p>대기? 버퍼?</p>
+<section id="erlang-loss-table" class="level2">
+<h2 class="anchored" data-anchor-id="erlang-loss-table">Erlang Loss Table</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/img/2025-05-01-19-57-26.png" class="img-fluid figure-img"></p>
+<figcaption>얼랑 솔실 공식<sup>1</sup></figcaption>
+</figure>
+</div>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/img/2025-05-01-20-09-03.png" class="img-fluid"></p>
 </section>
 <section id="buffer의-역할" class="level2">
 <h2 class="anchored" data-anchor-id="buffer의-역할">buffer의 역할</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/img/2025-05-01-20-10-25.png" class="img-fluid figure-img"></p>
+<figcaption>변동성으로 인해 capacity가 낮아지는 이유</figcaption>
+</figure>
+</div>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/img/2025-05-01-20-19-03.png" class="img-fluid"></p>
 <ul>
-<li>blocking</li>
-<li>starving</li>
+<li>변동성이 없다면 cycle time은 1/capacity</li>
+<li>변동성이 있다면 cycle time은 늘어남. (시뮬레이션으로 계산)</li>
+<li>버퍼가 있으면 1/capacity로 점점 줄어듦.</li>
+<li>cell layout을 사용하면 cycle time을 제일 많이 줄일 수 있음.</li>
 </ul>
-<p>변동성 x → cycle time = 1/capacity</p>
 
 
 </section>
@@ -133,7 +148,7 @@
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">각주</h2>
 
 <ol>
-<li id="fn1"><p>Diversion 문제 나옴 (11p)↩︎</p></li>
+<li id="fn1"><p>diversion 확률, 꽉 차있을 확률, 도착한 환자가 서비스 받을 확률, 다른 병원으로 갈 확률 시험에 나온다.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
   <category>생산시스템관리</category>
