@@ -15,7 +15,56 @@
 <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Tue, 29 Apr 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 01 May 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>수송문제와 할당 문제들</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/11.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>OR</category>
+  <category>학부 정리</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/11.html</guid>
+  <pubDate>Thu, 01 May 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>선형계획을 위한 다른 알고리즘들</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/10.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="쌍대-심플렉스-방법" class="level2">
+<h2 class="anchored" data-anchor-id="쌍대-심플렉스-방법">쌍대 심플렉스 방법</h2>
+<ul>
+<li>쌍대 문제 제약식에 -1 하고 slack 변수 추가해서 반대로 품.</li>
+</ul>
+</section>
+<section id="상한-기법" class="level2">
+<h2 class="anchored" data-anchor-id="상한-기법">상한 기법</h2>
+<ul>
+<li>일단은 대수적으로 푸는 방법만 배움.</li>
+<li>변수가 0일 때 뿐만 아니라 upper bound일 때도 non-basic variable로 취급.</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>OR</category>
+  <category>학부 정리</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/10.html</guid>
+  <pubDate>Thu, 01 May 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>프로젝트 관리</title>
   <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/09.html</link>
@@ -299,6 +348,51 @@
 <li>원문제의 제약식 및 변수의 형태(≤, =, ≥, 비음, 무제약 등)에 따라 쌍대문제의 대응 형태를 쉽게 결정하는 규칙.</li>
 <li>대칭성: 쌍대문제의 쌍대는 원문제이므로, 두 문제의 관계는 완전히 대칭적이다.</li>
 </ul>
+</section>
+</section>
+<section id="민감도-분석" class="level2">
+<h2 class="anchored" data-anchor-id="민감도-분석">민감도 분석</h2>
+</section>
+<section id="민감도-분석-적용-요약-및-주요-내용" class="level2">
+<h2 class="anchored" data-anchor-id="민감도-분석-적용-요약-및-주요-내용">6.7 민감도 분석 적용 – 요약 및 주요 내용</h2>
+<p><strong>6.7절 “민감도 분석 적용”</strong>은 선형계획(Linear Programming) 문제에서 민감도 분석(Sensitivity Analysis)을 실제로 어떻게 적용하는지, 그리고 다양한 매개변수 변화가 최적해에 어떤 영향을 미치는지 구체적으로 설명하는 부분입니다.</p>
+<section id="주요-내용-요약" class="level3">
+<h3 class="anchored" data-anchor-id="주요-내용-요약">주요 내용 요약</h3>
+<ul>
+<li><p><strong>민감도 분석의 출발점</strong><br>
+민감도 분석은 보통 자원(b₁, b₂, …, bₘ)의 공급량 변화가 해에 미치는 영향을 분석하는 것으로 시작합니다. 이는 실제 모델에서 자원의 양을 조정할 수 있는 융통성이 크기 때문입니다.</p></li>
+<li><p><strong>우변(b) 변화의 영향</strong><br>
+자원(b)의 값이 변하면, 최종 심플렉스 표의 우변만 바뀌고 나머지(행 0의 비기저변수 계수 등)는 변하지 않을 수 있습니다. 이때는 우변만 수정해서 해가 여전히 가능(feasible)한지(기저변수 값이 모두 음이 아닌지) 확인하면 됩니다. 만약 불가능해지면 쌍대심플렉스법 등으로 재최적화가 필요합니다.</p></li>
+<li><p><strong>증분 분석</strong><br>
+자원의 값이 변화할 때, 변화분만큼의 영향(증분)을 계산해서 새로운 해와 목적함수 값을 빠르게 구할 수 있습니다.</p></li>
+<li><p><strong>허용범위(Allowable Range)</strong><br>
+각 자원(b)의 변화가 해의 가능성과 최적성을 유지할 수 있는 범위를 계산합니다. 이 범위 내에서는 잠재가격(dual price, shadow price)이 유효하게 적용됩니다.</p></li>
+<li><p><strong>동시 변화와 100% 규칙</strong><br>
+여러 자원의 값이 동시에 변할 때, 각 변화가 허용범위 내에서 차지하는 비율의 합이 100%를 넘지 않으면 잠재가격을 이용한 해석이 유효합니다.</p></li>
+<li><p><strong>목적함수 계수 변화</strong><br>
+비기저변수나 기저변수의 목적함수 계수(c)가 변할 때 해가 어떻게 변하는지, 허용범위를 어떻게 계산하는지 설명합니다.</p></li>
+<li><p><strong>새로운 제약식 추가</strong><br>
+모델에 새로운 제약식이 추가되면, 기존 최적해가 여전히 가능해인지 확인하고, 아니라면 심플렉스 표에 새로운 행을 추가해 재최적화를 진행합니다.</p></li>
+<li><p><strong>파라메트릭 분석</strong><br>
+하나 또는 여러 매개변수를 연속적으로 변화시키면서 최적해가 어떻게 달라지는지 체계적으로 분석합니다.</p></li>
+</ul>
+</section>
+<section id="예시-wyndor-glass-co.-모델" class="level3">
+<h3 class="anchored" data-anchor-id="예시-wyndor-glass-co.-모델">예시: Wyndor Glass Co.&nbsp;모델</h3>
+<ul>
+<li>b₂(자원 2의 공급량)가 12에서 24로 증가하면, 기저해가 더 이상 가능하지 않게 되고, 쌍대심플렉스법을 통해 새로운 최적해를 구해야 함을 보여줍니다.</li>
+<li>허용범위 내에서만 자원의 변화에 대해 잠재가격이 유효하며, 이를 벗어나면 해가 바뀌고 잠재가격도 달라집니다.</li>
+<li>여러 자원이 동시에 변할 때 100% 규칙을 적용해, 변화의 합이 100%를 넘지 않으면 기존 해석이 유효함을 설명합니다.</li>
+</ul>
+</section>
+<section id="실무적-의의" class="level3">
+<h3 class="anchored" data-anchor-id="실무적-의의">실무적 의의</h3>
+<ul>
+<li>실제 기업(예: Pacific Lumber Company)의 대규모 산림관리 최적화 문제에 민감도 분석이 어떻게 적용되어, 불확실성 하에서 더 나은 의사결정과 수익 증대에 기여했는지 사례로 제시합니다.</li>
+</ul>
+<hr>
+<p><strong>요약:</strong><br>
+6.7절은 선형계획의 해가 자원, 목적함수 계수, 제약식 등 모델의 매개변수 변화에 얼마나 민감한지, 그리고 이런 변화가 있을 때 해를 신속하게 갱신하거나 재최적화하는 절차를 구체적으로 다룹니다. 이를 통해 실제 의사결정에서 불확실성을 관리하고, 최적화 모델의 실용성을 높일 수 있음을 보여줍니다.</p>
 
 
 </section>
@@ -451,12 +545,22 @@
 <li><img src="https://latex.codecogs.com/png.latex?t(n_1%20+%20n_2%20-%202)%5E2%20=%20F(1,%20n_1%20+%20n_2%20-2)"></li>
 </ul>
 </section>
-<section id="완전-확률화-계획법" class="level2">
-<h2 class="anchored" data-anchor-id="완전-확률화-계획법">완전 확률화 계획법</h2>
+<section id="분산분석" class="level2">
+<h2 class="anchored" data-anchor-id="분산분석">분산분석</h2>
 <ul>
-<li>실험계획법</li>
-<li>일원 분산분석이 공정한 결과를 내기 위한 실험 조건</li>
+<li>요인, 인자 (factor): class</li>
+<li>수준 (level): class 값</li>
+<li>처리 (treatment): 요인과 수준의 조합</li>
+<li>반응치 (response): 관측치</li>
 </ul>
+<section id="완전-확률화-계획법" class="level3">
+<h3 class="anchored" data-anchor-id="완전-확률화-계획법">완전 확률화 계획법</h3>
+<ul>
+<li>일원 분산분석이 공정한 결과를 내기 위한 실험 조건</li>
+<li>처리 i에 해당되는 모집단으로부터 독립인 표본 <img src="https://latex.codecogs.com/png.latex?n_i">개를 랜덤으로 샘플링함으로써, k개의 서로 다른 모집단으로부터 독립인 random sample들을 얻는 것과 같음</li>
+<li>반복 수가 같을 필요는 없다</li>
+</ul>
+</section>
 </section>
 <section id="일원-분산-분석" class="level2">
 <h2 class="anchored" data-anchor-id="일원-분산-분석">일원 분산 분석</h2>
@@ -578,6 +682,24 @@
   <category>data mining</category>
   <category>보고서</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/12.html</guid>
+  <pubDate>Sat, 12 Apr 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>컴퓨팅적사고 발표 ppt</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/computer/02.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<iframe src="computer_presentation.pdf" width="100%" height="600px" allowfullscreen="">
+</iframe>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>보고서</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/computer/02.html</guid>
   <pubDate>Sat, 12 Apr 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
@@ -2809,1153 +2931,6 @@ Obj:  45.0</code></pre>
   <category>학부 정리</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/dsa/00.html</guid>
   <pubDate>Wed, 02 Apr 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Data Transformation</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/10.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<ol type="1">
-<li>concat</li>
-</ol>
-<ul>
-<li>axis=0 row</li>
-<li>axis=1 column</li>
-</ul>
-<ol start="2" type="1">
-<li>to_csv</li>
-</ol>
-<section id="train-test-split" class="level2">
-<h2 class="anchored" data-anchor-id="train-test-split">train test split</h2>
-<ol type="1">
-<li>Hold out method: sub sampling</li>
-</ol>
-<ul>
-<li>validation data set: 하이퍼파라미터를 튜닝</li>
-<li>층화추출법: stratified sampling</li>
-</ul>
-<ol type="1">
-<li>resampling method: Hold out을 여러번 반복. variance 극복 bias 극복 x
-<ol type="1">
-<li>cross validation</li>
-</ol>
-<ul>
-<li>k-fold</li>
-<li>leave-one-out:</li>
-</ul>
-<ol type="1">
-<li>bootstrap</li>
-</ol></li>
-</ol>
-</section>
-<section id="data의-특성" class="level2">
-<h2 class="anchored" data-anchor-id="data의-특성">data의 특성</h2>
-<p>volume - Data size big - Data size small(long data) velocity variety veracity(정확성) value</p>
-<div id="e5249bf7" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> LeaveOneOut</span>
-<span id="cb1-3">X <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.array([[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>]])</span>
-<span id="cb1-4">y <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.array([<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'a'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'b'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'c'</span>])</span>
-<span id="cb1-5">loo <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> LeaveOneOut()</span>
-<span id="cb1-6">loo.get_n_splits(X)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>3</code></pre>
-</div>
-</div>
-<div id="fd598cd2" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> KFold</span>
-<span id="cb3-2"></span>
-<span id="cb3-3">X <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.array([[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">40</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">15</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">19</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">34</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">41</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">11</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">21</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">33</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">39</span>]])</span>
-<span id="cb3-4">y <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.array([<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>])</span>
-<span id="cb3-5">kf <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> KFold(n_splits<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>)</span>
-<span id="cb3-6"></span>
-<span id="cb3-7">kf.get_n_splits(X)</span>
-<span id="cb3-8"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> train_index, test_index <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> kf.split(X):</span>
-<span id="cb3-9">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"TRAIN:"</span>, train_index, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"TEST:"</span>, test_index)</span>
-<span id="cb3-10">    X_train, X_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> X[train_index], X[test_index]</span>
-<span id="cb3-11">    y_train, y_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> y[train_index], y[test_index]</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>TRAIN: [2 3 4 5] TEST: [0 1]
-TRAIN: [0 1 4 5] TEST: [2 3]
-TRAIN: [0 1 2 3] TEST: [4 5]</code></pre>
-</div>
-</div>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>data mining</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/10.html</guid>
-  <pubDate>Tue, 01 Apr 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>배치 생산 및 경제적 주문량 모형</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/06.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="setup과-생산주기" class="level2">
-<h2 class="anchored" data-anchor-id="setup과-생산주기">setup과 생산주기</h2>
-<ul>
-<li>setup: 기계를 준비하는데 필요한 것
-<ul>
-<li>정확히 하나의 제품을 만드는 경우에도 setup이 필요함</li>
-<li>생산하는 양에 관계없이 setup 시간이 일정함</li>
-<li>sequence dependent setup: 순서에 따라 setup 시간이 달라짐</li>
-</ul></li>
-<li>생산주기(production cycle): setup + 생산의 과정을 반복
-<ul>
-<li>setup은 아무것도 못하고 시간을 버림</li>
-</ul></li>
-</ul>
-</section>
-<section id="배치-생산과정" class="level2">
-<h2 class="anchored" data-anchor-id="배치-생산과정">배치 생산과정</h2>
-<ul>
-<li>batch<sup>1</sup>: 부품 집합을 흐름 단위로 사용</li>
-<li>생산 주기: batch size만큼 생산하는 주기</li>
-<li>처리능력: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bbatch%20size%7D%7Bsetup%20time%20+%20(batch%20size%20*%20processing%20time%20per%20unit)%7D">
-<ul>
-<li>batch size가 무한히 커질수록 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bp%7D">로 수렴</li>
-<li>setuptime이 0이여도 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7Bp%7D"></li>
-</ul></li>
-</ul>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/img/2025-04-19-15-43-20.png" class="img-fluid"></p>
-<ul>
-<li>batch는 클 수록 좋은가?
-<ul>
-<li>batch size가 커질수록 처리능력이 증가하지만 재고가 많아짐</li>
-<li>→ 처리능력 제약적 상황에서 bottleneck의 batch size를 늘리고, 수요 제약적 상황에서 non-bottleneck의 batch size를 줄이는게 좋음</li>
-<li>→ <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BB%7D%7BS%20+%20Bp%7D%20=%20R%20%E2%86%92%20B%20=%20%5Cfrac%7BSR%7D%7B1%20-%20Rp%7D"></li>
-<li>R보다 크면 쓸데없이 제고가 쌓이고, 작으면 capacity가 낮아짐</li>
-</ul></li>
-<li>S가 늘어나면 Batch size를 키우고, 낮아지면 Batch size를 줄여도 됨</li>
-<li>p가 늘어나면 Batch size를 키우고, 낮아지면 Batch size를 줄여도 됨</li>
-</ul>
-</section>
-<section id="경제적-주문량-모형" class="level2">
-<h2 class="anchored" data-anchor-id="경제적-주문량-모형">경제적 주문량 모형</h2>
-<ul>
-<li>외부 공급자에게 부품을 주문하여 생산 및 배송이 이루어지는 경우</li>
-<li>단위시간당 발생하는 비용이 적을수록 좋다</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/img/2025-04-19-15-57-29.png" class="img-fluid figure-img"></p>
-<figcaption>재고량 패턴(재고가 0이 되었을 때 정확히 도착하도록 주문할 수 있다고 가정)</figcaption>
-</figure>
-</div>
-<ul>
-<li>Q: 한 번에 주문하는 양</li>
-<li>R: 수요(기울기)</li>
-<li>주문 주기: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BQ%7D%7BR%7D"></li>
-<li>평균 재고량: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BQ%7D%7B2%7D"></li>
-</ul>
-<ol type="1">
-<li>구매비용(purchase cost / variable cost): 단위 시간 당 구매비용은 Q에 영향을 받지 않음</li>
-<li>단위 재고 비용(h)
-<ul>
-<li>단위 시간 당 발생하는 재고 비용: <img src="https://latex.codecogs.com/png.latex?h%5Cfrac%7BQ%7D%7B2%7D"></li>
-</ul></li>
-<li>셋업(주문) 비용 (Fixed cost) (k): 주문량과 무관
-<ul>
-<li>단위 시간 당 발생하는 셋업 비용: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bk%7D%7B%5Cfrac%7BQ%7D%7BR%7D%7D"></li>
-</ul></li>
-</ol>
-<ul>
-<li><p>목적 함수: <img src="https://latex.codecogs.com/png.latex?C(Q)%20=%20%5Cfrac%7BKR%7D%7BQ%7D%20+%20%5Cfrac%7BhQ%7D%7B2%7D"></p></li>
-<li><p>경제적 주문량(EOQ): <img src="https://latex.codecogs.com/png.latex?Q%5E*%20=%20%5Csqrt%7B%5Cfrac%7B2KR%7D%7Bh%7D%7D"></p>
-<ul>
-<li>K: 주문비용</li>
-<li>R: 수요량</li>
-<li>h: 단위 재고비용</li>
-</ul></li>
-<li><p>EOQ만큼 주문할 때 단위 시간당 비용</p>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?C(Q%5E*)%20=%20%5Csqrt%7B2KhR%7D"></li>
-</ul></li>
-<li><p>단위당 비용 = <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BC(Q%5E*)%7D%7BR%7D%20=%20%5Csqrt%7B%5Cfrac%7B2Kh%7D%7BR%7D%7D"></p></li>
-<li><p>수요가 증가함에 따라 EOQ는 늘어나는데 단위 당 비용은 감소</p></li>
-<li><p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BC(Q)%7D%7BC(Q%5E*)%7D%20=%20%5Cfrac%7B1%7D%7B2%7D(%5Cfrac%7BQ%5E*%7D%7BQ%7D%20+%20%5Cfrac%7BQ%7D%7BQ%5E*%7D)"></p></li>
-<li><p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B%EC%A3%BC%EB%AC%B8%20%EC%A3%BC%EA%B8%B0%7D%20%E2%89%A0%20%EC%9E%AC%EA%B3%A0%20%ED%9A%8C%EC%A0%84%EC%9C%A8"></p>
-<ul>
-<li>주문 주기는 Q개가 다 없어지는 시간</li>
-<li>회전율은 Q/2개의 재고가 다 없어지는 시간</li>
-</ul></li>
-</ul>
-</section>
-<section id="buffer-or-suffer" class="level2">
-<h2 class="anchored" data-anchor-id="buffer-or-suffer">buffer or suffer</h2>
-<ul>
-<li>buffer 제고가 없으면 처리능력이 떨어질 수 있다.</li>
-</ul>
-
-
-</section>
-
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">각주</h2>
-
-<ol>
-<li id="fn1"><p>batch 1개는 부품 집합 1 단위 의미↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>생산시스템관리</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/06.html</guid>
-  <pubDate>Tue, 01 Apr 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Homework</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/09.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<div id="5c6c0723" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> pd</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> plt</span>
-<span id="cb1-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> warnings</span>
-<span id="cb1-5"></span>
-<span id="cb1-6">warnings.filterwarnings(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'ignore'</span>)</span>
-<span id="cb1-7"></span>
-<span id="cb1-8">dataset <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"_data/class/carprices.csv"</span>)</span>
-<span id="cb1-9"></span>
-<span id="cb1-10">dataset</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Car Model</th>
-<th data-quarto-table-cell-role="th">Mileage</th>
-<th data-quarto-table-cell-role="th">Sell Price($)</th>
-<th data-quarto-table-cell-role="th">Age(yrs)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>BMW X5</td>
-<td>69000</td>
-<td>18000</td>
-<td>6</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>BMW X5</td>
-<td>35000</td>
-<td>34000</td>
-<td>3</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>BMW X5</td>
-<td>57000</td>
-<td>26100</td>
-<td>5</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>BMW X5</td>
-<td>22500</td>
-<td>40000</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>BMW X5</td>
-<td>46000</td>
-<td>31500</td>
-<td>4</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>Audi A5</td>
-<td>59000</td>
-<td>29400</td>
-<td>5</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>Audi A5</td>
-<td>52000</td>
-<td>32000</td>
-<td>5</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>Audi A5</td>
-<td>72000</td>
-<td>19300</td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>Audi A5</td>
-<td>91000</td>
-<td>12000</td>
-<td>8</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>Mercedez Benz C class</td>
-<td>67000</td>
-<td>22000</td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>Mercedez Benz C class</td>
-<td>83000</td>
-<td>20000</td>
-<td>7</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>Mercedez Benz C class</td>
-<td>79000</td>
-<td>21000</td>
-<td>7</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>Mercedez Benz C class</td>
-<td>59000</td>
-<td>33000</td>
-<td>5</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<p>scatter plot을 이용해 선형성을 확인하겠습니다.</p>
-<p>연속형 변수인 <strong>Mileage</strong>와 <strong>Sell Price($)</strong>에 대해 확인하겠습니다.</p>
-<div id="66c9b208" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">fig, axes <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">12</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>))</span>
-<span id="cb2-2"></span>
-<span id="cb2-3">axes[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>].scatter(dataset.iloc[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>], dataset.iloc[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>], alpha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>)</span>
-<span id="cb2-4">axes[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>].set_xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Mileage"</span>)</span>
-<span id="cb2-5">axes[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>].set_ylabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Sell Price($)"</span>)</span>
-<span id="cb2-6">axes[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>].set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Mileage vs Sell Price($)"</span>)</span>
-<span id="cb2-7"></span>
-<span id="cb2-8">axes[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>].scatter(dataset.iloc[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>], dataset.iloc[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>], alpha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>)</span>
-<span id="cb2-9">axes[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>].set_xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Age(yrs)"</span>)</span>
-<span id="cb2-10">axes[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>].set_ylabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Price($)"</span>)</span>
-<span id="cb2-11">axes[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>].set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Age(yrs) vs Price($)"</span>)</span>
-<span id="cb2-12"></span>
-<span id="cb2-13">plt.show()</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/09_files/figure-html/cell-3-output-1.png" width="982" height="449" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>선형성이 보입니다.<br>
-두 변수 모두 linear regression을 적용할 수 있어 보입니다.</p>
-<div id="902dce37" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">x <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> dataset.drop(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Sell Price($)'</span>, axis<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>).values</span>
-<span id="cb3-2">y <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> dataset.iloc[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>].values</span></code></pre></div>
-</div>
-<p>독립 변수와 종속 변수를 저장해줍니다.</p>
-<div id="25682816" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.compose <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> ColumnTransformer</span>
-<span id="cb4-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> OneHotEncoder</span>
-<span id="cb4-3"></span>
-<span id="cb4-4">ct <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ColumnTransformer(transformers<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>[(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'encoder'</span>, OneHotEncoder(), [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>])], remainder<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'passthrough'</span>)</span>
-<span id="cb4-5">x <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.array(ct.fit_transform(x))</span></code></pre></div>
-</div>
-<p>범주형 변수 <strong>Car Model</strong>에 대해 <strong>one hot encoding</strong>을 적용하였습니다.</p>
-<div id="3567fea8" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> train_test_split</span>
-<span id="cb5-2"></span>
-<span id="cb5-3">X_train, X_test, y_train, y_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> train_test_split(x, y, test_size<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>)</span>
-<span id="cb5-4">X_train</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>array([[0.0, 1.0, 0.0, 46000, 4],
-       [1.0, 0.0, 0.0, 91000, 8],
-       [0.0, 0.0, 1.0, 59000, 5],
-       [0.0, 1.0, 0.0, 35000, 3],
-       [0.0, 1.0, 0.0, 22500, 2],
-       [0.0, 0.0, 1.0, 67000, 6],
-       [1.0, 0.0, 0.0, 52000, 5],
-       [0.0, 0.0, 1.0, 79000, 7],
-       [1.0, 0.0, 0.0, 72000, 6],
-       [0.0, 1.0, 0.0, 57000, 5]], dtype=object)</code></pre>
-</div>
-</div>
-<div id="e0465df1" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> StandardScaler</span>
-<span id="cb7-2"></span>
-<span id="cb7-3">sc <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> StandardScaler()</span>
-<span id="cb7-4">X_train[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>:] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> sc.fit_transform(X_train[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>:])</span>
-<span id="cb7-5">X_test[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>:] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> sc.transform(X_test[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>:])</span>
-<span id="cb7-6">X_train</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>array([[0.0, 1.0, 0.0, -0.6199306919491117, -0.6470588235294114],
-       [1.0, 0.0, 0.0, 1.695163178400268, 1.7058823529411762],
-       [0.0, 0.0, 1.0, 0.048874203929598015, -0.05882352941176448],
-       [0.0, 1.0, 0.0, -1.1858425269234045, -1.2352941176470584],
-       [0.0, 1.0, 0.0, -1.82892415757601, -1.8235294117647052],
-       [0.0, 0.0, 1.0, 0.46044644754726555, 0.5294117647058825],
-       [1.0, 0.0, 0.0, -0.31125150923586103, -0.05882352941176448],
-       [0.0, 0.0, 1.0, 1.0778048129737667, 1.1176470588235294],
-       [1.0, 0.0, 0.0, 0.7176790998083077, 0.5294117647058825],
-       [0.0, 1.0, 0.0, -0.05401885697481886, -0.05882352941176448]],
-      dtype=object)</code></pre>
-</div>
-</div>
-<p>train set과 test set을 나눈 뒤 연속형 변수에 대해 feature scailing을 진행해줍니다.</p>
-<div id="38a3376c" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.linear_model <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> LinearRegression</span>
-<span id="cb9-2"></span>
-<span id="cb9-3">regressor <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> LinearRegression()</span>
-<span id="cb9-4">regressor.fit(X_train, y_train)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<style>#sk-container-id-1 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-1 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-1 pre {
-  padding: 0;
-}
-
-#sk-container-id-1 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-1 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-1 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-1 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-1 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-1 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-1 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-1 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-1 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-1 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-1 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</a></style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;LinearRegression<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div>
-</div>
-</div>
-<p>모델을 학습시킵니다.</p>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section">1</h2>
-<div id="12b4baf0" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">target <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ct.transform([[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Mercedez Benz C class'</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">45000</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span>]])</span>
-<span id="cb10-2">target[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>:] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> sc.transform(target[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>:])</span>
-<span id="cb10-3">y_pred <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> regressor.predict(target)</span>
-<span id="cb10-4"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(y_pred)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[36216.12684278]</code></pre>
-</div>
-</div>
-</section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">2</h2>
-<div id="61989431" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">target <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ct.transform([[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'BMW X5'</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">86000</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7</span>]])</span>
-<span id="cb12-2">target[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>:] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> sc.transform(target[:, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>:])</span>
-<span id="cb12-3">y_pred <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> regressor.predict(target)</span>
-<span id="cb12-4"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(y_pred)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[11152.07829935]</code></pre>
-</div>
-</div>
-</section>
-<section id="section-2" class="level2">
-<h2 class="anchored" data-anchor-id="section-2">3</h2>
-<div id="76cd0041" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(regressor.score(X_test, y_test))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0.8409834346492212</code></pre>
-</div>
-</div>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>data mining</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/09.html</guid>
-  <pubDate>Mon, 31 Mar 2025 11:45:37 GMT</pubDate>
 </item>
 </channel>
 </rss>
