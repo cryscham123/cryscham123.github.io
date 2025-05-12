@@ -1,36 +1,271 @@
 ---
-title: "association rule mining"
-date: 2025-04-28
+title: "test"
+date: 2025-05-07
 categories: ["data mining"]
 ---
 
 ![](/img/human-thumb.jpg){.post-thumbnail}
 
+## Data Load
 
-거래 데이터 내에서 항목(item) 간의 흥미로운 관계, 즉 "어떤 항목이 발생하면 다른 항목도 같이 발생할 가능성이 높다"는 규칙(예: {기저귀} → {맥주})을 찾는 기법이다.
+```{r}
+# 데이터 로드 및 필요 패키지 불러오기
+library(tidyverse)
 
-이는 인과관계가 아닌 동시 발생 경향성을 의미한다.
+# CSV 파일 읽기 (row.names=1은 첫 번째 열을 행 이름으로 사용)
+df_origin <- read.csv('_data/student_1.csv', row.names=1)
 
-- **지지도(Support):** 전체 거래 중 특정 항목 집합이 포함된 거래의 비율.
-- **신뢰도(Confidence):** 항목 X를 포함하는 거래 중에서 항목 Y도 함께 포함하는 거래의 비율.
+# 원본 데이터 복사
+df <- df_origin
 
-## 유형
+# 필요한 열만 선택
+df <- df[, c('q48a01','q48a02','q48a03','q48a04','q48a05','q48a06','q48a07',
+              'q48a08','q48a09','q48a10','q48a11','q48a12','q48b1','q48b2',
+              'q48b3','q48c1','q48c2','q48c3','q48c4','q48c5','q48c6','q48c7',
+              'q48c8','q48c9','q48d1','q48d2','q48d3','q48d4','q48d5','q48d6',
+              'q49a01','q49a02','q49a03','q49a04','q49a05','q49a06','q49a07',
+              'q49a08','q49a09','q49a10','q49a11','q49a12','q49a13','q49a14',
+              'q49a15','q49a16','q49a17','q50')]
+```
 
-- 불리언 / 양적 연관 규칙
-- 단일/다차원
-- 단일/다중 수준
+## CFA (Confirmatory Factor Analysis)
 
-## 빈번 패턴 마이닝
+```{r}
+library(lavaan)
+library(semPlot)
 
-- 데이터 집합에서 자주 발생하는 패턴을 찾는 과정
-- 연관 규칙 학습 뿐만 아니라 다양한 데이터 마이닝 기법의 기초가 됨
+# 결측치 확인
+sum(is.na(df))
 
-- 빈발 패턴: 패턴의 거래 수가 최소 지지도를 넘는 것
-  - 빈발 패턴의 하위 집합은 빈발 패턴
-- max frequent: 직속 상위 집합들 모두가 빈번 집합이 아닌 빈번 집합
+# 결측치가 있는 경우 처리 (필요 시)
+df_clean <- na.omit(df)
 
-## Apirori
+# CFA 모델 지정
+# 13개의 잠재 요인을 정의 (위에서 지정한 요인 구조에 맞춰 설정)
 
-- 후보 생성 → 검사 → 가지치기
-- frequent itemsets을 찾는 알고리즘
-  - monotone property → 가지치기
+cfa_model <- '
+  # 측정 모델 정의
+  # 자아존중감 관련 요인
+  pos_esteem =~ q48a01 + q48a02 + q48a03
+  neg_esteem =~ q48a04 + q48a05 + q48a06
+  deviant_esteem =~ q48a07 + q48a08 + q48a10
+  
+  # 자기 신뢰감 관련 요인
+  self_confidence =~ q48b1 + q48b2 + q48b3
+  
+  # 정서 관련 요인
+  aggression =~ q48c1 + q48c3 + q48c4 + q48c5 + q48c6
+  emotional_regulation =~ q48c7 + q48c8 + q48c9
+  
+  # 성역할 정체감 요인
+  female_identity =~ q48d1 + q48d2 + q48d3
+  male_identity =~ q48d4 + q48d5 + q48d6
+  
+  # 스트레스 관련 요인
+  parent_stress =~ q49a01 + q49a02 + q49a03 + q49a04
+  academic_stress =~ q49a05 + q49a06 + q49a07 + q49a08
+  friend_stress =~ q49a09 + q49a10 + q49a11
+  appearance_stress =~ q49a12 + q49a13 + q49a14
+  desire_stress =~ q49a15 + q49a16 + q49a17
+'
+
+# CFA 모델 실행
+cfa_fit <- cfa(cfa_model, data = df_clean)
+
+# 모델 적합도 지수 확인
+summary(cfa_fit, fit.measures = TRUE, standardized = TRUE)
+
+# 요인 부하량 표시
+parameterEstimates(cfa_fit, standardized = TRUE) %>%
+  filter(op == "=~") %>%
+  select(lhs, rhs, est, std.all, pvalue)
+
+# 수정 지수 확인 (모델 개선에 필요)
+mi <- modificationIndices(cfa_fit)
+head(mi[order(mi$mi, decreasing = TRUE), ], 10)
+
+# 시각화. 변수가 너무 많아서 잘 안보이긴 함
+semPaths(cfa_fit, what = "std", edge.label.cex = 0.5, 
+         layout = "tree2", rotation = 2, 
+         edge.color = "black", edge.width = 0.5,
+         label.cex = 0.8, node.width = 1.5, node.height = 0.8,
+         curvePivot = TRUE)
+```
+
+## 군집 분석
+
+```{r}
+# 요인 점수 추출
+factor_scores <- lavPredict(cfa_fit)
+factor_scores_df <- as.data.frame(factor_scores)
+
+# 원본 데이터에서 필요한 변수 추출 (성별과 삶의 만족도)
+additional_vars <- df_origin[rownames(factor_scores_df), c("sex", "q50")]
+
+# 군집 분석을 위한 데이터셋 준비
+cluster_data <- factor_scores_df
+
+# 최적의 군집 수 결정 (엘보우 방법)
+library(factoextra)
+# WSS (Within-Cluster Sum of Squares) 계산
+wss <- fviz_nbclust(cluster_data, kmeans, method = "wss", k.max = 10)
+print(wss)
+
+# 실루엣 방법으로 최적 군집 수 확인
+silhouette <- fviz_nbclust(cluster_data, kmeans, method = "silhouette", k.max = 10)
+print(silhouette)
+
+# 군집 수를 2개로 결정 (필요에 따라 조정)
+k <- 2
+kmeans_result <- kmeans(cluster_data, centers = k, nstart = 25)
+
+# 군집 할당 결과 추가
+cluster_data$cluster <- as.factor(kmeans_result$cluster)
+additional_vars$cluster <- as.factor(kmeans_result$cluster)
+
+# 군집별 특성 확인
+cluster_means <- aggregate(. ~ cluster, data = cluster_data, mean)
+print(cluster_means)
+
+# 각 군집별 요인 점수 시각화 (레이더 차트)
+library(fmsb)
+
+# 레이더 차트를 위한 데이터 준비
+radar_data <- cluster_means[, -which(names(cluster_means) == "cluster")]
+# 데이터 정규화 (Min-Max 스케일링)
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+radar_data_norm <- as.data.frame(lapply(radar_data, normalize))
+
+# 최대값과 최소값 행 추가 (fmsb 패키지 요구사항)
+radar_data_plot <- rbind(rep(1, ncol(radar_data_norm)), 
+                         rep(0, ncol(radar_data_norm)),
+                         radar_data_norm)
+rownames(radar_data_plot) <- c("max", "min", paste("Cluster", 1:k))
+
+# 레이더 차트 그리기
+colors <- c("#FF5733", "#33FF57", "#3357FF", "#F3FF33")
+par(mar = c(1, 1, 1, 1))
+for (i in 1:k) {
+  if (i == 1) {
+    radarchart(radar_data_plot[c(1, 2, i + 2), ], 
+               pcol = colors[i], pfcol = scales::alpha(colors[i], 0.3),
+               plwd = 2, cglcol = "grey", cglty = 1, 
+               title = paste("Clusters' Factor Profiles"))
+  } else {
+    radarchart(radar_data_plot[c(1, 2, i + 2), ], 
+               pcol = colors[i], pfcol = scales::alpha(colors[i], 0.3), 
+               plwd = 2, add = TRUE)
+  }
+}
+legend("topright", legend = paste("Cluster", 1:k), 
+       col = colors, lty = 1, lwd = 2, pch = 16, 
+       pt.cex = 1.5, bty = "n")
+
+# 군집별 성별 분포 시각화
+library(ggplot2)
+
+# 성별과 군집에 따른 빈도 계산
+sex_cluster <- table(additional_vars$sex, additional_vars$cluster)
+sex_cluster_df <- as.data.frame(sex_cluster)
+names(sex_cluster_df) <- c("Sex", "Cluster", "Count")
+
+# 상대적 비율로 변환
+sex_cluster_df <- sex_cluster_df %>%
+  group_by(Cluster) %>%
+  mutate(Percentage = Count / sum(Count) * 100)
+
+# 성별 분포 시각화. 1이 남성 2가 여성
+ggplot(sex_cluster_df, aes(x = Cluster, y = Percentage, fill = Sex)) +
+  geom_bar(stat = "identity", position = "stack") +
+  geom_text(aes(label = sprintf("%.1f%%", Percentage)), 
+            position = position_stack(vjust = 0.5)) +
+  labs(title = "Gender Distribution by Cluster",
+       x = "Cluster", y = "Percentage", fill = "Gender") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set1")
+
+# 삶의 만족도(q50) 분포 시각화
+# q50의 분포를 확인
+table(additional_vars$q50)
+
+# 군집별 삶의 만족도 평균 비교
+life_satisfaction <- aggregate(q50 ~ cluster, data = additional_vars, mean)
+print(life_satisfaction)
+
+# 군집별 삶의 만족도 분포 시각화 (박스플롯)
+ggplot(additional_vars, aes(x = cluster, y = q50, fill = cluster)) +
+  geom_boxplot() +
+  labs(title = "Life Satisfaction Distribution by Cluster",
+       x = "Cluster", y = "Life Satisfaction Score") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2")
+
+# 군집별 삶의 만족도 분포 시각화 (바이올린 플롯)
+ggplot(additional_vars, aes(x = cluster, y = q50, fill = cluster)) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(width = 0.1, fill = "white") +
+  labs(title = "Life Satisfaction Distribution by Cluster",
+       x = "Cluster", y = "Life Satisfaction Score") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2")
+
+# 군집별 특성 요약
+cluster_summary <- data.frame(
+  Cluster = 1:k,
+  Size = as.vector(table(cluster_data$cluster)),
+  LifeSatisfaction = life_satisfaction$q50
+)
+
+# 군집별 요인 점수 평균 추가
+cluster_summary <- cbind(cluster_summary, cluster_means[, -which(names(cluster_means) == "cluster")])
+
+# 군집별 특성 출력
+print(cluster_summary)
+
+# 군집별 프로파일 해석
+# 각 군집의 주요 특징을 파악하여 프로파일 작성
+cluster_profiles <- list()
+
+for (i in 1:k) {
+  # 현재 군집의 요인 점수
+  curr_scores <- as.numeric(cluster_means[i, -which(names(cluster_means) == "cluster")])
+  
+  # 가장 높은 요인 3개와 가장 낮은 요인 3개 찾기
+  factor_names <- names(cluster_means)[-which(names(cluster_means) == "cluster")]
+  sorted_idx <- order(curr_scores, decreasing = TRUE)
+  
+  high_factors <- factor_names[sorted_idx[1:3]]
+  low_factors <- factor_names[sorted_idx[(length(curr_scores)-2):length(curr_scores)]]
+  
+  # 군집 프로파일 작성
+  cluster_profiles[[i]] <- list(
+    cluster = i,
+    size = as.vector(table(cluster_data$cluster))[i],
+    high_factors = high_factors,
+    low_factors = low_factors,
+    life_satisfaction = life_satisfaction$q50[i]
+  )
+}
+
+# 군집 프로파일 출력
+for (i in 1:k) {
+  cat(paste0("\nCluster ", i, " Profile:\n"))
+  cat(paste0("Size: ", cluster_profiles[[i]]$size, " (", 
+             round(cluster_profiles[[i]]$size / nrow(cluster_data) * 100, 1), "%)\n"))
+  cat("Prominent Characteristics:\n")
+  for (j in 1:3) {
+    factor_name <- cluster_profiles[[i]]$high_factors[j]
+    factor_value <- cluster_means[i, factor_name]
+    cat(paste0(" - High ", factor_name, ": ", round(factor_value, 2), "\n"))
+  }
+  cat("Less Prominent Characteristics:\n")
+  for (j in 1:3) {
+    factor_name <- cluster_profiles[[i]]$low_factors[j]
+    factor_value <- cluster_means[i, factor_name]
+    cat(paste0(" - Low ", factor_name, ": ", round(factor_value, 2), "\n"))
+  }
+  cat(paste0("Average Life Satisfaction: ", round(cluster_profiles[[i]]$life_satisfaction, 2), "\n"))
+}
+```
