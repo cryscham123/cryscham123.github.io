@@ -70,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -292,6 +321,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  <span class="menu-text">무엇이 그들을 행복하게 하는가?</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">test2</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -384,6 +419,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">수송문제와 할당 문제들</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/12.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">OR 과제 - 6</span></a>
   </div>
 </li>
       </ul>
@@ -525,6 +566,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ANOVA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Analysis</span></a>
   </div>
 </li>
       </ul>
@@ -1797,6 +1844,9 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#판단적-기법정성적-기법" id="toc-판단적-기법정성적-기법" class="nav-link active" data-scroll-target="#판단적-기법정성적-기법">판단적 기법(정성적 기법)</a></li>
+  <li><a href="#시계열-기법" id="toc-시계열-기법" class="nav-link" data-scroll-target="#시계열-기법">시계열 기법</a></li>
+  <li><a href="#상관관계-기법" id="toc-상관관계-기법" class="nav-link" data-scroll-target="#상관관계-기법">상관관계 기법</a></li>
+  <li><a href="#계절성-수요예측" id="toc-계절성-수요예측" class="nav-link" data-scroll-target="#계절성-수요예측">계절성 수요예측</a></li>
   </ul>
 </nav>
     </div>
@@ -1837,6 +1887,45 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="판단적-기법정성적-기법">판단적 기법(정성적 기법)</h2>
 <ul>
 <li>전문가의 경험과 직관에 의존하여 예측하는 기법</li>
+<li>비정량적 / 주관적 데이터로 정량적인 예측치를 구함
+<ul>
+<li>단순예측법: 최근의 자료가 미래에 대한 최선의 추정치</li>
+<li>추세분석:치전기와 현기 사이의 추세를 다음 기의 판매예측에 반영하는 방법</li>
+<li>시장조사법</li>
+<li>전문가 의견 종합법</li>
+<li>사례유추법: 비슷한 제품이랑 비교</li>
+<li>델파이 기법</li>
+</ul></li>
+</ul>
+</section>
+<section id="시계열-기법" class="level2">
+<h2 class="anchored" data-anchor-id="시계열-기법">시계열 기법</h2>
+<ul>
+<li>단순 이동평균법: time window를 계속 이동하면서 평균 구하는거
+<ul>
+<li>time window ↑: 먼 과거까지 보겠다</li>
+</ul></li>
+<li>가중 이동평균법: 가까울 수록 가중치를 크게 부여</li>
+<li>지수평활법: 과거의 모든 데이터를 가중 평균
+<ul>
+<li>지수평활계수(α): 최근의 값을 더 높은 가중치가 부여되도록 추정</li>
+<li><span class="math inline">\(\hat{y_{t+1}} = αy_t+ (1-α)\hat{y_t} = \hat{y_t} + α(y_t - \hat{y_t}\)</span></li>
+<li>예측치와 관측치 중 어디에 중점을 둘 지에 따라서 α 결정</li>
+<li>== 오차를 어느정도 반영할지에 따라서 α 결정</li>
+</ul></li>
+</ul>
+</section>
+<section id="상관관계-기법" class="level2">
+<h2 class="anchored" data-anchor-id="상관관계-기법">상관관계 기법</h2>
+<ul>
+<li>선행 지수법</li>
+</ul>
+</section>
+<section id="계절성-수요예측" class="level2">
+<h2 class="anchored" data-anchor-id="계절성-수요예측">계절성 수요예측</h2>
+<ul>
+<li>계절</li>
+<li>추세</li>
 </ul>
 
 
