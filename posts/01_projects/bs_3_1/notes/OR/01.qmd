@@ -20,12 +20,13 @@ def to_fraction(array):
     return [Fraction(x).limit_denominator() if isinstance(x, (int, float)) else x for x in array]
 
 # 초기 설정
-obj = [-6, -8, 0, 0, 0]
+obj = [-5, -10, 0, 0, 0, 0]
 A = [
-    [5, 2, 1, 0, 20],
-    [1, 2, 0, 1, 10],
+    [3, 1, 1, 0, 0, 40],
+    [1, 1, 0, 1, 0, 20],
+    [5, 3, 0, 0, 1, 90],
 ]
-basic = np.array([3, 4]) - 1  # x5, x6
+basic = np.array([3, 4, 5]) - 1  # x5, x6
 non_basic = np.array([1, 2]) - 1  # x1, x2, x3, x4
 
 
@@ -234,10 +235,11 @@ model.setParam(GRB.Param.OutputFlag, 0)
 x1 = model.addVar(vtype=GRB.CONTINUOUS, name="x1")
 x2 = model.addVar(vtype=GRB.CONTINUOUS, name="x2")
 
-model.setObjective(6 * x1 + 8 * x2, GRB.MAXIMIZE)
+model.setObjective(2 * x1 + 3 * x2, GRB.MAXIMIZE)
 
-model.addConstr(5 * x1 + 2 * x2 <= 20)
-model.addConstr(x1 + 2 * x2 <= 10)
+model.addConstr(3 * x1 - 9 * x2 <= 20)
+model.addConstr(3 * x1 <= 40)
+model.addConstr(9 * x2 <= 40)
 
 model.optimize()
 

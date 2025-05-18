@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/product/10.html" rel="next">
 <link href="../../../../../posts/01_projects/bs_3_1/notes/product/08.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
@@ -70,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -286,6 +315,18 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  <span class="menu-text">test</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/15.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">무엇이 그들을 행복하게 하는가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">test2</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -378,6 +419,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">수송문제와 할당 문제들</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/12.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">OR 과제 - 6</span></a>
   </div>
 </li>
       </ul>
@@ -480,6 +527,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  <span class="menu-text">프로젝트 관리</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/product/10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">예측</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -513,6 +566,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ANOVA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Analysis</span></a>
   </div>
 </li>
       </ul>
@@ -1786,6 +1845,11 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <ul>
   <li><a href="#프로젝트-vs-프로세스" id="toc-프로젝트-vs-프로세스" class="nav-link active" data-scroll-target="#프로젝트-vs-프로세스">프로젝트 vs 프로세스</a></li>
   <li><a href="#주경로-기법critical-path-method-cpm" id="toc-주경로-기법critical-path-method-cpm" class="nav-link" data-scroll-target="#주경로-기법critical-path-method-cpm">주경로 기법(Critical Path Method, CPM)</a></li>
+  <li><a href="#불확실성-하에서의-프로젝트-관리" id="toc-불확실성-하에서의-프로젝트-관리" class="nav-link" data-scroll-target="#불확실성-하에서의-프로젝트-관리">불확실성 하에서의 프로젝트 관리</a>
+  <ul class="collapse">
+  <li><a href="#가정" id="toc-가정" class="nav-link" data-scroll-target="#가정">가정</a></li>
+  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징">특징</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1838,8 +1902,30 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <li>프로세스 흐름도에서 개별작업의 처리능력이 중요했던것과 달리 프로젝트 종료 시간이 중요.</li>
 </ul></li>
 </ul>
+</section>
+<section id="불확실성-하에서의-프로젝트-관리" class="level2">
+<h2 class="anchored" data-anchor-id="불확실성-하에서의-프로젝트-관리">불확실성 하에서의 프로젝트 관리</h2>
+<ul>
+<li>CPM(Critical Path Method): 소요 시간이 정확하게 알려져 있다고 가정</li>
+<li>PERT(Program Evaluation and Review Technique): 소요 시간이 불확실하다고 가정</li>
+</ul>
+<section id="가정" class="level3">
+<h3 class="anchored" data-anchor-id="가정">가정</h3>
+<ol type="1">
+<li>주 경로는 각 활동의 평균 소요시간으로구함</li>
+<li>주 경로는 바뀌지 않음</li>
+<li>각 활동의 소요시간은 독립적임</li>
+</ol>
+</section>
+<section id="특징" class="level3">
+<h3 class="anchored" data-anchor-id="특징">특징</h3>
+<ul>
+<li><span class="math inline">\(d_1, d_2, ..., d_n\)</span>이 확률변수이면 프로젝트 완성시간 (<span class="math inline">\(X\)</span>)도 확률변수</li>
+<li><span class="math inline">\(d_1, d_2, ..., d_n\)</span>이 정규분포를 따른다면 <span class="math inline">\(X\)</span>도 정규분포를 따름</li>
+</ul>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
@@ -2274,8 +2360,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html" class="pagination-link" aria-label="확률과 통계 1 정리">
-        <span class="nav-page-text">확률과 통계 1 정리</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/product/10.html" class="pagination-link" aria-label="예측">
+        <span class="nav-page-text">예측</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

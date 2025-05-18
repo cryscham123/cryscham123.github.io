@@ -1,0 +1,79 @@
+---
+title: "test2"
+date: 2025-05-14
+categories: ["data mining"]
+---
+
+![](/img/human-thumb.jpg){.post-thumbnail}
+
+## Data Load
+
+```{r}
+# 데이터 로드 및 필요 패키지 불러오기
+library(tidyverse)
+
+# CSV 파일 읽기 (row.names=1은 첫 번째 열을 행 이름으로 사용)
+df_origin <- read.csv('_data/student_6.csv', row.names=1)
+
+# 원본 데이터 복사
+df <- df_origin[c('q11', 'yy')]
+
+summary(df$yy)
+# 데이터 구조 확인
+str(df)
+
+# 칼럼별 결측치 개수 확인
+missing_values <- colSums(is.na(df))
+print("칼럼별 결측치 개수:")
+print(missing_values)
+
+# 결측치 비율 확인(%)
+missing_percentage <- colMeans(is.na(df)) * 100
+missing_df <- data.frame(
+  Column = names(missing_percentage),
+  Missing_Count = missing_values,
+  Missing_Percentage = missing_percentage
+)
+print("칼럼별 결측치 비율(%):")
+print(missing_df)
+
+# q11 빈도표 생성
+q11_freq <- table(df$q11)
+print("q11 빈도표:")
+print(q11_freq)
+
+# 빈도와 비율을 함께 보여주는 데이터프레임 생성
+q11_freq_df <- as.data.frame(q11_freq)
+colnames(q11_freq_df) <- c("q11_값", "빈도")
+q11_freq_df$비율 <- prop.table(q11_freq) * 100
+q11_freq_df$누적비율 <- cumsum(q11_freq_df$비율)
+
+# 총 빈도를 마지막 행에 추가
+total_row <- data.frame(
+  "q11_값" = "총계",
+  "빈도" = sum(q11_freq_df$빈도),
+  "비율" = sum(q11_freq_df$비율),
+  "누적비율" = NA
+)
+q11_freq_df <- rbind(q11_freq_df, total_row)
+print(q11_freq_df)
+
+# 빈도 막대 그래프
+barplot(q11_freq, main="q11 빈도 분포", xlab="q11 값", ylab="빈도", col="skyblue")
+
+# ggplot2를 활용한 빈도 그래프
+library(ggplot2)
+ggplot(q11_freq_df, aes(x=`q11_값`, y=빈도)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  geom_text(aes(label=빈도), vjust=-0.3) +
+  theme_minimal() +
+  labs(title="q11 빈도 분포", x="q11 값", y="빈도")
+```
+
+
+
+
+
+
+
+

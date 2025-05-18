@@ -11,21 +11,15 @@ categories: ["data mining"]
 ```{r}
 # 데이터 로드 및 필요 패키지 불러오기
 library(tidyverse)
+library(survey)
 
-# CSV 파일 읽기 (row.names=1은 첫 번째 열을 행 이름으로 사용)
-df_origin <- read.csv('_data/student_1.csv', row.names=1)
-
-# 원본 데이터 복사
-df <- df_origin
-
-# 필요한 열만 선택
-df <- df[, c('q48a01','q48a02','q48a03','q48a04','q48a05','q48a06','q48a07',
-              'q48a08','q48a09','q48a10','q48a11','q48a12','q48b1','q48b2',
-              'q48b3','q48c1','q48c2','q48c3','q48c4','q48c5','q48c6','q48c7',
-              'q48c8','q48c9','q48d1','q48d2','q48d3','q48d4','q48d5','q48d6',
-              'q49a01','q49a02','q49a03','q49a04','q49a05','q49a06','q49a07',
-              'q49a08','q49a09','q49a10','q49a11','q49a12','q49a13','q49a14',
-              'q49a15','q49a16','q49a17','q50')]
+# 데이터 파일 불러오기
+df1_origin <- read.csv('_data/student_1.csv')
+df2_origin <- read.csv('_data/student_2.csv')
+df3_origin <- read.csv('_data/student_3.csv')
+df4_origin <- read.csv('_data/student_4.csv')
+df5_origin <- read.csv('_data/student_5.csv')
+df6_origin <- read.csv('_data/student_6.csv')
 ```
 
 ## CFA (Confirmatory Factor Analysis)
@@ -34,238 +28,699 @@ df <- df[, c('q48a01','q48a02','q48a03','q48a04','q48a05','q48a06','q48a07',
 library(lavaan)
 library(semPlot)
 
-# 결측치 확인
-sum(is.na(df))
-
-# 결측치가 있는 경우 처리 (필요 시)
-df_clean <- na.omit(df)
-
-# CFA 모델 지정
-# 13개의 잠재 요인을 정의 (위에서 지정한 요인 구조에 맞춰 설정)
-
 cfa_model <- '
   # 측정 모델 정의
-  # 자아존중감 관련 요인
-  pos_esteem =~ q48a01 + q48a02 + q48a03
-  neg_esteem =~ q48a04 + q48a05 + q48a06
-  deviant_esteem =~ q48a07 + q48a08 + q48a10
+  # 1. 부모애착
+  parent_attachment =~ q33a01 + q33a02 + q33a03 + q33a04 + q33a05 + q33a06
   
-  # 자기 신뢰감 관련 요인
+  # 2. 일탈적 자아 낙인
+  deviant_esteem =~ q48a07 + q48a08 + q48a09 + q48a10
+  
+  # 3. 부모에 의한 스트레스
+  parent_stress =~ q49a01 + q49a02 + q49a03 + q49a04
+  
+  # 4. 부모감독
+  parent_monitoring =~ q33a07 + q33a08 + q33a09
+  
+  # 5. 원하는거 못 사는 스트레스
+  desire_stress =~ q49a15 + q49a16 + q49a17
+  
+  # 6. 친구로 인한 스트레스
+  friend_stress =~ q49a09 + q49a10 + q49a11
+  
+  # 7. 자기신뢰감
   self_confidence =~ q48b1 + q48b2 + q48b3
   
-  # 정서 관련 요인
-  aggression =~ q48c1 + q48c3 + q48c4 + q48c5 + q48c6
-  emotional_regulation =~ q48c7 + q48c8 + q48c9
+  # 8. 상급학교 의존도
+  higher_school_dependence =~ q12a01 + q12a02 + q12a03
   
-  # 성역할 정체감 요인
-  female_identity =~ q48d1 + q48d2 + q48d3
-  male_identity =~ q48d4 + q48d5 + q48d6
+  # 9. 부정적 자아존중감
+  neg_esteem =~ q48a04 + q48a05 + q48a06
   
-  # 스트레스 관련 요인
-  parent_stress =~ q49a01 + q49a02 + q49a03 + q49a04
-  academic_stress =~ q49a05 + q49a06 + q49a07 + q49a08
-  friend_stress =~ q49a09 + q49a10 + q49a11
-  appearance_stress =~ q49a12 + q49a13 + q49a14
-  desire_stress =~ q49a15 + q49a16 + q49a17
+  # 10. 학업으로 인한 스트레스
+  academic_stress =~ q49a05 + q49a06 + q49a08
 '
+# 각 웨이브별 요인 점수 계산 및 병합을 위한 데이터프레임 생성
+merged_df <- data.frame()
 
-# CFA 모델 실행
-cfa_fit <- cfa(cfa_model, data = df_clean)
+# 모든 웨이브에서 사용할 ID 변수 식별
+for (i in 1:6) {
+  # 각 웨이브 데이터셋에서 ID 변수가 무엇인지 확인해야 합니다
+  # 여기서는 'id'라고 가정합니다. 실제 데이터셋의 ID 변수명으로 바꿔주세요
+  id_var <- "id"
+  
+  # 원본 데이터프레임에서 ID 변수와 분석에 필요한 변수들을 추출
+  df <- get(paste0("df", i, "_origin"))
+  
+  # ID 변수가 있는지 확인
+  if(!id_var %in% names(df)) {
+    stop(paste0("ID 변수 '", id_var, "'가 df", i, "_origin에 없습니다. 올바른 ID 변수명을 지정해주세요."))
+  }
+  
+  # 가중치 변수가 있는지 확인
+  if(!"wt1" %in% names(df)) {
+    warning(paste0("가중치 변수 'wt1'이 df", i, "_origin에 없습니다. 가중치 없이 분석을 진행합니다."))
+    has_weights <- FALSE
+  } else {
+    has_weights <- TRUE
+  }
+  
+  # 분석에 필요한 변수 추출 (ID, 가중치, 문항)
+  if(has_weights) {
+    df_analysis <- df[c(id_var, "wt1", "q33a01", "q33a02", "q33a03", "q33a04", "q33a05", "q33a06", 
+                      "q48a07", "q48a08", "q48a09", "q48a10",
+                      "q49a01", "q49a02", "q49a03", "q49a04",
+                      "q33a07", "q33a08", "q33a09",
+                      "q49a15", "q49a16", "q49a17",
+                      "q49a09", "q49a10", "q49a11",
+                      "q48b1", "q48b2", "q48b3",
+                      "q12a01", "q12a02", "q12a03",
+                      "q48a04", "q48a05", "q48a06",
+                      "q49a05", "q49a06", "q49a08")]
+  } else {
+    df_analysis <- df[c(id_var, "q33a01", "q33a02", "q33a03", "q33a04", "q33a05", "q33a06", 
+                      "q48a07", "q48a08", "q48a09", "q48a10",
+                      "q49a01", "q49a02", "q49a03", "q49a04",
+                      "q33a07", "q33a08", "q33a09",
+                      "q49a15", "q49a16", "q49a17",
+                      "q49a09", "q49a10", "q49a11",
+                      "q48b1", "q48b2", "q48b3",
+                      "q12a01", "q12a02", "q12a03",
+                      "q48a04", "q48a05", "q48a06",
+                      "q49a05", "q49a06", "q49a08")]
+  }
+  
+  # 결측치가 있는 경우 처리 (요인 점수 계산에 사용될 관측치만 유지)
+  df_clean <- na.omit(df_analysis)
+  
+  # CFA 모형 적용 (가중치가 있는 경우와 없는 경우 구분)
+  if(has_weights) {
+    cfa_fit <- cfa(
+      cfa_model,
+      data = df_clean,
+      sampling.weights = "wt1",
+      estimator = "MLR",
+      se = "robust.cluster",
+      test = "satorra.bentler")
+  } else {
+    cfa_fit <- cfa(
+      cfa_model,
+      data = df_clean,
+      se = "robust.huber.white",
+      estimator = "MLR")
+  }
+ 
 
-# 모델 적합도 지수 확인
-summary(cfa_fit, fit.measures = TRUE, standardized = TRUE)
+  # 요인 점수 추출
+  factor_scores <- lavPredict(cfa_fit)
+  
+  # 요인 점수와 ID 변수 결합
+  factor_scores_df <- cbind(df_clean[id_var], as.data.frame(factor_scores))
+  
+  # 열 이름에 웨이브 번호 추가 (ID 변수 제외)
+  names(factor_scores_df)[-1] <- paste0(names(factor_scores_df)[-1], "_w", i)
+  
+  # 첫 번째 웨이브인 경우 병합 데이터프레임 초기화
+  if (i == 1) {
+    merged_df <- factor_scores_df
+  } else {
+    # ID 변수를 기준으로 병합
+    merged_df <- merge(merged_df, factor_scores_df, by = id_var, all = TRUE)
+  }
+}
 
-# 요인 부하량 표시
-parameterEstimates(cfa_fit, standardized = TRUE) %>%
-  filter(op == "=~") %>%
-  select(lhs, rhs, est, std.all, pvalue)
+# df6_origin의 q11 칼럼 값을 기준으로 상태 분류하기 (가중치 반영)
+if("q11" %in% names(df6_origin)) {
+  # 상태 분류 함수 정의
+  classify_status <- function(q11_value) {
+    if(is.na(q11_value)) return(NA)
+    
+    if(q11_value %in% c(7, 8, 9, 71, 81, 91)) {
+      return("생산적활동참여")
+    } else {
+      return("비경제활동및학업관련상태")
+    }
+  }
+  
+  # 숫자형 상태 코드 함수 정의
+  status_code <- function(q11_value) {
+    if(is.na(q11_value)) return(NA)
+    
+    if(q11_value %in% c(7, 8, 9, 71, 81, 91)) {
+      return(1)
+    } else {
+      return(2)
+    }
+  }
+  
+  # ID, q11 칼럼 및 가중치 변수 추출
+  if("wt1" %in% names(df6_origin)) {
+    status_df <- df6_origin[, c("id", "q11", "wt1")]
+    has_weight <- TRUE
+  } else {
+    status_df <- df6_origin[, c("id", "q11")]
+    has_weight <- FALSE
+    warning("df6_origin에 가중치 변수 'wt1'이 없습니다. 가중치 없이 상태 분류를 진행합니다.")
+  }
+  
+  # 상태 분류 칼럼 추가
+  status_df$status_category <- sapply(status_df$q11, classify_status)
+  status_df$status_code <- sapply(status_df$q11, status_code)
+  
+  # 최종 데이터프레임과 병합
+  merged_df <- merge(merged_df, status_df, by = "id", all.x = TRUE)
+  
+  # 상태별 가중 인원수 확인 (가중치가 있는 경우)
+  if(has_weight) {
+    # 가중치를 이용한 상태별 인원수 계산
+    weighted_status <- aggregate(wt1 ~ status_category, data = status_df, FUN = sum, na.rm = TRUE)
+    print("가중치를 반영한 상태별 인원수:")
+    print(weighted_status)
+    
+    # 가중 비율 계산
+    total_weight <- sum(status_df$wt1, na.rm = TRUE)
+    weighted_status$proportion <- weighted_status$wt1 / total_weight * 100
+    weighted_status$proportion <- round(weighted_status$proportion, 2)
+    print("가중치를 반영한 상태별 비율(%):")
+    print(weighted_status)
+  }
+  
+  # 일반 빈도수도 함께 확인
+  status_summary <- table(status_df$status_category, useNA = "ifany")
+  print("단순 상태별 인원수:")
+  print(status_summary)
+} else {
+  warning("df6_origin에 q11 칼럼이 없습니다.")
+}
 
-# 수정 지수 확인 (모델 개선에 필요)
-mi <- modificationIndices(cfa_fit)
-head(mi[order(mi$mi, decreasing = TRUE), ], 10)
-
-# 시각화. 변수가 너무 많아서 잘 안보이긴 함
-semPaths(cfa_fit, what = "std", edge.label.cex = 0.5, 
-         layout = "tree2", rotation = 2, 
-         edge.color = "black", edge.width = 0.5,
-         label.cex = 0.8, node.width = 1.5, node.height = 0.8,
-         curvePivot = TRUE)
+# knitr 테이블로 깔끔하게 출력 (처음 10개 행만)
+library(knitr)
+kable(head(merged_df, 10), caption = "ID 기준으로 병합된 각 웨이브별 요인 점수 및 상태 분류")
 ```
 
-## 군집 분석
+## 독립변수간 상관관계 분석
 
 ```{r}
-# 요인 점수 추출
-factor_scores <- lavPredict(cfa_fit)
-factor_scores_df <- as.data.frame(factor_scores)
-
-# 원본 데이터에서 필요한 변수 추출 (성별과 삶의 만족도)
-additional_vars <- df_origin[rownames(factor_scores_df), c("sex", "q50")]
-
-# 군집 분석을 위한 데이터셋 준비
-cluster_data <- factor_scores_df
-
-# 최적의 군집 수 결정 (엘보우 방법)
-library(factoextra)
-# WSS (Within-Cluster Sum of Squares) 계산
-wss <- fviz_nbclust(cluster_data, kmeans, method = "wss", k.max = 10)
-print(wss)
-
-# 실루엣 방법으로 최적 군집 수 확인
-silhouette <- fviz_nbclust(cluster_data, kmeans, method = "silhouette", k.max = 10)
-print(silhouette)
-
-# 군집 수를 2개로 결정 (필요에 따라 조정)
-k <- 2
-kmeans_result <- kmeans(cluster_data, centers = k, nstart = 25)
-
-# 군집 할당 결과 추가
-cluster_data$cluster <- as.factor(kmeans_result$cluster)
-additional_vars$cluster <- as.factor(kmeans_result$cluster)
-
-# 군집별 특성 확인
-cluster_means <- aggregate(. ~ cluster, data = cluster_data, mean)
-print(cluster_means)
-
-# 각 군집별 요인 점수 시각화 (레이더 차트)
-library(fmsb)
-
-# 레이더 차트를 위한 데이터 준비
-radar_data <- cluster_means[, -which(names(cluster_means) == "cluster")]
-# 데이터 정규화 (Min-Max 스케일링)
-normalize <- function(x) {
-  return((x - min(x)) / (max(x) - min(x)))
-}
-radar_data_norm <- as.data.frame(lapply(radar_data, normalize))
-
-# 최대값과 최소값 행 추가 (fmsb 패키지 요구사항)
-radar_data_plot <- rbind(rep(1, ncol(radar_data_norm)), 
-                         rep(0, ncol(radar_data_norm)),
-                         radar_data_norm)
-rownames(radar_data_plot) <- c("max", "min", paste("Cluster", 1:k))
-
-# 레이더 차트 그리기
-colors <- c("#FF5733", "#33FF57", "#3357FF", "#F3FF33")
-par(mar = c(1, 1, 1, 1))
-for (i in 1:k) {
-  if (i == 1) {
-    radarchart(radar_data_plot[c(1, 2, i + 2), ], 
-               pcol = colors[i], pfcol = scales::alpha(colors[i], 0.3),
-               plwd = 2, cglcol = "grey", cglty = 1, 
-               title = paste("Clusters' Factor Profiles"))
-  } else {
-    radarchart(radar_data_plot[c(1, 2, i + 2), ], 
-               pcol = colors[i], pfcol = scales::alpha(colors[i], 0.3), 
-               plwd = 2, add = TRUE)
-  }
-}
-legend("topright", legend = paste("Cluster", 1:k), 
-       col = colors, lty = 1, lwd = 2, pch = 16, 
-       pt.cex = 1.5, bty = "n")
-
-# 군집별 성별 분포 시각화
+# 필요한 패키지 로드
+library(corrplot)
 library(ggplot2)
+library(reshape2)
 
-# 성별과 군집에 따른 빈도 계산
-sex_cluster <- table(additional_vars$sex, additional_vars$cluster)
-sex_cluster_df <- as.data.frame(sex_cluster)
-names(sex_cluster_df) <- c("Sex", "Cluster", "Count")
+# 상관관계 분석을 위한 독립변수 선택 (요인 점수만 선택)
+factor_vars <- names(merged_df)[grep("_w[1-6]$", names(merged_df))]
+correlation_df <- merged_df[, factor_vars]
 
-# 상대적 비율로 변환
-sex_cluster_df <- sex_cluster_df %>%
-  group_by(Cluster) %>%
-  mutate(Percentage = Count / sum(Count) * 100)
+# 결측치가 있는 행은 제외
+correlation_df <- correlation_df[complete.cases(correlation_df), ]
 
-# 성별 분포 시각화. 1이 남성 2가 여성
-ggplot(sex_cluster_df, aes(x = Cluster, y = Percentage, fill = Sex)) +
-  geom_bar(stat = "identity", position = "stack") +
-  geom_text(aes(label = sprintf("%.1f%%", Percentage)), 
-            position = position_stack(vjust = 0.5)) +
-  labs(title = "Gender Distribution by Cluster",
-       x = "Cluster", y = "Percentage", fill = "Gender") +
+# 상관행렬 계산
+corr_matrix <- cor(correlation_df, use = "pairwise.complete.obs")
+
+# 상관행렬 확인 (크기가 크므로 첫 10x10만 출력)
+cat("상관행렬 (처음 10x10):\n")
+print(round(corr_matrix[1:10, 1:10], 2))
+
+# kable로 더 보기 좋게 출력
+kable(round(corr_matrix, 2), caption = "요인 점수 간 상관관계")
+
+# corrplot을 사용하여 상관관계 히트맵 생성
+corrplot(corr_matrix, 
+         method = "color",
+         type = "upper", 
+         order = "hclust",
+         tl.col = "black",
+         tl.cex = 0.7,
+         diag = FALSE,
+         title = "요인 점수 간 상관관계",
+         mar = c(0, 0, 1, 0))
+
+# ggplot2를 사용하여 상관관계 히트맵 생성
+# 데이터 구조 변환
+corr_df <- melt(corr_matrix)
+names(corr_df) <- c("Var1", "Var2", "value")
+
+# 히트맵 생성
+correlation_heatmap_plot <- ggplot(corr_df, aes(Var1, Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
   theme_minimal() +
-  scale_fill_brewer(palette = "Set1")
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6),
+        axis.text.y = element_text(size = 6),
+        plot.title = element_text(hjust = 0.5)) +
+  labs(title = "요인 점수 간 상관관계 히트맵", x = "", y = "", fill = "상관계수") +
+  coord_fixed()
 
-# 삶의 만족도(q50) 분포 시각화
-# q50의 분포를 확인
-table(additional_vars$q50)
+output_filename <- "correlation_heatmap.png"
 
-# 군집별 삶의 만족도 평균 비교
-life_satisfaction <- aggregate(q50 ~ cluster, data = additional_vars, mean)
-print(life_satisfaction)
+# ggsave 함수를 사용하여 저장
+# plot 인자에 저장할 플롯 객체를 지정합니다.
+# width와 height 인자로 그림의 크기를 조절할 수 있습니다 (인치 단위).
+# dpi 인자로 해상도를 조절합니다 (dots per inch). 보고서용은 300dpi 이상 권장.
+ggsave(filename = output_filename,
+       plot = correlation_heatmap_plot, # 저장할 플롯 객체 지정
+       width = 8, # 너비 (인치)
+       height = 8, # 높이 (인치)
+       dpi = 300) # 해상도
 
-# 군집별 삶의 만족도 분포 시각화 (박스플롯)
-ggplot(additional_vars, aes(x = cluster, y = q50, fill = cluster)) +
-  geom_boxplot() +
-  labs(title = "Life Satisfaction Distribution by Cluster",
-       x = "Cluster", y = "Life Satisfaction Score") +
-  theme_minimal() +
-  scale_fill_brewer(palette = "Set2")
+# 추가 분석: 높은 상관관계를 가진 변수 쌍 확인
+# 대각선 위쪽만 사용하여 중복 피함
+high_corr <- which(abs(corr_matrix) > 0.7 & upper.tri(corr_matrix), arr.ind = TRUE)
 
-# 군집별 삶의 만족도 분포 시각화 (바이올린 플롯)
-ggplot(additional_vars, aes(x = cluster, y = q50, fill = cluster)) +
-  geom_violin(trim = FALSE) +
-  geom_boxplot(width = 0.1, fill = "white") +
-  labs(title = "Life Satisfaction Distribution by Cluster",
-       x = "Cluster", y = "Life Satisfaction Score") +
-  theme_minimal() +
-  scale_fill_brewer(palette = "Set2")
+if(nrow(high_corr) > 0) {
+  high_corr_pairs <- data.frame(
+    Var1 = rownames(corr_matrix)[high_corr[, 1]],
+    Var2 = colnames(corr_matrix)[high_corr[, 2]],
+    Correlation = corr_matrix[high_corr]
+  )
+  
+  # 상관계수 크기순으로 정렬
+  high_corr_pairs <- high_corr_pairs[order(abs(high_corr_pairs$Correlation), decreasing = TRUE), ]
+  
+  cat("\n높은 상관관계(|r| > 0.7)를 가진 변수 쌍:\n")
+  print(high_corr_pairs)
+  kable(high_corr_pairs, caption = "높은 상관관계를 가진 변수 쌍 (|r| > 0.7)")
+} else {
+  cat("\n상관계수 절댓값이 0.7을 초과하는 변수 쌍이 없습니다.\n")
+}
+```
 
-# 군집별 특성 요약
-cluster_summary <- data.frame(
-  Cluster = 1:k,
-  Size = as.vector(table(cluster_data$cluster)),
-  LifeSatisfaction = life_satisfaction$q50
+## 가중치 및 층화 정보 추가
+
+```{r}
+# df6_origin에서 가중치와 층화 정보를 추출
+if("wt2" %in% names(df6_origin) && "area" %in% names(df6_origin)) {
+  # ID, wt2, area 칼럼 추출
+  weight_strata_df <- df6_origin[, c("id", "wt2", "area")]
+  
+  # merged_df와 병합
+  merged_df <- merge(merged_df, weight_strata_df, by = "id", all.x = TRUE)
+  
+  # 가중치와 층화 정보가 제대로 추가되었는지 확인
+  print("가중치(wt2)와 층화정보(area) 확인:")
+  print(summary(merged_df[, c("wt2", "area")]))
+} else {
+  warning("df6_origin에 wt2 또는 area 칼럼이 없습니다.")
+}
+```
+## 데이터 전처리 및 train test split
+
+```{r}
+# 필요한 패키지 로드
+library(caret)
+library(randomForest)
+library(pROC)
+library(dplyr) # 데이터 전처리 및 변수 선택에 유용
+library(stringr) # 변수 이름 처리에 유용 (grep 대신 사용 가능)
+library(kableExtra) # 표 출력을 위해 추가 (kable 함수 사용 시 필요)
+
+# 데이터 불러오기 (실제 데이터 불러오는 코드로 대체하세요)
+# merged_df <- read.csv("your_merged_panel_data.csv")
+
+# --- 실제 데이터 변수명에 맞게 수정 ---
+# 아래 변수명 문자열들을 실제 데이터프레임의 컬럼 이름과 일치하도록 수정해야 합니다.
+ID_VAR <- "id" # 개인 식별자 변수 이름
+WEIGHT_VAR <- "wt2" # 6차년도 종단면 가중치 변수 이름 (wt2가 6차년도 종단면 가중치 이름이라고 확인됨)
+OUTCOME_VAR <- "status_category" # 6차년도 진로 상황 변수 이름 (종속 변수 - 문자열 범주 컬럼 이름)
+STRATA_VAR <- "area" # 6차년도 지역 변수 이름 (층화 변수)
+
+# 예측에 필요한 변수 선택
+pred_vars <- names(merged_df)[grep("_w[1-6]$", names(merged_df))] # W1부터 W6까지 변수 선택
+
+model_df <- merged_df %>%
+  select(!!sym(ID_VAR), !!sym(OUTCOME_VAR), !!sym(WEIGHT_VAR), !!sym(STRATA_VAR), all_of(pred_vars))
+
+model_df <- model_df %>%
+  filter(complete.cases(.)) # 선택된 모든 컬럼에 대해 결측치 없는 행만 남김
+
+print(paste("전처리 후 결측치 없는 행 수:", nrow(model_df)))
+
+model_df[[OUTCOME_VAR]] <- factor(model_df[[OUTCOME_VAR]])
+
+levels(model_df[[OUTCOME_VAR]]) <- make.names(levels(model_df[[OUTCOME_VAR]]))
+
+print(paste0(OUTCOME_VAR, "의 팩터 레벨 (make.names 적용):"))
+print(levels(model_df[[OUTCOME_VAR]]))
+
+# 예측 변수와 대상 변수 분리
+X <- model_df[, pred_vars]
+y <- model_df[[OUTCOME_VAR]] # status_category 사용
+weights <- model_df[[WEIGHT_VAR]] # wt2 사용
+strata <- model_df[[STRATA_VAR]] # area 사용
+
+# 층화 추출을 사용한 훈련/테스트 데이터 분할 (70/30)
+# 종속변수 (y = status_category)를 기준으로 층화 분할
+set.seed(123) # 재현성을 위한 시드 설정
+train_index <- createDataPartition(y, p = 0.7, list = FALSE, times = 1)
+
+# 인덱스를 사용하여 X, y, weights, strata 분할
+X_train <- X[train_index, , drop = FALSE] # 변수가 하나일 경우 벡터가 아닌 데이터프레임 유지
+X_test <- X[-train_index, , drop = FALSE] # 변수가 하나일 경우 벡터가 아닌 데이터프레임 유지
+y_train <- y[train_index]
+y_test <- y[-train_index]
+weights_train <- weights[train_index]
+weights_test <- weights[-train_index]
+strata_train <- strata[train_index]
+strata_test <- strata[-train_index]
+
+# 훈련/테스트 세트 크기 확인
+print(paste("훈련 세트 크기:", nrow(X_train)))
+print(paste("테스트 세트 크기:", nrow(X_test)))
+
+# 각 세트의 종속 변수 범주 분포 확인
+print("훈련 세트 클래스 분포:")
+print(table(y_train))
+print("테스트 세트 클래스 분포:")
+print(table(y_test))
+```
+
+## Random Forest 모델 학습 및 평가
+
+```{r}
+rf_model <- randomForest(
+  x = X_train,
+  y = y_train,
+  weights = weights_train,
+  ntree = 500,
+  mtry = floor(sqrt(ncol(X_train))),
+  importance = TRUE,
+  sampsize = table(y_train),
+  replace = TRUE
 )
 
-# 군집별 요인 점수 평균 추가
-cluster_summary <- cbind(cluster_summary, cluster_means[, -which(names(cluster_means) == "cluster")])
+# 모델 요약 (선택 사항)
+# print(rf_model)
 
-# 군집별 특성 출력
-print(cluster_summary)
+# 변수 중요도 시각화 (선택 사항)
+varImpPlot(rf_model)
 
-# 군집별 프로파일 해석
-# 각 군집의 주요 특징을 파악하여 프로파일 작성
-cluster_profiles <- list()
+# --- 모델 평가 (가중치 고려) ---
+# 테스트 세트에 대한 예측
+cat("\n테스트 세트에 대해 예측 중...\n")
+y_pred <- predict(rf_model, X_test)
+cat("예측 완료.\n")
 
-for (i in 1:k) {
-  # 현재 군집의 요인 점수
-  curr_scores <- as.numeric(cluster_means[i, -which(names(cluster_means) == "cluster")])
-  
-  # 가장 높은 요인 3개와 가장 낮은 요인 3개 찾기
-  factor_names <- names(cluster_means)[-which(names(cluster_means) == "cluster")]
-  sorted_idx <- order(curr_scores, decreasing = TRUE)
-  
-  high_factors <- factor_names[sorted_idx[1:3]]
-  low_factors <- factor_names[sorted_idx[(length(curr_scores)-2):length(curr_scores)]]
-  
-  # 군집 프로파일 작성
-  cluster_profiles[[i]] <- list(
-    cluster = i,
-    size = as.vector(table(cluster_data$cluster))[i],
-    high_factors = high_factors,
-    low_factors = low_factors,
-    life_satisfaction = life_satisfaction$q50[i]
-  )
+# 이전의 caret::confusionMatrix는 가중치를 고려하지 않았으므로 사용하지 않습니다.
+# print(confusionMatrix(y_pred, y_test))
+
+# 가중 혼동 행렬 계산 (수동 구현 - 가중치 반영)
+actual_classes <- y_test # 테스트 데이터의 실제 값
+predicted_classes <- y_pred # 테스트 데이터의 예측 값
+test_weights <- weights_test # 테스트 데이터의 가중치
+
+# 종속 변수의 레벨 (가중 혼동 행렬 차원 정의에 사용)
+outcome_levels <- levels(actual_classes)
+
+# 가중 혼동 행렬 초기화
+weighted_confusion_matrix <- matrix(0,
+                                   nrow = length(outcome_levels),
+                                   ncol = length(outcome_levels),
+                                   dimnames = list(Actual = outcome_levels, Predicted = outcome_levels))
+
+# 각 테스트 데이터 개체에 대해 가중치 합산
+for (i in 1:length(actual_classes)) {
+  actual_cat <- as.character(actual_classes[i])
+  predicted_cat <- as.character(predicted_classes[i])
+  weight <- test_weights[i]
+
+  # 해당 (실제, 예측) 셀에 가중치 합산
+  # 범주 레벨이 유효한지 확인하는 로직 추가 (예상치 못한 범주 오류 방지)
+   if (actual_cat %in% outcome_levels && predicted_cat %in% outcome_levels) {
+      weighted_confusion_matrix[actual_cat, predicted_cat] <- weighted_confusion_matrix[actual_cat, predicted_cat] + weight
+  } else {
+      warning(paste("유효하지 않은 범주 발견: 실제 =", actual_cat, ", 예측 =", predicted_cat, "인 개체 (인덱스:", i, ")"))
+  }
 }
 
-# 군집 프로파일 출력
-for (i in 1:k) {
-  cat(paste0("\nCluster ", i, " Profile:\n"))
-  cat(paste0("Size: ", cluster_profiles[[i]]$size, " (", 
-             round(cluster_profiles[[i]]$size / nrow(cluster_data) * 100, 1), "%)\n"))
-  cat("Prominent Characteristics:\n")
-  for (j in 1:3) {
-    factor_name <- cluster_profiles[[i]]$high_factors[j]
-    factor_value <- cluster_means[i, factor_name]
-    cat(paste0(" - High ", factor_name, ": ", round(factor_value, 2), "\n"))
-  }
-  cat("Less Prominent Characteristics:\n")
-  for (j in 1:3) {
-    factor_name <- cluster_profiles[[i]]$low_factors[j]
-    factor_value <- cluster_means[i, factor_name]
-    cat(paste0(" - Low ", factor_name, ": ", round(factor_value, 2), "\n"))
-  }
-  cat(paste0("Average Life Satisfaction: ", round(cluster_profiles[[i]]$life_satisfaction, 2), "\n"))
+cat("\n=== 가중 혼동 행렬 ===\n")
+print(round(weighted_confusion_matrix, 2)) # 보기 좋게 반올림하여 출력
+
+# 가중 혼동 행렬 기반 가중 성능 지표 계산
+total_weighted_sum <- sum(weighted_confusion_matrix)
+
+# 가중 정확도 (Weighted Accuracy)
+weighted_accuracy <- sum(diag(weighted_confusion_matrix)) / total_weighted_sum
+cat("\n=== 가중 성능 지표 ===\n")
+cat("가중 정확도:", round(weighted_accuracy, 4), "\n")
+
+# 각 범주별 가중 정밀도, 재현율, F1-score 계산
+weighted_precision <- numeric(length(outcome_levels))
+weighted_recall <- numeric(length(outcome_levels))
+weighted_f1_score <- numeric(length(outcome_levels))
+names(weighted_precision) <- names(weighted_recall) <- names(weighted_f1_score) <- outcome_levels
+
+for (cat in outcome_levels) {
+  TP <- weighted_confusion_matrix[cat, cat]
+  FP <- sum(weighted_confusion_matrix[, cat]) - TP # 해당 열의 합 - TP
+  FN <- sum(weighted_confusion_matrix[cat, ]) - TP # 해당 행의 합 - TP
+
+  # 정밀도 (Precision): 예측된 cat 중 실제 cat 비율 (TP / (TP + FP))
+  # 분모가 0인 경우 (해당 범주로 예측된 개체가 하나도 없는 경우) 0으로 처리
+  weighted_precision[cat] <- ifelse((TP + FP) == 0, 0, TP / (TP + FP))
+
+  # 재현율 (Recall) 또는 민감도 (Sensitivity): 실제 cat인 것들 중 예측도 cat인 비율 (TP / (TP + FN))
+  # 분모가 0인 경우 (실제 해당 범주인 개체가 하나도 없는 경우) 0으로 처리
+  weighted_recall[cat] <- ifelse((TP + FN) == 0, 0, TP / (TP + FN))
+
+  # F1-score: 정밀도와 재현율의 조화 평균
+  # 분모가 0인 경우 0으로 처리
+  weighted_f1_score[cat] <- ifelse((weighted_precision[cat] + weighted_recall[cat]) == 0, 0,
+                                    2 * (weighted_precision[cat] * weighted_recall[cat]) / (weighted_precision[cat] + weighted_recall[cat]))
 }
+
+cat("\n범주별 가중 정밀도:\n")
+print(round(weighted_precision, 4))
+
+cat("\n범주별 가중 재현율:\n")
+print(round(weighted_recall, 4))
+
+cat("\n범주별 가중 F1-score:\n")
+print(round(weighted_f1_score, 4))
+
+# ROC 곡선 및 AUC (다중 클래스인 경우 one-vs-all 방식으로 계산)
+# predict 함수의 type = "prob"을 사용하여 클래스 확률 얻기
+y_pred_prob <- predict(rf_model, X_test, type = "prob")
+
+# 각 클래스에 대한 ROC 곡선 그리기 (비가중)
+# ROC 곡선 자체에 가중치 반영은 pROC 패키지로는 직접 어렵습니다.
+# 이 그래프는 비가중 결과를 시각화하는 것이므로 해석에 유의해야 합니다.
+cat("\n비가중 ROC 곡선 (참고용):\n")
+plot_roc <- function() {
+  num_classes <- length(levels(y_test))
+  if (num_classes <= 4 && num_classes > 0) { # 범주가 1개 이하이면 플롯 불가능
+    par(mfrow = c(2, ceiling(num_classes/2)))
+  } else if (num_classes > 4) {
+    par(mfrow = c(2, 2)) # 범주가 많으면 일부만 표시하거나 레이아웃 조정 필요
+    warning("범주가 4개 이상입니다. 일부 ROC 곡선만 표시될 수 있습니다. 레이아웃을 조정하거나 플롯 코드를 수정하세요.")
+  } else {
+    cat("ROC 곡선을 그릴 범주가 부족합니다.\n")
+    return(numeric(0)) # 빈 numeric 반환
+  }
+
+
+  auc_values <- numeric(num_classes)
+  names(auc_values) <- levels(y_test)
+
+  for (i in 1:num_classes) {
+    class_label <- levels(y_test)[i]
+
+    if(class_label %in% unique(y_test) && class_label %in% colnames(y_pred_prob)) {
+      roc_obj <- roc(response = ifelse(y_test == class_label, 1, 0), predictor = y_pred_prob[, class_label])
+      auc_values[i] <- auc(roc_obj)
+      plot(roc_obj, main = paste("ROC for", class_label, "(Unweighted)"), col = "blue", lwd = 2)
+      abline(a = 0, b = 1, lty = 2, col = "gray")
+      text(0.5, 0.3, paste("AUC =", round(auc_values[i], 3)), col = "red")
+      } else {
+        cat("클래스", class_label, "에 대한 ROC 곡선을 그릴 수 없습니다 (데이터 부족).\n")
+        auc_values[i] <- NA # AUC 값에 NA 할당
+        plot.new() # 빈 플롯 생성
+        text(0.5, 0.5, paste("No ROC for", class_label))
+      }
+  }
+  par(mfrow = c(1, 1))
+  return(auc_values)
+}
+
+auc_values_unweighted <- plot_roc()
+cat("\n각 클래스별 비가중 AUC:\n")
+print(data.frame(Class = levels(y_test), AUC_Unweighted = auc_values_unweighted))
+```
+
+## 모델 튜닝
+
+```{r}
+# 교차 검증 및 하이퍼파라미터 튜닝을 위한 설정
+# caret의 trainControl과 train 함수는 가중치를 지원하지만,
+# 교차 검증 과정 및 최종 성능 요약치는 기본적으로 가중치를 엄밀하게 반영하지 않습니다.
+# 가중치를 고려한 교차 검증 튜닝은 더 고급 기법이 필요합니다.
+# 여기서는 caret의 가중치 지원 기능을 사용하되, 최종 모델 평가 시에는 수동 가중치 계산을 사용합니다.
+ctrl <- trainControl(
+  method = "cv",
+  number = 5,
+  savePredictions = "final",
+  classProbs = TRUE,
+  summaryFunction = multiClassSummary
+)
+
+# 튜닝할 파라미터 그리드 설정
+param_grid <- expand.grid(
+  mtry = floor(sqrt(ncol(X_train))) # 예시: sqrt(p)만 시도. 필요 시 다른 값 추가 c(..., ...)
+)
+# 변수 개수가 1개이면 mtry=1로 설정
+if (ncol(X_train) == 1) {
+  param_grid <- expand.grid(mtry = 1)
+}
+
+
+# 가중치를 반영한 caret 모델 학습 (훈련 데이터 사용)
+cat("\ncaret을 사용한 모델 튜닝 중 (가중치 반영)...\n")
+# metric = "Accuracy"는 튜닝 과정에서 최적 모델 선택 기준으로 사용됨 (비가중 기준)
+rf_tuned <- train(
+  x = X_train,
+  y = y_train,
+  method = "rf",
+  metric = "Accuracy", # 튜닝 기준으로 사용할 지표 (비가중 기준)
+  weights = weights_train, # 가중치 전달
+  trControl = ctrl,
+  tuneGrid = param_grid,
+  importance = TRUE,
+  ntree = 500
+)
+cat("모델 튜닝 완료.\n")
+
+# 튜닝 결과 출력
+print(rf_tuned)
+# plot(rf_tuned) # 튜닝 결과 시각화 (선택 사항)
+
+# --- 튜닝된 모델 평가 (가중치 고려) ---
+# 최적의 튜닝 파라미터로 학습된 모델을 테스트 세트에 대해 평가
+cat("\n튜닝된 모델의 테스트 세트 예측 중...\n")
+y_pred_tuned <- predict(rf_tuned, X_test)
+cat("예측 완료.\n")
+
+# 튜닝된 모델의 가중 혼동 행렬 계산 (수동 구현)
+actual_classes_tuned <- y_test
+predicted_classes_tuned <- y_pred_tuned
+test_weights_tuned <- weights_test
+
+weighted_confusion_matrix_tuned <- matrix(0,
+                                         nrow = length(levels(actual_classes_tuned)),
+                                         ncol = length(levels(actual_classes_tuned)),
+                                         dimnames = list(Actual = levels(actual_classes_tuned), Predicted = levels(actual_classes_tuned)))
+
+for (i in 1:length(actual_classes_tuned)) {
+  actual_cat <- as.character(actual_classes_tuned[i])
+  predicted_cat <- as.character(predicted_classes_tuned[i])
+  weight <- test_weights_tuned[i]
+   if (actual_cat %in% levels(actual_classes_tuned) && predicted_cat %in% levels(actual_classes_tuned)) {
+      weighted_confusion_matrix_tuned[actual_cat, predicted_cat] <- weighted_confusion_matrix_tuned[actual_cat, predicted_cat] + weight
+  } else {
+      warning(paste("튜닝 모델: 유효하지 않은 범주 발견: 실제 =", actual_cat, ", 예측 =", predicted_cat, "인 개체 (인덱스:", i, ")"))
+  }
+}
+
+cat("\n=== 튜닝된 모델 가중 혼동 행렬 ===\n")
+print(round(weighted_confusion_matrix_tuned, 2)) # 보기 좋게 반올림하여 출력
+
+# 튜닝된 모델의 가중 혼동 행렬 기반 가중 성능 지표 계산
+total_weighted_sum_tuned <- sum(weighted_confusion_matrix_tuned)
+
+# 가중 정확도 (Weighted Accuracy)
+weighted_accuracy_tuned <- sum(diag(weighted_confusion_matrix_tuned)) / total_weighted_sum_tuned
+cat("\n=== 튜닝된 모델 가중 성능 지표 ===\n")
+cat("가중 정확도:", round(weighted_accuracy_tuned, 4), "\n")
+
+# 각 범주별 가중 정밀도, 재현율, F1-score 계산
+weighted_precision_tuned <- numeric(length(levels(actual_classes_tuned)))
+weighted_recall_tuned <- numeric(length(levels(actual_classes_tuned)))
+weighted_f1_score_tuned <- numeric(length(levels(actual_classes_tuned)))
+names(weighted_precision_tuned) <- names(weighted_recall_tuned) <- names(weighted_f1_score_tuned) <- levels(actual_classes_tuned)
+
+for (cat in levels(actual_classes_tuned)) {
+  TP <- weighted_confusion_matrix_tuned[cat, cat]
+  FP <- sum(weighted_confusion_matrix_tuned[, cat]) - TP
+  FN <- sum(weighted_confusion_matrix_tuned[cat, ]) - TP
+
+  weighted_precision_tuned[cat] <- ifelse((TP + FP) == 0, 0, TP / (TP + FP))
+  weighted_recall_tuned[cat] <- ifelse((TP + FN) == 0, 0, TP / (TP + FN))
+  weighted_f1_score_tuned[cat] <- ifelse((weighted_precision_tuned[cat] + weighted_recall_tuned[cat]) == 0, 0,
+                                    2 * (weighted_precision_tuned[cat] * weighted_recall_tuned[cat]) / (weighted_precision_tuned[cat] + weighted_recall_tuned[cat]))
+}
+
+cat("\n튜닝된 모델 범주별 가중 정밀도:\n")
+print(round(weighted_precision_tuned, 4))
+
+cat("\n튜닝된 모델 범주별 가중 재현율:\n")
+print(round(weighted_recall_tuned, 4))
+
+cat("\n튜닝된 모델 범주별 가중 F1-score:\n")
+print(round(weighted_f1_score_tuned, 4))
+
+# 변수 중요도 (튜닝된 모델)
+importance_obj_tuned <- varImp(rf_tuned)
+
+if("importance" %in% names(importance_obj_tuned)) {
+  imp_df_tuned <- importance_obj_tuned$importance
+} else {
+  imp_df_tuned <- importance_obj_tuned
+}
+
+var_names_tuned <- rownames(imp_df_tuned)
+if("Overall" %in% colnames(imp_df_tuned)) {
+  var_importance_tuned <- imp_df_tuned$Overall
+} else {
+  var_importance_tuned <- imp_df_tuned[,1]
+}
+
+importance_df_tuned <- data.frame(
+  Variable = var_names_tuned,
+  Importance = var_importance_tuned
+)
+importance_df_tuned <- importance_df_tuned[order(importance_df_tuned$Importance, decreasing = TRUE),]
+
+# 상위 10개 변수 출력 (튜닝된 모델)
+top_vars_tuned <- head(importance_df_tuned$Variable, 10)
+cat("\n튜닝된 모델에서 가장 중요한 변수 상위 10개:\n")
+print(top_vars_tuned)
+```
+
+## 최종 평가 및 결론
+
+```{r}
+# 최종 모델 성능 요약 비교
+# 원 모델과 튜닝 모델의 가중 정확도 비교
+final_metrics <- data.frame(
+  Metric = c("가중 정확도"), # 비가중 정확도 대신 가중 정확도만 비교
+  Original_Model = c(round(weighted_accuracy * 100, 2)),
+  Tuned_Model = c(round(weighted_accuracy_tuned * 100, 2))
+)
+
+# 결과 출력
+cat("\n=== 최종 모델 가중 정확도 비교 ===\n")
+print(kable(final_metrics, caption = "원본 모델 vs 튜닝 모델 가중 정확도 비교"))
+
+# 클래스별 가중 성능 지표 (튜닝된 모델 결과 사용 권장)
+cat("\n=== 튜닝된 모델 범주별 가중 성능 지표 ===\n")
+class_weighted_metrics_tuned <- data.frame(
+  Class = levels(y_test), # y_test 또는 actual_classes_tuned 사용 가능
+  Weighted_Precision = round(weighted_precision_tuned, 4),
+  Weighted_Recall = round(weighted_recall_tuned, 4),
+  Weighted_F1 = round(weighted_f1_score_tuned, 4)
+)
+print(kable(class_weighted_metrics_tuned, caption = "튜닝된 모델 클래스별 가중 성능 지표"))
+
+
+# 최종 변수 중요도 요약 (튜닝된 모델 결과 사용)
+cat("\n=== 튜닝된 모델 변수 중요도 ===\n")
+print(kable(head(importance_df_tuned, 10), caption = "튜닝된 모델 상위 10개 중요 변수 (가중치 고려 학습 결과)"))
+
+
+# 결론 요약
+cat("\n=== 결론 요약 ===\n")
+cat("1. 위 모델은 학생들의 진로 상태(", OUTCOME_VAR, ")를 예측하기 위해 이전 시점의 요인 점수들을 독립변수로 활용했습니다.\n",
+  "2. 6차년도 종단면 가중치(", WEIGHT_VAR, ")를 모델 학습에 반영했으며, 테스트 데이터에서 가중치 고려 성능 평가를 수행했습니다.\n",
+  "3. 랜덤 포레스트 모델의 원래 버전과 하이퍼파라미터 튜닝 버전 모두 학습 및 가중 평가했습니다.\n",
+  "4. 최종 튜닝된 모델의 테스트 데이터에서의 **가중 정확도**는 약 ", round(weighted_accuracy_tuned * 100, 2), "%입니다.\n",
+  "5. 각 진로 상태 범주별 모델의 가중 정밀도, 가중 재현율, 가중 F1-score는 위의 '튜닝된 모델 범주별 가중 성능 지표' 표를 참고하십시오.\n",
+  "6. 예측에 가장 중요한 변수는 위의 '튜닝된 모델 상위 10개 중요 변수' 표를 참고하십시오.\n",
+  "7. 이 결과는 6차년도 종단면 가중치를 통해 원 모집단(1차 조사 시점의 중2 청소년들)에 대해 일정 수준 일반화하여 해석할 수 있습니다.\n")
 ```
