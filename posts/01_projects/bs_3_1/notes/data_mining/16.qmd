@@ -1,79 +1,256 @@
 ---
-title: "test2"
-date: 2025-05-14
-categories: ["data mining"]
+title: 청소년기의 심리·정서적 요인을 통한 진로 의사결정 성향 예측
+categories: ["보고서", "데이터 마이닝"]
+mainfont: "Noto Sans KR"
+sansfont: "Noto Sans KR"
+monofont: "Noto Sans KR"
+date: last-modified
+geometry:
+  - top=25mm
+  - left=25mm
+  - right=25mm
+  - bottom=25mm
+format: 
+  titlepage-pdf:
+    documentclass: scrartcl
+    classoption: ["oneside", "open=any", "twocolumn"]
+    number-sections: true
+    toc: false
+    titlepage: "none"
+    coverpage: "none"
+    fontsize: 11pt
+    titlepage-include-file:
+      - _tex/title.tex
+    include-in-header: 
+      text: |
+        \usepackage[utf8]{inputenc}
+        \usepackage{graphicx}
+        \usepackage{amsmath}
+        \usepackage{amsfonts}
+        \usepackage{amssymb}
+        \usepackage{geometry}
+        \usepackage{fancyhdr}
+        \usepackage{hyperref}
+        \usepackage{lipsum}
+        \setlength{\columnsep}{15mm}
+        \usepackage{setspace}
+        \setstretch{1.2}
+        \usepackage{booktabs}
+        \usepackage{tabularx}
+        \usepackage{makecell}
+        \usepackage{caption}
+        \usepackage{multirow}
+        \usepackage{array}
+        \usepackage{graphicx}
+        \renewcommand{\arraystretch}{1.3}
+        \renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
-![](/img/human-thumb.jpg){.post-thumbnail}
+# 서론
 
-## Data Load
+추가 예정
 
-```{r}
-# 데이터 로드 및 필요 패키지 불러오기
-library(tidyverse)
+# 관련 연구
 
-# CSV 파일 읽기 (row.names=1은 첫 번째 열을 행 이름으로 사용)
-df_origin <- read.csv('_data/student_6.csv', row.names=1)
+추가 예정
 
-# 원본 데이터 복사
-df <- df_origin[c('q11', 'yy')]
+# 데이터 소개
 
-summary(df$yy)
-# 데이터 구조 확인
-str(df)
+## 데이터 개요
 
-# 칼럼별 결측치 개수 확인
-missing_values <- colSums(is.na(df))
-print("칼럼별 결측치 개수:")
-print(missing_values)
+본 연구는 청소년기 심리·정서적 요인이 성인기 초기 진로 이행에 미치는 영향을 예측적으로 분석하고자 한국청소년패널조사(KYPS)의 중2 패널 1차 년도(2003년)부터 6차 년도(2008년)까지의 자료를 활용하였다.
 
-# 결측치 비율 확인(%)
-missing_percentage <- colMeans(is.na(df)) * 100
-missing_df <- data.frame(
-  Column = names(missing_percentage),
-  Missing_Count = missing_values,
-  Missing_Percentage = missing_percentage
-)
-print("칼럼별 결측치 비율(%):")
-print(missing_df)
+초기 1차년도 조사의 최종 확보 표본은 3,449명이었으나, 6차년도까지 모든 조사에 응답하고 본 연구의 분석에 필요한 주요 변수들에서 결측치가 없는 개체를 선별한 결과, 최종 분석 대상은 2,451명의 데이터로 구성되었다.
 
-# q11 빈도표 생성
-q11_freq <- table(df$q11)
-print("q11 빈도표:")
-print(q11_freq)
+각 연차별 데이터는 연구 대상에 대한 5점 리커트 척도의 설문 문항 점수를 저장하고 있다. 해당 데이터는 청소년의 인적 사항, 진로(희망 직업, 진로 계획, 진로 준비 현황), 여가 및 사회 활동, 일탈 및 피해 경험, 생활 영역별 시간 배분 및 중요도, 자아관 관련 심리 문항 등 청소년의 다양한 삶의 영역에 대한 질문들로 구성되어 있으며, 연차 별로 총 560개 이상의 문항이 포함되어 있다.
 
-# 빈도와 비율을 함께 보여주는 데이터프레임 생성
-q11_freq_df <- as.data.frame(q11_freq)
-colnames(q11_freq_df) <- c("q11_값", "빈도")
-q11_freq_df$비율 <- prop.table(q11_freq) * 100
-q11_freq_df$누적비율 <- cumsum(q11_freq_df$비율)
+## 요인 분석
 
-# 총 빈도를 마지막 행에 추가
-total_row <- data.frame(
-  "q11_값" = "총계",
-  "빈도" = sum(q11_freq_df$빈도),
-  "비율" = sum(q11_freq_df$비율),
-  "누적비율" = NA
-)
-q11_freq_df <- rbind(q11_freq_df, total_row)
-print(q11_freq_df)
+본 연구는 한국청소년패널조사 User's Guide의 원자료 설문 문항 범주를 기반으로 요인 분석을 진행했다. 이를 통해 부모애착, 일탈적 자아 낙인, 부모 요인 스트레스, 부모 감독, 물질적 요인 스트레스, 친구 관계 스트레스, 자기신뢰감, 상급학교 의존도, 부정적 자아존중감, 학업 스트레스 등 총 10개 요인을 도출했다. 이후 각 요인의 점수를 산출하여 독립변수로 활용했다.
 
-# 빈도 막대 그래프
-barplot(q11_freq, main="q11 빈도 분포", xlab="q11 값", ylab="빈도", col="skyblue")
-
-# ggplot2를 활용한 빈도 그래프
-library(ggplot2)
-ggplot(q11_freq_df, aes(x=`q11_값`, y=빈도)) +
-  geom_bar(stat="identity", fill="steelblue") +
-  geom_text(aes(label=빈도), vjust=-0.3) +
-  theme_minimal() +
-  labs(title="q11 빈도 분포", x="q11 값", y="빈도")
-```
+[Table 4](#fig:cfa-result)에는 각 연차별 요인 분석 결과가 제시되어 있다. 이는 설정된 잠재 요인 구조가 실제 관측된 데이터의 패턴과 얼마나 잘 일치하는지를 나타낸다. 이 지표들이 양호한 값을 보일수록, 가정한 심리 요인들이 실제 청소년들의 응답 패턴을 어느 정도 잘 반영하고 있다고 해석될 수 있다.
 
 
+CFI(Comparative Fit Index)와 TLI(Tucker-Lewis Index)는 대부분의 연차에서 0.90 이상을 기록하며 양호한 수준을 보였다. 이는 설정된 요인 구조가 데이터의 변동을 설명하는 데 있어 기준 모델 대비 비교적 적절함을 시사한다.
 
+RMSEA(Root Mean Square Error of Approximation) 지수는 모든 연차에서 0.08 이하로 나타났다. 이 지표는 모델이 모집단 공분산 구조와 얼마나 근사적인 차이를 보이는지를 나타내며, 값이 0에 가까울수록 더 나은 적합성을 의미한다.
 
+SRMR(Standardized Root Mean Square Residual) 지수 또한 모든 연차에서 0.08 이하로 나타났다. 이 지표는 관측된 상관과 모델에 의해 예측된 상관 간의 평균적인 표준화 차이를 나타내며, 값이 0에 가까울수록 모델의 예측이 실제와 가깝다고 해석된다.
 
+연차별 적합도 지표 값에 다소 변동이 있었으나, 전반적으로 6년에 걸쳐 분석된 심리 요인 모델들은 데이터 패턴에 대해 비교적 일관되게 양호한 수준의 부합성을 보이는 것으로 판단된다. 이러한 적합도 결과는 본 연구에서 설정한 심리 요인 구조가 6년의 추적 기간 동안 청소년들의 심리 관련 응답 패턴을 나타내는 데 있어 어느 정도 타당한 측정 모델로서 활용될 수 있음을 지지하는 근거가 될 수 있다.
 
+## 데이터 전처리
 
+먼저, 연도별로 분리된 패널 데이터를 개인 식별자를 기준으로 횡 형태로 통합하였다. 통합된 데이터에서 본 연구에 필요한 독립 변수, 종속 변수, 그리고 가중치 변수 컬럼들을 추출하였다. 이때 가중치 변수는 초기 표본 추출 확률 및 1차년도부터 6차년도까지의 종단 탈락을 고려하여 계산된 것으로, 본 연구의 상대적으로 적은 표본으로 인한 일반화 가능성의 한계점을 보완하기 위해 사용되었다.
 
+이후, 분석에 사용될 최종 변수들에 대해 결측치가 없는 행을 제거하여 최종 분석 데이터셋을 구축하였다. 종속 변수는 원 데이터의 상세 분류 코드를 바탕으로 2개의 범주로 그룹화하고 팩터 형태로 변환하였다. 종속 변수의 분류는 [Table 5](#fig:dependent_variable_groups)과 같다.
+
+## 데이터 분포
+
+최종 분석에 활용된 대상자의 인구사회학적 특성 및 종속 변수의 분포는 다음의 표의 내용과 같다.
+
+\begin{table}[h]
+\centering
+\caption{출생년도별 분포 (조사 시점: 2008년)}
+\label{tab:birthyear-freq}
+\begin{tabularx}{\columnwidth}{@{} *{3}{>{\centering\arraybackslash}X} @{}}
+% 너비를 \columnwidth로, 열 개수를 3개로 수정
+\toprule
+출생년도 & 빈도 & 비율 \\
+\midrule
+88 & 2 & 0.08 \\
+\midrule
+89 & 1895 & 77.32 \\
+\midrule
+90 & 554 & 22.60 \\ % 마지막 행 뒤에는 \\를 붙이지 않는 것이 일반적입니다.
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{성별 분포}
+\label{tab:gender-freq}
+\begin{tabularx}{\columnwidth}{@{} *{3}{>{\centering\arraybackslash}X} @{}}
+% 너비를 \columnwidth로, 열 개수를 3개로 수정
+\toprule
+성별 & 빈도 & 비율 \\
+\midrule
+남성 & 1165 & 47.53 \\
+\midrule
+여성 & 1286 & 52.47 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{종속 변수 분포}
+\label{tab:dependentvar-freq} % 고유한 레이블로 변경
+\begin{tabularx}{\columnwidth}{@{} *{3}{>{\centering\arraybackslash}X} @{}}
+% 너비를 \columnwidth로, 열 개수를 3개로 수정
+\toprule
+구분 & 빈도 & 비율 \\
+\midrule
+생산적활동참여 & 102 & 4.16 \\
+\midrule
+\makecell[lt]{비 경제활동 및 \\ 학업 관련 상태} & 2349 & 95.84 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+먼저, 조사 시점인 2008년을 기준으로 대상자들의 출생년도를 살펴본 결과, 대부분의 대상자가 1989년(77.32%) 또는 1990년(22.60%)생으로 나타났다. 이는 1차 조사 시작 시점(2003년)에 중학교 2학년이었던 표본이 6차년도 시점에 대략 만 18세(1990년생) 또는 만 19세(1989년생)에 해당함을 보여준다. 소수의 대상자(0.08%)는 만 20세로 확인되었다.
+
+성별 분포에서는 남성(47.53%)이 1,165명, 여성(52.47%)이 1,286명으로, 전체적으로 남성보다 여성의 비율이 약간 더 높은 것으로 나타났다.
+
+본 연구에서 최종적으로 분석에 사용된 종속 변수의 분포는 '생산적 활동 참여' 범주에 해당하는 대상자가 102명(4.16%)이었으며, '비 경제활동 및 학업 관련 상태' 범주에 해당하는 대상자는 2,349명(95.84%)으로 나타났다.
+
+## 독립 변수 간 상관관계
+
+최종 데이터셋에서 사용된 독립 변수 간의 상관관계는 아래 [히트맵](#fig:var-heatmap)과 같은 양상을 보인다.
+해당 히트맵은 청소년의 심리사회적 특성 간의 구조적인 연관성을 시사하는 몇 가지 주목할 만한 관계 패턴을 보인다.
+
+첫째, 본 연구에서 부모감독 요인은 청소년이 외출했을 때 부모가 자녀가 어디에 있는지, 누구와 함께 있는지, 무엇을 하고 있는지, 그리고 언제 돌아올지를 얼마나 잘 알고 있는지에 대한 인지 수준을 묻는 문항들을 통해 측정되었다. 이렇게 측정된 부모감독 요인과 부모애착 요인 간에는 모든 조사 연차에 걸쳐 강한 정적 상관관계가 일관되게 관찰되었다. 이는 청소년이 부모와 긍정적이고 안정적인 애착 관계를 형성하고 있을수록, 부모 또한 자녀의 외출 활동에 대해 더 많은 정보를 인지하는 경향이 강함을 시사한다.
+
+둘째, 부모애착과 다양한 스트레스 요인들 간에는 상반된 관계 패턴이 확인되었다. 이는 청소년이 부모와 안정적인 애착 관계를 형성하는 것이 다양한 스트레스를 완화하는 보호 요인으로 작용할 수 있음을 시사한다.
+
+또한, 각종 스트레스 요인들 간에도 유의미한 관련성이 확인되었다. 이는 특정 영역에서 경험하는 스트레스가 다른 영역의 스트레스 경험과 밀접하게 연동되어 있음을 명확히 보여주며, 특히 부모에 의한 스트레스는 학업으로 인한 스트레스와 여러 연차에서 강한 정적 상관관계를 나타났다.
+
+이러한 연차별 패턴은 여러 연차에 걸쳐 비교적 일관된 양상을 보였고, 가까운 연차끼리 높은 상관관계를 가지는 양상을 보이고 있다.
+
+\begin{table*}[t]
+\centering
+\caption{Confirmatory Factor Analysis 결과}
+\label{fig:cfa-result}
+\begin{tabularx}{\textwidth}{@{} *{5}{>{\centering\arraybackslash}X} @{}}
+\toprule
+년차 & CFI & TLI & RMSEA & SRMR \\
+\midrule
+1 & 0.929 & 0.918 & 0.048 & 0.042 \\
+\midrule
+2 & 0.943 & 0.934 & 0.047 & 0.037 \\
+\midrule
+3 & 0.937 & 0.927 & 0.048 & 0.043 \\
+\midrule
+4 & 0.927 & 0.915 & 0.054 & 0.046 \\
+\midrule
+5 & 0.935 & 0.924 & 0.052 & 0.045 \\
+\midrule
+6 & 0.906 & 0.891 & 0.064 & 0.059 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\caption{종속 변수 그룹}
+\label{fig:dependent_variable_groups}
+% X 열의 내용을 왼쪽 정렬하고 싶다면 다음 줄의 주석을 해제하세요.
+% \renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+종속 변수 & 원 데이터 값 \\
+\midrule
+생산적활동참여 & 고등학교는졸업하였고현재취업(임시직, 일용직포함)해있는상태이다 \newline
+고등학교는졸업하였고현재창업해있는상태이다 \newline
+고등학교는졸업하였고현재무보수로가업을돕고있다 \newline
+현재취업(임시직, 일용직포함)상태에서대학생활(방통대, 야간대등)도 병행하고있다 \newline
+현재창업상태에서대학생활(방통대, 야간대등)도병행하고있다 \newline
+현재무보수로가업을돕고있는상태에서대학생활(방통대, 야간대등)도 병행하고있다 \\
+\midrule
+비경제활동및학업관련상태 & 대학에 진학하였고 졸업할 때까지 계속 다닐 생각이다 \newline
+대학에 진학하였고 조만간에 휴학할 생각이다 \newline
+대학에 진학하였고 현재 휴학중이다 \newline
+대학에 진학하였고 조만간에 그만둘(중퇴할) 생각이다 \newline
+대학에 진학한 후 중퇴했으며 현재 다른 대학 입학을 준비중이다 \newline
+고등학교는 졸업하였고 현재 대학 입학을 준비중이다 \newline
+고등학교는 졸업하였고 현재 취업(임시직, 일용직포함)을 위해 노력중이다 \newline
+고등학교는 졸업하였고 현재 창업을 준비하고있다 \newline
+대학에 진학한 후 중퇴했으며 현재 취업(임시직, 일용직포함)을 위해 노력중이다 \newline
+대학에 진학한 후 중퇴했으며 현재 창업을 준비하고있다 \newline
+고등학교는 졸업하였고 현재 가사,육아를 돕고있다 \newline
+고등학교는 졸업하였고 현재 군 입대 대기중이다 \newline
+고등학교는 졸업하였고 현재 아무일도 하지 않고있다 \newline
+고등학교 재학중 \newline
+중학교 재학중 \newline
+고등학교, 중학교 졸업 전 중퇴 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{correlation_heatmap.png}
+    \caption{독립변수 히트맵}
+    \label{fig:var-heatmap}
+\end{figure*}
+
+\clearpage
+
+# 연구 과정
+
+train test set
+
+Random forest 씀. xgboost 사용. logistic 회귀분석
+
+# 연구 결과
+
+## 모형별 변수 중요도 순위
+
+## 모형 평가 결과
+
+# 해석 및 논의
+
+1. 표본 갯수 적음. 가중치 사용.
+1. 종속변수의 분포가 불균형함. 이건 어쩔 수 없음.
+1. 무작위 분류에 비해서는 성능이 좋지만, 여전히 구분을 잘 하는 수준은 아님.
+1. 다중공산성 문제. 하지만 랜덤 포레스트는 다중공선성에 덜 민감함.
+
+# 참고문헌
+
+- [한국 아동 청소년 청년 데이터 아카이브](https://www.nypi.re.kr/archive/board?menuId=MENU00219)
