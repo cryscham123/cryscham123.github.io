@@ -8,24 +8,24 @@ categories: ["data mining"]
 
 ## Data Load
 
-```{r}
-library(lavaan)
-library(tidyverse)
-library(survey)
-library(semPlot)
-library(caret)
-library(randomForest)
-library(pROC)
-library(dplyr)
-library(stringr)
-library(kableExtra)
-library(ROSE) # ROSE 패키지 추가 (불균형 데이터 처리)
+```{python}
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+from matplotlib import font_manager, rc
+import seaborn as sns
+import warnings
 
-ID_VAR <- "id"
-WEIGHT_VAR <- "wt2"
-OUTCOME_VAR <- "status_category"
+warnings.filterwarnings("ignore")
 
-target_pred_var <- c(ID_VAR, "wt1", "q33a01", "q33a02", "q33a03", "q33a04", "q33a05", "q33a06",
+ID_VAR = "id"
+WEIGHT_VAR = "wt2"
+OUTCOME_VAR = "status_category"
+RANDOM_STATE = 54321
+target_pred_var = [ID_VAR, "wt1", "q33a01", "q33a02", "q33a03", "q33a04", "q33a05", "q33a06",
                     "q48a07", "q48a08", "q48a09", "q48a10",
                     "q49a01", "q49a02", "q49a03", "q49a04",
                     "q33a07", "q33a08", "q33a09",
@@ -34,9 +34,8 @@ target_pred_var <- c(ID_VAR, "wt1", "q33a01", "q33a02", "q33a03", "q33a04", "q33
                     "q48b1", "q48b2", "q48b3",
                     "q12a01", "q12a02", "q12a03",
                     "q48a04", "q48a05", "q48a06",
-                    "q49a05", "q49a06", "q49a08")
-
-cfa_model <- '
+                    "q49a05", "q49a06", "q49a08"]
+cfa_model = """
   # 1. 부모애착
   parent_attachment =~ q33a01 + q33a02 + q33a03 + q33a04 + q33a05 + q33a06
   # 2. 일탈적 자아 낙인
@@ -57,460 +56,271 @@ cfa_model <- '
   neg_esteem =~ q48a04 + q48a05 + q48a06
   # 10. 학업으로 인한 스트레스
   academic_stress =~ q49a05 + q49a06 + q49a08
-'
-
-df1_origin <- read.csv('_data/student_1.csv')
-df2_origin <- read.csv('_data/student_2.csv')
-df3_origin <- read.csv('_data/student_3.csv')
-df4_origin <- read.csv('_data/student_4.csv')
-df5_origin <- read.csv('_data/student_5.csv')
-df6_origin <- read.csv('_data/student_6.csv')
+"""
+df1_origin = pd.read_csv('_data/student_1.csv')
+df2_origin = pd.read_csv('_data/student_2.csv')
+df3_origin = pd.read_csv('_data/student_3.csv')
+df4_origin = pd.read_csv('_data/student_4.csv')
+df5_origin = pd.read_csv('_data/student_5.csv')
+df6_origin = pd.read_csv('_data/student_6.csv')
+df_origin = [df1_origin, df2_origin, df3_origin, df4_origin, df5_origin]
 ```
 
 ## CFA (Confirmatory Factor Analysis)
 
-```{r}
-merged_df <- data.frame()
-for (i in 1:5) {
-  ID_VAR <- "id"
-  df <- get(paste0("df", i, "_origin"))
-  df_analysis <- df[target_pred_var]
-  df_clean <- na.omit(df_analysis)
-  cfa_fit <- cfa(
-    cfa_model,
-    data = df_clean,
-    sampling.weights = "wt1",
-    estimator = "MLR",
-    se = "robust.cluster",
-    test = "satorra.bentler")
-  factor_scores <- lavPredict(cfa_fit)
-  factor_scores_df <- cbind(df_clean[ID_VAR], as.data.frame(factor_scores))
-  names(factor_scores_df)[-1] <- paste0(names(factor_scores_df)[-1], "_w", i)
-  if (i == 1) {
-    merged_df <- factor_scores_df
-  } else {
-    merged_df <- merge(merged_df, factor_scores_df, by = ID_VAR, all = TRUE)
-  }
-}
+```{python}
+import rpy2.robjects as ro
+from rpy2.robjects.packages import importr
+from rpy2.robjects import pandas2ri
+from rpy2.robjects.conversion import localconverter
+from rpy2.robjects.packages import importr
 
-classify_status <- function(q11_value) {
-  if (q11_value %in% c(1, 5, 6, 7, 8, 71, 81, 91, 10, 101, 11, 111)) {
-    return("active")
-  } else if (q11_value %in% c(2, 3, 4, 9, 12, 13, 14)) {
-    return("passive")
-  } else {
-    return(NA)
-  }
-}
+pandas2ri.activate()
+lavaan = importr('lavaan')
+base_r = importr('base')
 
-extra_df <- df6_origin[, c("id", "q11", "wt2", "sex", "yy", "area")]
-extra_df$status_category <- mapply(classify_status, extra_df$q11)
-merged_df <- merge(merged_df, extra_df, by = "id", all.x = TRUE)
+merged_df_pd = pd.DataFrame()
+for i, df in enumerate(df_origin):
+    wave = i + 1
+    df_analysis = df[target_pred_var].copy()
+    df_clean = df_analysis.dropna()
+    with localconverter(ro.default_converter + pandas2ri.converter):
+        df_clean_r = ro.conversion.py2rpy(df_clean)
+    cfa_fit_r = lavaan.cfa(
+        model=cfa_model,
+        data=df_clean_r,
+        sampling_weights="wt1",
+        estimator="MLR",
+        warn=False,
+        verbose=False
+    )
+    print(f"\n--- Wave {wave} CFA 적합도 지수 ---")
+    desired_fit_measures = ro.StrVector([
+        'cfi.scaled', 'tli.scaled',
+        'rmsea.scaled', 'rmsea.ci.lower.scaled', 'rmsea.ci.upper.scaled',
+        'srmr_bentler'
+    ])
+    fit_measures_values_r = lavaan.fitMeasures(cfa_fit_r, fit_measures=desired_fit_measures)
+    fit_values_py = [val if val is not ro.NA_Real else float('nan') for val in list(fit_measures_values_r)]
+    fit_measures_s = pd.Series(fit_values_py, index=list(desired_fit_measures))
+    print(fit_measures_s.to_string())
+    print("------------------------------------")
+    factor_scores_r = lavaan.lavPredict(cfa_fit_r, type="lv")
+    factor_scores_pd = pd.DataFrame(factor_scores_r, columns=["parent_attachment", "deviant_esteem", "parent_stress", "parent_monitoring",
+                                                             "desire_stress", "friend_stress", "self_confidence",
+                                                             "higher_school_dependence", "neg_esteem", "academic_stress"])
+    ids_for_scores = df_clean[ID_VAR].reset_index(drop=True)
+    factor_scores_pd[ID_VAR] = ids_for_scores
+    new_colnames = {col: f"{col}_w{wave}" for col in factor_scores_pd.columns if col != ID_VAR}
+    factor_scores_pd = factor_scores_pd.rename(columns=new_colnames)
+    if wave == 1:
+        merged_df_pd = factor_scores_pd
+    else:
+        merged_df_pd = pd.merge(merged_df_pd, factor_scores_pd, on=ID_VAR, how='outer')
+
+def classify_status(q11_value):
+    if q11_value in [1, 7, 8, 9, 71, 81, 91, 10, 101, 11, 111]:
+        return "stable"
+    elif q11_value in [2, 3, 4, 5, 6, 12, 13, 14]:
+        return "explorative"
+    else:
+        return None
+
+pandas2ri.deactivate()
+```
+
+### 상관행렬
+
+```{python}
+plt.rcParams['font.family'] = 'Noto Sans KR'
+
+plt.figure(figsize=(25, 22))
+corr_matrix = merged_df_pd.drop(columns=[ID_VAR]).corr()
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+sns.heatmap(
+    corr_matrix,
+    annot=False,
+    vmax=1.0, 
+    vmin=-1.0,
+    center=0,
+    linewidths=.5,
+    cmap=cmap,
+    cbar_kws={"shrink": .5, "label": "Correlation Coefficient"}
+)
+
+plt.title('Correlation Matrix', fontsize=16, pad=20)
+plt.tight_layout()
+plt.savefig('correlation_heatmap.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+corr_pairs = corr_matrix.unstack().reset_index()
+corr_pairs.columns = ['Variable 1', 'Variable 2', 'Correlation']
+
+corr_pairs = corr_pairs[corr_pairs['Variable 1'] != corr_pairs['Variable 2']]
+corr_pairs['Pair'] = corr_pairs.apply(lambda x: tuple(sorted([x['Variable 1'], x['Variable 2']])), axis=1)
+corr_pairs = corr_pairs.drop_duplicates('Pair')
+
+corr_pairs = corr_pairs.sort_values(by='Correlation', key=abs, ascending=False)
+top_corr = corr_pairs[['Variable 1', 'Variable 2', 'Correlation']]
+
+print("Highest Absolute Correlations:")
+print(top_corr.head(40))
+```
+
+```{python}
+extra_df_pd = df6_origin[[ID_VAR, "q11", WEIGHT_VAR, "sex", "yy", "area"]].copy()
+extra_df_pd['status_category'] = extra_df_pd['q11'].apply(classify_status)
+merged_df = pd.merge(merged_df_pd, extra_df_pd, on=ID_VAR, how='left').dropna()
 ```
 
 ## 인구통계학적 분포 분석
 
-```{r}
-merged_df_clean <- merged_df %>%
-  filter(complete.cases(.))
+### 분포 테이블
 
-sex_dist <- merged_df_clean %>%
-  count(sex) %>%
-  mutate(percentage = n / sum(n) * 100)
+```{python}
+sex_dist_py = merged_df['sex'].value_counts().rename_axis('sex').reset_index(name='n')
+sex_dist_py['percentage'] = (sex_dist_py['n'] / sex_dist_py['n'].sum()) * 100
 
-birth_year_dist <- merged_df_clean %>%
-  count(yy) %>%
-  mutate(percentage = n / sum(n) * 100)
+birth_year_dist_py = merged_df['yy'].value_counts().rename_axis('yy').reset_index(name='n')
+birth_year_dist_py['percentage'] = (birth_year_dist_py['n'] / birth_year_dist_py['n'].sum()) * 100
+birth_year_dist_py = birth_year_dist_py.sort_values(by='yy').reset_index(drop=True)
 
-area_dist <- merged_df_clean %>%
-  count(area) %>%
-  mutate(percentage = n / sum(n) * 100)
+area_dist_py = merged_df['area'].value_counts().rename_axis('area').reset_index(name='n')
+area_dist_py['percentage'] = (area_dist_py['n'] / area_dist_py['n'].sum()) * 100
+area_dist_py = area_dist_py.sort_values(by='area').reset_index(drop=True) # 지역 순으로 정렬
 
-status_dist <- merged_df_clean %>%
-  count(status_category) %>%
-  mutate(percentage = n / sum(n) * 100)
+status_dist_py = merged_df['status_category'].value_counts(dropna=False).rename_axis('status_category').reset_index(name='n')
+status_dist_py['percentage'] = (status_dist_py['n'] / status_dist_py['n'].sum()) * 100
 
-# 표 출력
-kable(sex_dist, caption = "성별 분포 (결측치 제거 후)") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
-
-kable(birth_year_dist, caption = "출생년도 분포 (결측치 제거 후)") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
-
-kable(area_dist, caption = "거주 지역 분포 (결측치 제거 후)") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
-
-kable(status_dist, caption = "종속변수(Active vs Passive) 분포 (결측치 제거 후)") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+print(sex_dist_py)
+print(birth_year_dist_py)
+print(status_dist_py)
 ```
 
-## 분포 시각화
+### 분포 시각화
 
-```{r}
-# 성별 분포 시각화
-ggplot(sex_dist, aes(x = sex, y = n, fill = sex)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = paste0(round(percentage, 1), "%")), vjust = -0.5) +
-  labs(title = "성별 분포", x = "성별", y = "빈도") +
-  theme_minimal()
-
-# 출생년도 분포 시각화
-ggplot(birth_year_dist, aes(x = yy, y = n)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  geom_text(aes(label = paste0(round(percentage, 1), "%")), vjust = -0.5) +
-  labs(title = "출생년도 분포", x = "출생년도", y = "빈도") +
-  theme_minimal()
-
-# 종속변수 분포 시각화
-ggplot(status_dist, aes(x = status_category, y = n, fill = status_category)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = paste0(round(percentage, 1), "%")), vjust = -0.5) +
-  labs(title = "Active vs Passive 분포", x = "상태 카테고리", y = "빈도") +
-  theme_minimal()
-```
-
-## 지역 분포
-
-```{r}
-# 한국 지도 데이터 패키지 설치 및 로드
-if(!require(kormaps2014)) {
-  install.packages("stringi")
-  install.packages("devtools")
-  devtools::install_github("cardiomoon/kormaps2014")
-}
-library(kormaps2014)
-library(ggplot2)
-library(stringi)
-library(mapproj)
-
-# 대한민국 지역 시각화를 위한 준비
-library(ggplot2)
-
-# 지역 코드와 merged_df의 area 코드 매핑 함수
-map_area_code <- function(area_code) {
-  area_mapping <- c(
-      "100" = "서울",
-      "110" = "서울",
-      "120" = "서울",
-      "121" = "서울",
-      "122" = "서울",
-      "130" = "서울",
-      "131" = "서울",
-      "132" = "서울",
-      "133" = "서울",
-      "134" = "서울",
-      "135" = "서울",
-      "136" = "서울",
-      "137" = "서울",
-      "138" = "서울",
-      "139" = "서울",
-      "140" = "서울",
-      "142" = "서울",
-      "143" = "서울",
-      "150" = "서울",
-      "151" = "서울",
-      "152" = "서울",
-      "153" = "서울",
-      "156" = "서울",
-      "157" = "서울",
-      "158" = "서울",
-      "200" = "강원",
-      "209" = "강원",
-      "210" = "강원",
-      "215" = "강원",
-      "217" = "강원",
-      "219" = "강원",
-      "220" = "강원",
-      "225" = "강원",
-      "230" = "강원",
-      "232" = "강원",
-      "233" = "강원",
-      "235" = "강원",
-      "240" = "강원",
-      "245" = "강원",
-      "250" = "강원",
-      "252" = "강원",
-      "255" = "강원",
-      "269" = "강원",
-      "300" = "대전",
-      "301" = "대전",
-      "302" = "대전",
-      "305" = "대전",
-      "306" = "대전",
-      "312" = "충남",
-      "314" = "충남",
-      "320" = "충남",
-      "321" = "충남",
-      "323" = "충남",
-      "325" = "충남",
-      "330" = "충남",
-      "336" = "충남",
-      "339" = "충남",
-      "340" = "충남",
-      "343" = "충남",
-      "345" = "충남",
-      "350" = "충남",
-      "355" = "충남",
-      "356" = "충남",
-      "357" = "충남",
-      "360" = "충북",
-      "361" = "충북",
-      "363" = "충북",
-      "365" = "충북",
-      "367" = "충북",
-      "368" = "충북",
-      "369" = "충북",
-      "370" = "충북",
-      "373" = "충북",
-      "376" = "충북",
-      "380" = "충북",
-      "390" = "충북",
-      "395" = "충북",
-      "400" = "인천",
-      "401" = "인천",
-      "402" = "인천",
-      "403" = "인천",
-      "404" = "인천",
-      "405" = "인천",
-      "406" = "인천",
-      "407" = "인천",
-      "409" = "인천",
-      "411" = "경기",
-      "412" = "경기",
-      "413" = "경기",
-      "415" = "경기",
-      "417" = "인천",
-      "420" = "경기",
-      "421" = "경기",
-      "422" = "경기",
-      "423" = "경기",
-      "425" = "경기",
-      "426" = "경기",
-      "427" = "경기",
-      "429" = "경기",
-      "430" = "경기",
-      "431" = "경기",
-      "435" = "경기",
-      "437" = "경기",
-      "440" = "경기",
-      "441" = "경기",
-      "442" = "경기",
-      "443" = "경기",
-      "445" = "경기",
-      "447" = "경기",
-      "449" = "경기",
-      "456" = "경기",
-      "459" = "경기",
-      "461" = "경기",
-      "462" = "경기",
-      "463" = "경기",
-      "464" = "경기",
-      "465" = "경기",
-      "467" = "경기",
-      "469" = "경기",
-      "471" = "경기",
-      "472" = "경기",
-      "476" = "경기",
-      "477" = "경기",
-      "480" = "경기",
-      "481" = "경기",
-      "482" = "경기",
-      "483" = "경기",
-      "487" = "경기",
-      "500" = "광주",
-      "501" = "광주",
-      "502" = "광주",
-      "503" = "광주",
-      "506" = "광주",
-      "513" = "전남",
-      "515" = "전남",
-      "516" = "전남",
-      "517" = "전남",
-      "519" = "전남",
-      "520" = "전남",
-      "525" = "전남",
-      "526" = "전남",
-      "527" = "전남",
-      "529" = "전남",
-      "530" = "전남",
-      "534" = "전남",
-      "535" = "전남",
-      "536" = "전남",
-      "537" = "전남",
-      "539" = "전남",
-      "540" = "전남",
-      "542" = "전남",
-      "545" = "전남",
-      "546" = "전남",
-      "548" = "전남",
-      "550" = "전남",
-      "560" = "전북",
-      "561" = "전북",
-      "565" = "전북",
-      "566" = "전북",
-      "567" = "전북",
-      "568" = "전북",
-      "570" = "전북",
-      "573" = "전북",
-      "576" = "전북",
-      "579" = "전북",
-      "580" = "전북",
-      "585" = "전북",
-      "590" = "전북",
-      "595" = "전북",
-      "597" = "전북",
-      "600" = "부산",
-      "601" = "부산",
-      "602" = "부산",
-      "604" = "부산",
-      "606" = "부산",
-      "607" = "부산",
-      "608" = "부산",
-      "609" = "부산",
-      "611" = "부산",
-      "612" = "부산",
-      "613" = "부산",
-      "614" = "부산",
-      "616" = "부산",
-      "617" = "부산",
-      "618" = "부산",
-      "619" = "부산",
-      "621" = "경남",
-      "626" = "경남",
-      "627" = "경남",
-      "631" = "경남",
-      "635" = "경남",
-      "636" = "경남",
-      "637" = "경남",
-      "638" = "경남",
-      "641" = "경남",
-      "645" = "경남",
-      "650" = "경남",
-      "656" = "경남",
-      "660" = "경남",
-      "664" = "경남",
-      "666" = "경남",
-      "667" = "경남",
-      "668" = "경남",
-      "670" = "경남",
-      "676" = "경남",
-      "678" = "경남",
-      "680" = "울산",
-      "681" = "울산",
-      "682" = "울산",
-      "683" = "울산",
-      "689" = "울산",
-      "690" = "제주",
-      "695" = "제주",
-      "697" = "제주",
-      "699" = "제주",
-      "700" = "대구",
-      "701" = "대구",
-      "702" = "대구",
-      "703" = "대구",
-      "704" = "대구",
-      "705" = "대구",
-      "706" = "대구",
-      "711" = "대구",
-      "712" = "경북",
-      "714" = "경북",
-      "716" = "경북",
-      "717" = "경북",
-      "718" = "경북",
-      "719" = "경북",
-      "730" = "경북",
-      "740" = "경북",
-      "742" = "경북",
-      "745" = "경북",
-      "750" = "경북",
-      "755" = "경북",
-      "757" = "경북",
-      "760" = "경북",
-      "763" = "경북",
-      "764" = "경북",
-      "766" = "경북",
-      "767" = "경북",
-      "769" = "경북",
-      "770" = "경북",
-      "780" = "경북",
-      "790" = "경북",
-      "791" = "경북",
-      "799" = "경북",
-      "999" = "국외"
-  )
-  return(area_mapping[as.character(area_code)])
+```{python}
+area_mapping_py = {
+    100: "서울", 110: "서울", 120: "서울", 121: "서울", 122: "서울",
+    130: "서울", 131: "서울", 132: "서울", 133: "서울", 134: "서울",
+    135: "서울", 136: "서울", 137: "서울", 138: "서울", 139: "서울",
+    140: "서울", 142: "서울", 143: "서울", 150: "서울", 151: "서울",
+    152: "서울", 153: "서울", 156: "서울", 157: "서울", 158: "서울",
+    200: "강원", 209: "강원", 210: "강원", 215: "강원", 217: "강원",
+    219: "강원", 220: "강원", 225: "강원", 230: "강원", 232: "강원",
+    233: "강원", 235: "강원", 240: "강원", 245: "강원", 250: "강원",
+    252: "강원", 255: "강원", 269: "강원",
+    300: "대전", 301: "대전", 302: "대전", 305: "대전", 306: "대전",
+    312: "충남", 314: "충남", 320: "충남", 321: "충남", 323: "충남",
+    325: "충남", 330: "충남", 336: "충남", 339: "충남", 340: "충남",
+    343: "충남", 345: "충남", 350: "충남", 355: "충남", 356: "충남",
+    357: "충남",
+    360: "충북", 361: "충북", 363: "충북", 365: "충북", 367: "충북",
+    368: "충북", 369: "충북", 370: "충북", 373: "충북", 376: "충북",
+    380: "충북", 390: "충북", 395: "충북",
+    400: "인천", 401: "인천", 402: "인천", 403: "인천", 404: "인천",
+    405: "인천", 406: "인천", 407: "인천", 409: "인천", 417: "인천",
+    411: "경기", 412: "경기", 413: "경기", 415: "경기",
+    420: "경기", 421: "경기", 422: "경기", 423: "경기", 425: "경기",
+    426: "경기", 427: "경기", 429: "경기", 430: "경기", 431: "경기",
+    435: "경기", 437: "경기", 440: "경기", 441: "경기", 442: "경기",
+    443: "경기", 445: "경기", 447: "경기", 449: "경기", 456: "경기",
+    459: "경기", 461: "경기", 462: "경기", 463: "경기", 464: "경기",
+    465: "경기", 467: "경기", 469: "경기", 471: "경기", 472: "경기",
+    476: "경기", 477: "경기", 480: "경기", 481: "경기", 482: "경기",
+    483: "경기", 487: "경기",
+    500: "광주", 501: "광주", 502: "광주", 503: "광주", 506: "광주",
+    513: "전남", 515: "전남", 516: "전남", 517: "전남", 519: "전남",
+    520: "전남", 525: "전남", 526: "전남", 527: "전남", 529: "전남",
+    530: "전남", 534: "전남", 535: "전남", 536: "전남", 537: "전남",
+    539: "전남", 540: "전남", 542: "전남", 545: "전남", 546: "전남",
+    548: "전남", 550: "전남",
+    560: "전북", 561: "전북", 565: "전북", 566: "전북", 567: "전북",
+    568: "전북", 570: "전북", 573: "전북", 576: "전북", 579: "전북",
+    580: "전북", 585: "전북", 590: "전북", 595: "전북", 597: "전북",
+    600: "부산", 601: "부산", 602: "부산", 604: "부산", 606: "부산",
+    607: "부산", 608: "부산", 609: "부산", 611: "부산", 612: "부산",
+    613: "부산", 614: "부산", 616: "부산", 617: "부산", 618: "부산",
+    619: "부산",
+    621: "경남", 626: "경남", 627: "경남", 631: "경남", 635: "경남",
+    636: "경남", 637: "경남", 638: "경남", 641: "경남", 645: "경남",
+    650: "경남", 656: "경남", 660: "경남", 664: "경남", 666: "경남",
+    667: "경남", 668: "경남", 670: "경남", 676: "경남", 678: "경남",
+    680: "울산", 681: "울산", 682: "울산", 683: "울산", 689: "울산",
+    690: "제주", 695: "제주", 697: "제주", 699: "제주",
+    700: "대구", 701: "대구", 702: "대구", 703: "대구", 704: "대구",
+    705: "대구", 706: "대구", 711: "대구",
+    712: "경북", 714: "경북", 716: "경북", 717: "경북", 718: "경북",
+    719: "경북", 730: "경북", 740: "경북", 742: "경북", 745: "경북",
+    750: "경북", 755: "경북", 757: "경북", 760: "경북", 763: "경북",
+    764: "경북", 766: "경북", 767: "경북", 769: "경북", 770: "경북",
+    780: "경북", 790: "경북", 791: "경북", 799: "경북",
+    999: "국외"
 }
 
-# area 코드를 지역명으로 변환
-merged_df_clean$area_name <- sapply(merged_df_clean$area, function(x) map_area_code(x))
+sns.barplot(x='sex', y='percentage', data=sex_dist_py, palette='pastel')
+plt.title('Gender Distribution (%)')
+plt.ylabel('Percentage (%)')
+plt.xticks(ticks=[0, 1], labels=['Male', 'Female'])
+plt.tight_layout()
+plt.savefig('sex_dis.png', dpi=300, bbox_inches='tight')
+plt.show()
 
-# 지역별 집계
-region_counts <- merged_df_clean %>%
-  count(area_name) %>%
-  mutate(percentage = n / sum(n) * 100)
+sns.barplot(x='yy', y='percentage', data=birth_year_dist_py, palette='viridis')
+plt.title('Birth Year Distribution (%)')
+plt.ylabel('Percentage (%)')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('birth_dis.png', dpi=300, bbox_inches='tight')
+plt.show()
 
-# 지역 분포 시각화 - 막대 그래프로 표현
-ggplot(region_counts, aes(x = reorder(area_name, -percentage), y = percentage, fill = area_name)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = paste0(round(percentage, 1), "%")), vjust = -0.5, size = 3) +
-  labs(title = "지역별 분포 (결측치 제거 후)",
-       x = "지역", 
-       y = "비율 (%)") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "none")
+merged_df['area_name'] = merged_df['area'].map(area_mapping_py)
+area_name_dist_py = merged_df['area_name'].value_counts(dropna=False).rename_axis('area_name').reset_index(name='n')
+area_name_dist_py['percentage'] = (area_name_dist_py['n'] / area_name_dist_py['n'].sum()) * 100
+area_name_dist_py = area_name_dist_py.sort_values(by='percentage', ascending=False).reset_index(drop=True)
+sns.barplot(x='area_name', y='percentage', data=area_name_dist_py, palette='colorblind')
+plt.title('Regional Distribution (%)')
+plt.ylabel('Percentage (%)')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('area_dis.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+sns.barplot(x='status_category', y='percentage', data=status_dist_py, palette='Set2')
+plt.title('Dependent Variable Distribution (%)')
+plt.ylabel('Percentage (%)')
+plt.tight_layout()
+plt.savefig('status_dis.png', dpi=300, bbox_inches='tight')
+plt.show()
 ```
-
 
 ## 데이터 전처리 및 train test split
 
-```{r}
-pred_vars <- names(merged_df)[grep("_w[1-5]$", names(merged_df))]
-model_df <- merged_df %>%
-  select(!!sym(ID_VAR), !!sym(OUTCOME_VAR), !!sym(WEIGHT_VAR), all_of(pred_vars))
-model_df <- model_df %>%
-  filter(complete.cases(.))
-model_df[[OUTCOME_VAR]] <- factor(model_df[[OUTCOME_VAR]])
-levels(model_df[[OUTCOME_VAR]]) <- make.names(levels(model_df[[OUTCOME_VAR]]))
+```{python}
+import re
+from sklearn.model_selection import train_test_split
 
-X <- model_df[, pred_vars]
-y <- model_df[[OUTCOME_VAR]]
-weights <- model_df[[WEIGHT_VAR]]
+pred_vars = [col for col in merged_df.columns if re.search(r"_w[1-5]$", col)]
+merged_df[OUTCOME_VAR] = merged_df[OUTCOME_VAR].astype('category')
 
-set.seed(1234)
-train_index <- createDataPartition(y, p = 0.7, list = FALSE, times = 1)
-
-X_train <- X[train_index, , drop = FALSE]
-X_test <- X[-train_index, , drop = FALSE]
-y_train <- y[train_index]
-y_test <- y[-train_index]
-weights_train <- weights[train_index]
-weights_test <- weights[-train_index]
-```
-
-## 오버샘플링
-
-```{r}
-train_data <- cbind(X_train, y = y_train)
-rose_train_data <- ROSE(y ~ ., data = train_data, N = nrow(train_data) * 2)$data
-
-X_train <- rose_train_data[, setdiff(names(rose_train_data), "y")]
-y_train <- rose_train_data$y
+X = merged_df[pred_vars]
+y = merged_df[OUTCOME_VAR]
+composite_stratify_key = y.astype(str) + '_' + \
+                         merged_df['area_name'].astype(str) + '_' + \
+                         merged_df['sex'].astype(str)
+weights = merged_df[WEIGHT_VAR]
+X_train, X_test, y_train, y_test, weights_train, weights_test = train_test_split(X, y, weights, test_size=0.3, random_state=RANDOM_STATE, stratify=composite_stratify_key)
 ```
 
 ## 데이터 저장
 
-```{r}
-train_data_to_save <- data.frame(
-  y = y_train,
-  weights = weights_train,
-  X_train
-)
-write.csv(train_data_to_save, "_data/train_data.csv", row.names = FALSE)
-test_data_to_save <- data.frame(
-  y = y_test,
-  weights = weights_test,
-  X_test
-)
-write.csv(test_data_to_save, "_data/test_data.csv", row.names = FALSE)
+```{python}
+train_data_to_save = X_train.copy()
+train_data_to_save.insert(0, 'y', y_train)
+train_data_to_save.insert(1, 'weights', weights_train)
+train_data_to_save.to_csv('_data/train_data.csv', index=False)
+test_data_to_save = X_test.copy()
+test_data_to_save.insert(0, 'y', y_test)
+test_data_to_save.insert(1, 'weights', weights_test)
+test_data_to_save.to_csv('_data/test_data.csv', index=False)
 ```

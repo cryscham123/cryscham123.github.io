@@ -8,521 +8,473 @@ categories: ["data mining"]
 
 ## 데이터 load
 
-```{r}
-library(tidyverse)
-library(survey)
-library(semPlot)
-library(caret)
-library(randomForest)
-library(pROC)
-library(dplyr)
-library(stringr)
-library(kableExtra)
+```{python}
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_curve, auc, classification_report
+from sklearn.preprocessing import label_binarize
+import matplotlib.pyplot as plt
+import seaborn as sns
+from collections import Counter
+import warnings
 
-set.seed(1234)
+warnings.filterwarnings('ignore')
 
-X_train <- read.csv("_data/train_data.csv")
-X_test <- read.csv("_data/test_data.csv")
-y_train <- factor(X_train$y)
-y_test <- factor(X_test$y)
-weights_train <- X_train$weights
-weights_test <- X_test$weights
-X_train <- X_train %>% select(-y, -weights)
-X_test <- X_test %>% select(-y, -weights)
+plt.rcParams['font.family'] = 'Noto Sans KR'
+
+RANDOM_STATE = 54321
+np.random.seed(RANDOM_STATE)
+
+X_train_df = pd.read_csv("_data/train_data.csv")
+X_test_df = pd.read_csv("_data/test_data.csv")
+y_train = X_train_df['y'].astype('category')
+y_test = X_test_df['y'].astype('category')
+weights_train = X_train_df['weights']
+weights_test = X_test_df['weights']
+X_train = X_train_df.drop(columns=['y', 'weights'])
+X_test = X_test_df.drop(columns=['y', 'weights'])
 ```
 
-## 무작위 분류기 (Random Classifier)
+## 무작위 분류
 
+```{python}
+class_proportions_py = y_train.value_counts(normalize=True)
+test_categories = list(y_test.cat.categories)
+prop_values_ordered = class_proportions_py.reindex(test_categories, fill_value=0).values
+random_predictions = np.random.choice(
+    a=test_categories,
+    size=len(y_test),
+    replace=True,
+    p=prop_values_ordered
+)
+random_predictions_cat = pd.Categorical(random_predictions, categories=test_categories, ordered=False)
+cm_random = confusion_matrix(y_test, random_predictions_cat, sample_weight=weights_test, labels=test_categories)
 
-```{r}
-# 훈련 데이터에서 클래스 비율 계산
-class_proportions <- table(y_train) / length(y_train)
+print("\n=== 무작위 분류기 혼동 행렬 ===\n")
+cm_df_random = pd.DataFrame(cm_random, index=[f"Actual: {cat}" for cat in test_categories], columns=[f"Predicted: {cat}" for cat in test_categories])
+print(cm_df_random.round(2))
 
-# 테스트 데이터에 대한 무작위 예측 생성
-# 클래스 비율에 맞게 무작위로 샘플링
-random_predictions <- sample(levels(y_test), 
-                            size = length(y_test), 
-                            replace = TRUE, 
-                            prob = class_proportions)
-random_predictions <- factor(random_predictions, levels = levels(y_test))
+accuracy_random = accuracy_score(y_test, random_predictions_cat, sample_weight=weights_test)
+precision_random_sk = precision_score(y_test, random_predictions_cat, sample_weight=weights_test, average=None, labels=test_categories, zero_division=0)
+recall_random_sk = recall_score(y_test, random_predictions_cat, sample_weight=weights_test, average=None, labels=test_categories, zero_division=0)
+f1_score_random_sk = f1_score(y_test, random_predictions_cat, sample_weight=weights_test, average=None, labels=test_categories, zero_division=0)
 
-# 가중 혼동 행렬 계산
-weighted_confusion_matrix_random <- matrix(0,
-                                          nrow = length(levels(y_test)),
-                                          ncol = length(levels(y_test)),
-                                          dimnames = list(Actual = levels(y_test), Predicted = levels(y_test)))
+print("\n=== 무작위 분류기 성능 지표 ===\n")
+print(f"정확도: {accuracy_random:.4f}")
 
-for (i in 1:length(y_test)) {
-  actual_cat <- as.character(y_test[i])
-  predicted_cat <- as.character(random_predictions[i])
-  weight <- weights_test[i]
-  if (actual_cat %in% levels(y_test) && predicted_cat %in% levels(y_test)) {
-    weighted_confusion_matrix_random[actual_cat, predicted_cat] <- weighted_confusion_matrix_random[actual_cat, predicted_cat] + weight
-  }
+print("\n무작위 분류기 범주별 정밀도")
+print(pd.Series(precision_random_sk, index=test_categories).round(4))
+
+print("\n무작위 분류기 범주별 재현율")
+print(pd.Series(recall_random_sk, index=test_categories).round(4))
+
+print("\n무작위 분류기 범주별 F1-score")
+print(pd.Series(f1_score_random_sk, index=test_categories).round(4))
+```
+
+## Random Forest
+
+```{python}
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+
+base_rf = RandomForestClassifier(
+    random_state=RANDOM_STATE,
+    oob_score=True,
+    class_weight='balanced_subsample',
+    n_jobs=-1
+)
+
+param_grid = {
+    'n_estimators': [100, 300, 500],
+    'max_depth': [None, 10, 20, 30],
+    'max_features': ['sqrt', 'log2'],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
 }
 
-cat("\n=== 무작위 분류기 가중 혼동 행렬 ===\n")
-print(round(weighted_confusion_matrix_random, 2))
+grid_search = GridSearchCV(
+    estimator=base_rf,
+    param_grid=param_grid,
+    cv=3,
+    scoring='accuracy',
+    n_jobs=-1,
+    verbose=False
+)
 
-# 무작위 분류기 가중 성능 지표 계산
-total_weighted_sum_random <- sum(weighted_confusion_matrix_random)
-weighted_accuracy_random <- sum(diag(weighted_confusion_matrix_random)) / total_weighted_sum_random
-cat("\n=== 무작위 분류기 가중 성능 지표 ===\n")
-cat("가중 정확도:", round(weighted_accuracy_random, 4), "\n")
+grid_search.fit(X_train, y_train, sample_weight=weights_train)
 
-# 각 범주별 가중 정밀도, 재현율, F1-score 계산
-weighted_precision_random <- numeric(length(levels(y_test)))
-weighted_recall_random <- numeric(length(levels(y_test)))
-weighted_f1_score_random <- numeric(length(levels(y_test)))
-names(weighted_precision_random) <- names(weighted_recall_random) <- names(weighted_f1_score_random) <- levels(y_test)
+print(f"\n최적의 하이퍼파라미터: {grid_search.best_params_}")
+print(f"최적 교차 검증 점수: {grid_search.best_score_:.4f}")
 
-for (cat in levels(y_test)) {
-  TP <- weighted_confusion_matrix_random[cat, cat]
-  FP <- sum(weighted_confusion_matrix_random[, cat]) - TP
-  FN <- sum(weighted_confusion_matrix_random[cat, ]) - TP
+rf_model_py = grid_search.best_estimator_
+print(f"OOB Score: {rf_model_py.oob_score_:.4f}")
 
-  weighted_precision_random[cat] <- ifelse((TP + FP) == 0, 0, TP / (TP + FP))
-  weighted_recall_random[cat] <- ifelse((TP + FN) == 0, 0, TP / (TP + FN))
-  weighted_f1_score_random[cat] <- ifelse((weighted_precision_random[cat] + weighted_recall_random[cat]) == 0, 0,
-                                        2 * (weighted_precision_random[cat] * weighted_recall_random[cat]) / (weighted_precision_random[cat] + weighted_recall_random[cat]))
-}
+importances = rf_model_py.feature_importances_
+feature_names = X_train.columns
 
-cat("\n무작위 분류기 범주별 가중 정밀도:\n")
-print(round(weighted_precision_random, 4))
+max_importance = importances.max()
+scaled_importances = (importances / max_importance) * 100
+forest_importances = pd.Series(scaled_importances, index=feature_names).sort_values(ascending=False)
 
-cat("\n무작위 분류기 범주별 가중 재현율:\n")
-print(round(weighted_recall_random, 4))
+print("\n=== Random Forest 중요도 ===")
+top_10_importances = forest_importances
+top_10_df = pd.DataFrame({'Feature': top_10_importances.index, 'Importance': top_10_importances.values})
+print(top_10_df.round(2))
 
-cat("\n무작위 분류기 범주별 가중 F1-score:\n")
-print(round(weighted_f1_score_random, 4))
+sns.barplot(x=top_10_importances.values, y=top_10_importances.index)
+plt.title('Feature Importances (Random Forest)', fontsize=10)
+plt.xlabel('Importance Score', fontsize=8)
+plt.ylabel('Feature', fontsize=8)
+plt.xticks(fontsize=7)
+plt.yticks(fontsize=7)
+plt.tight_layout()
+plt.savefig('ran_imp.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+y_pred_rf = rf_model_py.predict(X_test)
+y_pred_proba_rf = rf_model_py.predict_proba(X_test)
+
+y_pred_rf_cat = pd.Categorical(y_pred_rf, categories=test_categories, ordered=False)
+
+cm_rf = confusion_matrix(y_test, y_pred_rf_cat, sample_weight=weights_test, labels=test_categories)
+print("\n=== Random Forest 혼동 행렬 ===\n")
+cm_df_rf = pd.DataFrame(cm_rf, index=[f"Actual: {cat}" for cat in test_categories], columns=[f"Predicted: {cat}" for cat in test_categories])
+print(cm_df_rf.round(2))
+
+accuracy_rf = accuracy_score(y_test, y_pred_rf_cat, sample_weight=weights_test)
+precision_rf_sk = precision_score(y_test, y_pred_rf_cat, sample_weight=weights_test, average=None, labels=test_categories, zero_division=0)
+recall_rf_sk = recall_score(y_test, y_pred_rf_cat, sample_weight=weights_test, average=None, labels=test_categories, zero_division=0)
+f1_score_rf_sk = f1_score(y_test, y_pred_rf_cat, sample_weight=weights_test, average=None, labels=test_categories, zero_division=0)
+
+print("\n=== Random Forest 성능 지표 ===\n")
+print(f"정확도: {accuracy_rf:.4f}")
+print("\nRandom Forest 범주별 정밀도:")
+print(pd.Series(precision_rf_sk, index=test_categories).round(4))
+print("\nRandom Forest 범주별 재현율:")
+print(pd.Series(recall_rf_sk, index=test_categories).round(4))
+print("\nRandom Forest 범주별 F1-score:")
+print(pd.Series(f1_score_rf_sk, index=test_categories).round(4))
 ```
 
 
-## Random Forest 모델 학습 및 평가
+## XGBoost
 
-```{r}
-rf_model <- randomForest(
-  x = X_train,
-  y = y_train,
-  weights = weights_train,
-  ntree = 500,
-  mtry = floor(sqrt(ncol(X_train))),
-  importance = TRUE,
-  sampsize = table(y_train),
-  replace = TRUE
+```{python}
+import xgboost as xgb
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+y_train_numeric = le.fit_transform(y_train)
+y_test_numeric = le.transform(y_test)
+
+class_labels_ordered = list(le.classes_) 
+num_classes = len(class_labels_ordered)
+
+print(f"Label Encoder 클래스: {class_labels_ordered} -> {list(range(num_classes))}")
+
+xgb_model = xgb.XGBClassifier(
+    objective='multi:softprob',
+    eval_metric='mlogloss',
+    num_class=num_classes,
+    seed=RANDOM_STATE,
+    use_label_encoder=False,
+    verbosity=0
 )
-varImpPlot(rf_model)
-y_pred <- predict(rf_model, X_test)
-actual_classes <- y_test
-predicted_classes <- y_pred
-test_weights <- weights_test
-outcome_levels <- levels(actual_classes)
-weighted_confusion_matrix <- matrix(0,
-                                   nrow = length(outcome_levels),
-                                   ncol = length(outcome_levels),
-                                   dimnames = list(Actual = outcome_levels, Predicted = outcome_levels))
-for (i in 1:length(actual_classes)) {
-  actual_cat <- as.character(actual_classes[i])
-  predicted_cat <- as.character(predicted_classes[i])
-  weight <- test_weights[i]
-  weighted_confusion_matrix[actual_cat, predicted_cat] <- weighted_confusion_matrix[actual_cat, predicted_cat] + weight
-}
-print(round(weighted_confusion_matrix, 2))
-total_weighted_sum <- sum(weighted_confusion_matrix)
-weighted_accuracy <- sum(diag(weighted_confusion_matrix)) / total_weighted_sum
-cat("\n=== 가중 성능 지표 ===\n")
-cat("가중 정확도:", round(weighted_accuracy, 4), "\n")
-weighted_precision <- numeric(length(outcome_levels))
-weighted_recall <- numeric(length(outcome_levels))
-weighted_f1_score <- numeric(length(outcome_levels))
-names(weighted_precision) <- names(weighted_recall) <- names(weighted_f1_score) <- outcome_levels
 
-for (cat in outcome_levels) {
-  TP <- weighted_confusion_matrix[cat, cat]
-  FP <- sum(weighted_confusion_matrix[, cat]) - TP # 해당 열의 합 - TP
-  FN <- sum(weighted_confusion_matrix[cat, ]) - TP # 해당 행의 합 - TP
-  weighted_precision[cat] <- ifelse((TP + FP) == 0, 0, TP / (TP + FP))
-  weighted_recall[cat] <- ifelse((TP + FN) == 0, 0, TP / (TP + FN))
-  weighted_f1_score[cat] <- ifelse((weighted_precision[cat] + weighted_recall[cat]) == 0, 0,
-                                    2 * (weighted_precision[cat] * weighted_recall[cat]) / (weighted_precision[cat] + weighted_recall[cat]))
+param_grid = {
+    'n_estimators': [100, 200],
+    'max_depth': [3, 6],
+    'learning_rate': [0.05, 0.1],
+    'subsample': [0.8, 1.0],
+    'colsample_bytree': [0.8, 1.0]
 }
-cat("\n범주별 가중 정밀도:\n")
-print(round(weighted_precision, 4))
-cat("\n범주별 가중 재현율:\n")
-print(round(weighted_recall, 4))
-cat("\n범주별 가중 F1-score:\n")
-print(round(weighted_f1_score, 4))
-y_pred_prob <- predict(rf_model, X_test, type = "prob")
-cat("\n비가중 ROC 곡선 (참고용):\n")
-plot_roc <- function() {
-  num_classes <- length(levels(y_test))
-  if (num_classes <= 4 && num_classes > 0) { # 범주가 1개 이하이면 플롯 불가능
-    par(mfrow = c(2, ceiling(num_classes/2)))
-  } else if (num_classes > 4) {
-    par(mfrow = c(2, 2)) # 범주가 많으면 일부만 표시하거나 레이아웃 조정 필요
-    warning("범주가 4개 이상입니다. 일부 ROC 곡선만 표시될 수 있습니다. 레이아웃을 조정하거나 플롯 코드 를 수정하세요.")
-  } else {
-    cat("ROC 곡선을 그릴 범주가 부족합니다.\n")
-    return(numeric(0)) # 빈 numeric 반환
-  }
-  auc_values <- numeric(num_classes)
-  names(auc_values) <- levels(y_test)
-  for (i in 1:num_classes) {
-    class_label <- levels(y_test)[i]
-    if(class_label %in% unique(y_test) && class_label %in% colnames(y_pred_prob)) {
-      roc_obj <- roc(response = ifelse(y_test == class_label, 1, 0), predictor = y_pred_prob[, class_label])
-      auc_values[i] <- auc(roc_obj)
-      plot(roc_obj, main = paste("ROC for", class_label, "(Unweighted)"), col = "blue", lwd = 2)
-      abline(a = 0, b = 1, lty = 2, col = "gray")
-      text(0.5, 0.3, paste("AUC =", round(auc_values[i], 3)), col = "red")
-      } else {
-        cat("클래스", class_label, "에 대한 ROC 곡선을 그릴 수 없습니다 (데이터 부족).\n")
-        auc_values[i] <- NA # AUC 값에 NA 할당
-        plot.new() # 빈 플롯 생성
-        text(0.5, 0.5, paste("No ROC for", class_label))
-      }
-  }
-  par(mfrow = c(1, 1))
-  return(auc_values)
-}
-auc_values_unweighted <- plot_roc()
-cat("\n각 클래스별 비가중 AUC:\n")
-print(data.frame(Class = levels(y_test), AUC_Unweighted = auc_values_unweighted))
+
+grid_search = GridSearchCV(
+    estimator=xgb_model,
+    param_grid=param_grid,
+    cv=3,
+    scoring='accuracy',
+    n_jobs=-1,
+    verbose=1
+)
+
+grid_search.fit(X_train, y_train_numeric, sample_weight=weights_train)
+
+print(f"\n최적의 하이퍼파라미터: {grid_search.best_params_}")
+print(f"최적 교차 검증 점수: {grid_search.best_score_:.4f}")
+
+xgb_model_py = grid_search.best_estimator_
+
+importance_scores = xgb_model_py.feature_importances_
+xgb_importance_df = pd.DataFrame({
+    'Feature': X_train.columns,
+    'Importance': importance_scores
+})
+
+max_importance = xgb_importance_df['Importance'].max()
+xgb_importance_df['Importance'] = (xgb_importance_df['Importance'] / max_importance) * 100
+xgb_importance_df = xgb_importance_df.sort_values(by='Importance', ascending=False)
+
+print("\nXGBoost 변수 중요도")
+print(xgb_importance_df)
+
+sns.barplot(x='Importance', y='Feature', data=xgb_importance_df)
+plt.title('Feature Importances (XGBoost)', fontsize=10)
+plt.xlabel('Importance', fontsize=8)
+plt.ylabel('Feature', fontsize=8)
+plt.xticks(fontsize=7)
+plt.yticks(fontsize=7)
+plt.tight_layout()
+plt.savefig('xg_imp.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+y_pred_proba_xgb = xgb_model_py.predict_proba(X_test)
+y_pred_xgb_numeric = np.argmax(y_pred_proba_xgb, axis=1)
+y_pred_xgb = le.inverse_transform(y_pred_xgb_numeric)
+y_pred_xgb_cat = pd.Categorical(y_pred_xgb, categories=class_labels_ordered, ordered=False)
+
+cm_xgb = confusion_matrix(y_test, y_pred_xgb_cat, sample_weight=weights_test, labels=class_labels_ordered)
+print("\n=== XGBoost 모델 혼동 행렬 ===\n")
+cm_df_xgb = pd.DataFrame(cm_xgb, index=[f"Actual: {cat}" for cat in class_labels_ordered], columns=[f"Predicted: {cat}" for cat in class_labels_ordered])
+print(cm_df_xgb.round(2))
+
+accuracy_xgb = accuracy_score(y_test, y_pred_xgb_cat, sample_weight=weights_test)
+precision_xgb_sk = precision_score(y_test, y_pred_xgb_cat, sample_weight=weights_test, average=None, labels=class_labels_ordered, zero_division=0)
+recall_xgb_sk = recall_score(y_test, y_pred_xgb_cat, sample_weight=weights_test, average=None, labels=class_labels_ordered, zero_division=0)
+f1_score_xgb_sk = f1_score(y_test, y_pred_xgb_cat, sample_weight=weights_test, average=None, labels=class_labels_ordered, zero_division=0)
+
+print("\n=== XGBoost 모델 성능 지표 ===\n")
+print(f"정확도: {accuracy_xgb:.4f}")
+print("\nXGBoost 모델 범주별 정밀도:")
+print(pd.Series(precision_xgb_sk, index=class_labels_ordered).round(4))
+print("\nXGBoost 모델 범주별 재현율:")
+print(pd.Series(recall_xgb_sk, index=class_labels_ordered).round(4))
+print("\nXGBoost 모델 범주별 F1-score:")
+print(pd.Series(f1_score_xgb_sk, index=class_labels_ordered).round(4))
 ```
 
-## 모델 튜닝
+## Logistic Regression
 
-```{r}
-ctrl <- trainControl(
-  method = "cv",
-  number = 5,
-  savePredictions = "final",
-  classProbs = TRUE,
-  summaryFunction = multiClassSummary
+```{python}
+from sklearn.linear_model import LogisticRegression
+import statsmodels.api as sm
+
+base_log_reg = LogisticRegression(
+    solver='lbfgs',
+    max_iter=5000,
+    random_state=RANDOM_STATE,
+    n_jobs=-1
 )
-param_grid <- expand.grid(
-  mtry = floor(sqrt(ncol(X_train)))
+
+param_grid = [
+    {
+        'penalty': ['l1'],
+        'C': [0.001, 0.01, 0.1, 1, 10],
+        'solver': ['liblinear', 'saga'],
+        'class_weight': ['balanced', None]
+    },
+    {
+        'penalty': ['l2'],
+        'C': [0.001, 0.01, 0.1, 1, 10],
+        'solver': ['lbfgs', 'liblinear', 'saga'],
+        'class_weight': ['balanced', None]
+    },
+    {
+        'penalty': ['elasticnet'],
+        'C': [0.001, 0.01, 0.1, 1, 10],
+        'solver': ['saga'],
+        'l1_ratio': [0.2, 0.5, 0.8],
+        'class_weight': ['balanced', None]
+    },
+    {
+        'penalty': [None],
+        'solver': ['lbfgs', 'saga'],
+        'class_weight': ['balanced', None]
+    }
+]
+
+grid_search = GridSearchCV(
+    estimator=base_log_reg,
+    param_grid=param_grid,
+    cv=3,
+    scoring='accuracy',
+    n_jobs=-1,
+    verbose=False
 )
-if (ncol(X_train) == 1) {
-  param_grid <- expand.grid(mtry = 1)
-}
-rf_tuned <- train(
-  x = X_train,
-  y = y_train,
-  method = "rf",
-  metric = "Accuracy",
-  weights = weights_train,
-  trControl = ctrl,
-  tuneGrid = param_grid,
-  importance = TRUE,
-  ntree = 500
-)
-print(rf_tuned)
-y_pred_tuned <- predict(rf_tuned, X_test)
-actual_classes_tuned <- y_test
-predicted_classes_tuned <- y_pred_tuned
-test_weights_tuned <- weights_test
-weighted_confusion_matrix_tuned <- matrix(0,
-                                         nrow = length(levels(actual_classes_tuned)),
-                                         ncol = length(levels(actual_classes_tuned)),
-                                         dimnames = list(Actual = levels(actual_classes_tuned), Predicted = levels(actual_classes_tuned)))
 
-for (i in 1:length(actual_classes_tuned)) {
-  actual_cat <- as.character(actual_classes_tuned[i])
-  predicted_cat <- as.character(predicted_classes_tuned[i])
-  weight <- test_weights_tuned[i]
-   if (actual_cat %in% levels(actual_classes_tuned) && predicted_cat %in% levels(actual_classes_tuned)) {
-      weighted_confusion_matrix_tuned[actual_cat, predicted_cat] <- weighted_confusion_matrix_tuned[actual_cat, predicted_cat] + weight
-  } else {
-      warning(paste("튜닝 모델: 유효하지 않은 범주 발견: 실제 =", actual_cat, ", 예측 =", predicted_cat, "인 개체 (인덱스:", i, ")"))
-  }
-}
-cat("\n=== 튜닝된 모델 가중 혼동 행렬 ===\n")
-print(round(weighted_confusion_matrix_tuned, 2)) # 보기 좋게 반올림하여 출력
-total_weighted_sum_tuned <- sum(weighted_confusion_matrix_tuned)
-weighted_accuracy_tuned <- sum(diag(weighted_confusion_matrix_tuned)) / total_weighted_sum_tuned
-cat("\n=== 튜닝된 모델 가중 성능 지표 ===\n")
-cat("가중 정확도:", round(weighted_accuracy_tuned, 4), "\n")
-weighted_precision_tuned <- numeric(length(levels(actual_classes_tuned)))
-weighted_recall_tuned <- numeric(length(levels(actual_classes_tuned)))
-weighted_f1_score_tuned <- numeric(length(levels(actual_classes_tuned)))
-names(weighted_precision_tuned) <- names(weighted_recall_tuned) <- names(weighted_f1_score_tuned) <- levels(actual_classes_tuned)
-for (cat in levels(actual_classes_tuned)) {
-  TP <- weighted_confusion_matrix_tuned[cat, cat]
-  FP <- sum(weighted_confusion_matrix_tuned[, cat]) - TP
-  FN <- sum(weighted_confusion_matrix_tuned[cat, ]) - TP
+grid_search.fit(X_train, y_train, sample_weight=weights_train)
 
-  weighted_precision_tuned[cat] <- ifelse((TP + FP) == 0, 0, TP / (TP + FP))
-  weighted_recall_tuned[cat] <- ifelse((TP + FN) == 0, 0, TP / (TP + FN))
-  weighted_f1_score_tuned[cat] <- ifelse((weighted_precision_tuned[cat] + weighted_recall_tuned[cat]) == 0, 0,
-                                    2 * (weighted_precision_tuned[cat] * weighted_recall_tuned[cat]) / (weighted_precision_tuned[cat] + weighted_recall_tuned[cat]))
-}
+print(f"\n최적의 하이퍼파라미터: {grid_search.best_params_}")
+print(f"최적 교차 검증 점수: {grid_search.best_score_:.4f}")
 
-cat("\n튜닝된 모델 범주별 가중 정밀도:\n")
-print(round(weighted_precision_tuned, 4))
+log_reg_model_py = grid_search.best_estimator_
+class_labels_logreg = log_reg_model_py.classes_
+coef_series = pd.Series(log_reg_model_py.coef_[0], index=X_train.columns)
+sorted_coefs = coef_series.reindex(coef_series.abs().sort_values(ascending=False).index)
 
-cat("\n튜닝된 모델 범주별 가중 재현율:\n")
-print(round(weighted_recall_tuned, 4))
+X_train_sm = sm.add_constant(X_train)
+X_test_sm = sm.add_constant(X_test)
 
-cat("\n튜닝된 모델 범주별 가중 F1-score:\n")
-print(round(weighted_f1_score_tuned, 4))
+y_train_binary = (y_train == class_labels_logreg[1]).astype(int)
 
-importance_obj_tuned <- varImp(rf_tuned)
+logit_model = sm.Logit(y_train_binary, X_train_sm)
+logit_result = logit_model.fit(disp=0)
 
-if("importance" %in% names(importance_obj_tuned)) {
-  imp_df_tuned <- importance_obj_tuned$importance
-} else {
-  imp_df_tuned <- importance_obj_tuned
-}
+coef_summary = logit_result.summary2().tables[1]
+coef_summary_df = pd.DataFrame(coef_summary)
+coef_summary_sorted = coef_summary_df.sort_values('Coef.', key=abs, ascending=False)
+print("\n계수 및 p-value (절댓값이 큰 순서):")
+print(coef_summary_sorted[['Coef.', 'P>|z|']])
 
-var_names_tuned <- rownames(imp_df_tuned)
-if("Overall" %in% colnames(imp_df_tuned)) {
-  var_importance_tuned <- imp_df_tuned$Overall
-} else {
-  var_importance_tuned <- imp_df_tuned[,1]
-}
+y_pred_logistic_py = log_reg_model_py.predict(X_test)
 
-importance_df_tuned <- data.frame(
-  Variable = var_names_tuned,
-  Importance = var_importance_tuned
-)
-importance_df_tuned <- importance_df_tuned[order(importance_df_tuned$Importance, decreasing = TRUE),]
+test_categories_logreg = list(y_test.cat.categories) if hasattr(y_test, 'cat') else sorted(list(y_test.unique()))
+y_pred_logistic_cat = pd.Categorical(y_pred_logistic_py, categories=test_categories_logreg, ordered=False)
 
-# 상위 10개 변수 출력 (튜닝된 모델)
-top_vars_tuned <- head(importance_df_tuned$Variable, 10)
-cat("\n튜닝된 모델에서 가장 중요한 변수 상위 10개:\n")
-print(top_vars_tuned)
+cm_logistic = confusion_matrix(y_test, y_pred_logistic_cat, sample_weight=weights_test, labels=test_categories_logreg)
+print("\n=== 로지스틱 회귀 모델 혼동 행렬 ===\n")
+cm_df_logistic = pd.DataFrame(cm_logistic, index=[f"Actual: {cat}" for cat in test_categories_logreg], columns=[f"Predicted: {cat}" for cat in test_categories_logreg])
+print(cm_df_logistic.round(2))
+
+accuracy_logistic = accuracy_score(y_test, y_pred_logistic_cat, sample_weight=weights_test)
+precision_logistic_sk = precision_score(y_test, y_pred_logistic_cat, sample_weight=weights_test, average=None, labels=test_categories_logreg, zero_division=0)
+recall_logistic_sk = recall_score(y_test, y_pred_logistic_cat, sample_weight=weights_test, average=None, labels=test_categories_logreg, zero_division=0)
+f1_score_logistic_sk = f1_score(y_test, y_pred_logistic_cat, sample_weight=weights_test, average=None, labels=test_categories_logreg, zero_division=0)
+
+print("\n=== 로지스틱 회귀 모델 성능 지표 ===\n")
+print(f"정확도: {accuracy_logistic:.4f}")
+print("\n로지스틱 회귀 모델 범주별 정밀도:")
+print(pd.Series(precision_logistic_sk, index=test_categories_logreg).round(4))
+print("\n로지스틱 회귀 모델 범주별 재현율:")
+print(pd.Series(recall_logistic_sk, index=test_categories_logreg).round(4))
+print("\n로지스틱 회귀 모델 범주별 F1-score:")
+print(pd.Series(f1_score_logistic_sk, index=test_categories_logreg).round(4))
 ```
 
-## XGBoost 모델
+## 모델 성능 비교
 
+```{python}
+import matplotlib.cm as cm
 
-```{r}
-# XGBoost 모델 학습 및 평가
-library(xgboost)
+model_metrics_list = []
+class_labels_ordered = list(y_test.cat.categories)
 
-# 데이터 변환 (XGBoost는 DMatrix 형식을 사용)
-# 먼저 factor를 수치형으로 변환
-y_train_numeric <- as.integer(y_train) - 1  # 0부터 시작하는 인덱스로 변환
-y_test_numeric <- as.integer(y_test) - 1
+def compile_metrics(model_name, accuracy, precision_arr, recall_arr, f1_arr):
+    metrics = {'Model': model_name, 'Accuracy': accuracy}
+    for i, label in enumerate(class_labels_ordered):
+        metrics[f'Precision ({label})'] = precision_arr[i]
+        metrics[f'Recall ({label})'] = recall_arr[i]
+        metrics[f'F1-score ({label})'] = f1_arr[i]
+    return metrics
 
-# XGBoost DMatrix 생성
-dtrain <- xgb.DMatrix(data = as.matrix(X_train), label = y_train_numeric, weight = weights_train)
-dtest <- xgb.DMatrix(data = as.matrix(X_test), label = y_test_numeric, weight = weights_test)
+model_metrics_list.append(compile_metrics(
+    "Random Classifier",
+    accuracy_random,
+    precision_random_sk,
+    recall_random_sk,
+    f1_score_random_sk
+))
+model_metrics_list.append(compile_metrics(
+    "Random Forest",
+    accuracy_rf,
+    precision_rf_sk,
+    recall_rf_sk,
+    f1_score_rf_sk
+))
+model_metrics_list.append(compile_metrics(
+    "XGBoost",
+    accuracy_xgb,
+    precision_xgb_sk,
+    recall_xgb_sk,
+    f1_score_xgb_sk
+))
+model_metrics_list.append(compile_metrics(
+    "Logistic Regression",
+    accuracy_logistic,
+    precision_logistic_sk,
+    recall_logistic_sk,
+    f1_score_logistic_sk
+))
 
-# 모델 파라미터 설정
-xgb_params <- list(
-  objective = "multi:softprob",
-  eval_metric = "mlogloss",
-  num_class = length(levels(y_train)),
-  eta = 0.3,               # 학습률
-  max_depth = 6,           # 트리 최대 깊이
-  min_child_weight = 1,    # 최소 자식 노드 가중치 합
-  subsample = 0.8,         # 샘플링 비율
-  colsample_bytree = 0.8   # 특성 샘플링 비율
-)
+comparison_df = pd.DataFrame(model_metrics_list).set_index('Model')
+models = comparison_df.index.tolist()
+all_categories = ['Accuracy']
+for label in class_labels_ordered:
+    all_categories.extend([
+        f'Precision ({label})',
+        f'Recall ({label})',
+        f'F1-score ({label})'
+    ])
+angles = np.linspace(0, 2*np.pi, len(all_categories), endpoint=False).tolist()
+angles += angles[:1]
+ax = plt.subplot(111, polar=True)
+colors = cm.tab10(np.linspace(0, 1, len(models)))
+for i, model in enumerate(models):
+    values = comparison_df.loc[model, all_categories].values.flatten().tolist()
+    values += values[:1]
+    ax.plot(angles, values, 'o-', linewidth=2, color=colors[i], label=model, alpha=0.8)
+    ax.fill(angles, values, color=colors[i], alpha=0.1)
+ax.set_xticks(angles[:-1])
+ax.set_xticklabels(all_categories, fontsize=10)
 
-# XGBoost 모델 학습
-cat("\nXGBoost 모델 학습 중...\n")
-xgb_model <- xgb.train(
-  params = xgb_params,
-  data = dtrain,
-  nrounds = 100,           # 부스팅 반복 횟수
-  verbose = 0
-)
-cat("XGBoost 모델 학습 완료.\n")
-
-# 변수 중요도 확인
-xgb_importance <- xgb.importance(model = xgb_model)
-if (nrow(xgb_importance) > 0) {
-  cat("\nXGBoost 변수 중요도 상위 10개:\n")
-  print(head(xgb_importance, 10))
-  xgb.plot.importance(xgb_importance, top_n = 10)
-} else {
-  cat("\nXGBoost 변수 중요도를 계산할 수 없습니다.\n")
-}
-
-# XGBoost 모델로 테스트 세트 예측
-cat("\nXGBoost 모델로 테스트 세트 예측 중...\n")
-xgb_pred_probs <- predict(xgb_model, dtest)
-# 예측 확률을 행렬로 변환 (각 클래스별 확률값)
-xgb_pred_probs_matrix <- matrix(xgb_pred_probs, nrow = length(y_test), byrow = TRUE)
-# 가장 높은 확률을 가진 클래스를 예측값으로 선택
-y_pred_xgb_idx <- apply(xgb_pred_probs_matrix, 1, which.max) - 1  # 0-based 인덱스
-# 다시 factor로 변환
-y_pred_xgb <- factor(levels(y_test)[y_pred_xgb_idx + 1], levels = levels(y_test))
-cat("예측 완료.\n")
-
-# 가중 혼동 행렬 계산
-weighted_confusion_matrix_xgb <- matrix(0,
-                                       nrow = length(levels(y_test)),
-                                       ncol = length(levels(y_test)),
-                                       dimnames = list(Actual = levels(y_test), Predicted = levels(y_test)))
-
-for (i in 1:length(y_test)) {
-  actual_cat <- as.character(y_test[i])
-  predicted_cat <- as.character(y_pred_xgb[i])
-  weight <- weights_test[i]
-  if (actual_cat %in% levels(y_test) && predicted_cat %in% levels(y_test)) {
-    weighted_confusion_matrix_xgb[actual_cat, predicted_cat] <- weighted_confusion_matrix_xgb[actual_cat, predicted_cat] + weight
-  }
-}
-
-cat("\n=== XGBoost 모델 가중 혼동 행렬 ===\n")
-print(round(weighted_confusion_matrix_xgb, 2))
-
-# XGBoost 모델 가중 성능 지표 계산
-total_weighted_sum_xgb <- sum(weighted_confusion_matrix_xgb)
-weighted_accuracy_xgb <- sum(diag(weighted_confusion_matrix_xgb)) / total_weighted_sum_xgb
-cat("\n=== XGBoost 모델 가중 성능 지표 ===\n")
-cat("가중 정확도:", round(weighted_accuracy_xgb, 4), "\n")
-
-# 각 범주별 가중 정밀도, 재현율, F1-score 계산
-weighted_precision_xgb <- numeric(length(levels(y_test)))
-weighted_recall_xgb <- numeric(length(levels(y_test)))
-weighted_f1_score_xgb <- numeric(length(levels(y_test)))
-names(weighted_precision_xgb) <- names(weighted_recall_xgb) <- names(weighted_f1_score_xgb) <- levels(y_test)
-
-for (cat in levels(y_test)) {
-  TP <- weighted_confusion_matrix_xgb[cat, cat]
-  FP <- sum(weighted_confusion_matrix_xgb[, cat]) - TP
-  FN <- sum(weighted_confusion_matrix_xgb[cat, ]) - TP
-
-  weighted_precision_xgb[cat] <- ifelse((TP + FP) == 0, 0, TP / (TP + FP))
-  weighted_recall_xgb[cat] <- ifelse((TP + FN) == 0, 0, TP / (TP + FN))
-  weighted_f1_score_xgb[cat] <- ifelse((weighted_precision_xgb[cat] + weighted_recall_xgb[cat]) == 0, 0,
-                                     2 * (weighted_precision_xgb[cat] * weighted_recall_xgb[cat]) / (weighted_precision_xgb[cat] + weighted_recall_xgb[cat]))
-}
-
-cat("\nXGBoost 모델 범주별 가중 정밀도:\n")
-print(round(weighted_precision_xgb, 4))
-
-cat("\nXGBoost 모델 범주별 가중 재현율:\n")
-print(round(weighted_recall_xgb, 4))
-
-cat("\nXGBoost 모델 범주별 가중 F1-score:\n")
-print(round(weighted_f1_score_xgb, 4))
+ax.set_ylim(0, 1)
+ax.set_yticks([0.2, 0.4, 0.6, 0.8, 1.0])
+ax.set_yticklabels(['0.2', '0.4', '0.6', '0.8', '1.0'], fontsize=9)
+ax.grid(True, linestyle='-', alpha=0.3)
+plt.title('모델 성능 비교', size=15, y=1.1)
+plt.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
+plt.savefig('model_met.png', dpi=300, bbox_inches='tight')
+plt.tight_layout()
+plt.show()
 ```
 
-## 로지스틱 회귀 모델
+## ROC 커브
 
-```{r}
-# 다항 로지스틱 회귀 모델 학습 및 평가
-library(nnet)
+```{python}
+random_pred_proba = np.zeros((len(y_test), len(class_labels_ordered)))
+for i, cls in enumerate(class_labels_ordered):
+    random_pred_proba[:, i] = prop_values_ordered[i]
 
-# 다항 로지스틱 회귀 모델 학습 (가중치 적용)
-cat("\n다항 로지스틱 회귀 모델 학습 중...\n")
-# X_train에 열 이름이 없으면 추가
-if(is.null(colnames(X_train))) {
-  colnames(X_train) <- paste0("V", 1:ncol(X_train))
+pred_probas = {
+    "Random Classifier": random_pred_proba,
+    "Random Forest": y_pred_proba_rf,
+    "XGBoost": y_pred_proba_xgb,
+    "Logistic Regression": log_reg_model_py.predict_proba(X_test)
 }
 
-# 학습 데이터를 데이터프레임으로 변환
-train_df <- as.data.frame(X_train)
-train_df$y <- y_train
-
-# 다항 로지스틱 회귀 모델 학습
-logistic_model <- multinom(
-  y ~ .,
-  data = train_df,
-  weights = weights_train,
-  trace = FALSE
-)
-cat("다항 로지스틱 회귀 모델 학습 완료.\n")
-
-# 모델 요약
-print(summary(logistic_model))
-
-# 테스트 세트 예측
-cat("\n다항 로지스틱 회귀 모델로 테스트 세트 예측 중...\n")
-# X_test에 열 이름이 없으면 추가
-if(is.null(colnames(X_test))) {
-  colnames(X_test) <- paste0("V", 1:ncol(X_test))
-}
-y_pred_logistic <- predict(logistic_model, newdata = as.data.frame(X_test))
-cat("예측 완료.\n")
-
-# 가중 혼동 행렬 계산
-weighted_confusion_matrix_logistic <- matrix(0,
-                                           nrow = length(levels(y_test)),
-                                           ncol = length(levels(y_test)),
-                                           dimnames = list(Actual = levels(y_test), Predicted = levels(y_test)))
-
-for (i in 1:length(y_test)) {
-  actual_cat <- as.character(y_test[i])
-  predicted_cat <- as.character(y_pred_logistic[i])
-  weight <- weights_test[i]
-  if (actual_cat %in% levels(y_test) && predicted_cat %in% levels(y_test)) {
-    weighted_confusion_matrix_logistic[actual_cat, predicted_cat] <- weighted_confusion_matrix_logistic[actual_cat, predicted_cat] + weight
-  }
+colors = {
+    "Random Classifier": "grey",
+    "Random Forest": "forestgreen",
+    "XGBoost": "darkorange",
+    "Logistic Regression": "navy"
 }
 
-cat("\n=== 다항 로지스틱 회귀 모델 가중 혼동 행렬 ===\n")
-print(round(weighted_confusion_matrix_logistic, 2))
+y_test_numeric = y_test.cat.codes if hasattr(y_test, 'cat') else y_test
 
-# 다항 로지스틱 회귀 모델 가중 성능 지표 계산
-total_weighted_sum_logistic <- sum(weighted_confusion_matrix_logistic)
-weighted_accuracy_logistic <- sum(diag(weighted_confusion_matrix_logistic)) / total_weighted_sum_logistic
-cat("\n=== 다항 로지스틱 회귀 모델 가중 성능 지표 ===\n")
-cat("가중 정확도:", round(weighted_accuracy_logistic, 4), "\n")
+for model_name, proba in pred_probas.items():
+    if proba.shape[1] > 1:
+        y_score = proba[:, 1]
+    else:
+        y_score = proba.ravel()
+    fpr, tpr, _ = roc_curve(y_test_numeric, y_score, sample_weight=weights_test)
+    roc_auc = auc(fpr, tpr)
+    plt.plot(fpr, tpr, lw=2, label=f'{model_name} (AUC = {roc_auc:.3f})', color=colors[model_name])
 
-# 각 범주별 가중 정밀도, 재현율, F1-score 계산
-weighted_precision_logistic <- numeric(length(levels(y_test)))
-weighted_recall_logistic <- numeric(length(levels(y_test)))
-weighted_f1_score_logistic <- numeric(length(levels(y_test)))
-names(weighted_precision_logistic) <- names(weighted_recall_logistic) <- names(weighted_f1_score_logistic) <- levels(y_test)
+plt.plot([0, 1], [0, 1], 'k--', lw=1.5)
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.0])
+plt.xlabel('False Positive Rate', fontsize=12)
+plt.ylabel('True Positive Rate', fontsize=12)
+plt.title('ROC 커브', fontsize=14, fontweight='bold')
+plt.legend(loc="lower right", fontsize=10)
+plt.grid(True, linestyle='--', alpha=0.7)
 
-for (cat in levels(y_test)) {
-  TP <- weighted_confusion_matrix_logistic[cat, cat]
-  FP <- sum(weighted_confusion_matrix_logistic[, cat]) - TP
-  FN <- sum(weighted_confusion_matrix_logistic[cat, ]) - TP
+# 가로 세로 비율 조정
+plt.gcf().set_size_inches(8, 8)  # 정사각형 비율로 설정
 
-  weighted_precision_logistic[cat] <- ifelse((TP + FP) == 0, 0, TP / (TP + FP))
-  weighted_recall_logistic[cat] <- ifelse((TP + FN) == 0, 0, TP / (TP + FN))
-  weighted_f1_score_logistic[cat] <- ifelse((weighted_precision_logistic[cat] + weighted_recall_logistic[cat]) == 0, 0,
-                                          2 * (weighted_precision_logistic[cat] * weighted_recall_logistic[cat]) / (weighted_precision_logistic[cat] + weighted_recall_logistic[cat]))
-}
-
-cat("\n다항 로지스틱 회귀 모델 범주별 가중 정밀도:\n")
-print(round(weighted_precision_logistic, 4))
-
-cat("\n다항 로지스틱 회귀 모델 범주별 가중 재현율:\n")
-print(round(weighted_recall_logistic, 4))
-
-cat("\n다항 로지스틱 회귀 모델 범주별 가중 F1-score:\n")
-print(round(weighted_f1_score_logistic, 4))
-```
-
-## 최종 모델 성능 비교
-
-```{r}
-# 모든 모델의 가중 정확도 비교
-final_metrics <- data.frame(
-  Metric = c("가중 정확도"),
-  RandomForest = c(round(weighted_accuracy_tuned * 100, 2)),
-  # C50_Tree = c(round(weighted_accuracy_c50 * 100, 2)),
-  XGBoost = c(round(weighted_accuracy_xgb * 100, 2)),
-  # SVM = c(round(weighted_accuracy_svm * 100, 2)),
-  # KNN = c(round(weighted_accuracy_knn * 100, 2)),
-  LogisticRegression = c(round(weighted_accuracy_logistic * 100, 2))
-)
-
-# 결과 출력
-cat("\n=== 최종 모델 가중 정확도 비교 ===\n")
-print(kable(final_metrics, caption = "원본 모델 vs 튜닝 모델 가중 정확도 비교"))
-
-# 클래스별 가중 성능 지표 (튜닝된 모델 결과 사용 권장)
-cat("\n=== 튜닝된 모델 범주별 가중 성능 지표 ===\n")
-class_weighted_metrics_tuned <- data.frame(
-  Class = levels(y_test), # y_test 또는 actual_classes_tuned 사용 가능
-  Weighted_Precision = round(weighted_precision_tuned, 4),
-  Weighted_Recall = round(weighted_recall_tuned, 4),
-  Weighted_F1 = round(weighted_f1_score_tuned, 4)
-)
-print(kable(class_weighted_metrics_tuned, caption = "튜닝된 모델 클래스별 가중 성능 지표"))
-
-
-# 최종 변수 중요도 요약 (튜닝된 모델 결과 사용)
-cat("\n=== 튜닝된 모델 변수 중요도 ===\n")
-print(kable(head(importance_df_tuned, 10), caption = "튜닝된 모델 상위 10개 중요 변수 (가중치 고려 학습 결과)"))
+plt.tight_layout()
+plt.savefig('roc_curve_comparison.png', dpi=300, bbox_inches='tight')
+plt.show()
 ```

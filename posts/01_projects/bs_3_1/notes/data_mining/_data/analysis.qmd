@@ -1,0 +1,360 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .qmd
+      format_name: quarto
+      format_version: '1.0'
+      jupytext_version: 1.17.1
+  kernelspec:
+    display_name: Python 3
+    name: python3
+    language: python
+---
+
+```{python}
+#| colab: {base_uri: 'https://localhost:8080/'}
+pip install tabulate
+```
+
+```{python}
+import tabulate
+```
+
+```{python}
+#| colab: {base_uri: 'https://localhost:8080/', height: 1000}
+# ------------------------------------------------------------------------------------
+# [Colab 전용] 한글 폰트 설치 안내
+# 이 파이썬 스크립트를 Colab에서 실행한다면, 가장 먼저 다음 셀을 실행하고
+# [런타임] > [런타임 다시 시작]을 해주세요.
+#
+# !sudo apt-get install -y fonts-nanum
+# !sudo fc-cache -fv
+# !rm ~/.cache/matplotlib -rf
+#
+# 런타임 다시 시작 후, 아래 코드부터 실행하면 됩니다.
+# ------------------------------------------------------------------------------------
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_recall_fscore_support, roc_curve, auc, classification_report
+from sklearn.preprocessing import LabelEncoder
+import xgboost as xgb
+import matplotlib.pyplot as plt
+import seaborn as sns
+from tabulate import tabulate
+
+# R의 set.seed(1234)와 유사하게 난수 시드 설정
+np.random.seed(1234)
+import random
+random.seed(1234)
+
+# ------------------------------------------------------------------------------------
+# Matplotlib 한글 폰트 설정 (Colab의 경우 위 안내에 따라 폰트 설치 및 런타임 재시작 선행 필요)
+# ------------------------------------------------------------------------------------
+try:
+    # Colab에서는 'NanumBarunGothic' 또는 'NanumGothic' 등을 사용
+    plt.rc('font', family='NanumBarunGothic') # ❗️수정된 부분: 'Malgun Gothic' -> 'NanumBarunGothic'
+    plt.rcParams['axes.unicode_minus'] = False # 마이너스 부호 깨짐 방지
+    print("Matplotlib 한글 폰트('NanumBarunGothic')가 설정되었습니다.")
+except Exception as e:
+    print(f"한글 폰트 설정 중 오류: {e}")
+    print("한글 폰트가 제대로 설정되지 않으면 그래프의 한글이 깨질 수 있습니다.")
+    print("Colab 환경이라면, 코드 상단의 폰트 설치 안내를 따르고 런타임을 다시 시작했는지 확인하세요.")
+# ------------------------------------------------------------------------------------
+
+
+# --- 데이터 로드 및 전처리 ---
+print("=== 데이터 로드 및 전처리 ===")
+try:
+    X_train_df = pd.read_csv("train_data.csv")
+    X_test_df = pd.read_csv("test_data.csv")
+    print("train_data.csv 와 test_data.csv 파일을 성공적으로 로드했습니다.")
+except FileNotFoundError:
+    print("오류: train_data.csv 또는 test_data.csv 파일을 현재 디렉토리에서 찾을 수 없습니다.")
+    exit() # 파일이 없으면 중단
+
+y_train_raw = X_train_df['y']
+weights_train = X_train_df['weights'].values
+X_train = X_train_df.drop(columns=['y', 'weights'])
+
+y_test_raw = X_test_df['y']
+weights_test = X_test_df['weights'].values
+X_test = X_test_df.drop(columns=['y', 'weights'])
+
+label_encoder = LabelEncoder()
+y_train = label_encoder.fit_transform(y_train_raw)
+y_test = label_encoder.transform(y_test_raw)
+class_names = label_encoder.classes_
+unique_encoded_classes = np.unique(y_train)
+
+print(f"학습 데이터 형태: X_train {X_train.shape}, y_train {y_train.shape}")
+print(f"테스트 데이터 형태: X_test {X_test.shape}, y_test {y_test.shape}")
+print(f"클래스 종류 (원래 이름): {class_names}")
+print(f"인코딩된 y_train의 고유값: {unique_encoded_classes}")
+print(f"label_encoder로부터 얻은 클래스 개수: {len(label_encoder.classes_)}")
+
+
+# --- 가중 혼동 행렬 및 성능 지표 계산 함수 ---
+def calculate_weighted_performance(y_true, y_pred, weights, encoded_class_labels_for_cm, original_class_names_for_display, model_name="모델"):
+    num_classes_for_cm = len(encoded_class_labels_for_cm)
+    # 혼동행렬의 실제 차원은 y_true와 y_pred에 나타나는 최대 인덱스 + 1이 되어야 함.
+    # label_encoder.classes_의 길이를 사용하는 것이 더 안전.
+    max_label_val = 0
+    if len(y_true) > 0 : max_label_val = max(max_label_val, np.max(y_true))
+    if len(y_pred) > 0 : max_label_val = max(max_label_val, np.max(y_pred))
+    # num_distinct_classes_in_data = max_label_val + 1
+    # 혼동행렬은 전체 클래스 개수를 기준으로 생성 (label_encoder.classes_ 사용)
+    num_total_classes = len(original_class_names_for_display)
+    weighted_cm = np.zeros((num_total_classes, num_total_classes))
+
+
+    for true_label_idx, pred_label_idx, weight in zip(y_true, y_pred, weights):
+        # y_pred에 혹시라도 학습 과정에서 보지 못한 레이블이 나올 경우 대비 및 인덱스 범위 확인
+        if true_label_idx < num_total_classes and pred_label_idx < num_total_classes:
+             weighted_cm[true_label_idx, pred_label_idx] += weight
+
+    print(f"\n=== {model_name} 가중 혼동 행렬 ===")
+    cm_df = pd.DataFrame(weighted_cm,
+                         index=[f"Actual: {name}" for name in original_class_names_for_display],
+                         columns=[f"Predicted: {name}" for name in original_class_names_for_display])
+    print(cm_df.round(2))
+
+    total_weighted_sum = np.sum(weighted_cm)
+    weighted_accuracy = np.sum(np.diag(weighted_cm)) / total_weighted_sum if total_weighted_sum > 0 else 0
+
+    num_display_classes = len(original_class_names_for_display)
+    weighted_precision = np.zeros(num_display_classes)
+    weighted_recall = np.zeros(num_display_classes)
+    weighted_f1 = np.zeros(num_display_classes)
+
+    for i in range(num_display_classes): # 혼동행렬의 인덱스 i를 사용
+        TP = weighted_cm[i, i]
+        FP = np.sum(weighted_cm[:, i]) - TP
+        FN = np.sum(weighted_cm[i, :]) - TP
+        weighted_precision[i] = TP / (TP + FP) if (TP + FP) > 0 else 0
+        weighted_recall[i] = TP / (TP + FN) if (TP + FN) > 0 else 0
+        weighted_f1[i] = 2 * (weighted_precision[i] * weighted_recall[i]) / (weighted_precision[i] + weighted_recall[i]) if (weighted_precision[i] + weighted_recall[i]) > 0 else 0
+
+    print(f"\n=== {model_name} 가중 성능 지표 ===")
+    print(f"가중 정확도: {weighted_accuracy:.4f}")
+    print(f"\n{model_name} 범주별 가중 정밀도:")
+    for i, label in enumerate(original_class_names_for_display): print(f"  {label}: {weighted_precision[i]:.4f}")
+    print(f"\n{model_name} 범주별 가중 재현율:")
+    for i, label in enumerate(original_class_names_for_display): print(f"  {label}: {weighted_recall[i]:.4f}")
+    print(f"\n{model_name} 범주별 가중 F1-score:")
+    for i, label in enumerate(original_class_names_for_display): print(f"  {label}: {weighted_f1[i]:.4f}")
+
+    return weighted_accuracy, weighted_precision, weighted_recall, weighted_f1, weighted_cm
+
+# --- 1. 무작위 분류기 (Baseline) ---
+print("\n--- 1. 무작위 분류기 (Baseline) ---")
+_unique_train_labels, counts = np.unique(y_train, return_counts=True)
+class_proportions_dict = dict(zip(_unique_train_labels, counts / len(y_train)))
+prob_values = [class_proportions_dict.get(cls_idx, 0) for cls_idx in _unique_train_labels]
+
+# np.random.choice의 p 합계가 1인지 확인 (작은 오차는 무시)
+if not np.isclose(sum(prob_values), 1.0):
+    print(f"경고: 무작위 분류기의 확률 합계가 1이 아닙니다: {sum(prob_values)}")
+    # 확률 정규화 (만약을 위해)
+    if sum(prob_values) > 0:
+        prob_values = np.array(prob_values) / sum(prob_values)
+    else: # 모든 클래스의 비율이 0인 극단적인 경우 (예: y_train이 비어있음)
+          # 이 경우 _unique_train_labels도 비어있을 것이므로, 아래 choice에서 오류 발생 가능
+          # -> 이 부분은 y_train이 비어있지 않음을 가정함.
+        print("오류: y_train에 클래스 정보가 없어 무작위 분류기 확률을 설정할 수 없습니다.")
+
+
+if len(_unique_train_labels) > 0 and len(prob_values) == len(_unique_train_labels): # 예측할 클래스와 확률 배열 길이가 맞는지 확인
+    random_predictions_indices = np.random.choice(
+        _unique_train_labels,
+        size=len(y_test),
+        replace=True,
+        p=prob_values
+    )
+    acc_random, _, _, _, _ = calculate_weighted_performance(
+        y_test, random_predictions_indices, weights_test,
+        label_encoder.classes_, # 혼동행렬의 차원은 전체 클래스 개수 기준
+        class_names,            # 출력용 클래스 이름
+        "무작위 분류기"
+    )
+else:
+    print("오류: 무작위 분류기를 위한 클래스 또는 확률 정보가 부족합니다.")
+    acc_random = 0
+
+
+# --- 2. 랜덤 포레스트 모델 (기본) ---
+print("\n--- 2. 랜덤 포레스트 모델 (기본) ---")
+rf_model = RandomForestClassifier(n_estimators=500, max_features='sqrt', random_state=1234)
+rf_model.fit(X_train, y_train, sample_weight=weights_train)
+
+importances_rf = rf_model.feature_importances_
+feature_names_list = X_train.columns.tolist()
+sorted_indices_rf = np.argsort(importances_rf)[::-1]
+print("\n랜덤 포레스트 변수 중요도 (상위 10개):")
+for i in range(min(10, len(feature_names_list))): print(f"{feature_names_list[sorted_indices_rf[i]]}: {importances_rf[sorted_indices_rf[i]]:.4f}")
+if len(feature_names_list) > 0 and len(importances_rf) > 0 : # 변수가 있을 때만 그래프 그림
+    plt.figure(figsize=(10, min(6, 0.5 * min(10, len(feature_names_list)))))
+    plt.title("랜덤 포레스트 변수 중요도 (상위 10개)")
+    plt.bar(range(min(10, len(feature_names_list))), importances_rf[sorted_indices_rf][:min(10, len(feature_names_list))], align="center")
+    plt.xticks(range(min(10, len(feature_names_list))), np.array(feature_names_list)[sorted_indices_rf][:min(10, len(feature_names_list))], rotation=90)
+    plt.tight_layout()
+    plt.show()
+
+y_pred_rf = rf_model.predict(X_test)
+acc_rf, _, _, _, _ = calculate_weighted_performance(
+    y_test, y_pred_rf, weights_test, label_encoder.classes_, class_names, "랜덤 포레스트(기본)"
+)
+
+y_pred_prob_rf = rf_model.predict_proba(X_test)
+print("\n비가중 ROC 곡선 (참고용 - 랜덤 포레스트 기본):")
+# 클래스가 하나만 있는 경우 ROC 곡선 그리기 어려움
+if len(class_names) > 1:
+    plt.figure(figsize=(7 * min(2, len(class_names)), 6 * int(np.ceil(len(class_names)/2)) ))
+    auc_values_rf_unweighted = []
+    for i in range(len(class_names)):
+        fpr, tpr, _ = roc_curve(y_test, y_pred_prob_rf[:, i], pos_label=i)
+        roc_auc = auc(fpr, tpr)
+        auc_values_rf_unweighted.append(roc_auc)
+        plt.subplot(int(np.ceil(len(class_names)/2)), min(2, len(class_names)), i + 1)
+        plt.plot(fpr, tpr, color='blue', lw=2, label=f'ROC curve (AUC = {roc_auc:.3f})')
+        plt.plot([0, 1], [0, 1], color='gray', lw=2, linestyle='--')
+        plt.xlim([0.0, 1.0]); plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate'); plt.ylabel('True Positive Rate')
+        plt.title(f'ROC for {class_names[i]} (Unweighted)'); plt.legend(loc="lower right")
+    plt.tight_layout()
+    plt.show()
+    print("\n각 클래스별 비가중 AUC (랜덤 포레스트 기본):")
+    for i, label_name in enumerate(class_names): print(f"  {label_name}: {auc_values_rf_unweighted[i]:.4f}")
+else:
+    print("클래스가 하나만 있어 ROC 곡선을 그릴 수 없습니다.")
+    auc_values_rf_unweighted = [np.nan] * len(class_names)
+
+
+# --- 3. 튜닝된 랜덤 포레스트 모델 (GridSearchCV) ---
+print("\n--- 3. 튜닝된 랜덤 포레스트 모델 ---")
+param_grid_rf = {'max_features': [int(np.sqrt(X_train.shape[1]))] if X_train.shape[1] > 1 else [1]}
+fit_params_rf_tuned = {'sample_weight': weights_train}
+rf_tuned_search = GridSearchCV(
+    estimator=RandomForestClassifier(n_estimators=500, random_state=1234),
+    param_grid=param_grid_rf, scoring='accuracy', cv=5, verbose=1
+)
+rf_tuned_search.fit(X_train, y_train, **fit_params_rf_tuned)
+print("\n최적 파라미터 (튜닝된 랜덤 포레스트):", rf_tuned_search.best_params_)
+rf_tuned_model = rf_tuned_search.best_estimator_
+importances_rf_tuned = rf_tuned_model.feature_importances_
+sorted_indices_rf_tuned = np.argsort(importances_rf_tuned)[::-1]
+print("\n튜닝된 랜덤 포레스트 변수 중요도 (상위 10개):")
+top_vars_tuned_rf = []
+for i in range(min(10, len(feature_names_list))):
+    var_name = feature_names_list[sorted_indices_rf_tuned[i]]
+    top_vars_tuned_rf.append(var_name)
+    print(f"{var_name}: {importances_rf_tuned[sorted_indices_rf_tuned[i]]:.4f}")
+y_pred_rf_tuned = rf_tuned_model.predict(X_test)
+acc_rf_tuned, pre_rf_tuned, rec_rf_tuned, f1_rf_tuned, _ = calculate_weighted_performance(
+    y_test, y_pred_rf_tuned, weights_test, label_encoder.classes_, class_names, "랜덤 포레스트(튜닝)"
+)
+
+# --- 4. XGBoost 모델 ---
+print("\n--- 4. XGBoost 모델 ---")
+acc_xgb, pre_xgb_list, rec_xgb_list, f1_xgb_list = 0, [0]*len(class_names), [0]*len(class_names), [0]*len(class_names)
+
+if y_train.shape[0] == 0:
+    print("오류: XGBoost에 전달될 y_train이 비어있습니다! XGBoost 학습을 건너뜁니다.")
+else:
+    num_classes_for_xgboost = len(label_encoder.classes_)
+    print(f"XGBoost에 설정될 num_class: {num_classes_for_xgboost}")
+    # 데이터에 실제로 존재하는 클래스 수 확인 (y_train_raw 기준)
+    actual_num_distinct_classes_in_data = X_train_df['y'].nunique()
+
+    if num_classes_for_xgboost < 2 or actual_num_distinct_classes_in_data < 2 : # LabelEncoder가 인식한 클래스 또는 실제 데이터의 클래스가 2개 미만이면
+        print(f"오류: XGBoost multi:softprob 목적 함수는 최소 2개의 클래스가 필요하지만, LabelEncoder 클래스 수: {num_classes_for_xgboost}개, 실제 데이터 클래스 수: {actual_num_distinct_classes_in_data}개가 감지되었습니다. XGBoost 학습을 건너뜁니다.")
+    else:
+        xgb_model = xgb.XGBClassifier(
+            objective="multi:softprob", eval_metric="mlogloss", num_class=num_classes_for_xgboost,
+            learning_rate=0.3, max_depth=6, min_child_weight=1, subsample=0.8, colsample_bytree=0.8,
+            n_estimators=100, random_state=1234, use_label_encoder=False
+        )
+        print("\nXGBoost 모델 학습 중...")
+        try:
+            xgb_model.fit(X_train, y_train, sample_weight=weights_train, verbose=False)
+            print("XGBoost 모델 학습 완료.")
+            importances_xgb = xgb_model.feature_importances_
+            sorted_indices_xgb = np.argsort(importances_xgb)[::-1]
+            print("\nXGBoost 변수 중요도 (상위 10개):")
+            if len(importances_xgb) > 0 and len(feature_names_list) > 0:
+                for i in range(min(10, len(feature_names_list))): print(f"{feature_names_list[sorted_indices_xgb[i]]}: {importances_xgb[sorted_indices_xgb[i]]:.4f}")
+                plt.figure(figsize=(10, min(6, 0.5 * min(10, len(feature_names_list)))))
+                plt.title("XGBoost 변수 중요도 (상위 10개)")
+                plt.bar(range(min(10, len(feature_names_list))), importances_xgb[sorted_indices_xgb][:min(10, len(feature_names_list))], align="center")
+                plt.xticks(range(min(10, len(feature_names_list))), np.array(feature_names_list)[sorted_indices_xgb][:min(10, len(feature_names_list))], rotation=90)
+                plt.tight_layout()
+                plt.show()
+            else: print("\nXGBoost 변수 중요도를 계산할 수 없거나 특성 이름이 없습니다.")
+            print("\nXGBoost 모델로 테스트 세트 예측 중...")
+            y_pred_xgb = xgb_model.predict(X_test)
+            print("예측 완료.")
+            acc_xgb, pre_xgb_list, rec_xgb_list, f1_xgb_list, _ = calculate_weighted_performance(
+                y_test, y_pred_xgb, weights_test, label_encoder.classes_, class_names, "XGBoost"
+            )
+        except Exception as e:
+            print(f"XGBoost 모델 학습 또는 평가 중 오류 발생: {e}")
+
+# --- 5. 다항 로지스틱 회귀 모델 ---
+print("\n--- 5. 다항 로지스틱 회귀 모델 ---")
+logistic_model = LogisticRegression(
+    multi_class='multinomial', solver='lbfgs', max_iter=1000, random_state=1234
+)
+print("\n다항 로지스틱 회귀 모델 학습 중...")
+logistic_model.fit(X_train, y_train, sample_weight=weights_train)
+print("다항 로지스틱 회귀 모델 학습 완료.")
+print("\n다항 로지스틱 회귀 모델로 테스트 세트 예측 중...")
+y_pred_logistic = logistic_model.predict(X_test)
+print("예측 완료.")
+acc_logistic, pre_logistic, rec_logistic, f1_logistic, _ = calculate_weighted_performance(
+    y_test, y_pred_logistic, weights_test, label_encoder.classes_, class_names, "다항 로지스틱 회귀"
+)
+
+# --- 6. 최종 모델 비교 및 결과 요약 ---
+print("\n--- 6. 최종 모델 비교 및 결과 요약 ---")
+final_metrics_data = {
+    'Metric': ['가중 정확도 (%)'],
+    'RandomForest_Tuned': [round(acc_rf_tuned * 100, 2)],
+    'XGBoost': [round(acc_xgb * 100, 2) if acc_xgb is not None and acc_xgb !=0 else 'N/A'],
+    'LogisticRegression': [round(acc_logistic * 100, 2)],
+    'RandomForest_Basic': [round(acc_rf * 100, 2)],
+    'Random_Classifier': [round(acc_random * 100, 2) if acc_random != 0 else 'N/A'] # 무작위 분류기도 오류 가능성 고려
+}
+final_metrics_df = pd.DataFrame(final_metrics_data)
+print("\n=== 최종 모델 가중 정확도 비교 ===")
+print(tabulate(final_metrics_df, headers='keys', tablefmt='pipe', showindex=False))
+
+print("\n=== 튜닝된 랜덤 포레스트 모델 범주별 가중 성능 지표 ===")
+class_metrics_tuned_data = {
+    'Class': class_names,
+    'Weighted_Precision': [round(p, 4) for p in pre_rf_tuned],
+    'Weighted_Recall': [round(r, 4) for r in rec_rf_tuned],
+    'Weighted_F1': [round(f, 4) for f in f1_rf_tuned]
+}
+class_metrics_tuned_df = pd.DataFrame(class_metrics_tuned_data)
+print(tabulate(class_metrics_tuned_df, headers='keys', tablefmt='pipe', showindex=False))
+
+print("\n=== 튜닝된 랜덤 포레스트 모델 변수 중요도 (상위 10개) ===")
+if len(feature_names_list) > 0 and len(importances_rf_tuned) > 0:
+    importance_df_tuned_data = {
+        'Variable': np.array(feature_names_list)[sorted_indices_rf_tuned][:min(10, len(feature_names_list))],
+        'Importance': importances_rf_tuned[sorted_indices_rf_tuned][:min(10, len(feature_names_list))]
+    }
+    importance_df_tuned_display = pd.DataFrame(importance_df_tuned_data)
+    importance_df_tuned_display['Importance'] = importance_df_tuned_display['Importance'].round(4)
+    print(tabulate(importance_df_tuned_display, headers='keys', tablefmt='pipe', showindex=False))
+else:
+    print("튜닝된 랜덤 포레스트 모델의 변수 중요도를 표시할 수 없습니다 (특성 또는 중요도 정보 부족).")
+
+
+print("\n분석 완료.")
+```
+
