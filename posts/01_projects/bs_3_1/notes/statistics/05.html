@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>확률과 통계 R 실습 과제 – 김형훈의 학습 블로그</title>
+<title>Analysis of categorical data – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,46 +20,12 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
 <script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../../posts/02_areas/deep_learning/index.html" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/statistics/06.html" rel="next">
 <link href="../../../../../posts/01_projects/bs_3_1/notes/statistics/04.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
@@ -104,35 +70,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -172,7 +109,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html">Statistics</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/05.html">확률과 통계 R 실습 과제</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html">Statistics</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/05.html">Analysis of categorical data</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -248,12 +185,6 @@ window.Quarto = {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">intro</span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/01.pdf" class="sidebar-item-text sidebar-link">
@@ -361,6 +292,18 @@ window.Quarto = {
  <span class="menu-text">청소년기의 심리·정서적 요인을 통한 성인 진입기 진로 안정형·탐색형 성향 분류 예측</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/18.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">18</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -375,6 +318,12 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/dsa/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시험 범위</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/dsa/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">시험 범위</span></a>
   </div>
 </li>
@@ -464,7 +413,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/13.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">OR 과제 - 7</span></a>
+ <span class="menu-text">OR 과제 - 8</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시험 범위</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">수송문제와 할당 문제들</span></a>
   </div>
 </li>
       </ul>
@@ -635,6 +596,12 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/05.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Analysis of categorical data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률과 통계 R 실습 과제</span></a>
   </div>
 </li>
@@ -1902,53 +1869,17 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of Contents</h2>
-   
-  <ul>
-  <li><a href="#one-way-anova" id="toc-one-way-anova" class="nav-link active" data-scroll-target="#one-way-anova">One-way ANOVA</a>
-  <ul class="collapse">
-  <li><a href="#a" id="toc-a" class="nav-link" data-scroll-target="#a">a</a></li>
-  <li><a href="#b" id="toc-b" class="nav-link" data-scroll-target="#b">b</a></li>
-  <li><a href="#c" id="toc-c" class="nav-link" data-scroll-target="#c">c</a></li>
-  <li><a href="#d" id="toc-d" class="nav-link" data-scroll-target="#d">d</a></li>
-  <li><a href="#e" id="toc-e" class="nav-link" data-scroll-target="#e">e</a></li>
-  <li><a href="#f" id="toc-f" class="nav-link" data-scroll-target="#f">f</a></li>
-  </ul></li>
-  <li><a href="#anova-for-randomized-block-design" id="toc-anova-for-randomized-block-design" class="nav-link" data-scroll-target="#anova-for-randomized-block-design">ANOVA for Randomized Block Design</a>
-  <ul class="collapse">
-  <li><a href="#a-1" id="toc-a-1" class="nav-link" data-scroll-target="#a-1">a</a></li>
-  <li><a href="#b-1" id="toc-b-1" class="nav-link" data-scroll-target="#b-1">b</a></li>
-  <li><a href="#c-1" id="toc-c-1" class="nav-link" data-scroll-target="#c-1">c</a></li>
-  </ul></li>
-  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression">Simple Linear Regression</a>
-  <ul class="collapse">
-  <li><a href="#a-2" id="toc-a-2" class="nav-link" data-scroll-target="#a-2">a</a></li>
-  <li><a href="#b-2" id="toc-b-2" class="nav-link" data-scroll-target="#b-2">b</a></li>
-  <li><a href="#c-2" id="toc-c-2" class="nav-link" data-scroll-target="#c-2">c</a></li>
-  <li><a href="#d-1" id="toc-d-1" class="nav-link" data-scroll-target="#d-1">d</a></li>
-  </ul></li>
-  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression">Multiple Linear Regression</a>
-  <ul class="collapse">
-  <li><a href="#a-3" id="toc-a-3" class="nav-link" data-scroll-target="#a-3">a</a></li>
-  <li><a href="#b-3" id="toc-b-3" class="nav-link" data-scroll-target="#b-3">b</a></li>
-  <li><a href="#c-3" id="toc-c-3" class="nav-link" data-scroll-target="#c-3">c</a></li>
-  <li><a href="#d-2" id="toc-d-2" class="nav-link" data-scroll-target="#d-2">d</a></li>
-  <li><a href="#e-1" id="toc-e-1" class="nav-link" data-scroll-target="#e-1">e</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html">Statistics</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/05.html">확률과 통계 R 실습 과제</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/00.html">Statistics</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/05.html">Analysis of categorical data</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">확률과 통계 R 실습 과제</h1>
+<h1 class="title">Analysis of categorical data</h1>
   <div class="quarto-categories">
     <div class="quarto-category">확률과 통계</div>
-    <div class="quarto-category">보고서</div>
   </div>
   </div>
 
@@ -1960,7 +1891,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 5월 30일</p>
+      <p class="date">2025년 6월 5일</p>
     </div>
   </div>
   
@@ -1973,432 +1904,8 @@ window.Quarto = {
 
 
 <p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="one-way-anova" class="level2">
-<h2 class="anchored" data-anchor-id="one-way-anova">One-way ANOVA</h2>
-<section id="a" class="level3">
-<h3 class="anchored" data-anchor-id="a">a</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>val1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.84</span>, <span class="fl">2.67</span>, <span class="fl">2.61</span>, <span class="fl">2.95</span>, <span class="fl">2.25</span>, <span class="fl">2.35</span>, <span class="fl">2.85</span>, <span class="fl">2.58</span>, <span class="fl">3.08</span>, <span class="fl">2.25</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>val2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.79</span>, <span class="fl">1.98</span>, <span class="fl">2.01</span>, <span class="fl">1.93</span>, <span class="fl">2.24</span>, <span class="fl">2.03</span>, <span class="fl">2.22</span>, <span class="fl">1.44</span>, <span class="fl">2.24</span>, <span class="fl">2.05</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>val3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.31</span>, <span class="fl">2.24</span>, <span class="fl">2.74</span>, <span class="fl">2.36</span>, <span class="fl">2.79</span>, <span class="fl">2.20</span>, <span class="fl">2.32</span>, <span class="fl">2.82</span>, <span class="fl">2.73</span>, <span class="fl">2.78</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"일반 마우스"</span>, <span class="dv">10</span>), <span class="fu">rep</span>(<span class="st">"트랙 패트"</span>, <span class="dv">10</span>), <span class="fu">rep</span>(<span class="st">"버티컬 마우스"</span>, <span class="dv">10</span>)),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">finger =</span> <span class="fu">c</span>(<span class="st">'왼중지'</span>, <span class="st">'왼검지'</span>, <span class="st">'오른약지'</span>, <span class="st">'왼약지'</span>, <span class="st">'왼엄지'</span>, <span class="st">'오른약지'</span>, <span class="st">'오른새끼'</span>, <span class="st">'오른엄지'</span>, <span class="st">'왼중지'</span>, <span class="st">'왼새끼'</span>, <span class="st">'오른중지'</span>, <span class="st">'오른엄지'</span>, <span class="st">'오른중지'</span>, <span class="st">'오른검지'</span>, <span class="st">'왼엄지'</span>, <span class="st">'왼검지'</span>, <span class="st">'오른새끼'</span>, <span class="st">'오른검지'</span>, <span class="st">'왼엄지'</span>, <span class="st">'오른중지'</span>, <span class="st">'왼검지'</span>, <span class="st">'왼새끼'</span>, <span class="st">'오른검지'</span>, <span class="st">'왼약지'</span>, <span class="st">'오른새끼'</span>, <span class="st">'오른엄지'</span>, <span class="st">'왼약지'</span>, <span class="st">'왼중지'</span>, <span class="st">'왼새끼'</span>, <span class="st">'오른약지'</span>),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(val1, val2, val3)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           group   finger value
-1    일반 마우스   왼중지  1.84
-2    일반 마우스   왼검지  2.67
-3    일반 마우스 오른약지  2.61
-4    일반 마우스   왼약지  2.95
-5    일반 마우스   왼엄지  2.25
-6    일반 마우스 오른약지  2.35
-7    일반 마우스 오른새끼  2.85
-8    일반 마우스 오른엄지  2.58
-9    일반 마우스   왼중지  3.08
-10   일반 마우스   왼새끼  2.25
-11     트랙 패트 오른중지  1.79
-12     트랙 패트 오른엄지  1.98
-13     트랙 패트 오른중지  2.01
-14     트랙 패트 오른검지  1.93
-15     트랙 패트   왼엄지  2.24
-16     트랙 패트   왼검지  2.03
-17     트랙 패트 오른새끼  2.22
-18     트랙 패트 오른검지  1.44
-19     트랙 패트   왼엄지  2.24
-20     트랙 패트 오른중지  2.05
-21 버티컬 마우스   왼검지  3.31
-22 버티컬 마우스   왼새끼  2.24
-23 버티컬 마우스 오른검지  2.74
-24 버티컬 마우스   왼약지  2.36
-25 버티컬 마우스 오른새끼  2.79
-26 버티컬 마우스 오른엄지  2.20
-27 버티컬 마우스   왼약지  2.32
-28 버티컬 마우스   왼중지  2.82
-29 버티컬 마우스   왼새끼  2.73
-30 버티컬 마우스 오른약지  2.78</code></pre>
-</div>
-</div>
-<ul>
-<li>요인: 클릭하는 장치 종류</li>
-<li>수준: 일반 마우스, 트랙 패드, 버티컬 마우스</li>
-<li>반응치: <a href="https://www.arealme.com/reaction-test/ko/">클릭 반응속도</a></li>
-</ul>
-<p>10개의 손가락에 대해 3개의 장치를 랜덤으로 사용하여 클릭 반응속도를 측정한다.</p>
-</section>
-<section id="b" class="level3">
-<h3 class="anchored" data-anchor-id="b">b</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.means <span class="ot">&lt;-</span> <span class="fu">tapply</span>(df<span class="sc">$</span>value, <span class="at">INDEX=</span>df<span class="sc">$</span>group, <span class="at">FUN=</span>mean)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(df<span class="sc">$</span>value <span class="sc">~</span> df<span class="sc">$</span>group, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"mistyrose"</span>, <span class="st">"lightcyan"</span>))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, df.means, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">pch=</span><span class="dv">4</span>, <span class="at">cex=</span><span class="fl">1.5</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="05_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="c" class="level3">
-<h3 class="anchored" data-anchor-id="c">c</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.sd <span class="ot">&lt;-</span> <span class="fu">tapply</span>(df<span class="sc">$</span>value, <span class="at">INDEX=</span>df<span class="sc">$</span>group, <span class="at">FUN=</span>sd)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.sd.diff <span class="ot">&lt;-</span> <span class="fu">max</span>(df.sd) <span class="sc">/</span> <span class="fu">min</span>(df.sd)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (df.sd.diff <span class="sc">&gt;</span> <span class="dv">2</span>) </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"모집단의 분산이 동일하지 않음"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"모집단의 분산이 동일하다고 가정"</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "모집단의 분산이 동일하다고 가정"</code></pre>
-</div>
-</div>
-</section>
-<section id="d" class="level3">
-<h3 class="anchored" data-anchor-id="d">d</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggplot2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(val1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="05_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(val2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="05_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(val3)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="05_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>그림을 보니 반응치 값들이 정규분포를 따르는 것 같다!</p>
-</section>
-<section id="e" class="level3">
-<h3 class="anchored" data-anchor-id="e">e</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(value <span class="sc">~</span> group, <span class="at">data=</span>df)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df.anova)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-group        2  2.381  1.1907   11.17 0.000292 ***
-Residuals   27  2.878  0.1066                     
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>is_significant <span class="ot">&lt;-</span> <span class="fu">summary</span>(df.anova)[[<span class="dv">1</span>]][[<span class="st">"Pr(&gt;F)"</span>]][<span class="dv">1</span>] <span class="sc">&lt;</span> <span class="fl">0.05</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (is_significant)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"95%에서 처리별 모평균의 차이가 있음"</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"95%에서 처리별 모평균의 차이가 없음"</span>)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "95%에서 처리별 모평균의 차이가 있음"</code></pre>
-</div>
-</div>
-</section>
-<section id="f" class="level3">
-<h3 class="anchored" data-anchor-id="f">f</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (is_significant)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  df.bon <span class="ot">&lt;-</span> <span class="fu">pairwise.t.test</span>(df<span class="sc">$</span>value, df<span class="sc">$</span>group, <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  diff_pair <span class="ot">&lt;-</span> <span class="fu">which</span>(df.bon<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(diff_pair) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"모평균의 차이가 있는 쌍"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(diff_pair)) </span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="fu">colnames</span>(df.bon<span class="sc">$</span>p.value)[diff_pair[i, <span class="st">"col"</span>]], <span class="st">"-"</span>, <span class="fu">rownames</span>(df.bon<span class="sc">$</span>p.value)[diff_pair[i, <span class="st">"row"</span>]], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> </span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"모평균의 차이가 있는 처리 쌍 없음"</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>모평균의 차이가 있는 쌍 
-버티컬 마우스 - 트랙 패트 
-일반 마우스 - 트랙 패트 </code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="anova-for-randomized-block-design" class="level2">
-<h2 class="anchored" data-anchor-id="anova-for-randomized-block-design">ANOVA for Randomized Block Design</h2>
-<section id="a-1" class="level3">
-<h3 class="anchored" data-anchor-id="a-1">a</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">block =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"아스팔트"</span>, <span class="st">"트랙"</span>, <span class="st">"모래밭"</span>, <span class="st">"잔디밭"</span>), <span class="at">each=</span><span class="dv">3</span>),</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"런닝화"</span>, <span class="st">"축구화"</span>, <span class="st">"크록스"</span>), <span class="at">times=</span><span class="dv">4</span>),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="fl">6.1</span>, <span class="fl">6.4</span>, <span class="fl">6.5</span>, <span class="fl">5.5</span>, <span class="fl">5.9</span>, <span class="fl">6.0</span>, <span class="fl">6.9</span>, <span class="fl">7.1</span>, <span class="fl">7.5</span>, <span class="fl">6.3</span>, <span class="fl">6.9</span>, <span class="fl">7.0</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      block treatment value
-1  아스팔트    런닝화   6.1
-2  아스팔트    축구화   6.4
-3  아스팔트    크록스   6.5
-4      트랙    런닝화   5.5
-5      트랙    축구화   5.9
-6      트랙    크록스   6.0
-7    모래밭    런닝화   6.9
-8    모래밭    축구화   7.1
-9    모래밭    크록스   7.5
-10   잔디밭    런닝화   6.3
-11   잔디밭    축구화   6.9
-12   잔디밭    크록스   7.0</code></pre>
-</div>
-</div>
-<ul>
-<li>요인: 운동화 종류</li>
-<li>수준: 런닝화, 축구화, 크록스</li>
-<li>block: 달리는 땅</li>
-<li>반응치: 50m 달리기 시간(초)</li>
-</ul>
-</section>
-<section id="b-1" class="level3">
-<h3 class="anchored" data-anchor-id="b-1">b</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df.anova.rbd <span class="ot">&lt;-</span> <span class="fu">aov</span>(value <span class="sc">~</span> treatment <span class="sc">+</span> block, <span class="at">data=</span>df)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df.anova.rbd)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-treatment    2 0.6317  0.3158   27.73  0.00093 ***
-block        3 3.0492  1.0164   89.24 2.28e-05 ***
-Residuals    6 0.0683  0.0114                     
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<p>처리에 의한 변동이 통계적으로 유의미하다.</p>
-<p>block에 의한 변동 역시 통계적으로 유의미하다.</p>
-</section>
-<section id="c-1" class="level3">
-<h3 class="anchored" data-anchor-id="c-1">c</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df.anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(value<span class="sc">~</span>treatment, <span class="at">data=</span>df)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df.anova)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-treatment    2 0.6317  0.3158   0.912  0.436
-Residuals    9 3.1175  0.3464               </code></pre>
-</div>
-</div>
-<p>처리에 의한 변동이 통계적으로 유의미하지 않다고 나온다.</p>
-<p>block에 의한 변동이 통계적으로 유의미하기 때문에, block에 의한 변동을 제거하고 처리에 의한 변동을 분석해야 하기 때문이다.</p>
-</section>
-</section>
-<section id="simple-linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="simple-linear-regression">Simple Linear Regression</h2>
-<section id="a-2" class="level3">
-<h3 class="anchored" data-anchor-id="a-2">a</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">4</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">-</span> <span class="dv">2</span> <span class="sc">+</span> error</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = y ~ x)
-
-Coefficients:
-(Intercept)            x  
-     -1.824        2.893  </code></pre>
-</div>
-</div>
-</section>
-<section id="b-2" class="level3">
-<h3 class="anchored" data-anchor-id="b-2">b</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"B1의 추정 기울기: "</span>, <span class="fu">coef</span>(model)[<span class="dv">2</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>B1의 추정 기울기:  2.892536</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>trust <span class="ot">&lt;-</span> <span class="fu">confint</span>(model, <span class="at">level=</span><span class="fl">0.95</span>)[<span class="dv">2</span>, ]</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"신뢰구간: "</span>, trust, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>신뢰구간:  2.624822 3.160251 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="dv">3</span> <span class="sc">&gt;</span> trust[<span class="dv">1</span>] <span class="sc">&amp;&amp;</span> <span class="dv">3</span> <span class="sc">&lt;</span> trust[<span class="dv">2</span>]) </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"신뢰구간에 3 포함"</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> </span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"신뢰구간에 3 안 포함"</span>)</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "신뢰구간에 3 포함"</code></pre>
-</div>
-</div>
-</section>
-<section id="c-2" class="level3">
-<h3 class="anchored" data-anchor-id="c-2">c</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex=</span><span class="fl">0.7</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"실제 회귀선"</span>, <span class="st">"추정 회귀선"</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="05_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="d-1" class="level3">
-<h3 class="anchored" data-anchor-id="d-1">d</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cnt <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  error <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">4</span>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">-</span> <span class="dv">2</span> <span class="sc">+</span> error</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  trust <span class="ot">&lt;-</span> <span class="fu">confint</span>(model, <span class="at">level=</span><span class="fl">0.95</span>)[<span class="dv">2</span>, ]</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  cnt <span class="ot">&lt;-</span> cnt <span class="sc">+</span> (<span class="dv">3</span> <span class="sc">&gt;</span> trust[<span class="dv">1</span>] <span class="sc">&amp;&amp;</span> <span class="dv">3</span> <span class="sc">&lt;</span> trust[<span class="dv">2</span>])</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>cnt</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 96</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="multiple-linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="multiple-linear-regression">Multiple Linear Regression</h2>
-<section id="a-3" class="level3">
-<h3 class="anchored" data-anchor-id="a-3">a</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Petal.Length <span class="sc">+</span> Petal.Width, <span class="at">data =</span> iris)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width, 
-    data = iris)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.88045 -0.20945  0.01426  0.17942  0.78125 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   1.04309    0.27058   3.855 0.000173 ***
-Sepal.Length  0.60707    0.06217   9.765  &lt; 2e-16 ***
-Petal.Length -0.58603    0.06214  -9.431  &lt; 2e-16 ***
-Petal.Width   0.55803    0.12256   4.553  1.1e-05 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.3038 on 146 degrees of freedom
-Multiple R-squared:  0.524, Adjusted R-squared:  0.5142 
-F-statistic: 53.58 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>F 값의 p-value가 매우 작으므로, 모델이 통계적으로 유의미하다고 할 수 있다.</p>
-<p>각각의 독립변수에 대한 p-value 역시 모두 매우 작으므로, 종속변수에 통계적으로 유의미한 영향을 미친다고 할 수 있다.</p>
-<p>하지만 r-squared 값이 크지 않아서 모델이 종속변수의 변동을 잘 설명하지 못한다고 할 수 있다.</p>
-</section>
-<section id="b-3" class="level3">
-<h3 class="anchored" data-anchor-id="b-3">b</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model, <span class="dv">1</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="05_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>잔차가 U자 패턴을 보이므로, 선형성이 만족되지 않는 것 같다.</p>
-</section>
-<section id="c-3" class="level3">
-<h3 class="anchored" data-anchor-id="c-3">c</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Sepal.Length <span class="sc">+</span> <span class="fu">I</span>(Sepal.Length<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Petal.Length <span class="sc">+</span> <span class="fu">I</span>(Petal.Length<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Petal.Width <span class="sc">+</span> <span class="fu">I</span>(Petal.Width<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> iris)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Sepal.Width ~ Sepal.Length + I(Sepal.Length^2) + 
-    Petal.Length + I(Petal.Length^2) + Petal.Width + I(Petal.Width^2), 
-    data = iris)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.82277 -0.16843 -0.00315  0.15300  0.77761 
-
-Coefficients:
-                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       -3.10783    1.37460  -2.261 0.025275 *  
-Sepal.Length       2.32243    0.50141   4.632 8.08e-06 ***
-I(Sepal.Length^2) -0.15699    0.04264  -3.682 0.000327 ***
-Petal.Length      -0.89155    0.20300  -4.392 2.17e-05 ***
-I(Petal.Length^2)  0.06925    0.02336   2.965 0.003549 ** 
-Petal.Width       -0.03666    0.38214  -0.096 0.923708    
-I(Petal.Width^2)   0.13095    0.10529   1.244 0.215648    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.2755 on 143 degrees of freedom
-Multiple R-squared:  0.6167,    Adjusted R-squared:  0.6006 
-F-statistic: 38.35 on 6 and 143 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
-<section id="d-2" class="level3">
-<h3 class="anchored" data-anchor-id="d-2">d</h3>
-<p>Sepal.Length, <span class="math inline">\(\text{Sepal.Length}^2\)</span>, Petal.Length의 p-value가 모두 0.05보다 작으므로, 이 변수들이 종속변수에 통계적으로 유의미한 영향을 미친다고 할 수 있다.</p>
-<p>r-squared 값도 더 작아져서, c 모델이 b 모델보다 종속변수의 변동을 잘 설명한다고 할 수 있다.</p>
-</section>
-<section id="e-1" class="level3">
-<h3 class="anchored" data-anchor-id="e-1">e</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="dv">1</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="05_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>U자 패턴이 완만해진걸로 보인다.</p>
 
 
-</section>
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2832,8 +2339,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/02_areas/deep_learning/index.html" class="pagination-link" aria-label="Deep Learning">
-        <span class="nav-page-text">Deep Learning</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/06.html" class="pagination-link" aria-label="확률과 통계 R 실습 과제">
+        <span class="nav-page-text">확률과 통계 R 실습 과제</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
