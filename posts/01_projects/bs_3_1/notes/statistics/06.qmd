@@ -1,0 +1,257 @@
+---
+title: "확률과 통계 R 실습 과제"
+date: last-modified
+categories: ["확률과 통계", "보고서"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## One-way ANOVA
+
+### a
+
+```{r}
+val1 <- c(1.84, 2.67, 2.61, 2.95, 2.25, 2.35, 2.85, 2.58, 3.08, 2.25)
+val2 <- c(1.79, 1.98, 2.01, 1.93, 2.24, 2.03, 2.22, 1.44, 2.24, 2.05)
+val3 <- c(3.31, 2.24, 2.74, 2.36, 2.79, 2.20, 2.32, 2.82, 2.73, 2.78)
+df <- data.frame(
+  group = c(rep("일반 마우스", 10), rep("트랙 패트", 10), rep("버티컬 마우스", 10)),
+  finger = c('왼중지', '왼검지', '오른약지', '왼약지', '왼엄지', '오른약지', '오른새끼', '오른엄지', '왼중지', '왼새끼', '오른중지', '오른엄지', '오른중지', '오른검지', '왼엄지', '왼검지', '오른새끼', '오른검지', '왼엄지', '오른중지', '왼검지', '왼새끼', '오른검지', '왼약지', '오른새끼', '오른엄지', '왼약지', '왼중지', '왼새끼', '오른약지'),
+  value = c(val1, val2, val3)
+)
+df
+```
+
+- 요인: 클릭하는 장치 종류
+- 수준: 일반 마우스, 트랙 패드, 버티컬 마우스
+- 반응치: [클릭 반응속도](https://www.arealme.com/reaction-test/ko/)
+
+10개의 손가락에 대해 3개의 장치를 랜덤으로 사용하여 클릭 반응속도를 측정한다.
+
+각 손가락의 실험에 대해 랜덤으로 그룹을 나눈 후, 그룹별로 클릭하는 장치 종류를 배정하였다.
+
+### b
+
+```{r}
+df.means <- tapply(df$value, INDEX=df$group, FUN=mean)
+boxplot(df$value ~ df$group, col=c("lightblue", "mistyrose", "lightcyan"))
+points(1:3, df.means, col="red", pch=4, cex=1.5)
+```
+
+결과는 다음과 같이 나온다.
+
+### c
+
+```{r}
+df.sd <- tapply(df$value, INDEX=df$group, FUN=sd)
+df.sd.diff <- max(df.sd) / min(df.sd)
+if (df.sd.diff > 2) 
+{
+  print("모집단의 분산이 동일하지 않음")
+} else 
+{
+  print("모집단의 분산이 동일하다고 가정")
+}
+```
+
+결과는 다음과 같이 나온다.
+
+### d
+
+```{r}
+library(ggpubr)
+ggqqplot(val1)
+ggqqplot(val2)
+ggqqplot(val3)
+```
+
+그림을 보니 반응치 값들이 정규분포를 따르는 것 같다!
+
+### e
+
+```{r}
+df.anova <- aov(value ~ group, data=df)
+summary(df.anova)
+is_significant <- summary(df.anova)[[1]][["Pr(>F)"]][1] < 0.05
+if (is_significant)
+{
+  print("95%에서 처리별 모평균의 차이가 있음")
+} else
+{
+  print("95%에서 처리별 모평균의 차이가 없음")
+}
+```
+
+결과는 다음과 같이 나온다.
+
+### f
+
+```{r}
+if (is_significant)
+{
+  df.bon <- pairwise.t.test(df$value, df$group, p.adjust.method = "bonferroni")
+  diff_pair <- which(df.bon$p.value < 0.05, arr.ind = TRUE)
+  if (length(diff_pair) > 0)
+  {
+    cat("모평균의 차이가 있는 쌍", "\n")
+    for (i in 1:nrow(diff_pair)) 
+    {
+      cat(colnames(df.bon$p.value)[diff_pair[i, "col"]], "-", rownames(df.bon$p.value)[diff_pair[i, "row"]], "\n")
+    }
+  } else 
+  {
+    print("모평균의 차이가 있는 처리 쌍 없음")
+  }
+}
+```
+
+결과는 다음과 같이 나온다.
+
+## ANOVA for Randomized Block Design
+
+### a
+
+```{r}
+df <- data.frame(
+  block = rep(c("아스팔트", "트랙", "모래밭", "잔디밭"), each=3),
+  treatment = rep(c("런닝화", "축구화", "크록스"), times=4),
+  value = c(6.1, 6.4, 6.5, 5.5, 5.9, 6.0, 6.9, 7.1, 7.5, 6.3, 6.9, 7.0)
+)
+df
+```
+
+- 요인: 운동화 종류
+- 수준: 런닝화, 축구화, 크록스
+- block: 달리는 땅
+- 반응치: 50m 달리기 시간(초)
+
+각 block에 대해 3개의 운동화 종류를 사용하는 순서를 랜덤으로 결정해서 달리기 시간을 측정한다.
+
+### b
+
+```{r}
+df.anova.rbd <- aov(value ~ treatment + block, data=df)
+summary(df.anova.rbd)
+```
+
+처리에 의한 변동이 통계적으로 유의미하다.
+
+block에 의한 변동 역시 통계적으로 유의미하다.
+
+### c
+
+```{r}
+df.anova <- aov(value~treatment, data=df)
+summary(df.anova)
+```
+
+처리에 의한 변동이 통계적으로 유의미하지 않다고 나온다.
+
+block에 의한 변동이 통계적으로 유의미하기 때문에, block에 의한 변동을 제거하고 처리에 의한 변동을 분석해야 하기 때문이다.
+
+## Simple Linear Regression
+
+### a
+
+```{r}
+x <- runif(100, 0, 10)
+error <- rnorm(100, 0, 4)
+y <- 3 * x - 2 + error
+model <- lm(y ~ x)
+model
+```
+
+결과는 다음과 같이 나온다.
+
+### b
+
+```{r}
+cat("B1의 추정 기울기: ", coef(model)[2])
+
+trust <- confint(model, level=0.95)[2, ]
+cat("신뢰구간: ", trust, "\n")
+if (3 > trust[1] && 3 < trust[2]) 
+{
+  print("신뢰구간에 3 포함")
+} else 
+{
+  print("신뢰구간에 3 안 포함")
+}
+```
+
+결과는 다음과 같이 나온다.
+
+### c
+
+```{r}
+plot(x, y, cex=0.7)
+abline(model, col = "red", lwd = 2)
+abline(-2, 3, col = "blue", lwd = 2)
+legend("topleft", legend = c("실제 회귀선", "추정 회귀선"), col = c("blue", "red"), lwd = 2)
+```
+
+결과는 다음과 같이 나온다.
+
+### d
+
+```{r}
+cnt <- 0
+for (i in 1:100) 
+{
+  x <- runif(100, 0, 10)
+  error <- rnorm(100, 0, 4)
+  y <- 3 * x - 2 + error
+  model <- lm(y ~ x)
+  trust <- confint(model, level=0.95)[2, ]
+  cnt <- cnt + (3 > trust[1] && 3 < trust[2])
+}
+cnt
+```
+
+95에 가깝게 나온다.
+
+## Multiple Linear Regression
+
+### a
+
+```{r}
+data(iris)
+model <- lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width, data = iris)
+summary(model)
+```
+
+F 값의 p-value가 매우 작으므로, 모델이 통계적으로 유의미하다고 할 수 있다.
+
+각각의 독립변수에 대한 p-value 역시 모두 매우 작으므로, 종속변수에 통계적으로 유의미한 영향을 미친다고 할 수 있다.
+
+하지만 r-squared 값이 크지 않아서 모델이 종속변수의 변동을 잘 설명하지 못한다고 할 수 있다.
+
+### b
+
+```{r}
+plot(model, 1)
+```
+
+잔차가 U자 패턴을 보이므로, 선형성이 만족되지 않는 것 같다.
+
+### c
+
+```{r}
+model2 <- lm(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2) + Petal.Length + I(Petal.Length^2) + Petal.Width + I(Petal.Width^2), data = iris)
+summary(model2)
+```
+
+
+### d
+
+Sepal.Length, $\text{Sepal.Length}^2$, Petal.Length의 p-value가 모두 0.05보다 작으므로, 이 변수들이 종속변수에 통계적으로 유의미한 영향을 미친다고 할 수 있다.
+
+r-squared 값도 더 작아져서, c 모델이 b 모델보다 종속변수의 변동을 잘 설명한다고 할 수 있다.
+
+### e
+
+```{r}
+plot(model2, 1)
+```
+
+U자 패턴이 완만해진걸로 보인다.

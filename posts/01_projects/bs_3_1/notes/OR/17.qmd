@@ -1,0 +1,574 @@
+---
+title: cheat sheet
+mainfont: "Noto Sans KR"
+sansfont: "Noto Sans KR"
+monofont: "Noto Sans KR"
+geometry:
+  - top=0mm
+  - left=0mm
+  - right=0mm
+  - bottom=0mm
+format: 
+  titlepage-pdf:
+    documentclass: scrartcl
+    classoption: ["oneside", "open=any", "twocolumn"]
+    number-sections: false
+    toc: false
+    titlepage: "none"
+    coverpage: "none"
+    fontsize: 7pt
+    include-in-header: 
+      text: |
+        \usepackage[utf8]{inputenc}
+        \usepackage{graphicx}
+        \usepackage{amsmath}
+        \usepackage{amsfonts}
+        \usepackage{amssymb}
+        \usepackage{geometry}
+        \usepackage{fancyhdr}
+        \usepackage{hyperref}
+        \usepackage{lipsum}
+        \setlength{\columnsep}{10mm}
+        \usepackage{setspace}
+        \setstretch{1.2}
+        \usepackage{booktabs}
+        \usepackage{tabularx}
+        \usepackage{makecell}
+        \usepackage{caption}
+        \usepackage{multirow}
+        \usepackage{array}
+        \usepackage{graphicx}
+        \renewcommand{\arraystretch}{1.3}
+        \renewcommand{\tabularxcolumn}[1]{m{#1}}
+        \raggedbottom
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## 쌍대이론
+
+![](img/2025-06-06-19-47-06.png){width="30%"}
+
+![](img/2025-06-06-19-46-56.png){width="30%"}
+
+## 민감도 분석
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & x_5 & \text{RHS} \\
+\hline
+ & 1 & 0 & 0 & 2 & 5 & 0 & 100 \\
+x_2 & 0 & -1 & 1 & 3 & 1 & 0 & 20 \\
+x_5 & 0 & 16 & 0 & -2 & -4 & 1 & 10 \\
+\hline
+\end{array}
+$$
+
+### $b_1=30$으로 바꾸어라
+
+- $B^{-1}b_{new} = \begin{bmatrix} 
+1 & 0 \\
+-4 & 1
+\end{bmatrix} \begin{bmatrix}
+30 \\
+90
+\end{bmatrix} = \begin{bmatrix}
+30 \\
+-30
+\end{bmatrix}$
+
+- $Z_{new} = [5, 0] \begin{bmatrix}
+30 \\
+-30
+\end{bmatrix} = 150$.
+
+(0) $Z + 2x_3 + 5x_4 = 150$
+(1) $-x_1 + x_2 + 3x_3 + x_4 = 30$
+(2) $16x_1 - 2x_3 - 4x_4 + x_5 = -30$
+
+- 기저해: (0, 30, 0, 0, -30)
+- $x_5 < 0$ (infeasible)
+- Z-행의 비기저 변수 $x_1, x_3, x_4$의 계수는 각각 $0, 2, 5$. bfs였다면 최적 조건을 만족
+
+### $b_2=70$으로 바꾸어라.
+
+- $B^{-1}b_{new} = \begin{bmatrix} 
+1 & 0 \\
+-4 & 1
+\end{bmatrix} \begin{bmatrix}
+20 \\
+70
+\end{bmatrix} = \begin{bmatrix}
+20 \\
+-10
+\end{bmatrix}$
+
+- $Z_{new} = [5, 0] \begin{bmatrix}
+20 \\
+-10
+\end{bmatrix} = 100$.
+
+(0) $Z + 2x_3 + 5x_4 = 100$
+(1) $-x_1 + x_2 + 3x_3 + x_4 = 20$
+(2) $16x_1 - 2x_3 - 4x_4 + x_5 = -10$
+
+- 기저해: (0, 20, 0, 0, -10). infeasible
+- rc: (0, 0, 2, 5, 0). bfs였다면 최적
+
+### $b_1=10, b_2=100$으로 바꾸어라.
+
+- $B^{-1}b_{new} = \begin{bmatrix} 
+1 & 0 \\
+-4 & 1
+\end{bmatrix} \begin{bmatrix}
+10 \\
+100
+\end{bmatrix} = \begin{bmatrix}
+10 \\
+60
+\end{bmatrix}$
+
+- $Z_{new} = [5, 0] \begin{bmatrix}
+10 \\
+60
+\end{bmatrix} = 50$.
+
+(0) $Z + 2x_3 + 5x_4 = 50$
+(1) $-x_1 + x_2 + 3x_3 + x_4 = 10$
+(2) $16x_1 - 2x_3 - 4x_4 + x_5 = 60$
+
+- 기저해: (0, 10, 0, 0, 60). feasible
+- rc: 0, 0, 2, 5, 0. 최적
+
+### $c_3=80$으로 바꾸어라.
+
+- origin: $z - c_3 = 2, z = 15$
+- new: $z - c_3 = 15 - 80 = -65$
+
+(0) $Z - 65x_3 + 5x_4 = 100$
+(1) $-x_1 + x_2 + 3x_3 + x_4 = 20$
+(2) $16x_1 - 2x_3 - 4x_4 + x_5 = 10$
+
+- 기저해: (0, 20, 0, 0, 10). feasible
+- rc: (0, 0, 7, 5, 0). 최적
+
+### $c_1=-2, a_{11} = 0, a_{21} = 5$으로 바꾸어라.
+
+- $x_1$의 rc: $c_BB^{-1}A_{⋅1} - c_1 = [5, 0] \begin{bmatrix}
+1 & 0 \\
+-4 & 1
+\end{bmatrix} \begin{bmatrix}
+0 \\
+5
+\end{bmatrix} - (-2) = 2$
+- $N_{⋅1}$: $B^{-1}A_{⋅1} = \begin{bmatrix}
+1 & 0 \\
+-4 & 1
+\end{bmatrix} \begin{bmatrix}
+0 \\
+5
+\end{bmatrix} = \begin{bmatrix}
+0 \\
+5
+\end{bmatrix}$
+
+(0) $Z + 2x_1 + 2x_3 + 5x_4 = 100$
+(1) $x_2 + 3x_3 + x_4 = 20$
+(2) $5x_1 - 2x_3 - 4x_4 + x_5 = 10$
+
+- 기저해: (0, 20, 0, 0, 10). feasible
+- rc: (2, 0, 7, 5, 0). 최적
+
+### $c_2=6, a_{12} = 2, a_{22} = 5$으로 바꾸어라.
+
+- $B = \begin{bmatrix}
+2 & 0 \\
+5 & 1
+\end{bmatrix}$
+- $B^{-1} = \begin{bmatrix}
+\frac{1}{2} & 0 \\
+-\frac{5}{2} & 1
+\end{bmatrix}$
+- $c_B = [6, 0]$
+- $B^{-1}b = \begin{bmatrix} 
+\frac{1}{2} & 0 \\
+-\frac{5}{2} & 1
+\end{bmatrix} \begin{bmatrix}
+20 \\
+90
+\end{bmatrix} = \begin{bmatrix}
+10 \\
+40
+\end{bmatrix}$
+- $Z = [6, 0] \begin{bmatrix}
+10 \\
+40
+\end{bmatrix} = 60$.
+- $x_1$의 rc: $c_BB^{-1}A_{⋅1} - c_1 = [6, 0] \begin{bmatrix}
+\frac{1}{2} & 0 \\
+-\frac{5}{2} & 1
+\end{bmatrix} \begin{bmatrix}
+-1 \\
+12
+\end{bmatrix} - (-5) = 2$
+- $N_{⋅1}$: $B^{-1}A_{⋅1} = \begin{bmatrix}
+\frac{1}{2} & 0 \\
+-\frac{5}{2} & 1
+\end{bmatrix} \begin{bmatrix}
+-1 \\
+12
+\end{bmatrix} = \begin{bmatrix}
+-\frac{1}{2} \\
+\frac{29}{2}
+\end{bmatrix}$
+
+- $x_3$의 rc: $c_BB^{-1}A_{⋅3} - c_3 = [6, 0] \begin{bmatrix}
+\frac{1}{2} & 0 \\
+-\frac{5}{2} & 1
+\end{bmatrix} \begin{bmatrix}
+3 \\
+10
+\end{bmatrix} - 13 = -4$
+- $N_{⋅3}$: $B^{-1}A_{⋅3} = \begin{bmatrix}
+\frac{1}{2} & 0 \\
+-\frac{5}{2} & 1
+\end{bmatrix} \begin{bmatrix}
+3 \\
+10
+\end{bmatrix} = \begin{bmatrix}
+\frac{3}{2} \\
+\frac{5}{2}
+\end{bmatrix}$
+
+- $x_4$의 rc: $c_BB^{-1}A_{⋅4} - c_4 = [6, 0] \begin{bmatrix}
+\frac{1}{2} & 0 \\
+-\frac{5}{2} & 1
+\end{bmatrix} \begin{bmatrix}
+1 \\
+0
+\end{bmatrix} - 0 = 3$
+- $N_{⋅4}$: $B^{-1}A_{⋅4} = \begin{bmatrix}
+\frac{1}{2} & 0 \\
+-\frac{5}{2} & 1
+\end{bmatrix} \begin{bmatrix}
+1 \\
+0
+\end{bmatrix} = \begin{bmatrix}
+\frac{1}{2} \\
+-\frac{5}{2}
+\end{bmatrix}$
+
+(0) $Z + 2x_1 - 4x_3 + 3x_4 = 60$
+(1) $-\frac{1}{2}x_1 + x_2 + \frac{3}{2}x_3 + \frac{1}{2}x_4 = 10$
+(2) $\frac{29}{2}x_1 + \frac{5}{2}x_3 - \frac{5}{2}x_4 + x_5 = 40$
+
+- 기저해: (0, 10, 0, 0, 40). feasible
+- rc: (2, 0, -4, 3, 0). 최적 아님.
+
+### $c_6=10, a_{16} = 5, a_{26} = 3$을 도입하라
+
+- $N_{⋅6}$: $B^{-1}A_{⋅6} = \begin{bmatrix}
+1 & 0 \\
+-4 & 1
+\end{bmatrix} \begin{bmatrix}
+3 \\
+5
+\end{bmatrix} = \begin{bmatrix}
+3 \\
+-7
+\end{bmatrix}$
+
+- $x_6$의 rc:  $(5,0) \begin{bmatrix}
+3 \\
+-7
+\end{bmatrix} - 10 = 5$.
+
+(0) $Z + 2x_3 + 5x_4 + 5x_6 = 100$
+(1) $-x_1 + x_2 + 3x_3 + x_4 + 3x_6 = 20$
+(2) $16x_1 - 2x_3 - 4x_4 + x_5 - 7x_6 = 10$
+
+- 기저해: (0, 20, 0, 0, 10, 0). feasible
+- rc: (0, 0, 2, 5, 0, 5). 최적.
+
+### 새로운 제약식 $2x_1 +3x_2 + 5x_3 ≤ 50$을 도입하라.
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & x_5 & x_6 & \text{RHS} \\
+\hline
+ & 1 & 0 & 0 & 2 & 5 & 0 & 0 & 100 \\
+x_2 & 0 & -1 & 1 & 3 & 1 & 0 & 0 & 20 \\
+x_5 & 0 & 16 & 0 & -2 & -4 & 1 & 0 & 10 \\
+x_6 & 0 & 2 & 3 & 5 & 0 & 0 & 1 & 50 \\
+\hline
+\end{array}
+$$
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & Z & x_1 & x_2 & x_3 & x_4 & x_5 & x_6 & \text{RHS} \\
+\hline
+ & 1 & 0 & 0 & 2 & 5 & 0 & 0 & 100 \\
+x_2 & 0 & -1 & 1 & 3 & 1 & 0 & 0 & 20 \\
+x_5 & 0 & 16 & 0 & -2 & -4 & 1 & 0 & 10 \\
+x_6 & 0 & 5 & 0 & -4 & -3 & 0 & 1 & -10 \\
+\hline
+\end{array}
+$$
+
+(0) $Z + 2x_3 + 5x_4 = 100$
+(1) $-x_1 + x_2 + 3x_3 + x_4 = 20$
+(2) $16x_1 - 2x_3 - 4x_4 + x_5 = 10$
+(3) $5x_1 - 4x_3 - 3x_4 + x_6 = -10$
+
+- 기저해: (0, 20, 0, 0, 10, -10). infeasible
+- rc: (0, 0, 2, 5, 0). bfs면 최적.
+
+### 제약식 2를 $10x_1 + 5x_2 + 10x_3 ≤ 100$으로 바꾸어라.
+
+- $B = \begin{bmatrix}
+1 & 0 \\
+5 & 1
+\end{bmatrix}$
+- $B^{-1} = \begin{bmatrix}
+1 & 0 \\
+-5 & 1
+\end{bmatrix}$
+- $c_B = [5, 0]$
+- $B^{-1}b = \begin{bmatrix} 
+1 & 0 \\
+-5 & 1
+\end{bmatrix} \begin{bmatrix}
+20 \\
+100
+\end{bmatrix} = \begin{bmatrix}
+20 \\
+0
+\end{bmatrix}$
+- $Z = [5, 0] \begin{bmatrix}
+20 \\
+0
+\end{bmatrix} = 100$
+
+- $x_1$의 rc: $c_BB^{-1}A_{⋅1} - c_1 = [5, 0] \begin{bmatrix}
+1 & 0 \\
+-5 & 1
+\end{bmatrix} \begin{bmatrix}
+-1 \\
+10
+\end{bmatrix} - (-5) = 0$
+- $N_{⋅1}$: $B^{-1}A_{⋅1} = \begin{bmatrix}
+1 & 0 \\
+-5 & 1
+\end{bmatrix} \begin{bmatrix}
+-1 \\
+10
+\end{bmatrix} = \begin{bmatrix}
+-1  \\
+15
+\end{bmatrix}$
+
+- $x_3$의 rc: $c_BB^{-1}A_{⋅3} - c_3 = [6, 0] \begin{bmatrix}
+1 & 0 \\
+-5 & 1
+\end{bmatrix} \begin{bmatrix}
+3 \\
+10
+\end{bmatrix} - 13 = 2$
+- $N_{⋅3}$: $B^{-1}A_{⋅3} = \begin{bmatrix}
+1 & 0 \\
+-5 & 1
+\end{bmatrix} \begin{bmatrix}
+3 \\
+10
+\end{bmatrix} = \begin{bmatrix}
+3 \\
+-5
+\end{bmatrix}$
+
+- $x_4$의 rc: $c_BB^{-1}A_{⋅4} - c_4 = [6, 0] \begin{bmatrix}
+1 & 0 \\
+-5 & 1
+\end{bmatrix} \begin{bmatrix}
+1 \\
+0
+\end{bmatrix} - 0 = 5$
+
+- $N_{⋅4}$: $B^{-1}A_{⋅4} = \begin{bmatrix}
+1 & 0 \\
+-5 & 1
+\end{bmatrix} \begin{bmatrix}
+1 \\
+0
+\end{bmatrix} = \begin{bmatrix}
+1 \\
+-5
+\end{bmatrix}$
+
+(0) $Z + 0x_1 + 2x_3 + 5x_4 = 100$
+(1) $x_2 - x_1 + 3x_3 + x_4 = 20$
+(2) $x_5 + 15x_1 - 5x_3 - 5x_4 = 0$
+
+- 기저해: (0, 20, 0, 0, 0). feasible
+- rc: (0, 0, 2, 5, 0). 최적.
+
+## dual simplex
+
+$$
+\begin{aligned}
+\text{Minimize} \quad & W = 40y_1 + 20y_2 + 90y_3 \\
+\text{Subject to} \quad & 3y_1 + y_2 + 5y_3 ≥ 5 \\
+& y_1 + y_2 + 3y_3 ≥ 10 \\
+& y_1, y_2, y_3 ≥ 0
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{Minimize} \quad & W = 40y_1 + 20y_2 + 90y_3 \\
+\text{Subject to} \quad & -3y_1 - y_2 - 5y_3 ≤ -5 \\
+& -y_1 - y_2 - 3y_3 ≤ -10 \\
+& y_1, y_2, y_3 ≥ 0
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & -W = -40y_1 - 20y_2 - 90y_3 \\
+\text{Subject to} \quad & -3y_1 - y_2 - 5y_3 + y_4 = -5 \\
+& -y_1 - y_2 - 3y_3 + y_5 = -10 \\
+& y_1, y_2, y_3, y_4, y_5 ≥ 0
+\end{aligned}
+$$
+
+### iteration 1
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & -W & y_1 & y_2 & y_3 & y_4 & y_5 & \text{RHS} \\
+\hline
+ & 1 & 40 & 20 & 90 & 0 & 0 & 0 \\
+y_4 & 0 & -3 & -1 & -5 & 1 & 0 & -5 \\
+y_5 & 0 & -1 & -1 & -3 & 0 & 1 & -10 \\
+\hline
+\end{array}
+$$
+
+- bfs: (0, 0, 0, -5, -10)
+
+### iteration 2
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & -W & y_1 & y_2 & y_3 & y_4 & y_5 & \text{RHS} \\
+\hline
+ & 1 & 20 & 0 & 30 & 0 & 20 & -200 \\
+y_4 & 0 & -2 & 0 & -2 & 1 & -1 & 5 \\
+y_2 & 0 & 1 & 1 & 3 & 0 & -1 & 10 \\
+\hline
+\end{array}
+$$
+
+- bfs: (0, 10, 0, 5, 0)
+
+## upper bound
+
+$$
+\begin{aligned}
+\text{Maximize} \quad & Z - 2x_1 - 3x_2 = 0 \\
+\text{Subject to} \quad & x_3 = 20 - 3x_1 + 9x_2 \\
+& 0 ≤ x_1 ≤ \frac{40}{3}, 0 ≤ x_2 ≤ \frac{40}{9}, x_3 ≥ 0
+\end{aligned}
+$$
+
+- $x_2$ enter
+
+$$
+\begin{aligned}
+Z - 2x_1 - 3x_2 = 0\\
+x_3 = 20 + 9x_2 \quad ... \quad x_2 ≤ \frac{40}{9}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+x_2 = \frac{40}{9} - y_2 \\
+x_3 = 60 - 3x_1 - 9y_2 \quad ... \quad x_1 ≤ \frac{40}{3} \\
+Z - 2x_1 + 3y_2 = \frac{40}{3}\\
+\end{aligned}
+$$
+
+- $x_1$ enter
+
+$$
+\begin{aligned}
+x_1 = \frac{40}{3} - y_1 \\
+x_3 = 20 + 3y_1 - 9y_2 \\
+Z + 2y_1 + 3y_2 = 40 \\
+\end{aligned}
+$$
+
+- bfs$(x_1, x_2, x_3, y_1, y_2)$: $(\frac{40}{3}, \frac{40}{9}, 20, 0, 0)$
+- obj: = 40
+
+## 수송 문제
+
+1. 공급량과 수요량이 일치하지 않는 경우: dummy 수요를 만들고, cost를 0으로 설정.
+1. 최소, 최대 수요량이 있는 경우: 가상 근원지
+
+![](img/2025-06-06-18-30-20.png)
+
+![](img/2025-06-06-18-30-55.png)
+
+### 초기 bfs를 만들기 위한 절차
+
+![문제 예시](img/2025-06-05-20-28-05.png)
+
+1. 북모서리법으로 기저변수를 선택
+
+![](img/2025-06-05-20-11-54.png)
+
+### 최적화 검사 절차
+
+1. 가장 많은 할당이 일어난 행의 변수 하나를 0으로 설정
+1. 기저인 $x_{ij}$의 ${i, j}$에 대해 $c_{ij} = u_i + v_j$를 만족한다는 성질로 $u_i$와 $v_j$를 계산한다.
+1. 비기저 변수들의 $c_{ij} - u_i - v_j$를 계산한다.
+1. 모두 양수이면 최적.
+
+### 반복
+
+1. 진입기저변수를 결정하라: 가장 큰(절댓값으로) 음의 값 $C_{jj} - u_i - v_j$를 가지는 비기저변수 $x_{ij}$를 선택하라.
+1. 탈락기저변수를 결정하라: 진입기저변수가 증가할 때 가능을 유지하기 위해 요구되는 연쇄반응을 식별하라. 기증셀들 중에서, 가장 작은 값을 가지는 기저변수를 선택하라.
+1. 새 기저가능해를 결정하라: 탈락변수의 값을 각 수신셀의 할당에 더하라. 그 값을 각 기증 셀의 할당에서 빼어라.
+
+## 다익스트라 최소비용 문제로 전환
+
+시작점 용량은 len(node) - 1, 나머지는 -1로 설정하고 용량은 무한
+
+## 최대흐름문제 최소비용 문제로 전환
+
+도착점에서 출발점 arc를 생성한 후, $max x_{fa}$, cost, outflow - inflow는 모두 0으로 설정.
+
+## 7. 네트워크 심플렉스 해법
+
+![](img/2025-06-06-19-00-50.png){width="30%"}
+
+![$x_{AB}$가 상한값에 도달했다고 가정](img/2025-06-06-19-01-06.png){width="30%"}
+
+![](img/2025-06-06-19-01-14.png){width="30%"}
+
+![](img/2025-06-06-19-01-47.png){width="30%"}
+
+![$x_{CE}$가 상한값에 도달해서 역방향됨](img/2025-06-06-19-02-22.png){width="30%"}
+
+![$x_{BA}$가 진입하고, $x_{AB}$가 퇴출](img/2025-06-06-19-21-22.png){width="30%"}
+
+![](img/2025-06-06-19-32-34.png){width="30%"}

@@ -11,12 +11,9 @@ categories: ["data mining"]
 ```{python}
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_curve, auc, classification_report
-from sklearn.preprocessing import label_binarize
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_curve, auc
 import matplotlib.pyplot as plt
 import seaborn as sns
-from collections import Counter
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -87,9 +84,9 @@ base_rf = RandomForestClassifier(
 )
 
 param_grid = {
-    'n_estimators': [100, 300, 500],
-    'max_depth': [None, 10, 20, 30],
-    'max_features': ['sqrt', 'log2'],
+    'n_estimators': [100, 200],
+    'max_depth': [3, 5, 10, None],
+    'max_features': ['sqrt', 'log2', None],
     'min_samples_split': [2, 5, 10],
     'min_samples_leaf': [1, 2, 4]
 }
@@ -185,7 +182,7 @@ xgb_model = xgb.XGBClassifier(
 
 param_grid = {
     'n_estimators': [100, 200],
-    'max_depth': [3, 6],
+    'max_depth': [3, 5, 10, None],
     'learning_rate': [0.05, 0.1],
     'subsample': [0.8, 1.0],
     'colsample_bytree': [0.8, 1.0]
@@ -286,11 +283,6 @@ param_grid = [
         'C': [0.001, 0.01, 0.1, 1, 10],
         'solver': ['saga'],
         'l1_ratio': [0.2, 0.5, 0.8],
-        'class_weight': ['balanced', None]
-    },
-    {
-        'penalty': [None],
-        'solver': ['lbfgs', 'saga'],
         'class_weight': ['balanced', None]
     }
 ]
@@ -470,10 +462,7 @@ plt.ylabel('True Positive Rate', fontsize=12)
 plt.title('ROC 커브', fontsize=14, fontweight='bold')
 plt.legend(loc="lower right", fontsize=10)
 plt.grid(True, linestyle='--', alpha=0.7)
-
-# 가로 세로 비율 조정
-plt.gcf().set_size_inches(8, 8)  # 정사각형 비율로 설정
-
+plt.gcf().set_size_inches(7, 7)
 plt.tight_layout()
 plt.savefig('roc_curve_comparison.png', dpi=300, bbox_inches='tight')
 plt.show()

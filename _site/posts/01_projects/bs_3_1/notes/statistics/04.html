@@ -216,12 +216,6 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">intro</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/01.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">컴퓨팅적 사고 1차 발표 구현 raw script</span></a>
   </div>
@@ -327,6 +321,12 @@ window.Quarto = {
  <span class="menu-text">청소년기의 심리·정서적 요인을 통한 성인 진입기 진로 안정형·탐색형 성향 분류 예측</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">clustering</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -341,6 +341,12 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/dsa/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시험 범위</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/dsa/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">시험 범위</span></a>
   </div>
 </li>
@@ -430,7 +436,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/13.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">OR 과제 - 7</span></a>
+ <span class="menu-text">OR 과제 - 8</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시험 범위</span></a>
   </div>
 </li>
       </ul>
@@ -1873,10 +1885,13 @@ window.Quarto = {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#단순선형회귀모형의-확장" id="toc-단순선형회귀모형의-확장" class="nav-link active" data-scroll-target="#단순선형회귀모형의-확장">단순선형회귀모형의 확장</a>
-  <ul class="collapse">
-  <li><a href="#독립변수의-비선형-변환" id="toc-독립변수의-비선형-변환" class="nav-link" data-scroll-target="#독립변수의-비선형-변환">독립변수의 비선형 변환</a></li>
-  </ul></li>
+  <li><a href="#통계학습-및-회귀분석" id="toc-통계학습-및-회귀분석" class="nav-link active" data-scroll-target="#통계학습-및-회귀분석">통계학습 및 회귀분석</a></li>
+  <li><a href="#단순-선형회귀모형" id="toc-단순-선형회귀모형" class="nav-link" data-scroll-target="#단순-선형회귀모형">단순 선형회귀모형</a></li>
+  <li><a href="#회귀계수의-추정" id="toc-회귀계수의-추정" class="nav-link" data-scroll-target="#회귀계수의-추정">회귀계수의 추정</a></li>
+  <li><a href="#회귀모형의-적합성" id="toc-회귀모형의-적합성" class="nav-link" data-scroll-target="#회귀모형의-적합성">회귀모형의 적합성</a></li>
+  <li><a href="#회귀계수에-대한-추론" id="toc-회귀계수에-대한-추론" class="nav-link" data-scroll-target="#회귀계수에-대한-추론">회귀계수에 대한 추론</a></li>
+  <li><a href="#종속변수의-신뢰구간과-예측구간" id="toc-종속변수의-신뢰구간과-예측구간" class="nav-link" data-scroll-target="#종속변수의-신뢰구간과-예측구간">종속변수의 신뢰구간과 예측구간</a></li>
+  <li><a href="#잔차-분석" id="toc-잔차-분석" class="nav-link" data-scroll-target="#잔차-분석">잔차 분석</a></li>
   </ul>
 </nav>
     </div>
@@ -1912,14 +1927,101 @@ window.Quarto = {
 
 
 <p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="단순선형회귀모형의-확장" class="level2">
-<h2 class="anchored" data-anchor-id="단순선형회귀모형의-확장">단순선형회귀모형의 확장</h2>
-<section id="독립변수의-비선형-변환" class="level3">
-<h3 class="anchored" data-anchor-id="독립변수의-비선형-변환">독립변수의 비선형 변환</h3>
-<p>선형: 회귀계수에 대해 선형 → <span class="math inline">\(x^2\)</span>도 선형</p>
-
-
+<section id="통계학습-및-회귀분석" class="level2">
+<h2 class="anchored" data-anchor-id="통계학습-및-회귀분석">통계학습 및 회귀분석</h2>
+<ul>
+<li>통계 학습: 관측된 X, Y 데이터로부터 X와 Y의 관계를 추정하는 것</li>
+<li><span class="math inline">\(Y = f(X) + ϵ\)</span></li>
+<li>선형 회귀 모형: 독립변수와 종속변수 사이의 <strong>관계</strong>를 선형으로 가정하는 모형</li>
+</ul>
 </section>
+<section id="단순-선형회귀모형" class="level2">
+<h2 class="anchored" data-anchor-id="단순-선형회귀모형">단순 선형회귀모형</h2>
+<ul>
+<li><span class="math inline">\(Y_i = β_0 + β_1x_i + ϵ_i\)</span></li>
+<li><span class="math inline">\(β_0 + β_1x_i\)</span>: 회귀 계수, 선형 모형으로 설명 가능한 부분</li>
+<li><span class="math inline">\(ϵ_i\)</span>: 오차항, 선형 모형으로 설명할 수 없는 부분
+<ul>
+<li><span class="math inline">\(ϵ_i ~^{iid} N(0, σ^2) → Y_i ~ N(β_0 + β_1x_i, σ^2)\)</span></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-06-01-13-05-37.png" class="img-fluid figure-img"></p>
+<figcaption><span class="math inline">\(Y_i\)</span>는 iid는 아니다.</figcaption>
+</figure>
+</div>
+</section>
+<section id="회귀계수의-추정" class="level2">
+<h2 class="anchored" data-anchor-id="회귀계수의-추정">회귀계수의 추정</h2>
+<ul>
+<li>최소 제곱법: 잔차 제곱합을 최소화하는 방법
+<ul>
+<li>→ <span class="math inline">\(SS_E\)</span>를 <span class="math inline">\(\hat{β}_0, \hat{β}_1\)</span>에 대해 미분하여 0으로 만드는 <span class="math inline">\(\hat{β}_0, \hat{β}_1\)</span>.</li>
+<li><span class="math inline">\(β_0 = \bar{Y} - β_1\bar{X}\)</span>, <span class="math inline">\(β_1 = \frac{S_{XY}}{S_{XX}}\)</span></li>
+<li><span class="math inline">\(Σ_{i=1}^n e_i = 0\)</span>, <span class="math inline">\(Σ_{i=1}^n x_ie_i = 0\)</span></li>
+</ul></li>
+<li>회귀계수 추정 시에는 오차항의 분포에 대한 가정이 사용되지 않는다.</li>
+<li>독립변수의 단위가 달라지면, 회귀계수의 단위도 달라진다. (설명력은 동일하다)</li>
+</ul>
+</section>
+<section id="회귀모형의-적합성" class="level2">
+<h2 class="anchored" data-anchor-id="회귀모형의-적합성">회귀모형의 적합성</h2>
+<ul>
+<li><span class="math inline">\(SS_T = S_{YY}\)</span></li>
+<li><span class="math inline">\(SS_R = \frac{S_{XY}^2}{S_{XX}}\)</span></li>
+<li><span class="math inline">\(SS_E = SS_T - SS_R\)</span></li>
+</ul>
+<p><img src="img/2025-06-01-13-53-07.png" class="img-fluid" alt="모형 적합성"> - 결정계수: <span class="math inline">\(R^2 = \frac{SS_R}{SS_T} = 1 - \frac{SS_E}{SS_T}\)</span> - <span class="math inline">\(R^2\)</span>는 모형이 종속변수의 변동을 얼마나 설명하는지 나타내는 지표 - 오차를 최소화하면 <span class="math inline">\(R^2\)</span> 값 증가 - <span class="math inline">\(\frac{S_{XY}^2}{S_{XX}S_{YY}} = r(X, Y)^2\)</span></p>
+</section>
+<section id="회귀계수에-대한-추론" class="level2">
+<h2 class="anchored" data-anchor-id="회귀계수에-대한-추론">회귀계수에 대한 추론</h2>
+<ul>
+<li><span class="math inline">\(H_0: β_1 = 0\)</span> (독립변수와 종속변수 사이에 관계가 없다)</li>
+<li><span class="math inline">\(β_1\)</span>은 불편추정량, 정규분포를 따른다.</li>
+<li><span class="math inline">\(Var(β_1) = \frac{MS_E}{S_{XX}}\)</span></li>
+</ul>
+</section>
+<section id="종속변수의-신뢰구간과-예측구간" class="level2">
+<h2 class="anchored" data-anchor-id="종속변수의-신뢰구간과-예측구간">종속변수의 신뢰구간과 예측구간</h2>
+<ul>
+<li><span class="math inline">\(\hat{Y_0} = \hat{β}_0 + \hat{β}_1x_0\)</span></li>
+<li><span class="math inline">\(Var(\hat{Y_0}) = MS_E(\frac{1}{n} + \frac{(x_0 - \bar{x})^2}{S_{XX}})\)</span></li>
+<li>예측 구간에서의 오차의 분산은 <span class="math inline">\(MS_E(1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{S_{XX}})\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-06-01-14-30-27.png" class="img-fluid figure-img"></p>
+<figcaption>종속변수의 예측 / 신뢰구간은 평균일 때 가장 짧음</figcaption>
+</figure>
+</div>
+</section>
+<section id="잔차-분석" class="level2">
+<h2 class="anchored" data-anchor-id="잔차-분석">잔차 분석</h2>
+<ol type="1">
+<li>불편성</li>
+<li>정규성</li>
+<li>독립성</li>
+<li>등분산성</li>
+</ol>
+<p>오차의 추정치인 잔차를 통해 위의 가정을 검증할 수 있다.</p>
+<ul>
+<li>선형성: 잔차그림이 특정 패턴을 보이지 않는다.
+<ul>
+<li>만족하지 않을 경우: 독립변수 변환</li>
+</ul></li>
+<li>등분산성: 잔차그림의 분산이 일정하다.
+<ul>
+<li>만족하지 않는 경우: 반응치를 log 변환할 수 있다.</li>
+</ul></li>
+<li>독립성: 시계열 데이터의 경우, 자기상관을 고려해야 한다.</li>
+<li>정규성: normal Q-Q plot / shapiro-wilk test
+<ul>
+<li>만족하지 않는 경우: 반응치를 log 변환할 수 있다.</li>
+</ul></li>
+</ul>
+
+
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
