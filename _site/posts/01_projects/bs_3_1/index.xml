@@ -1262,6 +1262,7 @@ font-style: inherit;">1</span>)</span></code></pre></div>
 <p>모든 실행가능 해는 n-1개의 기저변수를 가지고, spanning tree를 형성한다.</p>
 <ol type="1">
 <li>최대흐름문제 심플렉스 (9.7.2) 이거 어케 품</li>
+<li>mingamdo variable add?</li>
 </ol>
 
 
@@ -1783,7 +1784,7 @@ font-style: inherit;">return</span> hroot</span></code></pre></div>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">class</span> BHeap:</span>
+font-style: inherit;">class</span> Bheap:</span>
 <span id="cb3-2">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1808,13 +1809,14 @@ background-color: null;
 font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb3-5">    <span class="kw" style="color: #003B4F;
+<span id="cb3-5"></span>
+<span id="cb3-6">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> create_heap(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>):</span>
-<span id="cb3-6">        <span class="cf" style="color: #003B4F;
+font-style: inherit;">self</span>, k):</span>
+<span id="cb3-7">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
@@ -1822,9 +1824,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
-font-style: inherit;">range</span>(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">self</span>.N <span class="op" style="color: #5E5E5E;
+font-style: inherit;">range</span>(N <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1835,39 +1835,39 @@ background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>):</span>
-<span id="cb3-7">            <span class="va" style="color: #111111;
+<span id="cb3-8">            <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.downheap(i)</span>
-<span id="cb3-8"></span>
-<span id="cb3-9">    <span class="kw" style="color: #003B4F;
+<span id="cb3-9"></span>
+<span id="cb3-10">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> insert(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, n):</span>
-<span id="cb3-10">        <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">self</span>.a.append(n)</span>
+font-style: inherit;">self</span>, k):</span>
 <span id="cb3-11">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.a.append(k)</span>
+<span id="cb3-12">        <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.N <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb3-12">        <span class="va" style="color: #111111;
+<span id="cb3-13">        <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.upheap(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.N)</span>
-<span id="cb3-13"></span>
-<span id="cb3-14">    <span class="kw" style="color: #003B4F;
+<span id="cb3-14"></span>
+<span id="cb3-15">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> delete_min(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>):</span>
-<span id="cb3-15">        <span class="cf" style="color: #003B4F;
+<span id="cb3-16">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> <span class="va" style="color: #111111;
@@ -1877,20 +1877,20 @@ background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>:</span>
-<span id="cb3-16">            <span class="cf" style="color: #003B4F;
+<span id="cb3-17">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span></span>
-<span id="cb3-17">        minimum <span class="op" style="color: #5E5E5E;
+<span id="cb3-18">        minimum <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.a[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>]</span>
-<span id="cb3-18">        <span class="va" style="color: #111111;
+<span id="cb3-19">        <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.a[<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1913,7 +1913,7 @@ background-color: null;
 font-style: inherit;">self</span>.a[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>]</span>
-<span id="cb3-19">        <span class="kw" style="color: #003B4F;
+<span id="cb3-20">        <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">del</span> <span class="va" style="color: #111111;
@@ -1923,13 +1923,6 @@ background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>]</span>
-<span id="cb3-20">        <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">self</span>.N <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span></span>
 <span id="cb3-21">        <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.downheap(<span class="dv" style="color: #AD0000;
@@ -1945,11 +1938,11 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> upheap(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, n):</span>
+font-style: inherit;">self</span>, i):</span>
 <span id="cb3-25">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">while</span> n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">while</span> i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1958,24 +1951,24 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">and</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.a[i][<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.a[i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>][<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">self</span>.a[n][<span class="dv" style="color: #AD0000;
-background-color: null;
 font-style: inherit;">0</span>]:</span>
 <span id="cb3-26">            <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[n], <span class="va" style="color: #111111;
+font-style: inherit;">self</span>.a[i], <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.a[i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1983,16 +1976,16 @@ font-style: inherit;">2</span>] <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.a[i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>], <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[n]</span>
-<span id="cb3-27">            n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.a[i]</span>
+<span id="cb3-27">            i <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -2001,24 +1994,24 @@ font-style: inherit;">2</span></span>
 <span id="cb3-29">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">def</span> dowmheap(<span class="va" style="color: #111111;
+font-style: inherit;">def</span> downheap(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, n):</span>
+font-style: inherit;">self</span>, i):</span>
 <span id="cb3-30">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">while</span> n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">while</span> i <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&lt;</span> <span class="va" style="color: #111111;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">self</span>.N <span class="op" style="color: #5E5E5E;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">//</span> <span class="dv" style="color: #AD0000;
+font-style: inherit;">&lt;=</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">2</span>:</span>
+font-style: inherit;">self</span>.N:</span>
 <span id="cb3-31">            k <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -2039,11 +2032,11 @@ font-style: inherit;">self</span>.a[k][<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&lt;</span> <span class="va" style="color: #111111;
+font-style: inherit;">&gt;</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[k<span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.a[k <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>][<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -2060,7 +2053,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[n][<span class="dv" style="color: #AD0000;
+font-style: inherit;">self</span>.a[i][<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2075,7 +2068,7 @@ font-weight: bold;
 font-style: inherit;">break</span></span>
 <span id="cb3-36">            <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[n], <span class="va" style="color: #111111;
+font-style: inherit;">self</span>.a[i], <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.a[k] <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2083,8 +2076,8 @@ font-style: inherit;">=</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.a[k], <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.a[n]</span>
-<span id="cb3-37">            n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.a[i]</span>
+<span id="cb3-37">            i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> k</span></code></pre></div>
 <p>삽입, 삭제: O(logN)</p>
@@ -2099,6 +2092,9 @@ font-style: inherit;">=</span> k</span></code></pre></div>
 <li>key 값을 10개정도 쭉 주고 나서 이진 탐색트리로 구현하라</li>
 <li>이진 탐색 트리를 주고 나서, 노드 삭제 후 최종 이진 탐색 트리 기술하라</li>
 </ul>
+<section id="연습-문제-bst-빈칸-채우기-고급" class="level3">
+<h3 class="anchored" data-anchor-id="연습-문제-bst-빈칸-채우기-고급">연습 문제: BST 빈칸 채우기 (고급)</h3>
+<p>아래 BST 클래스의 메소드들을 완성해보세요:</p>
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -2165,7 +2161,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> get(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, key):</span>
+font-style: inherit;">self</span>, k):</span>
 <span id="cb4-13">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -2180,11 +2176,11 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> get_item(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, n, k):</span>
+font-style: inherit;">self</span>, i, k):</span>
 <span id="cb4-16">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">if</span> i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="va" style="color: #111111;
 background-color: null;
@@ -2198,34 +2194,38 @@ font-style: inherit;">None</span></span>
 <span id="cb4-18">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n.key <span class="op" style="color: #5E5E5E;
+font-style: inherit;">if</span> k <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&gt;</span> k:</span>
+font-style: inherit;">&lt;</span> i.key:</span>
 <span id="cb4-19">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">return</span> get_item(n.left, k)</span>
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.get_item(i.left, k)</span>
 <span id="cb4-20">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n.key <span class="op" style="color: #5E5E5E;
+font-style: inherit;">if</span> i.key <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> k:</span>
 <span id="cb4-21">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">return</span> get_item(n.right, k)</span>
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.get_item(i.right, k)</span>
 <span id="cb4-22">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">return</span> n.value</span>
+font-style: inherit;">return</span> i.value</span>
 <span id="cb4-23"></span>
 <span id="cb4-24">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> put(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, key, value):</span>
+font-style: inherit;">self</span>, k, val):</span>
 <span id="cb4-25">        <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.root <span class="op" style="color: #5E5E5E;
@@ -2234,18 +2234,20 @@ font-style: inherit;">=</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.put_item(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.root, key, value)</span>
+font-style: inherit;">self</span>.root, k, val)</span>
 <span id="cb4-26"></span>
 <span id="cb4-27">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> put_item(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, n, k, val):</span>
+font-style: inherit;">self</span>, i, k, val):</span>
 <span id="cb4-28">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.root <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="va" style="color: #111111;
 background-color: null;
@@ -2253,36 +2255,50 @@ font-style: inherit;">None</span>:</span>
 <span id="cb4-29">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">return</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">None</span></span>
+font-style: inherit;">return</span> Node(k, val)</span>
 <span id="cb4-30">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n.key <span class="op" style="color: #5E5E5E;
+font-style: inherit;">if</span> k <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&gt;</span> k:</span>
-<span id="cb4-31">            n.left <span class="op" style="color: #5E5E5E;
+font-style: inherit;">&lt;</span> i.key:</span>
+<span id="cb4-31">            <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">=</span> put_item(n.left, k)</span>
+font-style: inherit;">self</span>.left <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.put_item(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>,left, k, val)</span>
 <span id="cb4-32">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n.key <span class="op" style="color: #5E5E5E;
+font-style: inherit;">elif</span> i.key <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> k:</span>
-<span id="cb4-33">            n.right <span class="op" style="color: #5E5E5E;
+<span id="cb4-33">            <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">=</span> put_item(n.right, k)</span>
-<span id="cb4-34">        n.value <span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.right <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> value</span>
-<span id="cb4-35">        <span class="cf" style="color: #003B4F;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.put_item(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.right, k, val)</span>
+<span id="cb4-34">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">return</span> n</span>
-<span id="cb4-36"></span>
-<span id="cb4-37">    <span class="kw" style="color: #003B4F;
+font-style: inherit;">else</span>:</span>
+<span id="cb4-35">            i.val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> val</span>
+<span id="cb4-36">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> i</span>
+<span id="cb4-37"></span>
+<span id="cb4-38">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> <span class="bu" style="color: null;
@@ -2290,7 +2306,7 @@ background-color: null;
 font-style: inherit;">min</span>(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>):</span>
-<span id="cb4-38">        <span class="cf" style="color: #003B4F;
+<span id="cb4-39">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> <span class="va" style="color: #111111;
@@ -2300,53 +2316,53 @@ background-color: null;
 font-style: inherit;">==</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>:</span>
-<span id="cb4-39">            <span class="cf" style="color: #003B4F;
+<span id="cb4-40">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span></span>
-<span id="cb4-40">        <span class="cf" style="color: #003B4F;
+<span id="cb4-41">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.minimum(<span class="va" style="color: #111111;
+font-style: inherit;">self</span>.min_item(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.root)</span>
-<span id="cb4-41"></span>
-<span id="cb4-42">    <span class="kw" style="color: #003B4F;
+<span id="cb4-42"></span>
+<span id="cb4-43">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">def</span> minimum(<span class="va" style="color: #111111;
+font-style: inherit;">def</span> min_item(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, n):</span>
-<span id="cb4-43">        <span class="cf" style="color: #003B4F;
+font-style: inherit;">self</span>, i):</span>
+<span id="cb4-44">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n.left <span class="op" style="color: #5E5E5E;
+font-style: inherit;">if</span> i.left <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>:</span>
-<span id="cb4-44">            <span class="cf" style="color: #003B4F;
+<span id="cb4-45">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">return</span> n</span>
-<span id="cb4-45">        <span class="cf" style="color: #003B4F;
+font-style: inherit;">return</span> i</span>
+<span id="cb4-46">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.minimum(n.left)</span>
-<span id="cb4-46"></span>
-<span id="cb4-47">    <span class="kw" style="color: #003B4F;
+font-style: inherit;">self</span>.min_item(i.left)</span>
+<span id="cb4-47"></span>
+<span id="cb4-48">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">def</span> deletemin(<span class="va" style="color: #111111;
+font-style: inherit;">def</span> del_minimum(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>):</span>
-<span id="cb4-48">        <span class="cf" style="color: #003B4F;
+<span id="cb4-49">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">if</span> <span class="va" style="color: #111111;
@@ -2356,13 +2372,13 @@ background-color: null;
 font-style: inherit;">==</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>:</span>
-<span id="cb4-49">            <span class="cf" style="color: #003B4F;
+<span id="cb4-50">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span></span>
-<span id="cb4-50">        <span class="cf" style="color: #003B4F;
+<span id="cb4-51">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
@@ -2370,140 +2386,147 @@ background-color: null;
 font-style: inherit;">self</span>.del_min(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.root)</span>
-<span id="cb4-51"></span>
-<span id="cb4-52">    <span class="kw" style="color: #003B4F;
+<span id="cb4-52"></span>
+<span id="cb4-53">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> del_min(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>, n):</span>
-<span id="cb4-53">        <span class="cf" style="color: #003B4F;
+font-style: inherit;">self</span>, i):</span>
+<span id="cb4-54">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n.left <span class="op" style="color: #5E5E5E;
+font-style: inherit;">if</span> i.left <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>:</span>
-<span id="cb4-54">            <span class="cf" style="color: #003B4F;
+<span id="cb4-55">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">return</span> n.right</span>
-<span id="cb4-55">        n.left <span class="op" style="color: #5E5E5E;
+font-style: inherit;">return</span> i.right</span>
+<span id="cb4-56">        i.left <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">=</span> del_min(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.del_min(n.left)</span>
-<span id="cb4-56">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> n</span>
-<span id="cb4-57"></span>
-<span id="cb4-58">    <span class="kw" style="color: #003B4F;
+font-style: inherit;">self</span>.left)</span>
+<span id="cb4-57">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">def</span> delete(<span class="va" style="color: #111111;
+font-style: inherit;">return</span> i</span>
+<span id="cb4-58"></span>
+<span id="cb4-59">    <span class="kw" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">self</span>, key):</span>
-<span id="cb4-59">        <span class="va" style="color: #111111;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">del</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, k):</span>
+<span id="cb4-60">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.root <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">self</span>.del_node(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">self</span>.root, key)</span>
-<span id="cb4-60"></span>
-<span id="cb4-61">    <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> del_node(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">self</span>, n, k):</span>
-<span id="cb4-62">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> n <span class="op" style="color: #5E5E5E;
-background-color: null;
 font-style: inherit;">==</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>:</span>
-<span id="cb4-63">            <span class="cf" style="color: #003B4F;
+<span id="cb4-61">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span></span>
-<span id="cb4-64">        <span class="cf" style="color: #003B4F;
+<span id="cb4-62">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n.key <span class="op" style="color: #5E5E5E;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">&gt;</span> k:</span>
-<span id="cb4-65">            n.left <span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.del_item(<span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">=</span> del_node(n.left, k)</span>
-<span id="cb4-66">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">elif</span> n.key <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> k:</span>
-<span id="cb4-67">            n.right <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> del_node(n.right, k)</span>
-<span id="cb4-68">        <span class="cf" style="color: #003B4F;
+font-style: inherit;">self</span>.root, k)</span>
+<span id="cb4-63"></span>
+<span id="cb4-64">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">else</span>:</span>
-<span id="cb4-69">            <span class="cf" style="color: #003B4F;
+font-style: inherit;">def</span> del_item(i, k):</span>
+<span id="cb4-65">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">if</span> n.right <span class="op" style="color: #5E5E5E;
+font-style: inherit;">if</span> k <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">==</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">None</span>:</span>
-<span id="cb4-70">                <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> n.left</span>
-<span id="cb4-71">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> n.left <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">None</span>:</span>
-<span id="cb4-72">                <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> n.right</span>
-<span id="cb4-73">            target <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> n</span>
-<span id="cb4-74">            n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">&lt;</span> i.key:</span>
+<span id="cb4-66">            i.left <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">self</span>.minimum(target.right)</span>
-<span id="cb4-75">            n.right <span class="op" style="color: #5E5E5E;
+font-style: inherit;">self</span>.del_item(i.left, k)</span>
+<span id="cb4-67">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> i.key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> k:</span>
+<span id="cb4-68">            i.right <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.del_item(i.right, k)</span>
+<span id="cb4-69">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb4-70">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> i.right <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb4-71">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> i.left</span>
+<span id="cb4-72">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> i.left <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb4-73">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> i.right</span>
+<span id="cb4-74">            target <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> i</span>
+<span id="cb4-75">            i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.min_item(target.right)</span>
+<span id="cb4-76">            i.left <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> target.left</span>
+<span id="cb4-77">            i.right <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.del_min(target.right)</span>
-<span id="cb4-76">            n.left <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> target.left</span>
-<span id="cb4-77">        <span class="cf" style="color: #003B4F;
+<span id="cb4-78">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">return</span> n</span></code></pre></div>
+font-style: inherit;">return</span> i</span></code></pre></div>
 <ol type="1">
 <li>AVL 안냄</li>
 </ol>
+</section>
 </section>
 <section id="그래프" class="level2">
 <h2 class="anchored" data-anchor-id="그래프">그래프</h2>
@@ -3147,8 +3170,39 @@ font-style: inherit;">not</span> visited[i]:</span>
 
 
 <p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="일정계획" class="level2">
-<h2 class="anchored" data-anchor-id="일정계획">일정계획</h2>
+<section id="방법" class="level2">
+<h2 class="anchored" data-anchor-id="방법">방법</h2>
+<ul>
+<li>FCFS</li>
+<li>LCFS</li>
+<li>SPT (Shortest Processing Time)</li>
+<li>LPT (Longest Processing Time)</li>
+<li>EDD (Earliest Due Date)</li>
+</ul>
+</section>
+<section id="평가-척도" class="level2">
+<h2 class="anchored" data-anchor-id="평가-척도">평가 척도</h2>
+<ul>
+<li>makespan: 모든 작업이 완료되는 시간
+<ul>
+<li>전체 소요시간은 달라지지 않음.</li>
+<li>sequential dependent한 set up이 있는 경우는 달라짐</li>
+</ul></li>
+<li>lateness: <img src="https://latex.codecogs.com/png.latex?C_i%20-%20d_i"> (작업이 완료된 시간 - 작업의 마감 시간)</li>
+<li>tardiness: 지연된 시간</li>
+<li>earliness: 일찍 완료된 시간</li>
+<li>flow time: <img src="https://latex.codecogs.com/png.latex?C_i%20-%20r_i"> (작업이 완료된 시간 - 작업이 시작된 시간)</li>
+<li>흐름률: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%EC%9E%91%EC%97%85%EB%9F%89%7D%7Bmakespan%7D"></li>
+</ul>
+<p>제고와 flow time을 제일 많이 줄이는 것은 SPT rule</p>
+<ul>
+<li>정확한 processing time을 알아야 하고</li>
+<li>processing time의 예측은 편향될 수 있고</li>
+<li>공정성 문제가 있을 수 있다.
+<ul>
+<li>weighted SPT Rule: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bweight%7D%7Bprocessing%20time%7D">이 높은 작업을 우선적으로 처리</li>
+</ul></li>
+</ul>
 
 
 </section>
@@ -3204,7 +3258,7 @@ font-style: inherit;">not</span> visited[i]:</span>
 <li>Periodic Order Quantity: 주문시 향후 T period만큼 필요한 양을 주문</li>
 <li>Lot-for-Lot: 주문시 수요량만큼 주문</li>
 </ul></li>
-<li>안전재고</li>
+<li>안전재고: <strong>순소요량에 안전재고 만큼 더함.</strong></li>
 </ul>
 
 
@@ -8716,6 +8770,7 @@ font-style: inherit;">False</span>)</span></code></pre></div>
 </ul></li>
 <li>회귀계수 추정 시에는 오차항의 분포에 대한 가정이 사용되지 않는다.</li>
 <li>독립변수의 단위가 달라지면, 회귀계수의 단위도 달라진다. (설명력은 동일하다)</li>
+<li>표본의 수가 늘어나면, <img src="https://latex.codecogs.com/png.latex?%CE%B2_1">은 수렴한다.</li>
 </ul>
 </section>
 <section id="회귀모형의-적합성" class="level2">
@@ -8895,6 +8950,9 @@ font-style: inherit;">False</span>)</span></code></pre></div>
 <li>MAE: 각 편차가 동일하게 나쁜 것으로 간주</li>
 <li>MAPE</li>
 </ol>
+<ul>
+<li>질문: 예측치가 음수일 수 있나?</li>
+</ul>
 
 
 </section>

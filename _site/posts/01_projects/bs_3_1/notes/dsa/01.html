@@ -1919,7 +1919,10 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#상향식-힙-만들기" id="toc-상향식-힙-만들기" class="nav-link" data-scroll-target="#상향식-힙-만들기">상향식 힙 만들기</a></li>
   </ul></li>
-  <li><a href="#이진-탐색-트리-1520" id="toc-이진-탐색-트리-1520" class="nav-link" data-scroll-target="#이진-탐색-트리-1520">이진 탐색 트리 (15~20)</a></li>
+  <li><a href="#이진-탐색-트리-1520" id="toc-이진-탐색-트리-1520" class="nav-link" data-scroll-target="#이진-탐색-트리-1520">이진 탐색 트리 (15~20)</a>
+  <ul class="collapse">
+  <li><a href="#연습-문제-bst-빈칸-채우기-고급" id="toc-연습-문제-bst-빈칸-채우기-고급" class="nav-link" data-scroll-target="#연습-문제-bst-빈칸-채우기-고급">연습 문제: BST 빈칸 채우기 (고급)</a></li>
+  </ul></li>
   <li><a href="#그래프" id="toc-그래프" class="nav-link" data-scroll-target="#그래프">그래프</a>
   <ul class="collapse">
   <li><a href="#kruscal" id="toc-kruscal" class="nav-link" data-scroll-target="#kruscal">kruscal</a></li>
@@ -2020,43 +2023,43 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> hroot</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="상향식-힙-만들기" class="level3">
 <h3 class="anchored" data-anchor-id="상향식-힙-만들기">상향식 힙 만들기</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BHeap:</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Bheap:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, a):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a <span class="op">=</span> a</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N <span class="op">=</span> <span class="bu">len</span>(a) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> create_heap(<span class="va">self</span>):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.N <span class="op">//</span> <span class="dv">2</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.downheap(i)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> insert(<span class="va">self</span>, n):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a.append(n)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.upheap(<span class="va">self</span>.N)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> delete_min(<span class="va">self</span>):</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.N <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        minimum <span class="op">=</span> <span class="va">self</span>.a[<span class="dv">1</span>]</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a[<span class="dv">1</span>], <span class="va">self</span>.a[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> <span class="va">self</span>.a[<span class="op">-</span><span class="dv">1</span>], <span class="va">self</span>.a[<span class="dv">1</span>]</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">del</span> <span class="va">self</span>.a[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> create_heap(<span class="va">self</span>, k):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N <span class="op">//</span> <span class="dv">2</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.downheap(i)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> insert(<span class="va">self</span>, k):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a.append(k)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.upheap(<span class="va">self</span>.N)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> delete_min(<span class="va">self</span>):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.N <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        minimum <span class="op">=</span> <span class="va">self</span>.a[<span class="dv">1</span>]</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a[<span class="dv">1</span>], <span class="va">self</span>.a[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> <span class="va">self</span>.a[<span class="op">-</span><span class="dv">1</span>], <span class="va">self</span>.a[<span class="dv">1</span>]</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">del</span> <span class="va">self</span>.a[<span class="op">-</span><span class="dv">1</span>]</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.downheap(<span class="dv">1</span>)</span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> minimum</span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> upheap(<span class="va">self</span>, n):</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> n <span class="op">&gt;</span> <span class="dv">1</span> <span class="kw">and</span> <span class="va">self</span>.a[n <span class="op">//</span> <span class="dv">2</span>][<span class="dv">0</span>] <span class="op">&gt;</span> <span class="va">self</span>.a[n][<span class="dv">0</span>]:</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.a[n], <span class="va">self</span>.a[n <span class="op">//</span> <span class="dv">2</span>] <span class="op">=</span> <span class="va">self</span>.a[n <span class="op">//</span> <span class="dv">2</span>], <span class="va">self</span>.a[n]</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> upheap(<span class="va">self</span>, i):</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> i <span class="op">&gt;</span> <span class="dv">1</span> <span class="kw">and</span> <span class="va">self</span>.a[i][<span class="dv">0</span>] <span class="op">&lt;</span> <span class="va">self</span>.a[i <span class="op">//</span> <span class="dv">2</span>][<span class="dv">0</span>]:</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.a[i], <span class="va">self</span>.a[i <span class="op">//</span> <span class="dv">2</span>] <span class="op">=</span> <span class="va">self</span>.a[i <span class="op">//</span> <span class="dv">2</span>], <span class="va">self</span>.a[i]</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            i <span class="op">=</span> i <span class="op">//</span> <span class="dv">2</span></span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> dowmheap(<span class="va">self</span>, n):</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> n <span class="op">&lt;</span> <span class="va">self</span>.N <span class="op">//</span> <span class="dv">2</span>:</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            k <span class="op">=</span> n <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> k <span class="op">&lt;</span> <span class="va">self</span>.N <span class="kw">and</span> <span class="va">self</span>.a[k][<span class="dv">0</span>] <span class="op">&lt;</span> <span class="va">self</span>.a[k<span class="op">+</span><span class="dv">1</span>][<span class="dv">0</span>]:</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> downheap(<span class="va">self</span>, i):</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> i <span class="op">*</span> <span class="dv">2</span> <span class="op">&lt;=</span> <span class="va">self</span>.N:</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            k <span class="op">=</span> i <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> k <span class="op">&lt;</span> <span class="va">self</span>.N <span class="kw">and</span> <span class="va">self</span>.a[k][<span class="dv">0</span>] <span class="op">&gt;</span> <span class="va">self</span>.a[k <span class="op">+</span> <span class="dv">1</span>][<span class="dv">0</span>]:</span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                k <span class="op">=</span> k<span class="op">+</span><span class="dv">1</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="va">self</span>.a[n][<span class="dv">0</span>] <span class="op">&lt;</span> <span class="va">self</span>.a[k][<span class="dv">0</span>]:</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="va">self</span>.a[i][<span class="dv">0</span>] <span class="op">&lt;</span> <span class="va">self</span>.a[k][<span class="dv">0</span>]:</span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.a[n], <span class="va">self</span>.a[k] <span class="op">=</span> <span class="va">self</span>.a[k], <span class="va">self</span>.a[n]</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> k</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.a[i], <span class="va">self</span>.a[k] <span class="op">=</span> <span class="va">self</span>.a[k], <span class="va">self</span>.a[i]</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>            i <span class="op">=</span> k</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>삽입, 삭제: O(logN)</p>
 </section>
 </section>
@@ -2069,6 +2072,9 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <li>key 값을 10개정도 쭉 주고 나서 이진 탐색트리로 구현하라</li>
 <li>이진 탐색 트리를 주고 나서, 노드 삭제 후 최종 이진 탐색 트리 기술하라</li>
 </ul>
+<section id="연습-문제-bst-빈칸-채우기-고급" class="level3">
+<h3 class="anchored" data-anchor-id="연습-문제-bst-빈칸-채우기-고급">연습 문제: BST 빈칸 채우기 (고급)</h3>
+<p>아래 BST 클래스의 메소드들을 완성해보세요:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Node:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, key, value, left<span class="op">=</span><span class="va">None</span>, right<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.key <span class="op">=</span> key</span>
@@ -2080,75 +2086,77 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.root <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get(<span class="va">self</span>, key):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get(<span class="va">self</span>, k):</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.get_item(<span class="va">self</span>.root, k)</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_item(<span class="va">self</span>, n, k):</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_item(<span class="va">self</span>, i, k):</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> <span class="va">None</span>:</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n.key <span class="op">&gt;</span> k:</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> get_item(n.left, k)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n.key <span class="op">&lt;</span> k:</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> get_item(n.right, k)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n.value</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> k <span class="op">&lt;</span> i.key:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.get_item(i.left, k)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i.key <span class="op">&lt;</span> k:</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.get_item(i.right, k)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i.value</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> put(<span class="va">self</span>, key, value):</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.root <span class="op">=</span> <span class="va">self</span>.put_item(<span class="va">self</span>.root, key, value)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> put(<span class="va">self</span>, k, val):</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.root <span class="op">=</span> <span class="va">self</span>.put_item(<span class="va">self</span>.root, k, val)</span>
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> put_item(<span class="va">self</span>, n, k, val):</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n <span class="op">==</span> <span class="va">None</span>:</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n.key <span class="op">&gt;</span> k:</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            n.left <span class="op">=</span> put_item(n.left, k)</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n.key <span class="op">&lt;</span> k:</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            n.right <span class="op">=</span> put_item(n.right, k)</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        n.value <span class="op">=</span> value</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="bu">min</span>(<span class="va">self</span>):</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.root <span class="op">==</span> <span class="va">None</span>:</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.minimum(<span class="va">self</span>.root)</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> minimum(<span class="va">self</span>, n):</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n.left <span class="op">==</span> <span class="va">None</span>:</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> n</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.minimum(n.left)</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> deletemin(<span class="va">self</span>):</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.root <span class="op">==</span> <span class="va">None</span>:</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.del_min(<span class="va">self</span>.root)</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> del_min(<span class="va">self</span>, n):</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n.left <span class="op">==</span> <span class="va">None</span>:</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> n.right</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        n.left <span class="op">=</span> <span class="va">self</span>.del_min(n.left)</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> delete(<span class="va">self</span>, key):</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.root <span class="op">=</span> <span class="va">self</span>.del_node(<span class="va">self</span>.root, key)</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> del_node(<span class="va">self</span>, n, k):</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n <span class="op">==</span> <span class="va">None</span>:</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n.key <span class="op">&gt;</span> k:</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>            n.left <span class="op">=</span> del_node(n.left, k)</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> n.key <span class="op">&lt;</span> k:</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>            n.right <span class="op">=</span> del_node(n.right, k)</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> n.right <span class="op">==</span> <span class="va">None</span>:</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> n.left</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> n.left <span class="op">==</span> <span class="va">None</span>:</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> n.right</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>            target <span class="op">=</span> n</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> <span class="va">self</span>.minimum(target.right)</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>            n.right <span class="op">=</span> <span class="va">self</span>.del_min(target.right)</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>            n.left <span class="op">=</span> target.left</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> put_item(<span class="va">self</span>, i, k, val):</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.root <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> Node(k, val)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> k <span class="op">&lt;</span> i.key:</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.left <span class="op">=</span> <span class="va">self</span>.put_item(<span class="va">self</span>,left, k, val)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> i.key <span class="op">&lt;</span> k:</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.right <span class="op">=</span> <span class="va">self</span>.put_item(<span class="va">self</span>.right, k, val)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            i.val <span class="op">=</span> val</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="bu">min</span>(<span class="va">self</span>):</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.root <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.min_item(<span class="va">self</span>.root)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> min_item(<span class="va">self</span>, i):</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i.left <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.min_item(i.left)</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> del_minimum(<span class="va">self</span>):</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.root <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.del_min(<span class="va">self</span>.root)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> del_min(<span class="va">self</span>, i):</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i.left <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i.right</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        i.left <span class="op">=</span> del_min(<span class="va">self</span>.left)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="kw">del</span>(<span class="va">self</span>, k):</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.root <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.del_item(<span class="va">self</span>.root, k)</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> del_item(i, k):</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> k <span class="op">&lt;</span> i.key:</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>            i.left <span class="op">=</span> <span class="va">self</span>.del_item(i.left, k)</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> i.key <span class="op">&lt;</span> k:</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>            i.right <span class="op">=</span> <span class="va">self</span>.del_item(i.right, k)</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i.right <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> i.left</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i.left <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> i.right</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>            target <span class="op">=</span> i</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>            i <span class="op">=</span> <span class="va">self</span>.min_item(target.right)</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>            i.left <span class="op">=</span> target.left</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>            i.right <span class="op">=</span> <span class="va">self</span>.del_min(target.right)</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol type="1">
 <li>AVL 안냄</li>
 </ol>
+</section>
 </section>
 <section id="그래프" class="level2">
 <h2 class="anchored" data-anchor-id="그래프">그래프</h2>
