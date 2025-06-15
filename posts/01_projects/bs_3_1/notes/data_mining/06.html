@@ -240,7 +240,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">scaling</span></a>
+ <span class="menu-text">데이터 전처리</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -699,14 +699,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/02_areas/42_seoul/notes/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ft_printf</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/42_seoul/notes/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ft_transcendence - github action</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/02_areas/42_seoul/notes/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ft_transcendence - JWT</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/02_areas/42_seoul/notes/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ft_transcendence - block chain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/42_seoul/notes/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">inception-of-things part 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/02_areas/42_seoul/notes/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">inception-of-things part 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/02_areas/42_seoul/notes/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">inception-of-things part 3</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1985,23 +2015,62 @@ window.Quarto = {
 <ul>
 <li>scalability 문제 있음</li>
 </ul></li>
-<li>CLARA: Clustering LARge Applications
+<li>CLARA: sampling을 통해서 PAM의 scalability 문제를 해결
 <ul>
 <li>샘플링 과정에서 biased될 수 있음</li>
 </ul></li>
-<li>CLARANS: Clustering Large Applications based on RANdomized Search</li>
+<li>CLARANS: medoid 후보를 랜덤하게 선택함</li>
 </ul></li>
 <li>k-means++: 초기 centroids를 더 잘 잡음</li>
 </ul></li>
 <li>Hierarchical methods
 <ul>
 <li>top-down: divisive, dia</li>
-<li>bottom-up: agglomerative</li>
+<li>bottom-up: agglomerative
+<ul>
+<li>ward’s distance: 군집 간의 거리 계산을 군집 내의 분산을 최소화하는 방식으로 계산
+<ul>
+<li>ESS: 각 군집의 중심으로 부터의 거리 제곱합</li>
 </ul></li>
 </ul></li>
-<li>Density-based methods</li>
-<li>Grid-based methods: 대표만(각 grid를 대표) 가지고 군집분석 하는거</li>
+</ul></li>
+</ul></li>
+<li>Density-based methods
+<ul>
+<li>다양한 모양의 군집을 찾을 수 있음</li>
+<li>noise, outlier에 강함</li>
+<li>DBSCAN: 잡음 포인트는 군집에서 제외
+<ol type="1">
+<li>core point를 찾음(eps 이내에 minPts 이상 있는 점)</li>
+<li>core point를 중심으로 군집을 확장
+<ul>
+<li>core point가 아닌 경우 확장 종료</li>
+</ul></li>
+</ol>
+<ul>
+<li>고정된 파라미터를 사용하기 때문에 군집간 밀도가 다를 경우 잘 못찾음</li>
+<li>군집간 계층관계를 인식하기 어렵다</li>
+</ul></li>
+<li>OPTICS: DBSCAN의 단점을 보완
+<ul>
+<li>군집의 밀도가 다를 때도 잘 처리함</li>
+<li>군집의 계층 구조를 인식할 수 있음</li>
+<li>eps, minPts 파라미터가 필요함</li>
+</ul></li>
+</ul></li>
+<li>Grid-based methods: 대표만(각 grid를 대표) 가지고 군집분석 하는거
+<ul>
+<li>속도와 메모리 측면에서 효율적</li>
+</ul></li>
 <li>Model-based clustering methods</li>
+</ul>
+<ul>
+<li>거리기반 군집의 단점:
+<ul>
+<li>군집의 모양이 구형이 아닐 경우 찾기 어려움</li>
+<li>군집의 갯수 결정하기 어려움</li>
+<li>군집의 밀도가 높아야함</li>
+</ul></li>
 </ul>
 </section>
 <section id="평가" class="level2">
