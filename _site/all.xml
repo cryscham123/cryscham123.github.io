@@ -15,7 +15,270 @@
 <link>https://cryscham123.github.io/all.html</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Thu, 05 Jun 2025 02:52:10 GMT</lastBuildDate>
+<lastBuildDate>Fri, 13 Jun 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>clustering</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/06.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="전제-조건" class="level2">
+<h2 class="anchored" data-anchor-id="전제-조건">전제 조건</h2>
+<ol type="1">
+<li>scalability</li>
+<li>다양한 타입의 속성을 처리해야 함
+<ul>
+<li>k-means는 수치형만 처리 가능</li>
+</ul></li>
+<li>인위적인 형상의 군집도 발견할 수 있어야 함
+<ul>
+<li>k-means는 non-convex 형태는 잘 못찾음</li>
+</ul></li>
+<li>파라미터 설정에 전문지식을 요하지 않아야함</li>
+<li>noise와 outliers를 처리해야 함</li>
+<li>데이터가 입력되는 순서에 민감하면 안됨</li>
+<li>차원 수가 높아도 잘 처리할 수 있어야함</li>
+<li>사용자 정의 제약조건도 수용할 수 있어야함</li>
+<li>해석과 사용이 용이해야함</li>
+</ol>
+</section>
+<section id="전처리" class="level2">
+<h2 class="anchored" data-anchor-id="전처리">전처리</h2>
+<ol type="1">
+<li>scaling 필요</li>
+<li>one hot encoding</li>
+</ol>
+</section>
+<section id="model" class="level2">
+<h2 class="anchored" data-anchor-id="model">model</h2>
+<ul>
+<li>Distance-based methods
+<ul>
+<li>Partitioning methods
+<ul>
+<li>k-means<sup>1</sup>:
+<ul>
+<li>polinominal 시간 안에 해결 가능</li>
+<li>noise, outlier에 민감함</li>
+<li>수치형만 처리 가능</li>
+<li>non-convex 형태는 잘 못찾음</li>
+</ul></li>
+<li>k-modes: 범주형 데이터 처리 가능. 빈도수로 유사도 처리함</li>
+<li>k-prototype: 범주형, 수치형 섞인거 처리 가능</li>
+<li>k-medoids: 중심에 위치한 데이터 포인트를 사용해서 outlier 잘 처리함
+<ul>
+<li>PAM: Partitioning Around Medoids
+<ul>
+<li>scalability 문제 있음</li>
+</ul></li>
+<li>CLARA: Clustering LARge Applications
+<ul>
+<li>샘플링 과정에서 biased될 수 있음</li>
+</ul></li>
+<li>CLARANS: Clustering Large Applications based on RANdomized Search</li>
+</ul></li>
+<li>k-means++: 초기 centroids를 더 잘 잡음</li>
+</ul></li>
+<li>Hierarchical methods
+<ul>
+<li>top-down: divisive, dia</li>
+<li>bottom-up: agglomerative</li>
+</ul></li>
+</ul></li>
+<li>Density-based methods</li>
+<li>Grid-based methods: 대표만(각 grid를 대표) 가지고 군집분석 하는거</li>
+<li>Model-based clustering methods</li>
+</ul>
+</section>
+<section id="평가" class="level2">
+<h2 class="anchored" data-anchor-id="평가">평가</h2>
+<ul>
+<li>silhuette score: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D%20s(i)%7D%7Bn%7D">
+<ul>
+<li>s(i): <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bb(i)%20-%20a(i)%7D%7Bmax((a(i),%20b(i)))%7D">
+<ul>
+<li>a(i): 군집 내 노드간의 평균 거리</li>
+<li>b(i): 가장 가까운 군집과의 노드 간 평균 거리</li>
+</ul></li>
+<li>1에 가까울 수록 좋음</li>
+</ul></li>
+</ul>
+
+
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">각주</h2>
+
+<ol>
+<li id="fn1"><p>장단점 기말고사 언급하심↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/06.html</guid>
+  <pubDate>Fri, 13 Jun 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>XGBoost</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/08.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<ul>
+<li>결측치 자체 처리</li>
+</ul>
+<section id="회귀" class="level2">
+<h2 class="anchored" data-anchor-id="회귀">회귀</h2>
+<ul>
+<li>similarity score: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B(sum%20of%20residuals)%5E2%7D%7Bnumber%20of%20residuals%20+%20%CE%BB%7D"></li>
+<li>λ를 높이면 잔차의 수에 따른 민감도를 완화할 수 있다. overfitting 방지</li>
+<li>gain: <img src="https://latex.codecogs.com/png.latex?Left_%7Bsimilarity%7D%20+%20Right_%7Bsimilarity%7D%20-%20Parent_%7Bsimilarity%7D"></li>
+<li>gain값이 높은 속성을 선택</li>
+<li>gain 값이 특정 γ보다 낮으면 가지치기</li>
+<li>leaf value: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bsum%20of%20residuals%7D%7Bnumber%20of%20residuals%20+%20%CE%BB%7D"></li>
+<li>예측값 갱신: <img src="https://latex.codecogs.com/png.latex?%EA%B8%B0%EC%A1%B4%20%EA%B0%92%20+%20learning%20rate(eta)%20*%20leaf%20value">로 예측</li>
+</ul>
+</section>
+<section id="분류" class="level2">
+<h2 class="anchored" data-anchor-id="분류">분류</h2>
+<ul>
+<li>similarity score: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B(sum%20of%20residuals)%5E2%7D%7B%E2%88%91_%7Bi=1%7D%5E%7Bn%7D(previous%20probability_i%20*%20(1%20-%20previous%20probability_i))%20+%20%CE%BB%7D"></li>
+<li>leaf value: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bsum%20of%20residuals%7D%7B%E2%88%91_%7Bi=1%7D%5E%7Bn%7D(previous%20probability_i%20*%20(1%20-%20previous%20probability_i))%20+%20%CE%BB%7D"></li>
+<li>예측값 갱신: log(odds) = <img src="https://latex.codecogs.com/png.latex?log%20%5Cfrac%7Bp%7D%7B1%20-%20p%7D%20+%20learning%20rate%20*%20leaf%20value">
+<ul>
+<li>new probability = <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Be%5E%7Blog(odds)%7D%7D%7B1%20+%20e%5E%7Blog(odds)%7D%7D"></li>
+</ul></li>
+<li>잔차는 점점 0에 수렴하고, probability는 실제 값(1, 0)에 수렴한다.</li>
+<li>min_child_weight: leaf node의 최소 가중치 합(<img src="https://latex.codecogs.com/png.latex?%E2%88%91_%7Bi=1%7D%5E%7Bn%7D%20(previous%20probability%20*%20(1%20-%20previous%20probility">)이 이 값보다 작으면 분할하지 않음</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>data mining</category>
+  <category>학부 정리</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/08.html</guid>
+  <pubDate>Fri, 13 Jun 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/16.pdf</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>보고서</category>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/16.pdf</guid>
+  <pubDate>Fri, 13 Jun 2025 12:22:48 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/01.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="scaling" class="level2">
+<h2 class="anchored" data-anchor-id="scaling">scaling</h2>
+<ol type="1">
+<li>min-max scaling: <img src="https://latex.codecogs.com/png.latex?x'%20=%20%5Cfrac%7Bx%20-%20min(x)%7D%7Bmax(x)%20-%20min(x)%7D">
+<ul>
+<li>0과 1 사이의 값으로 변환</li>
+</ul></li>
+<li>standardization: <img src="https://latex.codecogs.com/png.latex?x'%20=%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Csigma%7D">, <img src="https://latex.codecogs.com/png.latex?%5Cmu">: 평균, <img src="https://latex.codecogs.com/png.latex?%5Csigma">: 표준편차</li>
+</ol>
+</section>
+<section id="train-test-resampling" class="level2">
+<h2 class="anchored" data-anchor-id="train-test-resampling">Train Test Resampling</h2>
+<section id="resampling" class="level3">
+<h3 class="anchored" data-anchor-id="resampling">resampling</h3>
+<ul>
+<li>resampling: 데이터를 여러 번 나누어 모델을 학습하고 평가하는 방법</li>
+<li>train set: 모델을 학습하는 데이터</li>
+<li>validation data set: 하이퍼파라미터를 튜닝</li>
+<li>test set: 모델의 성능 평가</li>
+<li>층화추출법: stratified sampling</li>
+</ul>
+</section>
+<section id="methods" class="level3">
+<h3 class="anchored" data-anchor-id="methods">methods</h3>
+<ul>
+<li>hold out method: data를 train set과 test set으로 나누는 방법
+<ul>
+<li>어떤 데이터가 train, test set에 포함되는지에 따라 결과가 달라질 수 있다.</li>
+<li>→ train set과 test set을 여러 번 나누어 모델을 학습하고 평가하는 방법이 필요하다.</li>
+</ul></li>
+<li>cross validation: 데이터를 여러 번 나누어 모델을 학습하고 평가하는 방법
+<ul>
+<li>k-fold cross validation: 데이터를 k개의 fold로 나누고, 각 fold를 test set으로 사용하여 모델을 학습하고 평가한다.
+<ul>
+<li>random하게 sampling할 수 있고, 안할 수도 있음</li>
+</ul></li>
+<li>leave-one-out cross validation: 데이터의 개수가 n개일 때, n-1개의 데이터를 train set으로 사용하고 1개의 데이터를 test set으로 사용하는 방법</li>
+<li>error는 각 train set, fold 에서 계산된 error의 평균으로 구한다.</li>
+</ul></li>
+<li>bootstrap: 데이터를 중복을 허용하여 샘플링하는 방법
+<ul>
+<li>원본 데이터에서 n개의 데이터를 랜덤하게 선택하여 train set을 만들고, 나머지 데이터를 test set으로 사용한다.</li>
+<li>여러 번 반복하여 모델을 학습하고 평가한다.</li>
+<li><strong>실제 오류 추정치의 편향과 분산 모두에 대한 정확한 측정값을 얻을 수 있다.</strong></li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/01.html</guid>
+  <pubDate>Thu, 12 Jun 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>random forest</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/03.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<ol type="1">
+<li>bootstrap sampling</li>
+<li>k개의 feature 중 랜덤하게 선택해서 노드를 추가</li>
+<li>각 tree 학습</li>
+<li>각 tree의 예측값을 투표하여 최종 예측값 결정
+<ul>
+<li>분류: 다수결 투표</li>
+<li>회귀: 평균값</li>
+</ul></li>
+</ol>
+<ul>
+<li>vs bagging
+<ul>
+<li>bagging: 데이터의 행에 무작위성을 부여</li>
+<li>random forest: 데이터의 행과 열에 무작위성을 부여</li>
+</ul></li>
+<li>oob(out-of-bag) error: bootstrap sampling으로 학습에 사용되지 않은 데이터로 평가
+<ul>
+<li>사실상 별도의 validation set을 필요로 하지 않음</li>
+</ul></li>
+</ul>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>data mining</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/03.html</guid>
+  <pubDate>Thu, 12 Jun 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>확률과 통계 R 실습 과제</title>
   <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/statistics/06.html</link>
@@ -1459,24 +1722,6 @@ font-style: inherit;">1</span>)</span></code></pre></div>
   <category>확률과 통계</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/statistics/05.html</guid>
   <pubDate>Wed, 04 Jun 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/16.pdf</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>보고서</category>
-  <category>데이터 마이닝</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/16.pdf</guid>
-  <pubDate>Tue, 03 Jun 2025 04:11:29 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/13.pdf</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>보고서</category>
-  <category>OR</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/OR/13.pdf</guid>
-  <pubDate>Sun, 01 Jun 2025 11:24:58 GMT</pubDate>
 </item>
 <item>
   <title>시험 범위</title>
@@ -3119,46 +3364,46 @@ font-style: inherit;">not</span> visited[i]:</span>
   <pubDate>Fri, 30 May 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>clustering</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/17.html</link>
+  <title>ensemble</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/07.html</link>
   <description><![CDATA[ 
 
 
 
 
 <p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<p>다수의 모델을 학습시켜 결과를 종합하여 예측 성능을 높이는 방법</p>
+<section id="techniques" class="level2">
+<h2 class="anchored" data-anchor-id="techniques">Techniques</h2>
 <ul>
-<li>k-means</li>
-<li>k-medoids</li>
-<li>PAM</li>
-<li>CLARA</li>
-<li>CLARANS</li>
-<li>AGNES</li>
-<li>DIANA</li>
-<li>DBSCAN</li>
-<li>OPTICS</li>
-<li>GRID</li>
+<li>stacking:
+<ul>
+<li>여러 모델을 학습시킨 후, 각 모델의 예측 결과를 입력으로 하는 메타 모델을 학습시킨다.</li>
+<li>메타 모델은 다른 모델들의 예측 결과를 종합하여 최종 예측을 수행한다.</li>
+</ul></li>
+<li>bagging
+<ul>
+<li>vs cross validation:
+<ul>
+<li>cross validation은 이미 생성된 모델을 검증하기 위한 방법. 모델 구축 방법은 아님</li>
+<li>bagging은 분산을 줄이기 위해 사용함</li>
+</ul></li>
+<li><strong>bagging의 voting, averaging은 unsupervised learning</strong></li>
+</ul></li>
+<li>boosting: sequentially 학습
+<ul>
+<li>이전 모델의 오차를 보완하는 방식으로 학습한다.</li>
+<li><strong>supervised learning</strong></li>
+</ul></li>
 </ul>
-<ol type="1">
-<li>주제를 정하고 한게 아니고, 데이터 안에서 통찰을 찾은건데, 막상 우리 분석이 정말 의미가 있는지 모르겠다.
-<ul>
-<li>안정형, 탐색형을 분류하는게 무슨 의미가 있고, 이걸 18~19세 데이터만 측정하는게 대체 무슨 의미가 있을까</li>
-</ul></li>
-<li>오늘 발표한거 보니까 변수 해석보다는 분석 방법론(어떻게 분석을 진행했고, 예측률이 얼마나 나오는지)에 더 집중해서 진행한거 같은데, 원래 회귀분석에서는 분석 방법론에 더 집중하는게 맞는가?</li>
-<li>다중 공산성 문제가 있는데 트리기반 모델을 사용했고, l1, l2 엘라스틱넷을 사용했는데, 이게 다중 공산성 문제를 완전히 해결했다고 할 수 있을까
-<ul>
-<li>logistic regression의 결과 중 p value가 낮은 변수로 다시 분석을 진행해보면 괜찮을까</li>
-</ul></li>
-<li>train, test set을 분리하는 과정에서 가중치가 왜곡될 수 있어보인다.</li>
-<li>분석 모델을 너무 적게 사용했다고 생각할 수 있을까?</li>
-</ol>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>OR</category>
+  <category>data mining</category>
   <category>학부 정리</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/17.html</guid>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/07.html</guid>
   <pubDate>Fri, 30 May 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
@@ -8961,77 +9206,6 @@ font-style: inherit;">'tight'</span>)</span>
   <category>생산시스템관리</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/product/10.html</guid>
   <pubDate>Sun, 11 May 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/06.pdf</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>보고서</category>
-  <category>데이터 마이닝</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/06.pdf</guid>
-  <pubDate>Sat, 10 May 2025 00:37:01 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>보고서</category>
-  <category>데이터 마이닝</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/05.pdf</guid>
-  <pubDate>Sat, 10 May 2025 00:36:38 GMT</pubDate>
-</item>
-<item>
-  <title>의사결정 트리</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/02.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<p>불순도가 가장 낮은 leaves를 root에 두고, 그 다음 불순도가 낮은 leaf를 그 아래에 두는 방식으로 트리를 구성한다. leaf 노드의 과반수가 같은 클래스를 가지면 그 클래스를 리턴한다. overfit을 방비하기 위해 pruning을 하거나 max depth를 설정한다.</p>
-<section id="과정" class="level2">
-<h2 class="anchored" data-anchor-id="과정">과정</h2>
-<ol type="1">
-<li>루트 노드에서 시작전체 데이터셋을 기준으로 시작하여 가장 좋은 분할속성(feature)을 선택</li>
-<li>분할 기준 평가각 속성에 대해 데이터를 분할했을 때의 분할 평가함수 적용
-<ul>
-<li>gini index</li>
-<li>entropy</li>
-<li>information gain</li>
-<li>gain ratio</li>
-</ul></li>
-<li>최적의 분할 선택 평가된 기준 중 가장 순도가 높은 점수를 갖는 속성을 선택 (greedy)</li>
-<li>재귀적으로 하위 노드 분할분할된 하위 데이터에 대해 위의 과정을 반복</li>
-<li>종료 조건 만족 시 정지</li>
-</ol>
-</section>
-<section id="algorithm" class="level2">
-<h2 class="anchored" data-anchor-id="algorithm">Algorithm</h2>
-<ol type="1">
-<li>CART
-<ul>
-<li>분할 기준
-<ul>
-<li>분류: gini index</li>
-<li>회귀: MSE</li>
-</ul></li>
-<li>모든 분할에서 이진 트리로 분할</li>
-<li>사후 가지치기
-<ul>
-<li>비용 복잡도 가지치기: <img src="https://latex.codecogs.com/png.latex?Total%20SSR%20+%20%CE%B1(leaf%20size)">이 제일 작은 트리 선택</li>
-<li>α는 cross validation으로 결정</li>
-</ul></li>
-</ul></li>
-</ol>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>data mining</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_1/notes/data_mining/02.html</guid>
-  <pubDate>Sun, 04 May 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

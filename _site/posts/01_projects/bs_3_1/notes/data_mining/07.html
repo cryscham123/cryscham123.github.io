@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Support vector machine – 김형훈의 학습 블로그</title>
+<title>ensemble – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" rel="next">
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" rel="prev">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/08.html" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../../site_libs/quarto-html/quarto.js"></script>
@@ -109,7 +109,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html">Support vector machine</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html">ensemble</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -228,7 +228,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Support vector machine</span></a>
   </div>
 </li>
@@ -246,7 +246,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">ensemble</span></a>
   </div>
 </li>
@@ -1863,17 +1863,24 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#techniques" id="toc-techniques" class="nav-link active" data-scroll-target="#techniques">Techniques</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html">Support vector machine</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html">ensemble</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Support vector machine</h1>
+<h1 class="title">ensemble</h1>
   <div class="quarto-categories">
     <div class="quarto-category">data mining</div>
+    <div class="quarto-category">학부 정리</div>
   </div>
   </div>
 
@@ -1885,7 +1892,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 5월 5일</p>
+      <p class="date">2025년 5월 31일</p>
     </div>
   </div>
   
@@ -1897,27 +1904,34 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </header>
 
 
-<p><img src="../../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<p>다수의 모델을 학습시켜 결과를 종합하여 예측 성능을 높이는 방법</p>
+<section id="techniques" class="level2">
+<h2 class="anchored" data-anchor-id="techniques">Techniques</h2>
 <ul>
-<li>bias variance tradeoff
+<li>stacking:
 <ul>
-<li>margin ↑, bias ↑, variance ↓</li>
-<li>margin ↓, bias ↓, variance ↑</li>
+<li>여러 모델을 학습시킨 후, 각 모델의 예측 결과를 입력으로 하는 메타 모델을 학습시킨다.</li>
+<li>메타 모델은 다른 모델들의 예측 결과를 종합하여 최종 예측을 수행한다.</li>
 </ul></li>
-<li>suppot vector: 임계값에 가까운 데이터 포인트</li>
-<li>linear classification fomulation:</li>
-</ul>
-<p><img src="img/2025-05-05-10-49-25.png" class="img-fluid"></p>
-<p><img src="img/2025-05-05-10-49-34.png" class="img-fluid"></p>
+<li>bagging
 <ul>
-<li>if not linear solvable → kernel functions</li>
-<li>soft margin: 이상치를 포함할 수 있는 마진
+<li>vs cross validation:
 <ul>
-<li>cross validation으로 최적의 soft margin을 찾는다.</li>
+<li>cross validation은 이미 생성된 모델을 검증하기 위한 방법. 모델 구축 방법은 아님</li>
+<li>bagging은 분산을 줄이기 위해 사용함</li>
+</ul></li>
+<li><strong>bagging의 voting, averaging은 unsupervised learning</strong></li>
+</ul></li>
+<li>boosting: sequentially 학습
+<ul>
+<li>이전 모델의 오차를 보완하는 방식으로 학습한다.</li>
+<li><strong>supervised learning</strong></li>
 </ul></li>
 </ul>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2346,13 +2360,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" class="pagination-link" aria-label="random forest">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">random forest</span>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html" class="pagination-link" aria-label="clustering">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">clustering</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" class="pagination-link" aria-label="association rule mining">
-        <span class="nav-page-text">association rule mining</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/08.html" class="pagination-link" aria-label="XGBoost">
+        <span class="nav-page-text">XGBoost</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

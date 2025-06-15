@@ -624,16 +624,16 @@
   {
     "objectID": "posts/01_projects/bs_3_1/notes/data_mining/03.html",
     "href": "posts/01_projects/bs_3_1/notes/data_mining/03.html",
-    "title": "Support vector machine",
+    "title": "random forest",
     "section": "",
-    "text": "bias variance tradeoff\n\nmargin ↑, bias ↑, variance ↓\nmargin ↓, bias ↓, variance ↑\n\nsuppot vector: 임계값에 가까운 데이터 포인트\nlinear classification fomulation:\n\n\n\n\nif not linear solvable → kernel functions\nsoft margin: 이상치를 포함할 수 있는 마진\n\ncross validation으로 최적의 soft margin을 찾는다.\n\n\n\n\n\n 맨 위로",
+    "text": "bootstrap sampling\nk개의 feature 중 랜덤하게 선택해서 노드를 추가\n각 tree 학습\n각 tree의 예측값을 투표하여 최종 예측값 결정\n\n분류: 다수결 투표\n회귀: 평균값\n\n\n\nvs bagging\n\nbagging: 데이터의 행에 무작위성을 부여\nrandom forest: 데이터의 행과 열에 무작위성을 부여\n\noob(out-of-bag) error: bootstrap sampling으로 학습에 사용되지 않은 데이터로 평가\n\n사실상 별도의 validation set을 필요로 하지 않음\n\n\n\n\n\n 맨 위로",
     "crumbs": [
       "PARA",
       "Projects",
       "학부 3학년 1학기",
       "Notes",
       "Data Mining",
-      "Support vector machine"
+      "random forest"
     ]
   },
   {
@@ -744,16 +744,16 @@
   {
     "objectID": "posts/01_projects/bs_3_1/notes/data_mining/08.html",
     "href": "posts/01_projects/bs_3_1/notes/data_mining/08.html",
-    "title": "preprocessing",
+    "title": "XGBoost",
     "section": "",
-    "text": "import chardet\n\nwith open(\"_data/class/2012년_1당사자_법규위반별_주야별_교통사고.csv\", \"rb\") as f:\n    print(chardet.detect(f.read()))\n\n{'encoding': 'EUC-KR', 'confidence': 0.99, 'language': 'Korean'}\n\n\n\nimport pandas as pd\n\ndf = pd.read_csv(\n    \"_data/class/2012년_1당사자_법규위반별_주야별_교통사고.csv\", encoding=\"EUC-KR\"\n)\ndf\n\n\n\n\n\n\n\n\n법규위반\n주야\n발생건수\n사망자수\n부상자수\n중상\n경상\n부상신고\n\n\n\n\n0\n과속\n주\n159\n34\n334\n140\n178\n16\n\n\n1\n과속\n야\n218\n73\n348\n200\n139\n9\n\n\n2\n교차로 통행방법 위반\n주\n8817\n82\n14031\n3915\n9530\n586\n\n\n3\n교차로 통행방법 위반\n야\n5904\n29\n9728\n2401\n6884\n443\n\n\n4\n기타\n주\n9388\n141\n14070\n4271\n9217\n582\n\n\n5\n기타\n야\n6073\n56\n9218\n2348\n6457\n413\n\n\n6\n보행자 보호의무 위반\n주\n3772\n80\n3914\n2063\n1729\n122\n\n\n7\n보행자 보호의무 위반\n야\n3334\n94\n3535\n1802\n1626\n107\n\n\n8\n신호위반\n주\n12552\n210\n20396\n6816\n12765\n815\n\n\n9\n신호위반\n야\n12755\n179\n21724\n7177\n13749\n798\n\n\n10\n안전거리 미확보\n주\n12408\n57\n22392\n4509\n16882\n1001\n\n\n11\n안전거리 미확보\n야\n9867\n40\n17422\n3025\n13644\n753\n\n\n12\n안전운전 의무 불이행\n주\n62608\n1740\n91076\n28081\n58472\n4523\n\n\n13\n안전운전 의무 불이행\n야\n62783\n2132\n92942\n26451\n62209\n4282\n\n\n14\n중앙선 침범\n주\n6825\n243\n12427\n4658\n7339\n430\n\n\n15\n중앙선 침범\n야\n6193\n202\n11008\n3846\n6770\n392\n\n\n\n\n\n\n\n\ndf = pd.read_csv(\"_data/class/vote.csv\")\ndf\n\n\n\n\n\n\n\n\ngender\nregion\nedu\nincome\nage\nscore_gov\nscore_progress\nscore_intention\nvote\nparties\n\n\n\n\n0\n1\n4\n3\n3\n3\n2\n2\n4.0\n1\n2\n\n\n1\n1\n5\n2\n3\n3\n2\n4\n3.0\n0\n3\n\n\n2\n1\n3\n1\n2\n4\n1\n3\n2.8\n1\n4\n\n\n3\n2\n1\n2\n1\n3\n5\n4\n2.6\n1\n1\n\n\n4\n1\n1\n1\n2\n4\n4\n3\n2.4\n1\n1\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n206\n1\n4\n1\n4\n4\n3\n3\n1.8\n1\n2\n\n\n207\n1\n1\n2\n1\n2\n3\n4\n2.6\n1\n4\n\n\n208\n1\n2\n2\n1\n2\n3\n3\n2.6\n1\n2\n\n\n209\n1\n1\n2\n3\n4\n3\n2\n4.0\n1\n4\n\n\n210\n2\n1\n2\n2\n2\n3\n3\n3.8\n1\n2\n\n\n\n\n211 rows × 10 columns\n\n\n\n\nx = df.iloc[:, :8]\nx\n\n\n\n\n\n\n\n\ngender\nregion\nedu\nincome\nage\nscore_gov\nscore_progress\nscore_intention\n\n\n\n\n0\n1\n4\n3\n3\n3\n2\n2\n4.0\n\n\n1\n1\n5\n2\n3\n3\n2\n4\n3.0\n\n\n2\n1\n3\n1\n2\n4\n1\n3\n2.8\n\n\n3\n2\n1\n2\n1\n3\n5\n4\n2.6\n\n\n4\n1\n1\n1\n2\n4\n4\n3\n2.4\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n206\n1\n4\n1\n4\n4\n3\n3\n1.8\n\n\n207\n1\n1\n2\n1\n2\n3\n4\n2.6\n\n\n208\n1\n2\n2\n1\n2\n3\n3\n2.6\n\n\n209\n1\n1\n2\n3\n4\n3\n2\n4.0\n\n\n210\n2\n1\n2\n2\n2\n3\n3\n3.8\n\n\n\n\n211 rows × 8 columns\n\n\n\n\ny = df[\"vote\"]\ny\n\n0      1\n1      0\n2      1\n3      1\n4      1\n      ..\n206    1\n207    1\n208    1\n209    1\n210    1\nName: vote, Length: 211, dtype: int64\n\n\n\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"_data/class/Car-selling price.csv\")\ndf\n\n\n\n\n\n\n\n\nMileage\nAge(yrs)\nSell Price($)\n\n\n\n\n0\n69000\n6\n18000\n\n\n1\n35000\n3\n34000\n\n\n2\n57000\n5\n26100\n\n\n3\n22500\n2\n40000\n\n\n4\n46000\n4\n31500\n\n\n5\n59000\n5\n26750\n\n\n6\n52000\n5\n32000\n\n\n7\n72000\n6\n19300\n\n\n8\n91000\n8\n12000\n\n\n9\n67000\n6\n22000\n\n\n10\n83000\n7\n18700\n\n\n11\n79000\n7\n19500\n\n\n12\n59000\n5\n26000\n\n\n13\n58780\n4\n27500\n\n\n14\n82450\n7\n19400\n\n\n15\n25400\n3\n35000\n\n\n16\n28000\n2\n35500\n\n\n17\n69000\n5\n19700\n\n\n18\n87600\n8\n12800\n\n\n19\n52000\n5\n18200\n\n\n\n\n\n\n\n\nplt.title(\"Scatter Diagram\")\nplt.xlabel(\"Mileage\")\nplt.ylabel(\"Sell Price($)\")\nplt.scatter(df[\"Mileage\"], df[\"Sell Price($)\"])\n\n\n\n\n\n\n\n\n\nfrom sklearn.model_selection import train_test_split\n\nx = df[[\"Mileage\", \"Age(yrs)\"]]\ny = df[\"Sell Price($)\"]\n\nX_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2)\n\n\nfrom sklearn.preprocessing import Binarizer\nimport numpy as np\n\ndata = np.array([[1.1], [2.2], [3.3], [4.4], [5.5]])\nscaler = Binarizer(threshold=3.0)\nscaler.fit(data)\nresult = scaler.transform(data)\nresult\n\narray([[0.],\n       [0.],\n       [1.],\n       [1.],\n       [1.]])\n\n\n\nfrom sklearn.preprocessing import MinMaxScaler\n\nscaler = MinMaxScaler()\nscaler.fit(data)\nresult = scaler.transform(data)\nresult\n\narray([[0.  ],\n       [0.25],\n       [0.5 ],\n       [0.75],\n       [1.  ]])\n\n\n\nimport numpy as np\nfrom sklearn.preprocessing import Normalizer\n\ndata = np.array([[1.0, 2.0], [2.0, 3.0], [3.0, 4.0], [4.0, 5.0], [5.0, 6.0]])\n\nscaler = Normalizer(norm='l2')\nX_transformed = scaler.fit_transform(data.T).T\nX_transformed\n\narray([[0.13483997, 0.21081851],\n       [0.26967994, 0.31622777],\n       [0.40451992, 0.42163702],\n       [0.53935989, 0.52704628],\n       [0.67419986, 0.63245553]])\n\n\n\nfrom sklearn.preprocessing import MinMaxScaler\nminmax_scaler = MinMaxScaler(feature_range=(0, 1))\nminmax_scaler.fit_transform(data)\n\narray([[0.  , 0.  ],\n       [0.25, 0.25],\n       [0.5 , 0.5 ],\n       [0.75, 0.75],\n       [1.  , 1.  ]])\n\n\n\ndata = pd.read_csv('_data/class/homeprices.csv')\ndf = pd.DataFrame(data)\n\ndummies = pd.get_dummies(df.town)\nmerged = pd.concat([df, dummies], axis='columns')\nmerged\n\n\n\n\n\n\n\n\ntown\narea\nprice\nmonroe township\nrobinsville\nwest windsor\n\n\n\n\n0\nmonroe township\n2600\n550000\nTrue\nFalse\nFalse\n\n\n1\nmonroe township\n3000\n565000\nTrue\nFalse\nFalse\n\n\n2\nmonroe township\n3200\n610000\nTrue\nFalse\nFalse\n\n\n3\nmonroe township\n3600\n680000\nTrue\nFalse\nFalse\n\n\n4\nmonroe township\n4000\n725000\nTrue\nFalse\nFalse\n\n\n5\nwest windsor\n2600\n585000\nFalse\nFalse\nTrue\n\n\n6\nwest windsor\n2800\n615000\nFalse\nFalse\nTrue\n\n\n7\nwest windsor\n3300\n650000\nFalse\nFalse\nTrue\n\n\n8\nwest windsor\n3600\n710000\nFalse\nFalse\nTrue\n\n\n9\nrobinsville\n2600\n575000\nFalse\nTrue\nFalse\n\n\n10\nrobinsville\n2900\n600000\nFalse\nTrue\nFalse\n\n\n11\nrobinsville\n3100\n620000\nFalse\nTrue\nFalse\n\n\n12\nrobinsville\n3600\n695000\nFalse\nTrue\nFalse\n\n\n\n\n\n\n\n\nfinal = merged.drop(['town', 'west windsor'], axis='columns')\nfinal\n\n\n\n\n\n\n\n\narea\nprice\nmonroe township\nrobinsville\n\n\n\n\n0\n2600\n550000\nTrue\nFalse\n\n\n1\n3000\n565000\nTrue\nFalse\n\n\n2\n3200\n610000\nTrue\nFalse\n\n\n3\n3600\n680000\nTrue\nFalse\n\n\n4\n4000\n725000\nTrue\nFalse\n\n\n5\n2600\n585000\nFalse\nFalse\n\n\n6\n2800\n615000\nFalse\nFalse\n\n\n7\n3300\n650000\nFalse\nFalse\n\n\n8\n3600\n710000\nFalse\nFalse\n\n\n9\n2600\n575000\nFalse\nTrue\n\n\n10\n2900\n600000\nFalse\nTrue\n\n\n11\n3100\n620000\nFalse\nTrue\n\n\n12\n3600\n695000\nFalse\nTrue\n\n\n\n\n\n\n\n\nX = final.drop('price', axis='columns')\nX\n\n\n\n\n\n\n\n\narea\nmonroe township\nrobinsville\n\n\n\n\n0\n2600\nTrue\nFalse\n\n\n1\n3000\nTrue\nFalse\n\n\n2\n3200\nTrue\nFalse\n\n\n3\n3600\nTrue\nFalse\n\n\n4\n4000\nTrue\nFalse\n\n\n5\n2600\nFalse\nFalse\n\n\n6\n2800\nFalse\nFalse\n\n\n7\n3300\nFalse\nFalse\n\n\n8\n3600\nFalse\nFalse\n\n\n9\n2600\nFalse\nTrue\n\n\n10\n2900\nFalse\nTrue\n\n\n11\n3100\nFalse\nTrue\n\n\n12\n3600\nFalse\nTrue\n\n\n\n\n\n\n\n\ny = final.price\ny\n\n0     550000\n1     565000\n2     610000\n3     680000\n4     725000\n5     585000\n6     615000\n7     650000\n8     710000\n9     575000\n10    600000\n11    620000\n12    695000\nName: price, dtype: int64\n\n\n\nfrom sklearn.linear_model import LinearRegression\nmodel = LinearRegression()\nmodel.fit(X, y)\nmodel.predict([[2800, 0, 1]])\n\n/home/cryscham123/.local/lib/python3.12/site-packages/sklearn/base.py:493: UserWarning:\n\nX does not have valid feature names, but LinearRegression was fitted with feature names\n\n\n\narray([590775.63964739])\n\n\n\nmodel.score(X, y)\n\n0.9573929037221873\n\n\n\nfrom sklearn.preprocessing import LabelEncoder\n\nle = LabelEncoder()\ndfle = df\ndfle.town = le.fit_transform(dfle.town)\ndfle\n\n\n\n\n\n\n\n\ntown\narea\nprice\n\n\n\n\n0\n0\n2600\n550000\n\n\n1\n0\n3000\n565000\n\n\n2\n0\n3200\n610000\n\n\n3\n0\n3600\n680000\n\n\n4\n0\n4000\n725000\n\n\n5\n2\n2600\n585000\n\n\n6\n2\n2800\n615000\n\n\n7\n2\n3300\n650000\n\n\n8\n2\n3600\n710000\n\n\n9\n1\n2600\n575000\n\n\n10\n1\n2900\n600000\n\n\n11\n1\n3100\n620000\n\n\n12\n1\n3600\n695000\n\n\n\n\n\n\n\n\n\n\n 맨 위로",
+    "text": "결측치 자체 처리\n\n\n\n\n 맨 위로",
     "crumbs": [
       "PARA",
       "Projects",
       "학부 3학년 1학기",
       "Notes",
       "Data Mining",
-      "preprocessing"
+      "XGBoost"
     ]
   },
   {
@@ -4855,7 +4855,7 @@
     "href": "all.html",
     "title": "전체 게시글",
     "section": "",
-    "text": "정렬\n       디폴트\n         \n          날짜 - 날짜(오름차순)\n        \n         \n          날짜 - 날짜(내림차순)\n        \n         \n          제목\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n제목\n\n\n날짜\n\n\n분류\n\n\n\n\n\n\ncheat sheet\n\n\n \n\n\n \n\n\n\n\n확률과 통계 R 실습 과제\n\n\n2025-06-05\n\n\n확률과 통계, 보고서\n\n\n\n\n수송문제와 할당 문제들\n\n\n2025-06-05\n\n\nOR, 학부 정리\n\n\n\n\n네트워크 최적화 모형\n\n\n2025-06-05\n\n\nOR, 학부 정리\n\n\n\n\nAnalysis of categorical data\n\n\n2025-06-05\n\n\n확률과 통계\n\n\n\n\n청소년기의 심리·정서적 요인을 통한 성인 진입기 진로 안정형·탐색형 성향 분류 예측\n\n\n2025-06-03\n\n\n보고서, 데이터 마이닝\n\n\n\n\nOR 과제 - 8\n\n\n2025-06-01\n\n\n보고서, OR\n\n\n\n\n시험 범위\n\n\n2025-05-31\n\n\nData Structure, 학부 정리\n\n\n\n\n시험 범위\n\n\n2025-05-31\n\n\nOR, 학부 정리\n\n\n\n\nclustering\n\n\n2025-05-31\n\n\nOR, 학부 정리\n\n\n\n\n일정 계획\n\n\n2025-05-28\n\n\n생산시스템관리\n\n\n\n\n기준생산계획 및 자재소요계획\n\n\n2025-05-26\n\n\n생산시스템관리\n\n\n\n\npreprocessing\n\n\n2025-05-22\n\n\ndata mining\n\n\n\n\nanalysis\n\n\n2025-05-22\n\n\ndata mining\n\n\n\n\n총괄생산계획\n\n\n2025-05-19\n\n\n생산시스템관리\n\n\n\n\nOR 과제 - 6\n\n\n2025-05-18\n\n\n보고서, OR\n\n\n\n\nRegression Analysis\n\n\n2025-05-13\n\n\n확률과 통계\n\n\n\n\n예측\n\n\n2025-05-12\n\n\n생산시스템관리\n\n\n\n\n데이터마이닝 팀 과제 주제\n\n\n2025-05-10\n\n\n보고서, 데이터 마이닝\n\n\n\n\n데이터마이닝 1차 팀과제 script\n\n\n2025-05-10\n\n\n보고서, 데이터 마이닝\n\n\n\n\n의사결정 트리\n\n\n2025-05-05\n\n\ndata mining\n\n\n\n\nSupport vector machine\n\n\n2025-05-05\n\n\ndata mining\n\n\n\n\n수송문제와 할당 문제들\n\n\n2025-05-02\n\n\nOR, 학부 정리\n\n\n\n\n선형계획을 위한 다른 알고리즘들\n\n\n2025-05-02\n\n\nOR, 학부 정리\n\n\n\n\n프로젝트 관리\n\n\n2025-04-30\n\n\n생산시스템관리\n\n\n\n\n프로세스 성과에 미치는 변동성의 영향: 산술 손실\n\n\n2025-04-28\n\n\n생산시스템관리\n\n\n\n\nassociation rule mining\n\n\n2025-04-28\n\n\ndata mining\n\n\n\n\n컴퓨팅적 사고 1차 발표 구현 raw script\n\n\n2025-04-26\n\n\n보고서\n\n\n\n\nOR 과제 - 2\n\n\n2025-04-19\n\n\n보고서, OR\n\n\n\n\n쌍대이론과 민감도 분석 (part 6)\n\n\n2025-04-19\n\n\nOR, 학부 정리\n\n\n\n\nSimplex Method (part 5)\n\n\n2025-04-18\n\n\nOR, 학부 정리\n\n\n\n\nANOVA\n\n\n2025-04-15\n\n\n확률과 통계\n\n\n\n\nclassification with trees\n\n\n2025-04-14\n\n\ndata mining\n\n\n\n\n컴퓨팅적사고 발표 ppt\n\n\n2025-04-13\n\n\n보고서\n\n\n\n\nDataminig 1차 발표 ppt\n\n\n2025-04-13\n\n\ndata mining, 보고서\n\n\n\n\nOR 과제 - 4\n\n\n2025-04-10\n\n\n보고서, OR\n\n\n\n\nHomework - 2\n\n\n2025-04-10\n\n\ndata mining\n\n\n\n\n프로세스 성과에 미치는 변동성의 영향: 대기시간 문제\n\n\n2025-04-09\n\n\n생산시스템관리\n\n\n\n\nOR 과제 - 3\n\n\n2025-04-06\n\n\n보고서, OR\n\n\n\n\nCoding pipeline\n\n\n2025-04-05\n\n\nAir flow\n\n\n\n\n시험 범위\n\n\n2025-04-03\n\n\nData Structure, 학부 정리\n\n\n\n\nSimplex 표 계산\n\n\n2025-04-03\n\n\nOR, 학부 정리\n\n\n\n\n배치 생산 및 경제적 주문량 모형\n\n\n2025-04-02\n\n\n생산시스템관리\n\n\n\n\nData Transformation\n\n\n2025-04-02\n\n\ndata mining\n\n\n\n\nHomework\n\n\n2025-03-31\n\n\ndata mining\n\n\n\n\n인건비 추정과 감축\n\n\n2025-03-31\n\n\n생산시스템관리\n\n\n\n\n통계적 가설검정\n\n\n2025-03-27\n\n\n확률과 통계\n\n\n\n\n제품 설계 기법 및 기업 프로세스 유형\n\n\n2025-03-26\n\n\n생산시스템관리\n\n\n\n\npreprocessing\n\n\n2025-03-26\n\n\ndata mining\n\n\n\n\nGetting Started\n\n\n2025-03-26\n\n\nAir flow\n\n\n\n\n공급 프로세스의 이해: 프로세스 처리능력 평가\n\n\n2025-03-19\n\n\n생산시스템관리\n\n\n\n\n신경망\n\n\n2025-03-18\n\n\ndeep learning\n\n\n\n\n퍼셉트론\n\n\n2025-03-17\n\n\ndeep learning\n\n\n\n\ntitanic\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nUpper Confidence Bound\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nNull space and Column space\n\n\n2025-03-16\n\n\n선형 대수\n\n\n\n\nEclat\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nApriori\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\n안녕하세요. 데이터 분석 전문가(진)입니다.\n\n\n2025-03-14\n\n\nadp, 후기\n\n\n\n\nOR 과제 - 1\n\n\n2025-03-13\n\n\n보고서, OR\n\n\n\n\n통계적 추정\n\n\n2025-03-13\n\n\n확률과 통계\n\n\n\n\n봉사\n\n\n2025-03-13\n\n\n봉사\n\n\n\n\n조직을 프로세스 관점에서 바라보기\n\n\n2025-03-12\n\n\n생산시스템관리\n\n\n\n\n가감법으로 연립방정식을 풀기 위한 행렬\n\n\n2025-03-11\n\n\n선형 대수\n\n\n\n\nMatching Supply with Demand\n\n\n2025-03-10\n\n\n생산시스템관리\n\n\n\n\nvector dot product, cross product\n\n\n2025-03-09\n\n\n선형 대수\n\n\n\n\nk-means clustering\n\n\n2025-03-09\n\n\nmachine learning\n\n\n\n\nhierarchical clustering\n\n\n2025-03-09\n\n\nmachine learning\n\n\n\n\nLinear Programming Algorithm\n\n\n2025-03-08\n\n\nOperational Research\n\n\n\n\nIntro\n\n\n2025-03-07\n\n\nOR, 학부 정리\n\n\n\n\n확률과 통계 1 정리\n\n\n2025-03-06\n\n\n확률과 통계\n\n\n\n\n나의 단점에 관한 고찰\n\n\n2025-03-06\n\n\n인생\n\n\n\n\nQuantum Programming\n\n\n2025-03-06\n\n\nQuantum Programming\n\n\n\n\nQiskit\n\n\n2025-03-06\n\n\nQuantum Programming\n\n\n\n\nRandom Forest\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nNaive Bayes\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nIntro\n\n\n2025-03-05\n\n\n생산시스템관리\n\n\n\n\nDecision Tree Classification\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nSubspaces and the basis\n\n\n2025-03-03\n\n\n선형 대수\n\n\n\n\nlinear independence\n\n\n2025-03-02\n\n\n선형 대수\n\n\n\n\nSupport Vector Machine\n\n\n2025-03-02\n\n\nmachine learning\n\n\n\n\nK Nearest Neighbors\n\n\n2025-03-02\n\n\nmachine learning\n\n\n\n\nrandom forest\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nSupport Vector Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nLogistic Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nDecision Tree Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nPolynorminal Linear Regression\n\n\n2025-02-27\n\n\nmachine learning\n\n\n\n\noverview\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\ndata preprocessing\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\nSimple Linear Regression\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\nMultiple Linear Regression\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\n머신 러닝\n\n\n2025-02-25\n\n\n데이터 분석\n\n\n\n\n시험을 보고 왔습니다.\n\n\n2025-02-22\n\n\nadp, 후기\n\n\n\n\nwhat is a blockchain?\n\n\n2025-02-22\n\n\n블록 체인\n\n\n\n\n4 - 정형 데이터 마이닝\n\n\n2025-02-20\n\n\nadp\n\n\n\n\n4 - 비정형 데이터 마이닝\n\n\n2025-02-18\n\n\nadp\n\n\n\n\ninception-of-things part 1\n\n\n2025-02-17\n\n\nvagrant, k8s, argoCD, gitlab, 42 seoul\n\n\n\n\n4 - 통계분석\n\n\n2025-02-16\n\n\nadp\n\n\n\n\n4 - 데이터 마트\n\n\n2025-02-15\n\n\nadp\n\n\n\n\nTerraform Cloud\n\n\n2025-02-11\n\n\nterraform, terraform cloud, devops, IaC\n\n\n\n\n5 - 시각화 인사이트 프로세스\n\n\n2025-02-11\n\n\nadp\n\n\n\n\n5 - 시각화 디자인\n\n\n2025-02-11\n\n\nadp\n\n\n\n\n3 - 분석 마스터 플랜\n\n\n2025-02-10\n\n\nadp\n\n\n\n\n3 - 데이터 분석 기획의 이해\n\n\n2025-02-10\n\n\nadp\n\n\n\n\n2 - 데이터 처리 프로세스\n\n\n2025-02-08\n\n\nadp\n\n\n\n\n2 - 데이터 처리 기술\n\n\n2025-02-08\n\n\nadp\n\n\n\n\n성적 장학금\n\n\n2025-02-05\n\n\n장학금\n\n\n\n\n1 - 데이터의 가치와 미래\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n1 - 데이터 이해\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n1 - 가치 창조를 위한 데이터 사이언스와 전략 인사이트\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n인간 관계론 - 데일 카네기\n\n\n2025-02-02\n\n\n독서, 인간 관계\n\n\n\n\n선형결합과 생성\n\n\n2025-01-31\n\n\n선형 대수\n\n\n\n\n벡터와 공간\n\n\n2025-01-30\n\n\n선형 대수\n\n\n\n\ncloud-1 코드 설명\n\n\n2025-01-30\n\n\naws, packer, terraform, ansible, 42 seoul\n\n\n\n\ncloud-1 개념 설명\n\n\n2025-01-28\n\n\naws, packer, terraform, ansible, 42 seoul\n\n\n\n\n3-몰라\n\n\n2025-01-22\n\n\n선형 대수\n\n\n\n\n자기 소개서\n\n\n2025-01-17\n\n\n자기 소개서\n\n\n\n\nft_transcendence - github action\n\n\n2025-01-17\n\n\nagile, github action, 42 seoul\n\n\n\n\n2-기초(2)\n\n\n2025-01-11\n\n\n선형 대수\n\n\n\n\n2-기초(1)\n\n\n2025-01-10\n\n\n선형 대수\n\n\n\n\nSecond Brain - 티아고 포르테\n\n\n2025-01-09\n\n\n학습, 독서\n\n\n\n\nwhat is linear algebra\n\n\n2025-01-07\n\n\n선형 대수\n\n\n\n\n돈의 심리학 - 모건 하우절\n\n\n2025-01-02\n\n\n금융, 독서\n\n\n\n\n데이터 전처리\n\n\n2025-01-02\n\n\n데이터 분석\n\n\n\n\nEDA와 시각화\n\n\n2024-12-30\n\n\n데이터 분석\n\n\n\n\nPARA Blog 제작\n\n\n2024-12-26\n\n\n블로그\n\n\n\n\npandas data 구조\n\n\n2024-12-20\n\n\n데이터 분석\n\n\n\n\n맥도날드 키오스크 UI 개선 보고서\n\n\n2024-11-27\n\n\n보고서, 인간 공학\n\n\n\n\n숭실대학교 학생식당 식자제 SCM 설계\n\n\n2024-11-26\n\n\n보고서, database\n\n\n\n\nControl\n\n\n2024-11-21\n\n\n인간 공학\n\n\n\n\n표본의 분포\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\n중심 극한 정리\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\n정규 분포\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\nDisplay\n\n\n2024-11-14\n\n\n인간 공학\n\n\n\n\n연속형 확률분포\n\n\n2024-11-05\n\n\n확률과 통계\n\n\n\n\nAttention\n\n\n2024-11-05\n\n\n인간 공학\n\n\n\n\nDatabase Design\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\nDatabase Administration\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\nASP.NET\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\n4조 기말과제 제안서\n\n\n2024-10-30\n\n\n보고서, database\n\n\n\n\n이산형 확률분포\n\n\n2024-10-28\n\n\n확률과 통계\n\n\n\n\n데이터베이스설계및활용 개인과제 #2\n\n\n2024-10-27\n\n\n보고서, database\n\n\n\n\n확률변수의 기댓값\n\n\n2024-10-16\n\n\n확률과 통계\n\n\n\n\nSignal Detection Theory\n\n\n2024-10-15\n\n\n인간 공학\n\n\n\n\nAuditory Haptic\n\n\n2024-10-15\n\n\n인간 공학\n\n\n\n\nData Modeling and the Entity-Relationship Model\n\n\n2024-10-14\n\n\ndatabase\n\n\n\n\nSQL\n\n\n2024-09-27\n\n\ndatabase\n\n\n\n\nSensor System (Visual)\n\n\n2024-09-24\n\n\n인간 공학\n\n\n\n\nDatabase Normalization\n\n\n2024-09-24\n\n\ndatabase\n\n\n\n\nThe Relational Model\n\n\n2024-09-17\n\n\ndatabase\n\n\n\n\nHuman Information Processing Model\n\n\n2024-09-17\n\n\n인간 공학\n\n\n\n\nResearch Method in Human Factors\n\n\n2024-09-10\n\n\n인간 공학\n\n\n\n\n확률변수와 확률분포\n\n\n2024-09-03\n\n\n확률과 통계\n\n\n\n\nIntroduction to Human Factors\n\n\n2024-09-03\n\n\n인간 공학\n\n\n\n\nAn Overview of Database\n\n\n2024-09-03\n\n\ndatabase\n\n\n\n\n확률과 통계의 정의\n\n\n2024-09-02\n\n\n확률과 통계\n\n\n\n\nmetrics server\n\n\n2024-05-15\n\n\n \n\n\n\n\nmanual scheduling\n\n\n2024-05-15\n\n\n \n\n\n\n\nk8s cluster architecture\n\n\n2024-05-15\n\n\n \n\n\n\n\nfail tolerance\n\n\n2024-05-15\n\n\n \n\n\n\n\ncore DNS\n\n\n2024-05-15\n\n\n \n\n\n\n\nPersistant volume\n\n\n2024-05-15\n\n\n \n\n\n\n\nHA in master node\n\n\n2024-05-15\n\n\n \n\n\n\n\nAuthentication\n\n\n2024-05-15\n\n\n \n\n\n\n\nwhat is ebs\n\n\n2024-04-30\n\n\n \n\n\n\n\nwhat is EC2\n\n\n2024-04-30\n\n\n \n\n\n\n\ndatabase choice in aws\n\n\n2024-04-30\n\n\n \n\n\n\n\naws global infrastructure\n\n\n2024-04-30\n\n\n \n\n\n\n\nVPC\n\n\n2024-04-30\n\n\n \n\n\n\n\nRoute53\n\n\n2024-04-30\n\n\n \n\n\n\n\nPerformance Improvement\n\n\n2024-04-30\n\n\n \n\n\n\n\nOverview\n\n\n2024-04-30\n\n\nvault, devops\n\n\n\n\nKMS(Key Management Service)\n\n\n2024-04-30\n\n\n \n\n\n\n\nELB\n\n\n2024-04-30\n\n\n \n\n\n\n\nDisaster Recovery(DR)\n\n\n2024-04-30\n\n\n \n\n\n\n\nDefine IAM\n\n\n2024-04-30\n\n\n \n\n\n\n\nCloudFront\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon Rekognition\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon RDS\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon CloudWatch\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Snow Family\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS SQS\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS S3\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Organization\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Lambda\n\n\n2024-04-30\n\n\n \n\n\n\n\n\n일치 없음"
+    "text": "정렬\n       디폴트\n         \n          날짜 - 날짜(오름차순)\n        \n         \n          날짜 - 날짜(내림차순)\n        \n         \n          제목\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n제목\n\n\n날짜\n\n\n분류\n\n\n\n\n\n\ncheat sheet\n\n\n \n\n\n \n\n\n\n\nclustering\n\n\n2025-06-14\n\n\ndata mining\n\n\n\n\nXGBoost\n\n\n2025-06-14\n\n\ndata mining, 학부 정리\n\n\n\n\n청소년기의 심리·정서적 요인을 통한 성인 진입기 진로 안정형·탐색형 성향 분류 예측\n\n\n2025-06-13\n\n\n보고서, data mining\n\n\n\n\nscaling\n\n\n2025-06-13\n\n\ndata mining\n\n\n\n\nrandom forest\n\n\n2025-06-13\n\n\ndata mining\n\n\n\n\n확률과 통계 R 실습 과제\n\n\n2025-06-05\n\n\n확률과 통계, 보고서\n\n\n\n\n수송문제와 할당 문제들\n\n\n2025-06-05\n\n\nOR, 학부 정리\n\n\n\n\n네트워크 최적화 모형\n\n\n2025-06-05\n\n\nOR, 학부 정리\n\n\n\n\nAnalysis of categorical data\n\n\n2025-06-05\n\n\n확률과 통계\n\n\n\n\n시험 범위\n\n\n2025-05-31\n\n\nData Structure, 학부 정리\n\n\n\n\n시험 범위\n\n\n2025-05-31\n\n\nOR, 학부 정리\n\n\n\n\nensemble\n\n\n2025-05-31\n\n\ndata mining, 학부 정리\n\n\n\n\n일정 계획\n\n\n2025-05-28\n\n\n생산시스템관리\n\n\n\n\n기준생산계획 및 자재소요계획\n\n\n2025-05-26\n\n\n생산시스템관리\n\n\n\n\npreprocessing\n\n\n2025-05-22\n\n\ndata mining\n\n\n\n\nanalysis\n\n\n2025-05-22\n\n\ndata mining\n\n\n\n\n총괄생산계획\n\n\n2025-05-19\n\n\n생산시스템관리\n\n\n\n\nOR 과제 - 6\n\n\n2025-05-18\n\n\n보고서, OR\n\n\n\n\nRegression Analysis\n\n\n2025-05-13\n\n\n확률과 통계\n\n\n\n\n예측\n\n\n2025-05-12\n\n\n생산시스템관리\n\n\n\n\n데이터마이닝 1차 팀과제 script\n\n\n2025-05-10\n\n\n보고서, data mining\n\n\n\n\n분류\n\n\n2025-05-05\n\n\ndata mining\n\n\n\n\nSupport vector machine\n\n\n2025-05-05\n\n\ndata mining\n\n\n\n\n수송문제와 할당 문제들\n\n\n2025-05-02\n\n\nOR, 학부 정리\n\n\n\n\n선형계획을 위한 다른 알고리즘들\n\n\n2025-05-02\n\n\nOR, 학부 정리\n\n\n\n\n프로젝트 관리\n\n\n2025-04-30\n\n\n생산시스템관리\n\n\n\n\n프로세스 성과에 미치는 변동성의 영향: 산술 손실\n\n\n2025-04-28\n\n\n생산시스템관리\n\n\n\n\nassociation rule mining\n\n\n2025-04-28\n\n\ndata mining\n\n\n\n\n컴퓨팅적 사고 1차 발표 구현 raw script\n\n\n2025-04-26\n\n\n보고서\n\n\n\n\nOR 과제 - 2\n\n\n2025-04-19\n\n\n보고서, OR\n\n\n\n\n쌍대이론과 민감도 분석 (part 6)\n\n\n2025-04-19\n\n\nOR, 학부 정리\n\n\n\n\nSimplex Method (part 5)\n\n\n2025-04-18\n\n\nOR, 학부 정리\n\n\n\n\nANOVA\n\n\n2025-04-15\n\n\n확률과 통계\n\n\n\n\nclassification with trees\n\n\n2025-04-14\n\n\ndata mining\n\n\n\n\n컴퓨팅적사고 발표 ppt\n\n\n2025-04-13\n\n\n보고서\n\n\n\n\nDataminig 1차 발표 ppt\n\n\n2025-04-13\n\n\ndata mining, 보고서\n\n\n\n\nOR 과제 - 4\n\n\n2025-04-10\n\n\n보고서, OR\n\n\n\n\n프로세스 성과에 미치는 변동성의 영향: 대기시간 문제\n\n\n2025-04-09\n\n\n생산시스템관리\n\n\n\n\nOR 과제 - 3\n\n\n2025-04-06\n\n\n보고서, OR\n\n\n\n\nCoding pipeline\n\n\n2025-04-05\n\n\nAir flow\n\n\n\n\n시험 범위\n\n\n2025-04-03\n\n\nData Structure, 학부 정리\n\n\n\n\nSimplex 표 계산\n\n\n2025-04-03\n\n\nOR, 학부 정리\n\n\n\n\n배치 생산 및 경제적 주문량 모형\n\n\n2025-04-02\n\n\n생산시스템관리\n\n\n\n\n인건비 추정과 감축\n\n\n2025-03-31\n\n\n생산시스템관리\n\n\n\n\n통계적 가설검정\n\n\n2025-03-27\n\n\n확률과 통계\n\n\n\n\n제품 설계 기법 및 기업 프로세스 유형\n\n\n2025-03-26\n\n\n생산시스템관리\n\n\n\n\nGetting Started\n\n\n2025-03-26\n\n\nAir flow\n\n\n\n\n공급 프로세스의 이해: 프로세스 처리능력 평가\n\n\n2025-03-19\n\n\n생산시스템관리\n\n\n\n\n신경망\n\n\n2025-03-18\n\n\ndeep learning\n\n\n\n\n퍼셉트론\n\n\n2025-03-17\n\n\ndeep learning\n\n\n\n\ntitanic\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nUpper Confidence Bound\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nNull space and Column space\n\n\n2025-03-16\n\n\n선형 대수\n\n\n\n\nEclat\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\nApriori\n\n\n2025-03-16\n\n\nmachine learning\n\n\n\n\n안녕하세요. 데이터 분석 전문가(진)입니다.\n\n\n2025-03-14\n\n\nadp, 후기\n\n\n\n\nOR 과제 - 1\n\n\n2025-03-13\n\n\n보고서, OR\n\n\n\n\n통계적 추정\n\n\n2025-03-13\n\n\n확률과 통계\n\n\n\n\n봉사\n\n\n2025-03-13\n\n\n봉사\n\n\n\n\n조직을 프로세스 관점에서 바라보기\n\n\n2025-03-12\n\n\n생산시스템관리\n\n\n\n\n가감법으로 연립방정식을 풀기 위한 행렬\n\n\n2025-03-11\n\n\n선형 대수\n\n\n\n\nMatching Supply with Demand\n\n\n2025-03-10\n\n\n생산시스템관리\n\n\n\n\nvector dot product, cross product\n\n\n2025-03-09\n\n\n선형 대수\n\n\n\n\nk-means clustering\n\n\n2025-03-09\n\n\nmachine learning\n\n\n\n\nhierarchical clustering\n\n\n2025-03-09\n\n\nmachine learning\n\n\n\n\nLinear Programming Algorithm\n\n\n2025-03-08\n\n\nOperational Research\n\n\n\n\nIntro\n\n\n2025-03-07\n\n\nOR, 학부 정리\n\n\n\n\n확률과 통계 1 정리\n\n\n2025-03-06\n\n\n확률과 통계\n\n\n\n\n나의 단점에 관한 고찰\n\n\n2025-03-06\n\n\n인생\n\n\n\n\nQuantum Programming\n\n\n2025-03-06\n\n\nQuantum Programming\n\n\n\n\nQiskit\n\n\n2025-03-06\n\n\nQuantum Programming\n\n\n\n\nRandom Forest\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nNaive Bayes\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nIntro\n\n\n2025-03-05\n\n\n생산시스템관리\n\n\n\n\nDecision Tree Classification\n\n\n2025-03-05\n\n\nmachine learning\n\n\n\n\nSubspaces and the basis\n\n\n2025-03-03\n\n\n선형 대수\n\n\n\n\nlinear independence\n\n\n2025-03-02\n\n\n선형 대수\n\n\n\n\nSupport Vector Machine\n\n\n2025-03-02\n\n\nmachine learning\n\n\n\n\nK Nearest Neighbors\n\n\n2025-03-02\n\n\nmachine learning\n\n\n\n\nrandom forest\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nSupport Vector Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nLogistic Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nDecision Tree Regression\n\n\n2025-03-01\n\n\nmachine learning\n\n\n\n\nPolynorminal Linear Regression\n\n\n2025-02-27\n\n\nmachine learning\n\n\n\n\noverview\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\ndata preprocessing\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\nSimple Linear Regression\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\nMultiple Linear Regression\n\n\n2025-02-26\n\n\nmachine learning\n\n\n\n\n머신 러닝\n\n\n2025-02-25\n\n\n데이터 분석\n\n\n\n\n시험을 보고 왔습니다.\n\n\n2025-02-22\n\n\nadp, 후기\n\n\n\n\nwhat is a blockchain?\n\n\n2025-02-22\n\n\n블록 체인\n\n\n\n\n4 - 정형 데이터 마이닝\n\n\n2025-02-20\n\n\nadp\n\n\n\n\n4 - 비정형 데이터 마이닝\n\n\n2025-02-18\n\n\nadp\n\n\n\n\ninception-of-things part 1\n\n\n2025-02-17\n\n\nvagrant, k8s, argoCD, gitlab, 42 seoul\n\n\n\n\n4 - 통계분석\n\n\n2025-02-16\n\n\nadp\n\n\n\n\n4 - 데이터 마트\n\n\n2025-02-15\n\n\nadp\n\n\n\n\nTerraform Cloud\n\n\n2025-02-11\n\n\nterraform, terraform cloud, devops, IaC\n\n\n\n\n5 - 시각화 인사이트 프로세스\n\n\n2025-02-11\n\n\nadp\n\n\n\n\n5 - 시각화 디자인\n\n\n2025-02-11\n\n\nadp\n\n\n\n\n3 - 분석 마스터 플랜\n\n\n2025-02-10\n\n\nadp\n\n\n\n\n3 - 데이터 분석 기획의 이해\n\n\n2025-02-10\n\n\nadp\n\n\n\n\n2 - 데이터 처리 프로세스\n\n\n2025-02-08\n\n\nadp\n\n\n\n\n2 - 데이터 처리 기술\n\n\n2025-02-08\n\n\nadp\n\n\n\n\n성적 장학금\n\n\n2025-02-05\n\n\n장학금\n\n\n\n\n1 - 데이터의 가치와 미래\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n1 - 데이터 이해\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n1 - 가치 창조를 위한 데이터 사이언스와 전략 인사이트\n\n\n2025-02-04\n\n\nadp\n\n\n\n\n인간 관계론 - 데일 카네기\n\n\n2025-02-02\n\n\n독서, 인간 관계\n\n\n\n\n선형결합과 생성\n\n\n2025-01-31\n\n\n선형 대수\n\n\n\n\n벡터와 공간\n\n\n2025-01-30\n\n\n선형 대수\n\n\n\n\ncloud-1 코드 설명\n\n\n2025-01-30\n\n\naws, packer, terraform, ansible, 42 seoul\n\n\n\n\ncloud-1 개념 설명\n\n\n2025-01-28\n\n\naws, packer, terraform, ansible, 42 seoul\n\n\n\n\n3-몰라\n\n\n2025-01-22\n\n\n선형 대수\n\n\n\n\n자기 소개서\n\n\n2025-01-17\n\n\n자기 소개서\n\n\n\n\nft_transcendence - github action\n\n\n2025-01-17\n\n\nagile, github action, 42 seoul\n\n\n\n\n2-기초(2)\n\n\n2025-01-11\n\n\n선형 대수\n\n\n\n\n2-기초(1)\n\n\n2025-01-10\n\n\n선형 대수\n\n\n\n\nSecond Brain - 티아고 포르테\n\n\n2025-01-09\n\n\n학습, 독서\n\n\n\n\nwhat is linear algebra\n\n\n2025-01-07\n\n\n선형 대수\n\n\n\n\n돈의 심리학 - 모건 하우절\n\n\n2025-01-02\n\n\n금융, 독서\n\n\n\n\n데이터 전처리\n\n\n2025-01-02\n\n\n데이터 분석\n\n\n\n\nEDA와 시각화\n\n\n2024-12-30\n\n\n데이터 분석\n\n\n\n\nPARA Blog 제작\n\n\n2024-12-26\n\n\n블로그\n\n\n\n\npandas data 구조\n\n\n2024-12-20\n\n\n데이터 분석\n\n\n\n\n맥도날드 키오스크 UI 개선 보고서\n\n\n2024-11-27\n\n\n보고서, 인간 공학\n\n\n\n\n숭실대학교 학생식당 식자제 SCM 설계\n\n\n2024-11-26\n\n\n보고서, database\n\n\n\n\nControl\n\n\n2024-11-21\n\n\n인간 공학\n\n\n\n\n표본의 분포\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\n중심 극한 정리\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\n정규 분포\n\n\n2024-11-18\n\n\n확률과 통계\n\n\n\n\nDisplay\n\n\n2024-11-14\n\n\n인간 공학\n\n\n\n\n연속형 확률분포\n\n\n2024-11-05\n\n\n확률과 통계\n\n\n\n\nAttention\n\n\n2024-11-05\n\n\n인간 공학\n\n\n\n\nDatabase Design\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\nDatabase Administration\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\nASP.NET\n\n\n2024-10-31\n\n\ndatabase\n\n\n\n\n4조 기말과제 제안서\n\n\n2024-10-30\n\n\n보고서, database\n\n\n\n\n이산형 확률분포\n\n\n2024-10-28\n\n\n확률과 통계\n\n\n\n\n데이터베이스설계및활용 개인과제 #2\n\n\n2024-10-27\n\n\n보고서, database\n\n\n\n\n확률변수의 기댓값\n\n\n2024-10-16\n\n\n확률과 통계\n\n\n\n\nSignal Detection Theory\n\n\n2024-10-15\n\n\n인간 공학\n\n\n\n\nAuditory Haptic\n\n\n2024-10-15\n\n\n인간 공학\n\n\n\n\nData Modeling and the Entity-Relationship Model\n\n\n2024-10-14\n\n\ndatabase\n\n\n\n\nSQL\n\n\n2024-09-27\n\n\ndatabase\n\n\n\n\nSensor System (Visual)\n\n\n2024-09-24\n\n\n인간 공학\n\n\n\n\nDatabase Normalization\n\n\n2024-09-24\n\n\ndatabase\n\n\n\n\nThe Relational Model\n\n\n2024-09-17\n\n\ndatabase\n\n\n\n\nHuman Information Processing Model\n\n\n2024-09-17\n\n\n인간 공학\n\n\n\n\nResearch Method in Human Factors\n\n\n2024-09-10\n\n\n인간 공학\n\n\n\n\n확률변수와 확률분포\n\n\n2024-09-03\n\n\n확률과 통계\n\n\n\n\nIntroduction to Human Factors\n\n\n2024-09-03\n\n\n인간 공학\n\n\n\n\nAn Overview of Database\n\n\n2024-09-03\n\n\ndatabase\n\n\n\n\n확률과 통계의 정의\n\n\n2024-09-02\n\n\n확률과 통계\n\n\n\n\nmetrics server\n\n\n2024-05-15\n\n\n \n\n\n\n\nmanual scheduling\n\n\n2024-05-15\n\n\n \n\n\n\n\nk8s cluster architecture\n\n\n2024-05-15\n\n\n \n\n\n\n\nfail tolerance\n\n\n2024-05-15\n\n\n \n\n\n\n\ncore DNS\n\n\n2024-05-15\n\n\n \n\n\n\n\nPersistant volume\n\n\n2024-05-15\n\n\n \n\n\n\n\nHA in master node\n\n\n2024-05-15\n\n\n \n\n\n\n\nAuthentication\n\n\n2024-05-15\n\n\n \n\n\n\n\nwhat is ebs\n\n\n2024-04-30\n\n\n \n\n\n\n\nwhat is EC2\n\n\n2024-04-30\n\n\n \n\n\n\n\ndatabase choice in aws\n\n\n2024-04-30\n\n\n \n\n\n\n\naws global infrastructure\n\n\n2024-04-30\n\n\n \n\n\n\n\nVPC\n\n\n2024-04-30\n\n\n \n\n\n\n\nRoute53\n\n\n2024-04-30\n\n\n \n\n\n\n\nPerformance Improvement\n\n\n2024-04-30\n\n\n \n\n\n\n\nOverview\n\n\n2024-04-30\n\n\nvault, devops\n\n\n\n\nKMS(Key Management Service)\n\n\n2024-04-30\n\n\n \n\n\n\n\nELB\n\n\n2024-04-30\n\n\n \n\n\n\n\nDisaster Recovery(DR)\n\n\n2024-04-30\n\n\n \n\n\n\n\nDefine IAM\n\n\n2024-04-30\n\n\n \n\n\n\n\nCloudFront\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon Rekognition\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon RDS\n\n\n2024-04-30\n\n\n \n\n\n\n\nAmazon CloudWatch\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Snow Family\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS SQS\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS S3\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Organization\n\n\n2024-04-30\n\n\n \n\n\n\n\nAWS Lambda\n\n\n2024-04-30\n\n\n \n\n\n\n\n\n일치 없음"
   },
   {
     "objectID": "posts/00_inboxes/notes/01.html#사람을-대하는-기본-기술",
@@ -10064,7 +10064,7 @@
     "href": "posts/01_projects/bs_3_1/index.html#tasks",
     "title": "학부 3학년 1학기",
     "section": "Tasks",
-    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    푸른등대 기부장학금 - 두나무UDC 신청 (~2025-01-20 18:00)\n                \n                불합격\n            \n            \n            \n                \n                \n                    2025 DB 드림리더 장학생 신청 (~2025-01-10)\n                \n                잘할 자신이 없다\n            \n            \n            \n                \n                \n                    경기도 학자금대출 이자 지원 신청 (~2025.02.14 18:00)\n                \n                신청 완료\n            \n            \n            \n                \n                    \n                    학과 근로 신청\n                \n                신청 완료\n            \n\n            \n            \n                \n                    \n                    KMOOC 학점 인정 신청 (2025-03-10~)\n                \n                하나는 기간이 지나 버렸다. 종강 전에 하나만 더 듣자.\n            \n\n            \n            \n                \n                \n                    봉사활동 계획서 작성 (2025-03-11~)\n                \n                작성 완료\n            \n            \n            \n                \n                \n                    OR 과제 1 (~2025-03-16 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                \n                    OR 과제 2 (~2025-03-23 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                    \n                    교수님과 커피\n                \n                나 커피 못 마시는데\n            \n\n            \n            \n                \n                \n                    데이터마이닝 팀과제 주제 제안\n                \n                일단 완성\n            \n            \n            \n                \n                \n                    OR 과제 3 (~2025-04-06 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                \n                    OR 과제 4 (~2025-04-13 23:59)\n                \n                그만...\n            \n            \n            \n                \n                \n                    data mining 1차 과제 ppt 완성\n                \n                done\n            \n            \n            \n                \n                    \n                    진로 지도 상담 받기\n                \n                \n            \n\n            \n            \n                \n                \n                    컴퓨팅적 사고 발표 ppt 만들기\n                \n                \n            \n            \n            \n                \n                    \n                    데이터마이닝 2차 과제 준비\n                \n                노션에 정리 중\n            \n\n            \n            \n                \n                    \n                    교통비 지원금 신청\n                \n                \n            \n\n            \n            \n                \n                \n                    OR 과제 6 (~2025-05-18 23:59)\n                \n                힘들다\n            \n            \n            \n                \n                \n                    OR 과제 7 (~2025-05-25 23:59)",
+    "text": "Tasks\n\n\n\n    \n    \n    \n            \n                \n                \n                    푸른등대 기부장학금 - 두나무UDC 신청 (~2025-01-20 18:00)\n                \n                불합격\n            \n            \n            \n                \n                \n                    2025 DB 드림리더 장학생 신청 (~2025-01-10)\n                \n                잘할 자신이 없다\n            \n            \n            \n                \n                \n                    경기도 학자금대출 이자 지원 신청 (~2025.02.14 18:00)\n                \n                신청 완료\n            \n            \n            \n                \n                    \n                    학과 근로 신청\n                \n                신청 완료\n            \n\n            \n            \n                \n                    \n                    KMOOC 학점 인정 신청 (2025-03-10~)\n                \n                하나는 기간이 지나 버렸다. 종강 전에 하나만 더 듣자.\n            \n\n            \n            \n                \n                \n                    봉사활동 계획서 작성 (2025-03-11~)\n                \n                작성 완료\n            \n            \n            \n                \n                \n                    OR 과제 1 (~2025-03-16 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                \n                    OR 과제 2 (~2025-03-23 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                    \n                    교수님과 커피\n                \n                나 커피 못 마시는데\n            \n\n            \n            \n                \n                \n                    데이터마이닝 팀과제 script\n                \n                일단 완성\n            \n            \n            \n                \n                \n                    OR 과제 3 (~2025-04-06 23:59)\n                \n                제출 완료\n            \n            \n            \n                \n                \n                    OR 과제 4 (~2025-04-13 23:59)\n                \n                그만...\n            \n            \n            \n                \n                \n                    data mining 1차 과제 ppt 완성\n                \n                done\n            \n            \n            \n                \n                    \n                    진로 지도 상담 받기\n                \n                \n            \n\n            \n            \n                \n                \n                    컴퓨팅적 사고 발표 ppt 만들기\n                \n                \n            \n            \n            \n                \n                    \n                    데이터마이닝 2차 과제 준비\n                \n                노션에 정리 중\n            \n\n            \n            \n                \n                    \n                    교통비 지원금 신청\n                \n                \n            \n\n            \n            \n                \n                \n                    OR 과제 6 (~2025-05-18 23:59)\n                \n                힘들다",
     "crumbs": [
       "PARA",
       "Projects",
@@ -10720,6 +10720,291 @@
       "Notes",
       "Product",
       "일정 계획"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/05.html#pattern-minig",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/05.html#pattern-minig",
+    "title": "association rule mining",
+    "section": "Pattern minig",
+    "text": "Pattern minig\n\nBasic Concepts\n\npattern: dataset 안에서 함께 자주 발생하는 subsequences, substructures, set of items\n\n이 pattern은 인과관계를 의미하진 않는다.\n\nAssociation rule minig: 최소 지지도나 신뢰도를 넘는 모든 항목에 대해 pattern을 찾는다.\n\n\n\nApplications\n\nassociation rule, correlation, classification, clustering data mining의 기반이 될 수 있다.\n장바구니 분석\n연속 구매 분석\n\n\n\nTerminologies\n\n지지도(Support): 전체 거래 중 특정 항목 집합이 포함된 거래의 비율.\n신뢰도(Confidence): 항목 X를 포함하는 거래 중에서 항목 Y도 함께 포함하는 거래의 비율.\n빈발 패턴(frequent): 최소 지지도를 넘는 pattern\n\n빈발 항목 집합(frequent itemset): 단순한 묶음\n빈발 시퀀스\n\n\n\n\nclosed pattern\n\nx가 빈발이고, 지지도가 상위 집합들과 다른 집합 (지지도는 상위로 갈 수록 떨어짐)\n지지도 정보를 유지할 수 있다.\n\n신뢰도 계산할 때 사용할 수 있음\n\n\n\n\nmax patterns\n\nx가 빈발이고, 상위 집합들 모두가 빈발 집합이 아닌 집합\n지지도 정보는 유지되지 않음.\n\n신뢰도 계산할 때 사용할 수 없어서 사실 상 결과 요약 외의 용도는 없음\n\nDownward closure property: 어떤 itemset이 빈발하지 않으면, 그 모든 superset은 무조건 빈발하지 않는다. 대우도 성립\n\n교수님은 anti-monotone property로 설명하셨지만 이게 더 자주 사용되는 용어",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "association rule mining"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/05.html#association-rule",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/05.html#association-rule",
+    "title": "association rule mining",
+    "section": "Association Rule",
+    "text": "Association Rule\n\nfind frequent itemsets\n\nApriori (breadth-first search)\nFP-Growth\nEclat (depth-first search)\n\ngenerate association rules\n\n모든 빈발 itemset I에 대해 모든 I의 subset s로 ‘s -&gt; (I - s)’ 규칙을 생성\n최소 신뢰도 조건을 만족하는 규칙만 남김",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "association rule mining"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/05.html#algorithm",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/05.html#algorithm",
+    "title": "association rule mining",
+    "section": "Algorithm",
+    "text": "Algorithm\n\nApirori\n\nMonotone 성질을 이용하여 빈발하지 않는 집합은 후보에서 제거\n\n\nscan DB once to get 1-itemsets\n반복\n\nk개의 itemset에 대해 k+1-itemset의 후보를 생성\n\nself-join: k-itemset을 두 개 합쳐서 k+1-itemset을 생성\nprune: k+1-itemset을 생성할 때, k-itemset의 subset이 모두 빈발해야 k+1-itemset이 빈발할 수 있다.\n\nk+1-itemset 후보에 대해 DB를 scan하여 빈발한 itemset을 찾는다.\nk += 1\n빈발 itemset이 없으면 종료\n\n\n\nApriori의 단점: DB scan을 여러 번 해야함, 후보가 많아질 수 있음\n\n후보 수를 줄이는 방법: Hashing\n\n\n\n\nDHP (Direct Hashing and Pruning)\n\nHash값이 같은 itemset의 count를 합하고, minimum support를 넘는 itemset만 남김\nHash table을 매번 만드는 번거로움이 있지만, apriori보다 빠름\n반복\n\n빈발 항목 찾기, 후보 해시 테이블 생성\n\n데이터베이스를 scan하여 최소 지지도를 넘는 1-itemset 후보를 찾음\n동시에 조합 가능한 2-itemset을 만들어 mapping된 해시 테이블 bucket에 count += 1\n\n가지치기\n\n1-itemset 후보를 이용해 self-join, prune으로 2-itemset 후보 생성\n완성된 후보를 1단계에서 만든 hash table에 매핑해서 최소 지지도를 넘는 2-itemset bucket이 아닐 경우 배제",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "association rule mining"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/01.html#scaling",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/01.html#scaling",
+    "title": "김형훈의 학습 블로그",
+    "section": "scaling",
+    "text": "scaling\n\nmin-max scaling: \\(x' = \\frac{x - min(x)}{max(x) - min(x)}\\)\n\n0과 1 사이의 값으로 변환\n\nstandardization: \\(x' = \\frac{x - \\mu}{\\sigma}\\), \\(\\mu\\): 평균, \\(\\sigma\\): 표준편차",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "scaling"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/01.html#train-test-resampling",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/01.html#train-test-resampling",
+    "title": "김형훈의 학습 블로그",
+    "section": "Train Test Resampling",
+    "text": "Train Test Resampling\n\nresampling\n\nresampling: 데이터를 여러 번 나누어 모델을 학습하고 평가하는 방법\ntrain set: 모델을 학습하는 데이터\nvalidation data set: 하이퍼파라미터를 튜닝\ntest set: 모델의 성능 평가\n층화추출법: stratified sampling\n\n\n\nmethods\n\nhold out method: data를 train set과 test set으로 나누는 방법\n\n어떤 데이터가 train, test set에 포함되는지에 따라 결과가 달라질 수 있다.\n→ train set과 test set을 여러 번 나누어 모델을 학습하고 평가하는 방법이 필요하다.\n\ncross validation: 데이터를 여러 번 나누어 모델을 학습하고 평가하는 방법\n\nk-fold cross validation: 데이터를 k개의 fold로 나누고, 각 fold를 test set으로 사용하여 모델을 학습하고 평가한다.\n\nrandom하게 sampling할 수 있고, 안할 수도 있음\n\nleave-one-out cross validation: 데이터의 개수가 n개일 때, n-1개의 데이터를 train set으로 사용하고 1개의 데이터를 test set으로 사용하는 방법\nerror는 각 train set, fold 에서 계산된 error의 평균으로 구한다.\n\nbootstrap: 데이터를 중복을 허용하여 샘플링하는 방법\n\n원본 데이터에서 n개의 데이터를 랜덤하게 선택하여 train set을 만들고, 나머지 데이터를 test set으로 사용한다.\n여러 번 반복하여 모델을 학습하고 평가한다.\n실제 오류 추정치의 편향과 분산 모두에 대한 정확한 측정값을 얻을 수 있다.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "scaling"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/07.html",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/07.html",
+    "title": "ensemble",
+    "section": "",
+    "text": "다수의 모델을 학습시켜 결과를 종합하여 예측 성능을 높이는 방법",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "ensemble"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/07.html#techniques",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/07.html#techniques",
+    "title": "ensemble",
+    "section": "Techniques",
+    "text": "Techniques\n\nstacking:\n\n여러 모델을 학습시킨 후, 각 모델의 예측 결과를 입력으로 하는 메타 모델을 학습시킨다.\n메타 모델은 다른 모델들의 예측 결과를 종합하여 최종 예측을 수행한다.\n\nbagging\n\nvs cross validation:\n\ncross validation은 이미 생성된 모델을 검증하기 위한 방법. 모델 구축 방법은 아님\nbagging은 분산을 줄이기 위해 사용함\n\nbagging의 voting, averaging은 unsupervised learning\n\nboosting: sequentially 학습\n\n이전 모델의 오차를 보완하는 방식으로 학습한다.\nsupervised learning",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "ensemble"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/04.html",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/04.html",
+    "title": "Support vector machine",
+    "section": "",
+    "text": "bias variance tradeoff\n\nmargin ↑, bias ↑, variance ↓\nmargin ↓, bias ↓, variance ↑\n\nsuppot vector: 임계값에 가까운 데이터 포인트\nlinear classification fomulation:\n\n\n\n\nif not linear solvable → kernel functions\nsoft margin: 이상치를 포함할 수 있는 마진\n\ncross validation으로 최적의 soft margin을 찾는다.\n\n\n\n\n\n 맨 위로",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "Support vector machine"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/02.html#k-nn",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/02.html#k-nn",
+    "title": "분류",
+    "section": "K-NN",
+    "text": "K-NN\n\n새로운 데이터 포인트에 대해 k개의 가장 가까운 이웃을 찾고, 그 이웃들의 클래스를 투표하여 다수결로 분류한다.",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "분류"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/02.html#의사결정-트리",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/02.html#의사결정-트리",
+    "title": "분류",
+    "section": "의사결정 트리",
+    "text": "의사결정 트리\n불순도가 가장 낮은(한쪽의 class가 더 많은) leaves를 root에 두고, 그 다음 불순도가 낮은 leaf를 그 아래에 두는 방식으로 트리를 구성한다. leaf 노드의 과반수가 같은 클래스를 가지면 그 클래스를 리턴한다. overfit을 방지하기 위해 pruning을 하거나 max depth를 설정한다.\n\ngood split: 불순도가 낮고, 분할된 각 leave의 비율이 비슷한 경우\n\n\n과정\n\n루트 노드에서 시작전체 데이터셋을 기준으로 시작하여 가장 좋은 분할속성(feature)을 선택\n분할 기준 평가각 속성에 대해 데이터를 분할했을 때의 분할 평가함수 적용\n\ngini index\n\ngini: \\(1 - \\sum_{i=1}^{c} p_i^2\\).\n목표: 최소화\n제일 좋은게 0\n제일 안좋은게 0.5\n\nmisclassification error\n\nerror: \\(1 - \\max(p_i)\\)\n목표: 최소화\n제일 좋은게 0\n제일 안좋은게 0.5\n\nentropy: 유용하지 못한 정보를 포함하고 있는 정도.\n\nentropy: \\(-\\sum_{i=1}^{c} p_i \\log_2(p_i)\\)\n목표: 최소화\n제일 좋은게 0\n제일 안좋은게 1\n\ninformation gain: 어떤 속성을 기준으로 분할했을 때, 얻을 수 있는 불확실성의 감소량\n\n부모의 엔트로피 - 자식의 엔트로피 가중평균\n목표: 최대화\n단점: 고유한 값을 많이 갖는 변수를 선호하는 경향이 있음\n알고리즘: ID3, C4.5\n\ngain ratio: information gain의 단점을 보완한 방법\n\ngain ratio: \\(\\frac{information\\ gain}{entropy}\\)\n분기의 갯수와 각 분기의 크기를 함께 고려\n목표: 최대화\n단점: entropy가 낮은 것을 선택하는 경향이 있음\n\n→ 평균이 넘는 entorpy만 선택해서 gain ratio를 계산\n\n알고리즘: C4.5\n\n\n최적의 분할 선택 평가된 기준 중 가장 순도가 높은 점수를 갖는 속성을 선택 (greedy)\n재귀적으로 하위 노드 분할. 분할된 하위 데이터에 대해 위의 과정을 반복\n종료 조건 만족 시 정지\n가지치기 수행\n\n\n\nAlgorithm\n\nCART\n\n분할 기준\n\n분류: gini index\n회귀: MSE\n\n모든 분할에서 이진 트리로 분할\n사후 가지치기\n\n비용 복잡도 가지치기: \\(Total SSR + α(leaf size)\\)이 제일 작은 트리 선택\nα는 cross validation으로 결정",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "분류"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/02.html#평가",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/02.html#평가",
+    "title": "분류",
+    "section": "평가",
+    "text": "평가\n\nconfusion matrix\n\nTP, TN, FP, FN\n\naccuracy: \\(\\frac{TP + TN}{TP + TN + FP + FN}\\)\nprecision(정밀도): true로 예측한 것 중 실제 true인 것의 비율\n\n\\(\\frac{TP}{TP + FP}\\)\n\nrecall(민감도, 재현율): 실제 true인 것 중 true로 예측한 것의 비율\n\n\\(\\frac{TP}{TP + FN}\\)\n\nF1 score: \\(2 \\cdot \\frac{precision \\cdot recall}{precision + recall}\\)\nmacro 평균: 그냥 각 클래스의 score를 평균\nweighted 평균: 가중 평균\nmicro 평균: 전체 TP, TN, FP, FN을 합쳐서 계산\nROC curve: y축: TPR(민감도), x축: FPR(1 - 특이도)\n\nAUC: ROC curve 아래 면적\n\n1에 가까울수록 좋은 모델\n0.5는 랜덤 추측과 같음\n\n\n(1,1): 무작위 추측과 동일. 모든 샘플을 무조건 양성으로 예측\n(0,0): 모든 샘플을 무조건 음성으로 예측\n(1,0): 완벽한 모델\n(0,1): 반대로 예측하는 모델",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "분류"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/02.html#learning-curve",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/02.html#learning-curve",
+    "title": "분류",
+    "section": "learning curve",
+    "text": "learning curve\n\n\ntest set에 대한 오류가 증가하는 구간(cross 되는 구간)은 과적합 구간. 여기서 stop",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "분류"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/06.html#전제-조건",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/06.html#전제-조건",
+    "title": "clustering",
+    "section": "전제 조건",
+    "text": "전제 조건\n\nscalability\n다양한 타입의 속성을 처리해야 함\n\nk-means는 수치형만 처리 가능\n\n인위적인 형상의 군집도 발견할 수 있어야 함\n\nk-means는 non-convex 형태는 잘 못찾음\n\n파라미터 설정에 전문지식을 요하지 않아야함\nnoise와 outliers를 처리해야 함\n데이터가 입력되는 순서에 민감하면 안됨\n차원 수가 높아도 잘 처리할 수 있어야함\n사용자 정의 제약조건도 수용할 수 있어야함\n해석과 사용이 용이해야함",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "clustering"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/06.html#전처리",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/06.html#전처리",
+    "title": "clustering",
+    "section": "전처리",
+    "text": "전처리\n\nscaling 필요\none hot encoding",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "clustering"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/06.html#model",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/06.html#model",
+    "title": "clustering",
+    "section": "model",
+    "text": "model\n\nDistance-based methods\n\nPartitioning methods\n\nk-means1:\n\npolinominal 시간 안에 해결 가능\nnoise, outlier에 민감함\n수치형만 처리 가능\nnon-convex 형태는 잘 못찾음\n\nk-modes: 범주형 데이터 처리 가능. 빈도수로 유사도 처리함\nk-prototype: 범주형, 수치형 섞인거 처리 가능\nk-medoids: 중심에 위치한 데이터 포인트를 사용해서 outlier 잘 처리함\n\nPAM: Partitioning Around Medoids\n\nscalability 문제 있음\n\nCLARA: Clustering LARge Applications\n\n샘플링 과정에서 biased될 수 있음\n\nCLARANS: Clustering Large Applications based on RANdomized Search\n\nk-means++: 초기 centroids를 더 잘 잡음\n\nHierarchical methods\n\ntop-down: divisive, dia\nbottom-up: agglomerative\n\n\nDensity-based methods\nGrid-based methods: 대표만(각 grid를 대표) 가지고 군집분석 하는거\nModel-based clustering methods",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "clustering"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/06.html#평가",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/06.html#평가",
+    "title": "clustering",
+    "section": "평가",
+    "text": "평가\n\nsilhuette score: \\(\\frac{\\sum_{i=1}^{n} s(i)}{n}\\)\n\ns(i): \\(\\frac{b(i) - a(i)}{max((a(i), b(i)))}\\)\n\na(i): 군집 내 노드간의 평균 거리\nb(i): 가장 가까운 군집과의 노드 간 평균 거리\n\n1에 가까울 수록 좋음",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "clustering"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/06.html#footnotes",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/06.html#footnotes",
+    "title": "clustering",
+    "section": "각주",
+    "text": "각주\n\n\n장단점 기말고사 언급하심↩︎",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "clustering"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/08.html#회귀",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/08.html#회귀",
+    "title": "XGBoost",
+    "section": "회귀",
+    "text": "회귀\n\nsimilarity score: \\(\\frac{(sum of residuals)^2}{number of residuals + λ}\\)\nλ를 높이면 잔차의 수에 따른 민감도를 완화할 수 있다. overfitting 방지\ngain: \\(Left_{similarity} + Right_{similarity} - Parent_{similarity}\\)\ngain값이 높은 속성을 선택\ngain 값이 특정 γ보다 낮으면 가지치기\nleaf value: \\(\\frac{sum of residuals}{number of residuals + λ}\\)\n예측값 갱신: \\(기존 값 + learning rate(eta) * leaf value\\)로 예측",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "XGBoost"
+    ]
+  },
+  {
+    "objectID": "posts/01_projects/bs_3_1/notes/data_mining/08.html#분류",
+    "href": "posts/01_projects/bs_3_1/notes/data_mining/08.html#분류",
+    "title": "XGBoost",
+    "section": "분류",
+    "text": "분류\n\nsimilarity score: \\(\\frac{(sum of residuals)^2}{∑_{i=1}^{n}(previous probability_i * (1 - previous probability_i)) + λ}\\)\nleaf value: \\(\\frac{sum of residuals}{∑_{i=1}^{n}(previous probability_i * (1 - previous probability_i)) + λ}\\)\n예측값 갱신: log(odds) = \\(log \\frac{p}{1 - p} + learning rate * leaf value\\)\n\nnew probability = \\(\\frac{e^{log(odds)}}{1 + e^{log(odds)}}\\)\n\n잔차는 점점 0에 수렴하고, probability는 실제 값(1, 0)에 수렴한다.\nmin_child_weight: leaf node의 최소 가중치 합(\\(∑_{i=1}^{n} (previous probability * (1 - previous probility\\))이 이 값보다 작으면 분할하지 않음",
+    "crumbs": [
+      "PARA",
+      "Projects",
+      "학부 3학년 1학기",
+      "Notes",
+      "Data Mining",
+      "XGBoost"
     ]
   }
 ]

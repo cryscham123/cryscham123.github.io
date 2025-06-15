@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Support vector machine – 김형훈의 학습 블로그</title>
+<title>association rule mining – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" rel="next">
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" rel="prev">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../../site_libs/quarto-html/quarto.js"></script>
@@ -109,7 +109,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html">Support vector machine</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html">association rule mining</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -228,13 +228,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Support vector machine</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">association rule mining</span></a>
   </div>
 </li>
@@ -1863,15 +1863,34 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#pattern-minig" id="toc-pattern-minig" class="nav-link active" data-scroll-target="#pattern-minig">Pattern minig</a>
+  <ul class="collapse">
+  <li><a href="#basic-concepts" id="toc-basic-concepts" class="nav-link" data-scroll-target="#basic-concepts">Basic Concepts</a></li>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a></li>
+  <li><a href="#terminologies" id="toc-terminologies" class="nav-link" data-scroll-target="#terminologies">Terminologies</a></li>
+  <li><a href="#closed-pattern" id="toc-closed-pattern" class="nav-link" data-scroll-target="#closed-pattern">closed pattern</a></li>
+  <li><a href="#max-patterns" id="toc-max-patterns" class="nav-link" data-scroll-target="#max-patterns">max patterns</a></li>
+  </ul></li>
+  <li><a href="#association-rule" id="toc-association-rule" class="nav-link" data-scroll-target="#association-rule">Association Rule</a></li>
+  <li><a href="#algorithm" id="toc-algorithm" class="nav-link" data-scroll-target="#algorithm">Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#apirori" id="toc-apirori" class="nav-link" data-scroll-target="#apirori">Apirori</a></li>
+  <li><a href="#dhp-direct-hashing-and-pruning" id="toc-dhp-direct-hashing-and-pruning" class="nav-link" data-scroll-target="#dhp-direct-hashing-and-pruning">DHP (Direct Hashing and Pruning)</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html">Support vector machine</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html">association rule mining</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Support vector machine</h1>
+<h1 class="title">association rule mining</h1>
   <div class="quarto-categories">
     <div class="quarto-category">data mining</div>
   </div>
@@ -1885,7 +1904,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 5월 5일</p>
+      <p class="date">2025년 4월 28일</p>
     </div>
   </div>
   
@@ -1898,26 +1917,130 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 
 
 <p><img src="../../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="pattern-minig" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-minig">Pattern minig</h2>
+<section id="basic-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="basic-concepts">Basic Concepts</h3>
 <ul>
-<li>bias variance tradeoff
+<li>pattern: dataset 안에서 함께 자주 발생하는 subsequences, substructures, set of items
 <ul>
-<li>margin ↑, bias ↑, variance ↓</li>
-<li>margin ↓, bias ↓, variance ↑</li>
+<li>이 pattern은 인과관계를 의미하진 않는다.</li>
 </ul></li>
-<li>suppot vector: 임계값에 가까운 데이터 포인트</li>
-<li>linear classification fomulation:</li>
+<li>Association rule minig: 최소 지지도나 신뢰도를 넘는 모든 항목에 대해 pattern을 찾는다.</li>
 </ul>
-<p><img src="img/2025-05-05-10-49-25.png" class="img-fluid"></p>
-<p><img src="img/2025-05-05-10-49-34.png" class="img-fluid"></p>
+</section>
+<section id="applications" class="level3">
+<h3 class="anchored" data-anchor-id="applications">Applications</h3>
 <ul>
-<li>if not linear solvable → kernel functions</li>
-<li>soft margin: 이상치를 포함할 수 있는 마진
+<li>association rule, correlation, classification, clustering data mining의 기반이 될 수 있다.</li>
+<li>장바구니 분석</li>
+<li>연속 구매 분석</li>
+</ul>
+</section>
+<section id="terminologies" class="level3">
+<h3 class="anchored" data-anchor-id="terminologies">Terminologies</h3>
 <ul>
-<li>cross validation으로 최적의 soft margin을 찾는다.</li>
+<li><strong>지지도(Support):</strong> 전체 거래 중 특정 항목 집합이 포함된 거래의 비율.</li>
+<li><strong>신뢰도(Confidence):</strong> 항목 X를 포함하는 거래 중에서 항목 Y도 함께 포함하는 거래의 비율.</li>
+<li><strong>빈발 패턴(frequent):</strong> 최소 지지도를 넘는 pattern
+<ul>
+<li>빈발 항목 집합(frequent itemset): 단순한 묶음</li>
+<li>빈발 시퀀스</li>
 </ul></li>
+</ul>
+</section>
+<section id="closed-pattern" class="level3">
+<h3 class="anchored" data-anchor-id="closed-pattern">closed pattern</h3>
+<ul>
+<li>x가 빈발이고, 지지도가 상위 집합들과 다른 집합 (지지도는 상위로 갈 수록 떨어짐)</li>
+<li>지지도 정보를 유지할 수 있다.
+<ul>
+<li>신뢰도 계산할 때 사용할 수 있음</li>
+</ul></li>
+</ul>
+</section>
+<section id="max-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="max-patterns">max patterns</h3>
+<ul>
+<li>x가 빈발이고, 상위 집합들 모두가 빈발 집합이 아닌 집합</li>
+<li>지지도 정보는 유지되지 않음.
+<ul>
+<li>신뢰도 계산할 때 사용할 수 없어서 사실 상 결과 요약 외의 용도는 없음</li>
+</ul></li>
+<li>Downward closure property: 어떤 itemset이 빈발하지 않으면, 그 모든 superset은 무조건 빈발하지 않는다. 대우도 성립
+<ul>
+<li>교수님은 anti-monotone property로 설명하셨지만 이게 더 자주 사용되는 용어</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="association-rule" class="level2">
+<h2 class="anchored" data-anchor-id="association-rule">Association Rule</h2>
+<ol type="1">
+<li>find frequent itemsets
+<ul>
+<li>Apriori (breadth-first search)</li>
+<li>FP-Growth</li>
+<li>Eclat (depth-first search)</li>
+</ul></li>
+<li>generate association rules
+<ul>
+<li>모든 빈발 itemset I에 대해 모든 I의 subset s로 ‘s -&gt; (I - s)’ 규칙을 생성</li>
+<li>최소 신뢰도 조건을 만족하는 규칙만 남김</li>
+</ul></li>
+</ol>
+</section>
+<section id="algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="algorithm">Algorithm</h2>
+<section id="apirori" class="level3">
+<h3 class="anchored" data-anchor-id="apirori">Apirori</h3>
+<ul>
+<li>Monotone 성질을 이용하여 빈발하지 않는 집합은 후보에서 제거</li>
+</ul>
+<ol type="1">
+<li>scan DB once to get 1-itemsets</li>
+<li>반복
+<ol type="1">
+<li>k개의 itemset에 대해 k+1-itemset의 후보를 생성
+<ol type="1">
+<li>self-join: k-itemset을 두 개 합쳐서 k+1-itemset을 생성</li>
+<li>prune: k+1-itemset을 생성할 때, k-itemset의 subset이 모두 빈발해야 k+1-itemset이 빈발할 수 있다.</li>
+</ol></li>
+<li>k+1-itemset 후보에 대해 DB를 scan하여 빈발한 itemset을 찾는다.</li>
+<li>k += 1</li>
+<li>빈발 itemset이 없으면 종료</li>
+</ol></li>
+</ol>
+<ul>
+<li>Apriori의 단점: DB scan을 여러 번 해야함, 후보가 많아질 수 있음
+<ul>
+<li>후보 수를 줄이는 방법: Hashing</li>
+</ul></li>
+</ul>
+</section>
+<section id="dhp-direct-hashing-and-pruning" class="level3">
+<h3 class="anchored" data-anchor-id="dhp-direct-hashing-and-pruning">DHP (Direct Hashing and Pruning)</h3>
+<ul>
+<li><p>Hash값이 같은 itemset의 count를 합하고, minimum support를 넘는 itemset만 남김</p></li>
+<li><p>Hash table을 매번 만드는 번거로움이 있지만, apriori보다 빠름</p></li>
+<li><p>반복</p>
+<ol type="1">
+<li>빈발 항목 찾기, 후보 해시 테이블 생성
+<ul>
+<li>데이터베이스를 scan하여 최소 지지도를 넘는 1-itemset 후보를 찾음</li>
+<li>동시에 조합 가능한 2-itemset을 만들어 mapping된 해시 테이블 bucket에 count += 1</li>
+</ul></li>
+<li>가지치기
+<ul>
+<li>1-itemset 후보를 이용해 self-join, prune으로 2-itemset 후보 생성</li>
+<li>완성된 후보를 1단계에서 만든 hash table에 매핑해서 최소 지지도를 넘는 2-itemset bucket이 아닐 경우 배제</li>
+</ul></li>
+</ol></li>
 </ul>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2346,13 +2469,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" class="pagination-link" aria-label="random forest">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">random forest</span>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="pagination-link" aria-label="Support vector machine">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Support vector machine</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" class="pagination-link" aria-label="association rule mining">
-        <span class="nav-page-text">association rule mining</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html" class="pagination-link" aria-label="clustering">
+        <span class="nav-page-text">clustering</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
