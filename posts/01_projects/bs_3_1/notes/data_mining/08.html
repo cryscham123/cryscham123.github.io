@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>preprocessing – 김형훈의 학습 블로그</title>
+<title>XGBoost – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,47 +20,13 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/09.html" rel="next">
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.pdf" rel="prev">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/11.pdf" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../../site_libs/quarto-html/quarto.js"></script>
@@ -103,10 +69,36 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </script>
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -146,7 +138,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/02.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/08.html">preprocessing</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/08.html">XGBoost</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -224,12 +216,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">intro</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/computer/01.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">컴퓨팅적 사고 1차 발표 구현 raw script</span></a>
   </div>
@@ -253,56 +239,56 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth4 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">scaling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">의사결정 트리</span></a>
+ <span class="menu-text">분류</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Support vector machine</span></a>
+ <span class="menu-text">random forest</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Support vector machine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">association rule mining</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">데이터마이닝 1차 팀과제 script</span></a>
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">clustering</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">데이터마이닝 팀 과제 주제</span></a>
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ensemble</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/08.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">preprocessing</span></a>
+ <span class="menu-text">XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/09.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Transformation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework - 2</span></a>
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/11.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">데이터마이닝 1차 팀과제 script</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -349,6 +335,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/dsa/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시험 범위</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/dsa/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">시험 범위</span></a>
   </div>
 </li>
@@ -437,8 +429,26 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/13.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">OR 과제 - 7</span></a>
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시험 범위</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">수송문제와 할당 문제들</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">네트워크 최적화 모형</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/OR/17.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">cheat sheet</span></a>
   </div>
 </li>
       </ul>
@@ -609,6 +619,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis of categorical data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/statistics/06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률과 통계 R 실습 과제</span></a>
   </div>
 </li>
@@ -1876,17 +1892,25 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#회귀" id="toc-회귀" class="nav-link active" data-scroll-target="#회귀">회귀</a></li>
+  <li><a href="#분류" id="toc-분류" class="nav-link" data-scroll-target="#분류">분류</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/02.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/08.html">preprocessing</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/08.html">XGBoost</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">preprocessing</h1>
+<h1 class="title">XGBoost</h1>
   <div class="quarto-categories">
     <div class="quarto-category">data mining</div>
+    <div class="quarto-category">학부 정리</div>
   </div>
   </div>
 
@@ -1898,7 +1922,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 3월 26일</p>
+      <p class="date">2025년 6월 14일</p>
     </div>
   </div>
   
@@ -1910,1304 +1934,37 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </header>
 
 
-<p><img src="../../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<div id="ea21ad9f" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> chardet</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"_data/class/2012년_1당사자_법규위반별_주야별_교통사고.csv"</span>, <span class="st">"rb"</span>) <span class="im">as</span> f:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(chardet.detect(f.read()))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>{'encoding': 'EUC-KR', 'confidence': 0.99, 'language': 'Korean'}</code></pre>
-</div>
-</div>
-<div id="cd8ebb07" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"_data/class/2012년_1당사자_법규위반별_주야별_교통사고.csv"</span>, encoding<span class="op">=</span><span class="st">"EUC-KR"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div>
+<p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<ul>
+<li>결측치 자체 처리</li>
+</ul>
+<section id="회귀" class="level2">
+<h2 class="anchored" data-anchor-id="회귀">회귀</h2>
+<ul>
+<li>similarity score: <span class="math inline">\(\frac{(sum of residuals)^2}{number of residuals + λ}\)</span></li>
+<li>λ를 높이면 잔차의 수에 따른 민감도를 완화할 수 있다. overfitting 방지</li>
+<li>gain: <span class="math inline">\(Left_{similarity} + Right_{similarity} - Parent_{similarity}\)</span></li>
+<li>gain값이 높은 속성을 선택</li>
+<li>gain 값이 특정 γ보다 낮으면 가지치기</li>
+<li>leaf value: <span class="math inline">\(\frac{sum of residuals}{number of residuals + λ}\)</span></li>
+<li>예측값 갱신: <span class="math inline">\(기존 값 + learning rate(eta) * leaf value\)</span>로 예측</li>
+</ul>
+</section>
+<section id="분류" class="level2">
+<h2 class="anchored" data-anchor-id="분류">분류</h2>
+<ul>
+<li>similarity score: <span class="math inline">\(\frac{(sum of residuals)^2}{∑_{i=1}^{n}(previous probability_i * (1 - previous probability_i)) + λ}\)</span></li>
+<li>leaf value: <span class="math inline">\(\frac{sum of residuals}{∑_{i=1}^{n}(previous probability_i * (1 - previous probability_i)) + λ}\)</span></li>
+<li>예측값 갱신: log(odds) = <span class="math inline">\(log \frac{p}{1 - p} + learning rate * leaf value\)</span>
+<ul>
+<li>new probability = <span class="math inline">\(\frac{e^{log(odds)}}{1 + e^{log(odds)}}\)</span></li>
+</ul></li>
+<li>잔차는 점점 0에 수렴하고, probability는 실제 값(1, 0)에 수렴한다.</li>
+<li>min_child_weight: leaf node의 최소 가중치 합(<span class="math inline">\(∑_{i=1}^{n} (previous probability * (1 - previous probility\)</span>)이 이 값보다 작으면 분할하지 않음</li>
+</ul>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">법규위반</th>
-<th data-quarto-table-cell-role="th">주야</th>
-<th data-quarto-table-cell-role="th">발생건수</th>
-<th data-quarto-table-cell-role="th">사망자수</th>
-<th data-quarto-table-cell-role="th">부상자수</th>
-<th data-quarto-table-cell-role="th">중상</th>
-<th data-quarto-table-cell-role="th">경상</th>
-<th data-quarto-table-cell-role="th">부상신고</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>과속</td>
-<td>주</td>
-<td>159</td>
-<td>34</td>
-<td>334</td>
-<td>140</td>
-<td>178</td>
-<td>16</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>과속</td>
-<td>야</td>
-<td>218</td>
-<td>73</td>
-<td>348</td>
-<td>200</td>
-<td>139</td>
-<td>9</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>교차로 통행방법 위반</td>
-<td>주</td>
-<td>8817</td>
-<td>82</td>
-<td>14031</td>
-<td>3915</td>
-<td>9530</td>
-<td>586</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>교차로 통행방법 위반</td>
-<td>야</td>
-<td>5904</td>
-<td>29</td>
-<td>9728</td>
-<td>2401</td>
-<td>6884</td>
-<td>443</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>기타</td>
-<td>주</td>
-<td>9388</td>
-<td>141</td>
-<td>14070</td>
-<td>4271</td>
-<td>9217</td>
-<td>582</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>기타</td>
-<td>야</td>
-<td>6073</td>
-<td>56</td>
-<td>9218</td>
-<td>2348</td>
-<td>6457</td>
-<td>413</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>보행자 보호의무 위반</td>
-<td>주</td>
-<td>3772</td>
-<td>80</td>
-<td>3914</td>
-<td>2063</td>
-<td>1729</td>
-<td>122</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>보행자 보호의무 위반</td>
-<td>야</td>
-<td>3334</td>
-<td>94</td>
-<td>3535</td>
-<td>1802</td>
-<td>1626</td>
-<td>107</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>신호위반</td>
-<td>주</td>
-<td>12552</td>
-<td>210</td>
-<td>20396</td>
-<td>6816</td>
-<td>12765</td>
-<td>815</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>신호위반</td>
-<td>야</td>
-<td>12755</td>
-<td>179</td>
-<td>21724</td>
-<td>7177</td>
-<td>13749</td>
-<td>798</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>안전거리 미확보</td>
-<td>주</td>
-<td>12408</td>
-<td>57</td>
-<td>22392</td>
-<td>4509</td>
-<td>16882</td>
-<td>1001</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>안전거리 미확보</td>
-<td>야</td>
-<td>9867</td>
-<td>40</td>
-<td>17422</td>
-<td>3025</td>
-<td>13644</td>
-<td>753</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>안전운전 의무 불이행</td>
-<td>주</td>
-<td>62608</td>
-<td>1740</td>
-<td>91076</td>
-<td>28081</td>
-<td>58472</td>
-<td>4523</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>안전운전 의무 불이행</td>
-<td>야</td>
-<td>62783</td>
-<td>2132</td>
-<td>92942</td>
-<td>26451</td>
-<td>62209</td>
-<td>4282</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
-<td>중앙선 침범</td>
-<td>주</td>
-<td>6825</td>
-<td>243</td>
-<td>12427</td>
-<td>4658</td>
-<td>7339</td>
-<td>430</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
-<td>중앙선 침범</td>
-<td>야</td>
-<td>6193</td>
-<td>202</td>
-<td>11008</td>
-<td>3846</td>
-<td>6770</td>
-<td>392</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="0c1963b5" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"_data/class/vote.csv"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">gender</th>
-<th data-quarto-table-cell-role="th">region</th>
-<th data-quarto-table-cell-role="th">edu</th>
-<th data-quarto-table-cell-role="th">income</th>
-<th data-quarto-table-cell-role="th">age</th>
-<th data-quarto-table-cell-role="th">score_gov</th>
-<th data-quarto-table-cell-role="th">score_progress</th>
-<th data-quarto-table-cell-role="th">score_intention</th>
-<th data-quarto-table-cell-role="th">vote</th>
-<th data-quarto-table-cell-role="th">parties</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>1</td>
-<td>4</td>
-<td>3</td>
-<td>3</td>
-<td>3</td>
-<td>2</td>
-<td>2</td>
-<td>4.0</td>
-<td>1</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>1</td>
-<td>5</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-<td>2</td>
-<td>4</td>
-<td>3.0</td>
-<td>0</td>
-<td>3</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>1</td>
-<td>3</td>
-<td>1</td>
-<td>2</td>
-<td>4</td>
-<td>1</td>
-<td>3</td>
-<td>2.8</td>
-<td>1</td>
-<td>4</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>3</td>
-<td>5</td>
-<td>4</td>
-<td>2.6</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>4</td>
-<td>4</td>
-<td>3</td>
-<td>2.4</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">206</td>
-<td>1</td>
-<td>4</td>
-<td>1</td>
-<td>4</td>
-<td>4</td>
-<td>3</td>
-<td>3</td>
-<td>1.8</td>
-<td>1</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">207</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>2.6</td>
-<td>1</td>
-<td>4</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">208</td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-<td>2.6</td>
-<td>1</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">209</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>3</td>
-<td>2</td>
-<td>4.0</td>
-<td>1</td>
-<td>4</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">210</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-<td>3.8</td>
-<td>1</td>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-
-<p>211 rows × 10 columns</p>
-</div>
-</div>
-</div>
-<div id="8429638d" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> df.iloc[:, :<span class="dv">8</span>]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">gender</th>
-<th data-quarto-table-cell-role="th">region</th>
-<th data-quarto-table-cell-role="th">edu</th>
-<th data-quarto-table-cell-role="th">income</th>
-<th data-quarto-table-cell-role="th">age</th>
-<th data-quarto-table-cell-role="th">score_gov</th>
-<th data-quarto-table-cell-role="th">score_progress</th>
-<th data-quarto-table-cell-role="th">score_intention</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>1</td>
-<td>4</td>
-<td>3</td>
-<td>3</td>
-<td>3</td>
-<td>2</td>
-<td>2</td>
-<td>4.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>1</td>
-<td>5</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-<td>2</td>
-<td>4</td>
-<td>3.0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>1</td>
-<td>3</td>
-<td>1</td>
-<td>2</td>
-<td>4</td>
-<td>1</td>
-<td>3</td>
-<td>2.8</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>3</td>
-<td>5</td>
-<td>4</td>
-<td>2.6</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>4</td>
-<td>4</td>
-<td>3</td>
-<td>2.4</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">206</td>
-<td>1</td>
-<td>4</td>
-<td>1</td>
-<td>4</td>
-<td>4</td>
-<td>3</td>
-<td>3</td>
-<td>1.8</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">207</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>2.6</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">208</td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-<td>2.6</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">209</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>3</td>
-<td>2</td>
-<td>4.0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">210</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-<td>3.8</td>
-</tr>
-</tbody>
-</table>
-
-<p>211 rows × 8 columns</p>
-</div>
-</div>
-</div>
-<div id="46c5cc81" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"vote"</span>]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>0      1
-1      0
-2      1
-3      1
-4      1
-      ..
-206    1
-207    1
-208    1
-209    1
-210    1
-Name: vote, Length: 211, dtype: int64</code></pre>
-</div>
-</div>
-<div id="311d08f3" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"_data/class/Car-selling price.csv"</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Mileage</th>
-<th data-quarto-table-cell-role="th">Age(yrs)</th>
-<th data-quarto-table-cell-role="th">Sell Price($)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>69000</td>
-<td>6</td>
-<td>18000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>35000</td>
-<td>3</td>
-<td>34000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>57000</td>
-<td>5</td>
-<td>26100</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>22500</td>
-<td>2</td>
-<td>40000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>46000</td>
-<td>4</td>
-<td>31500</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>59000</td>
-<td>5</td>
-<td>26750</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>52000</td>
-<td>5</td>
-<td>32000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>72000</td>
-<td>6</td>
-<td>19300</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>91000</td>
-<td>8</td>
-<td>12000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>67000</td>
-<td>6</td>
-<td>22000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>83000</td>
-<td>7</td>
-<td>18700</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>79000</td>
-<td>7</td>
-<td>19500</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>59000</td>
-<td>5</td>
-<td>26000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>58780</td>
-<td>4</td>
-<td>27500</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
-<td>82450</td>
-<td>7</td>
-<td>19400</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
-<td>25400</td>
-<td>3</td>
-<td>35000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
-<td>28000</td>
-<td>2</td>
-<td>35500</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
-<td>69000</td>
-<td>5</td>
-<td>19700</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">18</td>
-<td>87600</td>
-<td>8</td>
-<td>12800</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">19</td>
-<td>52000</td>
-<td>5</td>
-<td>18200</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="eef02a28" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Scatter Diagram"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Mileage"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Sell Price($)"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(df[<span class="st">"Mileage"</span>], df[<span class="st">"Sell Price($)"</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="08_files/figure-html/cell-8-output-1.png" width="610" height="449" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="5384c7bc" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> df[[<span class="st">"Mileage"</span>, <span class="st">"Age(yrs)"</span>]]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"Sell Price($)"</span>]</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x, y, test_size<span class="op">=</span><span class="fl">0.2</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="0deac85d" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Binarizer</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.array([[<span class="fl">1.1</span>], [<span class="fl">2.2</span>], [<span class="fl">3.3</span>], [<span class="fl">4.4</span>], [<span class="fl">5.5</span>]])</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> Binarizer(threshold<span class="op">=</span><span class="fl">3.0</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>scaler.fit(data)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> scaler.transform(data)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>array([[0.],
-       [0.],
-       [1.],
-       [1.],
-       [1.]])</code></pre>
-</div>
-</div>
-<div id="f1883459" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler()</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>scaler.fit(data)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> scaler.transform(data)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>array([[0.  ],
-       [0.25],
-       [0.5 ],
-       [0.75],
-       [1.  ]])</code></pre>
-</div>
-</div>
-<div id="8deacbb8" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Normalizer</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.array([[<span class="fl">1.0</span>, <span class="fl">2.0</span>], [<span class="fl">2.0</span>, <span class="fl">3.0</span>], [<span class="fl">3.0</span>, <span class="fl">4.0</span>], [<span class="fl">4.0</span>, <span class="fl">5.0</span>], [<span class="fl">5.0</span>, <span class="fl">6.0</span>]])</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> Normalizer(norm<span class="op">=</span><span class="st">'l2'</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>X_transformed <span class="op">=</span> scaler.fit_transform(data.T).T</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>X_transformed</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>array([[0.13483997, 0.21081851],
-       [0.26967994, 0.31622777],
-       [0.40451992, 0.42163702],
-       [0.53935989, 0.52704628],
-       [0.67419986, 0.63245553]])</code></pre>
-</div>
-</div>
-<div id="00037616" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>minmax_scaler <span class="op">=</span> MinMaxScaler(feature_range<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>minmax_scaler.fit_transform(data)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>array([[0.  , 0.  ],
-       [0.25, 0.25],
-       [0.5 , 0.5 ],
-       [0.75, 0.75],
-       [1.  , 1.  ]])</code></pre>
-</div>
-</div>
-<div id="b3f95cc0" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'_data/class/homeprices.csv'</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>dummies <span class="op">=</span> pd.get_dummies(df.town)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.concat([df, dummies], axis<span class="op">=</span><span class="st">'columns'</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>merged</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">town</th>
-<th data-quarto-table-cell-role="th">area</th>
-<th data-quarto-table-cell-role="th">price</th>
-<th data-quarto-table-cell-role="th">monroe township</th>
-<th data-quarto-table-cell-role="th">robinsville</th>
-<th data-quarto-table-cell-role="th">west windsor</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>monroe township</td>
-<td>2600</td>
-<td>550000</td>
-<td>True</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>monroe township</td>
-<td>3000</td>
-<td>565000</td>
-<td>True</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>monroe township</td>
-<td>3200</td>
-<td>610000</td>
-<td>True</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>monroe township</td>
-<td>3600</td>
-<td>680000</td>
-<td>True</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>monroe township</td>
-<td>4000</td>
-<td>725000</td>
-<td>True</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>west windsor</td>
-<td>2600</td>
-<td>585000</td>
-<td>False</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>west windsor</td>
-<td>2800</td>
-<td>615000</td>
-<td>False</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>west windsor</td>
-<td>3300</td>
-<td>650000</td>
-<td>False</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>west windsor</td>
-<td>3600</td>
-<td>710000</td>
-<td>False</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>robinsville</td>
-<td>2600</td>
-<td>575000</td>
-<td>False</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>robinsville</td>
-<td>2900</td>
-<td>600000</td>
-<td>False</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>robinsville</td>
-<td>3100</td>
-<td>620000</td>
-<td>False</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>robinsville</td>
-<td>3600</td>
-<td>695000</td>
-<td>False</td>
-<td>True</td>
-<td>False</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="6c3acc55" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>final <span class="op">=</span> merged.drop([<span class="st">'town'</span>, <span class="st">'west windsor'</span>], axis<span class="op">=</span><span class="st">'columns'</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>final</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">area</th>
-<th data-quarto-table-cell-role="th">price</th>
-<th data-quarto-table-cell-role="th">monroe township</th>
-<th data-quarto-table-cell-role="th">robinsville</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>2600</td>
-<td>550000</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>3000</td>
-<td>565000</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>3200</td>
-<td>610000</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>3600</td>
-<td>680000</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>4000</td>
-<td>725000</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>2600</td>
-<td>585000</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>2800</td>
-<td>615000</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>3300</td>
-<td>650000</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>3600</td>
-<td>710000</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>2600</td>
-<td>575000</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>2900</td>
-<td>600000</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>3100</td>
-<td>620000</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>3600</td>
-<td>695000</td>
-<td>False</td>
-<td>True</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="94d8fbde" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> final.drop(<span class="st">'price'</span>, axis<span class="op">=</span><span class="st">'columns'</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">area</th>
-<th data-quarto-table-cell-role="th">monroe township</th>
-<th data-quarto-table-cell-role="th">robinsville</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>2600</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>3000</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>3200</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>3600</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>4000</td>
-<td>True</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>2600</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>2800</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>3300</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>3600</td>
-<td>False</td>
-<td>False</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>2600</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>2900</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>3100</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>3600</td>
-<td>False</td>
-<td>True</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="6678a247" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> final.price</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>0     550000
-1     565000
-2     610000
-3     680000
-4     725000
-5     585000
-6     615000
-7     650000
-8     710000
-9     575000
-10    600000
-11    620000
-12    695000
-Name: price, dtype: int64</code></pre>
-</div>
-</div>
-<div id="067a6f13" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>model.predict([[<span class="dv">2800</span>, <span class="dv">0</span>, <span class="dv">1</span>]])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/home/cryscham123/.local/lib/python3.12/site-packages/sklearn/base.py:493: UserWarning:
-
-X does not have valid feature names, but LinearRegression was fitted with feature names
-</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>array([590775.63964739])</code></pre>
-</div>
-</div>
-<div id="7796f570" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>model.score(X, y)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
-<pre><code>0.9573929037221873</code></pre>
-</div>
-</div>
-<div id="4ac58b85" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>dfle <span class="op">=</span> df</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>dfle.town <span class="op">=</span> le.fit_transform(dfle.town)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>dfle</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">town</th>
-<th data-quarto-table-cell-role="th">area</th>
-<th data-quarto-table-cell-role="th">price</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>0</td>
-<td>2600</td>
-<td>550000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>0</td>
-<td>3000</td>
-<td>565000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>0</td>
-<td>3200</td>
-<td>610000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>0</td>
-<td>3600</td>
-<td>680000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>0</td>
-<td>4000</td>
-<td>725000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>2</td>
-<td>2600</td>
-<td>585000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>2</td>
-<td>2800</td>
-<td>615000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>2</td>
-<td>3300</td>
-<td>650000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>2</td>
-<td>3600</td>
-<td>710000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>1</td>
-<td>2600</td>
-<td>575000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>1</td>
-<td>2900</td>
-<td>600000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>1</td>
-<td>3100</td>
-<td>620000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>1</td>
-<td>3600</td>
-<td>695000</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-
-
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -3636,13 +2393,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.pdf" class="pagination-link" aria-label="데이터마이닝 팀 과제 주제">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">데이터마이닝 팀 과제 주제</span>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" class="pagination-link" aria-label="ensemble">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">ensemble</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/09.html" class="pagination-link" aria-label="Homework">
-        <span class="nav-page-text">Homework</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/11.pdf" class="pagination-link" aria-label="데이터마이닝 1차 팀과제 script">
+        <span class="nav-page-text">데이터마이닝 1차 팀과제 script</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

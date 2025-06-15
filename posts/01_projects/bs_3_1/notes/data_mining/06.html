@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Support vector machine – 김형훈의 학습 블로그</title>
+<title>clustering – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" rel="next">
-<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" rel="prev">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../../site_libs/quarto-html/quarto.js"></script>
@@ -70,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -109,7 +138,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html">Support vector machine</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html">clustering</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -228,7 +257,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Support vector machine</span></a>
   </div>
 </li>
@@ -240,7 +269,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">clustering</span></a>
   </div>
 </li>
@@ -1863,15 +1892,24 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#전제-조건" id="toc-전제-조건" class="nav-link active" data-scroll-target="#전제-조건">전제 조건</a></li>
+  <li><a href="#전처리" id="toc-전처리" class="nav-link" data-scroll-target="#전처리">전처리</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">model</a></li>
+  <li><a href="#평가" id="toc-평가" class="nav-link" data-scroll-target="#평가">평가</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/04.html">Support vector machine</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/index.html">학부 3학년 1학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/01.html">Data Mining</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/06.html">clustering</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Support vector machine</h1>
+<h1 class="title">clustering</h1>
   <div class="quarto-categories">
     <div class="quarto-category">data mining</div>
   </div>
@@ -1885,7 +1923,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 5월 5일</p>
+      <p class="date">2025년 6월 14일</p>
     </div>
   </div>
   
@@ -1898,28 +1936,98 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 
 
 <p><img src="../../../../../img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="전제-조건" class="level2">
+<h2 class="anchored" data-anchor-id="전제-조건">전제 조건</h2>
+<ol type="1">
+<li>scalability</li>
+<li>다양한 타입의 속성을 처리해야 함
 <ul>
-<li>bias variance tradeoff
-<ul>
-<li>margin ↑, bias ↑, variance ↓</li>
-<li>margin ↓, bias ↓, variance ↑</li>
+<li>k-means는 수치형만 처리 가능</li>
 </ul></li>
-<li>suppot vector: 임계값에 가까운 데이터 포인트</li>
-<li>linear classification fomulation:</li>
+<li>인위적인 형상의 군집도 발견할 수 있어야 함
+<ul>
+<li>k-means는 non-convex 형태는 잘 못찾음</li>
+</ul></li>
+<li>파라미터 설정에 전문지식을 요하지 않아야함</li>
+<li>noise와 outliers를 처리해야 함</li>
+<li>데이터가 입력되는 순서에 민감하면 안됨</li>
+<li>차원 수가 높아도 잘 처리할 수 있어야함</li>
+<li>사용자 정의 제약조건도 수용할 수 있어야함</li>
+<li>해석과 사용이 용이해야함</li>
+</ol>
+</section>
+<section id="전처리" class="level2">
+<h2 class="anchored" data-anchor-id="전처리">전처리</h2>
+<ol type="1">
+<li>scaling 필요</li>
+<li>one hot encoding</li>
+</ol>
+</section>
+<section id="model" class="level2">
+<h2 class="anchored" data-anchor-id="model">model</h2>
+<ul>
+<li>Distance-based methods
+<ul>
+<li>Partitioning methods
+<ul>
+<li>k-means<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:
+<ul>
+<li>polinominal 시간 안에 해결 가능</li>
+<li>noise, outlier에 민감함</li>
+<li>수치형만 처리 가능</li>
+<li>non-convex 형태는 잘 못찾음</li>
+</ul></li>
+<li>k-modes: 범주형 데이터 처리 가능. 빈도수로 유사도 처리함</li>
+<li>k-prototype: 범주형, 수치형 섞인거 처리 가능</li>
+<li>k-medoids: 중심에 위치한 데이터 포인트를 사용해서 outlier 잘 처리함
+<ul>
+<li>PAM: Partitioning Around Medoids
+<ul>
+<li>scalability 문제 있음</li>
+</ul></li>
+<li>CLARA: Clustering LARge Applications
+<ul>
+<li>샘플링 과정에서 biased될 수 있음</li>
+</ul></li>
+<li>CLARANS: Clustering Large Applications based on RANdomized Search</li>
+</ul></li>
+<li>k-means++: 초기 centroids를 더 잘 잡음</li>
+</ul></li>
+<li>Hierarchical methods
+<ul>
+<li>top-down: divisive, dia</li>
+<li>bottom-up: agglomerative</li>
+</ul></li>
+</ul></li>
+<li>Density-based methods</li>
+<li>Grid-based methods: 대표만(각 grid를 대표) 가지고 군집분석 하는거</li>
+<li>Model-based clustering methods</li>
 </ul>
-<p><img src="img/2025-05-05-10-49-25.png" class="img-fluid"></p>
-<p><img src="img/2025-05-05-10-49-34.png" class="img-fluid"></p>
+</section>
+<section id="평가" class="level2">
+<h2 class="anchored" data-anchor-id="평가">평가</h2>
 <ul>
-<li>if not linear solvable → kernel functions</li>
-<li>soft margin: 이상치를 포함할 수 있는 마진
+<li>silhuette score: <span class="math inline">\(\frac{\sum_{i=1}^{n} s(i)}{n}\)</span>
 <ul>
-<li>cross validation으로 최적의 soft margin을 찾는다.</li>
+<li>s(i): <span class="math inline">\(\frac{b(i) - a(i)}{max((a(i), b(i)))}\)</span>
+<ul>
+<li>a(i): 군집 내 노드간의 평균 거리</li>
+<li>b(i): 가장 가까운 군집과의 노드 간 평균 거리</li>
+</ul></li>
+<li>1에 가까울 수록 좋음</li>
 </ul></li>
 </ul>
 
 
+</section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">각주</h2>
+
+<ol>
+<li id="fn1"><p>장단점 기말고사 언급하심<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -2346,13 +2454,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/03.html" class="pagination-link" aria-label="random forest">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">random forest</span>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" class="pagination-link" aria-label="association rule mining">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">association rule mining</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/05.html" class="pagination-link" aria-label="association rule mining">
-        <span class="nav-page-text">association rule mining</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_1/notes/data_mining/07.html" class="pagination-link" aria-label="ensemble">
+        <span class="nav-page-text">ensemble</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
