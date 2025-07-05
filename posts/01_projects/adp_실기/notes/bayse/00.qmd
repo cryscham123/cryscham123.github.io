@@ -1,0 +1,124 @@
+---
+title: "확률"
+date: 2025-06-17
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+```{python}
+import pandas as pd
+
+gss = pd.read_csv('https://raw.githubusercontent.com/AllenDowney/ThinkBayes2/master/data/gss_bayes.csv')
+banker = (gss['indus10'] == 6870)
+print(f'은행원 수: { banker.sum() }')
+print(f'은행원 비율: { banker.mean() }')
+```
+
+## 확률
+
+```{python}
+def prob(A):
+    """A의 확률 계산"""
+    return A.mean()
+prob(banker)
+```
+
+```{python}
+female = (gss['sex'] == 2)
+prob(female)
+```
+
+```{python}
+liberal = (gss['polviews'] <= 3)
+prob(liberal)
+```
+
+```{python}
+democrat = (gss['partyid'] <= 1)
+prob(democrat)
+```
+
+## And 논리곱
+
+```{python}
+prob(banker & democrat)
+```
+
+## 조건부 확률
+
+```{python}
+selected = democrat[liberal]
+prob(selected)
+```
+
+진보(liberal) 성향 중 민주당(democrat)의 비율
+
+```{python}
+def conditional(proposition, given):
+  return prob(proposition[given])
+conditional(liberal, given=female)
+```
+
+```{python}
+prob(liberal & female) / prob(female)
+```
+
+$P(A|B) = \frac{P(A and B)}{P(B)}$
+
+```{python}
+print(prob(female) * conditional(liberal, given=female))
+print(prob(female & liberal))
+```
+
+$P(A and B) = P(B)P(A|B)$
+
+```{python}
+conditional(female, given=liberal)
+```
+
+조건부 확률은 교환 불가
+
+```{python}
+print(conditional(female, given=liberal))
+print(prob(female) * conditional(liberal, given=female) / prob(liberal))
+```
+
+$P(A|B) = \frac{P(A)*P(B|A)}{P(B)}$
+
+```{python}
+male = (gss['sex'] == 1)
+sum(prob(gss['sex'] == i) * conditional(banker, gss['sex'] == i) for i in range(1, 3))
+```
+
+$P(A) = P(B_1)P(A|B_1) + P(B_2)P(A|B_2)$
+
+## 조건과 논리곱
+
+```{python}
+conditional(female, given=liberal & democrat)
+```
+
+## 연습문제
+
+### 1-1
+
+```{python}
+prob(female), prob(liberal), prob(democrat)
+```
+
+### 1-2
+
+```{python}
+conditional(liberal, given=democrat), conditional(democrat, given=liberal)
+```
+
+### 1-3
+
+```{python}
+young = (gss['age'] < 30)
+old = (gss['age'] >= 65)
+conservative = (gss['polviews'] >= 5)
+prob(young & liberal), conditional(liberal, given=young), prob(old & conservative), conditional(old, given=conservative)
+
+```

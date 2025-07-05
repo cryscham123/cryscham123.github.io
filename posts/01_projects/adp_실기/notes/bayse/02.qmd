@@ -1,0 +1,165 @@
+---
+title: "분포"
+date: 2025-06-19
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## Pmf를 이용한 확률
+
+### 쿠키 문제
+
+```{python}
+from empiricaldist import Pmf
+import pandas as pd
+
+prior = Pmf.from_seq(['Bowl 1', 'Bowl 2'])
+likelihood_vanilla = [0.75, 0.5]
+posterior = prior * likelihood_vanilla
+posterior.normalize()
+posterior
+```
+
+- 만약 같은 그릇에서 한 번 더 쿠키를 꺼냈을 때 바닐라일 경우
+
+```{python}
+posterior *= likelihood_vanilla
+posterior.normalize()
+posterior
+```
+
+- 만약 같은 그릇에서 한 번 더 쿠키를 꺼냈을 때 초코쿠키일 경우
+
+```{python}
+likelihood_chocolate = [0.25, 0.5]
+posterior *= likelihood_chocolate
+posterior.normalize()
+posterior
+```
+
+### 101개의 쿠키 그릇
+
+- 그릇 i에는 바닐라 쿠키가 i% 있다.
+- 임의의 그릇을 골라 쿠키를 임의로 꺼냈을 때, 바닐라 쿠키라면 그릇 x에서 쿠키가 나왔을 확률은 얼마일까?
+
+```{python}
+import numpy as np
+
+hypos = np.arange(101)
+prior = Pmf(1, hypos)
+prior.normalize()
+prior
+```
+
+```{python}
+likelihood_vanilla = hypos / 100
+posterior1 = prior * likelihood_vanilla
+posterior1.normalize()
+```
+
+```{python}
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+prior.plot(label='prior', color='C5')
+posterior1.plot(label='posterior', color='C4')
+plt.legend()
+plt.xlabel('그릇 번호')
+plt.ylabel('PMF')
+plt.title('바닐라 쿠키 하나 뽑은 후')
+```
+
+- 한 번 더 뽑았을 때 바닐라 쿠키인 경우
+
+```{python}
+posterior2 = posterior1 * likelihood_vanilla
+posterior2.normalize()
+```
+
+```{python}
+posterior2.plot(label='posterior', color='C4')
+plt.xlabel('그릇 번호')
+plt.ylabel('PMF')
+plt.title('바닐라 쿠키 두 번 뽑은 후')
+```
+
+- 한 번 더 뽑았는데 초코 쿠키인 경우
+
+```{python}
+likelihood_chocolate = 1 - hypos / 100
+posterior3 = posterior2 * likelihood_chocolate
+posterior3.normalize()
+```
+
+```{python}
+posterior3.plot(label='posterior', color='C4')
+plt.xlabel('그릇 번호')
+plt.ylabel('PMF')
+plt.title('바닐라 쿠키 두 번 뽑고 초코 쿠키 하나 뽑은 후')
+```
+
+```{python}
+posterior3.max_prob()
+```
+
+- MAP: 사후확률 분포에서 가장 큰 확률값
+
+### 주사위 문제
+
+```{python}
+def update_dice(pmf, data):
+  hypos = pmf.qs
+  likelihood = 1 / hypos
+  likelihood[data > hypos] = 0
+  pmf *= likelihood
+  pmf.normalize()
+```
+
+- 주사위를 굴려서 1이 나왔다.
+
+```{python}
+hypos = [6, 8, 12]
+pmf = Pmf(1/3, hypos)
+update_dice(pmf, 1)
+pmf
+```
+
+- 주사위를 한번 더 굴렸는데 7이 나왔다.
+
+```{python}
+update_dice(pmf, 7)
+pmf
+```
+
+## 연습문제
+
+### 3-1
+
+```{python}
+hypos = [6, 8, 12]
+pmf = Pmf(1/3, hypos)
+update_dice(pmf, 1)
+update_dice(pmf, 3)
+update_dice(pmf, 5)
+update_dice(pmf, 7)
+pmf
+```
+
+### 3-2
+
+```{python}
+hypos = [4, 6, 8, 12, 20]
+pmf = Pmf([1/15, 2/15, 3/15, 4/15, 5/15], hypos)
+update_dice(pmf, 7)
+pmf
+```
+### 3-3
+
+```{python}
+pmf = Pmf.from_seq(['서랍 1', '서랍 2'])
+likelihood = [1/2, 1/9]
+posterior = pmf * likelihood
+posterior.normalize()
+posterior
+```

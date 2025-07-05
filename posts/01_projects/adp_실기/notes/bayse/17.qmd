@@ -1,0 +1,51 @@
+---
+title: "켤레사전분포"
+date: 2025-07-01
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 월드컵 문제
+
+```{python}
+from scipy.stats import gamma
+import numpy as np
+from empiricaldist import Pmf
+
+alpha = 1.4
+dist = gamma(alpha)
+
+lams = np.linspace(0, 10, 101)
+prior = Pmf(dist.pdf(lams), lams)
+prior.normalize()
+```
+
+```{python}
+from scipy.stats import poisson
+
+k = 4
+likelihood = poisson(lams).pmf(k)
+posterior = prior * likelihood
+posterior.normalize()
+```
+
+## 켤레사전분포
+
+```{python}
+def make_gamma_dist(alpha, beta):
+    dist = gamma(alpha, scale=1/beta)
+    dist.alpha = alpha
+    dist.beta = beta
+    return dist
+
+def update_gamma(prior, daata):
+    k, t = data
+    alpha = prior.alpha + k
+    beta = prior.beta + t
+    return make_gamma_dist(alpha, beta)
+
+prior_gamma = make_gamma_dist(1.4, 1)
+data = 4, 1
+posterior_gamma = update_gamma(prior_gamma, data)
+```

@@ -1,0 +1,62 @@
+---
+title: "회귀"
+date: 2025-07-01
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 더 많은 눈이 내렸을까?
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+df = pd.read_csv('https://github.com/AllenDowney/ThinkBayes2/raw/master/data/2239075.csv', parse_dates=[2])
+df['YEAR'] = df['DATE'].dt.year
+snow = df.groupby('YEAR')['SNOW'].sum()
+snow = snow.iloc[1:-1]
+snow.plot(ls='', marker='o', label='강설량')
+plt.legend()
+```
+
+```{python}
+from empiricaldist import Pmf
+import statsmodels.formula.api as smf
+data = snow.reset_index()
+offset = data['YEAR'].mean().round()
+data['x'] = data['YEAR'] - offset
+data['y'] = data['SNOW']
+
+formula = 'y ~ x'
+results = smf.ols(formula, data=data).fit()
+results.params
+```
+
+### 사전분포
+
+```{python}
+qs = np.linspace(-0.5, 1.5, 51)
+prior_slope = Pmf.from_seq(qs)
+qs = np.linspace(54, 75, 41)
+prior_inter = Pmf.from_seq(qs)
+qs = np.linspace(20, 35, 31)
+prior_sigma = Pmf.from_seq(qs)
+```
+
+```{python}
+def make_joint(pmf1, pmf2):
+    X, Y = np.meshgrid(pmf1, pmf2)
+    return pd.DataFrame(X * Y, columns=pmf1.index, index=pmf2.index)
+
+def make_joint3(pmf1, pmf2, pmf3):
+    joint2 = make_joint(pmf2, pmf1).stack()
+    joint3 = make_joint(pmf3, joint2).stack()
+    return Pmf(joint3)
+
+prior = make_joint3(prior_slope, prior_inter, prior_sigma)
+prior
+```
+

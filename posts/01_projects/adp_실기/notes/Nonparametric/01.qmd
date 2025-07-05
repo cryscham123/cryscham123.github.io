@@ -1,0 +1,306 @@
+---
+title: "순열검정과 전통적인 비모수통계"
+date: 2025-07-02
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 부호검정(이항검정)
+
+- 모집단 분포가 정규분포가 아니고, 대칭이 아닐경우 사용
+- 어떤 분포라도 중앙값이 존재한다.
+- 표본 중 절반은 중앙값보다 작고, 절반은 크다.
+- 검정통계량은 $\sum_{i=1}^{n}I(X_i > θ_0)$
+- 영분포는 B(n, 1/2)를 따른다.
+
+$P(S≥c_{val} | H_0) = \sum_{k=c_{val}}^{n}nCk(\frac{1}{2})^n ≤ α$
+
+$c_{val} = Q_{1-α} + 1$
+
+- 만약 이산형 변수여서 $θ_0$와 같은 값이 m개 이면 n - m개에 대해서만 검정을 진행
+
+```{r}
+sign_test <- function(S0, sample, dir='two') {
+    n <- sum(sample != S0)
+    Sobs <- sum(sample > S0)
+    
+    if (dir == 'greater') {
+        pvalue <- 1 - pbinom(Sobs-1, n, 1/2)
+    } else if (dir == 'less') {
+        pvalue <- pbinom(Sobs, n, 1/2)
+    } else {
+        prob_lower <- pbinom(Sobs, n, 1/2)
+        prob_upper <- 1 - pbinom(Sobs-1, n, 1/2)
+        pvalue <- 2 * min(prob_lower, prob_upper)
+    }
+    
+    return(pvalue)
+}
+
+S0 <- 100
+iq <- c(98, 121, 110, 89, 109, 108, 102, 92, 131, 114)
+sign_test(S0, iq, 'greater')
+```
+
+```{r}
+quantile(iq, probs = 0.95)
+```
+
+```{r}
+sign_test(127.5, iq, 'greater')
+```
+
+### 부호검정의 영분포 시각화
+
+```{r}
+library(ggplot2)
+
+# 부호검정 영분포 plotting 함수
+plot_sign_test_null <- function(sample, S0, dir = 'two', alpha = 0.05) {
+    n <- sum(sample != S0)
+    Sobs <- sum(sample > S0)
+    
+    # 이항분포 B(n, 0.5)의 가능한 값들
+    x_vals <- 0:n
+    probs <- dbinom(x_vals, n, 0.5)
+    
+    # 데이터프레임 생성
+    df <- data.frame(x = x_vals, prob = probs)
+    
+    # p-value 계산 및 영역 표시를 위한 색상 설정
+    if (dir == 'greater') {
+        critical_region <- x_vals >= Sobs
+        pvalue <- 1 - pbinom(Sobs-1, n, 0.5)
+        title_suffix <- "(우측검정)"
+    } else if (dir == 'less') {
+        critical_region <- x_vals <= Sobs
+        pvalue <- pbinom(Sobs, n, 0.5)
+        title_suffix <- "(좌측검정)"
+    } else {
+        # 양측검정
+        prob_lower <- pbinom(Sobs, n, 0.5)
+        prob_upper <- 1 - pbinom(Sobs-1, n, 0.5)
+        if (prob_lower <= prob_upper) {
+            critical_region <- x_vals <= Sobs | x_vals >= (n - Sobs)
+        } else {
+            critical_region <- x_vals >= Sobs | x_vals <= (n - Sobs)
+        }
+        pvalue <- 2 * min(prob_lower, prob_upper)
+        title_suffix <- "(양측검정)"
+    }
+    
+    df$region <- ifelse(critical_region, "p-value 영역", "채택역")
+    
+    # 그래프 생성
+    p <- ggplot(df, aes(x = x, y = prob)) +
+        geom_col(aes(fill = region), alpha = 0.7, width = 0.8) +
+        geom_point(data = df[df$x == Sobs, ], 
+                   aes(x = x, y = prob), 
+                   color = "red", size = 4, shape = 19) +
+        scale_fill_manual(values = c("p-value 영역" = "red", "채택역" = "lightblue")) +
+        labs(
+            title = paste0("부호검정의 영분포 B(", n, ", 0.5) ", title_suffix),
+            subtitle = paste0("관찰값 S = ", Sobs, ", p-value = ", round(pvalue, 4)),
+            x = "검정통계량 S (중앙값보다 큰 값의 개수)",
+            y = "확률",
+            fill = "영역"
+        ) +
+        theme_minimal() +
+        theme(
+            plot.title = element_text(hjust = 0.5, size = 14),
+            plot.subtitle = element_text(hjust = 0.5, size = 12),
+            legend.position = "bottom"
+        ) +
+        scale_x_continuous(breaks = x_vals)
+    
+    return(p)
+}
+
+S0 <- 100
+iq <- c(98, 121, 110, 89, 109, 108, 102, 92, 131, 114)
+
+plot_sign_test_null(iq, S0, 'greater')
+```
+
+```{r}
+plot_sign_test_null(iq, S0, 'two')
+```
+
+```{r}
+plot_sign_test_null(iq, 127.5, 'less')
+```
+
+- α를 정확하게 통제할 수 없다.
+    - 대표본의 경우 이산형 분포가 정규분포로 근사할 수 있기 때문에, 근사해서 검정 진행해서 α 통제
+
+### 신뢰구간
+
+
+```{r}
+# 신뢰구간 계산
+a = 0.05
+n = length(iq)
+l = qbinom(a / 2, n, 1/2)
+u = n + 1 - l
+sorted_iq = sort(iq)
+(ci = sorted_iq[c(l, u)])
+```
+
+```{r}
+# 실제 신뢰도 계산 (이산분포 특성상 정확히 95%가 아님)
+(coverage = sum(dbinom(l:(u-1), n, 1/2)))
+```
+
+**왜 비대칭 분포에서도 유효한가?**
+
+1. **중앙값의 불변성**: 분포가 비대칭이어도 중앙값은 여전히 모집단을 반으로 나누는 점
+2. **부호의 독립성**: 각 관측값이 중앙값보다 클 확률은 항상 0.5 (연속분포 가정)
+3. **순서통계량의 분포**: 순서통계량들 사이의 확률적 관계는 분포 형태와 무관
+
+**시뮬레이션 검증: 비대칭 분포에서의 신뢰구간**
+
+```{r}
+# 부호검정 신뢰구간 함수
+sign_ci <- function(sample, alpha = 0.05) {
+    n <- length(sample)
+    l <- qbinom(alpha / 2, n, 0.5)
+    u <- n + 1 - l
+    sorted_sample <- sort(sample)
+    return(c(lower = sorted_sample[l], upper = sorted_sample[u]))
+}
+
+# 비대칭 분포 시뮬레이션
+set.seed(123)
+n_sim <- 1000
+n_sample <- 20
+coverage_results <- data.frame(
+    distribution = character(),
+    true_median = numeric(),
+    coverage_rate = numeric(),
+    stringsAsFactors = FALSE
+)
+
+# 1. 정규분포 (대칭)
+true_median_normal <- 0
+coverage_normal <- 0
+for (i in 1:n_sim) {
+    sample <- rnorm(n_sample, mean = 0, sd = 1)
+    ci <- sign_ci(sample)
+    if (true_median_normal >= ci[1] && true_median_normal <= ci[2]) {
+        coverage_normal <- coverage_normal + 1
+    }
+}
+coverage_results <- rbind(coverage_results, 
+    data.frame(distribution = "정규분포", 
+               true_median = true_median_normal,
+               coverage_rate = coverage_normal / n_sim))
+
+# 2. 지수분포 (오른쪽 비대칭)
+true_median_exp <- log(2)  # 지수분포의 중앙값
+coverage_exp <- 0
+for (i in 1:n_sim) {
+    sample <- rexp(n_sample, rate = 1)
+    ci <- sign_ci(sample)
+    if (true_median_exp >= ci[1] && true_median_exp <= ci[2]) {
+        coverage_exp <- coverage_exp + 1
+    }
+}
+coverage_results <- rbind(coverage_results, 
+    data.frame(distribution = "지수분포", 
+               true_median = true_median_exp,
+               coverage_rate = coverage_exp / n_sim))
+
+# 3. 베타분포 (왼쪽 비대칭)
+true_median_beta <- qbeta(0.5, shape1 = 5, shape2 = 2)
+coverage_beta <- 0
+for (i in 1:n_sim) {
+    sample <- rbeta(n_sample, shape1 = 5, shape2 = 2)
+    ci <- sign_ci(sample)
+    if (true_median_beta >= ci[1] && true_median_beta <= ci[2]) {
+        coverage_beta <- coverage_beta + 1
+    }
+}
+coverage_results <- rbind(coverage_results, 
+    data.frame(distribution = "베타분포(5,2)", 
+               true_median = true_median_beta,
+               coverage_rate = coverage_beta / n_sim))
+
+print(coverage_results)
+```
+
+```{r}
+# 각 분포의 형태와 중앙값 시각화
+library(ggplot2)
+library(gridExtra)
+
+set.seed(123)
+x_normal <- rnorm(1000)
+x_exp <- rexp(1000)
+x_beta <- rbeta(1000, 5, 2)
+
+p1 <- ggplot() + 
+    geom_histogram(aes(x = x_normal), bins = 30, alpha = 0.7, fill = "blue") +
+    geom_vline(xintercept = 0, color = "red", size = 1) +
+    labs(title = "정규분포 (대칭)", x = "값", y = "빈도") +
+    annotate("text", x = 0.5, y = 80, label = "중앙값 = 0", color = "red")
+
+p2 <- ggplot() + 
+    geom_histogram(aes(x = x_exp), bins = 30, alpha = 0.7, fill = "green") +
+    geom_vline(xintercept = log(2), color = "red", size = 1) +
+    labs(title = "지수분포 (오른쪽 비대칭)", x = "값", y = "빈도") +
+    annotate("text", x = 2, y = 150, label = paste("중앙값 =", round(log(2), 3)), color = "red")
+
+p3 <- ggplot() + 
+    geom_histogram(aes(x = x_beta), bins = 30, alpha = 0.7, fill = "orange") +
+    geom_vline(xintercept = qbeta(0.5, 5, 2), color = "red", size = 1) +
+    labs(title = "베타분포(5,2) (왼쪽 비대칭)", x = "값", y = "빈도") +
+    annotate("text", x = 0.5, y = 80, label = paste("중앙값 =", round(qbeta(0.5, 5, 2), 3)), color = "red")
+
+grid.arrange(p1, p2, p3, ncol = 1)
+```
+
+**결론**: 시뮬레이션 결과에서 볼 수 있듯이, 분포가 대칭이든 비대칭이든 부호검정의 신뢰구간 포함률(coverage rate)은 명목 신뢰수준(95%)에 근접합니다. 이는 부호검정 신뢰구간이 **분포무관(distribution-free)** 성질을 가지기 때문입니다.
+
+### 부호검정 사용 시 주의사항
+
+1. **동일한 값 처리**: 중앙값과 정확히 같은 값들은 검정에서 제외
+2. **표본 크기**: 작은 표본에서는 정확한 이항분포 사용, 큰 표본에서는 정규분포 근사
+3. **검정 방향**: 양측검정 vs 단측검정 선택 중요
+4. **가정**: 표본이 연속분포에서 추출되었다고 가정
+
+## 윌콕슨 부호순위검정
+
+- 모집단이 대칭인 경우 사용 가능
+- rank가 동점인 경우 평균으로 처리
+- 영분포는 잘 알려져 있지 않은 분포
+- 평균: $\frac{n(n+1)}{4}$
+- 분산: $\frac{n(n+1)(2n+1)}{24}$
+- 일반적으로 resampling 방식으로 구하고, 수가 많아지면 표준정규분포로 근사해서 계산(Lyapunov의 중심극한정리)
+
+### 중앙값 추정과 신뢰구간
+
+- 왈시평균: $W_{ij} = \frac{X_i + X_j}{2}$
+- $SR_{+}(θ) = \#{W_{ij} > θ}$
+
+```{r}
+x.before <- c(1.83, 0.5, 1.62, 2.48, 1.68, 1.88, 1.55, 3.06, 1.30, 0.39, 0.94, 1.34)
+x.after <- c(0.88, 0.65, 0.59, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29, 0.43, 0.57, 0.92)
+x <- x.before - x.after
+n <- length(x)
+w <- sort(Rfit::walsh(x))
+median(w)
+a = 0.05
+u = n * (n+1) / 2 + 1 - qsignrank(a/2, n)
+l = qsignrank(a/2, n)
+c(l, u)
+(ci = c(w[l], w[u]))
+```
+
+```{r}
+wilcox.test(x, alternative="greater", exact=F)
+wilcox.test(x, conf.int=T)
+```
+
+## 순열 검정
+

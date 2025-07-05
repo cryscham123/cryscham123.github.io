@@ -1,0 +1,121 @@
+---
+title: "EDA"
+date: 2025-06-17
+categories: ["데이터 분석"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## plot을 통한 자료 요약
+
+### 범주형 자료 요약
+
+1. 도수분포표
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from seaborn import color_palette
+
+df = pd.DataFrame(range(1, 11)).sample(100, replace=True)
+table = pd.crosstab(index=df.values.flatten(), colnames=['질병'], columns='도수')
+table.index = ["감염", "심장", "호흡기", "소화기", "신경", "근골격", "내분비", "정신", "피부", "기타"]
+print(table)
+```
+
+1. 원형 그래프
+
+```{python}
+plt.rcParams['font.family'] = 'Noto Sans KR'
+
+table.plot(kind='bar', color='skyblue', legend=False)
+plt.xlabel('사망 원인')
+plt.ylabel('빈도수')
+plt.title('사망 원인별 빈도수')
+plt.xticks(rotation=0)
+plt.show()
+```
+
+1. 막대 그래프
+
+```{python}
+plt.pie(table.iloc[:, 0], labels=list(table.index), colors=color_palette("pastel"), autopct='%1.1f%%')
+plt.title('사망 원인별 빈도수')
+plt.show()
+```
+
+1. 파레토그림 (명목형)
+
+- 가장 큰 영향을 미치는 범주를 파악할 수 있는 그래프
+- 라이브러리는 딱히 없는거 같고, 뭐 많이 쓰지도 않는거 같아서 구현은 생략
+
+### 이산형 자료 요약
+
+- 관측값의 종료가 적은 경우 그냥 범주형으로 처리할 수 있다. (단 파레토그림같은 순서가 바뀌는 기법은 사용하지 않는다.)
+- 관측값의 종류가 많을 경우, 연속형 자료로 처리할 수 있다.
+
+### 연속형 자료 요약
+
+1. 점도표
+
+1. 도수분포표
+
+- 구간을 정하고 각 구간에 속하는 관측값의 개수를 세어 도수분포표를 만든다.
+
+1. 히스토그램
+
+- 상대도수를 계급구간의 폭으로 나눈 값을 막대의 높이로 사용하는 그래프
+
+1. 도수다각형
+
+- 중심의 위치, 퍼진 정도 등을 파악하는데 유용하다.
+- 또한 여러 자료를 비교하는 경우 히스토그램보다 유용하다.
+
+1. 줄기-잎 그림
+
+- 개개의 관측값에 대한 정보를 유지하면서 분포를 파악할 수 있는 그래프
+- 하지만 관측값의 갯수가 많거나 지나치게 흩어져 있는 경우 제한된 공간에 그리는 것이 불가능하다.
+
+### 분포의 모양
+
+1. 종모양
+1. 이봉형: 두 개의 다른 집단이 섞여 있을 때 종종 나타난다.
+1. 균일형
+1. 오른쪽 편중
+1. 왼쪽 편중
+
+## 수치를 통한 연속형 자료 요약
+
+```{python}
+df.describe(include='all')
+```
+
+### 중심위치의 측도
+
+- 평균, 중앙값, 최빈값
+
+```{python}
+from scipy import stats
+
+print(f'평균: {np.mean(df)}, 중앙값: {np.median(df)}, 최빈값: {stats.mode(df)}')
+```
+
+### 퍼진 정도의 측도
+
+- 분산, 표준편차, 범위, 사분위수, 변동계수
+
+```{python}
+# 자유도 -1
+print(f'분산: {np.var(df, ddof=1)}, 표준편차: {np.std(df, ddof=1)}, 범위: {np.ptp(df)}, 1,3분위수: {np.quantile(df, [0.25, 0.75])}, 변동계수: {np.std(df, ddof=1) / np.mean(df)}')
+```
+
+### box plot
+
+- 종모양의 데이터의 분포를 나타내는 데 적절하다.
+- 사전에 도수분포표, 히스토그램, 줄기-잎 그림으로 봉우리를 파악해야 한다.
+
+```{python}
+plt.boxplot(df)
+```
+

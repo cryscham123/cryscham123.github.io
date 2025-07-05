@@ -1,0 +1,133 @@
+---
+title: "베이즈 정리"
+date: 2025-06-19
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 이론
+
+사전확률을 이용해서 사후확률을 구하는 과정을 베이즈 갱신이라고 한다.
+
+$P(H|D) = \frac{P(D|H)P(H)}{P(D)}$
+
+- $P(H)$: 가설의 확률. 사전확률
+- $P(H|D)$: 데이터가 주어졌을 때 가설의 확률. 사후확률
+- $P(D|H)$: 가설하에서 데이터가 나올 확률. 가능도(우도)
+- $P(D)$: 데이터의 확률. $P(D) = \sum P(H_i)P(D|H_i)$
+
+가설은 상호 배제와 전체 포괄 가정이 필요하다.  
+즉, 가설은 서로 배타적이어야 하고, 모든 가능한 가설을 포함해야 한다.
+
+## 베이즈 테이블
+
+1. 가설과 데이터를 정리한다.
+1. 사전확률을 구한다.
+1. 각 가설 하에서의 데이터 가능도를 구한다.
+1. 베이즈 테이블을 정리한다.
+
+### 쿠키 문제
+
+- 그릇 1에서 바닐라 쿠키를 집을 확률은 3/4
+- 그릇 2에서 바닐라 쿠키를 집을 확률은 1/2
+- 바닐라 쿠키를 집었을 때, 그릇 i에서 집었을 확률은?
+
+```{python}
+import pandas as pd
+
+table = pd.DataFrame(index=['bowl1', 'bowl2'])
+table['prior'] = 1/2, 1/2
+table['likelihood'] = 3/4, 1/2
+table['unnorm'] = table['prior'] * table['likelihood']
+table['posterior'] = table['unnorm'] / table['unnorm'].sum()
+table
+```
+
+### 주사위 문제
+
+- 육면체, 팔면체, 십이면체 주사위가 든 상자가 있다.
+- 이 중 임의로 하나를 집어 굴렸더니 1이 나왔다.
+- 이 주사위가 육면체일 확률은?
+
+```{python}
+def update(table):
+  table['unnorm'] = table['prior'] * table['likelihood']
+  prob_data = table['unnorm'].sum()
+  table['posterior'] = table['unnorm'] / prob_data
+  return prob_data
+
+from fractions import Fraction
+
+table2 = pd.DataFrame(index=[6, 8, 12])
+table2['prior'] = Fraction(1, 3)
+table2['likelihood'] = Fraction(1, 6), Fraction(1, 8), Fraction(1, 12)
+prob_data = update(table2)
+table2
+```
+
+### 몬티홀 문제
+
+- 1,2,3 번호가 붙은 세 개의 문 중 하나에 상품이 있다.
+- 참가자는 문 하나를 선택하고, 사회자는 나머지 두 문 중 상품이 없는 문을 열어 보여준다.
+- 참가자는 처음 선택한 문을 유지하거나 다른 문으로 바꿀 수 있다.
+- 당신은 1번 문을 선택했고, 사회자는 문 3을 열었다.
+- 다시 참가자가 문을 선택했을 때 상품이 있는 문을 선택할 확률은?
+
+```{python}
+table3 = pd.DataFrame(index=[1, 2, 3])
+table3['prior'] = Fraction(1, 3)
+table3['likelihood'] = Fraction(1, 2), 1, 0
+prob_data = update(table3)
+table3
+```
+
+## 연습문제
+
+### 2-1
+
+```{python}
+table = pd.DataFrame(index=['normal', 'weird'])
+table['prior'] = Fraction(1, 2)
+table['likelihood'] = Fraction(1, 2), 1
+prob_data = update(table)
+table
+```
+
+### 2-2
+
+```{python}
+table = pd.DataFrame(index=['bb', 'bg', 'gb', 'gg'])
+table['prior'] = Fraction(1, 4)
+table['likelihood'] = 0, 1, 1, 1
+prob_data = update(table)
+table
+```
+
+### 2-3
+
+```{python}
+table = pd.DataFrame(index=[1, 2, 3])
+table['prior'] = Fraction(1, 3)
+table['likelihood'] = 1, 0, 1
+prob_data = update(table)
+table
+```
+
+```{python}
+table = pd.DataFrame(index=[1, 2, 3])
+table['prior'] = Fraction(1, 3)
+table['likelihood'] = 0, 1, 0
+prob_data = update(table)
+table
+```
+
+### 2-4
+
+```{python}
+table = pd.DataFrame(index=['1994_1996', '1996_1994'])
+table['prior'] = Fraction(1, 2)
+table['likelihood'] = Fraction(2, 10) * Fraction(2, 10), Fraction(14, 100) * Fraction(1, 10)
+prob_data = update(table)
+table
+```

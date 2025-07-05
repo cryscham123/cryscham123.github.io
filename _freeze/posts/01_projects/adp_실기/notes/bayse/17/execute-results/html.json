@@ -1,0 +1,12 @@
+{
+  "hash": "6f772e8e38c4a42b229f8803bea2c538",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"켤레사전분포\"\ndate: 2025-07-01\ncategories: [\"확률 통계\"]\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n## 월드컵 문제\n\n::: {#ec47ab63 .cell execution_count=1}\n``` {.python .cell-code}\nfrom scipy.stats import gamma\nimport numpy as np\nfrom empiricaldist import Pmf\n\nalpha = 1.4\ndist = gamma(alpha)\n\nlams = np.linspace(0, 10, 101)\nprior = Pmf(dist.pdf(lams), lams)\nprior.normalize()\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n9.889360237140306\n```\n:::\n:::\n\n\n::: {#5c3c2104 .cell execution_count=2}\n``` {.python .cell-code}\nfrom scipy.stats import poisson\n\nk = 4\nlikelihood = poisson(lams).pmf(k)\nposterior = prior * likelihood\nposterior.normalize()\n```\n\n::: {.cell-output .cell-output-display execution_count=2}\n```\n0.05015532557804499\n```\n:::\n:::\n\n\n## 켤레사전분포\n\n::: {#52a1536f .cell execution_count=3}\n``` {.python .cell-code}\ndef make_gamma_dist(alpha, beta):\n    dist = gamma(alpha, scale=1/beta)\n    dist.alpha = alpha\n    dist.beta = beta\n    return dist\n\ndef update_gamma(prior, daata):\n    k, t = data\n    alpha = prior.alpha + k\n    beta = prior.beta + t\n    return make_gamma_dist(alpha, beta)\n\nprior_gamma = make_gamma_dist(1.4, 1)\ndata = 4, 1\nposterior_gamma = update_gamma(prior_gamma, data)\n```\n:::\n\n\n",
+    "supporting": [
+      "17_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

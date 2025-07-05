@@ -1,0 +1,131 @@
+---
+title: "로지스틱 회귀"
+date: 2025-07-01
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+$logO(H|x) = β_0 + β_1x$
+
+## 우주 왕복선 문제
+
+```{python}
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('https://raw.githubusercontent.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/master/Chapter2_MorePyMC/data/challenger_data.csv')
+pred = df.iloc[-1]
+df = df[:-1].dropna()
+offset = df['Temperature'].mean().round()
+df['x'] = df['Temperature'] - offset
+df['y'] = df['Damage Incident'].astype(int)
+
+df
+```
+
+### 전통 로지스틱
+
+```{python}
+import statsmodels.formula.api as smf
+
+formula = 'y ~ x'
+results = smf.logit(formula, data=df).fit(disp=False)
+results.params
+```
+
+```{python}
+from scipy.special import expit
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+
+inter = results.params['Intercept']
+slope = results.params['x']
+xs = np.arange(53, 83) - offset
+ps = expit(inter + slope * xs)
+plt.plot(xs + offset, ps)
+plt.scatter(df['x'] + offset, df['y'])
+```
+
+### 사전 분포
+
+```{python}
+from empiricaldist import Pmf
+
+def make_joint(pmf1, pmf2):
+    X, Y = np.meshgrid(pmf1, pmf2)
+    return pd.DataFrame(X * Y, columns=pmf1.qs, index=pmf2.qs)
+
+qs = np.linspace(-5, 1, 101)
+prior_inter = Pmf.from_seq(qs)
+qs = np.linspace(-0.8, 0.1, 101)
+prior_slope = Pmf.from_seq(qs)
+joint = make_joint(prior_inter, prior_slope)
+joint_pmf = Pmf(joint.stack())
+joint_pmf
+```
+
+### 가능도
+
+```{python}
+from scipy.stats import binom
+
+grouped = df.groupby('x')['y'].agg(['count', 'sum'])
+ns = grouped['count']
+ks = grouped['sum']
+xs = grouped.index
+ps = expit(inter + slope * xs)
+likes = binom.pmf(ks, ns, ps)
+likes
+```
+
+```{python}
+likelihood = joint_pmf.copy()
+for slope, inter in joint_pmf.index:
+    ps = expit(inter + slope * xs)
+    likes = binom.pmf(ks, ns, ps)
+    likelihood[slope, inter] = likes.prod()
+```
+
+### 갱신
+
+```{python}
+posterior_pmf = joint_pmf * likelihood
+posterior_pmf.normalize()
+joint_posterior = posterior_pmf.unstack()
+
+marginal_inter = Pmf(joint_posterior.sum(axis=0))
+marginal_inter.normalize()
+marginal_slope = Pmf(joint_posterior.sum(axis=1))
+marginal_slope.normalize()
+
+marginal_inter.plot()
+```
+
+```{python}
+marginal_slope.plot()
+```
+
+### 분포 변환
+
+```{python}
+marginal_probs = marginal_inter.transform(expit)
+marginal_lr = marginal_slope.transform(np.exp)
+```
+
+### 예측 분포
+
+```{python}
+sample = posterior_pmf.choice(101)
+temps = np.arange(31, 83)
+xs = temps - offset
+pred = np.empty((len(sample), len(xs)))
+for i, (slope, inter) in enumerate(sample):
+    pred[i] = expit(inter + slope * xs)
+low, median, high = np.percentile(pred, [5, 50, 95], axis=0)
+plt.fill_between(temps, low, high, color='C1', alpha=0.2, label='95% 신뢰구간')
+plt.plot(temps, median, color='C1', label='logistic model')
+plt.legend()
+plt.scatter(df['x'] + offset, df['y'], label='data')
+```
