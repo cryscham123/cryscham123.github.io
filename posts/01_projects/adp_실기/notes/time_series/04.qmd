@@ -1,0 +1,70 @@
+---
+title: "자기귀모형"
+date: 2025-07-11
+categories: ["확률 통계", "시계열 분석"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+- 자기회귀과정: 예측값이 이전 값에만 선형적으로 의존한다고 가정
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+
+df = pd.read_csv('_data/foot.csv')
+```
+
+```{python}
+from statsmodels.tsa.stattools import adfuller
+
+ADF_result = adfuller(df['foot_traffic'])
+ADF_result[0], ADF_result[1]
+```
+
+- 비 정상성 발견. 차분 진행
+
+```{python}
+foot_diff = np.diff(df['foot_traffic'], n=1)
+
+ADF_result = adfuller(foot_diff)
+ADF_result[0], ADF_result[1]
+```
+
+```{python}
+from statsmodels.graphics.tsaplots import plot_acf
+
+plot_acf(foot_diff, lags=20)
+plt.show()
+```
+
+```{python}
+from statsmodels.tsa.arima_process import ArmaProcess
+
+ma2 = np.array([1, 0, 0])
+ar2 = np.array([1, -0.33, -0.50])
+AR2_process = ArmaProcess(ar2, ma2).generate_sample(nsample=1000)
+```
+
+```{python}
+from statsmodels.graphics.tsaplots import plot_pacf
+
+plot_pacf(AR2_process, lags=20)
+plt.show()
+```
+
+```{python}
+plot_pacf(foot_diff, lags=20)
+plt.show()
+```
+
+```{python}
+df_diff = pd.DataFrame({'foot_traffic_diff': foot_diff})
+
+train = df_diff.iloc[:-52]
+test = df_diff.iloc[-52:]
+```

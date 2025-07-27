@@ -1,0 +1,30 @@
+---
+title: "외생 변수 추가하기"
+date: 2025-07-12
+categories: ["확률 통계", "시계열 분석"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+
+```{python}
+import statsmodels.api as sm
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+
+macro_econ_data = sm.datasets.macrodata.load_pandas().data
+macro_econ_data
+```
+
+```{python}
+target = macro_econ_data[['realgdp', 'realcons', 'realinv', 'realgovt', 'realdpi', 'cpi']]
+target.plot(subplots=True, figsize=(10, 8), layout=(3, 2))
+plt.xticks(np.arange(0, 208, 16), np.arange(1959, 2010, 4))
+plt.show()
+```
+
+- 이 다음 부분은 오류인거 같음. 다른 책 보자.

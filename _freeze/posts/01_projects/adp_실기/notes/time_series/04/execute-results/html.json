@@ -1,0 +1,12 @@
+{
+  "hash": "8bf2d3357a36ce81e1975f3caa77b2d1",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"자기귀모형\"\ndate: 2025-07-11\ncategories: [\"확률 통계\", \"시계열 분석\"]\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n- 자기회귀과정: 예측값이 이전 값에만 선형적으로 의존한다고 가정\n\n::: {#c523bb8d .cell execution_count=1}\n``` {.python .cell-code}\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nplt.rcParams['font.family'] = 'Noto Sans KR'\n\ndf = pd.read_csv('_data/foot.csv')\n```\n:::\n\n\n::: {#fbf9c67a .cell execution_count=2}\n``` {.python .cell-code}\nfrom statsmodels.tsa.stattools import adfuller\n\nADF_result = adfuller(df['foot_traffic'])\nADF_result[0], ADF_result[1]\n```\n\n::: {.cell-output .cell-output-display execution_count=8}\n```\n(-1.1758885999240625, 0.6838808917896241)\n```\n:::\n:::\n\n\n- 비 정상성 발견. 차분 진행\n\n::: {#042862ba .cell execution_count=3}\n``` {.python .cell-code}\nfoot_diff = np.diff(df['foot_traffic'], n=1)\n\nADF_result = adfuller(foot_diff)\nADF_result[0], ADF_result[1]\n```\n\n::: {.cell-output .cell-output-display execution_count=9}\n```\n(-5.268231347422049, 6.369317654781143e-06)\n```\n:::\n:::\n\n\n::: {#a546ebcf .cell execution_count=4}\n``` {.python .cell-code}\nfrom statsmodels.graphics.tsaplots import plot_acf\n\nplot_acf(foot_diff, lags=20)\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![](04_files/figure-html/cell-5-output-1.png){width=583 height=432}\n:::\n:::\n\n\n::: {#0052474d .cell execution_count=5}\n``` {.python .cell-code}\nfrom statsmodels.tsa.arima_process import ArmaProcess\n\nma2 = np.array([1, 0, 0])\nar2 = np.array([1, -0.33, -0.50])\nAR2_process = ArmaProcess(ar2, ma2).generate_sample(nsample=1000)\n```\n:::\n\n\n::: {#238b5927 .cell execution_count=6}\n``` {.python .cell-code}\nfrom statsmodels.graphics.tsaplots import plot_pacf\n\nplot_pacf(AR2_process, lags=20)\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![](04_files/figure-html/cell-7-output-1.png){width=583 height=432}\n:::\n:::\n\n\n::: {#881e91b0 .cell execution_count=7}\n``` {.python .cell-code}\nplot_pacf(foot_diff, lags=20)\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![](04_files/figure-html/cell-8-output-1.png){width=583 height=432}\n:::\n:::\n\n\n",
+    "supporting": [
+      "04_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

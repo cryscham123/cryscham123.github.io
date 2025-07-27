@@ -1,0 +1,92 @@
+---
+title: "단순 미래 예측"
+date: 2025-07-09
+categories: ["확률 통계", "시계열 분석"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 베이스라인 모델 정의
+
+- 단순예측법: 최근의 자료가 미래에 대한 최선의 추정치 $\hat{p_{t+1}} = p_t$
+- 추세분석: 전기와 현기 사이의 추세를 다음 기의 판매예측에 반영하는 방법. $\hat{p_{t+1}} = p_t + p_t - p_{t-1}$
+- 단순 이동평균법: time window를 계속 이동하면서 평균 구하는거
+    - time window ↑: 먼 과거까지 보겠다
+- 가중 이동평균법: 가중치를 다르게 부여
+
+### all 평균 (추세)
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+df = pd.read_csv('_data/jj.csv')
+
+train = df[:-4]
+test = df[-4:]
+
+historical_mean = np.mean(train['data'])
+historical_mean
+```
+
+```{python}
+test['pred_mean'] = historical_mean
+```
+
+```{python}
+def mape(y_true, y_pred):
+    return np.mean(np.abs(y_true - y_pred) / y_true) * 100
+
+mape_hist_mean = mape(test['data'], test['pred_mean'])
+mape_hist_mean
+```
+
+```{python}
+sns.lineplot(data=train, x='date', y='data', label='훈련')
+sns.lineplot(data=test, x='date', y='data', label='테스트')
+sns.lineplot(data=test, x='date', y='pred_mean', label='단순 예측')
+plt.xticks(np.arange(0, 85, 8), np.arange(1960, 1981, 2))
+```
+
+### 최근만 평균 (추세)
+
+```{python}
+last_year_mean = np.mean(train.iloc[-4:]['data'])
+test['pred_last_yr_mean'] = last_year_mean
+mape_last_year_mean = mape(test['data'], test['pred_last_yr_mean'])
+mape_last_year_mean
+```
+
+```{python}
+sns.lineplot(data=train, x='date', y='data', label='훈련')
+sns.lineplot(data=test, x='date', y='data', label='테스트')
+sns.lineplot(data=test, x='date', y='pred_last_yr_mean', label='최근 예측')
+plt.xticks(np.arange(0, 85, 8), np.arange(1960, 1981, 2))
+```
+
+### 단순 예측법
+
+```{python}
+last = train.iloc[-1]['data']
+test['pred_last'] = last
+mape_last = mape(test['data'], test['pred_last'])
+mape_last
+```
+
+```{python}
+sns.lineplot(data=train, x='date', y='data', label='훈련')
+sns.lineplot(data=test, x='date', y='data', label='테스트')
+sns.lineplot(data=test, x='date', y='pred_last', label='단순 예측')
+plt.xticks(np.arange(0, 85, 8), np.arange(1960, 1981, 2))
+```
+
+### 계절적 예측
+
+```{python}
+test['pred_last_season'] = train.iloc[-4:]['data'].values
+mape_naive_seasonal = mape(test['data'], test['pred_last_season'])
+mape_naive_seasonal
+```

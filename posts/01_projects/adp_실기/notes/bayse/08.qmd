@@ -1,0 +1,347 @@
+---
+title: "의사결정분석"
+date: 2025-07-06
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+df1 = pd.read_csv('https://raw.githubusercontent.com/AllenDowney/ThinkBayes2/master/data/showcases.2011.csv', index_col=0, skiprows=[1]).dropna().transpose()
+df2 = pd.read_csv('https://raw.githubusercontent.com/AllenDowney/ThinkBayes2/master/data/showcases.2012.csv', index_col=0, skiprows=[1]).dropna().transpose()
+df = pd.concat([df1, df2], ignore_index=True)
+df
+```
+
+```{python}
+from scipy.stats import gaussian_kde
+from empiricaldist import Pmf
+
+def kde_from_sample(sample, qs):
+    kde = gaussian_kde(sample)
+    ps = kde(qs)
+    pmf = Pmf(ps, qs)
+    pmf.normalize()
+    return pmf
+
+qs = np.linspace(0, 80000, 81)
+prior1 = kde_from_sample(df['Showcase 1'], qs)
+prior2 = kde_from_sample(df['Showcase 2'], qs)
+
+prior1.plot(label='진열대 1번의 사전확률')
+prior2.plot(label='진열대 2번의 사전확률')
+plt.xlabel('진열대 물건 총 금액')
+plt.ylabel('PMF')
+plt.legend()
+```
+
+```{python}
+sample_diff1 = df['Bid 1'] - df['Showcase 1']
+sample_diff2 = df['Bid 2'] - df['Showcase 2']
+
+qs = np.linspace(-40000, 20000, 61)
+kde_diff1 = kde_from_sample(sample_diff1, qs)
+kde_diff2 = kde_from_sample(sample_diff2, qs)
+
+kde_diff1.plot(label='1번의 차이')
+kde_diff2.plot(label='2번의 차이')
+plt.xlabel('차이 금액')
+plt.ylabel('PMF')
+plt.legend()
+```
+
+```{python}
+from scipy.stats import norm
+
+std_diff1 = sample_diff1.std()
+std_diff2 = sample_diff2.std()
+
+error_dist1 = norm(0, std_diff1)
+error_dist2 = norm(0, std_diff2)
+
+guess1 = 23000
+error1 = guess1 - prior1.qs
+likelihood1 = error_dist1.pdf(error1)
+posterior1 = prior1 * likelihood1
+posterior1.normalize()
+
+guess2 = 38000
+error2 = guess2 - prior2.qs
+likelihood2 = error_dist2.pdf(error2)
+posterior2 = prior2 * likelihood2
+posterior2.normalize()
+
+posterior1.plot(label='1번의 사후분포')
+posterior2.plot(label='2번의 사후분포')
+plt.legend()
+```
+
+```{python}
+def compute_prob_win(my_diff, op_diff):
+    if my_diff > 0:
+        return 0
+    p1 = np.mean(op_diff > 0)
+    p2 = np.mean(op_diff < my_diff)
+    return p1 + p2
+
+xs = np.linspace(-30000, 5000, 121)
+ys1 = [compute_prob_win(x, sample_diff2) for x in xs]
+ys2 = [compute_prob_win(x, sample_diff1) for x in xs]
+
+plt.plot(xs, ys1, label='1번 참가자가 이길 확률')
+plt.plot(xs, ys2, label='2번 참가자가 이길 확률')
+plt.legend()
+```
+
+
+```{python}
+def total_prob_win(bid, posterior, op_diff):
+    total = 0
+    for price, prob in posterior.items():
+        diff = bid - price
+        total += prob * compute_prob_win(diff, op_diff)
+    return total
+
+bids1 = posterior1.qs
+probs1 = [total_prob_win(bid, posterior1, sample_diff2) for bid in bids1]
+prob1_wins = pd.Series(probs1, index=bids1)
+
+bids2 = posterior2.qs
+probs2 = [total_prob_win(bid, posterior2, sample_diff1) for bid in bids2]
+prob2_wins = pd.Series(probs2, index=bids2)
+
+prob1_wins.plot(label=f'1번 참가자의 이길 확률 (최적: {prob1_wins.idxmax()})')
+plt.axvline(x=prob1_wins.idxmax(), color='b', linestyle=':')
+
+prob2_wins.plot(label=f'2번 참가자의 이길 확률 (최적: {prob2_wins.idxmax()})')
+plt.axvline(x=prob2_wins.idxmax(), color='r', linestyle=':')
+
+plt.legend()
+```
+
+## 연습문제
+
+### 9-6
+
+**열차 도착 시간에 대한 분포(z)**
+
+```{python}
+observed_gap_times = [
+    428.0, 705.0, 407.0, 465.0, 433.0, 425.0, 204.0, 506.0, 143.0, 351.0, 
+    450.0, 598.0, 464.0, 749.0, 341.0, 586.0, 754.0, 256.0, 378.0, 435.0, 
+    176.0, 405.0, 360.0, 519.0, 648.0, 374.0, 483.0, 537.0, 578.0, 534.0, 
+    577.0, 619.0, 538.0, 331.0, 186.0, 629.0, 193.0, 360.0, 660.0, 484.0, 
+    512.0, 315.0, 457.0, 404.0, 740.0, 388.0, 357.0, 485.0, 567.0, 160.0, 
+    428.0, 387.0, 901.0, 187.0, 622.0, 616.0, 585.0, 474.0, 442.0, 499.0, 
+    437.0, 620.0, 351.0, 286.0, 373.0, 232.0, 393.0, 745.0, 636.0, 758.0]
+zs = np.array(observed_gap_times) / 60
+qs = np.linspace(0, 20, 101)
+pmf_z = kde_from_sample(zs, qs)
+
+likelihood = pmf_z.qs
+posterior_z = pmf_z * likelihood
+posterior_z.normalize()
+
+pmf_z.plot(label=f'사전분포 (평균: {pmf_z.mean():.2f})')
+plt.axvline(x=pmf_z.mean(), color='b', linestyle=':')
+
+posterior_z.plot(label=f'사후분포 (평균: {posterior_z.mean():.2f})')
+plt.axvline(x=posterior_z.mean(), color='r', linestyle=':')
+plt.legend()
+plt.title('열차 도착 시간 간격')
+plt.xlabel('시간')
+plt.ylabel('PMF')
+```
+
+- 내가 관찰하는 열차 지연 시간은 실제 열차 지연시간보다 더 길다.
+- 예를들어 5분 간격의 길이와 15분 간격의 길이가 있다면, 더 긴 간격의 중간에 내가 도착할 확률이 더 높기 때문
+- 그래서 사후분포가 오른쪽으로 이동함. (신기하네)
+
+**내가 도착했을 때 이미 지난 시간에 대한 분포(x)**
+
+```{python}
+def make_mixture(pmf, pmf_seq):
+    df = pd.DataFrame(pmf_seq).fillna(0).transpose()
+    df *= np.array(pmf)
+    total = df.sum(axis=1)
+    return Pmf(total)
+
+def make_elapsed_dist(gap, qs):
+    qs = qs[qs <= gap]
+    n = len(qs)
+    return Pmf(1/n, qs)
+
+qs = posterior_z.qs
+pmf_seq = [make_elapsed_dist(gap, qs) for gap in qs]
+pmf_x = make_mixture(posterior_z, pmf_seq)
+```
+
+- z의 각 간격별 지난 시간을 균등분포로 지정
+
+```{python}
+from scipy.stats import poisson
+
+lam = 2
+num_passengers = 10
+likelihood = poisson(lam * pmf_x.qs).pmf(num_passengers)
+posterior_x = pmf_x * likelihood
+posterior_x.normalize()
+pmf_x.plot(label='사전분포', color='C1')
+posterior_x.plot(label='사후분포', color='C2')
+plt.legend()
+plt.title('10명이 기다리고 있는것을 관찰한 이전과 이후 분포')
+```
+
+- 일반적으로 분당 2명의 승객이 기다림. 가능도는 포아송 분포를 따름.
+- 10명이 기다리고 있는것을 관찰했을 때의 사후분포를 구해준다.
+
+**다음 열차 도착까지의 남은 시간에 대한 분포**
+
+```{python}
+posterior_y = Pmf.sub_dist(posterior_z, posterior_x)
+nonneg = (posterior_y.qs >= 0)
+posterior_y = Pmf(posterior_y[nonneg])
+posterior_y.normalize()
+
+posterior_x.make_cdf().plot(label='x의 사후분포', color='C2')
+posterior_y.make_cdf().plot(label='y의 사후분포', color='C3')
+posterior_z.make_cdf().plot(label='z의 사후분포', color='C4')
+plt.legend()
+```
+
+**결정 분석**
+
+```{python}
+sample = posterior_z.sample(260)
+delays = [30, 40, 50]
+augmented_sample = np.append(sample, delays)
+
+qs = np.linspace(0, 60, 101)
+augmented_posterior_z = kde_from_sample(augmented_sample, qs)
+augmented_posterior_z.plot(label='보강된 z의 사후분포', color='C4')
+plt.legend()
+```
+
+- 이전 데이터에서는 긴 지연시간에 대한 데이터가 없기 때문에 sampling을 통해 임의로 만들어줌
+
+```{python}
+qs = augmented_posterior_z.qs
+pmf_seq = [make_elapsed_dist(gap, qs) for gap in qs]
+pmf_x = make_mixture(augmented_posterior_z, pmf_seq)
+lam = 2
+def compute_posterior_y(num_passengers):
+    likelihood = poisson(lam * qs).pmf(num_passengers)
+    posterior_x = pmf_x * likelihood
+    posterior_x.normalize()
+    posterior_y = Pmf.sub_dist(augmented_posterior_z, posterior_x)
+    nonneg = (posterior_y.qs >= 0)
+    posterior_y = Pmf(posterior_y[nonneg])
+    posterior_y.normalize()
+    return posterior_y
+
+nums = np.arange(0, 37, 3)
+posteriors = [compute_posterior_y(num) for num in nums]
+mean_wait = [posterior_y.mean()
+             for posterior_y in posteriors]
+plt.plot(nums, mean_wait)
+plt.title('승객 수에 따른 예상 대기 시간')
+plt.xlabel('승객 수')
+plt.ylabel('예상 다음 도착 시간')
+```
+
+```{python}
+prob_late = [1 - posterior_y.make_cdf()(15) 
+             for posterior_y in posteriors]
+plt.plot(nums, prob_late)
+plt.xlabel('승객 수')
+plt.ylabel('늦을 확률')
+plt.title('승객 수에 따른 늦을 확률')
+```
+
+- lam이 만약 알려져 있지 않을 경우, lam에 대해서도 분포를 계산해야함 (쉽지 않네)
+
+### 9-7
+
+```{python}
+def print_cost(printed):
+    if printed < 100:
+        return printed * 5
+    else:
+        return printed * 4.5
+
+def total_income(printed, orders):
+    sold = min(printed, np.sum(orders))
+    return sold * 10
+
+def inventory_cost(printed, orders):
+    excess = printed - np.sum(orders)
+    if excess > 0:
+        return excess * 2
+    else:
+        return 0
+
+def out_of_stock_cost(printed, orders):
+    weeks = len(orders)
+    total_orders = np.cumsum(orders)
+    for i, total in enumerate(total_orders):
+        if total > printed:
+            return (weeks-i) * 50
+    return 0
+
+def compute_profit(printed, orders):
+    return (total_income(printed, orders) -
+            print_cost(printed)-
+            out_of_stock_cost(printed, orders) -
+            inventory_cost(printed, orders))
+```
+
+```{python}
+from scipy.stats import gamma
+
+alpha = 9
+qs = np.linspace(0, 25, 101)
+ps = gamma.pdf(qs, alpha)
+pmf = Pmf(ps, qs)
+pmf.normalize()
+pmf.mean()
+```
+
+```{python}
+rates = pmf.choice(1000)
+np.mean(rates)
+```
+
+```{python}
+order_array = np.random.poisson(rates, size=(8, 1000)).transpose()
+order_array[:5, :]
+```
+
+```{python}
+def compute_expected_profits(printed, order_array):
+    profits = [compute_profit(printed, orders)
+               for orders in order_array]
+    return np.mean(profits)
+```
+
+```{python}
+compute_expected_profits(70, order_array)
+compute_expected_profits(80, order_array)
+compute_expected_profits(90, order_array)
+```
+
+```{python}
+printed_array = np.arange(70, 110)
+t = [compute_expected_profits(printed, order_array)
+                    for printed in printed_array]
+expected_profits = pd.Series(t, printed_array)
+```
+
+```{python}
+expected_profits.plot(label='')
+```

@@ -1,0 +1,231 @@
+---
+title: "복잡한 시계열 모델"
+date: 2025-07-11
+categories: ["확률 통계", "시계열 분석"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+
+```{python}
+from statsmodels.tsa.arima_process import ArmaProcess
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+
+ar1 = np.array([1, -0.33])
+ma1 = np.array([1, 0.9])
+
+ARMA_1_1 = ArmaProcess(ar1, ma1).generate_sample(nsample=1000)
+```
+
+```{python}
+from statsmodels.tsa.stattools import adfuller
+
+ADF_result = adfuller(ARMA_1_1)
+
+ADF_result[0], ADF_result[1]
+```
+
+```{python}
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+
+plot_acf(ARMA_1_1, lags=20)
+plt.show()
+```
+
+- ARMA(1, 1) 모델인데 지연이 2.
+- ACF로는 차수를 추론할 수 없음.
+
+```{python}
+plot_pacf(ARMA_1_1, lags=20)
+plt.show()
+```
+
+- 마찬가지로 차수를 추론할 수 없음.
+
+## 일반적 모델링 절차
+
+- $AIC = 2k - 2ln(\hat{L})$
+- k = p + q
+- L = max(likelihood)
+
+```{python}
+from itertools import product
+
+ps = range(0, 4, 1)
+qs = range(0, 4, 1)
+
+order_list = list(product(ps, qs))
+```
+
+```{python}
+from typing import Union
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+
+def optimize_ARMA(endog: Union[pd.Series, list], order_list: list) -> pd.DataFrame:
+    results = []
+    for order in order_list:
+        try:
+            model = SARIMAX(endog, order=(order[0], 0, order[1]), simple_differencing=False).fit(disp=False)
+        except:
+            continue
+        aic = model.aic
+        results.append([order, aic])
+    result_df = pd.DataFrame(results)
+    result_df.columns = ['(p, q)', 'AIC']
+    result_df = result_df.sort_values(by="AIC").reset_index(drop=True)
+
+    return result_df
+
+result_df = optimize_ARMA(ARMA_1_1, order_list)
+result_df
+```
+
+### 잔차 분석
+
+```{python}
+model = SARIMAX(ARMA_1_1, order=(1, 0, 1), simple_differencing=False)
+model_fit = model.fit(disp=False)
+
+model_fit.plot_diagnostics(figsize=(12, 8))
+plt.show()
+```
+
+
+```{python}
+from statsmodels.stats.diagnostic import acorr_ljungbox
+
+tr = acorr_ljungbox(model_fit.resid, np.arange(1, 11))
+print(tr)
+```
+
+## 예시 - 대역폭 사용량 예측
+
+```{python}
+df = pd.read_csv('_data/bandwidth.csv')
+sns.lineplot(data=df, x=df.index, y='hourly_bandwidth')
+
+plt.xlabel('시간')
+plt.ylabel('시간당 대역폭 사용량(MBps)')
+plt.xticks(
+    np.arange(0, 10000, 730), 
+    ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', '2020', 'Feb'])
+plt.show()
+```
+
+```{python}
+ADF_result = adfuller(df['hourly_bandwidth'])
+
+ADF_result[0], ADF_result[1]
+```
+
+```{python}
+bandwidth_diff = np.diff(df['hourly_bandwidth'], n=1)
+
+ADF_result = adfuller(bandwidth_diff)
+
+ADF_result[0], ADF_result[1]
+```
+
+```{python}
+df_diff = pd.DataFrame({'bandwidth_diff': bandwidth_diff})
+train = df_diff.iloc[:-168]
+test = df_diff.iloc[-168:]
+```
+
+```{python}
+ps = range(0, 4, 1)
+qs = range(0, 4, 1)
+order_list = list(product(ps, qs))
+result_df = optimize_ARMA(train['bandwidth_diff'], order_list)
+result_df
+```
+
+```{python}
+model = SARIMAX(train['bandwidth_diff'], order=(2, 0, 2), simple_differencing=False)
+model_fit = model.fit(disp=False)
+model_fit.plot_diagnostics(figsize=(12, 8))
+```
+
+```{python}
+acorr_ljungbox(model_fit.resid, np.arange(1, 11))
+```
+
+```{python}
+def rolling_forecast(df: pd.DataFrame, train_len: int, horizon: int, window: int, method: str) -> list:
+    total_len = train_len + horizon
+    if method == 'mean':
+        pred_mean = []
+        for i in range(train_len, total_len, window):
+            mean = np.mean(df[:i].values)
+            pred_mean.extend(mean for _ in range(window))
+        return pred_mean
+    if method == 'last':
+        pred_last_value = []
+        for i in range(train_len, total_len, window):
+            last_value = df.iloc[i-1].values[0]
+            pred_last_value.extend(last_value for _ in range(window))
+        return pred_last_value
+    if method == 'ARMA':
+        pred_MA = []
+        for i in range(train_len, total_len, window):
+            model = SARIMAX(df[:i], order=(2,0,2))
+            res = model.fit(disp=False)
+            predictions = res.get_prediction(0, i + window - 1)
+            oos_pred = predictions.predicted_mean.iloc[-window:]
+            pred_MA.extend(oos_pred)
+        return pred_MA
+
+pred_df = test.copy()
+TRAIN_LEN = len(train)
+HORIZON = len(test)
+WINDOW = 2
+
+pred_mean = rolling_forecast(df_diff, TRAIN_LEN, HORIZON, WINDOW, 'mean')
+pred_last = rolling_forecast(df_diff, TRAIN_LEN, HORIZON, WINDOW, 'last')
+pred_ARMA = rolling_forecast(df_diff, TRAIN_LEN, HORIZON, WINDOW, 'ARMA')
+
+pred_df['pred_mean'] = pred_mean
+pred_df['pred_last'] = pred_last
+pred_df['pred_ARMA'] = pred_ARMA
+
+sns.lineplot(data=pred_df, x=pred_df.index, y='bandwidth_diff', label='실제값')
+sns.lineplot(data=pred_df, x=pred_df.index, y='pred_mean', label='평균 예측')
+sns.lineplot(data=pred_df, x=pred_df.index, y='pred_last', label='마지막 값 예측')
+sns.lineplot(data=pred_df, x=pred_df.index, y='pred_ARMA', label='ARMA(2, 2) 예측')
+plt.xlabel('시간')
+plt.ylabel('시간당 대역폭 사용량(MBps)')
+plt.xticks(
+    [9802, 9850, 9898, 9946, 9994],
+    ['2020-02-13', '2020-02-15', '2020-02-17', '2020-02-19', '2020-02-21'])
+plt.xlim(9800, 9999)
+plt.show()
+```
+
+```{python}
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+
+mse_mean = mean_squared_error(pred_df['bandwidth_diff'], pred_df['pred_mean'])
+mse_last = mean_squared_error(pred_df['bandwidth_diff'], pred_df['pred_last'])
+mse_ARMA = mean_squared_error(pred_df['bandwidth_diff'], pred_df['pred_ARMA'])
+mse_mean, mse_last, mse_ARMA
+```
+
+### 역변환
+
+```{python}
+df['pred_bandwidth'] = pd.Series()
+df['pred_bandwidth'].iloc[9832:] = df['hourly_bandwidth'].iloc[9832] + pred_df['pred_ARMA'].cumsum()
+
+sns.lineplot(data=df, x=df.index, y='hourly_bandwidth', label='실제 값')
+sns.lineplot(data=df, x=df.index, y='pred_bandwidth', label='ARMA(2, 2) 예측')
+plt.xticks(
+    [9802, 9850, 9898, 9946, 9994],
+    ['2020-02-13', '2020-02-15', '2020-02-17', '2020-02-19', '2020-02-21'])
+plt.xlim(9800, 9999)
+plt.show()
+```

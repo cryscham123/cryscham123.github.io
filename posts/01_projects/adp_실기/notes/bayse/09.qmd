@@ -1,0 +1,45 @@
+---
+title: "검정"
+date: 2025-07-06
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 동전
+
+```{python}
+import numpy as np
+from empiricaldist import Pmf
+from scipy.stats import binom
+
+k, n = 140, 250
+like_fair = binom.pmf(k, n, 0.5)
+```
+
+```{python}
+ramp_up = np.arange(50)
+ramp_down = np.arange(50, -1, -1)
+a = np.append(ramp_up, ramp_down)
+
+xs = np.linspace(0, 1, 101)
+triangle = Pmf(a, xs)
+triangle.normalize()
+biased_triangle = triangle.copy()
+biased_triangle[0.5] = 0
+biased_triangle.normalize()
+
+likelihood = binom.pmf(k, n, xs)
+like_triangle = np.sum(biased_triangle * likelihood)
+```
+
+```{python}
+k = like_fair / like_triangle
+k, k / (k + 1)
+```
+
+- 250번 중 140번이 앞면이 나왔는데도 여전히 공정할 확률이 높다.
+
+## 연습문제
+
+### 10-2

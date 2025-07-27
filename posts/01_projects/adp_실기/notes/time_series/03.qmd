@@ -1,0 +1,120 @@
+---
+title: "이동평균과정 모델링"
+date: 2025-07-11
+categories: ["확률 통계", "시계열 분석"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+- 이동편균 모델: 현잿 값이 현재와 과거 오차에 선형적으로 비례한다.
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.rcParams['font.family'] = 'Noto Sans KR'
+
+df = pd.read_csv('_data/widget.csv')
+sns.lineplot(data=df, x=df.index, y='widget_sales')
+plt.xticks(
+    [0, 30, 57, 87, 116, 145, 175, 204, 234, 264, 293, 323, 352, 382, 409, 439, 468, 498], 
+    ['Jan 2019', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan 2020', 'Feb', 'Mar', 'Apr', 'May', 'Jun'])
+plt.show()
+```
+
+```{python}
+from statsmodels.tsa.stattools import adfuller
+
+ADF_result = adfuller(df['widget_sales'])
+
+ADF_result[0], ADF_result[1]
+```
+
+- 정상 시계열이 아님. 차분 진행
+
+```{python}
+diff_df = np.diff(df['widget_sales'], n=1)
+
+ADF_result = adfuller(diff_df)
+ADF_result[0], ADF_result[1]
+```
+
+```{python}
+from statsmodels.graphics.tsaplots import plot_acf
+
+plot_acf(diff_df, lags=30)
+plt.show()
+```
+
+- 지연 2 이후 유의하지 않음.
+- MA(2) 진행
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+diff_df = pd.DataFrame({'widget_sales_diff': diff_df})
+train, test = train_test_split(diff_df, test_size=0.1)
+
+```
+
+- MA(q)는 q 크기까지만 예측 가능.
+- 회귀적으로 예측을 진행해야함
+
+```{python}
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+
+def rolling_forecast(df: pd.DataFrame, train_len: int, horizon: int, window: int, method: str) -> list:
+    total_len = train_len + horizon
+    if method == 'mean':
+        pred_mean = []
+        for i in range(train_len, total_len, window):
+            mean = np.mean(df[:i].values)
+            pred_mean.extend(mean for _ in range(window))
+        return pred_mean
+    if method == 'last':
+        pred_last_value = []
+        for i in range(train_len, total_len, window):
+            last_value = df.iloc[i-1].values[0]
+            pred_last_value.extend(last_value for _ in range(window))
+        return pred_last_value
+    if method == 'MA':
+        pred_MA = []
+        for i in range(train_len, total_len, window):
+            model = SARIMAX(df[:i], order=(0,0,2))
+            res = model.fit(disp=False)
+            predictions = res.get_prediction(0, i + window - 1)
+            oos_pred = predictions.predicted_mean.iloc[-window:]
+            pred_MA.extend(oos_pred)
+        return pred_MA
+```
+
+```{python}
+pred_df = test.copy()
+TRAIN_LEN = len(train)
+HORIZON = len(test)
+WINDOW = 2
+
+pred_mean = rolling_forecast(diff_df, TRAIN_LEN, HORIZON, WINDOW, 'mean')
+pred_last = rolling_forecast(diff_df, TRAIN_LEN, HORIZON, WINDOW, 'last')
+pred_MA = rolling_forecast(diff_df, TRAIN_LEN, HORIZON, WINDOW, 'MA')
+
+pred_df['pred_mean'] = pred_mean
+pred_df['pred_last'] = pred_last
+pred_df['pred_MA'] = pred_MA
+```
+
+```{python}
+df['pred_widget_sales'] = pd.Series()
+df['pred_widget_sales'].iloc[450:] = df['widget_sales'].iloc[450] + pred_df['pred_MA'].cumsum()
+```
+
+```{python}
+sns.lineplot(data=df, x=df.index, y='widget_sales', label='실제 값')
+sns.lineplot(data=df, x=df.index, y='pred_widget_sales', label='MA(2)')
+plt.xticks(
+    [409, 439, 468, 498], 
+    ['Mar', 'Apr', 'May', 'Jun'])
+plt.show()
+```
