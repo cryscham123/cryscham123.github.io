@@ -1,0 +1,61 @@
+---
+title: "텍스트 분석 - 20 뉴스그룹 분류"
+date: 2025-07-30
+categories: ["머신 러닝"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 전처리
+
+```{python}
+from sklearn.datasets import fetch_20newsgroups
+
+train_news = fetch_20newsgroups(subset='train', remove=('headers', 'footers', 'quates'))
+X_train = train_news.data
+y_train = train_news.target
+
+test_news = fetch_20newsgroups(subset='test', remove=('headers', 'footers', 'quates'))
+X_test = test_news.data
+y_test = test_news.target
+```
+
+## 학습
+
+### Count Vector
+
+```{python}
+from sklearn.feature_extraction.text import CountVectorizer
+
+cnt_vect = CountVectorizer()
+X_train_cnt_vect = cnt_vect.fit_transform(X_train)
+X_test_cnt_vect = cnt_vect.transform(X_test)
+```
+
+```{python}
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+import warnings
+
+warnings.filterwarnings('ignore')
+
+lr_clf = LogisticRegression(solver='liblinear')
+lr_clf.fit(X_train_cnt_vect, y_train)
+pred = lr_clf.predict(X_test_cnt_vect)
+print(f'{accuracy_score(y_test, pred):.3f} ')
+```
+
+### TF-IDF
+
+```{python}
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+tfidf_vect = TfidfVectorizer()
+X_train_tfidf_vect = tfidf_vect.fit_transform(X_train)
+X_test_tfidf_vect = tfidf_vect.transform(X_test)
+
+lr_clf = LogisticRegression(solver='liblinear')
+lr_clf.fit(X_train_tfidf_vect, y_train)
+pred = lr_clf.predict(X_test_tfidf_vect)
+print(f'{accuracy_score(y_test, pred):.3f} ')
+```

@@ -1,0 +1,226 @@
+---
+title: "신경망 학습"
+date: 2025-07-30
+categories: ["deep learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+- 훈련 데이터로 학습을 해서 매개변수의 최적값을 자동으로 휙득하는 방법
+- 이때 기준은 손실 함수이다.
+    - 그냥 정확도를 기준으로 하면 연속된 값이 안나와서 최적화가 안됨.
+
+## 손실함수
+
+### 오차 제곱합
+
+- $E = \frac{1}{2} \sum_{i=1}^{n} (y_i - t_i)^2$
+- $y_i$: 예측값
+- $t_i$: 정답값
+- $\frac{1}{2}$는 미분을 쉽게 하기 위해서 곱해주는 상수
+
+```{python}
+import numpy as np
+
+def sum_squared_error(y, t):
+    return 0.5 * np.sum((y - t) ** 2)
+```
+
+### 교차 엔트로피
+
+- $E = -\sum_{i=1}^{n} t_i \log(y_i)$
+- 일반적으로 정답값인 $t_i$는 0 또는 1이기 때문에(one hot encoding), $t_i = 1$인 경우에만 계산된다.
+- $y_i$가 1에 가까울수록 손실이 작아진다.
+
+```{python}
+def cross_entropy_error(y, t):
+    delta = 1e-7  # log(0) 방지
+    return -np.sum(t * np.log(y + delta))
+```
+
+## 미니배치 학습
+
+- 모든 데이터를 한 번에 학습하는 것이 아니라, 일부 데이터만을 사용하여 학습하는 방법
+
+```{python}
+import numpy as np
+from dl_dataset.mnist import load_mnist
+
+(x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
+```
+
+```{python}
+train_size = x_train.shape[0]
+batch_size = 10
+batch_mask = np.random.choice(train_size, batch_size)
+x_batch = x_train[batch_mask]
+t_batch = t_train[batch_mask]
+```
+
+```{python filename="정답이 정수인 경우"}
+def cross_entropy_error(y, t):
+    if y.ndim == 1:
+        t = t.reshape(1, t.size)
+        y = y.reshape(1, y.size)
+    batch_size = y.shape[0]
+    return -np.sum(np.log(y[np.arange(batch_size), t] + 1e-7)) / batch_size
+```
+
+```{python filename="정답이 one hot encoding인 경우"}
+def cross_entropy_error(y, t):
+    if y.ndim == 1:
+        t = t.reshape(1, t.size)
+        y = y.reshape(1, y.size)
+    batch_size = y.shape[0]
+    return -np.sum(t * np.log(y + 1e-7)) / batch_size
+```
+
+## 경사법
+
+- 기울기가 가리키는 쪽은 각 장소에서 함수의 출력 값을 가장 크게 줄이는 방향
+- 기울어진 방향이 반드시 최솟값은 아니지만, 그 방향으로 가야 함수의 값을 줄일 수 있다.
+
+
+```{python}
+import numpy as np
+def numerical_gradient(f, x):
+    h = 1e-4
+    grad = np.zeros_like(x)
+
+    for idx in range(x.size):
+        tmp_val = x[idx]
+        x[idx] = tmp_val + h
+        fxh1 = f(x)
+
+        x[idx] = tmp_val - h
+        fxh2 = f(x)
+
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
+        x[idx] = tmp_val
+
+    return grad
+```
+
+```{python}
+def gradient_descent(f, init_x, lr=0.01, step_num=100):
+    x = init_x.copy()
+
+    for _ in range(step_num):
+        grad = numerical_gradient(f, x)
+        x -= lr * grad
+    return x
+```
+
+```{python}
+from dl_common.functions import softmax, cross_entropy_error
+from dl_common.gradient import numerical_gradient
+
+class simpleNet:
+    def __init__(self):
+        self.W = np.random.randn(2, 3)
+
+    def predict(self, x):
+        return np.dot(x, self.W)
+
+    def loss(self, x, t):
+        z = self.predict(x)
+        y = softmax(z)
+        return cross_entropy_error(y, t)
+```
+
+```{python}
+net = simpleNet()
+x = np.array([0.6, 0.9])
+p = net.predict(x)
+np.argmax(p)
+```
+
+```{python}
+t = np.array([0, 0, 1])
+net.loss(x, t)
+```
+
+```{python}
+f = lambda w: net.loss(x, t)
+
+dW = numerical_gradient(f, net.W)
+print(dW)
+```
+
+## 학습 알고리즘 구현
+
+```{python}
+from dl_common.functions import *
+from dl_common.gradient import numerical_gradient
+
+class TwoLayerNet:
+    def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
+        self.params = {}
+        self.params['W1'] = weight_init_std * np.random.randn(input_size, hidden_size)
+        self.params['b1'] = np.zeros(hidden_size)
+        self.params['W2'] = np.random.randn(hidden_size, output_size)
+        self.params['b2'] = np.zeros(output_size)
+
+    def predict(self, x):
+        W1, b1 = self.params['W1'], self.params['b1']
+        W2, b2 = self.params['W2'], self.params['b2']
+        a1 = np.dot(x, W1) + b1
+        z1 = sigmoid(a1)
+        a2 = np.dot(z1, W2) + b2
+        y = softmax(a2)
+        return y
+
+    def loss(self, x, t):
+        y = self.predict(x)
+        return cross_entropy_error(y, t)
+
+    def accuracy(self, x, t):
+        y = self.predict(x)
+        if t.ndim != 1:  # one-hot encoding
+            t = np.argmax(t, axis=1)
+        return np.sum(np.argmax(y, axis=1) == t) / float(x.shape[0])
+
+    def numerical_gradient(self, x, t):
+        loss_w = lambda w: self.loss(x, t)
+        grads = {}
+        grads['W1'] = numerical_gradient(loss_w, self.params['W1'])
+        grads['b1'] = numerical_gradient(loss_w, self.params['b1'])
+        grads['W2'] = numerical_gradient(loss_w, self.params['W2'])
+        grads['b2'] = numerical_gradient(loss_w, self.params['b2'])
+        return grads
+```
+
+```{python}
+#| eval: false
+
+from dl_dataset.mnist import load_mnist
+
+(x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
+
+train_loss_list = []
+train_acc_list = []
+test_acc_list = []
+
+iters_num = 10000
+train_size = x_train.shape[0]
+batch_size = 100
+learning_rate = 0.1
+network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
+iter_per_epoch = max(train_size / batch_size, 1)
+
+for i in range(iters_num):
+    batch_mask = np.random.choice(train_size, batch_size)
+    x_batch = x_train[batch_mask]
+    t_batch = t_train[batch_mask]
+    grads = network.numerical_gradient(x_batch, t_batch)
+    for key in ('W1', 'b1', 'W2', 'b2'):
+        network.params[key] -= learning_rate * grads[key]
+    loss = network.loss(x_batch, t_batch)
+    train_loss_list.append(loss)
+
+    if i % iter_per_epoch == 0:
+        train_acc = network.accuracy(x_train, t_train)
+        test_acc = network.accuracy(x_test, t_test)
+        train_acc_list.append(train_acc)
+        test_acc_list.append(test_acc)
+```
