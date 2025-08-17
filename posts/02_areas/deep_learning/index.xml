@@ -15,7 +15,1182 @@
 <link>https://cryscham123.github.io/posts/02_areas/deep_learning/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Thu, 31 Jul 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 09 Aug 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>자연어와 단어의 분산 표현</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/06.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="자연어-처리nlp" class="level2">
+<h2 class="anchored" data-anchor-id="자연어-처리nlp">자연어 처리(NLP)</h2>
+<ul>
+<li>우리 말을 컴퓨터에게 이해시키기 위한 기술
+<ul>
+<li>기계 번역, 검색, 등</li>
+</ul></li>
+</ul>
+</section>
+<section id="시소러스" class="level2">
+<h2 class="anchored" data-anchor-id="시소러스">시소러스</h2>
+<ul>
+<li>사람이 직접 레이블링 한 유의어 사전</li>
+<li>대표적으로 WordNet이 있다.</li>
+</ul>
+<section id="한계" class="level3">
+<h3 class="anchored" data-anchor-id="한계">한계</h3>
+<ul>
+<li>시대 변화에 따라 단어의 의미가 바뀌는 경우가 있다.</li>
+<li>사람 쓰는 비용이 크다.</li>
+<li>단어의 미묘한 차이를 표현할 수 없다.</li>
+</ul>
+</section>
+</section>
+<section id="통계-기반-기법" class="level2">
+<h2 class="anchored" data-anchor-id="통계-기반-기법">통계 기반 기법</h2>
+<ul>
+<li>말뭉치: 언어의 실제 사용 예시를 모은 텍스트 데이터</li>
+<li>위키백과, 뉴스 기사, 블로그 글 등</li>
+</ul>
+<div id="13993a04" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> preprocess(text):</span>
+<span id="cb1-4">    text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> text.lower()</span>
+<span id="cb1-5">    text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> text.replace(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"."</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" ."</span>)</span>
+<span id="cb1-6">    words <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> text.split(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">' '</span>)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">    word_to_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb1-9">    id_to_word <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb1-10"></span>
+<span id="cb1-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> word <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> words:</span>
+<span id="cb1-12">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> word <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> word_to_id:</span>
+<span id="cb1-13">            new_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(word_to_id)</span>
+<span id="cb1-14">            word_to_id[word] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> new_id</span>
+<span id="cb1-15">            id_to_word[new_id] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> word</span>
+<span id="cb1-16">    corpus <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([word_to_id[w] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> w <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> words])</span>
+<span id="cb1-17">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> corpus, word_to_id, id_to_word</span></code></pre></div>
+</div>
+<div id="556b4d68" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The quick brown fox jumps over the lazy dog."</span></span>
+<span id="cb2-2">corpus, word_to_id, id_to_word <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> preprocess(text)</span></code></pre></div>
+</div>
+<section id="단어의-분산-표현" class="level3">
+<h3 class="anchored" data-anchor-id="단어의-분산-표현">단어의 분산 표현</h3>
+<ul>
+<li>단어의 의미를 벡터로 표현하는 방법</li>
+<li>분포 가설: 단어의 의미는 그 단어의 주변 단어들(맥락)에 의해 결정된다.</li>
+</ul>
+<div id="6c9272e7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> create_co_matrix(corpus, vocab_size, window_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb3-2">    co_matrix <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros((vocab_size, vocab_size), dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.int32)</span>
+<span id="cb3-3">    corpus_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(corpus)</span>
+<span id="cb3-4"></span>
+<span id="cb3-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> idx, word_id <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(corpus):</span>
+<span id="cb3-6">        left <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, idx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> window_size)</span>
+<span id="cb3-7">        right <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(corpus_size, idx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> window_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb3-8">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(left, right):</span>
+<span id="cb3-9">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> idx:</span>
+<span id="cb3-10">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">continue</span></span>
+<span id="cb3-11">            co_matrix[word_id, corpus[i]] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb3-12">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> co_matrix</span></code></pre></div>
+</div>
+<div id="bc300a12" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> cos_similarity(x, y, eps<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-8</span>):</span>
+<span id="cb4-2">    nx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (np.sqrt(np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> eps)</span>
+<span id="cb4-3">    ny <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (np.sqrt(np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> eps)</span>
+<span id="cb4-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> np.dot(nx, ny)</span></code></pre></div>
+</div>
+<div id="c3f5b88e" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">vocab_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(word_to_id)</span>
+<span id="cb5-2">C <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> create_co_matrix(corpus, vocab_size, window_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb5-3"></span>
+<span id="cb5-4">C0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> C[word_to_id[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'the'</span>]]</span>
+<span id="cb5-5">C1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> C[word_to_id[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'dog'</span>]]</span>
+<span id="cb5-6">similarity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cos_similarity(C0, C1)</span>
+<span id="cb5-7">similarity</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>0.4082482852200891</code></pre>
+</div>
+</div>
+</section>
+<section id="유사-단어-랭킹" class="level3">
+<h3 class="anchored" data-anchor-id="유사-단어-랭킹">유사 단어 랭킹</h3>
+<div id="0d05ecfe" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> most_similar(query, word_to_id, id_to_word, C, top<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>):</span>
+<span id="cb7-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> query <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> word_to_id:</span>
+<span id="cb7-3">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>query<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">는 사전에 없습니다."</span>)</span>
+<span id="cb7-4">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb7-5"></span>
+<span id="cb7-6">    query_id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> word_to_id[query]</span>
+<span id="cb7-7">    query_vec <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> C[query_id]</span>
+<span id="cb7-8"></span>
+<span id="cb7-9">    vocab_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> C.shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb7-10">    similarity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros(vocab_size)</span>
+<span id="cb7-11"></span>
+<span id="cb7-12">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(vocab_size):</span>
+<span id="cb7-13">        similarity[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cos_similarity(query_vec, C[i])</span>
+<span id="cb7-14"></span>
+<span id="cb7-15">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 유사도 순으로 정렬</span></span>
+<span id="cb7-16">    count <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb7-17">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> similarity).argsort():</span>
+<span id="cb7-18">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> id_to_word[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> query:</span>
+<span id="cb7-19">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">continue</span></span>
+<span id="cb7-20">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>id_to_word[i]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>similarity[i]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb7-21">        count <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb7-22">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> count <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> top:</span>
+<span id="cb7-23">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span></span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="통계-기반-기법-개선" class="level2">
+<h2 class="anchored" data-anchor-id="통계-기반-기법-개선">통계 기반 기법 개선</h2>
+<section id="이전-방법의-한계" class="level3">
+<h3 class="anchored" data-anchor-id="이전-방법의-한계">이전 방법의 한계</h3>
+<ul>
+<li>단어의 의미를 벡터로 표현하는 방법이 단순히 주변 단어의 빈도수에 의존한다.
+<ul>
+<li>점별 상호정보량(PMI)</li>
+</ul></li>
+</ul>
+<div id="3ab18496" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> ppmi(C, eps<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-8</span>):</span>
+<span id="cb8-2">    M <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros_like(C, dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.float32)</span>
+<span id="cb8-3">    N <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(C)</span>
+<span id="cb8-4">    S <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(C, axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb8-5"></span>
+<span id="cb8-6">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(C.shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]):</span>
+<span id="cb8-7">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(C.shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]):</span>
+<span id="cb8-8">            pmi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.log2((C[i, j] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> N) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (S[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> S[j]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> eps)</span>
+<span id="cb8-9">            M[i, j] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, pmi)</span>
+<span id="cb8-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> M</span></code></pre></div>
+</div>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/06.html</guid>
+  <pubDate>Sat, 09 Aug 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>학습 관련 기술들</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/04.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="매개변수-갱신" class="level2">
+<h2 class="anchored" data-anchor-id="매개변수-갱신">매개변수 갱신</h2>
+<ul>
+<li>확률적 경사하강법은 매개변수를 찾는 과정이 비효율적이다.
+<ul>
+<li>비등방성 함수에서 탐색 경로가 비효율적임</li>
+</ul></li>
+</ul>
+<section id="모멘텀" class="level3">
+<h3 class="anchored" data-anchor-id="모멘텀">모멘텀</h3>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?v%20=%20%CE%B1v%20-%20%CE%B7%20%5Cfrac%7BdL%7D%7BdW%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?W%20=%20W%20+%20v"></li>
+</ul>
+<div id="81172277" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Momentum:</span>
+<span id="cb1-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>, momentum<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>):</span>
+<span id="cb1-3">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.lr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> lr</span>
+<span id="cb1-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.momentum <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> momentum</span>
+<span id="cb1-5">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb1-6"></span>
+<span id="cb1-7">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> update(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, params, grads):</span>
+<span id="cb1-8">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.v <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb1-9">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb1-10">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> key, val <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> params.items():</span>
+<span id="cb1-11">                <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.v[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros_like(val)</span>
+<span id="cb1-12">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> key <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> params.keys():</span>
+<span id="cb1-13">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.v[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.momentum <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.v[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.lr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> grads[key]</span>
+<span id="cb1-14">            params[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.v[key]</span></code></pre></div>
+</div>
+</section>
+<section id="adagrad" class="level3">
+<h3 class="anchored" data-anchor-id="adagrad">AdaGrad</h3>
+<ul>
+<li>각각의 매개변수에 대해 학습률을 점점 낮추는 방법</li>
+<li><img src="https://latex.codecogs.com/png.latex?h%20=%20h%20+%20%5Cfrac%7BdL%7D%7BdW%7D%20%E2%8A%99%20%5Cfrac%7BdL%7D%7BdW%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?W%20=%20W%20-%20%CE%B7%5Cfrac%7B1%7D%7B%5Csqrt%7Bh%7D%7D%5Cfrac%7BdL%7D%7BdW%7D"></li>
+</ul>
+<div id="1f8cd075" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> AdaGrad:</span>
+<span id="cb2-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>):</span>
+<span id="cb2-3">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.lr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> lr</span>
+<span id="cb2-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.h <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb2-5"></span>
+<span id="cb2-6">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> update(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, params, grads):</span>
+<span id="cb2-7">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.h <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb2-8">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.h <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb2-9">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> key, val <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> params.items():</span>
+<span id="cb2-10">                <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.h[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros_like(val)</span>
+<span id="cb2-11">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> key, <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> params.keys():</span>
+<span id="cb2-12">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.h[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> grads[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> grads[key]</span>
+<span id="cb2-13">            params[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.lr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> grads[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (np.sqrt(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.h[key]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-7</span>)</span></code></pre></div>
+</div>
+<ul>
+<li>하지만 시간이 지나면 결국 기울기가 0으로 되버림
+<ul>
+<li>이것을 개선한 기법: RMSProp</li>
+</ul></li>
+</ul>
+</section>
+<section id="adam" class="level3">
+<h3 class="anchored" data-anchor-id="adam">Adam</h3>
+</section>
+</section>
+<section id="가중치의-초깃값" class="level2">
+<h2 class="anchored" data-anchor-id="가중치의-초깃값">가중치의 초깃값</h2>
+<ul>
+<li>초깃값은 무작위로 설정되어야 한다.</li>
+</ul>
+<section id="xavier-초깃값" class="level3">
+<h3 class="anchored" data-anchor-id="xavier-초깃값">Xavier 초깃값</h3>
+<ul>
+<li>표준편차가 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B%5Csqrt%7Bn%7D%7D">인 초깃값</li>
+<li>sigmoid, tanh에서 사용됨.</li>
+</ul>
+</section>
+<section id="he-초깃값" class="level3">
+<h3 class="anchored" data-anchor-id="he-초깃값">He 초깃값</h3>
+<ul>
+<li>표준편차가 <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B2%7D%7B%5Csqrt%7Bn%7D%7D">인 초깃값</li>
+<li>ReLU에 특화됨</li>
+</ul>
+</section>
+</section>
+<section id="배치-정규화" class="level2">
+<h2 class="anchored" data-anchor-id="배치-정규화">배치 정규화</h2>
+<ul>
+<li>각 층의 활성화를 적당히 퍼뜨리도록 강제 하는 것</li>
+<li>학습속도 개선, 초깃값 의존도 감소, 과대적합 억제의 장점이 있음</li>
+<li>활성화 함수 앞이나 뒤에서 standardization scaling을 진행</li>
+<li>이후 <img src="https://latex.codecogs.com/png.latex?y_i%20=%20%5Cgamma%20%5Chat%7Bx%7D_i%20+%20%CE%B2">의 수식으로, 두 파라미터를 적합한 값으로 학습해 나감</li>
+</ul>
+</section>
+<section id="과대적합-방지" class="level2">
+<h2 class="anchored" data-anchor-id="과대적합-방지">과대적합 방지</h2>
+<section id="가중치-감소" class="level3">
+<h3 class="anchored" data-anchor-id="가중치-감소">가중치 감소</h3>
+<ul>
+<li>손실함수에 l2(<img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B2%7D%CE%BB%20W%5E2">) l1 norm을 더함</li>
+</ul>
+</section>
+<section id="드롭아웃" class="level3">
+<h3 class="anchored" data-anchor-id="드롭아웃">드롭아웃</h3>
+<ul>
+<li>신경망 모델이 복잡해지면 가중치 감소만으로 대응하기 어려움</li>
+<li>훈련 때 은닉층의 뉴런을 무작위로 골라 삭제한다.</li>
+<li>시험 때 각 뉴련의 출력에 훈련 때 삭제 안 한 비율을 곱한다.</li>
+</ul>
+<div id="35abcdd3" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Dropout:</span>
+<span id="cb3-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, dropout_ratio<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>):</span>
+<span id="cb3-3">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dropout_ratio <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dropout_ratio</span>
+<span id="cb3-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.mask <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb3-5"></span>
+<span id="cb3-6">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x, train_flg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>):</span>
+<span id="cb3-7">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> train_flg:</span>
+<span id="cb3-8">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.mask <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.rand(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x.shape) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dropout_ratio</span>
+<span id="cb3-9">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.mask</span>
+<span id="cb3-10">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dropout_ratio)</span>
+<span id="cb3-11"></span>
+<span id="cb3-12">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> backward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, dout):</span>
+<span id="cb3-13">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.mask</span></code></pre></div>
+</div>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/04.html</guid>
+  <pubDate>Tue, 05 Aug 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>합성곱 신경망</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/05.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="합성곱-계층" class="level2">
+<h2 class="anchored" data-anchor-id="합성곱-계층">합성곱 계층</h2>
+<section id="완전연결-계층의-문제점" class="level3">
+<h3 class="anchored" data-anchor-id="완전연결-계층의-문제점">완전연결 계층의 문제점</h3>
+<ul>
+<li>데이터의 형상이 무시된다: n차원으로 된 데이터도, 1차원 데이터로 평탄화해서 입력해야 한다.</li>
+</ul>
+</section>
+<section id="연산" class="level3">
+<h3 class="anchored" data-anchor-id="연산">연산</h3>
+<ul>
+<li>입력 데이터 * 필터(커널) + 편향
+<ul>
+<li>필터가 완전연결 신경망에서의 가중치 역할을 함.</li>
+<li>단일 곱셈 누산: 이 연산을 윈도우를 일정 간격으로 이동해 가며 입력 데이터에 적용함.</li>
+<li>3차원 이미지(R, G, B)의 경우, 입력과 필터의 채널 크기가 같아야 한다.</li>
+</ul></li>
+<li>패딩: 입력 데이터 주변을 특정 값으로 채움. 크기가 커지면 출력 크기가 커짐.</li>
+<li>스트라이드: 필터를 정용하는 위치의 간격. 크기가 커지면 출력 크기가 작아짐.</li>
+<li>출력 크기
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?OH%20=%20%5Cfrac%7BH%20+%202P%20-%20FH%7D%7BS%7D%20+%201"></li>
+<li><img src="https://latex.codecogs.com/png.latex?OW%20=%20%5Cfrac%7BW%20+%202P%20-%20FW%7D%7BS%7D%20+%201">
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?(H,%20W)">: 입력 크기, <img src="https://latex.codecogs.com/png.latex?(FH,%20FW)">: 필터 크기, <img src="https://latex.codecogs.com/png.latex?(OH,%20OW)">: 출력 크기, <img src="https://latex.codecogs.com/png.latex?P">: 패딩, <img src="https://latex.codecogs.com/png.latex?S">: 스트라이드</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="풀링-계층" class="level2">
+<h2 class="anchored" data-anchor-id="풀링-계층">풀링 계층</h2>
+<ul>
+<li>세로, 가로 방향의 공간을 줄이는 연산 (차원 축소 계층)</li>
+<li>풀링의 윈도우 크기와 스트라이드 값은 같게 설정하는 것이 일반적</li>
+<li>대상 영역에서 최대 / 평균 값을 산출</li>
+</ul>
+<section id="특징" class="level3">
+<h3 class="anchored" data-anchor-id="특징">특징</h3>
+<ul>
+<li>학습해야할 매개변수가 없음</li>
+<li>채널 수가 변하지 않음</li>
+<li>입력의 변화에 영향을 적게 받는다</li>
+</ul>
+</section>
+</section>
+<section id="전체-구조" class="level2">
+<h2 class="anchored" data-anchor-id="전체-구조">전체 구조</h2>
+<div id="289dcfa8" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dl_common.util <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> im2col</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.rand(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 1개 배치, 3 채널, 7 x 7 크기 이미지</span></span>
+<span id="cb1-5">col1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> im2col(x1, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, stride<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-6"></span>
+<span id="cb1-7">x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.rand(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>)</span>
+<span id="cb1-8">col2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> im2col(x2, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, stride<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span></code></pre></div>
+</div>
+<div id="4de70362" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Convolution:</span>
+<span id="cb2-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, W, b, stride<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>):</span>
+<span id="cb2-3">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> W</span>
+<span id="cb2-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b</span>
+<span id="cb2-5">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.stride <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stride</span>
+<span id="cb2-6">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.pad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pad</span>
+<span id="cb2-7"></span>
+<span id="cb2-8">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x):</span>
+<span id="cb2-9">        FN, C, FH, FW <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.W.shape</span>
+<span id="cb2-10">        N, C, H, W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x.shape</span>
+<span id="cb2-11">        out_h <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (H <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.pad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> FH) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.stride)</span>
+<span id="cb2-12">        out_w <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.pad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> FW) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.stride)</span>
+<span id="cb2-13">        </span>
+<span id="cb2-14">        col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> im2col(x, FH, FW, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.stride, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.pad)</span>
+<span id="cb2-15">        col_W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.W.reshape(FN, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>).T</span>
+<span id="cb2-16">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(col, col_W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.b</span>
+<span id="cb2-17"></span>
+<span id="cb2-18">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> out.reshape(N, out_h, out_w, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>).transpose(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb2-19">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> out</span></code></pre></div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/05.html</guid>
+  <pubDate>Thu, 31 Jul 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>오차역전법</title>
   <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/03.html</link>
@@ -25,8 +1200,1060 @@
 
 
 <p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="계산-그래프" class="level2">
+<h2 class="anchored" data-anchor-id="계산-그래프">계산 그래프</h2>
+<section id="특징" class="level3">
+<h3 class="anchored" data-anchor-id="특징">특징</h3>
+<ul>
+<li>국소적 계산: 자신과 관계된 정보만 결과로 출력</li>
+<li>중간 결과를 모두 저장할 수 있다.</li>
+<li>역전파를 통해 특정 단계에서의 최정 결과에 대한 미분을 효율적으로 계산할 수 있다.</li>
+</ul>
+</section>
+<section id="예시---순전파" class="level3">
+<h3 class="anchored" data-anchor-id="예시---순전파">예시 - 순전파</h3>
+<ul>
+<li>철수는 슈퍼에서 사과를 2개 귤을 3개 샀다. 사과는 1개 100원, 귤은 1개 150원이다. 소비세가 10%일 때 지불 금액은?</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    apple_num((사과 갯수)) -- 2 --&gt; apple_x
+    apple_price((사과 가격)) -- 100 --&gt; apple_x
+    orange_num((귤 갯수)) -- 3 --&gt; orange_x
+    orange_price((귤 가격)) -- 150 --&gt; orange_x
+    tax((소비세)) -- 1.1 --&gt; total_x
+    apple_x[x] -- 200 --&gt; fruit_plus
+    orange_x[x] -- 450 --&gt; fruit_plus
+    fruit_plus(+) -- 650 --&gt; total_x
+    total_x[x] -- 715 --&gt; output((지불 금액))
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="오차역전법" class="level2">
+<h2 class="anchored" data-anchor-id="오차역전법">오차역전법</h2>
+<ul>
+<li>연쇄법칙을 생각하면 됨.</li>
+</ul>
+<section id="덧셈-노드-역전파" class="level3">
+<h3 class="anchored" data-anchor-id="덧셈-노드-역전파">덧셈 노드 역전파</h3>
+<ul>
+<li>덧셈 노드의 역전파는 입력값을 그대로 전달한다.</li>
+</ul>
+</section>
+<section id="곱셈-노드-역전파" class="level3">
+<h3 class="anchored" data-anchor-id="곱셈-노드-역전파">곱셈 노드 역전파</h3>
+<ul>
+<li>곱셈 노드의 역전파는 입력값을 그대로 전달하되, 다른 입력값을 곱해준다.</li>
+</ul>
+</section>
+<section id="예시---역전파" class="level3">
+<h3 class="anchored" data-anchor-id="예시---역전파">예시 - 역전파</h3>
+<ul>
+<li>철수는 슈퍼에서 사과를 2개 귤을 3개 샀다. 사과는 1개 100원, 귤은 1개 150원이다. 소비세가 10%일 때 지불 금액은?</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    apple_num((사과 갯수)) -- 2 --&gt; apple_x
+    apple_price((사과 가격)) -- 100 --&gt; apple_x
+    tax((소비세)) -- 1.1 --&gt; total_x
+    apple_x[x] -- 200 --&gt; total_x
+    total_x[x] -- 220 --&gt; output((지불 금액))
+
+    apple_x -. 110 .-&gt; apple_num
+    apple_x -. 2.2 .-&gt; apple_price
+    total_x -. 200 .-&gt; tax
+    total_x -. 1.1 .-&gt; apple_x
+    output -. 1 .-&gt; total_x
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="python-구현" class="level2">
+<h2 class="anchored" data-anchor-id="python-구현">python 구현</h2>
+<div id="67e13fd3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> MulLayer:</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb1-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb1-5">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb1-6"></span>
+<span id="cb1-7">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x, y):</span>
+<span id="cb1-8">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x</span>
+<span id="cb1-9">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y</span>
+<span id="cb1-10">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y</span>
+<span id="cb1-11"></span>
+<span id="cb1-12">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> out</span>
+<span id="cb1-13"></span>
+<span id="cb1-14">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> backward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, dout):</span>
+<span id="cb1-15">        dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.y</span>
+<span id="cb1-16">        dy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.x</span>
+<span id="cb1-17"></span>
+<span id="cb1-18">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> dx, dy</span></code></pre></div>
+</div>
+<div id="6cc6663d" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> AddLayer:</span>
+<span id="cb2-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb2-3">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">pass</span></span>
+<span id="cb2-4"></span>
+<span id="cb2-5">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x, y):</span>
+<span id="cb2-6">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y</span>
+<span id="cb2-7">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> out</span>
+<span id="cb2-8"></span>
+<span id="cb2-9">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> backward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, dout):</span>
+<span id="cb2-10">        dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-11">        dy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-12">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> dx, dy</span></code></pre></div>
+</div>
+</section>
+<section id="활성화-함수-계층" class="level2">
+<h2 class="anchored" data-anchor-id="활성화-함수-계층">활성화 함수 계층</h2>
+<section id="relu" class="level3">
+<h3 class="anchored" data-anchor-id="relu">ReLU</h3>
+<ul>
+<li>입력이 0보다 크면 그대로, 작으면 0</li>
+</ul>
+<div id="7bfea5fd" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Relu:</span>
+<span id="cb3-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb3-3">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.mask <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb3-4"></span>
+<span id="cb3-5">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x):</span>
+<span id="cb3-6">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.mask <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb3-7">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x.copy()</span>
+<span id="cb3-8">        out[<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.mask] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb3-9">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> out</span>
+<span id="cb3-10"></span>
+<span id="cb3-11">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> backward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, dout):</span>
+<span id="cb3-12">        dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dout.copy()</span>
+<span id="cb3-13">        dx[<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.mask] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb3-14">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> dx</span></code></pre></div>
+</div>
+</section>
+<section id="sigmoid" class="level3">
+<h3 class="anchored" data-anchor-id="sigmoid">Sigmoid</h3>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BhL%7D%7Bhy%7Dy%5E2exp(-x)%20=%20%5Cfrac%7BhL%7D%7Bhy%7Dy(1-y)"> (계산 생략)</li>
+</ul>
+<div id="e061126d" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Sigmoid:</span>
+<span id="cb4-4">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb4-5">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb4-6"></span>
+<span id="cb4-7">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x):</span>
+<span id="cb4-8">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> np.exp(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>x))</span>
+<span id="cb4-9">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> out</span>
+<span id="cb4-10"></span>
+<span id="cb4-11">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> out</span>
+<span id="cb4-12"></span>
+<span id="cb4-13">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> backward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, dout):</span>
+<span id="cb4-14">        dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.out) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.out</span>
+<span id="cb4-15">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> dx</span></code></pre></div>
+</div>
+</section>
+<section id="affine" class="level3">
+<h3 class="anchored" data-anchor-id="affine">Affine</h3>
+<ul>
+<li>WX + B 계산 node</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdL%7D%7BdX%7D%20=%20%5Cfrac%7BdL%7D%7BdY%7D%20%E2%8B%85%20W%5ET"></li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdL%7D%7BdW%7D%20=%20X%5ET%20%E2%8B%85%20%5Cfrac%7BdL%7D%7BdY%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdL%7D%7BdB%7D%20=%20%5Csum%20%5Cfrac%7BdL%7D%7BdY%7D"></li>
+</ul>
+<div id="8335a558" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Affine:</span>
+<span id="cb5-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, W, b):</span>
+<span id="cb5-3">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> W</span>
+<span id="cb5-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b</span>
+<span id="cb5-5">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb5-6">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dW <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb5-7">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.db <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb5-8"></span>
+<span id="cb5-9">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x):</span>
+<span id="cb5-10">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x</span>
+<span id="cb5-11">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(x, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.b</span>
+<span id="cb5-12">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> out</span>
+<span id="cb5-13"></span>
+<span id="cb5-14">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> backward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, dout):</span>
+<span id="cb5-15">        dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(dout, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.W.T)</span>
+<span id="cb5-16">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dW <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.x.T, dout)</span>
+<span id="cb5-17">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.db <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(dout, axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb5-18"></span>
+<span id="cb5-19">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> dx</span></code></pre></div>
+</div>
+</section>
+<section id="softmax" class="level3">
+<h3 class="anchored" data-anchor-id="softmax">Softmax</h3>
+<div id="027758a0" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> SoftmaxWithLoss:</span>
+<span id="cb6-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb6-3">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb6-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb6-5">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb6-6"></span>
+<span id="cb6-7">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x, t):</span>
+<span id="cb6-8">      <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t</span>
+<span id="cb6-9">      <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> softmax(x)</span>
+<span id="cb6-10">      <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cross_entropy_error(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.y, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.t)</span>
+<span id="cb6-11"></span>
+<span id="cb6-12">      <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.loss</span>
+<span id="cb6-13"></span>
+<span id="cb6-14">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> backward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, dout<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb6-15">        batch_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.t.shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb6-16">        dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.t) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> batch_size</span>
+<span id="cb6-17"></span>
+<span id="cb6-18">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> dx</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="오차역전법-신경망" class="level2">
+<h2 class="anchored" data-anchor-id="오차역전법-신경망">오차역전법 신경망</h2>
+<div id="51e6ba2b" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dl_common.layers <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span></span>
+<span id="cb7-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dl_common.gradient <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numerical_gradient</span>
+<span id="cb7-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> collections <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> OrderedDict</span>
+<span id="cb7-4"></span>
+<span id="cb7-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> TwoLayerNet:</span>
+<span id="cb7-6">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, input_size, hidden_size, output_size, weight_init_std<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>):</span>
+<span id="cb7-7">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb7-8">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W1'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> weight_init_std <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.random.randn(input_size, hidden_size)</span>
+<span id="cb7-9">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b1'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros(hidden_size)</span>
+<span id="cb7-10">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W2'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>  weight_init_std <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.random.randn(hidden_size, output_size)</span>
+<span id="cb7-11">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b1'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros(output_size)</span>
+<span id="cb7-12">      </span>
+<span id="cb7-13">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.layers <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> OrderedDict()</span>
+<span id="cb7-14">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.layers[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Affine1'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Affine(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W1'</span>], <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b1'</span>])</span>
+<span id="cb7-15">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.layers[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Relu1'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Relu()</span>
+<span id="cb7-16">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.layers[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Affine2'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Affine(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W2'</span>], <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b2'</span>])</span>
+<span id="cb7-17">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.last_layer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> SoftmaxWithLoss()</span>
+<span id="cb7-18"></span>
+<span id="cb7-19">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> predict(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x):</span>
+<span id="cb7-20">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> layer <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.layers.values():</span>
+<span id="cb7-21">            x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> layer.forward(x)</span>
+<span id="cb7-22">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x</span>
+<span id="cb7-23"></span>
+<span id="cb7-24">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> loss(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x , t):</span>
+<span id="cb7-25">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.predict(x)</span>
+<span id="cb7-26">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.last_layer.forward(y, t)</span>
+<span id="cb7-27"></span>
+<span id="cb7-28">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> auuracy(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x, t):</span>
+<span id="cb7-29">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.predict(x)</span>
+<span id="cb7-30">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.argmax(y, axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb7-31">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> t.ndim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:</span>
+<span id="cb7-32">            t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.argmax(t, axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb7-33">        acc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.mean(y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> t)</span>
+<span id="cb7-34"></span>
+<span id="cb7-35">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> acc</span>
+<span id="cb7-36"></span>
+<span id="cb7-37">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> gradient(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x, t):</span>
+<span id="cb7-38">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.loss(x, t)</span>
+<span id="cb7-39"></span>
+<span id="cb7-40">        dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb7-41">        dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.last_layer.backward(dout)</span>
+<span id="cb7-42">        </span>
+<span id="cb7-43">        layers <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.layers.values())</span>
+<span id="cb7-44">        layers.reverse()</span>
+<span id="cb7-45">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> layer <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> layers:</span>
+<span id="cb7-46">            dout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> layer.backward(dout)</span>
+<span id="cb7-47">        </span>
+<span id="cb7-48">        grads <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb7-49"></span>
+<span id="cb7-50">        grads[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W1'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> numerical_gradient(loss_W, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W1'</span>])</span>
+<span id="cb7-51">        grads[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b1'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> numerical_gradient(loss_W, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b1'</span>])</span>
+<span id="cb7-52">        grads[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W2'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> numerical_gradient(loss_W, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W2'</span>])</span>
+<span id="cb7-53">        grads[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b2'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> numerical_gradient(loss_W, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b2'</span>])</span>
+<span id="cb7-54">        </span>
+<span id="cb7-55">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> grads</span></code></pre></div>
+</div>
+<div id="8205c741" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dl_dataset.mnist <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_mnist</span>
+<span id="cb8-2"></span>
+<span id="cb8-3">(x_train, t_train), (x_test, t_test) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> load_mnist(normalize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, one_hot_label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb8-4"></span>
+<span id="cb8-5">train_loss_list <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb8-6">train_acc_list <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb8-7">test_acc_list <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb8-8"></span>
+<span id="cb8-9">iters_num <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span></span>
+<span id="cb8-10">train_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train.shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb8-11">batch_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span id="cb8-12">learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span></span>
+<span id="cb8-13">network <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> TwoLayerNet(input_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">784</span>, hidden_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, output_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb8-14">iter_per_epoch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(train_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> batch_size, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb8-15"></span>
+<span id="cb8-16"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(iters_num):</span>
+<span id="cb8-17">    batch_mask <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.choice(train_size, batch_size)</span>
+<span id="cb8-18">    x_batch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train[batch_mask]</span>
+<span id="cb8-19">    t_batch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t_train[batch_mask]</span>
+<span id="cb8-20">    grads <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> network.gradient(x_batch, t_batch)</span>
+<span id="cb8-21">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> key <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W1'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b1'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W2'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b2'</span>):</span>
+<span id="cb8-22">        network.params[key] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-=</span> learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> grads[key]</span>
+<span id="cb8-23">    loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> network.loss(x_batch, t_batch)</span>
+<span id="cb8-24">    train_loss_list.append(loss)</span>
+<span id="cb8-25"></span>
+<span id="cb8-26">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> iter_per_epoch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb8-27">        train_acc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> network.accuracy(x_train, t_train)</span>
+<span id="cb8-28">        test_acc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> network.accuracy(x_test, t_test)</span>
+<span id="cb8-29">        train_acc_list.append(train_acc)</span>
+<span id="cb8-30">        test_acc_list.append(test_acc)</span></code></pre></div>
+</div>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
@@ -907,7 +3134,7 @@ font-style: inherit;">=</span> network.accuracy(x_test, t_test)</span>
 <ul>
 <li>계단 함수(step function): 앞서 살펴본 함수</li>
 </ul>
-<div id="301bc78b" class="cell" data-execution_count="1">
+<div id="42b77ac0" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -946,7 +3173,7 @@ font-style: inherit;">2.0</span>])))</span></code></pre></div>
 <pre><code>[0 1 1]</code></pre>
 </div>
 </div>
-<div id="061f9f8c" class="cell" data-execution_count="2">
+<div id="4b9420fd" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
@@ -987,7 +3214,7 @@ font-style: inherit;">1.1</span>)</span>
 <ul>
 <li>시그모이드 함수: <img src="https://latex.codecogs.com/png.latex?h(x)%20=%20%5Cfrac%7B1%7D%7B1%20+%20%5Cexp(-x)%7D"></li>
 </ul>
-<div id="26f93274" class="cell" data-execution_count="3">
+<div id="ab9e01b6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1051,7 +3278,7 @@ font-style: inherit;">1.1</span>)</span>
 </ul></li>
 <li>ReLU 함수: <img src="https://latex.codecogs.com/png.latex?h(x)%20=%20%5Cbegin%7Bcases%7D%20x%20&amp;%20(x%20%3E%200)%20%5C%5C%200%20&amp;%20(x%20%E2%89%A4%200)%20%5Cend%7Bcases%7D"></li>
 </ul>
-<div id="30227135" class="cell" data-execution_count="4">
+<div id="17f7f0d8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1066,7 +3293,7 @@ font-style: inherit;">0</span>, x)</span></code></pre></div>
 <ul>
 <li>SoftMax 함수: <img src="https://latex.codecogs.com/png.latex?y_k%20=%20%5Cfrac%7B%5Cexp(a_k)%7D%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D%20%5Cexp(a_i)%7D"></li>
 </ul>
-<div id="c573200e" class="cell" data-execution_count="5">
+<div id="8d319814" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1091,7 +3318,7 @@ font-style: inherit;">return</span> y</span></code></pre></div>
 </div>
 <p>softmax 함수는 값이 기하급수적으로 증가하기 때문에 쉽게 overflow가 발생할 수 있음.</p>
 <p>따라서 다음과 같이 개선이 필요함</p>
-<div id="7c3423e2" class="cell" data-execution_count="6">
+<div id="d62dd082" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1123,12 +3350,12 @@ font-style: inherit;">return</span> y</span></code></pre></div>
 </div>
 <p>sofrmax 함수 출력의 총합은 1이고, 개별 출력은 0에서 1 사이이다.</p>
 <p>따라서 softmax 함수의 출력을 확률로 해석할 수 있다.</p>
-<p>여기서 softmax 함수는 입력 값의 대소관계가 유지된다는 성질이 있기 때문에, 사실 생략해도 상관없다.</p>
+<p>여기서 softmax 함수는 입력 값의 대소관계가 유지된다는 성질이 있기 때문에 학습이 아닌, 추론 단계에서는 보통 생략한다.</p>
 </section>
 <section id="층-신경망-구성" class="level2">
 <h2 class="anchored" data-anchor-id="층-신경망-구성">3층 신경망 구성</h2>
 <p>입력층에서 1층으로 신호 전달</p>
-<div id="6ab87e8f" class="cell" data-execution_count="7">
+<div id="86592e66" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">X <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.array([<span class="fl" style="color: #AD0000;
@@ -1182,7 +3409,7 @@ font-style: inherit;">print</span>(Z1)</span></code></pre></div>
 </div>
 </div>
 <p>1층에서 2층으로 신호 전달</p>
-<div id="a25f6f9b" class="cell" data-execution_count="8">
+<div id="e8d4a03a" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">W2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
@@ -1227,7 +3454,7 @@ font-style: inherit;">print</span>(Z2)</span></code></pre></div>
 </div>
 </div>
 <p>2층에서 출력층으로 신호 전달</p>
-<div id="c64f7cfa" class="cell" data-execution_count="9">
+<div id="5e00b542" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
