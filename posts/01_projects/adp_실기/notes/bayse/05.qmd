@@ -197,7 +197,7 @@ prob(post_odds)
 ### 6-5
 
 ```{python}
-dice6 = Pmf([1/6] * 6, list(range(1, 7)))
+dice6 = Pmf.from_seq(np.arange(1, 7))
 goblin_health = dice6.add_dist(dice6)
 remaining_health = Pmf.sub_dist(goblin_health, 3)
 attack_damage = dice6
@@ -205,7 +205,7 @@ attack_damage = dice6
 defeat_probability = 0
 for damage, damage_prob in attack_damage.items():
     for remaining, remaining_prob in remaining_health.items():
-        if remaining > 0 and damage >= remaining:
+        if remaining > 0 and damage > remaining:
             defeat_probability += damage_prob * remaining_prob
 
 print(f"\n고블린을 물리칠 확률: {defeat_probability:.3f}")
@@ -256,17 +256,18 @@ n_outperform = 312
 
 hypos = np.arange(n_total + 1)
 prior = Pmf(1, hypos)
+prior.normalize()
 
-likelihoods = []
+likelihoods = np.zeros(prior.shape[0])
 for n_honest in hypos:
     n_dishonest = n_total - n_honest
     honest_dist = make_binomial(n_honest, 0.5)
     dishonest_dist = make_binomial(n_dishonest, 0.9)
     total_dist = Pmf.add_dist(honest_dist, dishonest_dist)
-    likelihood = total_dist[n_outperform] if n_outperform in total_dist else 0
-    likelihoods.append(likelihood)
+    likelihood = total_dist[n_outperform]
+    likelihoods[n_honest] = likelihood
 
-posterior = prior * np.array(likelihoods)
+posterior = prior * likelihoods
 posterior.normalize()
 
 most_likely_honest = posterior.max_prob()

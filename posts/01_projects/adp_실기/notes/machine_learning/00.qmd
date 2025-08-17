@@ -61,9 +61,31 @@ train_raw = pd.read_csv('_data/train.csv')
 test_df = pd.read_csv('_data/test.csv')
 
 train_df = train_raw.copy(deep=True)
-cleaner = [train_df, test_df]
-print(train_raw.info())
-train_raw.sample(10)
+train_X = train_df.drop('Survived', axis=1)
+train_y = train_df['Survived'].astype('category')
+cleaner = [train_X, test_df]
+```
+
+```{python}
+del_feat = ['PassengerId', 'Cabin', 'Ticket']
+qual = ['Pclass', 'Name', 'Sex', 'Ticket', 'Embarked']
+quan = ['Age', 'SibSp', 'Parch', 'Fare']
+for target in cleaner:
+    target.drop(del_feat, axis=1, inplace=True)
+    for col in qual:
+        target[col] = target[col].astype('category')
+train_X.info()
+```
+
+```{python}
+train_X.describe(include='category')
+```
+
+```{python}
+freq = pd.DataFrame(train_y.value_counts())
+freq['상대도수'] = train_y.value_counts(normalize=True)
+freq = freq.rename(columns={'count': '도수'})
+freq
 ```
 
 - Survived: 종속 변수. 생존은 1, 사망은 0으로 표시되는 이진 명목형 데이터 타입.
@@ -74,6 +96,24 @@ train_raw.sample(10)
 - Age(나이)와 Fare(요금) 변수는 연속형 양적 데이터 타입
 - SibSp는 함께 탑승한 형제자매/배우자의 수를, Parch는 함께 탑승한 부모/자녀의 수를 나타냄. 두 변수 모두 이산형 양적 데이터 타입. 이 변수들은 피처 엔지니어링에 사용되어 가족 규모(family size)와 동승자 없는 변수(is alone)를 만드는 데 사용될 수 있음.
 - Cabin(객실) 변수는 명목형 데이터 타입으로, 사고 발생 시 배에서의 대략적인 위치나 갑판 등급(deck levels)에 따른 사회경제적 지위를 위한 피처 엔지니어링에 사용될 수 있다. 하지만 결측값(null values)이 많기 때문에 가치를 더하지 못하므로 분석에서 제외.
+
+### 상관계수
+
+- 순서척도의 경우 스피어만, 켄달 타우 상관계수 분석 방법을 사용할 수 있다.
+- 카테고리의 수는 그렇게 중요하지 않아보임.
+- 책에서는 Survived를 측정하고 있는데, 이건 명목척도로 볼 수 있어서 조금 애매한거 같다.
+
+```{python}
+from scipy.stats import spearmanr, kendalltau
+
+corr, p = spearmanr(train_y, train_X['Pclass'])
+print(f'스피어만: {corr:.3f}, {p:.3f}')
+
+corr2, p2 = kendalltau(train_y, train_X['Pclass'])
+print(f'켄달타우: {corr2:.3f}, {p2:.3f}')
+```
+
+- 등급이 높을 수록 생존 가능성이 높아지는 경향
 
 ### Correcting, Completing, Creating, and Converting
 

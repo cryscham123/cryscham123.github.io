@@ -1,0 +1,110 @@
+---
+title: "학습 관련 기술들"
+date: 2025-08-06
+categories: ["deep learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 매개변수 갱신
+
+- 확률적 경사하강법은 매개변수를 찾는 과정이 비효율적이다.
+    - 비등방성 함수에서 탐색 경로가 비효율적임
+
+### 모멘텀
+
+- $v = αv - η \frac{dL}{dW}$
+- $W = W + v$
+
+```{python}
+class Momentum:
+    def __init__(self, lr=0.01, momentum=0.9):
+        self.lr = lr
+        self.momentum = momentum
+        self.v = None
+
+    def update(self, params, grads):
+        if self.v is None:
+            self.v = {}
+            for key, val in params.items():
+                self.v[key] = np.zeros_like(val)
+        for key in params.keys():
+            self.v[key] = self.momentum * self.v[key] - self.lr * grads[key]
+            params[key] += self.v[key]
+```
+
+### AdaGrad
+
+- 각각의 매개변수에 대해 학습률을 점점 낮추는 방법
+- $h = h + \frac{dL}{dW} ⊙ \frac{dL}{dW}$
+- $W = W - η\frac{1}{\sqrt{h}}\frac{dL}{dW}$
+
+```{python}
+class AdaGrad:
+    def __init__(self, lr=0.01):
+        self.lr = lr
+        self.h = None
+
+    def update(self, params, grads):
+        if self.h is None:
+            self.h = {}
+            for key, val in params.items():
+                self.h[key] = np.zeros_like(val)
+        for key, in params.keys():
+            self.h[key] += grads[key] * grads[key]
+            params[key] -= self.lr * grads[key] / (np.sqrt(self.h[key]) + 1e-7)
+```
+
+- 하지만 시간이 지나면 결국 기울기가 0으로 되버림
+    - 이것을 개선한 기법: RMSProp
+
+### Adam
+
+## 가중치의 초깃값
+
+- 초깃값은 무작위로 설정되어야 한다.
+
+### Xavier 초깃값
+
+- 표준편차가 $\frac{1}{\sqrt{n}}$인 초깃값
+- sigmoid, tanh에서 사용됨.
+
+### He 초깃값
+
+- 표준편차가 $\frac{2}{\sqrt{n}}$인 초깃값
+- ReLU에 특화됨
+
+## 배치 정규화
+
+- 각 층의 활성화를 적당히 퍼뜨리도록 강제 하는 것
+- 학습속도 개선, 초깃값 의존도 감소, 과대적합 억제의 장점이 있음
+- 활성화 함수 앞이나 뒤에서 standardization scaling을 진행
+- 이후 $y_i = \gamma \hat{x}_i + β$의 수식으로, 두 파라미터를 적합한 값으로 학습해 나감
+
+## 과대적합 방지
+
+### 가중치 감소
+
+- 손실함수에 l2($\frac{1}{2}λ W^2$) l1 norm을 더함
+
+### 드롭아웃
+
+- 신경망 모델이 복잡해지면 가중치 감소만으로 대응하기 어려움
+- 훈련 때 은닉층의 뉴런을 무작위로 골라 삭제한다.
+- 시험 때 각 뉴련의 출력에 훈련 때 삭제 안 한 비율을 곱한다.
+
+```{python}
+class Dropout:
+    def __init__(self, dropout_ratio=0.5):
+        self.dropout_ratio = dropout_ratio
+        self.mask = None
+
+    def forward(self, x, train_flg=True):
+        if train_flg:
+            self.mask = np.random.rand(*x.shape) > self.dropout_ratio
+            return x * self.mask
+        return x * (1.0 - self.dropout_ratio)
+
+    def backward(self, dout):
+        return dout * self.mask
+```

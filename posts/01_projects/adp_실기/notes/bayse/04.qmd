@@ -202,127 +202,57 @@ print(f"\n추정 토끼 수 (평균): {posterior.mean():.2f}마리")
 
 ### 5-3
 
-Exercise: Suppose that in the criminal justice system, all prison sentences are either 1, 2, or 3 years, with an equal number of each. One day, you visit a prison and choose a prisoner at random. What is the probability that they are serving a 3-year sentence? What is the average remaining sentence of the prisoners you observe?
-
 ```{python}
-# 감옥 문제 해결
-# 핵심: 길이 편향(length bias) - 더 긴 형량을 받은 죄수가 감옥에 더 오래 머물러 있음
+#| eval: false
 
-import numpy as np
-from empiricaldist import Pmf
+def update_remain(pmf, data):
+    hypos = pmf.qs
+    likelihood = 1 / hypos
+    likelihood[(hypos < data)] = 0
+    pmf *= likelihood
+    pmf.normalize()
 
-# 형량별 죄수 수 (같은 수)
-sentences = [1, 2, 3]  # 년 단위
-sentence_counts = [1, 1, 1]  # 각각 동일한 수
+hypos = np.arange(0, 1096)
+prior = Pmf(1, hypos)
+prior.normalize()
 
-# 각 형량의 죄수가 감옥에 있을 기간 (평균적으로)
-# 1년형: 평균 0.5년, 2년형: 평균 1년, 3년형: 평균 1.5년 동안 감옥에 있음
-expected_time_in_prison = [0.5, 1.0, 1.5]
-
-# 어느 순간 감옥에 있을 죄수의 분포 (길이 편향 적용)
-# 각 형량의 죄수 수 × 평균 재소 기간
-weighted_counts = [count * time for count, time in zip(sentence_counts, expected_time_in_prison)]
-
-print("형량별 가중 죄수 수:")
-for i, sentence in enumerate(sentences):
-    print(f"{sentence}년형: {weighted_counts[i]}")
-
-total_weighted = sum(weighted_counts)
-probabilities = [count / total_weighted for count in weighted_counts]
-
-print(f"\n무작위로 선택한 죄수의 형량 분포:")
-for i, sentence in enumerate(sentences):
-    print(f"{sentence}년형 확률: {probabilities[i]:.3f}")
-
-print(f"\n3년형을 받을 확률: {probabilities[2]:.3f}")
-
-# 평균 잔여 형량 계산
-# 각 형량에 대해 평균 잔여 기간을 계산
-avg_remaining = []
-for sentence in sentences:
-    # 균등분포 가정: 0부터 sentence까지 균등하게 분포
-    # 평균 잔여 기간 = sentence/2
-    avg_remaining.append(sentence / 2)
-
-print(f"\n형량별 평균 잔여 기간:")
-for i, sentence in enumerate(sentences):
-    print(f"{sentence}년형: {avg_remaining[i]:.1f}년")
-
-# 전체 평균 잔여 형량 (가중평균)
-overall_avg_remaining = sum(prob * remaining for prob, remaining in zip(probabilities, avg_remaining))
-print(f"\n관찰된 죄수들의 평균 잔여 형량: {overall_avg_remaining:.3f}년")
+update_remain(prior, 1095)
+prior.plot(label='사후확률', color='pink')
+plt.legend()
+plt.show()
 ```
 
 ### 5-5
 
-Exercise: The Doomsday argument is "a probabilistic argument that claims to predict the number of future members of the human species given an estimate of the total number of humans born so far."
-
-Suppose there are only two kinds of intelligent civilizations that can happen in the universe. The "short-lived" kind go exinct after only 200 billion individuals are born. The "long-lived" kind survive until 2,000 billion individuals are born. And suppose that the two kinds of civilization are equally likely. Which kind of civilization do you think we live in?
-
-The Doomsday argument says we can use the total number of humans born so far as data. According to the Population Reference Bureau, the total number of people who have ever lived is about 108 billion.
-
-Since you were born quite recently, let's assume that you are, in fact, human being number 108 billion. If  N  is the total number who will ever live and we consider you to be a randomly-chosen person, it is equally likely that you could have been person 1, or  N , or any number in between. So what is the probability that you would be number 108 billion?
-
-Given this data and dubious prior, what is the probability that our civilization will be short-lived?
-
 ```{python}
-# Doomsday Argument 문제 해결
-# 핵심: 베이즈 정리를 사용하여 현재까지 태어난 인구수로부터 문명의 유형을 추정
-
 import numpy as np
 from empiricaldist import Pmf
 
-# 문제 설정
-observed_position = 108  # 108번째 인간 (단위: 10억)
-short_lived_total = 200  # 단명형 문명의 총 인구 (단위: 10억) 
-long_lived_total = 2000  # 장명형 문명의 총 인구 (단위: 10억)
+hypos_short = np.arange(0, 201) # 10억 단위
+prior_short = Pmf(1, hypos_short, name="short")
+prior_short.normalize()
 
-# 사전확률: 두 종류의 문명이 동일한 확률
-prior_short = 0.5
-prior_long = 0.5
+hypos_long = np.arange(0, 2001)
+prior_long = Pmf(1, hypos_long, name="long")
+prior_long.normalize()
 
-print("=== Doomsday Argument 분석 ===")
-print(f"관찰된 데이터: 현재까지 {observed_position}억 명이 태어남")
-print(f"단명형 문명: 총 {short_lived_total}억 명까지 생존")
-print(f"장명형 문명: 총 {long_lived_total}억 명까지 생존")
-print(f"사전확률: 각각 {prior_short:.1f}")
+likelihood_ps = {}
+for pmf in [prior_short, prior_long]:
+    likelihood = 1 / pmf.qs
+    likelihood[(pmf.qs < 108)] = 0
+    pmf *= likelihood
+    pmf.normalize()
+    likelihood_ps[pmf.name] = pmf(108)
+    pmf.plot(label=f"{pmf.name}: {pmf(108)}")
+plt.legend()
+plt.show()
+```
 
-# Likelihood 계산
-# 만약 총 N명이 태어날 문명이라면, 내가 108번째일 확률은 1/N (균등분포 가정)
+```{python}
+prior = Pmf.from_seq(['short', 'long'])
+for hypos in prior.index:
+    prior.loc[hypos] *= likelihood_ps[hypos]
 
-likelihood_short = 1 / short_lived_total if observed_position <= short_lived_total else 0
-likelihood_long = 1 / long_lived_total if observed_position <= long_lived_total else 0
-
-print(f"\n=== Likelihood 계산 ===")
-print(f"단명형 문명에서 108번째일 확률: {likelihood_short:.6f}")
-print(f"장명형 문명에서 108번째일 확률: {likelihood_long:.6f}")
-
-# 베이즈 정리 적용
-# P(단명형|데이터) = P(데이터|단명형) × P(단명형) / P(데이터)
-
-numerator_short = likelihood_short * prior_short
-numerator_long = likelihood_long * prior_long
-denominator = numerator_short + numerator_long
-
-posterior_short = numerator_short / denominator
-posterior_long = numerator_long / denominator
-
-print(f"\n=== 베이즈 업데이트 결과 ===")
-print(f"단명형 문명일 사후확률: {posterior_short:.6f} ({posterior_short*100:.2f}%)")
-print(f"장명형 문명일 사후확률: {posterior_long:.6f} ({posterior_long*100:.2f}%)")
-
-# 추가 분석: 베이즈 팩터
-bayes_factor = (likelihood_short / likelihood_long) if likelihood_long > 0 else float('inf')
-print(f"\n=== 추가 분석 ===")
-print(f"베이즈 팩터 (단명형/장명형): {bayes_factor:.1f}")
-print(f"이는 관찰된 데이터가 단명형을 {bayes_factor:.1f}배 더 지지함을 의미")
-
-# 결론
-print(f"\n=== 결론 ===")
-if posterior_short > posterior_long:
-    print(f"Doomsday argument에 따르면, 우리 문명은 단명형일 확률이 {posterior_short*100:.1f}%로 더 높습니다.")
-    print("이는 직관과 반대되는 결과로, 108억이라는 관찰값이 200억보다 2000억에 더 가깝지만,")
-    print("확률적으로는 단명형에서 이 값이 나올 가능성이 더 높다고 계산됩니다.")
-else:
-    print(f"우리 문명은 장명형일 확률이 {posterior_long*100:.1f}%로 더 높습니다.")
+prior.normalize()
+prior
 ```

@@ -72,30 +72,15 @@ goals = np.arange(15)
 pmf_seq = [make_poisson_pmf(lam * remaining_time, goals) for lam in post2.qs]
 pred = make_mixture(post2, pmf_seq)
 
-print(f"예상 골 수: {sum(pred.qs[i] * pred.ps[i] for i in range(len(pred.qs))):.2f}골")
-# 표준편차 수동 계산
-mean_val = sum(pred.qs[i] * pred.ps[i] for i in range(len(pred.qs)))
-variance = sum((pred.qs[i] - mean_val)**2 * pred.ps[i] for i in range(len(pred.qs)))
-std_val = variance**0.5
-print(f"표준편차: {std_val:.2f}골")
-
-# 5골 이상 득점할 확률 계산
-prob_5_or_more = 1 - sum(pred.ps[i] for i in range(min(5, len(pred.ps))))
-print(f"\n5골 이상 득점할 확률: {prob_5_or_more:.4f} ({prob_5_or_more*100:.2f}%)")
-
-pred.plot(color='red', alpha=0.7)
-plt.axvline(5, color='orange', linestyle='--', alpha=0.8, label='5골')
-try:
-    # 수동으로 평균 계산
-    mean_goals = sum(pred.qs[i] * pred.ps[i] for i in range(len(pred.qs)))
-    plt.axvline(mean_goals, color='blue', linestyle='--', alpha=0.8, label=f'평균 ({mean_goals:.2f}골)')
-except:
-    print("평균 계산 중 오류 발생")
-plt.xlabel("골 수")
-plt.ylabel("확률")
-plt.title("남은 시간 동안의 예상 골 수 분포")
-plt.legend()
+plt.plot(pred)
+plt.title('독일의 남은 시간 동안의 골 득점 예측')
+plt.xlabel('골 수')
+plt.ylabel('확률')
 plt.show()
+```
+
+```{python}
+pred[5:].sum()
 ```
 
 ### 8-2

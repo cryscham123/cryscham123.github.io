@@ -15,7 +15,145 @@
 <link>https://cryscham123.github.io/posts/02_areas/선형대수/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sat, 15 Mar 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 12 Aug 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>전치행렬</title>
+  <link>https://cryscham123.github.io/posts/02_areas/선형대수/notes/13.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<ul>
+<li><p>전치행렬의 행렬식은 원래 행렬의 행렬식과 같다.</p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?(ABC)%5ET%20=%20C%5ET%20B%5ET%20A%5ET"></p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?(A%20+%20B)%5ET%20=%20A%5ET%20+%20B%5ET"></p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?(A%5E%7B-1%7D)%5ET%20=%20(A%5ET)%5E%7B-1%7D"></p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?C(A%5ET)%20=%20N(A)%5E%E2%9F%82"></p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?N(A%5ET)%20=%20C(A)%5E%E2%9F%82"></p></li>
+<li><p>rank(A) + nullity(Aᵀ) = n</p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?P=A(A%5ETA)%5E%7B%E2%88%921%7DA%5ET">: projection matrix</p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?Px">는 x를 A의 column space로 projection한 것이다.</p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?A%5ETAx%20=%20A%5ETb">: || Ax = b ||의 최소제곱해를 구하는 식</p></li>
+<li><p>닮음 변환: <img src="https://latex.codecogs.com/png.latex?D=C%5E%7B-1%7DAC"> (C는 invertible matrix)</p></li>
+</ul>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>선형 대수</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/선형대수/notes/13.html</guid>
+  <pubDate>Tue, 12 Aug 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>역함수와 역변환</title>
+  <link>https://cryscham123.github.io/posts/02_areas/선형대수/notes/12.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="함수의-역" class="level2">
+<h2 class="anchored" data-anchor-id="함수의-역">함수의 역</h2>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?f"> is invertible ⟺ ∀y ∈ Y, ∃!x ∈ X such that <img src="https://latex.codecogs.com/png.latex?f(x)%20=%20y">, 즉 f는 전단사 함수이다.
+<ul>
+<li>전사: <img src="https://latex.codecogs.com/png.latex?f(R%5En)%20-%3E%20R%5Em,%20f(x)%20=%20Ax,%20C(A)%20=%20R%5EM">, 즉 rank(A) = m</li>
+<li>단사: N(A) = {0}, 즉 Ax = 0의 해는 유일하다. = C(A)가 linearly independent이다.</li>
+<li>즉, A는 정방행렬이다.</li>
+<li>즉, A의 기약행렬은 I이다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="함수의-해집합" class="level2">
+<h2 class="anchored" data-anchor-id="함수의-해집합">함수의 해집합</h2>
+<ul>
+<li>Ax = b의 해집합은 Ax = 0의 해집합(Null space)을 특수해 만큼 평행 이동한 것과 같다.</li>
+</ul>
+</section>
+<section id="행렬식" class="level2">
+<h2 class="anchored" data-anchor-id="행렬식">행렬식</h2>
+<ul>
+<li>선형 변환 시 부피의 변화율과 방향을 나타낸다. (기존 부피에 행렬식의 절댓값을 곱한 것이 새로운 부피)</li>
+<li>n x n: row를 정해서, 그 row를 기준으로, <img src="https://latex.codecogs.com/png.latex?a_%7Brow%201%7DA_%7Brow%201%7D%20-%20a_%7Brow%202%7DA_%7Brow%202%7D%20+%20...%20+%20a_%7Brow%20n%7DA_%7Brow%20n%7D">의 형태로 나타낼 수 있다.</li>
+<li>부호는 checkerboard pattern을 따른다.</li>
+<li>행렬의 scalar 곱은, 행렬식의 <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bscalar%7D%5En"></li>
+<li>행렬의 특정 row끼리 더한 행렬의 행렬식은 두 행렬식의 합과 같다.</li>
+<li>duplicated row는 행렬식이 0이 된다. 즉, 역행렬이 존재하지 않는다.
+<ul>
+<li>따라서 한 행에 상수배를 해서 다른 행에 더해도 행렬식은 변하지 않는다.</li>
+</ul></li>
+<li>상삼각행렬의 행렬식은 대각선 원소의 곱이다.</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>선형 대수</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/선형대수/notes/12.html</guid>
+  <pubDate>Tue, 12 Aug 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>linear transformations</title>
+  <link>https://cryscham123.github.io/posts/02_areas/선형대수/notes/11.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/human-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<ul>
+<li>Matrix vector product는 항상 linear transformation이다.</li>
+<li>kernel: <img src="https://latex.codecogs.com/png.latex?%7Bx%20%E2%88%88%20R%5En%20%7C%20T(x)%20=%200%7D"></li>
+<li>ker(T) = N(A)</li>
+</ul>
+<section id="prerequest-for-linear-transformation" class="level2">
+<h2 class="anchored" data-anchor-id="prerequest-for-linear-transformation">PreRequest for linear transformation</h2>
+<ul>
+<li>T(a + b) = T(a) + T(b)</li>
+<li>T(ca) = cT(a)</li>
+</ul>
+</section>
+<section id="transformation" class="level2">
+<h2 class="anchored" data-anchor-id="transformation">Transformation</h2>
+<ul>
+<li><p>표준 기저벡터가 어디로 이동하는지에 따라 변환을 정의한다.</p></li>
+<li><p>θ만큼 회전하는 A in <img src="https://latex.codecogs.com/png.latex?R%5E2">::</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%20%5Ccos%20%CE%B8%20&amp;%20-%5Csin%20%CE%B8%20%5C%5C%20%5Csin%20%CE%B8%20&amp;%20%5Ccos%20%CE%B8%20%5Cend%7Bbmatrix%7D"></li>
+</ul></li>
+</ul>
+</section>
+<section id="projection" class="level2">
+<h2 class="anchored" data-anchor-id="projection">Projection</h2>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?proj_L(x)%20=%20%5Cfrac%7Bx%20%E2%8B%85%20v%7D%7Bu%20%E2%8B%85%20v%7D%20v">
+<ul>
+<li>if v is unit vecotr, then <img src="https://latex.codecogs.com/png.latex?proj_L(x)%20=%20(x%20%E2%8B%85%20v)%20v"></li>
+<li><img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cbegin%7Bbmatrix%7D%20%CE%BC_1%5E2%20&amp;%20%CE%BC_2%CE%BC_1%20%5C%5C%20%CE%BC_1%CE%BC_2%20&amp;%20%CE%BC_2%5E2%20%5Cend%7Bbmatrix%7D"></li>
+</ul></li>
+</ul>
+</section>
+<section id="합성곱" class="level2">
+<h2 class="anchored" data-anchor-id="합성곱">합성곱</h2>
+<ul>
+<li>선형 변환의 합성곱 역시 선형 변환: 합성곱을 Ax로 표현 가능.</li>
+<li>행렬의 곱은 결합법칙이 성립한다.</li>
+<li>행렬의 곱은 교환법칙이 성립하지 않는다.</li>
+<li>행렬의 곱은 분배법칙이 성립한다.</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>선형 대수</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/선형대수/notes/11.html</guid>
+  <pubDate>Mon, 11 Aug 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Null space and Column space</title>
   <link>https://cryscham123.github.io/posts/02_areas/선형대수/notes/10.html</link>
@@ -252,6 +390,7 @@
 <p><img src="https://latex.codecogs.com/png.latex?S"> is linearly dependent ⟺ ∃(<img src="https://latex.codecogs.com/png.latex?c_i"> is not 0) <img src="https://latex.codecogs.com/png.latex?c_1v_1%20+%20c_2v_2%20+%20...%20+%20c_nv_n%20=%200"> is <img src="https://latex.codecogs.com/png.latex?c_1%20=%20c_2%20=%20...%20=%20c_n%20=%200">.</p>
 <ul>
 <li>if <img src="https://latex.codecogs.com/png.latex?c_1%20=%20c_2%20=%20...%20=%20c_n%20=%200">, then <img src="https://latex.codecogs.com/png.latex?S"> is linearly independent.</li>
+<li>벡터의 원소 수가 <img src="https://latex.codecogs.com/png.latex?n">인 경우, span(<img src="https://latex.codecogs.com/png.latex?S">)의 차원은 <img src="https://latex.codecogs.com/png.latex?n"> 이하이다. (나머지 벡터는 선형 결합으로 표현 가능)</li>
 </ul>
 
 

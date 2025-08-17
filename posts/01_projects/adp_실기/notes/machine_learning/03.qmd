@@ -12,7 +12,6 @@ categories: ["머신 러닝"]
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import warnings
 
 plt.rcParams['font.family'] = 'Noto Sans KR'
@@ -35,6 +34,12 @@ labels = df.iloc[:, -1]
 ```
 
 ```{python}
+test_df = pd.read_csv('_data/santander/test.csv', encoding='latin-1')
+test_df['var3'].replace(-999999, 2, inplace=True)
+test_df.drop('ID', axis=1, inplace=True)
+```
+
+```{python}
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X_features, labels, test_size=0.2)
@@ -49,6 +54,8 @@ X_tr, X_val, y_tr, y_val = train_test_split(X_train, y_train, test_size=0.3)
 ```
 
 ```{python}
+#| eval: false
+
 from xgboost import XGBClassifier
 from sklearn.metrics import roc_auc_score
 
@@ -60,4 +67,176 @@ xgb_clf = XGBClassifier(n_estimators=400,
 xgb_clf.fit(X_tr, y_tr, eval_set=evals, verbose=False)
 xgb_roc_score = roc_auc_score(y_test, xgb_clf.predict_proba(X_test)[:, 1])
 print(f'{xgb_roc_score:.3f}')
+```
+
+### 베이지안 최적화
+
+```{python}
+#| eval: false
+
+from sklearn.model_selection import KFold
+from sklearn.metrics import roc_auc_score
+
+def objective_func(search_space):
+    xgb_clf = XGBClassifier(n_estimators=100, 
+                            early_stopping_rounds=30,
+                            eval_metric='auc',
+                            max_depth=int(search_space['max_depth']),
+                            min_child_weight=int(search_space['min_child_weight']),
+                            colsample_bytree=search_space['colsample_bytree'],
+                            learning_rate=search_space['learning_rate'])
+    roc_auc_list = []
+    kf = KFold(n_splits=3)
+    for tr_index, val_index in kf.split(X_train):
+        X_tr, y_tr = X_train.iloc[tr_index], y_train.iloc[tr_index]
+        X_val, y_val =  X_train.iloc[val_index], y_train.iloc[val_index]
+
+        xgb_clf.fit(X_tr, y_tr, eval_set=[(X_tr, y_tr), (X_val, y_val)])
+        score = roc_auc_score(y_val, xgb_clf.predict_proba(X_val)[:, 1])
+        roc_auc_list.append(score)
+
+    return -1 * np.mean(roc_auc_list)
+```
+
+```{python}
+#| eval: false
+
+from hyperopt import hp, fmin, tpe, Trials
+
+xgb_search_space = {
+  'max_depth': hp.quniform('max_depth', 5, 15, 1),
+  'min_child_weight': hp.quniform('min_child_weight', 1, 6, 1),
+  'colsample_bytree': hp.uniform('colsample_bytree', 0.5, 0.95),
+  'learning_rate': hp.uniform('learning_rate', 0.01, 0.2)
+}
+
+trials = Trials()
+best = fmin(fn=objective_func,
+            space=xgb_search_space,
+            algo=tpe.suggest,
+            max_evals=50,
+            trials=trials)
+print(best)
+```
+
+### 재 학습
+
+```{python}
+#| eval: false
+
+from xgboost import XGBClassifier
+from sklearn.metrics import roc_auc_score
+
+evals = [(X_tr, y_tr), (X_val, y_val)]
+xgb_clf = XGBClassifier(n_estimators=500, 
+                    learning_rate=round(best['learning_rate'], 5),
+                    max_depth=int(best['max_depth']),
+                    min_child_weight=int(best['min_child_weight']),
+                    colsample_bytree=round(best['colsample_bytree'], 5),
+                    early_stopping_rounds=100,
+                    eval_metric=['auc'])
+xgb_clf.fit(X_tr, y_tr, eval_set=evals, verbose=False)
+xgb_roc_score = roc_auc_score(y_test, xgb_clf.predict_proba(X_test)[:, 1])
+print(f'{xgb_roc_score:.3f}')
+```
+
+### plot importance
+
+```{python}
+#| eval: false
+
+from xgboost import plot_importance
+
+plot_importance(xgb_clf, max_num_features=20, height=0.4)
+```
+
+## LightGBM
+
+```{python}
+from sklearn.metrics import roc_auc_score
+from lightgbm import LGBMClassifier
+
+lgbm_clf = LGBMClassifier(n_estimators=500, early_stopping_rounds=100, eval_metric='auc')
+
+eval_set = [(X_tr, y_tr), (X_val, y_val)]
+lgbm_clf.fit(X_tr, y_tr, eval_set=eval_set)
+
+lgbm_roc_score = roc_auc_score(y_test, lgbm_clf.predict_proba(X_test)[:, 1])
+print(f'{lgbm_roc_score:.3f}')
+```
+
+### 베이지안 최적화
+
+```{python}
+from sklearn.model_selection import KFold
+
+def objective_func(search_space):
+    lgbm_clf = LGBMClassifier(n_estimators=100, 
+                            early_stopping_rounds=30,
+                            eval_metric='auc',
+                            num_leaves=int(search_space['num_leaves']),
+                            max_depth=int(search_space['max_depth']),
+                            min_child_samples=int(search_space['min_child_samples']),
+                            subsample=search_space['subsample'],
+                            learning_rate=search_space['learning_rate'])
+    roc_auc_list = []
+    kf = KFold(n_splits=3)
+    for tr_index, val_index in kf.split(X_train):
+        X_tr, y_tr = X_train.iloc[tr_index], y_train.iloc[tr_index]
+        X_val, y_val =  X_train.iloc[val_index], y_train.iloc[val_index]
+
+        lgbm_clf.fit(X_tr, y_tr, eval_set=[(X_tr, y_tr), (X_val, y_val)])
+        score = roc_auc_score(y_val, lgbm_clf.predict_proba(X_val)[:, 1])
+        roc_auc_list.append(score)
+
+    return -1 * np.mean(roc_auc_list)
+```
+
+```{python}
+from hyperopt import hp, fmin, tpe, Trials
+
+lgbm_search_space = {
+  'num_leaves': hp.quniform('num_leaves', 32, 64, 1),
+  'max_depth': hp.quniform('max_depth', 100, 160, 1),
+  'min_child_samples': hp.quniform('min_child_samples', 60, 100, 1),
+  'subsample': hp.uniform('subsample', 0.7, 1),
+  'learning_rate': hp.uniform('learning_rate', 0.01, 0.2)
+}
+
+trials = Trials()
+best = fmin(fn=objective_func,
+            space=lgbm_search_space,
+            algo=tpe.suggest,
+            max_evals=50,
+            trials=trials)
+print(best)
+```
+
+### 재학습
+
+```{python}
+lgbm_clf = LGBMClassifier(n_estimators=500, 
+                          num_leaves=int(best['num_leaves']),
+                          max_depth=int(best['max_depth']),
+                          min_child_samples=int(best['min_child_samples']),
+                          subsample=round(best['subsample'], 5),
+                          learning_rate=round(best['learning_rate'], 5),
+                          early_stopping_rounds=100, 
+                          eval_metric='auc')
+
+eval_set = [(X_tr, y_tr), (X_val, y_val)]
+lgbm_clf.fit(X_tr, y_tr, eval_set=eval_set)
+
+lgbm_roc_score = roc_auc_score(y_test, lgbm_clf.predict_proba(X_test)[:, 1])
+print(f'{lgbm_roc_score:.3f}')
+```
+
+## 제출
+
+```{python}
+target = lgbm_clf.predict(test_df)
+
+submit = pd.read_csv('_data/santander/sample_submission.csv', encoding='latin-1')
+submit['TARGET'] = target
+submit.to_csv('_data/santander/submission.csv', encoding='latin-1', index=False)
 ```

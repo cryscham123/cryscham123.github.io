@@ -1,0 +1,141 @@
+---
+title: "EDA"
+date: 2025-08-05
+categories: ["확률 통계"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 질적 변수
+
+### 상관분석
+
+```{python filename="순서형 상관계수"}
+#| eval: false
+
+from scipy.stats import spearmanr, kendalltau
+
+corr, p = spearmanr(df['var1'], df['var2'])
+
+corr, p = kendalltau(df['var1'], df['var2'])
+
+df.corr(method='kendall') # kendal, spearman
+```
+
+```{python filename="범주형 상관계수}
+#| eval: false
+
+from scipy.stats.contingeny import association
+
+v2 = association(table.values, method="tschuprow") # phi 계수
+v2 = association(table.values, method='cramer') # 크래머 v
+v2
+```
+
+```{python filename="범주형 연속형"}
+#| eval: false
+
+```
+
+- 상관계수: 공분산을 각 변수의 표준편차로 나눈 것
+- 스피어만 상관계수: 서열척도 vs 서열척도. 확률분포에 대한 가정 필요 없음.
+- 켄달의 타우: 서열척도 vs 서열척도.
+    - 둘 중 하나가 연속형이여도 스피어만, 켄달의 타우 중 하나를 사용.
+    - 샘플이 적거나, 이상치, 동점이 많은 경우 켄달의 타우를 주로 사용.
+    - 두 변수의 크기는 같아야함.
+- phi 계수: 명목척도 vs 명목척도
+    - 두 변인 모두 level이 2개일 때 사용
+    - 두 변수를 0과 1로 바꾼 후 pearson 상관계수 계산
+- 크래머 v: 명목척도 vs 명목척도.
+    - 적어도 하나의 변수가 3개 이상의 level을 가지면 사용
+    - 범위는 0~1. 0.2 이하면 서로 연관성이 약하고, 0.6 이상이면 서로 연관성이 높음.
+- Point-biserial correlation: 명목척도 vs 연속형
+    - 명목척도의 level이 2개일 때
+- Polyserial correlation: 명목척도 vs 연속형
+    - 명목척도의 level이 3개 이상일 때
+
+- 명목과 순서의 경우
+    - level이 2개: Mann-Whitney U검정
+    - 3개 이상: Kruskal-Wallis H test
+
+### 시각화
+
+```{python filename="도수분포표, 상대도수분포표"}
+#| eval: false
+
+import pandas as pd
+
+cols = ['your', 'target', 'cols', ...]
+freq = pd.DataFrame(df[cols].value_counts()) # 도수분포표
+freq['proportion'] = df[cols].value_counts(normalize=True) # 상대도수분포표
+```
+
+```{python filename="막대 그래프"}
+#| eval: false
+
+freq['count'].plot.bar(figsize=(15, 10), subplots=True, layout=(3, 3))
+plt.tight_layout()
+plt.show()
+```
+
+```{python filename="파이 그래프}
+#| eval: false
+
+plt.pie(freq['count'].values, 
+        labels=freq.index, 
+        autopct='%1.1f%%', 
+        colors=sns.color_palette('pastel', n_colors=len(freq)))
+plt.show()
+```
+
+## 양적 변수
+
+### 기술통계
+
+```{python filename="계산적 대푯값"}
+#| eval: false
+from scipy.stats.mstats import gmean, hmean, tmean
+import numpy as np
+
+np.mean(example) # 산술평균
+gmean(example) # 기하평균
+hmean(example) # 조화평균
+tmean(example, (1, 5)) # 절사평균
+np.sqrt(np.mean(np.array(example) ** 2)) # 평방평균
+```
+
+- 기하평균: 비율의 평균에 주로 사용됨. 한 값이라도 0이면 전체가 0이 됨
+- 조화평균: 속도, 밀도 등의 평균에 주로 사용됨.
+- 절사평균: 극단값의 영향을 줄이기 위해 상위, 하위 몇 %를 제외한 평균
+- 평방평균: 신호, 파동 등에서 자주 사용
+
+```{python filename="위치적 대푯값"}
+#| eval: false
+
+df.median()
+df.mode()[0]
+df.quantile(q=0.25)
+```
+
+```{python filename="절대적 산포도}
+
+```
+
+```{python filename="상대적 산포도}
+
+```
+
+```{python filename="왜도, 첨도"}
+
+```
+
+- 상관계수: 피어슨
+
+### 시각화
+
+- 도수분포표
+- 상대도수분포표
+- 줄기잎그림
+- 히스토그램
+- 상자그림
+- 산점도
