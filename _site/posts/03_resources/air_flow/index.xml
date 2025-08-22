@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>김형훈의 학습 블로그</title>
+<link>https://cryscham123.github.io/posts/03_resources/air_flow/</link>
+<atom:link href="https://cryscham123.github.io/posts/03_resources/air_flow/index.xml" rel="self" type="application/rss+xml"/>
+<description>안녕하세요. 김형훈의 학습 블로그 입니다.</description>
+<image>
+<url>https://cryscham123.github.io/profile.jpg</url>
+<title>김형훈의 학습 블로그</title>
+<link>https://cryscham123.github.io/posts/03_resources/air_flow/</link>
+</image>
+<generator>quarto-1.5.56</generator>
+<lastBuildDate>Fri, 04 Apr 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>Coding pipeline</title>
+  <link>https://cryscham123.github.io/posts/03_resources/air_flow/notes/01.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="dag-skeleton" class="level2">
+<h2 class="anchored" data-anchor-id="dag-skeleton">DAG skeleton</h2>
+<div id="04f09be0" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> airflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> DAG</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> datetime <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> datetime</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> DAG(</span>
+<span id="cb1-5">    dag_id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'example_dag'</span>,</span>
+<span id="cb1-6">    schedule<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'@daily'</span>,</span>
+<span id="cb1-7">    start_date<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>datetime(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2022</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>),</span>
+<span id="cb1-8">    catchup<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>,</span>
+<span id="cb1-9">) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> dag:</span>
+<span id="cb1-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">pass</span></span></code></pre></div>
+</div>
+<ul>
+<li>DAG는 start_date / last_execution time + schedule_interval에 실행된다.</li>
+</ul>
+</section>
+<section id="operator" class="level2">
+<h2 class="anchored" data-anchor-id="operator">Operator</h2>
+<ul>
+<li>operator 하나 당 하나의 task만 실행하는게 좋다.</li>
+</ul>
+<section id="operator-type" class="level3">
+<h3 class="anchored" data-anchor-id="operator-type">operator type</h3>
+<ul>
+<li>Action operators
+<ul>
+<li>BashOperator</li>
+<li>PythonOperator</li>
+</ul></li>
+<li>Transfer operators</li>
+<li>Sensor operators</li>
+</ul>
+</section>
+</section>
+<section id="providers" class="level2">
+<h2 class="anchored" data-anchor-id="providers">Providers</h2>
+<ul>
+<li>Airflow providers are a set of packages that contain operators, sensors, hooks, and other utilities to interact with external platforms and services.</li>
+<li>Providers are installed separately from Airflow and can be added to your environment as needed.</li>
+<li>In Airflow core, Bash and Python operators, … are included</li>
+</ul>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> airflow.providers.postgres.operators.postgres <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> PostgresOperator</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> DAG(</span>
+<span id="cb2-4">    dag_id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'example_db'</span>,</span>
+<span id="cb2-5">    schedule<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'@daily'</span>,</span>
+<span id="cb2-6">    start_date<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>datetime(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2022</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>),</span>
+<span id="cb2-7">    catchup<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>,</span>
+<span id="cb2-8">) <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> dag:</span>
+<span id="cb2-9">    create_table <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PostgresOperator(</span>
+<span id="cb2-10">        task_id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'create_table'</span>,</span>
+<span id="cb2-11">        postgres_conn_id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'postgres'</span>,</span>
+<span id="cb2-12">        sql<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-13"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">            CREATE TABLE IF NOT EXISTS example_table (</span></span>
+<span id="cb2-14"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">                id SERIAL PRIMARY KEY,</span></span>
+<span id="cb2-15"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">                name VARCHAR(50)</span></span>
+<span id="cb2-16"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">            );</span></span>
+<span id="cb2-17"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">        """</span>,</span>
+<span id="cb2-18">    )</span></code></pre></div>
+<ul>
+<li>DB에 접속하기 위해서 connection을 설정해야 한다.</li>
+</ul>
+</section>
+<section id="hook" class="level2">
+<h2 class="anchored" data-anchor-id="hook">Hook</h2>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>Air flow</category>
+  <guid>https://cryscham123.github.io/posts/03_resources/air_flow/notes/01.html</guid>
+  <pubDate>Fri, 04 Apr 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Getting Started</title>
+  <link>https://cryscham123.github.io/posts/03_resources/air_flow/notes/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="what-is-airflow" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-airflow">What is Airflow</h2>
+<ul>
+<li><p>open source platform to pragramatically author, schedule and monitor workflows</p></li>
+<li><p>Not a data processing framework</p></li>
+<li><p>Not a Real time streaming solution (only for batch processing)</p></li>
+<li><p>Not a data storage system</p></li>
+<li><p>and simple linear workflow might overkill</p></li>
+</ul>
+</section>
+<section id="why-airflow" class="level2">
+<h2 class="anchored" data-anchor-id="why-airflow">Why Airflow</h2>
+<ol type="1">
+<li>automation</li>
+<li>visibility</li>
+<li>flexibility and scalability</li>
+<li>extensibility</li>
+</ol>
+</section>
+<section id="core-components" class="level2">
+<h2 class="anchored" data-anchor-id="core-components">Core Components</h2>
+<ul>
+<li>Webserver: provides UI</li>
+<li>Scheduler: triggers tasks. ensure that task runs in correct time and order</li>
+<li>meta database: memmory, communication between components</li>
+<li>trigger: daemon that listens to external events and triggers tasks</li>
+<li>executer: traffic controller that decide how tasks are executed (sequential or parallel, local or remote)</li>
+<li>queue</li>
+<li>worker</li>
+</ul>
+</section>
+<section id="core-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="core-concepts">Core Concepts</h2>
+<section id="dag" class="level3">
+<h3 class="anchored" data-anchor-id="dag">DAG</h3>
+<ul>
+<li>Directed Acyclic Graph</li>
+<li>collection of all the tasks you want to run, organized in a way that reflects their relationships and dependencies</li>
+<li>no cycles in dependencies graph</li>
+</ul>
+</section>
+<section id="operator" class="level3">
+<h3 class="anchored" data-anchor-id="operator">Operator</h3>
+<ul>
+<li>defines a single task in a workflow</li>
+<li>e.g.&nbsp;BashOperator, PythonOperator, EmailOperator, etc.</li>
+</ul>
+</section>
+<section id="task-task-instance" class="level3">
+<h3 class="anchored" data-anchor-id="task-task-instance">Task / Task Instance</h3>
+<ul>
+<li>specific instance of an operator</li>
+<li>when operator assigned to a DAG, it becomes a task</li>
+</ul>
+</section>
+<section id="workflow" class="level3">
+<h3 class="anchored" data-anchor-id="workflow">Workflow</h3>
+<ul>
+<li>entire process defined by DAG</li>
+<li>DAG = workflow</li>
+</ul>
+</section>
+</section>
+<section id="arcitecture" class="level2">
+<h2 class="anchored" data-anchor-id="arcitecture">Arcitecture</h2>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>Air flow</category>
+  <guid>https://cryscham123.github.io/posts/03_resources/air_flow/notes/00.html</guid>
+  <pubDate>Tue, 25 Mar 2025 15:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

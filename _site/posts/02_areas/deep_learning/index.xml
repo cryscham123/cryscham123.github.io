@@ -15,7 +15,81 @@
 <link>https://cryscham123.github.io/posts/02_areas/deep_learning/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sat, 09 Aug 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 16 Aug 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>word2vec</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/07.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<ul>
+<li>이전에 봤던 방법은 통계 기반 기법, 모든 학습 데이터를 한꺼번에 처리하는 방식</li>
+<li>word2vec은 신경망 기반 기법, 미니배치 학습</li>
+</ul>
+<div id="a638b139" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]])</span>
+<span id="cb1-4">W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.randn(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb1-5">h <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(c, W)</span>
+<span id="cb1-6">h</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>array([[ 0.7871821 ,  0.94388187, -1.51434548]])</code></pre>
+</div>
+</div>
+</section>
+<section id="cbow-모델" class="level2">
+<h2 class="anchored" data-anchor-id="cbow-모델">CBOW 모델</h2>
+<ul>
+<li>딥러닝 학습을 진행
+<ul>
+<li>말뭉치로부터 목표하는 단어를 타깃으로, 그 주변 단어를 맥락으로 뽑아냄.</li>
+<li>맥락을 one hot 인코딩 해서 입력으로 사용, 타깃을 정답 레이블로 사용</li>
+</ul></li>
+<li>입력 측의 가중치(단어의 분산 표현)를 이용해서 예측을 진행</li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/07.html</guid>
+  <pubDate>Sat, 16 Aug 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>자연어와 단어의 분산 표현</title>
   <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/06.html</link>
