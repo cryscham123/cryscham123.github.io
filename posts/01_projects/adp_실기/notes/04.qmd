@@ -6,3 +6,16 @@ categories: ["데이터 분석"]
 
 ![](/img/stat-thumb.jpg){.post-thumbnail}
 
+```{mermaid}
+flowchart TD
+    A[검정 방법 선택 시작] --> B(표본의 크기가 충분히 큰가?)
+    B -->|yes| C(모분산을 알고 있는가?)
+    B -->|no| E(모집단이 정규분포를 따르는가?)
+    E -->|yes| C
+    C -->|yes| D[z 검정]
+    C -->|no| G(등분산성을 만족하는가?)
+    E -->|no| F[비모수 검정]
+    G -->|yes| H[t 검정]
+    G -->|no| I[Welch's t 검정]
+```
+

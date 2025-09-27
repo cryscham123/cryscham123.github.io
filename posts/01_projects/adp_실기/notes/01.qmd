@@ -1,275 +1,270 @@
 ---
-title: "pandas data 구조"
-date: 2024-12-20
+title: "코드 snippet"
+date: 2025-09-21
 categories: ["데이터 분석"]
 directories: ["adp_실기"]
 ---
 
 ![](/img/stat-thumb.jpg){.post-thumbnail}
 
-pandas: numpy를 라벨링한거
-
-# Series
-
-1차원 배열 구조, 이름과 형식을 가지고 모든 값에 고유한 인덱스를 가짐
+## 모델 정의
 
 ```{python}
-import pandas as pd
+#| eval: false
 
-data1 = pd.Series({'ulala': 1, 'haha': 2}, name='class')
-data1
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
+from sklearn.compose import ColumnTransformer
+
+preprocessor = ColumnTransformer(transformers=[
+    ('num', StandardScaler(), num_features),
+    ('cat', OneHotEncoder(drop='first'), cat_features),
+    ('ord', OrdinalEncoder(), ord_features)
+])
+pipeline = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('model_name', YourModel(random_state=42))
+])
 ```
 
-```{python}
-data1 = pd.Series({'ulala': 1, 'ulala': 2}, name='class')
-data1
+## Grid Search & Bayesian Optimization
+
+```{python filename="grid search}
+#| eval: false
+
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support, roc_auc_score
+from sklearn.metrics import mean_absolute_error, r2_score, root_mean_squared_error
+
+# 파라미터 이름 앞에 pipeline에서 사용한 '모델이름__'을 붙여야 함
+params = {
+    'classifier__n_estimators': [100, 200, 300],
+    'classifier__max_depth': [10, 50, 100],
+    'classifier__min_samples_split': [2, 5, 10],
+    'classifier__min_samples_leaf': [1, 2, 4]
+}
+
+grid_search = GridSearchCV(estimator=pipeline, 
+                           param_grid=params, 
+                           cv=5, 
+                           scoring='accuracy') # 분류: accuracy, f1, roc_auc, f1_macro, roc_auc_ovr, roc_auc_ovo, 회귀: neg_root_mean_squared_error, r2, neg_mean_absolute_error
+grid_search.fit(X_train, y_train)
+best_model = grid_search.best_estimator_
+
+y_pred = best_model.predict(X_test)
+
+# ============ 분류 scoring ============
+
+y_pred_proba = best_model.predict_proba(X_test)[:, 1] # 다중클래스인 경우 [:, 1] 제거
+
+test_acc = accuracy_score(y_test, y_pred)
+test_precision, test_recall, test_f1, _ = precision_recall_fscore_support(
+    y_test, 
+    y_pred, 
+    average='binary' # 다중 클래스인 경우 'macro', 'micro', 'weighted' 중 선택
+)
+test_auc = roc_auc_score(y_test, y_pred_proba) # 다중 클래스인 경우 multi_class='ovo', 'ovr' 중 선택
+
+print(f"test_accuracy: {test_acc:.4f}")
+print(f"test_precision: {test_precision:.4f}")
+print(f"test_recall: {test_recall:.4f}")
+print(f"test_f1_score: {test_f1:.4f}")
+print(f"test_auc: {test_auc:.4f}")
+
+# ============ 회귀 scoring ============
+
+rmse = root_mean_squared_error(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+print(f"test_rmse: {rmse:.4f}")
+print(f"test_mae: {mae:.4f}")
+print(f"test_r2: {r2:.4f}")
 ```
 
-```{python}
-data2 = pd.Series([1, 2], name='class')
-data2
+```{python filename="bayesian optimization"}
+#| eval: false
+import optuna
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics import precision_recall_fscore_support, accuracy_score, roc_auc_score
+from sklearn.metrics import mean_absolute_error, r2_score, root_mean_squared_error
+
+def objective(trial):
+    # 모델에 적합한 파라미터에 맞게 수정
+    params = {
+        'classifier__n_estimators': trial.suggest_int("n_estimators", 100, 500, 100),
+        'classifier__max_features': trial.suggest_categorical("max_features", ['sqrt', 'log2']),
+        'classifier__max_depth': trial.suggest_int("max_depth", 10, 110, 20),
+        'classifier__min_samples_split': trial.suggest_int("min_samples_split", 2, 10, 2),
+        'classifier__min_samples_leaf': trial.suggest_int("min_samples_leaf", 1, 4, 1)
+    }
+    pipeline.set_params(**params)
+
+    cv_score = cross_val_score(pipeline,
+                               X_train,
+                               y_train,
+                               cv=5,
+                               scoring='accuracy') # 분류: accuracy, f1, roc_auc, f1_macro, roc_auc_ovr, roc_auc_ovo, 회귀: neg_root_mean_squared_error, r2, neg_mean_absolute_error
+    mean_cv_accuracy = cv_score.mean()
+    return mean_cv_accuracy
+
+study = optuna.create_study(direction='maximize')
+study.optimize(objective, n_trials=100)
+
+pipeline.set_params(**study.best_params)
+pipeline.fit(X_train, y_train)
+
+y_pred = pipeline.predict(X_test)
+
+# ============ 분류 scoring ============
+
+y_pred_proba = pipeline.predict_proba(X_test)[:, 1]
+
+
+test_acc = accuracy_score(y_test, y_pred)
+test_precision, test_recall, test_f1, _ = precision_recall_fscore_support(
+    y_test, 
+    y_pred, 
+    average='binary' # 다중 클래스인 경우 'macro', 'micro', 'weighted' 중 선택해서 사용
+)
+test_auc = roc_auc_score(y_test, y_pred_proba) # 다중 클래스인 경우 multiclass='ovo', 'ovr' 중 선택해서 사용
+
+print("test_accuracy:", test_acc)
+print("test_precision:", test_precision)
+print("test_recall:", test_recall)
+print("test_f1_score:", test_f1)
+print("test_auc:", test_auc)
+
+# ============ 회귀 scoring ============
+
+rmse = root_mean_squared_error(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+print(f"test_rmse: {rmse:.4f}")
+print(f"test_mae: {mae:.4f}")
+print(f"test_r2: {r2:.4f}")
 ```
 
-# DataFrame
+## 모델 평가 visualization
 
-2차원 배열 구조, 각 행은 인덱스를 가지고, 각 열은 이름과 형식을 가짐
-
-## Before
-
-데이터를 호출하고, 데이터 내용과 요약 / 통계 정보를 확인해야함
-
-칼럼명이 칼럼 타입을 변경해야할 때도 있음
-
-### Pandas 사용 준비
-
-1. 라이브러리 설치
-2. 라이브러리 호출
+### ROC AUC
 
 ```{python}
-import pandas as pd
+#| eval: false
+import matplotlib.pyplot as plt
 
-pd.set_option('display.max_rows', 10)
+plt.figure()
+plt.plot(logistic_fpr, logistic_tpr, color='blue', lw=2, label=f'Logistic (AUC = {logistic_roc_auc:.2f})')
+plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.0])
+plt.xlabel('FPR')
+plt.ylabel('TPR')
+plt.title('ROC')
+plt.legend(loc='lower right')
+plt.show()
 ```
 
-### DataFrame 선언
+### Feature Importance
 
 ```{python}
-import numpy as np
-dataset = np.array([['kor', 70], ['math', 80]])
-# declare df 1
-df = pd.DataFrame(dataset, columns=['class', 'score'])
-# declare df 2
-df = pd.DataFrame([['kor', 70], ['math', 80]], columns=['class', 'score'])
-# declare df 3
-df = pd.DataFrame({'class': ['kor', 'math'], 'score': [70, 80]})
-df
+#| eval: false
+
 ```
 
-### DataFrame 읽고 저장
+## 모델 파라미터
+
+### Logistic 회귀분석
 
 ```{python}
-# filepath = '../book/data/data.csv'
-# data = pd.read_csv(filepath, na_values='NA', encoding='utf8')
-# data.to_csv('result.csv', header=True, index=True, encoding='utf8')
+#| eval: false
+
+params = {
+    "penalty":, 
+    "C":, 
+    "l1_ratio":
+}
+
+C : float, default=1.0
+    Inverse of regularization strength; must be a positive float.
+    Like in support vector machines, smaller values specify stronger
+    regularization.
+
+
+l1_ratio : float, default=None
+    The Elastic-Net mixing parameter, with ``0 <= l1_ratio <= 1``. Only
+    used if ``penalty='elasticnet'``. Setting ``l1_ratio=0`` is equivalent
+    to using ``penalty='l2'``, while setting ``l1_ratio=1`` is equivalent
+    to using ``penalty='l1'``. For ``0 < l1_ratio <1``, the penalty is a
+    combination of L1 and L2.
 ```
 
-### DataFrame 출력
+### KNN
 
 ```{python}
-from sklearn.datasets import load_iris
+#| eval: false
 
-iris = load_iris()
-iris
 ```
 
+### Support Vector Machine
+
 ```{python}
-iris = pd.DataFrame(iris.data, columns=iris.feature_names)
-iris
+#| eval: false
+
 ```
 
+### Random Forest
+
 ```{python}
-iris.info()
+#| eval: false
+
+params = {
+    "n_estimators":,
+    "criterion":,
+    "max_depth":,
+    "min_samples_split":,
+    "min_samples_leaf":,
+    "min_weight_fraction_leaf":,
+    "max_features":,
+    "max_leaf_nodes":,
+    "min_impurity_decrease":,
+    "min_impurity_split":,
+    "ccp_alpha":,
+    "max_samples":
+}
 ```
 
+### XGBOOST
+
 ```{python}
-iris.describe()
+#| eval: false
+
+params = {
+    "max_depth" :,
+    "learning_rate":,
+    "n_estimators":,
+    "gamma":,
+    "min_child_weight":,
+    "max_delta_step":,
+    "subsample":,
+    "colsample_bytree":,
+    "colsample_bylevel":,
+    "colsample_bynode":,
+    "reg_alpha":,
+    "reg_lambda":,
+}
 ```
 
-sepal length와 petal width의 값의 차이가 크다.
-
-전처리 과정에서 변수 정규화 수행의 근거가 된다.
-
-### index / column 명 변경
+### LightGBM
 
 ```{python}
-df.index
+#| eval: false
+
 ```
 
-```{python}
-list(df.index)
-```
+### Catboost
+
 
 ```{python}
-df.index = ['A', 'B']
-df.index
-```
+#| eval: false
 
-```{python}
-df
-```
-
-```{python}
-df.set_index('class', drop=True, append=False, inplace=True)
-df
-```
-
-```{python}
-df.reset_index(drop=False, inplace=True)
-df
-```
-
-```{python}
-iris.columns
-```
-
-```{python}
-iris.columns = ['sepal length', 'sepal width', 'petal length', 'petal width']
-iris
-```
-
-```{python}
-iris.columns = iris.columns.str.replace(' ', '_')
-iris
-```
-
-### 데이터 타입 변경
-
-사용 가능한 타입
-
-- int
-- float
-- bool
-- datetime
-- category
-- object
-
-```{python}
-iris.dtypes
-```
-
-```{python}
-iris['sepal_length'] = iris['sepal_length'].astype('int')
-iris[['sepal_width', 'petal_length']] = \
-iris[['sepal_width', 'petal_length']].astype('int')
-iris
-```
-
-## row / coumn 선택 추가 삭제
-
-### row 선택
-
-```{python}
-iris[0:4]
-```
-
-### column 선택
-
-Series 형식으로 출력
-
-```{python}
-iris['sepal_length']
-```
-
-DataFrame 형식으로 출력
-
-```{python}
-iris[['sepal_length', 'sepal_width']]
-```
-
-### column, row 선택
-
-```{python}
-iris.loc[0:4, ['sepal_length', 'sepal_width']]
-```
-
-```{python}
-iris.iloc[0:4, [1, 2]]
-```
-
-### row 추가
-
-```{python}
-# 방법 1: concat 사용
-# df = pd.concat([df, pd.DataFrame([{'class': 'eng', 'score': 90}])], ignore_index=True)
-
-# 방법 2: loc 사용 
-df.loc[len(df)] = {'class': 'eng', 'score': 90}
-df
-```
-
-### column 추가
-
-```{python}
-df['yo'] = df['score'] + 10
-df
-```
-
-### row 삭제
-
-```{python}
-df.drop(2, inplace=True)
-df
-```
-
-### column 삭제
-
-```{python}
-df.drop(columns=['yo'], inplace=True)
-df
-```
-
-## 조건 선택
-
-```{python}
-iris[(iris['sepal_length'] > 5) & (iris['sepal_width'] < 3)]
-```
-
-```{python}
-df.loc[df['score'] > 70, '합격'] = 'Pass'
-df.loc[df['합격'] != 'Pass', '합격'] = 'Fail'
-df
-```
-
-```{python}
-import numpy as np
-
-condition_list = [(df['score'] >= 70), 
-                  (df['score'] < 70) & (df['score'] >= 60),
-                  (df['score'] < 60)]
-grade_list = ['A', 'B', 'C']
-df['grade'] = np.select(condition_list, grade_list, default='F')
-df
-```
-
-### 결측치 탐색
-
-```{python}
-df.isna().sum()
-```
-
-```{python}
-df.notna().sum(1) # 행 기준
-```
-
-### 결측치 제거
-
-```{python}
-# dropna(axis=0, how='any' or 'all', thresh=None, subset=None, inplace=False)
-df.dropna()
-```
-
-### 결측치 대체
-
-```{python}
-# fillna(value=None, method=None ('pad', 'ffill', 'backfill', 'bfill'), axis=None, inplace=False, limit=None)
 ```
