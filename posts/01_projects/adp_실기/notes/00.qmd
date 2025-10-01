@@ -21,6 +21,7 @@ include-in-header:
     \date{}
     \usepackage{fontspec}
     \setmainfont{Noto Sans KR}
+    \setmonofont{Noto Sans KR}
     \usepackage{titlesec}
     \titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{0.8em}{\huge}
     \titleformat{\subsection}[block]{\normalfont\large\bfseries}{}{0pt}{}
@@ -642,8 +643,6 @@ imputed_X = imputer.fit_transform(X)
     - 이전 모델의 오차를 보완하는 방식으로 학습한다.
 
 ```{.python filename="voting"}
-#| eval: false
-
 from sklearn.ensemble import VotingClassifier, VotingRegressor
 
 voting_lf = VotingClassifier(estimators=[

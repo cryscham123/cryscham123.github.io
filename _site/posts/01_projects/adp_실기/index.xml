@@ -15,14 +15,677 @@
 <link>https://cryscham123.github.io/posts/01_projects/adp_실기/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sat, 27 Sep 2025 03:12:51 GMT</lastBuildDate>
+<lastBuildDate>Sun, 28 Sep 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>EDA와 시각화</title>
+  <link>https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="edaexploratory-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="edaexploratory-data-analysis">EDA(Exploratory Data Analysis)</h2>
+<p>: 데이터의 특징과 데이터에 내재된 관계를 알아내기 위해 그래프와 통계적 분석 방법을 활용하여 탐구하는 것</p>
+<section id="주제" class="level3">
+<h3 class="anchored" data-anchor-id="주제">주제</h3>
+<ol type="1">
+<li>저항성 강조: 부분적 변동(이상치 등)에 대한 민감성 확인</li>
+<li>잔차 계산</li>
+<li>자료변수의 재표현: 변수를 적당한 척도로 바꾸는 것</li>
+<li>그래프를 통한 현시성</li>
+</ol>
+</section>
+</section>
+<section id="막대-그래프" class="level2">
+<h2 class="anchored" data-anchor-id="막대-그래프">막대 그래프</h2>
+<p><code>범주형 데이터</code>를 요약하고 시각적으로 비교하는 데 활용</p>
+<div id="cb7e8a6f" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.datasets <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_wine</span>
+<span id="cb1-4"></span>
+<span id="cb1-5">wine_load <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> load_wine()</span>
+<span id="cb1-6">wine <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(wine_load.data, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>wine_load.feature_names)</span>
+<span id="cb1-7">wine_load</span>
+<span id="cb1-8">wine[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> wine_load.target</span>
+<span id="cb1-9">wine[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> wine[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>({<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class_0'</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class_1'</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class_2'</span>})</span>
+<span id="cb1-10"></span>
+<span id="cb1-11">wine_type <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> wine[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Class'</span>].value_counts()</span>
+<span id="cb1-12">wine_type</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>Class
+class_1    71
+class_0    59
+class_2    48
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="d2162de6" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 수직 막대</span></span>
+<span id="cb3-2">plt.bar(wine_type.index, wine_type.values, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, bottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, align <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>)</span>
+<span id="cb3-3">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-3-output-1.png" width="566" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="0065c7fe" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 수평 막대</span></span>
+<span id="cb4-2">plt.barh(wine_type.index, wine_type.values, height<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, left<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, align <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>)</span>
+<span id="cb4-3">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-4-output-1.png" width="598" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>각 범주의 값의 갯수 <code>차이가 극단적</code>인지 확인한다. 극단적일 경우, 전처리 과정에서 <code>업/다운 샘플링 등을 통해 갯수가 유사해지도록 조정</code>해야한다.</p>
+</section>
+<section id="히스토그램" class="level2">
+<h2 class="anchored" data-anchor-id="히스토그램">히스토그램</h2>
+<p><code>연속형 데이터</code>의 분포를 확인하는 데 활용</p>
+<div id="3aa395ce" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Wine alcohol histogram'</span>)</span>
+<span id="cb5-2">plt.hist(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'alcohol'</span>, bins<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>), color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'purple'</span>, data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>wine)</span>
+<span id="cb5-3">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-5-output-1.png" width="566" height="431" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="box-plot" class="level2">
+<h2 class="anchored" data-anchor-id="box-plot">box plot</h2>
+<p><code>수치형 변수</code>의 분포를 확인하는 그래프</p>
+<div id="71671800" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.datasets <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_iris</span>
+<span id="cb6-2"></span>
+<span id="cb6-3">iris_load <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> load_iris()</span>
+<span id="cb6-4">iris <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(iris_load.data, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris_load.feature_names)</span>
+<span id="cb6-5">iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris_load.target</span>
+<span id="cb6-6">iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>({<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'setosa'</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'versicolor'</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'virginica'</span>})</span>
+<span id="cb6-7"></span>
+<span id="cb6-8">plt.boxplot(iris.drop(columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class'</span>))</span>
+<span id="cb6-9">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-6-output-1.png" width="558" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6e1b5a42" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> sns</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">sns.boxplot(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"class"</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sepal width (cm)"</span>, data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris)</span>
+<span id="cb7-4">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-7-output-1.png" width="589" height="432" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="산점도" class="level2">
+<h2 class="anchored" data-anchor-id="산점도">산점도</h2>
+<p>두 개의 <code>수치형 변수</code>의 <code>분포와 관계</code>를 확인하는 그래프</p>
+<div id="0699d108" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iris scatter'</span>)</span>
+<span id="cb8-2">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal length (cm)'</span>)</span>
+<span id="cb8-3">plt.ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal width (cm)'</span>)</span>
+<span id="cb8-4"></span>
+<span id="cb8-5">plt.scatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal length (cm)'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal width (cm)'</span>, data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb8-6">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-8-output-1.png" width="589" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="65717dc9" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">sns.scatterplot(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal length (cm)'</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal width (cm)'</span>, hue<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class'</span>, data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris, style<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class'</span>)</span>
+<span id="cb9-2">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-9-output-1.png" width="589" height="432" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="선그래프" class="level2">
+<h2 class="anchored" data-anchor-id="선그래프">선그래프</h2>
+<section id="수평-수직-선" class="level3">
+<h3 class="anchored" data-anchor-id="수평-수직-선">수평 / 수직 선</h3>
+<div id="9c6a5dda" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">plt.hlines(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, xmin<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, xmax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>, linestyles<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'solid'</span>)</span>
+<span id="cb10-2">plt.vlines(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, ymin<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, ymax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'blue'</span>, linestyles<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'dashed'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-10-output-1.png" width="590" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="함수식" class="level3">
+<h3 class="anchored" data-anchor-id="함수식">함수식</h3>
+<div id="b1cdb42f" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> linear_func(x):</span>
+<span id="cb11-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb11-3"></span>
+<span id="cb11-4">X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal length (cm)'</span>]</span>
+<span id="cb11-5">plt.plot(X, linear_func(X), c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>)</span>
+<span id="cb11-6">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-11-output-1.png" width="566" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="회귀선" class="level3">
+<h3 class="anchored" data-anchor-id="회귀선">회귀선</h3>
+<div id="d95c5bec" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb12-2"></span>
+<span id="cb12-3">X, Y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal length (cm)'</span>], iris[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal width (cm)'</span>]</span>
+<span id="cb12-4">plt.scatter(X, Y, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb12-5">a, b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.polyfit(X, Y, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb12-6">plt.plot(X, a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b, c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>)</span>
+<span id="cb12-7">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-12-output-1.png" width="571" height="413" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>2차 이상의 그래프는 X값에 대하여 정렬해야 한다.</p>
+<div id="2061621e" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">iris2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris.sort_values(by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal length (cm)'</span>)</span>
+<span id="cb13-2">X, Y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris2[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal length (cm)'</span>], iris2[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'petal length (cm)'</span>]</span>
+<span id="cb13-3">b2, b1, b0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.polyfit(X, Y, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb13-4">plt.scatter(X, Y, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb13-5">plt.plot(X, b0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>X<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>)</span>
+<span id="cb13-6">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-13-output-1.png" width="558" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="꺾은선" class="level3">
+<h3 class="anchored" data-anchor-id="꺾은선">꺾은선</h3>
+<div id="5b05c474" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">plt.plot(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal length (cm)'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'petal length (cm)'</span>, data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris2)</span>
+<span id="cb14-2">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-14-output-1.png" width="558" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="상관관계-시각화" class="level2">
+<h2 class="anchored" data-anchor-id="상관관계-시각화">상관관계 시각화</h2>
+<section id="산점도-행렬" class="level3">
+<h3 class="anchored" data-anchor-id="산점도-행렬">산점도 행렬</h3>
+<div id="3a077aad" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pandas.plotting <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> scatter_matrix</span>
+<span id="cb15-2"></span>
+<span id="cb15-3">scatter_matrix(iris, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>), diagonal<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'hist'</span>)</span>
+<span id="cb15-4">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-15-output-1.png" width="649" height="655" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="06b84c9b" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">sns.pairplot(iris, diag_kind<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'auto'</span>, hue<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class'</span>)</span>
+<span id="cb16-2">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-16-output-1.png" width="1069" height="947" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="상관계수-행렬-그래프" class="level3">
+<h3 class="anchored" data-anchor-id="상관계수-행렬-그래프">상관계수 행렬 그래프</h3>
+<div id="d4cac182" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">iris_corr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iris.drop(columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'class'</span>).corr(method<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pearson'</span>)</span>
+<span id="cb17-2">sns.heatmap(iris_corr, xticklabels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris_corr.columns, yticklabels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris_corr.columns, cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"RdBu_r"</span>, annot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02_files/figure-html/cell-17-output-1.png" width="648" height="520" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pandas-profiling" class="level2">
+<h2 class="anchored" data-anchor-id="pandas-profiling">Pandas Profiling</h2>
+<div id="e2f08bc6" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># from pandas_profiling import ProfileReport</span></span>
+<span id="cb18-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb18-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ProfileReport(iris)</span></span></code></pre></div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>데이터 분석</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/adp_실기/notes/02.html</guid>
+  <pubDate>Sun, 28 Sep 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title></title>
   <link>https://cryscham123.github.io/posts/01_projects/adp_실기/notes/00.pdf</link>
   <description><![CDATA[ undefined ]]></description>
   <category>자격증</category>
   <guid>https://cryscham123.github.io/posts/01_projects/adp_실기/notes/00.pdf</guid>
-  <pubDate>Sat, 27 Sep 2025 03:12:51 GMT</pubDate>
+  <pubDate>Sun, 28 Sep 2025 02:51:02 GMT</pubDate>
 </item>
 <item>
   <title>pandas data 구조</title>
@@ -18073,862 +18736,6 @@ font-style: inherit;">'Jun'</span>])</span>
   <category>시계열 분석</category>
   <guid>https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/03.html</guid>
   <pubDate>Thu, 10 Jul 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>확률보행</title>
-  <link>https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="what-is-확률보행" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-확률보행">what is 확률보행</h2>
-<ul>
-<li><code>확률보행</code>: 무작위로 상승 또는 하락이 발생할 확률이 동일한 프로세스
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?y_t%20=%20C%20+%20y_%7Bt-1%7D%20+%20%CF%B5_t"></li>
-<li>C가 0이 아닌 경우 표류가 있는 확률보행</li>
-</ul></li>
-</ul>
-<div id="ad1058b8" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> plt</span>
-<span id="cb1-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> sns</span>
-<span id="cb1-4"></span>
-<span id="cb1-5">plt.rcParams[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'font.family'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Noto Sans KR'</span></span>
-<span id="cb1-6"></span>
-<span id="cb1-7">steps <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.random.standard_normal(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1000</span>)</span>
-<span id="cb1-8">steps[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span></span>
-<span id="cb1-9">random_walk <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.cumsum(steps)</span>
-<span id="cb1-10">sns.lineplot(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>np.arange(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(random_walk)), y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>random_walk)</span>
-<span id="cb1-11">plt.xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'시간'</span>)</span>
-<span id="cb1-12">plt.ylabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'값'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
-<pre><code>Text(0, 0.5, '값')</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-2-output-2.png" width="590" height="430" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="확률보행-식별" class="level2">
-<h2 class="anchored" data-anchor-id="확률보행-식별">확률보행 식별</h2>
-<ul>
-<li>확률보행은 <code>정상적</code>이고 <code>자기상관관계가 없는 시계열</code>로 나타난다.</li>
-</ul>
-<section id="정상성" class="level3">
-<h3 class="anchored" data-anchor-id="정상성">정상성</h3>
-<ul>
-<li>시간이 지나도 통계적 특성이 변하지 않는 시계열
-<ul>
-<li>평균과 분산이 상수이고 자기상관관계가 있으며, 이러한 특성들이 시간에 따라 변하지 않는다.</li>
-</ul></li>
-<li>정상화:
-<ul>
-<li>평균: 차분</li>
-<li>분산: 로그 변환, Box-Cox 변환 등</li>
-</ul></li>
-<li>정상성 검정:
-<ul>
-<li>ADF (Augmented Dickey-Fuller) 테스트
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?H_0">: 시계열에 단위근<sup>1</sup>이 존재하여 비정상적이다.</li>
-<li><img src="https://latex.codecogs.com/png.latex?H_1">: 시계열에 단위근이 존재하지 않아 정상적이다.</li>
-</ul></li>
-</ul></li>
-</ul>
-<div id="fa6a622e" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb3-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> statsmodels.tsa.stattools <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> adfuller</span>
-<span id="cb3-3"></span>
-<span id="cb3-4"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> simulate_process(alpha: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">float</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> np.array:</span>
-<span id="cb3-5">    process <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.empty(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">401</span>)</span>
-<span id="cb3-6">    process[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span></span>
-<span id="cb3-7">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">400</span>):</span>
-<span id="cb3-8">        process[i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> alpha <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> process[i] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> np.random.standard_normal()</span>
-<span id="cb3-9">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> process</span>
-<span id="cb3-10"></span>
-<span id="cb3-11">stationary <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> simulate_process(alpha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>)</span>
-<span id="cb3-12">non_stationary <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> simulate_process(alpha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>)</span>
-<span id="cb3-13"></span>
-<span id="cb3-14">sns.lineplot(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>np.arange(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(stationary)), y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>stationary, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'정상성 프로세스'</span>)</span>
-<span id="cb3-15">sns.lineplot(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>np.arange(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(non_stationary)), y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>non_stationary, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'비정상성 프로세스'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-3-output-1.png" width="572" height="415" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="e83bbb23" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> mean_var_over_time(process: np.array) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> np.array:</span>
-<span id="cb4-2">    means <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> []</span>
-<span id="cb4-3">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">vars</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> []</span>
-<span id="cb4-4">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(process)):</span>
-<span id="cb4-5">        means.append(np.mean(process[:i]))</span>
-<span id="cb4-6">        <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">vars</span>.append(np.var(process[:i]))</span>
-<span id="cb4-7">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> means, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">vars</span></span>
-<span id="cb4-8"></span>
-<span id="cb4-9">means_stationary, vars_stationary <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> mean_var_over_time(stationary)</span>
-<span id="cb4-10">means_non_stationary, vars_non_stationary <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> mean_var_over_time(non_stationary)</span>
-<span id="cb4-11"></span>
-<span id="cb4-12">sns.lineplot(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>np.arange(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(means_stationary)), y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>means_stationary, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'정상성 평균'</span>)</span>
-<span id="cb4-13">sns.lineplot(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>np.arange(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(means_non_stationary)), y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>means_non_stationary, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'비정상성 평균'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-4-output-1.png" width="583" height="412" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="11a3d38d" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">sns.lineplot(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>np.arange(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(vars_stationary)), y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>vars_stationary, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'정상성 분산'</span>)</span>
-<span id="cb5-2">sns.lineplot(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>np.arange(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(vars_non_stationary)), y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>vars_non_stationary, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'비정상성 분산'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-5-output-1.png" width="564" height="412" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="757a5cb0" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">result1 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> adfuller(stationary)</span>
-<span id="cb6-2">result2 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> adfuller(non_stationary)</span>
-<span id="cb6-3"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f'ADF Statistic: 정상성: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>result1[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>]<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">, 비정상성: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>result2[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>]<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>)</span>
-<span id="cb6-4"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f'p-value: 정상성: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>result1[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">, 비정상성: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>result2[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>ADF Statistic: 정상성: -10.182654946345801, 비정상성: -2.2791893442991604
-p-value: 정상성: 6.632269182398948e-18, 비정상성: 0.17876768439598817</code></pre>
-</div>
-</div>
-</section>
-<section id="자기상관관계" class="level3">
-<h3 class="anchored" data-anchor-id="자기상관관계">자기상관관계</h3>
-<ul>
-<li>자기 상관관계: 시계열의 선행값과 후행값 아이의 선형관계
-<ul>
-<li>x: 지연 (<img src="https://latex.codecogs.com/png.latex?y_t,%20y_%7Bt-2%7D">의 경우 지연 2)</li>
-<li>y: 계수</li>
-</ul></li>
-<li>추세가 있는 경우: 짧은 지연에서 계수가 높고, 지연이 커질수록 계수가 낮아지는 경향</li>
-<li>계절성이 있는 경우: 주기적인 패턴이 나타남.</li>
-</ul>
-<div id="d3648072" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> statsmodels.graphics.tsaplots <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> plot_acf</span>
-<span id="cb8-2"></span>
-<span id="cb8-3">plot_acf(non_stationary, lags<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-7-output-1.png" width="583" height="432" class="figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-7-output-2.png" width="583" height="432" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>비정상적 시계열에서 추세가 보인다. 차분을 진행해보자.</li>
-</ul>
-<div id="95126a88" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">diff <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.diff(non_stationary, n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>)</span>
-<span id="cb9-2"></span>
-<span id="cb9-3">result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> adfuller(diff)</span>
-<span id="cb9-4">result[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>], result[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="41">
-<pre><code>(-19.871934314399926, 0.0)</code></pre>
-</div>
-</div>
-<div id="80dbb7be" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">plot_acf(diff, lags<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-9-output-1.png" width="583" height="432" class="figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-9-output-2.png" width="583" height="432" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="예시" class="level2">
-<h2 class="anchored" data-anchor-id="예시">예시</h2>
-<div id="9b70c5e3" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> pd</span>
-<span id="cb12-2"></span>
-<span id="cb12-3">df <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'_data/googl.csv'</span>)</span>
-<span id="cb12-4">sns.lineplot(data<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>df, x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Date'</span>, y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Close'</span>)</span>
-<span id="cb12-5"></span>
-<span id="cb12-6">plt.xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'날짜'</span>)</span>
-<span id="cb12-7">plt.ylabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'종가'</span>)</span>
-<span id="cb12-8"></span>
-<span id="cb12-9">plt.xticks([<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">24</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">46</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">68</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">89</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">110</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">132</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">152</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">174</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">193</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">212</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">235</span>],</span>
-<span id="cb12-10">           [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'May'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Jun'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Jul'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Aug'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Sep'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Oct'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Nov'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Dec'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Jan'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Feb'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Mar'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Apr'</span>],</span>
-<span id="cb12-11">           rotation<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">45</span>)</span>
-<span id="cb12-12">plt.show()</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-10-output-1.png" width="598" height="444" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="0a6d651d" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> adfuller(df[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Close'</span>])</span>
-<span id="cb13-2"></span>
-<span id="cb13-3">result[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>], result[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
-<pre><code>(0.16025048664771407, 0.9699419435913058)</code></pre>
-</div>
-</div>
-<div id="417fe7e1" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">diff <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.diff(df[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Close'</span>], n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>)</span>
-<span id="cb15-2"></span>
-<span id="cb15-3">result_diff <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> adfuller(diff)</span>
-<span id="cb15-4">result_diff[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>], result_diff[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="45">
-<pre><code>(-5.303439704295227, 5.386530961454778e-06)</code></pre>
-</div>
-</div>
-<div id="733884c2" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">plot_acf(diff, lags<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="46">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-13-output-1.png" width="583" height="432" class="figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-13-output-2.png" width="583" height="432" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="확류보행-예측" class="level2">
-<h2 class="anchored" data-anchor-id="확류보행-예측">확류보행 예측</h2>
-<div id="ed517e6e" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">df <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.DataFrame({<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>: random_walk})</span>
-<span id="cb18-2">train <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df.iloc[:<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">800</span>]</span>
-<span id="cb18-3">test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df.iloc[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">800</span>:]</span>
-<span id="cb18-4"></span>
-<span id="cb18-5">mean <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.mean(train[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>])</span>
-<span id="cb18-6">test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_mean'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> mean</span>
-<span id="cb18-7"></span>
-<span id="cb18-8">last_value <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> train.iloc[<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>][<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>]</span>
-<span id="cb18-9">test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_last'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> last_value</span></code></pre></div>
-</div>
-<section id="표류-기법" class="level3">
-<h3 class="anchored" data-anchor-id="표류-기법">표류 기법</h3>
-<div id="22d75af6" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1">drift <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> (train.iloc[<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>][<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> train.iloc[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>][<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>]) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> (<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(train) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>)</span>
-<span id="cb19-2">drift</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="48">
-<pre><code>-0.0073114182124709975</code></pre>
-</div>
-</div>
-<div id="aa1d2d30" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1">x_vals <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.arange(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">801</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1001</span>)</span>
-<span id="cb21-2">pred_drift <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> drift <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> x_vals</span>
-<span id="cb21-3">test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_drift'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pred_drift</span>
-<span id="cb21-4">sns.lineplot(data<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>df, x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>df.index, y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>)</span>
-<span id="cb21-5">sns.lineplot(data<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>test, x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>test.index, y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_mean'</span>, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'평균 예측'</span>)</span>
-<span id="cb21-6">sns.lineplot(data<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>test, x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>test.index, y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_last'</span>, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'마지막 값 예측'</span>)</span>
-<span id="cb21-7">sns.lineplot(data<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>test, x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>test.index, y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_drift'</span>, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'표류 예측'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-16-output-1.png" width="590" height="430" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="e7f01675" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.metrics <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> mean_squared_error</span>
-<span id="cb22-2"></span>
-<span id="cb22-3">mse_mean <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> mean_squared_error(test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>], test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_mean'</span>])</span>
-<span id="cb22-4">mse_last <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> mean_squared_error(test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>], test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_last'</span>])</span>
-<span id="cb22-5">mse_drift <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> mean_squared_error(test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>], test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'pred_drift'</span>])</span>
-<span id="cb22-6"></span>
-<span id="cb22-7">sns.barplot(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'평균'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'마지막 값'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'표류'</span>], y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>[mse_mean, mse_last, mse_drift])</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02_files/figure-html/cell-17-output-1.png" width="572" height="412" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="단순-예측법" class="level3">
-<h3 class="anchored" data-anchor-id="단순-예측법">단순 예측법</h3>
-<div id="069530f1" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">df_shift <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df.shift(periods<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>)</span>
-<span id="cb23-2">mse_one_step <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> mean_squared_error(test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>], df_shift[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'value'</span>].iloc[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">800</span>:])</span>
-<span id="cb23-3">mse_one_step</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="51">
-<pre><code>1.0373151143278658</code></pre>
-</div>
-</div>
-
-
-</section>
-</section>
-
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">각주</h2>
-
-<ol>
-<li id="fn1"><p><img src="https://latex.codecogs.com/png.latex?y_t%20=%20C%20+%20%CE%B1y_%7Bt-1%7D%20+%20%CF%B5_t"> 형태의 시계열로, α가 1보다 작은 경우, 과거의 값이 현재 값에 미치는 영향이 작아져 시계열이 정상적이다.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>확률 통계</category>
-  <category>시계열 분석</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/adp_실기/notes/time_series/02.html</guid>
-  <pubDate>Tue, 08 Jul 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

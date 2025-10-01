@@ -1,185 +1,114 @@
 ---
-title: "EDA와 시각화"
-date: 2024-12-30
+title: "EDA 템플릿"
+date: 2025-09-29
 categories: ["데이터 분석"]
-directories: ["adp_실기"]
 ---
 
 ![](/img/stat-thumb.jpg){.post-thumbnail}
 
-## EDA(Exploratory Data Analysis)
+# 데이터 이해
 
-: 데이터의 특징과 데이터에 내재된 관계를 알아내기 위해 그래프와 통계적 분석 방법을 활용하여 탐구하는 것
-
-### 주제
-
-1. 저항성 강조: 부분적 변동(이상치 등)에 대한 민감성 확인
-2. 잔차 계산
-3. 자료변수의 재표현: 변수를 적당한 척도로 바꾸는 것
-4. 그래프를 통한 현시성
-
-## 막대 그래프
-
-`범주형 데이터`를 요약하고 시각적으로 비교하는 데 활용
+## Load Library
 
 ```{python}
+#| eval: false
 import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.datasets import load_wine
-
-wine_load = load_wine()
-wine = pd.DataFrame(wine_load.data, columns=wine_load.feature_names)
-wine_load
-wine['Class'] = wine_load.target
-wine['Class'] = wine['Class'].map({0: 'class_0', 1: 'class_1', 2: 'class_2'})
-
-wine_type = wine['Class'].value_counts()
-wine_type
-```
-
-```{python}
-# 수직 막대
-plt.bar(wine_type.index, wine_type.values, width=0.8, bottom=None, align = 'center')
-plt.show()
-```
-
-```{python}
-# 수평 막대
-plt.barh(wine_type.index, wine_type.values, height=0.8, left=None, align = 'center')
-plt.show()
-```
-
-각 범주의 값의 갯수 `차이가 극단적`인지 확인한다.
-극단적일 경우, 전처리 과정에서 `업/다운 샘플링 등을 통해 갯수가 유사해지도록 조정`해야한다.
-
-## 히스토그램
-
-`연속형 데이터`의 분포를 확인하는 데 활용
-
-```{python}
-plt.title('Wine alcohol histogram')
-plt.hist('alcohol', bins=8, range=(11, 15), color='purple', data=wine)
-plt.show()
-```
-
-## box plot
-
-`수치형 변수`의 분포를 확인하는 그래프
-
-```{python}
-from sklearn.datasets import load_iris
-
-iris_load = load_iris()
-iris = pd.DataFrame(iris_load.data, columns=iris_load.feature_names)
-iris['class'] = iris_load.target
-iris['class'] = iris['class'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
-
-plt.boxplot(iris.drop(columns='class'))
-plt.show()
-```
-
-```{python}
-import seaborn as sns
-
-sns.boxplot(x="class", y="sepal width (cm)", data=iris)
-plt.show()
-```
-
-## 산점도
-
-두 개의 `수치형 변수`의 `분포와 관계`를 확인하는 그래프
-
-```{python}
-plt.title('iris scatter')
-plt.xlabel('sepal length (cm)')
-plt.ylabel('sepal width (cm)')
-
-plt.scatter('sepal length (cm)', 'sepal width (cm)', data=iris, alpha=0.5)
-plt.show()
-```
-
-```{python}
-sns.scatterplot(x='sepal length (cm)', y='sepal width (cm)', hue='class', data=iris, style='class')
-plt.show()
-```
-
-## 선그래프
-
-### 수평 / 수직 선
-
-```{python}
-plt.hlines(y=-6, xmin=-10, xmax=10, colors='red', linestyles='solid')
-plt.vlines(x=0, ymin=-10, ymax=10, colors='blue', linestyles='dashed')
-```
-
-### 함수식
-
-```{python}
-def linear_func(x):
-    return 2*x + 1
-
-X = iris['sepal length (cm)']
-plt.plot(X, linear_func(X), c='red')
-plt.show()
-```
-
-### 회귀선
-
-```{python}
 import numpy as np
-
-X, Y = iris['sepal length (cm)'], iris['sepal width (cm)']
-plt.scatter(X, Y, alpha=0.5)
-a, b = np.polyfit(X, Y, 1)
-plt.plot(X, a*X + b, c='red')
-plt.show()
+import matplotlib.pyplot as plt
+import seaborn as sns
+import platform
+import warnings
 ```
 
-2차 이상의 그래프는 X값에 대하여 정렬해야 한다.
+## Settings
 
 ```{python}
-iris2 = iris.sort_values(by='sepal length (cm)')
-X, Y = iris2['sepal length (cm)'], iris2['petal length (cm)']
-b2, b1, b0 = np.polyfit(X, Y, 2)
-plt.scatter(X, Y, alpha=0.5)
-plt.plot(X, b0 + b1*X + b2*X**2, color='red')
-plt.show()
+#| eval: false
+warnings.filterwarnings('ignore')
+
+if platform.system() == 'Darwin': #맥
+        plt.rc('font', family='AppleGothic') 
+elif platform.system() == 'Windows': #윈도우
+        plt.rc('font', family='Malgun Gothic') 
+elif platform.system() == 'Linux': #리눅스 (구글 콜랩)
+        #!wget "https://www.wfonts.com/download/data/2016/06/13/malgun-gothic/malgun.ttf"
+        #!mv malgun.ttf /usr/share/fonts/truetype/
+        #import matplotlib.font_manager as fm 
+        #fm._rebuild() 
+        plt.rc('font', family='Malgun Gothic') 
+plt.rcParams['axes.unicode_minus'] = False #한글 폰트 사용시 마이너스 폰트 깨짐 해결
+warnings.filterwarnings('ignore')
 ```
 
-### 꺾은선
+## Load Data
 
 ```{python}
-plt.plot('sepal length (cm)', 'petal length (cm)', data=iris2)
-plt.show()
+#| eval: false
+
+df = pd.read_csv('df.csv')
+
+print(f"df shape: {df.shape}")
 ```
 
-## 상관관계 시각화
-
-### 산점도 행렬
+## Statistical Summary
 
 ```{python}
-from pandas.plotting import scatter_matrix
-
-scatter_matrix(iris, alpha=0.5, figsize= (8, 8), diagonal='hist')
-plt.show()
+df.head()
 ```
 
 ```{python}
-sns.pairplot(iris, diag_kind='auto', hue='class')
-plt.show()
+df.info()
 ```
 
-### 상관계수 행렬 그래프
+### 범주형
 
 ```{python}
-iris_corr = iris.drop(columns='class').corr(method='pearson')
-sns.heatmap(iris_corr, xticklabels=iris_corr.columns, yticklabels=iris_corr.columns, cmap="RdBu_r", annot=True)
+import matplotlib.pyplot as plt
+
+cat_cols = []
+num_cols = []
+ord_cols = [] # 연속형으로 처리하던가 범주형으로 처리하던가 알아서 정하면 됨
+
+for col in cat_cols + ord_cols:
+    target_counts = df[col].value_counts().sort_index()
+    target_ratio = df[col].value_counts(normalize=True).sort_index()
+
+    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    target_counts.plot(kind='bar', ax=ax1)
+    ax1.set_title(f'{col}'s Count', fontsize=14, pad=20)
+    ax1.set_xlabel('Support Level', fontsize=12)
+    ax1.set_ylabel('count', fontsize=12)
+    ax1.set_xticklabels()
+
+    colors = ['#3498db', '#e74c3c', '#2ecc71']
+    wedges, texts, autotexts = ax2.pie(target_ratio, labels=['Level 0', 'Level 1', 'Level 2'], 
+                                                                           autopct='%1.1f%%', colors=colors, startangle=90)
+    ax2.set_title('Support Level Distribution', fontsize=14, pad=20)
+
+    plt.tight_layout()
+    plt.show()
+
+    print("Target variable distribution:")
+    for i in range(3):
+            print(f"Level {i}: {target_counts[i]:,} customers ({target_ratio[i]*100:.1f}%)")
 ```
 
-## Pandas Profiling
+### 연속형
 
 ```{python}
-# from pandas_profiling import ProfileReport
-#
-# ProfileReport(iris)
+
+
+```
+
+## Missing Values
+
+```{python}
+print(df.isnull().sum())
+
+print(df[df.isnull().any(axis=1)])
+```
+
+```{python}
+
 ```

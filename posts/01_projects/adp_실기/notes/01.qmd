@@ -19,7 +19,7 @@ from sklearn.compose import ColumnTransformer
 preprocessor = ColumnTransformer(transformers=[
     ('num', StandardScaler(), num_features),
     ('cat', OneHotEncoder(drop='first'), cat_features),
-    ('ord', OrdinalEncoder(), ord_features)
+    ('ord', OrdinalEncoder(), ord_features) # 순서형 변수. 하지만 이렇게 처리하는 것보다 그냥 DataFrame.map()으로 직접 인코딩해주는게 더 나을듯
 ])
 pipeline = Pipeline(steps=[
     ('preprocessor', preprocessor),
@@ -29,12 +29,12 @@ pipeline = Pipeline(steps=[
 
 ## Grid Search & Bayesian Optimization
 
-```{python filename="grid search}
+```{python filename="grid search"}
 #| eval: false
 
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, roc_auc_score
-from sklearn.metrics import mean_absolute_error, r2_score, root_mean_squared_error
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
 
 # 파라미터 이름 앞에 pipeline에서 사용한 '모델이름__'을 붙여야 함
 params = {
@@ -63,7 +63,7 @@ test_precision, test_recall, test_f1, _ = precision_recall_fscore_support(
     y_pred, 
     average='binary' # 다중 클래스인 경우 'macro', 'micro', 'weighted' 중 선택
 )
-test_auc = roc_auc_score(y_test, y_pred_proba) # 다중 클래스인 경우 multi_class='ovo', 'ovr' 중 선택
+test_auc = roc_auc_score(y_test, y_pred_proba) # 다중 클래스인 경우 multi_class='ovr', 'ovo' 중 선택
 
 print(f"test_accuracy: {test_acc:.4f}")
 print(f"test_precision: {test_precision:.4f}")
@@ -73,7 +73,7 @@ print(f"test_auc: {test_auc:.4f}")
 
 # ============ 회귀 scoring ============
 
-rmse = root_mean_squared_error(y_test, y_pred)
+rmse = mean_squared_error(y_test, y_pred, squared=False)
 mae = mean_absolute_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 print(f"test_rmse: {rmse:.4f}")
@@ -81,12 +81,14 @@ print(f"test_mae: {mae:.4f}")
 print(f"test_r2: {r2:.4f}")
 ```
 
+- 👇 시험에서 사용 불가. 하지만 kaggle이나 dacon에서 주로 사용됨
+
 ```{python filename="bayesian optimization"}
 #| eval: false
 import optuna
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score, roc_auc_score
-from sklearn.metrics import mean_absolute_error, r2_score, root_mean_squared_error
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
 
 def objective(trial):
     # 모델에 적합한 파라미터에 맞게 수정
@@ -126,7 +128,7 @@ test_precision, test_recall, test_f1, _ = precision_recall_fscore_support(
     y_pred, 
     average='binary' # 다중 클래스인 경우 'macro', 'micro', 'weighted' 중 선택해서 사용
 )
-test_auc = roc_auc_score(y_test, y_pred_proba) # 다중 클래스인 경우 multiclass='ovo', 'ovr' 중 선택해서 사용
+test_auc = roc_auc_score(y_test, y_pred_proba) # 다중 클래스인 경우 multiclass='ovr', 'ovo' 중 선택해서 사용
 
 print("test_accuracy:", test_acc)
 print("test_precision:", test_precision)
@@ -136,7 +138,96 @@ print("test_auc:", test_auc)
 
 # ============ 회귀 scoring ============
 
-rmse = root_mean_squared_error(y_test, y_pred)
+rmse = mean_squared_error(y_test, y_pred, squared=False)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+print(f"test_rmse: {rmse:.4f}")
+print(f"test_mae: {mae:.4f}")
+print(f"test_r2: {r2:.4f}")
+```
+
+- 👇 시험에서 사용 가능
+
+```{python filename="bayesian optimization hyperopt"}
+#| eval: false
+from hyperopt import hp, STATUS_OK, fmin, tpe, Trials
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics import precision_recall_fscore_support, accuracy_score, roc_auc_score
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
+
+# 파라미터 공간 정의
+search_space = {
+    'classifier__n_estimators': hp.quniform('n_estimators', 100, 500, 100),
+    'classifier__max_features': hp.choice('max_features', ['sqrt', 'log2']),
+    'classifier__max_depth': hp.quniform('max_depth', 10, 110, 20),
+    'classifier__min_samples_split': hp.quniform('min_samples_split', 2, 10, 2),
+    'classifier__min_samples_leaf': hp.quniform('min_samples_leaf', 1, 4, 1)
+}
+
+def objective_func(params):
+    # 파라미터 타입 변환 (hyperopt는 float로 반환하므로 int로 변환 필요)
+    params_int = {
+        'classifier__n_estimators': int(params['classifier__n_estimators']),
+        'classifier__max_features': params['classifier__max_features'],
+        'classifier__max_depth': int(params['classifier__max_depth']),
+        'classifier__min_samples_split': int(params['classifier__min_samples_split']),
+        'classifier__min_samples_leaf': int(params['classifier__min_samples_leaf'])
+    }
+    pipeline.set_params(**params_int)
+    
+    cv_score = cross_val_score(pipeline,
+                               X_train,
+                               y_train,
+                               cv=5,
+                               scoring='accuracy') # 분류: accuracy, f1, roc_auc, f1_macro, roc_auc_ovr, roc_auc_ovo, 회귀: neg_root_mean_squared_error, r2, neg_mean_absolute_error
+    mean_cv_score = cv_score.mean()
+    
+    # hyperopt는 최소화하므로 음수 반환 (최대화하려는 경우)
+    return {'loss': -mean_cv_score, 'status': STATUS_OK}
+
+# 최적화 실행
+trials = Trials()
+best = fmin(fn=objective_func,
+            space=search_space,
+            algo=tpe.suggest,
+            max_evals=100,
+            trials=trials)
+
+# 최적 파라미터 적용 (타입 변환 포함)
+best_params = {
+    'classifier__n_estimators': int(best['n_estimators']),
+    'classifier__max_features': ['sqrt', 'log2'][int(best['max_features'])],
+    'classifier__max_depth': int(best['max_depth']),
+    'classifier__min_samples_split': int(best['min_samples_split']),
+    'classifier__min_samples_leaf': int(best['min_samples_leaf'])
+}
+
+pipeline.set_params(**best_params)
+pipeline.fit(X_train, y_train)
+
+y_pred = pipeline.predict(X_test)
+
+# ============ 분류 scoring ============
+
+y_pred_proba = pipeline.predict_proba(X_test)[:, 1]
+
+test_acc = accuracy_score(y_test, y_pred)
+test_precision, test_recall, test_f1, _ = precision_recall_fscore_support(
+    y_test, 
+    y_pred, 
+    average='binary' # 다중 클래스인 경우 'macro', 'micro', 'weighted' 중 선택해서 사용
+)
+test_auc = roc_auc_score(y_test, y_pred_proba) # 다중 클래스인 경우 multiclass='ovr', 'ovo' 중 선택해서 사용
+
+print("test_accuracy:", test_acc)
+print("test_precision:", test_precision)
+print("test_recall:", test_recall)
+print("test_f1_score:", test_f1)
+print("test_auc:", test_auc)
+
+# ============ 회귀 scoring ============
+
+rmse = mean_squared_error(y_test, y_pred, squared=False)
 mae = mean_absolute_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 print(f"test_rmse: {rmse:.4f}")
@@ -150,17 +241,24 @@ print(f"test_r2: {r2:.4f}")
 
 ```{python}
 #| eval: false
+from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
 
-plt.figure()
-plt.plot(logistic_fpr, logistic_tpr, color='blue', lw=2, label=f'Logistic (AUC = {logistic_roc_auc:.2f})')
-plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+# ROC 곡선 계산
+y_pred_proba = best_model.predict_proba(X_test)[:, 1]  # 양성 클래스 확률
+fpr, tpr, _ = roc_curve(y_test, y_pred_proba)
+
+# ROC 곡선 시각화
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, color='blue', lw=2, label=f'ROC curve (AUC = {roc_auc:.2f})')
+plt.plot([0, 1], [0, 1], color='red', lw=2, linestyle='--', label='Random')
 plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.0])
-plt.xlabel('FPR')
-plt.ylabel('TPR')
-plt.title('ROC')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
 plt.legend(loc='lower right')
+plt.grid(True)
 plt.show()
 ```
 
@@ -168,34 +266,43 @@ plt.show()
 
 ```{python}
 #| eval: false
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+importances = pipeline.named_steps['classifier'].feature_importances_
+ftr_importance = pd.Series(importances, index=X.columns)
+ftr_top = ftr_importance.sort_values(ascending=False)[:20] # 원하는 수 만큼 설정
+sns.barplot(ftr_top20, y=ftr_top.index)
+plt.show()
 ```
 
 ## 모델 파라미터
+
+- 아래부터는 ai의 도움을 받았습니다.
+- 적당히 몇 개만 골라서 사용하면 됩니다.
 
 ### Logistic 회귀분석
 
 ```{python}
 #| eval: false
 
+# Grid Search용
 params = {
-    "penalty":, 
-    "C":, 
-    "l1_ratio":
+    "classifier__penalty": ['l1', 'l2', 'elasticnet', 'none'],  # 정규화 방법
+    "classifier__C": [0.001, 0.01, 0.1, 1, 10, 100],  # 정규화 강도 (작을수록 강한 정규화)
+    "classifier__l1_ratio": [0.1, 0.3, 0.5, 0.7, 0.9],  # elasticnet일 때만 사용
+    "classifier__solver": ['liblinear', 'lbfgs', 'newton-cg', 'sag', 'saga'],  # 최적화 알고리즘
+    "classifier__max_iter": [100, 500, 1000, 2000]  # 최대 반복 횟수
 }
 
-C : float, default=1.0
-    Inverse of regularization strength; must be a positive float.
-    Like in support vector machines, smaller values specify stronger
-    regularization.
-
-
-l1_ratio : float, default=None
-    The Elastic-Net mixing parameter, with ``0 <= l1_ratio <= 1``. Only
-    used if ``penalty='elasticnet'``. Setting ``l1_ratio=0`` is equivalent
-    to using ``penalty='l2'``, while setting ``l1_ratio=1`` is equivalent
-    to using ``penalty='l1'``. For ``0 < l1_ratio <1``, the penalty is a
-    combination of L1 and L2.
+# Bayesian Optimization용 (optuna)
+params_bayes = {
+    "classifier__penalty": trial.suggest_categorical("penalty", ['l1', 'l2', 'elasticnet']),
+    "classifier__C": trial.suggest_float("C", 0.001, 100, log=True),
+    "classifier__l1_ratio": trial.suggest_float("l1_ratio", 0.1, 0.9),
+    "classifier__solver": trial.suggest_categorical("solver", ['liblinear', 'saga']),
+    "classifier__max_iter": trial.suggest_int("max_iter", 100, 2000, step=100)
+}
 ```
 
 ### KNN
@@ -203,6 +310,25 @@ l1_ratio : float, default=None
 ```{python}
 #| eval: false
 
+# Grid Search용
+params = {
+    "classifier__n_neighbors": [3, 5, 7, 9, 11, 15, 21],  # k값 (이웃의 수)
+    "classifier__weights": ['uniform', 'distance'],  # 가중치 방법
+    "classifier__algorithm": ['auto', 'ball_tree', 'kd_tree', 'brute'],  # 알고리즘
+    "classifier__leaf_size": [20, 30, 40, 50],  # 리프 크기 (ball_tree, kd_tree용)
+    "classifier__p": [1, 2],  # 거리 측도 (1: 맨하탄, 2: 유클리드)
+    "classifier__metric": ['minkowski', 'euclidean', 'manhattan']  # 거리 함수
+}
+
+# Bayesian Optimization용 (optuna)
+params_bayes = {
+    "classifier__n_neighbors": trial.suggest_int("n_neighbors", 3, 21, step=2),
+    "classifier__weights": trial.suggest_categorical("weights", ['uniform', 'distance']),
+    "classifier__algorithm": trial.suggest_categorical("algorithm", ['auto', 'ball_tree', 'kd_tree']),
+    "classifier__leaf_size": trial.suggest_int("leaf_size", 20, 50, step=10),
+    "classifier__p": trial.suggest_int("p", 1, 2),
+    "classifier__metric": trial.suggest_categorical("metric", ['minkowski', 'euclidean', 'manhattan'])
+}
 ```
 
 ### Support Vector Machine
@@ -210,6 +336,30 @@ l1_ratio : float, default=None
 ```{python}
 #| eval: false
 
+# Grid Search용
+params = {
+    "classifier__C": [0.001, 0.01, 0.1, 1, 10, 100, 1000],  # 정규화 파라미터 (작을수록 강한 정규화)
+    "classifier__kernel": ['linear', 'poly', 'rbf', 'sigmoid'],  # 커널 함수
+    "classifier__degree": [2, 3, 4, 5],  # poly 커널 차수 (poly일 때만 사용)
+    "classifier__gamma": ['scale', 'auto', 0.001, 0.01, 0.1, 1, 10],  # 커널 계수 (rbf, poly, sigmoid용)
+    "classifier__coef0": [0.0, 0.1, 0.5, 1.0],  # 커널의 독립항 (poly, sigmoid용)
+    "classifier__shrinking": [True, False],  # 수축 휴리스틱 사용 여부
+    "classifier__tol": [1e-5, 1e-4, 1e-3],  # 정지 기준 허용 오차
+    "classifier__max_iter": [100, 500, 1000, 2000, -1]  # 최대 반복 횟수 (-1: 제한 없음)
+}
+
+# Bayesian Optimization용 (optuna)
+params_bayes = {
+    "classifier__C": trial.suggest_float("C", 0.001, 1000, log=True),
+    "classifier__kernel": trial.suggest_categorical("kernel", ['linear', 'poly', 'rbf', 'sigmoid']),
+    "classifier__degree": trial.suggest_int("degree", 2, 5),  # poly일 때만
+    "classifier__gamma": trial.suggest_categorical("gamma", ['scale', 'auto']) if trial.suggest_categorical("gamma_type", ['scale_auto', 'float']) == 'scale_auto' 
+                         else trial.suggest_float("gamma", 0.001, 10, log=True),
+    "classifier__coef0": trial.suggest_float("coef0", 0.0, 1.0),
+    "classifier__shrinking": trial.suggest_categorical("shrinking", [True, False]),
+    "classifier__tol": trial.suggest_float("tol", 1e-5, 1e-3, log=True),
+    "classifier__max_iter": trial.suggest_int("max_iter", 100, 2000, step=100)
+}
 ```
 
 ### Random Forest
@@ -217,19 +367,35 @@ l1_ratio : float, default=None
 ```{python}
 #| eval: false
 
+# Grid Search용
 params = {
-    "n_estimators":,
-    "criterion":,
-    "max_depth":,
-    "min_samples_split":,
-    "min_samples_leaf":,
-    "min_weight_fraction_leaf":,
-    "max_features":,
-    "max_leaf_nodes":,
-    "min_impurity_decrease":,
-    "min_impurity_split":,
-    "ccp_alpha":,
-    "max_samples":
+    "classifier__n_estimators": [50, 100, 200, 300, 500],  # 트리 개수
+    "classifier__criterion": ['gini', 'entropy', 'log_loss'],  # 불순도 측정 기준
+    "classifier__max_depth": [None, 5, 10, 20, 30, 50],  # 트리의 최대 깊이 (None: 제한 없음)
+    "classifier__min_samples_split": [2, 5, 10, 20],  # 내부 노드 분할에 필요한 최소 샘플 수
+    "classifier__min_samples_leaf": [1, 2, 4, 10],  # 리프 노드에 필요한 최소 샘플 수
+    "classifier__min_weight_fraction_leaf": [0.0, 0.1, 0.2],  # 리프 노드에 필요한 최소 가중치 비율
+    "classifier__max_features": ['sqrt', 'log2', None, 0.3, 0.5, 0.7],  # 각 분할에서 고려할 피처 수
+    "classifier__max_leaf_nodes": [None, 50, 100, 200],  # 최대 리프 노드 수
+    "classifier__min_impurity_decrease": [0.0, 0.01, 0.05, 0.1],  # 분할에 필요한 최소 불순도 감소량
+    "classifier__bootstrap": [True, False],  # 부트스트랩 사용 여부
+    "classifier__oob_score": [True, False],  # OOB 스코어 계산 여부
+    "classifier__max_samples": [None, 0.5, 0.7, 0.9],  # 각 트리에 사용할 샘플 비율
+    "classifier__ccp_alpha": [0.0, 0.01, 0.05, 0.1]  # 복잡도 가지치기 파라미터
+}
+
+# Bayesian Optimization용 (optuna)
+params_bayes = {
+    "classifier__n_estimators": trial.suggest_int("n_estimators", 50, 500, step=50),
+    "classifier__criterion": trial.suggest_categorical("criterion", ['gini', 'entropy']),
+    "classifier__max_depth": trial.suggest_int("max_depth", 5, 50, step=5) if trial.suggest_categorical("max_depth_choice", [True, False]) else None,
+    "classifier__min_samples_split": trial.suggest_int("min_samples_split", 2, 20, step=2),
+    "classifier__min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 10, step=1),
+    "classifier__max_features": trial.suggest_categorical("max_features", ['sqrt', 'log2', None]),
+    "classifier__min_impurity_decrease": trial.suggest_float("min_impurity_decrease", 0.0, 0.1),
+    "classifier__bootstrap": trial.suggest_categorical("bootstrap", [True, False]),
+    "classifier__max_samples": trial.suggest_float("max_samples", 0.5, 1.0) if trial.suggest_categorical("use_max_samples", [True, False]) else None,
+    "classifier__ccp_alpha": trial.suggest_float("ccp_alpha", 0.0, 0.1)
 }
 ```
 
@@ -238,19 +404,38 @@ params = {
 ```{python}
 #| eval: false
 
+# Grid Search용
 params = {
-    "max_depth" :,
-    "learning_rate":,
-    "n_estimators":,
-    "gamma":,
-    "min_child_weight":,
-    "max_delta_step":,
-    "subsample":,
-    "colsample_bytree":,
-    "colsample_bylevel":,
-    "colsample_bynode":,
-    "reg_alpha":,
-    "reg_lambda":,
+    "classifier__n_estimators": [50, 100, 200, 300, 500],  # 부스팅 라운드 수
+    "classifier__learning_rate": [0.01, 0.05, 0.1, 0.2, 0.3],  # 학습률 (eta)
+    "classifier__max_depth": [3, 4, 5, 6, 7, 8],  # 트리 최대 깊이
+    "classifier__min_child_weight": [1, 3, 5, 7],  # 리프 노드의 최소 가중치 합
+    "classifier__gamma": [0, 0.1, 0.2, 0.3, 0.4],  # 분할에 필요한 최소 손실 감소
+    "classifier__subsample": [0.6, 0.7, 0.8, 0.9, 1.0],  # 행 샘플링 비율
+    "classifier__colsample_bytree": [0.6, 0.7, 0.8, 0.9, 1.0],  # 열 샘플링 비율 (트리별)
+    "classifier__colsample_bylevel": [0.6, 0.7, 0.8, 0.9, 1.0],  # 열 샘플링 비율 (레벨별)
+    "classifier__colsample_bynode": [0.6, 0.7, 0.8, 0.9, 1.0],  # 열 샘플링 비율 (노드별)
+    "classifier__reg_alpha": [0, 0.01, 0.1, 1, 10],  # L1 정규화 파라미터
+    "classifier__reg_lambda": [0, 0.01, 0.1, 1, 10],  # L2 정규화 파라미터
+    "classifier__max_delta_step": [0, 1, 2, 5, 10],  # 각 트리 가중치 변화의 최대값
+    "classifier__scale_pos_weight": [1, 2, 3, 5]  # 양성 클래스 가중치 (불균형 데이터용)
+}
+
+# Bayesian Optimization용 (optuna)
+params_bayes = {
+    "classifier__n_estimators": trial.suggest_int("n_estimators", 50, 500, step=50),
+    "classifier__learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
+    "classifier__max_depth": trial.suggest_int("max_depth", 3, 8),
+    "classifier__min_child_weight": trial.suggest_int("min_child_weight", 1, 7),
+    "classifier__gamma": trial.suggest_float("gamma", 0, 0.4),
+    "classifier__subsample": trial.suggest_float("subsample", 0.6, 1.0),
+    "classifier__colsample_bytree": trial.suggest_float("colsample_bytree", 0.6, 1.0),
+    "classifier__colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.6, 1.0),
+    "classifier__colsample_bynode": trial.suggest_float("colsample_bynode", 0.6, 1.0),
+    "classifier__reg_alpha": trial.suggest_float("reg_alpha", 0, 10, log=True),
+    "classifier__reg_lambda": trial.suggest_float("reg_lambda", 0, 10, log=True),
+    "classifier__max_delta_step": trial.suggest_int("max_delta_step", 0, 10),
+    "classifier__scale_pos_weight": trial.suggest_int("scale_pos_weight", 1, 5)
 }
 ```
 
@@ -259,12 +444,95 @@ params = {
 ```{python}
 #| eval: false
 
+# Grid Search용
+params = {
+    "classifier__n_estimators": [50, 100, 200, 300, 500],  # 부스팅 라운드 수
+    "classifier__learning_rate": [0.01, 0.05, 0.1, 0.2, 0.3],  # 학습률
+    "classifier__max_depth": [3, 5, 7, 10, -1],  # 트리 최대 깊이 (-1: 제한 없음)
+    "classifier__num_leaves": [15, 31, 63, 127, 255],  # 리프 노드 수 (2^max_depth - 1보다 작게)
+    "classifier__min_child_samples": [10, 20, 30, 50],  # 리프 노드의 최소 샘플 수
+    "classifier__min_child_weight": [1e-3, 1e-2, 1e-1, 1],  # 리프 노드의 최소 가중치 합
+    "classifier__subsample": [0.6, 0.7, 0.8, 0.9, 1.0],  # 행 샘플링 비율
+    "classifier__colsample_bytree": [0.6, 0.7, 0.8, 0.9, 1.0],  # 열 샘플링 비율
+    "classifier__reg_alpha": [0, 0.01, 0.1, 1, 10],  # L1 정규화
+    "classifier__reg_lambda": [0, 0.01, 0.1, 1, 10],  # L2 정규화
+    "classifier__min_split_gain": [0, 0.01, 0.1, 0.5],  # 분할에 필요한 최소 gain
+    "classifier__min_data_in_leaf": [10, 20, 50, 100],  # 리프의 최소 데이터 수
+    "classifier__boosting_type": ['gbdt', 'dart', 'goss'],  # 부스팅 타입
+    "classifier__feature_fraction": [0.6, 0.7, 0.8, 0.9, 1.0],  # 피처 샘플링 비율
+    "classifier__bagging_fraction": [0.6, 0.7, 0.8, 0.9, 1.0],  # 데이터 샘플링 비율
+    "classifier__bagging_freq": [0, 1, 3, 5]  # 배깅 빈도
+}
+
+# Bayesian Optimization용 (optuna)
+params_bayes = {
+    "classifier__n_estimators": trial.suggest_int("n_estimators", 50, 500, step=50),
+    "classifier__learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
+    "classifier__max_depth": trial.suggest_int("max_depth", 3, 10) if trial.suggest_categorical("limit_depth", [True, False]) else -1,
+    "classifier__num_leaves": trial.suggest_int("num_leaves", 15, 255, step=16),
+    "classifier__min_child_samples": trial.suggest_int("min_child_samples", 10, 50, step=10),
+    "classifier__min_child_weight": trial.suggest_float("min_child_weight", 1e-3, 1, log=True),
+    "classifier__subsample": trial.suggest_float("subsample", 0.6, 1.0),
+    "classifier__colsample_bytree": trial.suggest_float("colsample_bytree", 0.6, 1.0),
+    "classifier__reg_alpha": trial.suggest_float("reg_alpha", 0, 10, log=True),
+    "classifier__reg_lambda": trial.suggest_float("reg_lambda", 0, 10, log=True),
+    "classifier__min_split_gain": trial.suggest_float("min_split_gain", 0, 0.5),
+    "classifier__min_data_in_leaf": trial.suggest_int("min_data_in_leaf", 10, 100, step=10),
+    "classifier__boosting_type": trial.suggest_categorical("boosting_type", ['gbdt', 'dart', 'goss']),
+    "classifier__feature_fraction": trial.suggest_float("feature_fraction", 0.6, 1.0),
+    "classifier__bagging_fraction": trial.suggest_float("bagging_fraction", 0.6, 1.0),
+    "classifier__bagging_freq": trial.suggest_int("bagging_freq", 0, 5)
+}
 ```
 
 ### Catboost
 
-
 ```{python}
 #| eval: false
 
+# Grid Search용
+params = {
+    "classifier__n_estimators": [50, 100, 200, 300, 500],  # 부스팅 라운드 수
+    "classifier__learning_rate": [0.01, 0.05, 0.1, 0.2, 0.3],  # 학습률
+    "classifier__depth": [3, 4, 5, 6, 7, 8],  # 트리 깊이 (max_depth 대신 depth 사용)
+    "classifier__l2_leaf_reg": [1, 3, 5, 10, 20],  # L2 정규화 파라미터
+    "classifier__border_count": [32, 64, 128, 255],  # 수치형 피처의 분할점 개수
+    "classifier__bagging_temperature": [0, 0.5, 1, 2, 5],  # 배깅 온도 (0: 비활성화)
+    "classifier__random_strength": [1, 2, 5, 10],  # 트리 구조의 무작위성
+    "classifier__od_type": ['IncToDec', 'Iter'],  # 조기 종료 타입
+    "classifier__od_wait": [10, 20, 50],  # 조기 종료 대기 라운드
+    "classifier__bootstrap_type": ['Bayesian', 'Bernoulli', 'MVS', 'Poisson'],  # 부트스트랩 타입
+    "classifier__subsample": [0.6, 0.7, 0.8, 0.9, 1.0],  # 샘플링 비율 (Bernoulli일 때만)
+    "classifier__rsm": [0.5, 0.7, 0.9, 1.0],  # 무작위 서브스페이스 방법 (피처 샘플링)
+    "classifier__leaf_estimation_iterations": [1, 3, 5, 10],  # 리프 값 추정 반복 횟수
+    "classifier__grow_policy": ['SymmetricTree', 'Depthwise', 'Lossguide'],  # 트리 성장 정책
+    "classifier__min_data_in_leaf": [1, 5, 10, 20],  # 리프 노드의 최소 샘플 수
+    "classifier__max_leaves": [16, 31, 64, 127]  # 최대 리프 수 (Lossguide일 때만)
+}
+
+# Bayesian Optimization용 (optuna)
+params_bayes = {
+    "classifier__n_estimators": trial.suggest_int("n_estimators", 50, 500, step=50),
+    "classifier__learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
+    "classifier__depth": trial.suggest_int("depth", 3, 8),
+    "classifier__l2_leaf_reg": trial.suggest_int("l2_leaf_reg", 1, 20),
+    "classifier__border_count": trial.suggest_categorical("border_count", [32, 64, 128, 255]),
+    "classifier__bagging_temperature": trial.suggest_float("bagging_temperature", 0, 5),
+    "classifier__random_strength": trial.suggest_int("random_strength", 1, 10),
+    "classifier__od_type": trial.suggest_categorical("od_type", ['IncToDec', 'Iter']),
+    "classifier__od_wait": trial.suggest_int("od_wait", 10, 50, step=10),
+    "classifier__bootstrap_type": trial.suggest_categorical("bootstrap_type", ['Bayesian', 'Bernoulli', 'MVS']),
+    "classifier__subsample": trial.suggest_float("subsample", 0.6, 1.0) if trial.suggest_categorical("use_subsample", [True, False]) else None,
+    "classifier__rsm": trial.suggest_float("rsm", 0.5, 1.0),
+    "classifier__leaf_estimation_iterations": trial.suggest_int("leaf_estimation_iterations", 1, 10),
+    "classifier__grow_policy": trial.suggest_categorical("grow_policy", ['SymmetricTree', 'Depthwise', 'Lossguide']),
+    "classifier__min_data_in_leaf": trial.suggest_int("min_data_in_leaf", 1, 20),
+    "classifier__max_leaves": trial.suggest_int("max_leaves", 16, 127) if trial.suggest_categorical("use_max_leaves", [True, False]) else None
+}
+
+# 주요 특징:
+# - GPU 지원 (gpu_device_id=-1로 설정하면 GPU 사용)
+# - 범주형 변수 자동 처리 (cat_features 파라미터로 지정)
+# - 내장된 교차검증 및 조기 종료
+# - 텍스트 및 임베딩 피처 지원
 ```
