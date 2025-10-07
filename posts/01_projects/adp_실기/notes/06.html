@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>EDA와 시각화 – 김형훈의 학습 블로그</title>
+<title>비지도 학습 템플릿 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,47 +20,13 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../posts/01_projects/adp_실기/notes/03.html" rel="next">
-<link href="../../../../posts/01_projects/adp_실기/notes/01.html" rel="prev">
+<link href="../../../../posts/01_projects/adp_실기/notes/07.html" rel="next">
+<link href="../../../../posts/01_projects/adp_실기/notes/05.html" rel="prev">
 <link href="../../../../favicon" rel="icon">
 <script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../site_libs/quarto-html/quarto.js"></script>
@@ -104,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
@@ -143,7 +138,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/index.html">ADP 실기 준비 - try 1</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/notes/00.pdf">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/notes/02.html">EDA 템플릿</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/index.html">ADP 실기 준비 - try 1</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/notes/00.pdf">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/notes/06.html">비지도 학습 템플릿</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -258,7 +253,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/01_projects/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../posts/01_projects/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">EDA 템플릿</span></a>
   </div>
 </li>
@@ -282,7 +277,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../posts/01_projects/adp_실기/notes/06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../posts/01_projects/adp_실기/notes/06.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">비지도 학습 템플릿</span></a>
   </div>
 </li>
@@ -2852,36 +2847,25 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#edaexploratory-data-analysis" id="toc-edaexploratory-data-analysis" class="nav-link active" data-scroll-target="#edaexploratory-data-analysis">EDA(Exploratory Data Analysis)</a>
+  <li><a href="#군집-분석" id="toc-군집-분석" class="nav-link active" data-scroll-target="#군집-분석">군집 분석</a>
   <ul class="collapse">
-  <li><a href="#주제" id="toc-주제" class="nav-link" data-scroll-target="#주제">주제</a></li>
+  <li><a href="#전제-조건" id="toc-전제-조건" class="nav-link" data-scroll-target="#전제-조건">전제 조건</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">model</a></li>
+  <li><a href="#평가" id="toc-평가" class="nav-link" data-scroll-target="#평가">평가</a></li>
   </ul></li>
-  <li><a href="#막대-그래프" id="toc-막대-그래프" class="nav-link" data-scroll-target="#막대-그래프">막대 그래프</a></li>
-  <li><a href="#히스토그램" id="toc-히스토그램" class="nav-link" data-scroll-target="#히스토그램">히스토그램</a></li>
-  <li><a href="#box-plot" id="toc-box-plot" class="nav-link" data-scroll-target="#box-plot">box plot</a></li>
-  <li><a href="#산점도" id="toc-산점도" class="nav-link" data-scroll-target="#산점도">산점도</a></li>
-  <li><a href="#선그래프" id="toc-선그래프" class="nav-link" data-scroll-target="#선그래프">선그래프</a>
-  <ul class="collapse">
-  <li><a href="#수평-수직-선" id="toc-수평-수직-선" class="nav-link" data-scroll-target="#수평-수직-선">수평 / 수직 선</a></li>
-  <li><a href="#함수식" id="toc-함수식" class="nav-link" data-scroll-target="#함수식">함수식</a></li>
-  <li><a href="#회귀선" id="toc-회귀선" class="nav-link" data-scroll-target="#회귀선">회귀선</a></li>
-  <li><a href="#꺾은선" id="toc-꺾은선" class="nav-link" data-scroll-target="#꺾은선">꺾은선</a></li>
-  </ul></li>
-  <li><a href="#상관관계-시각화" id="toc-상관관계-시각화" class="nav-link" data-scroll-target="#상관관계-시각화">상관관계 시각화</a>
-  <ul class="collapse">
-  <li><a href="#산점도-행렬" id="toc-산점도-행렬" class="nav-link" data-scroll-target="#산점도-행렬">산점도 행렬</a></li>
-  <li><a href="#상관계수-행렬-그래프" id="toc-상관계수-행렬-그래프" class="nav-link" data-scroll-target="#상관계수-행렬-그래프">상관계수 행렬 그래프</a></li>
-  </ul></li>
-  <li><a href="#pandas-profiling" id="toc-pandas-profiling" class="nav-link" data-scroll-target="#pandas-profiling">Pandas Profiling</a></li>
+  <li><a href="#자기조직화-지도-som" id="toc-자기조직화-지도-som" class="nav-link" data-scroll-target="#자기조직화-지도-som">자기조직화 지도 (SOM)</a></li>
+  <li><a href="#pca" id="toc-pca" class="nav-link" data-scroll-target="#pca">PCA</a></li>
+  <li><a href="#요인-분석" id="toc-요인-분석" class="nav-link" data-scroll-target="#요인-분석">요인 분석</a></li>
+  <li><a href="#연관-분석" id="toc-연관-분석" class="nav-link" data-scroll-target="#연관-분석">연관 분석</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/index.html">ADP 실기 준비 - try 1</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/notes/00.pdf">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/notes/02.html">EDA 템플릿</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/index.html">ADP 실기 준비 - try 1</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/notes/00.pdf">Notes</a></li><li class="breadcrumb-item"><a href="../../../../posts/01_projects/adp_실기/notes/06.html">비지도 학습 템플릿</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">EDA와 시각화</h1>
+<h1 class="title">비지도 학습 템플릿</h1>
   <div class="quarto-categories">
     <div class="quarto-category">데이터 분석</div>
   </div>
@@ -2895,7 +2879,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024년 12월 30일</p>
+      <p class="date">2025년 10월 5일</p>
     </div>
   </div>
   
@@ -2907,286 +2891,129 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </header>
 
 
-<p><img src="../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="edaexploratory-data-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="edaexploratory-data-analysis">EDA(Exploratory Data Analysis)</h2>
-<p>: 데이터의 특징과 데이터에 내재된 관계를 알아내기 위해 그래프와 통계적 분석 방법을 활용하여 탐구하는 것</p>
-<section id="주제" class="level3">
-<h3 class="anchored" data-anchor-id="주제">주제</h3>
+<section id="군집-분석" class="level2">
+<h2 class="anchored" data-anchor-id="군집-분석">군집 분석</h2>
+<section id="전제-조건" class="level3">
+<h3 class="anchored" data-anchor-id="전제-조건">전제 조건</h3>
 <ol type="1">
-<li>저항성 강조: 부분적 변동(이상치 등)에 대한 민감성 확인</li>
-<li>잔차 계산</li>
-<li>자료변수의 재표현: 변수를 적당한 척도로 바꾸는 것</li>
-<li>그래프를 통한 현시성</li>
+<li>scalability</li>
+<li>다양한 타입의 속성을 처리해야 함
+<ul>
+<li>k-means는 수치형만 처리 가능</li>
+</ul></li>
+<li>인위적인 형상의 군집도 발견할 수 있어야 함
+<ul>
+<li>k-means는 non-convex 형태는 잘 못찾음</li>
+</ul></li>
+<li>파라미터 설정에 전문지식을 요하지 않아야함</li>
+<li>noise와 outliers를 처리해야 함</li>
+<li>데이터가 입력되는 순서에 민감하면 안됨</li>
+<li>차원 수가 높아도 잘 처리할 수 있어야함</li>
+<li>사용자 정의 제약조건도 수용할 수 있어야함</li>
+<li>해석과 사용이 용이해야함</li>
+<li>scaling, one hot encoding 등의 전처리가 필요하다.</li>
 </ol>
 </section>
+<section id="model" class="level3">
+<h3 class="anchored" data-anchor-id="model">model</h3>
+<ul>
+<li><p>Distance-based methods</p>
+<ul>
+<li>Partitioning methods</li>
+<li>k-means:
+<ul>
+<li>polinominal 시간 안에 해결 가능</li>
+<li>noise, outlier에 민감함</li>
+<li>수치형만 처리 가능</li>
+<li>non-convex 형태는 잘 못찾음</li>
+</ul></li>
+<li>k-modes: 범주형 데이터 처리 가능. 빈도수로 유사도 처리함</li>
+<li>k-prototype: 범주형, 수치형 섞인거 처리 가능</li>
+<li>k-medoids: 중심에 위치한 데이터 포인트를 사용해서 outlier 잘 처리함
+<ul>
+<li>PAM: Partitioning Around Medoids
+<ul>
+<li>scalability 문제 있음</li>
+</ul></li>
+<li>CLARA: sampling을 통해서 PAM의 scalability 문제를 해결
+<ul>
+<li>샘플링 과정에서 biased될 수 있음</li>
+</ul></li>
+<li>CLARANS: medoid 후보를 랜덤하게 선택함</li>
+</ul></li>
+<li>k-means++: 초기 centroids를 더 잘 잡음</li>
+<li>Hierarchical methods</li>
+<li>top-down: divisive, dia</li>
+<li>bottom-up: agglomerative
+<ul>
+<li>ward’s distance: 군집 간의 거리 계산을 군집 내의 분산을 최소화하는 방식으로 계산
+<ul>
+<li>ESS: 각 군집의 중심으로 부터의 거리 제곱합</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Density-based methods</p>
+<ul>
+<li>다양한 모양의 군집을 찾을 수 있음</li>
+<li>noise, outlier에 강함</li>
+<li>DBSCAN: 잡음 포인트는 군집에서 제외
+<ol type="1">
+<li>core point를 찾음(eps 이내에 minPts 이상 있는 점)</li>
+<li>core point를 중심으로 군집을 확장
+<ul>
+<li>core point가 아닌 경우 확장 종료</li>
+</ul></li>
+</ol>
+<ul>
+<li>고정된 파라미터를 사용하기 때문에 군집간 밀도가 다를 경우 잘 못찾음</li>
+<li>군집간 계층관계를 인식하기 어렵다</li>
+</ul></li>
+<li>OPTICS: DBSCAN의 단점을 보완
+<ul>
+<li>군집의 밀도가 다를 때도 잘 처리함</li>
+<li>군집의 계층 구조를 인식할 수 있음</li>
+<li>eps, minPts 파라미터가 필요함</li>
+</ul></li>
+</ul></li>
+<li><p>Grid-based methods: 대표만(각 grid를 대표) 가지고 군집분석 하는거</p>
+<ul>
+<li>속도와 메모리 측면에서 효율적</li>
+</ul></li>
+<li><p>Model-based clustering methods</p></li>
+<li><p>거리기반 군집의 단점:</p>
+<ul>
+<li>군집의 모양이 구형이 아닐 경우 찾기 어려움</li>
+<li>군집의 갯수 결정하기 어려움</li>
+<li>군집의 밀도가 높아야함</li>
+</ul></li>
+</ul>
 </section>
-<section id="막대-그래프" class="level2">
-<h2 class="anchored" data-anchor-id="막대-그래프">막대 그래프</h2>
-<p><code>범주형 데이터</code>를 요약하고 시각적으로 비교하는 데 활용</p>
-<div id="cb7e8a6f" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_wine</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>wine_load <span class="op">=</span> load_wine()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>wine <span class="op">=</span> pd.DataFrame(wine_load.data, columns<span class="op">=</span>wine_load.feature_names)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>wine_load</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>wine[<span class="st">'Class'</span>] <span class="op">=</span> wine_load.target</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>wine[<span class="st">'Class'</span>] <span class="op">=</span> wine[<span class="st">'Class'</span>].<span class="bu">map</span>({<span class="dv">0</span>: <span class="st">'class_0'</span>, <span class="dv">1</span>: <span class="st">'class_1'</span>, <span class="dv">2</span>: <span class="st">'class_2'</span>})</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>wine_type <span class="op">=</span> wine[<span class="st">'Class'</span>].value_counts()</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>wine_type</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>Class
-class_1    71
-class_0    59
-class_2    48
-Name: count, dtype: int64</code></pre>
-</div>
-</div>
-<div id="d2162de6" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수직 막대</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.bar(wine_type.index, wine_type.values, width<span class="op">=</span><span class="fl">0.8</span>, bottom<span class="op">=</span><span class="va">None</span>, align <span class="op">=</span> <span class="st">'center'</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-3-output-1.png" width="566" height="411" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="0065c7fe" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수평 막대</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.barh(wine_type.index, wine_type.values, height<span class="op">=</span><span class="fl">0.8</span>, left<span class="op">=</span><span class="va">None</span>, align <span class="op">=</span> <span class="st">'center'</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-4-output-1.png" width="598" height="411" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>각 범주의 값의 갯수 <code>차이가 극단적</code>인지 확인한다. 극단적일 경우, 전처리 과정에서 <code>업/다운 샘플링 등을 통해 갯수가 유사해지도록 조정</code>해야한다.</p>
-</section>
-<section id="히스토그램" class="level2">
-<h2 class="anchored" data-anchor-id="히스토그램">히스토그램</h2>
-<p><code>연속형 데이터</code>의 분포를 확인하는 데 활용</p>
-<div id="3aa395ce" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Wine alcohol histogram'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.hist(<span class="st">'alcohol'</span>, bins<span class="op">=</span><span class="dv">8</span>, <span class="bu">range</span><span class="op">=</span>(<span class="dv">11</span>, <span class="dv">15</span>), color<span class="op">=</span><span class="st">'purple'</span>, data<span class="op">=</span>wine)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-5-output-1.png" width="566" height="431" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="box-plot" class="level2">
-<h2 class="anchored" data-anchor-id="box-plot">box plot</h2>
-<p><code>수치형 변수</code>의 분포를 확인하는 그래프</p>
-<div id="71671800" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>iris_load <span class="op">=</span> load_iris()</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> pd.DataFrame(iris_load.data, columns<span class="op">=</span>iris_load.feature_names)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>iris[<span class="st">'class'</span>] <span class="op">=</span> iris_load.target</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>iris[<span class="st">'class'</span>] <span class="op">=</span> iris[<span class="st">'class'</span>].<span class="bu">map</span>({<span class="dv">0</span>: <span class="st">'setosa'</span>, <span class="dv">1</span>: <span class="st">'versicolor'</span>, <span class="dv">2</span>: <span class="st">'virginica'</span>})</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.boxplot(iris.drop(columns<span class="op">=</span><span class="st">'class'</span>))</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-6-output-1.png" width="558" height="411" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="6e1b5a42" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">"class"</span>, y<span class="op">=</span><span class="st">"sepal width (cm)"</span>, data<span class="op">=</span>iris)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-7-output-1.png" width="589" height="432" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="산점도" class="level2">
-<h2 class="anchored" data-anchor-id="산점도">산점도</h2>
-<p>두 개의 <code>수치형 변수</code>의 <code>분포와 관계</code>를 확인하는 그래프</p>
-<div id="0699d108" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'iris scatter'</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'sepal length (cm)'</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'sepal width (cm)'</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(<span class="st">'sepal length (cm)'</span>, <span class="st">'sepal width (cm)'</span>, data<span class="op">=</span>iris, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-8-output-1.png" width="589" height="449" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="65717dc9" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'sepal length (cm)'</span>, y<span class="op">=</span><span class="st">'sepal width (cm)'</span>, hue<span class="op">=</span><span class="st">'class'</span>, data<span class="op">=</span>iris, style<span class="op">=</span><span class="st">'class'</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-9-output-1.png" width="589" height="432" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="선그래프" class="level2">
-<h2 class="anchored" data-anchor-id="선그래프">선그래프</h2>
-<section id="수평-수직-선" class="level3">
-<h3 class="anchored" data-anchor-id="수평-수직-선">수평 / 수직 선</h3>
-<div id="9c6a5dda" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.hlines(y<span class="op">=-</span><span class="dv">6</span>, xmin<span class="op">=-</span><span class="dv">10</span>, xmax<span class="op">=</span><span class="dv">10</span>, colors<span class="op">=</span><span class="st">'red'</span>, linestyles<span class="op">=</span><span class="st">'solid'</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.vlines(x<span class="op">=</span><span class="dv">0</span>, ymin<span class="op">=-</span><span class="dv">10</span>, ymax<span class="op">=</span><span class="dv">10</span>, colors<span class="op">=</span><span class="st">'blue'</span>, linestyles<span class="op">=</span><span class="st">'dashed'</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-10-output-1.png" width="590" height="411" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="함수식" class="level3">
-<h3 class="anchored" data-anchor-id="함수식">함수식</h3>
-<div id="b1cdb42f" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> linear_func(x):</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> iris[<span class="st">'sepal length (cm)'</span>]</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.plot(X, linear_func(X), c<span class="op">=</span><span class="st">'red'</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-11-output-1.png" width="566" height="411" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="회귀선" class="level3">
-<h3 class="anchored" data-anchor-id="회귀선">회귀선</h3>
-<div id="d95c5bec" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>X, Y <span class="op">=</span> iris[<span class="st">'sepal length (cm)'</span>], iris[<span class="st">'sepal width (cm)'</span>]</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(X, Y, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> np.polyfit(X, Y, <span class="dv">1</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.plot(X, a<span class="op">*</span>X <span class="op">+</span> b, c<span class="op">=</span><span class="st">'red'</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-12-output-1.png" width="571" height="413" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>2차 이상의 그래프는 X값에 대하여 정렬해야 한다.</p>
-<div id="2061621e" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>iris2 <span class="op">=</span> iris.sort_values(by<span class="op">=</span><span class="st">'sepal length (cm)'</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>X, Y <span class="op">=</span> iris2[<span class="st">'sepal length (cm)'</span>], iris2[<span class="st">'petal length (cm)'</span>]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>b2, b1, b0 <span class="op">=</span> np.polyfit(X, Y, <span class="dv">2</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(X, Y, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.plot(X, b0 <span class="op">+</span> b1<span class="op">*</span>X <span class="op">+</span> b2<span class="op">*</span>X<span class="op">**</span><span class="dv">2</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-13-output-1.png" width="558" height="411" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="꺾은선" class="level3">
-<h3 class="anchored" data-anchor-id="꺾은선">꺾은선</h3>
-<div id="5b05c474" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="st">'sepal length (cm)'</span>, <span class="st">'petal length (cm)'</span>, data<span class="op">=</span>iris2)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-14-output-1.png" width="558" height="411" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="평가" class="level3">
+<h3 class="anchored" data-anchor-id="평가">평가</h3>
+<ul>
+<li>silhuette score: <span class="math inline">\(\frac{\sum_{i=1}^{n} s(i)}{n}\)</span>
+<ul>
+<li>s(i): <span class="math inline">\(\frac{b(i) - a(i)}{max((a(i), b(i)))}\)</span>
+<ul>
+<li>a(i): 군집 내 노드간의 평균 거리</li>
+<li>b(i): 가장 가까운 군집과의 노드 간 평균 거리</li>
+</ul></li>
+<li>1에 가까울 수록 좋음</li>
+</ul></li>
+</ul>
 </section>
 </section>
-<section id="상관관계-시각화" class="level2">
-<h2 class="anchored" data-anchor-id="상관관계-시각화">상관관계 시각화</h2>
-<section id="산점도-행렬" class="level3">
-<h3 class="anchored" data-anchor-id="산점도-행렬">산점도 행렬</h3>
-<div id="3a077aad" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas.plotting <span class="im">import</span> scatter_matrix</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>scatter_matrix(iris, alpha<span class="op">=</span><span class="fl">0.5</span>, figsize<span class="op">=</span> (<span class="dv">8</span>, <span class="dv">8</span>), diagonal<span class="op">=</span><span class="st">'hist'</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-15-output-1.png" width="649" height="655" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="06b84c9b" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(iris, diag_kind<span class="op">=</span><span class="st">'auto'</span>, hue<span class="op">=</span><span class="st">'class'</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-16-output-1.png" width="1069" height="947" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="자기조직화-지도-som" class="level2">
+<h2 class="anchored" data-anchor-id="자기조직화-지도-som">자기조직화 지도 (SOM)</h2>
 </section>
-<section id="상관계수-행렬-그래프" class="level3">
-<h3 class="anchored" data-anchor-id="상관계수-행렬-그래프">상관계수 행렬 그래프</h3>
-<div id="d4cac182" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>iris_corr <span class="op">=</span> iris.drop(columns<span class="op">=</span><span class="st">'class'</span>).corr(method<span class="op">=</span><span class="st">'pearson'</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(iris_corr, xticklabels<span class="op">=</span>iris_corr.columns, yticklabels<span class="op">=</span>iris_corr.columns, cmap<span class="op">=</span><span class="st">"RdBu_r"</span>, annot<span class="op">=</span><span class="va">True</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02_files/figure-html/cell-17-output-1.png" width="648" height="520" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="pca" class="level2">
+<h2 class="anchored" data-anchor-id="pca">PCA</h2>
 </section>
+<section id="요인-분석" class="level2">
+<h2 class="anchored" data-anchor-id="요인-분석">요인 분석</h2>
 </section>
-<section id="pandas-profiling" class="level2">
-<h2 class="anchored" data-anchor-id="pandas-profiling">Pandas Profiling</h2>
-<div id="e2f08bc6" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from pandas_profiling import ProfileReport</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ProfileReport(iris)</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="연관-분석" class="level2">
+<h2 class="anchored" data-anchor-id="연관-분석">연관 분석</h2>
 
 
 </section>
@@ -3618,13 +3445,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <input type="hidden" id="giscus-alt-theme" value="light">
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../../posts/01_projects/adp_실기/notes/01.html" class="pagination-link" aria-label="모델링, 평가 템플릿">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">모델링, 평가 템플릿</span>
+      <a href="../../../../posts/01_projects/adp_실기/notes/05.html" class="pagination-link" aria-label="분산 분석 템플릿">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">분산 분석 템플릿</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/01_projects/adp_실기/notes/03.html" class="pagination-link" aria-label="전처리 템플릿">
-        <span class="nav-page-text">전처리 템플릿</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../posts/01_projects/adp_실기/notes/07.html" class="pagination-link" aria-label="시계열 분석 템플릿">
+        <span class="nav-page-text">시계열 분석 템플릿</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
