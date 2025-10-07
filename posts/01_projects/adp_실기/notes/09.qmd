@@ -1,0 +1,47 @@
+---
+title: "기타"
+date: 2025-10-05
+categories: ["데이터 분석"]
+---
+
+## OR
+
+- pulp 이용해서 푼다.
+- 제약 함수, 결정 변수, 목표 함수만 잘 설정하면 풀 수 있을듯
+
+```{.python filename="pulp example"}
+import pulp
+
+prob = pulp.LpProblem("Problem_name", pulp.LpMinimize) # 문제에 맞게 설정
+
+# 2. 결정 변수 정의 (이름, 하한, 상항, 정수형 여부)
+x_A1 = pulp.LpVariable("A_to_1", 0, None, pulp.LpInteger)
+x_A2 = pulp.LpVariable("A_to_2", 0, None, pulp.LpInteger)
+x_A3 = pulp.LpVariable("A_to_3", 0, None, pulp.LpInteger)
+x_B1 = pulp.LpVariable("B_to_1", 0, None, pulp.LpInteger)
+x_B2 = pulp.LpVariable("B_to_2", 0, None, pulp.LpInteger)
+x_B3 = pulp.LpVariable("B_to_3", 0, None, pulp.LpInteger)
+
+# 3. 목표 함수 정의 (총 운송 비용)
+prob += 2*x_A1 + 4*x_A2 + 5*x_A3 + 3*x_B1 + 1*x_B2 + 6*x_B3, "obj_name"
+
+# 4. 제약 조건 정의
+prob += x_A1 + x_A2 + x_A3 <= 100, "Factory_A_Supply"
+prob += x_B1 + x_B2 + x_B3 <= 200, "Factory_B_Supply"
+prob += x_A1 + x_B1 == 80, "Warehouse_1_Demand"
+prob += x_A2 + x_B2 == 90, "Warehouse_2_Demand"
+prob += x_A3 + x_B3 == 130, "Warehouse_3_Demand"
+
+# 5. 문제 풀이
+prob.solve()
+
+# 6. 결과 확인
+print("Status:", pulp.LpStatus[prob.status])
+print("\nOptimal Transportation Plan:")
+for v in prob.variables():
+    print(v.name, "=", v.varValue)
+
+print("\nTotal Minimum Cost = ", pulp.value(prob.objective))
+```
+
+- 그 외 자주 안나오는 문제 예상 관련 글이 올라올 경우 추가 예정

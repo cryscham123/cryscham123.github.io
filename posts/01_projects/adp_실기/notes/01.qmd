@@ -1,11 +1,9 @@
 ---
-title: "코드 snippet"
+title: "모델링, 평가 템플릿"
 date: 2025-09-21
 categories: ["데이터 분석"]
 directories: ["adp_실기"]
 ---
-
-![](/img/stat-thumb.jpg){.post-thumbnail}
 
 ## 모델 정의
 
@@ -274,6 +272,104 @@ ftr_importance = pd.Series(importances, index=X.columns)
 ftr_top = ftr_importance.sort_values(ascending=False)[:20] # 원하는 수 만큼 설정
 sns.barplot(ftr_top20, y=ftr_top.index)
 plt.show()
+```
+
+### Drop Column importance
+
+```{python}
+#| eval: false
+from sklearn.base import clone
+
+for col in X_train.columns:
+    X_train_dropped = X_train.drop(columns=[col])
+    X_test_dropped = X_test.drop(columns=[col])
+
+    # 시간의 단축을 위해 하이퍼파라미터는 그냥 그대로 사용
+    # 엄밀하게 하고 싶다면 각 iteration마다 다시 튜닝
+    model_dropped = clone(best_model)
+    model_dropped.fit(X_train_dropped, y_train)
+
+    score = model_dropped.score(X_test_dropped, y_test)
+    print(f"{col}'s difference:", best_model.score(X_test, y_test) - score) # 혹은 다른 평가 지표 사용
+```
+
+### Permutation importance
+
+```{python}
+#| eval: false
+
+import eli5
+from eli5.sklearn import PermutationImportance
+
+perm = PermutationImportance(best_model).fit(X_test, y_test)
+eli5.show_weights(perm, feature_names=X_test.columns.tolist())
+```
+
+- 음수 값은 제거해도 된다는 뜻
+- 단점: 상관관계가 높은 feature에 대해서 비현실적인 데이터 조합이 생성될 가능성이 높다.
+    - (ex. shuffle을 통해 키 180cm, 몸무게 30kg의 데이터가 조합되는 경우)
+
+## ensemble
+
+- stacking:
+    - 여러 모델을 학습시킨 후, 각 모델의 예측 결과를 입력으로 하는 메타 모델을 학습시킨다.
+    - 메타 모델은 다른 모델들의 예측 결과를 종합하여 최종 예측을 수행한다.
+- voting, averaging:
+    - 여러 모델을 학습시킨 후, 각 모델의 예측 결과를 투표(voting)하거나 평균(averaging)하여 최종 예측을 수행한다.
+    - 분류 문제에서는 다수결 투표(hard voting) 또는 확률 평균(soft voting)을 사용하고, 회귀 문제에서는 단순 평균 또는 가중 평균을 사용한다.
+- bagging
+    - vs cross validation:
+        - cross validation은 이미 생성된 모델을 검증하기 위한 방법. 모델 구축 방법은 아님
+        - bagging은 분산을 줄이기 위해 사용함
+- boosting: sequentially 학습
+    - 이전 모델의 오차를 보완하는 방식으로 학습한다.
+
+```{python filename="stacking"}
+#| eval: false
+
+from sklearn.ensemble import StackingClassifier, StackingRegressor
+
+stacking_lf = StackingClassifier(estimators=[
+    ('lr', LogisticRegression()),
+    ('dt', DecisionTreeClassifier()),
+    ('rf', RandomForestClassifier())
+], final_estimator=LogisticRegression())
+
+stacking_rf = StackingRegressor(estimators=[
+    ('lr', LinearRegression()),
+    ('dt', DecisionTreeRegressor()),
+    ('rf', RandomForestRegressor())
+], final_estimator=LinearRegression())
+
+stacking_lf.fit(X_train, y_train)
+stacking_rf.fit(X_train, y_train)
+stacking_lf.predict(X_test)
+stacking_rf.predict(X_test)
+```
+
+```{python filename="voting"}
+#| eval: false
+
+from sklearn.ensemble import VotingClassifier, VotingRegressor
+
+voting_lf = VotingClassifier(estimators=[
+    ('lr', LogisticRegression()),
+    ('dt', DecisionTreeClassifier()),
+    ('rf', RandomForestClassifier())
+], voting='soft') # or hard
+
+
+voting_rf = VotingRegressor(estimators=[
+    ('lr', LinearRegression()),
+    ('dt', DecisionTreeRegressor()),
+    ('rf', RandomForestRegressor())
+], weights=[1, 1, 2])
+
+
+voting_lf.fit(X_train, y_train)
+voting_rf.fit(X_train, y_train)
+voting_lf.predict(X_test)
+voting_rf.predict(X_test)
 ```
 
 ## 모델 파라미터

@@ -4,10 +4,6 @@ date: 2025-09-29
 categories: ["데이터 분석"]
 ---
 
-![](/img/stat-thumb.jpg){.post-thumbnail}
-
-# 데이터 이해
-
 ## Load Library
 
 ```{python}
@@ -15,6 +11,7 @@ categories: ["데이터 분석"]
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import jarque_bera
 import seaborn as sns
 import platform
 import warnings
@@ -50,7 +47,17 @@ df = pd.read_csv('df.csv')
 print(f"df shape: {df.shape}")
 ```
 
-## Statistical Summary
+## Missing Values
+
+```{python}
+print(df.isnull().sum())
+
+print(df[df.isnull().any(axis=1)])
+```
+
+- 결측치 처리는 전처리 참조
+
+## 단일 column 분석
 
 ```{python}
 df.head()
@@ -60,55 +67,318 @@ df.head()
 df.info()
 ```
 
+- 순서형 변수는 연속형으로 처리하던가 범주형으로 처리하던가 알아서 정하면 됨.
+- 순서형 그 자체로 보고 분석할 수 있는 방법들도 있긴 있음.
+
 ### 범주형
+
+```{python}
+df.describe(include='object')
+```
 
 ```{python}
 import matplotlib.pyplot as plt
 
 cat_cols = []
 num_cols = []
-ord_cols = [] # 연속형으로 처리하던가 범주형으로 처리하던가 알아서 정하면 됨
 
 for col in cat_cols + ord_cols:
     target_counts = df[col].value_counts().sort_index()
     target_ratio = df[col].value_counts(normalize=True).sort_index()
 
-    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    fig, ax = plt.subplots(1, 2, figsize=(10, 5))
 
-    target_counts.plot(kind='bar', ax=ax1)
-    ax1.set_title(f'{col}'s Count', fontsize=14, pad=20)
-    ax1.set_xlabel('Support Level', fontsize=12)
-    ax1.set_ylabel('count', fontsize=12)
-    ax1.set_xticklabels()
+    target_counts.plot.bar(ax=ax[0])
+    ax[0].set_title(f"{col}'s Count")
+    ax[0].set_xlabel(f"{col}'s Level")
+    ax[0].set_ylabel('count')
 
-    colors = ['#3498db', '#e74c3c', '#2ecc71']
-    wedges, texts, autotexts = ax2.pie(target_ratio, labels=['Level 0', 'Level 1', 'Level 2'], 
-                                                                           autopct='%1.1f%%', colors=colors, startangle=90)
-    ax2.set_title('Support Level Distribution', fontsize=14, pad=20)
-
-    plt.tight_layout()
+    wedges, texts, autotexts = ax[1].pie(target_ratio, autopct='%1.1f%%')
+    ax[1].set_title(f"{col}'s Distribution", fontsize=14, pad=20)
     plt.show()
 
-    print("Target variable distribution:")
-    for i in range(3):
-            print(f"Level {i}: {target_counts[i]:,} customers ({target_ratio[i]*100:.1f}%)")
+    summary = pd.concat([target_counts, target_ratio], axis=1)
+    summary.columns = ['counts', 'probs']
+    summary = summary.sort_values('counts', ascending=False)
+    summary.loc[''] = summary.sum()
+    display(summary)
 ```
 
 ### 연속형
 
-```{python}
+```{python filname="basic statistic"}
+detailed_stats = []
+for col in num_cols:
+    stats_dict = {
+        'Mean': df[col].mean(),
+        'Median': df[col].median(),
+        'Min': df[col].min(),
+        'Max': df[col].max(),
+        'Std Dev': df[col].std(),
+        'IQR': df[col].quantile(0.75) - df[col].quantile(0.25),
+        'Skewness': df[col].skew(),
+        'Kurtosis': df[col].kurtosis(),
+        'CV (%)': df[col].std() / df[col].mean() * 100
+    }
+    detailed_stats.append(pd.Series(stats_dict, name=col))
 
-
+display(pd.concat(detailed_stats, axis=1).round(2).T)
 ```
 
-## Missing Values
+```{python filename="distribution"}
+from scipy.stats import probplot
 
-```{python}
-print(df.isnull().sum())
+for col in num_cols:
+    fig, ax = plt.subplots(1, 3, figsize=(10, 5))
 
-print(df[df.isnull().any(axis=1)])
+    # 히스토그램과 KDE
+    df[col].hist(ax=ax[0], color='skyblue', density=True)
+    sns.kdeplot(df[col], color='red', linewidth=2, label='KDE', ax=ax[0])
+    ax[0].set_title(f'{col} Distribution')
+    ax[0].set_xlabel(col)
+    ax[0].set_ylabel('Density')
+
+    mean_val = df[col].mean()
+    median_val = df[col].median()
+    ax[0].axvline(mean_val, color='red', linestyle='--', label=f'Mean: {mean_val:.1f}')
+    ax[0].axvline(median_val, color='green', linestyle='--', label=f'Median: {median_val:.1f}')
+    ax[0].legend()
+
+    # 박스플롯
+    sns.boxplot(y=df[col], ax=ax[1], color='lightgreen')
+
+    # Q-Q 플롯
+    probplot(df[col], plot=ax[2])
+
+    plt.show()
 ```
 
-```{python}
+```{python filename="normality"}
+from scipy.stats import shapiro, anderson, jarque_bera, normaltest
 
+for col in num_cols:
+    # 소표본 적합
+    stat, p = shapiro(df[col].dropna())
+    print(f"Shapiro-Wilk Test: stat={stat:.4f}, p-value={p:.4f}")
+
+    result = anderson(df[col].dropna())
+    print(f"Anderson-Darling Test: stat={result.statistic:.4f}, critical values={result.critical_values}, significance levels={result.significance_level}")
+
+    # 왜도, 첨도 기준 판별. 대표본 적합
+    stat, p = jarque_bera(df[col].dropna())
+    print(f"Jarque-Bera Test: stat={stat:.4f}, p-value={p:.4f}")
+
+    # 왜도, 첨도 기준 판별. 범용적
+    stat, p = normaltest(df[col].dropna())
+    print(f"D'Agostino's K-squared Test: stat={stat:.4f}, p-value={p:.4f}")
+
+    print()
 ```
+
+```{python filename="outliers - IQR"}
+outliers_info = []
+outliers_mask = pd.DataFrame(False, index=df.index, columns=df.columns)
+
+for col in num_cols:
+    Q1 = df[col].quantile(0.25)
+    Q3 = df[col].quantile(0.75)
+    IQR = Q3 - Q1
+
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    out_idx = (df[col] < lower_bound) | (df[col] > upper_bound)
+    outliers_mask[col] |= out_idx
+    outliers = df[out_idx]
+    
+    outliers_info.append(pd.Series({
+        'Q1': Q1,
+        'Q3': Q3,
+        'IQR': IQR,
+        'Lower Bound': lower_bound,
+        'Upper Bound': upper_bound,
+        'Outlier Count': len(outliers),
+        'Outlier %': len(outliers) / len(df) * 100
+    }, name=col))
+outliers_info = pd.concat(outliers_info, axis=1)
+outliers = df[outliers_mask.any(axis=1)]
+outliers['reason'] = outliers_mask[outliers_mask.any(axis=1)].apply(lambda x: ', '.join(x.index[x]), axis=1)
+
+display(outliers_info.round(2).T)
+display()
+```
+
+```{python filename="outliers - Z-score"}
+outliers_info = []
+outliers_mask = pd.DataFrame(False, index=df.index, columns=df.columns)
+
+for col in num_cols:
+    mean = df[col].mean()
+    std = df[col].std()
+    z_scores = (df[col] - mean) / std
+    out_idx = (z_scores.abs() > 3)
+    outliers_mask[col] |= out_idx
+    outliers = df[out_idx]
+
+    outliers_info.append(pd.Series({
+        'Mean': mean,
+        'Std Dev': std,
+        'Outlier Count': len(outliers),
+        'Outlier %': len(outliers) / len(df) * 100
+    }, name=col))
+outliers_info = pd.concat(outliers_info, axis=1)
+outliers = df[outliers_mask.any(axis=1)]
+outliers['reason'] = outliers_mask[outliers_mask.any(axis=1)].apply(lambda x: ', '.join(x.index[x]), axis=1)
+
+display(outliers_info.round(2).T)
+display(outliers)
+```
+
+- 이후 이상치와 정상 데이터 비교 분석 진행 (범주형의 분포, 연속형의 분포 등)
+- 이상치 처리는 전처리 참조
+- HUOE(Heterogeneous Univariate Outlier Ensembles) 방법도 있음 (하지만 이를 위한 library는 없는듯)
+
+## 변수간 관계
+
+### 연속, 연속
+
+- 산점도로 시각화
+- spearman 상관계수 확인
+- spearman - pearson 차이로 비선형 관계 확인 가능
+    - 0.1 이상 차이가 나는지 확인. (공식 기준 아님)
+
+### 범주, 연속
+
+```{python}
+for col in num_cols:
+    fig, ax = plt.subplots(1, 3, figsize=(10, 5))
+
+    for target_val in df['target'].unique():
+        subset = df[df['target'] == target_val][col]
+        subset.hist(ax=ax[0], label=target_val, density=True)
+    ax[0].set_title(f'{col} Distribution')
+    ax[0].set_xlabel(col)
+    ax[0].set_ylabel('Density')
+
+    plt.show()
+```
+
+- 이런 식으로 subset 만들어서 단일 분석에서 했던 것과 같이 하면 됨.
+
+- 분포 확인 후, ANOVA나 Kruskal-Wallis 등으로 그룹 간 차이 검정 진행
+- t 검정을 사용했다면, Cohen's d 등으로 효과 크기 확인 가능
+- 자세한건 분산 분석 파트 참조
+
+### 범주, 범주
+
+- 시각화는 마찬가지로 subset 만들어서 단일 분석에서 했던 것과 같이 하면 됨.
+- chi-square 검정 등으로 독립성 검정 진행
+- Cramer's V 등으로 연관성 정도 확인
+    - 두 변수가 level이 2개면 phi 계수로 확인 가능 (Cramer's V와 동일한 값 나옴)
+
+```{python}
+#| eval: false
+
+from scipy.stats import chi2_contingency
+from scipy.stats.contingency import association
+
+contingency_table = pd.crosstab(df['var1'], df['var2'])
+chi2, p, dof, expected = chi2_contingency(contingency_table, correction=False)
+cramers_v = association(contingency_table, method='cramer')
+
+print(f"Chi-square Test: chi2={chi2:.4f}, p-value={p:.4f}")
+print(f"Cramer's V: {cramers_v:.4f}")
+```
+
+## 독립변수 vs 종속변수
+
+- 간단한 트리 모델링 이후 feature importance 확인 가능
+- 0.01이 넘는 변수들만 따로 분석 진행
+
+```{python filename="mutaul information"}
+#| eval: false
+
+from sklearn.feature_selection import mutual_info_regression
+
+mi_score = mutual_info_regression(df[num_cols], df['target']) # df['target']이 범주형이면 mutual_info_classif 사용
+mi_result = pd.Series(ms_score, index=num_cols).sort_values(ascending=False)
+mi_result
+```
+
+- mutual information로 선형 + 비선형 관계 확인 가능
+- 구체적으로 어떤 관계인지는 scatter plot으로 확인 (연속 + 연속이면)
+
+```{python filename="partial correlation"}
+#| eval: false
+
+import pingouin as pg
+
+pcorr = pg.partial_corr(data=df, x='var1', y='var2', covar='var3', method='')
+pcorr
+```
+
+- 하나의 변수를 통제했을 때, 두 변수 간의 상관관계를 분석
+- 내부적으로는 회귀분석을 사용
+- 도메인 지식으로 통제변수 선정해서 진행
+    - 혹은 EDA 과정에서 발견한 관계로 선정 (한 마디로 본인이 알아서 잘 선정하기)
+- 인과분석을 하면 이 과정은 필요 없으나, ADP 환경에서 인과분석 라이브러리는 제공 안하는듯
+
+### Interation Effect
+
+- 두 개 이상의 독립변수가 결합하여 종속변수에 미치는 영향
+- 유효한 상호작용 효과가 있다면 새로운 변수를 만들어서 분석에 포함 (예: new_var = var1 * var2)
+- 자세한건 분산분석 파트 참조
+
+### Polinorminal Relationships
+
+- 회귀분석 파트 참조
+
+## 다변량 분석
+
+### 차원 축소
+
+```{python filename="PCA"}
+#| eval: false
+
+scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='viridis', alpha=0.6)
+plt.xlabel(f'PC1 ({explained_var_ratio[0]:.1%} variance)')
+plt.ylabel(f'PC2 ({explained_var_ratio[1]:.1%} variance)')
+plt.title('PCA Projection by Support Level')
+plt.colorbar(scatter, label='Support Level')
+```
+
+```{python filename="TSNE"}
+#| eval: false
+
+from sklearn.manifold import TSNE
+
+tsne = TSNE(n_components=2)
+tsne_result = tsne.fit_transform(df[num_cols])
+
+plt.scatter(tsne_result[:, 0], tsne_result[:, 1], c=df['target'])
+```
+
+- UMAP이 전역적으로는 구조를 더 잘 보존하고, 속도도 빠르다.
+- ADP 환경에서 UMAP 라이브러리는 제공 안하는듯
+- 애초에 2차원으로 정사영해서 plot한 이 자료들로 의미있는 해석을 더 할 수 있는지 의문
+
+### DBSCAN, Isolation Forest 등으로 이상치 탐지 가능
+
+- DBSCAN은 비지도 학습 파트 군집분석 참조
+
+```{python filename="isolation Forest"}
+#| eval: false
+
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.ensemble import IsolationForest
+
+iso_forest = IsolationForest()
+oe = OrdinalEncoder()
+
+df_encoded = df.copy()
+df_encoded[cat_cols] = oe.fit_transform(df[cat_cols])
+outlier_labels = iso_forest.fit_predict(df_encoded)
+display(df[(outlier_labels == -1)])
+```
+
+- 해당 결과들을 voting 등으로 종합해서 이상치로 판단할 수도 있음.
+- 자세한건 modeling 파트의 voting 부분 참조
