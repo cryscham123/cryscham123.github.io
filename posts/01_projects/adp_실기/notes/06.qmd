@@ -6,65 +6,142 @@ categories: ["데이터 분석"]
 
 ## 군집 분석
 
-### 전제 조건
+### Distance-based methods
 
-1. scalability
-1. 다양한 타입의 속성을 처리해야 함
-    - k-means는 수치형만 처리 가능
-1. 인위적인 형상의 군집도 발견할 수 있어야 함
-    - k-means는 non-convex 형태는 잘 못찾음
-1. 파라미터 설정에 전문지식을 요하지 않아야함
-1. noise와 outliers를 처리해야 함
-1. 데이터가 입력되는 순서에 민감하면 안됨
-1. 차원 수가 높아도 잘 처리할 수 있어야함
-1. 사용자 정의 제약조건도 수용할 수 있어야함
-1. 해석과 사용이 용이해야함
-1. scaling, one hot encoding 등의 전처리가 필요하다.
+- Partitioning methods
 
-### model
+```{.python filename="k-means"}
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
-- Distance-based methods
-    - Partitioning methods
-    - k-means:
-        - polinominal 시간 안에 해결 가능
-        - noise, outlier에 민감함
-        - 수치형만 처리 가능
-        - non-convex 형태는 잘 못찾음
-    - k-modes: 범주형 데이터 처리 가능. 빈도수로 유사도 처리함
-    - k-prototype: 범주형, 수치형 섞인거 처리 가능
-    - k-medoids: 중심에 위치한 데이터 포인트를 사용해서 outlier 잘 처리함
-        - PAM: Partitioning Around Medoids
-            - scalability 문제 있음
-        - CLARA: sampling을 통해서 PAM의 scalability 문제를 해결
-            - 샘플링 과정에서 biased될 수 있음
-        - CLARANS: medoid 후보를 랜덤하게 선택함
-    - k-means++: 초기 centroids를 더 잘 잡음
-    - Hierarchical methods
-    - top-down: divisive, dia
-    - bottom-up: agglomerative
-        - ward's distance: 군집 간의 거리 계산을 군집 내의 분산을 최소화하는 방식으로 계산
-            - ESS: 각 군집의 중심으로 부터의 거리 제곱합
-- Density-based methods
-    - 다양한 모양의 군집을 찾을 수 있음
-    - noise, outlier에 강함
-    - DBSCAN: 잡음 포인트는 군집에서 제외
-        1. core point를 찾음(eps 이내에 minPts 이상 있는 점)
-        1. core point를 중심으로 군집을 확장
-            - core point가 아닌 경우 확장 종료
-        - 고정된 파라미터를 사용하기 때문에 군집간 밀도가 다를 경우 잘 못찾음
-        - 군집간 계층관계를 인식하기 어렵다
-    - OPTICS: DBSCAN의 단점을 보완
-        - 군집의 밀도가 다를 때도 잘 처리함
-        - 군집의 계층 구조를 인식할 수 있음
-        - eps, minPts 파라미터가 필요함
-- Grid-based methods: 대표만(각 grid를 대표) 가지고 군집분석 하는거
-    - 속도와 메모리 측면에서 효율적
-- Model-based clustering methods
+scaler = StandardScaler() # or RobustScaler
+df_scaled = scaler.fit_transform(df)
+
+# Elbow method
+I = []
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters=i) # sklearn은 기본적으로 k-means++
+    kmeans.fit(df_scaled)
+    I.append(kmeans.inertia_)
+plt.plot(range(1, 11), I, marker='o')
+
+# k 선택 후 군집화
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(df_scaled)
+df['cluster'] = kmeans.labels_
+
+# 군집 중심값 정보
+centers = scaler.inverse_transform(kmeans.cluster_centers_)
+centers_df = pd.DataFrame(centers, columns=df.columns[:-1], index=[f'cluster_{i}' for i in range(centers.shape[0])])
+display(centers_df)
+```
+
+1. Kmeans
+    - polinominal 시간 안에 해결 가능
+    - noise, outlier에 민감함
+    - 수치형만 처리 가능
+2. k-modes: 범주형 데이터 처리 가능. 빈도수로 유사도 처리함
+3. k-prototype: 범주형, 수치형 섞인거 처리 가능
+4. k-medoids: 중심에 위치한 데이터 포인트를 사용해서 outlier 잘 처리함
+    - PAM: Partitioning Around Medoids
+        - scalability 문제 있음
+    - CLARA: sampling을 통해서 PAM의 scalability 문제를 해결
+        - 샘플링 과정에서 biased될 수 있음
+    - CLARANS: medoid 후보를 랜덤하게 선택함
+
+> k-modes, k-prototype, k-medoids는 ADP 환경에서 제공 안함
+> ADP 환경에서 제공하는 모듈로는 범주형, 수치형 섞인거 처리하는 군집 방법이 없음 (일단 내가 생각하기로는 그렇다)
+
+- Hierarchical methods
+
+1. top-down: divisive, dia
+2. bottom-up: agglomerative
+
+```{.python filename="agglomerative"}
+from scipy.cluster.hierarchy import dendrogram, linkage. cut_tree
+
+z = linkage(df_scaled, method='ward') # 'single', 'complete', 'average', 'ward' 등등
+
+result = cut_tree(z, n_clusters=3).flatten()
+
+d = dendogram(z, labels=list(df.index))
+plt.show()
+```
+
+```{.python filename="합쳐지는 거리"}
+thr = pd.DataFrame(d['dcoord'])
+thr # (0, 3) = 합쳐지기 전 왼쪽, 오른쪽 높이, (1, 2) = 합쳐진 후 높이
+thr[thr[2] > 70].sort_values(2)[[2]] # 70 이상의 높이에서 합쳐지는 군집들의 높이
+```
 
 - 거리기반 군집의 단점:
     - 군집의 모양이 구형이 아닐 경우 찾기 어려움
     - 군집의 갯수 결정하기 어려움
     - 군집의 밀도가 높아야함
+
+### Density-based methods
+
+- 다양한 모양의 군집을 찾을 수 있음
+- noise, outlier에 강함
+
+1. DBSCAN: 잡음 포인트는 군집에서 제외
+    1. core point를 찾음(eps 이내에 minPts 이상 있는 점)
+    1. core point를 중심으로 군집을 확장
+        - core point가 아닌 경우 확장 종료
+    - 고정된 파라미터를 사용하기 때문에 군집간 밀도가 다를 경우 잘 못찾음
+    - 군집간 계층관계를 인식하기 어렵다
+    - 대신 빠르고, DBSCAN만으로도 충분해서 많이 사용되는 듯
+
+```{.python filename="DBSCAN eps 결정"}
+from sklearn.neighbors import NearestNeighbors
+
+MIN_SAMPLES = 5
+df_scaled = scaler.fit_transform(df)
+
+neigh = NearestNeighbors(n_neighbors=MIN_SAMPLES)
+neigh.fit(df_scaled)
+distances, indices = neigh.kneighbors(df_scaled)
+
+k_distances = np.sort(distances[:, MIN_SAMPLES-1])[::-1]
+
+# k-dist plot 그리기
+plt.figure(figsize=(12, 6))
+plt.plot(k_distances)
+plt.xlabel('Data Points sorted by distance')
+plt.ylabel(f'{MIN_SAMPLES-1}-th Nearest Neighbor Distance') # 자기 자신을 제외한 거리
+plt.title('k-distance Graph')
+plt.grid(True)
+plt.show()
+```
+
+- min samples 기준
+    - 2 * 차원, log(샘플 수), 4~5개 등등의 기준이 있다.
+    - 이론적으로 증명이 되거나 한건 아니니까 적절히 선택하거나, for문 돌려가면서 최적값 찾기
+- eps 기준
+    - k-dist plot에서 급격히 꺾이는 지점
+
+```{.python filename="DBSCAN"}
+from sklearn.cluster import DBSCAN
+
+# k-dist plot에서 찾은 값으로 DBSCAN 적용
+eps_value = 18  # k-dist plot에서 결정한 값
+
+db = DBSCAN(eps=eps_value, min_samples=MIN_SAMPLES).fit(df_scaled)
+labels = db.labels_
+```
+
+2. OPTICS: DBSCAN의 단점을 보완
+    - 군집의 밀도가 다를 때도 잘 처리함
+    - 군집의 계층 구조를 인식할 수 있음
+    - minPts 파라미터가 필요함
+    - 얘로도 이상치 탐지 가능
+
+```{.python filename="OPTICS"}
+from sklearn.cluster import OPTICS
+
+optics = OPTICS(min_samples=MIN_SAMPLES).fit(df_scaled)
+labels = optics.labels_
+```
 
 ### 평가
 
@@ -73,12 +150,43 @@ categories: ["데이터 분석"]
         - a(i): 군집 내 노드간의 평균 거리
         - b(i): 가장 가까운 군집과의 노드 간 평균 거리
     - 1에 가까울 수록 좋음
+- 그 외 sklearn metrics 참고
 
-## 자기조직화 지도 (SOM)
+## 차원 축소
 
-## PCA
-
-## 요인 분석
+- PCA, LSA, t-SNE, UMAP, ICA, MDS, NMF 등등
+    - 정말 많은 방법들이 있다.
+- 요인분석에서 확인적 요인분석은 python에서 제공하는 library가 없는걸로 알고 있음
 
 ## 연관 분석
+
+```{python}
+#| eval: false
+
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, association_rules
+
+transactions = {}
+te = TransactionEncoder()
+
+# 전처리
+data = df['target'].str.split(', ').values
+te_ary = te.fit_transform(data)
+transactions[name] = pd.DataFrame(te_ary, columns=te.columns_)
+
+# 빈발패턴 생성
+fset = apriori(t, min_support=0.6, use_colnames=True, verbose=False)
+if fset.shape[0] == 0:
+    print("빈발패턴이 존재하지 않습니다.")
+else:
+    # 연관규칙 생성
+    rule = association_rules(fset, metric="confidence", min_threshold=0.7)
+    rule['len_ant'] = rule['antecedents'].apply(lambda x: len(x))
+    rule['len_con'] = rule['consequents'].apply(lambda x: len(x))
+    display(rule[(rule['len_con'] == 1) & (rule['lift'] >= 1.2)].reset_index(drop=True))
+```
+
+- 지지도: 전체 거래에서 특정 항목 집합이 나타나는 비율
+- 신뢰도: 특정 항목 집합이 주어졌을 때 다른 항목
+- 향상도: 두 항목 집합이 독립적인 경우에 비해 함께 나타날 가능성
 

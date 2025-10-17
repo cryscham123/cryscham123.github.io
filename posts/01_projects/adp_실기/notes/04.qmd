@@ -25,7 +25,7 @@ resid = model.resid
 print(model.summary())
 ```
 
-### 영향치 처리
+### 이상치, 영향치 처리
 
 - 레버러지(변수 내 다른 관측치들이랑 떨어진 정도) * 잔차
     - Cook's distance
@@ -35,19 +35,22 @@ print(model.summary())
 ```{python}
 #| eval: false
 
-def get_influence(df, model):
-    influence = model.get_influence()
+mean = resid.mean()
+std = resid.std()
+outlier_mask = (resid < mean - 3 * std) | (resid > mean + 3 * std)
 
-    cooks = influence.cooks_distance[0]
-    leverage = influence.hat_matrix_diag
-    df_influence = pd.DataFrame({
-        'cooks': cooks,
-        'leverage': leverage,
-    })
-    return df_influence
+influence = model.get_influence()
+cooks = influence.cooks_distance[0]
+influence = cooks > 4 / (len(resid) - model.df_model - 1)
 
-influence_df = get_influence(X, model)
-display(influence_df)
+outlier = resid[outlier_mask | influence].index
+
+y_log = y.drop(outlier)
+Xc = sm.add_constant(X.drop(outlier))
+model = sm.OLS(y, Xc).fit()
+resid = model.resid
+
+print(model.summary())
 ```
 
 ### 다중공선성 검정
@@ -55,7 +58,6 @@ display(influence_df)
 1. 전 변수 집합 대상
 
 ```{.python filename="multicollinearity test"}
-
 cor = df.corr()
 cond_num = np.linalg.cond(cor)
 print("Condition Number:", cond_num)
@@ -118,7 +120,7 @@ sns.heatmap(cor, annot=True, ax=ax)
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-sns.residplot(x=fitted.fittedvalues, y=fitted.resid, lowess=True,
+sns.residplot(x=model.fittedvalues, y=model.resid, lowess=True,
               line_kws={'color': 'red', 'lw': 2})
 plt.show()
 ```
@@ -127,6 +129,22 @@ plt.show()
     - 잔차도가 어떠한 패턴도 보이지 않아야 한다.
 - 등분산성: 
     - 잔차도가 일정한 폭을 가져야 한다.
+
+```{python}
+#| eval: false
+
+from statsmodels.stats.diagnostic import het_breuschpagan
+
+# Breusch-Pagan 검정
+lm, lm_pvalue, fvalue, f_pvalue = het_breuschpagan(resid, Xc)
+print(f'Breusch-Pagan p-value: {lm_pvalue:.3f}')
+
+# 잔차의 정규성 만족시 lm_pvalue, 그 외 f_pvalue 사용
+if lm_pvalue > 0.05:
+    print("등분산성 가정을 만족합니다.")
+else:
+    print("등분산성 가정을 위반합니다.")
+```
 
 ### 독립성
 

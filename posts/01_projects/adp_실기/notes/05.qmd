@@ -44,10 +44,11 @@ import seaborn as sns
 zdata = zscore(data)
 fig, ax = plt.subplots(1, 2, figsize=(10, 3))
 
-(osm, odr), (slope, intercept, r)) = probplot(zdata, plot=ax[0])
+(osm, odr), (slope, intercept, r) = probplot(zdata, plot=ax[0])
 ax[0].set_title("Q-Q Plot")
 
-sns.histplot(data, kde=True, ax=ax[1])
+data.hist(ax=ax[1], color='skyblue', density=True)
+sns.kdeplot(data, color='red', linewidth=2, label='KDE', ax=ax[1])
 ax[1].set_title("Histogram")
 
 plt.show()
@@ -86,8 +87,8 @@ print(f"Levene's Test: stat={stat:.3f}, p={p:.3f}")
 - 코크란 Q 검정: 이항분포를 따르는 반복 측정 자료에 사용
     - 만약 대응표본이 아닐 경우 (실패, 성공) 변수를 만들어서 독립성 검정 사용
     - 만약 이항분포가 아닐 경우 프리드만 검정 고려
-- 독립성 검정의 cell의 기대도수가 5 미만인 경우, 피셔의 정확검정 사용
-    - 만약 2x3을 넘어갈 경우 몬테카를로 시뮬레이션 사용(python으로 구현하기 복잡하다.)
+- 독립성 검정의 cell의 기대도수가 5 미만인 경우, Boschloo's test 혹은 Fisher's Exact 사용
+    - 만약 2x2을 넘어갈 경우 몬테카를로 시뮬레이션 사용(python으로 구현하기 복잡하다.)
 - 크루스칼, 맨휘트니: 동점이 과하게 많을 경우 permutation test, 순열 분산 분석 사용 가능
     - 하지만 ADP 환경의 scipy에서는 버전이 낮아서 permutation test를 쓸 수 없다.
 
@@ -149,6 +150,8 @@ p
 
 - 반복이 없는 경우 교효작용 검정은 불가능
 - 정규성, 등분산성 검정은 잔차에 대해 수행
+    - 모든 집단이 정규성과 등분산성을 만족하면 오차는 N(0, σ²)를 따른다.
+    - 고로 오차의 추정값인 잔차가 정규성과 등분산성을 만족하는지 검정으로 대체 가능
 
 ```{python}
 #| eval: false

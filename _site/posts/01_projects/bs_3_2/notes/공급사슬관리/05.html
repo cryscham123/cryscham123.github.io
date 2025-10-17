@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>재고 관리 – 김형훈의 학습 블로그</title>
+<title>재고 관리 2 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -109,7 +138,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/00.html">공급사슬관리</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/05.html">재고 관리</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/00.html">공급사슬관리</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/05.html">재고 관리 2</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -219,25 +248,61 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/adp_실기/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">코드 snippet</span></a>
+ <span class="menu-text">모델링, 평가 템플릿</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">EDA와 시각화</span></a>
+ <span class="menu-text">EDA 템플릿</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/adp_실기/notes/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">데이터 전처리</span></a>
+ <span class="menu-text">전처리 템플릿</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/adp_실기/notes/04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">머신 러닝</span></a>
+ <span class="menu-text">회귀분석 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분산 분석 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">비지도 학습 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시계열 분석</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">베이지안 통계 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">기타</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률과 통계</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
@@ -655,8 +720,14 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/05.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">재고 관리</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/05.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">재고 관리 2</span></a>
   </div>
 </li>
       </ul>
@@ -674,6 +745,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/기공수/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">무한 급수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/기공수/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">테일러 급수</span></a>
   </div>
 </li>
       </ul>
@@ -707,7 +784,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/신재생에너지/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">개인 발표 - 탄소배출권</span></a>
+ <span class="menu-text">개인 발표 - 공짜 탄소배출권 발급 사건</span></a>
   </div>
 </li>
       </ul>
@@ -723,12 +800,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">intro</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">품질관리의 기본개념</span></a>
   </div>
@@ -742,7 +813,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">으악</span></a>
+ <span class="menu-text">관리도</span></a>
   </div>
 </li>
       </ul>
@@ -756,12 +827,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           </a> 
       </div>
       <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">intro</span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/01.html" class="sidebar-item-text sidebar-link">
@@ -784,6 +849,18 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">BMP 표준 개요</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">프로세스 모델링 표준: WS-BPEL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">06</span></a>
   </div>
 </li>
       </ul>
@@ -2782,23 +2859,17 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#공급사슬에서-재고의-의미" id="toc-공급사슬에서-재고의-의미" class="nav-link active" data-scroll-target="#공급사슬에서-재고의-의미">공급사슬에서 재고의 의미</a></li>
-  <li><a href="#재고-유지비용" id="toc-재고-유지비용" class="nav-link" data-scroll-target="#재고-유지비용">재고 유지비용</a></li>
-  <li><a href="#재고의-필요성" id="toc-재고의-필요성" class="nav-link" data-scroll-target="#재고의-필요성">재고의 필요성</a></li>
-  <li><a href="#재고-관리" id="toc-재고-관리" class="nav-link" data-scroll-target="#재고-관리">재고 관리</a>
-  <ul class="collapse">
-  <li><a href="#고객-서비스-수준-지표" id="toc-고객-서비스-수준-지표" class="nav-link" data-scroll-target="#고객-서비스-수준-지표">고객 서비스 수준 지표</a></li>
-  <li><a href="#재고-비용" id="toc-재고-비용" class="nav-link" data-scroll-target="#재고-비용">재고 비용</a></li>
-  </ul></li>
+  <li><a href="#신문판매원-모형" id="toc-신문판매원-모형" class="nav-link active" data-scroll-target="#신문판매원-모형">신문판매원 모형</a></li>
+  <li><a href="#위치-통합-전략" id="toc-위치-통합-전략" class="nav-link" data-scroll-target="#위치-통합-전략">위치 통합 전략</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/00.html">공급사슬관리</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/05.html">재고 관리</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/00.html">공급사슬관리</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/05.html">재고 관리 2</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">재고 관리</h1>
+<h1 class="title">재고 관리 2</h1>
   <div class="quarto-categories">
     <div class="quarto-category">공급사슬관리</div>
   </div>
@@ -2812,7 +2883,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">공개</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025년 9월 23일</p>
+      <p class="date">2025년 10월 12일</p>
     </div>
   </div>
   
@@ -2825,68 +2896,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 
 
 <p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="공급사슬에서-재고의-의미" class="level2">
-<h2 class="anchored" data-anchor-id="공급사슬에서-재고의-의미">공급사슬에서 재고의 의미</h2>
+<section id="신문판매원-모형" class="level2">
+<h2 class="anchored" data-anchor-id="신문판매원-모형">신문판매원 모형</h2>
 <ul>
-<li>미래 사용에 대비하여 보관중인 재화
+<li>구매비용</li>
+<li>판매가격</li>
+<li>잔존가치
 <ul>
-<li><code>다양한 형태</code>로 <code>다양한 위치</code>에 존재</li>
+<li>0이거나 음수일 수 있음</li>
 </ul></li>
-<li>종류
-<ol type="1">
-<li>원자재 및 구매 부품</li>
-<li>재공품(WIP)</li>
-<li>완제품(FGI)</li>
-<li>운송중 재고(GIT)</li>
-</ol></li>
-</ul>
-</section>
-<section id="재고-유지비용" class="level2">
-<h2 class="anchored" data-anchor-id="재고-유지비용">재고 유지비용</h2>
+<li><span class="math inline">\(C_o\)</span>: 과다재고비용 = 구매비용 - 잔존가치
 <ul>
-<li>자본비용: 기회비용</li>
-<li>보관 및 취급 비용: 창고 임대료</li>
-<li>세금: 관세?</li>
-<li>보험료</li>
-<li>가치상실</li>
-<li>물리적 파손, 도난, 분실</li>
-</ul>
-</section>
-<section id="재고의-필요성" class="level2">
-<h2 class="anchored" data-anchor-id="재고의-필요성">재고의 필요성</h2>
-<ul>
-<li>재고비용은 늘어나지만, 공급사실의 반응성에 영향을 준다.</li>
-</ul>
-</section>
-<section id="재고-관리" class="level2">
-<h2 class="anchored" data-anchor-id="재고-관리">재고 관리</h2>
-<ul>
-<li>재고 비용을 낮추면서 고객의 서비스 수준을 유지하는 것이 목표</li>
-</ul>
-<section id="고객-서비스-수준-지표" class="level3">
-<h3 class="anchored" data-anchor-id="고객-서비스-수준-지표">고객 서비스 수준 지표</h3>
-<ol type="1">
-<li>재고 충족률(In-stock rate)
-<ul>
-<li>고객 주문에 대해 재고로부터 즉시 출고할 수 있는 비율</li>
+<li>필요한 양보다 더 주문했을 때 발생하는 비용</li>
 </ul></li>
-<li>백오더(Backorders)
+<li><span class="math inline">\(C_u\)</span>: 과소재고비용 = 판매가격 - 구매비용
 <ul>
-<li>재고 부족으로 인해 고객 주문을 즉시 출고하지 못한 주문량</li>
+<li>필요한 양보다 덜 주문했을 때 발생하는 기회비용</li>
 </ul></li>
-<li>재고 회전율(Inventory Turnover)</li>
-</ol>
+<li>최적의 주문량 F(Q) = <span class="math inline">\(\frac{C_u}{C_o + C_u}\)</span>
+<ul>
+<li>critical ratio가 두 값 사이일 경우 큰 값 선택</li>
+</ul></li>
+<li>기대 비용 함수: <span class="math inline">\(TC(Q) = C_o E[max(Q - D, 0)] + C_u E[max(D - Q, 0)]\)</span></li>
+<li><span class="math inline">\(TC(Q✶) = (C_o + C_u) Z_α σ\)</span></li>
+</ul>
 </section>
-<section id="재고-비용" class="level3">
-<h3 class="anchored" data-anchor-id="재고-비용">재고 비용</h3>
-<ol type="1">
-<li>주문 비용</li>
-<li>보관 비용</li>
-<li>부족 비용</li>
-</ol>
+<section id="위치-통합-전략" class="level2">
+<h2 class="anchored" data-anchor-id="위치-통합-전략">위치 통합 전략</h2>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->

@@ -15,7 +15,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
 from sklearn.compose import ColumnTransformer
 
 preprocessor = ColumnTransformer(transformers=[
-    ('num', StandardScaler(), num_features),
+    ('num', StandardScaler(), num_features), # outlier가 많다면 RobustScaler를 고려하자
     ('cat', OneHotEncoder(drop='first'), cat_features),
     ('ord', OrdinalEncoder(), ord_features) # 순서형 변수. 하지만 이렇게 처리하는 것보다 그냥 DataFrame.map()으로 직접 인코딩해주는게 더 나을듯
 ])
@@ -24,6 +24,9 @@ pipeline = Pipeline(steps=[
     ('model_name', YourModel(random_state=42))
 ])
 ```
+
+- category 형을 있는 그대로 처리하고 싶다면, pipeline보다는 LGBM, CatBoost, XGBoost 등의 모델을 바로 사용하는게 더 나음.
+    - sklearn은 데이터들을 numpy array로 변환하기 때문에 category 형을 유지하지 못함
 
 ## Grid Search & Bayesian Optimization
 
@@ -391,13 +394,13 @@ params = {
     "classifier__max_iter": [100, 500, 1000, 2000]  # 최대 반복 횟수
 }
 
-# Bayesian Optimization용 (optuna)
+# Bayesian Optimization용 (hyperopt)
 params_bayes = {
-    "classifier__penalty": trial.suggest_categorical("penalty", ['l1', 'l2', 'elasticnet']),
-    "classifier__C": trial.suggest_float("C", 0.001, 100, log=True),
-    "classifier__l1_ratio": trial.suggest_float("l1_ratio", 0.1, 0.9),
-    "classifier__solver": trial.suggest_categorical("solver", ['liblinear', 'saga']),
-    "classifier__max_iter": trial.suggest_int("max_iter", 100, 2000, step=100)
+    "classifier__penalty": hp.choice("penalty", ['l1', 'l2', 'elasticnet']),
+    "classifier__C": hp.loguniform("C", np.log(0.001), np.log(100)),
+    "classifier__l1_ratio": hp.uniform("l1_ratio", 0.1, 0.9),
+    "classifier__solver": hp.choice("solver", ['liblinear', 'saga']),
+    "classifier__max_iter": hp.quniform("max_iter", 100, 2000, 100)
 }
 ```
 
@@ -416,14 +419,14 @@ params = {
     "classifier__metric": ['minkowski', 'euclidean', 'manhattan']  # 거리 함수
 }
 
-# Bayesian Optimization용 (optuna)
+# Bayesian Optimization용 (hyperopt)
 params_bayes = {
-    "classifier__n_neighbors": trial.suggest_int("n_neighbors", 3, 21, step=2),
-    "classifier__weights": trial.suggest_categorical("weights", ['uniform', 'distance']),
-    "classifier__algorithm": trial.suggest_categorical("algorithm", ['auto', 'ball_tree', 'kd_tree']),
-    "classifier__leaf_size": trial.suggest_int("leaf_size", 20, 50, step=10),
-    "classifier__p": trial.suggest_int("p", 1, 2),
-    "classifier__metric": trial.suggest_categorical("metric", ['minkowski', 'euclidean', 'manhattan'])
+    "classifier__n_neighbors": hp.quniform("n_neighbors", 3, 21, 2),
+    "classifier__weights": hp.choice("weights", ['uniform', 'distance']),
+    "classifier__algorithm": hp.choice("algorithm", ['auto', 'ball_tree', 'kd_tree']),
+    "classifier__leaf_size": hp.quniform("leaf_size", 20, 50, 10),
+    "classifier__p": hp.choice("p", [1, 2]),
+    "classifier__metric": hp.choice("metric", ['minkowski', 'euclidean', 'manhattan'])
 }
 ```
 
@@ -444,17 +447,16 @@ params = {
     "classifier__max_iter": [100, 500, 1000, 2000, -1]  # 최대 반복 횟수 (-1: 제한 없음)
 }
 
-# Bayesian Optimization용 (optuna)
+# Bayesian Optimization용 (hyperopt)
 params_bayes = {
-    "classifier__C": trial.suggest_float("C", 0.001, 1000, log=True),
-    "classifier__kernel": trial.suggest_categorical("kernel", ['linear', 'poly', 'rbf', 'sigmoid']),
-    "classifier__degree": trial.suggest_int("degree", 2, 5),  # poly일 때만
-    "classifier__gamma": trial.suggest_categorical("gamma", ['scale', 'auto']) if trial.suggest_categorical("gamma_type", ['scale_auto', 'float']) == 'scale_auto' 
-                         else trial.suggest_float("gamma", 0.001, 10, log=True),
-    "classifier__coef0": trial.suggest_float("coef0", 0.0, 1.0),
-    "classifier__shrinking": trial.suggest_categorical("shrinking", [True, False]),
-    "classifier__tol": trial.suggest_float("tol", 1e-5, 1e-3, log=True),
-    "classifier__max_iter": trial.suggest_int("max_iter", 100, 2000, step=100)
+    "classifier__C": hp.loguniform("C", np.log(0.001), np.log(1000)),
+    "classifier__kernel": hp.choice("kernel", ['linear', 'poly', 'rbf', 'sigmoid']),
+    "classifier__degree": hp.quniform("degree", 2, 5, 1),  # poly일 때만
+    "classifier__gamma": hp.choice("gamma", ['scale', 'auto'] + [hp.loguniform("gamma_float", np.log(0.001), np.log(10))]),
+    "classifier__coef0": hp.uniform("coef0", 0.0, 1.0),
+    "classifier__shrinking": hp.choice("shrinking", [True, False]),
+    "classifier__tol": hp.loguniform("tol", np.log(1e-5), np.log(1e-3)),
+    "classifier__max_iter": hp.quniform("max_iter", 100, 2000, 100)
 }
 ```
 
@@ -480,18 +482,18 @@ params = {
     "classifier__ccp_alpha": [0.0, 0.01, 0.05, 0.1]  # 복잡도 가지치기 파라미터
 }
 
-# Bayesian Optimization용 (optuna)
+# Bayesian Optimization용 (hyperopt)
 params_bayes = {
-    "classifier__n_estimators": trial.suggest_int("n_estimators", 50, 500, step=50),
-    "classifier__criterion": trial.suggest_categorical("criterion", ['gini', 'entropy']),
-    "classifier__max_depth": trial.suggest_int("max_depth", 5, 50, step=5) if trial.suggest_categorical("max_depth_choice", [True, False]) else None,
-    "classifier__min_samples_split": trial.suggest_int("min_samples_split", 2, 20, step=2),
-    "classifier__min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 10, step=1),
-    "classifier__max_features": trial.suggest_categorical("max_features", ['sqrt', 'log2', None]),
-    "classifier__min_impurity_decrease": trial.suggest_float("min_impurity_decrease", 0.0, 0.1),
-    "classifier__bootstrap": trial.suggest_categorical("bootstrap", [True, False]),
-    "classifier__max_samples": trial.suggest_float("max_samples", 0.5, 1.0) if trial.suggest_categorical("use_max_samples", [True, False]) else None,
-    "classifier__ccp_alpha": trial.suggest_float("ccp_alpha", 0.0, 0.1)
+    "classifier__n_estimators": hp.quniform("n_estimators", 50, 500, 50),
+    "classifier__criterion": hp.choice("criterion", ['gini', 'entropy']),
+    "classifier__max_depth": hp.choice("max_depth", [None, hp.quniform("max_depth_val", 5, 50, 5)]),
+    "classifier__min_samples_split": hp.quniform("min_samples_split", 2, 20, 2),
+    "classifier__min_samples_leaf": hp.quniform("min_samples_leaf", 1, 10, 1),
+    "classifier__max_features": hp.choice("max_features", ['sqrt', 'log2', None]),
+    "classifier__min_impurity_decrease": hp.uniform("min_impurity_decrease", 0.0, 0.1),
+    "classifier__bootstrap": hp.choice("bootstrap", [True, False]),
+    "classifier__max_samples": hp.choice("max_samples", [None, hp.uniform("max_samples_val", 0.5, 1.0)]),
+    "classifier__ccp_alpha": hp.uniform("ccp_alpha", 0.0, 0.1)
 }
 ```
 
@@ -517,21 +519,21 @@ params = {
     "classifier__scale_pos_weight": [1, 2, 3, 5]  # 양성 클래스 가중치 (불균형 데이터용)
 }
 
-# Bayesian Optimization용 (optuna)
+# Bayesian Optimization용 (hyperopt)
 params_bayes = {
-    "classifier__n_estimators": trial.suggest_int("n_estimators", 50, 500, step=50),
-    "classifier__learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
-    "classifier__max_depth": trial.suggest_int("max_depth", 3, 8),
-    "classifier__min_child_weight": trial.suggest_int("min_child_weight", 1, 7),
-    "classifier__gamma": trial.suggest_float("gamma", 0, 0.4),
-    "classifier__subsample": trial.suggest_float("subsample", 0.6, 1.0),
-    "classifier__colsample_bytree": trial.suggest_float("colsample_bytree", 0.6, 1.0),
-    "classifier__colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.6, 1.0),
-    "classifier__colsample_bynode": trial.suggest_float("colsample_bynode", 0.6, 1.0),
-    "classifier__reg_alpha": trial.suggest_float("reg_alpha", 0, 10, log=True),
-    "classifier__reg_lambda": trial.suggest_float("reg_lambda", 0, 10, log=True),
-    "classifier__max_delta_step": trial.suggest_int("max_delta_step", 0, 10),
-    "classifier__scale_pos_weight": trial.suggest_int("scale_pos_weight", 1, 5)
+    "classifier__n_estimators": hp.quniform("n_estimators", 50, 500, 50),
+    "classifier__learning_rate": hp.loguniform("learning_rate", np.log(0.01), np.log(0.3)),
+    "classifier__max_depth": hp.quniform("max_depth", 3, 8, 1),
+    "classifier__min_child_weight": hp.quniform("min_child_weight", 1, 7, 1),
+    "classifier__gamma": hp.uniform("gamma", 0, 0.4),
+    "classifier__subsample": hp.uniform("subsample", 0.6, 1.0),
+    "classifier__colsample_bytree": hp.uniform("colsample_bytree", 0.6, 1.0),
+    "classifier__colsample_bylevel": hp.uniform("colsample_bylevel", 0.6, 1.0),
+    "classifier__colsample_bynode": hp.uniform("colsample_bynode", 0.6, 1.0),
+    "classifier__reg_alpha": hp.loguniform("reg_alpha", np.log(0.01), np.log(10)),
+    "classifier__reg_lambda": hp.loguniform("reg_lambda", np.log(0.01), np.log(10)),
+    "classifier__max_delta_step": hp.quniform("max_delta_step", 0, 10, 1),
+    "classifier__scale_pos_weight": hp.quniform("scale_pos_weight", 1, 5, 1)
 }
 ```
 
@@ -560,24 +562,24 @@ params = {
     "classifier__bagging_freq": [0, 1, 3, 5]  # 배깅 빈도
 }
 
-# Bayesian Optimization용 (optuna)
+# Bayesian Optimization용 (hyperopt)
 params_bayes = {
-    "classifier__n_estimators": trial.suggest_int("n_estimators", 50, 500, step=50),
-    "classifier__learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
-    "classifier__max_depth": trial.suggest_int("max_depth", 3, 10) if trial.suggest_categorical("limit_depth", [True, False]) else -1,
-    "classifier__num_leaves": trial.suggest_int("num_leaves", 15, 255, step=16),
-    "classifier__min_child_samples": trial.suggest_int("min_child_samples", 10, 50, step=10),
-    "classifier__min_child_weight": trial.suggest_float("min_child_weight", 1e-3, 1, log=True),
-    "classifier__subsample": trial.suggest_float("subsample", 0.6, 1.0),
-    "classifier__colsample_bytree": trial.suggest_float("colsample_bytree", 0.6, 1.0),
-    "classifier__reg_alpha": trial.suggest_float("reg_alpha", 0, 10, log=True),
-    "classifier__reg_lambda": trial.suggest_float("reg_lambda", 0, 10, log=True),
-    "classifier__min_split_gain": trial.suggest_float("min_split_gain", 0, 0.5),
-    "classifier__min_data_in_leaf": trial.suggest_int("min_data_in_leaf", 10, 100, step=10),
-    "classifier__boosting_type": trial.suggest_categorical("boosting_type", ['gbdt', 'dart', 'goss']),
-    "classifier__feature_fraction": trial.suggest_float("feature_fraction", 0.6, 1.0),
-    "classifier__bagging_fraction": trial.suggest_float("bagging_fraction", 0.6, 1.0),
-    "classifier__bagging_freq": trial.suggest_int("bagging_freq", 0, 5)
+    "classifier__n_estimators": hp.quniform("n_estimators", 50, 500, 50),
+    "classifier__learning_rate": hp.loguniform("learning_rate", np.log(0.01), np.log(0.3)),
+    "classifier__max_depth": hp.choice("max_depth", [-1, hp.quniform("max_depth_val", 3, 10, 1)]),
+    "classifier__num_leaves": hp.quniform("num_leaves", 15, 255, 16),
+    "classifier__min_child_samples": hp.quniform("min_child_samples", 10, 50, 10),
+    "classifier__min_child_weight": hp.loguniform("min_child_weight", np.log(1e-3), np.log(1)),
+    "classifier__subsample": hp.uniform("subsample", 0.6, 1.0),
+    "classifier__colsample_bytree": hp.uniform("colsample_bytree", 0.6, 1.0),
+    "classifier__reg_alpha": hp.loguniform("reg_alpha", np.log(0.01), np.log(10)),
+    "classifier__reg_lambda": hp.loguniform("reg_lambda", np.log(0.01), np.log(10)),
+    "classifier__min_split_gain": hp.uniform("min_split_gain", 0, 0.5),
+    "classifier__min_data_in_leaf": hp.quniform("min_data_in_leaf", 10, 100, 10),
+    "classifier__boosting_type": hp.choice("boosting_type", ['gbdt', 'dart', 'goss']),
+    "classifier__feature_fraction": hp.uniform("feature_fraction", 0.6, 1.0),
+    "classifier__bagging_fraction": hp.uniform("bagging_fraction", 0.6, 1.0),
+    "classifier__bagging_freq": hp.quniform("bagging_freq", 0, 5, 1)
 }
 ```
 
@@ -606,24 +608,24 @@ params = {
     "classifier__max_leaves": [16, 31, 64, 127]  # 최대 리프 수 (Lossguide일 때만)
 }
 
-# Bayesian Optimization용 (optuna)
+# Bayesian Optimization용 (hyperopt)
 params_bayes = {
-    "classifier__n_estimators": trial.suggest_int("n_estimators", 50, 500, step=50),
-    "classifier__learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
-    "classifier__depth": trial.suggest_int("depth", 3, 8),
-    "classifier__l2_leaf_reg": trial.suggest_int("l2_leaf_reg", 1, 20),
-    "classifier__border_count": trial.suggest_categorical("border_count", [32, 64, 128, 255]),
-    "classifier__bagging_temperature": trial.suggest_float("bagging_temperature", 0, 5),
-    "classifier__random_strength": trial.suggest_int("random_strength", 1, 10),
-    "classifier__od_type": trial.suggest_categorical("od_type", ['IncToDec', 'Iter']),
-    "classifier__od_wait": trial.suggest_int("od_wait", 10, 50, step=10),
-    "classifier__bootstrap_type": trial.suggest_categorical("bootstrap_type", ['Bayesian', 'Bernoulli', 'MVS']),
-    "classifier__subsample": trial.suggest_float("subsample", 0.6, 1.0) if trial.suggest_categorical("use_subsample", [True, False]) else None,
-    "classifier__rsm": trial.suggest_float("rsm", 0.5, 1.0),
-    "classifier__leaf_estimation_iterations": trial.suggest_int("leaf_estimation_iterations", 1, 10),
-    "classifier__grow_policy": trial.suggest_categorical("grow_policy", ['SymmetricTree', 'Depthwise', 'Lossguide']),
-    "classifier__min_data_in_leaf": trial.suggest_int("min_data_in_leaf", 1, 20),
-    "classifier__max_leaves": trial.suggest_int("max_leaves", 16, 127) if trial.suggest_categorical("use_max_leaves", [True, False]) else None
+    "classifier__n_estimators": hp.quniform("n_estimators", 50, 500, 50),
+    "classifier__learning_rate": hp.loguniform("learning_rate", np.log(0.01), np.log(0.3)),
+    "classifier__depth": hp.quniform("depth", 3, 8, 1),
+    "classifier__l2_leaf_reg": hp.quniform("l2_leaf_reg", 1, 20, 1),
+    "classifier__border_count": hp.choice("border_count", [32, 64, 128, 255]),
+    "classifier__bagging_temperature": hp.uniform("bagging_temperature", 0, 5),
+    "classifier__random_strength": hp.quniform("random_strength", 1, 10, 1),
+    "classifier__od_type": hp.choice("od_type", ['IncToDec', 'Iter']),
+    "classifier__od_wait": hp.quniform("od_wait", 10, 50, 10),
+    "classifier__bootstrap_type": hp.choice("bootstrap_type", ['Bayesian', 'Bernoulli', 'MVS']),
+    "classifier__subsample": hp.uniform("subsample", 0.6, 1.0),
+    "classifier__rsm": hp.uniform("rsm", 0.5, 1.0),
+    "classifier__leaf_estimation_iterations": hp.quniform("leaf_estimation_iterations", 1, 10, 1),
+    "classifier__grow_policy": hp.choice("grow_policy", ['SymmetricTree', 'Depthwise', 'Lossguide']),
+    "classifier__min_data_in_leaf": hp.quniform("min_data_in_leaf", 1, 20, 1),
+    "classifier__max_leaves": hp.quniform("max_leaves", 16, 127, 1)
 }
 
 # 주요 특징:

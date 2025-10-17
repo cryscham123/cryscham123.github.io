@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -284,7 +318,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/01_projects/adp_실기/notes/07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">시계열 분석 템플릿</span></a>
+ <span class="menu-text">시계열 분석</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -724,6 +758,12 @@ window.Quarto = {
  <span class="menu-text">재고 관리</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">재고 관리 2</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -802,6 +842,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../../../posts/01_projects/bs_3_2/notes/품질경영/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">품질변동과 공정능력</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../posts/01_projects/bs_3_2/notes/품질경영/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">관리도</span></a>
   </div>
 </li>
       </ul>
@@ -2849,13 +2895,11 @@ window.Quarto = {
   <ul>
   <li><a href="#군집-분석" id="toc-군집-분석" class="nav-link active" data-scroll-target="#군집-분석">군집 분석</a>
   <ul class="collapse">
-  <li><a href="#전제-조건" id="toc-전제-조건" class="nav-link" data-scroll-target="#전제-조건">전제 조건</a></li>
-  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">model</a></li>
+  <li><a href="#distance-based-methods" id="toc-distance-based-methods" class="nav-link" data-scroll-target="#distance-based-methods">Distance-based methods</a></li>
+  <li><a href="#density-based-methods" id="toc-density-based-methods" class="nav-link" data-scroll-target="#density-based-methods">Density-based methods</a></li>
   <li><a href="#평가" id="toc-평가" class="nav-link" data-scroll-target="#평가">평가</a></li>
   </ul></li>
-  <li><a href="#자기조직화-지도-som" id="toc-자기조직화-지도-som" class="nav-link" data-scroll-target="#자기조직화-지도-som">자기조직화 지도 (SOM)</a></li>
-  <li><a href="#pca" id="toc-pca" class="nav-link" data-scroll-target="#pca">PCA</a></li>
-  <li><a href="#요인-분석" id="toc-요인-분석" class="nav-link" data-scroll-target="#요인-분석">요인 분석</a></li>
+  <li><a href="#차원-축소" id="toc-차원-축소" class="nav-link" data-scroll-target="#차원-축소">차원 축소</a></li>
   <li><a href="#연관-분석" id="toc-연관-분석" class="nav-link" data-scroll-target="#연관-분석">연관 분석</a></li>
   </ul>
 </nav>
@@ -2893,39 +2937,45 @@ window.Quarto = {
 
 <section id="군집-분석" class="level2">
 <h2 class="anchored" data-anchor-id="군집-분석">군집 분석</h2>
-<section id="전제-조건" class="level3">
-<h3 class="anchored" data-anchor-id="전제-조건">전제 조건</h3>
-<ol type="1">
-<li>scalability</li>
-<li>다양한 타입의 속성을 처리해야 함
-<ul>
-<li>k-means는 수치형만 처리 가능</li>
-</ul></li>
-<li>인위적인 형상의 군집도 발견할 수 있어야 함
-<ul>
-<li>k-means는 non-convex 형태는 잘 못찾음</li>
-</ul></li>
-<li>파라미터 설정에 전문지식을 요하지 않아야함</li>
-<li>noise와 outliers를 처리해야 함</li>
-<li>데이터가 입력되는 순서에 민감하면 안됨</li>
-<li>차원 수가 높아도 잘 처리할 수 있어야함</li>
-<li>사용자 정의 제약조건도 수용할 수 있어야함</li>
-<li>해석과 사용이 용이해야함</li>
-<li>scaling, one hot encoding 등의 전처리가 필요하다.</li>
-</ol>
-</section>
-<section id="model" class="level3">
-<h3 class="anchored" data-anchor-id="model">model</h3>
-<ul>
-<li><p>Distance-based methods</p>
+<section id="distance-based-methods" class="level3">
+<h3 class="anchored" data-anchor-id="distance-based-methods">Distance-based methods</h3>
 <ul>
 <li>Partitioning methods</li>
-<li>k-means:
+</ul>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>k-means</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="k-means"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler() <span class="co"># or RobustScaler</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df_scaled <span class="op">=</span> scaler.fit_transform(df)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Elbow method</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>I <span class="op">=</span> []</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>):</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>i) <span class="co"># sklearn은 기본적으로 k-means++</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    kmeans.fit(df_scaled)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    I.append(kmeans.inertia_)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>), I, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># k 선택 후 군집화</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>kmeans.fit(df_scaled)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'cluster'</span>] <span class="op">=</span> kmeans.labels_</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 군집 중심값 정보</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>centers <span class="op">=</span> scaler.inverse_transform(kmeans.cluster_centers_)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>centers_df <span class="op">=</span> pd.DataFrame(centers, columns<span class="op">=</span>df.columns[:<span class="op">-</span><span class="dv">1</span>], index<span class="op">=</span>[<span class="ss">f'cluster_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(centers.shape[<span class="dv">0</span>])])</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>display(centers_df)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Kmeans
 <ul>
 <li>polinominal 시간 안에 해결 가능</li>
 <li>noise, outlier에 민감함</li>
 <li>수치형만 처리 가능</li>
-<li>non-convex 형태는 잘 못찾음</li>
 </ul></li>
 <li>k-modes: 범주형 데이터 처리 가능. 빈도수로 유사도 처리함</li>
 <li>k-prototype: 범주형, 수치형 섞인거 처리 가능</li>
@@ -2941,21 +2991,54 @@ window.Quarto = {
 </ul></li>
 <li>CLARANS: medoid 후보를 랜덤하게 선택함</li>
 </ul></li>
-<li>k-means++: 초기 centroids를 더 잘 잡음</li>
+</ol>
+<blockquote class="blockquote">
+<p>k-modes, k-prototype, k-medoids는 ADP 환경에서 제공 안함 ADP 환경에서 제공하는 모듈로는 범주형, 수치형 섞인거 처리하는 군집 방법이 없음 (일단 내가 생각하기로는 그렇다)</p>
+</blockquote>
+<ul>
 <li>Hierarchical methods</li>
+</ul>
+<ol type="1">
 <li>top-down: divisive, dia</li>
-<li>bottom-up: agglomerative
+<li>bottom-up: agglomerative</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>agglomerative</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="agglomerative"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.hierarchy <span class="im">import</span> dendrogram, linkage. cut_tree</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> linkage(df_scaled, method<span class="op">=</span><span class="st">'ward'</span>) <span class="co"># 'single', 'complete', 'average', 'ward' 등등</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> cut_tree(z, n_clusters<span class="op">=</span><span class="dv">3</span>).flatten()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> dendogram(z, labels<span class="op">=</span><span class="bu">list</span>(df.index))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>합쳐지는 거리</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="합쳐지는 거리"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>thr <span class="op">=</span> pd.DataFrame(d[<span class="st">'dcoord'</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>thr <span class="co"># (0, 3) = 합쳐지기 전 왼쪽, 오른쪽 높이, (1, 2) = 합쳐진 후 높이</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>thr[thr[<span class="dv">2</span>] <span class="op">&gt;</span> <span class="dv">70</span>].sort_values(<span class="dv">2</span>)[[<span class="dv">2</span>]] <span class="co"># 70 이상의 높이에서 합쳐지는 군집들의 높이</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <ul>
-<li>ward’s distance: 군집 간의 거리 계산을 군집 내의 분산을 최소화하는 방식으로 계산
+<li>거리기반 군집의 단점:
 <ul>
-<li>ESS: 각 군집의 중심으로 부터의 거리 제곱합</li>
+<li>군집의 모양이 구형이 아닐 경우 찾기 어려움</li>
+<li>군집의 갯수 결정하기 어려움</li>
+<li>군집의 밀도가 높아야함</li>
 </ul></li>
-</ul></li>
-</ul></li>
-<li><p>Density-based methods</p>
+</ul>
+</section>
+<section id="density-based-methods" class="level3">
+<h3 class="anchored" data-anchor-id="density-based-methods">Density-based methods</h3>
 <ul>
 <li>다양한 모양의 군집을 찾을 수 있음</li>
 <li>noise, outlier에 강함</li>
+</ul>
+<ol type="1">
 <li>DBSCAN: 잡음 포인트는 군집에서 제외
 <ol type="1">
 <li>core point를 찾음(eps 이내에 minPts 이상 있는 점)</li>
@@ -2967,26 +3050,74 @@ window.Quarto = {
 <ul>
 <li>고정된 파라미터를 사용하기 때문에 군집간 밀도가 다를 경우 잘 못찾음</li>
 <li>군집간 계층관계를 인식하기 어렵다</li>
+<li>대신 빠르고, DBSCAN만으로도 충분해서 많이 사용되는 듯</li>
 </ul></li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>DBSCAN eps 결정</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="DBSCAN eps 결정"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> NearestNeighbors</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>MIN_SAMPLES <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_scaled <span class="op">=</span> scaler.fit_transform(df)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>neigh <span class="op">=</span> NearestNeighbors(n_neighbors<span class="op">=</span>MIN_SAMPLES)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>neigh.fit(df_scaled)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>distances, indices <span class="op">=</span> neigh.kneighbors(df_scaled)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>k_distances <span class="op">=</span> np.sort(distances[:, MIN_SAMPLES<span class="op">-</span><span class="dv">1</span>])[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># k-dist plot 그리기</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.plot(k_distances)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Data Points sorted by distance'</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="ss">f'</span><span class="sc">{</span>MIN_SAMPLES<span class="op">-</span><span class="dv">1</span><span class="sc">}</span><span class="ss">-th Nearest Neighbor Distance'</span>) <span class="co"># 자기 자신을 제외한 거리</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'k-distance Graph'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>min samples 기준
+<ul>
+<li>2 * 차원, log(샘플 수), 4~5개 등등의 기준이 있다.</li>
+<li>이론적으로 증명이 되거나 한건 아니니까 적절히 선택하거나, for문 돌려가면서 최적값 찾기</li>
+</ul></li>
+<li>eps 기준
+<ul>
+<li>k-dist plot에서 급격히 꺾이는 지점</li>
+</ul></li>
+</ul>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>DBSCAN</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="DBSCAN"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> DBSCAN</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># k-dist plot에서 찾은 값으로 DBSCAN 적용</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>eps_value <span class="op">=</span> <span class="dv">18</span>  <span class="co"># k-dist plot에서 결정한 값</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> DBSCAN(eps<span class="op">=</span>eps_value, min_samples<span class="op">=</span>MIN_SAMPLES).fit(df_scaled)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> db.labels_</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
 <li>OPTICS: DBSCAN의 단점을 보완
 <ul>
 <li>군집의 밀도가 다를 때도 잘 처리함</li>
 <li>군집의 계층 구조를 인식할 수 있음</li>
-<li>eps, minPts 파라미터가 필요함</li>
+<li>minPts 파라미터가 필요함</li>
+<li>얘로도 이상치 탐지 가능</li>
 </ul></li>
-</ul></li>
-<li><p>Grid-based methods: 대표만(각 grid를 대표) 가지고 군집분석 하는거</p>
-<ul>
-<li>속도와 메모리 측면에서 효율적</li>
-</ul></li>
-<li><p>Model-based clustering methods</p></li>
-<li><p>거리기반 군집의 단점:</p>
-<ul>
-<li>군집의 모양이 구형이 아닐 경우 찾기 어려움</li>
-<li>군집의 갯수 결정하기 어려움</li>
-<li>군집의 밀도가 높아야함</li>
-</ul></li>
-</ul>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>OPTICS</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="OPTICS"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> OPTICS</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>optics <span class="op">=</span> OPTICS(min_samples<span class="op">=</span>MIN_SAMPLES).fit(df_scaled)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> optics.labels_</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="평가" class="level3">
 <h3 class="anchored" data-anchor-id="평가">평가</h3>
@@ -3000,20 +3131,50 @@ window.Quarto = {
 </ul></li>
 <li>1에 가까울 수록 좋음</li>
 </ul></li>
+<li>그 외 sklearn metrics 참고</li>
 </ul>
 </section>
 </section>
-<section id="자기조직화-지도-som" class="level2">
-<h2 class="anchored" data-anchor-id="자기조직화-지도-som">자기조직화 지도 (SOM)</h2>
-</section>
-<section id="pca" class="level2">
-<h2 class="anchored" data-anchor-id="pca">PCA</h2>
-</section>
-<section id="요인-분석" class="level2">
-<h2 class="anchored" data-anchor-id="요인-분석">요인 분석</h2>
+<section id="차원-축소" class="level2">
+<h2 class="anchored" data-anchor-id="차원-축소">차원 축소</h2>
+<ul>
+<li>PCA, LSA, t-SNE, UMAP, ICA, MDS, NMF 등등
+<ul>
+<li>정말 많은 방법들이 있다.</li>
+</ul></li>
+<li>요인분석에서 확인적 요인분석은 python에서 제공하는 library가 없는걸로 알고 있음</li>
+</ul>
 </section>
 <section id="연관-분석" class="level2">
 <h2 class="anchored" data-anchor-id="연관-분석">연관 분석</h2>
+<div id="d0b281f6" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlxtend.preprocessing <span class="im">import</span> TransactionEncoder</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlxtend.frequent_patterns <span class="im">import</span> apriori, association_rules</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>transactions <span class="op">=</span> {}</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>te <span class="op">=</span> TransactionEncoder()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 전처리</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> df[<span class="st">'target'</span>].<span class="bu">str</span>.split(<span class="st">', '</span>).values</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>te_ary <span class="op">=</span> te.fit_transform(data)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>transactions[name] <span class="op">=</span> pd.DataFrame(te_ary, columns<span class="op">=</span>te.columns_)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 빈발패턴 생성</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>fset <span class="op">=</span> apriori(t, min_support<span class="op">=</span><span class="fl">0.6</span>, use_colnames<span class="op">=</span><span class="va">True</span>, verbose<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> fset.shape[<span class="dv">0</span>] <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"빈발패턴이 존재하지 않습니다."</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 연관규칙 생성</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    rule <span class="op">=</span> association_rules(fset, metric<span class="op">=</span><span class="st">"confidence"</span>, min_threshold<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    rule[<span class="st">'len_ant'</span>] <span class="op">=</span> rule[<span class="st">'antecedents'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x))</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    rule[<span class="st">'len_con'</span>] <span class="op">=</span> rule[<span class="st">'consequents'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x))</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    display(rule[(rule[<span class="st">'len_con'</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (rule[<span class="st">'lift'</span>] <span class="op">&gt;=</span> <span class="fl">1.2</span>)].reset_index(drop<span class="op">=</span><span class="va">True</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>지지도: 전체 거래에서 특정 항목 집합이 나타나는 비율</li>
+<li>신뢰도: 특정 항목 집합이 주어졌을 때 다른 항목</li>
+<li>향상도: 두 항목 집합이 독립적인 경우에 비해 함께 나타날 가능성</li>
+</ul>
 
 
 </section>
@@ -3450,8 +3611,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../posts/01_projects/adp_실기/notes/07.html" class="pagination-link" aria-label="시계열 분석 템플릿">
-        <span class="nav-page-text">시계열 분석 템플릿</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../posts/01_projects/adp_실기/notes/07.html" class="pagination-link" aria-label="시계열 분석">
+        <span class="nav-page-text">시계열 분석</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

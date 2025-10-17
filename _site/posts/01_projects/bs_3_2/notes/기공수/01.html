@@ -70,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -219,13 +248,55 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/adp_실기/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">코드 snippet</span></a>
+ <span class="menu-text">모델링, 평가 템플릿</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">EDA 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">전처리 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">회귀분석 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분산 분석 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">비지도 학습 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시계열 분석</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">기타</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/adp_실기/notes/10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률과 통계</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
@@ -647,6 +718,18 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  <span class="menu-text">재고 관리</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">재고 관리 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">채찍 효과</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -701,7 +784,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/신재생에너지/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">개인 발표 - 탄소배출 측정 기술</span></a>
+ <span class="menu-text">개인 발표 - 공짜 탄소배출권 발급 사건</span></a>
   </div>
 </li>
       </ul>
@@ -725,6 +808,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">품질변동과 공정능력</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">관리도</span></a>
   </div>
 </li>
       </ul>
@@ -765,7 +854,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">프로세스 모델링 표준: BPMN</span></a>
+ <span class="menu-text">프로세스 모델링 표준: WS-BPEL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">06</span></a>
   </div>
 </li>
       </ul>
@@ -2805,9 +2900,30 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
 <section id="멱급수" class="level2">
 <h2 class="anchored" data-anchor-id="멱급수">멱급수</h2>
+<ul>
+<li><p>변수 x가 붙은 무한급수</p></li>
+<li><p><span class="math inline">\(f(x) = \Sigma a_n (x-a)^n\)</span> 꼴</p>
+<ul>
+<li>급수의 수렴 공식을 이용해 해당 멱급수가 수렴하는 구간을 구할 수 있다.</li>
+<li>적어도 한 점 x=a에서 수렴한다.</li>
+<li>일반적으로 절대 비판정법을 많이 사용하고, 1, -1에서의 수렴 여부도 확인을 해줘야 한다.</li>
+</ul></li>
+<li><p>멱급수 <span class="math inline">\(\Sigma a_nx^n\)</span>이 <span class="math inline">\(x_0\)</span>에서 수렴하면, <span class="math inline">\(|x| &lt; |x_0|\)</span>인 모든 x에 대하여 절대수렴한다.</p></li>
+<li><p>멱급수 <span class="math inline">\(\Sigma a_nx^n\)</span>이 <span class="math inline">\(x_0\)</span>에서 발산하면, <span class="math inline">\(|x| &gt; |x_0|\)</span>인 모든 x에 대하여 발산한다.</p></li>
+<li><p>수렴반경이 R &gt; 0인 멱급수 <span class="math inline">\(\Sigma a_n (x-a)^n\)</span>에 대하여, <span class="math inline">\(f(x) = \Sigma a_n (x-a)^n, |x-a| &lt; R\)</span>로 정의된 f(x)는 구간 (a - R, a + R)에서 미분가능하고, 부정적분을 가지며 다음이 성립한다.</p>
+<ol type="1">
+<li><span class="math inline">\(f'(x) = \Sigma_{n=1}^{\infty} n a_n (x-a)^{n-1}\)</span></li>
+<li><span class="math inline">\(\int f(x) dx = C + \Sigma_{n=0}^{\infty} \frac{a_n (x-a)^{n+1}}{n+1}\)</span></li>
+</ol></li>
+</ul>
 </section>
 <section id="테일러-급수" class="level2">
 <h2 class="anchored" data-anchor-id="테일러-급수">테일러 급수</h2>
+<ul>
+<li><span class="math inline">\(f(x) = \Sigma_{n=0}^{\infty} \frac{f^{n}(a)}{n!}(x-a)^n, |x - a| &lt; R\)</span></li>
+<li>x = 0 에서의 테일러 급수를 맥클로린 급수라고 한다.</li>
+<li>p가 실수이고, <span class="math inline">\(|x| &lt; 1\)</span>이면, <span class="math inline">\((1 + x)^p = \Sigma{n=0}^{\infty} \binom{p}{n} x^n\)</span></li>
+</ul>
 </section>
 <section id="멱급수의-연산" class="level2">
 <h2 class="anchored" data-anchor-id="멱급수의-연산">멱급수의 연산</h2>

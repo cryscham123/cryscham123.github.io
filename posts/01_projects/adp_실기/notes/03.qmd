@@ -47,7 +47,7 @@ def multi_impute(df, categorical, max_iter=40):
     df_imp = df.copy()
     num_cols = [col for col in df.columns if col not in categorical]
 
-    # 결측치가 많은 column 우선 처리
+    # 결측치가 적은 column 우선 처리
     null_counts = df_imp.isnull().sum()
     null_cols = null_counts[null_counts > 0].sort_values().index.tolist()
 
@@ -79,12 +79,12 @@ def multi_impute(df, categorical, max_iter=40):
             if col in categorical:
                 model = LGBMClassifier(
                     boosting_type="rf", n_estimators=5,
-                    bagging_fraction=0.8, bagging_freq=1
+                    bagging_fraction=0.8, bagging_freq=1, feature_fraction=0.8
                 )
             else:
                 model = LGBMRegressor(
                     boosting_type="rf", n_estimators=5,
-                    bagging_fraction=0.8, bagging_freq=1
+                    bagging_fraction=0.8, bagging_freq=1, feature_fraction=0.8
                 )
             model.fit(X_obs, y_obs)
             y_pred = model.predict(X_mis)
@@ -151,6 +151,7 @@ class MultiImputer:
                         n_estimators=self.n_estimators,
                         bagging_fraction=0.8, 
                         bagging_freq=1,
+                        feature_fraction=0.8,
                         verbose=-1
                     )
                 else:
@@ -159,6 +160,7 @@ class MultiImputer:
                         n_estimators=self.n_estimators,
                         bagging_fraction=0.8, 
                         bagging_freq=1,
+                        feature_fraction=0.8,
                         verbose=-1
                     )
                 
@@ -213,7 +215,8 @@ class MultiImputer:
 ## 이상치 처리
 
 - 이상치 탐지는 EDA 참고
-- 처리는 알아서 잘 하자.
+- 이상치는 그 자체로 중요한 정보일 수 있다. 
+- 따라서 수집중 오류, 측정 과정에서의 오류 등과 같은 상황이 의심되는 비정상적인 데이터가 아니라면 제거하지 않는 것이 좋다.
 
 ## 불균형 처리
 
@@ -240,7 +243,7 @@ df3 = multi_impute(df, categorical=cat_cols)
 
 candis = [
     ('Nothing', df), # 종속변수는 결측치가 없어야 된다.
-    ('Just Delete', df1), # 얘는 지나치게 성능이 좋게 나온다. 그냥 빼는게 좋을듯
+    ('Just Delete', df1),
     ('Simple Impute', df2),
     ('MultiImputer', df3)
 ]
@@ -250,7 +253,8 @@ for name, df in candis:
     rf = LGBMRegressor(boosting_type="rf", 
                        n_estimators=100, 
                        bagging_fraction=0.8, 
-                       bagging_freq=1)
+                       bagging_freq=1,
+                       feature_fraction=0.8)
     result[name] = cross_val_score(rf, 
                                    df.drop('target', axis=1), 
                                    df['target'], 
@@ -268,6 +272,20 @@ ax.set_yticklabels(means.index)
 plt.show()
 ```
 
+- Imbalance 처리 방법에 대해서도 적용 가능
+
+## Encoding
+
+- LGBM, XGBoost, CatBoost 등은 범주형 변수를 직접 처리 가능
+- 범주형 인코딩의 경우, 문제에서 범주 값이 주어지거나, 실무에서 범주 값이 미리 정해져 있는 경우 굳이 train, test set 나눈 후에 fit할 필요는 없다고 생각한다. (개인적인 의견이다.)
+
+## Scaling
+
+- 이상치가 많다면 Robust Scaling, 정규분포를 따른다면 Standard Scaling
+    - Standard Scaling 이후 회귀계수의 단위는 표준편차 단위
+    - Robust Scaling 이후 회귀계수의 단위는 IQR 단위
+- 일반적으로 같은 scaling 방법을 사용하는게 권장된다.
+
 ## Feature Selection
 
 ### Filter Method
@@ -275,6 +293,7 @@ plt.show()
 1. basic methods
 
 - 하나의 값만 가지는 변수 혹은 분산이 너무 낮은 변수는 제거
+- 하지만 분산이 낮아도 종속변수와 관계가 있을 수 있다. 일단은 mutual info 까지 확인을 해보는게 좋을 듯.
 
 ```{python}
 #| eval: false
@@ -309,6 +328,15 @@ from sklearn.feature_selection import SelectKBest, SelectPercentile, mutual_info
 
 X_new = SelectKBest(mutual_info_classif, k=2).fit_transform(X, y) # 최상위 2개
 X_new = SelectPercentile(mutual_info_regression, percentile=10).fit_transform(X, y) # 상위 10%
+```
+
+```{.python filename="mutual info"}
+from sklearn.feature_selection import mutual_info_classif
+
+mi_score = mutual_info_classif(X, y,
+                              discrete_features=[x in cat_cols for x in df.columns])
+mi_result = pd.Series(mi_score, index=X.coulmns).sort_values(ascending=False)
+mi_result
 ```
 
 - EDA 파트 mutual info 참고
