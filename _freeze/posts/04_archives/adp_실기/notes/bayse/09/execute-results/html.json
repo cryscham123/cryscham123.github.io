@@ -1,0 +1,12 @@
+{
+  "hash": "6ab4ad6e653f793056b608e2e04137d9",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"검정\"\ndate: 2025-07-06\ncategories: [\"확률 통계\"]\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n## 동전\n\n::: {#55f36613 .cell execution_count=1}\n``` {.python .cell-code}\nimport numpy as np\nfrom empiricaldist import Pmf\nfrom scipy.stats import binom\n\nk, n = 140, 250\nlike_fair = binom.pmf(k, n, 0.5)\n```\n:::\n\n\n::: {#4468fc90 .cell execution_count=2}\n``` {.python .cell-code}\nramp_up = np.arange(50)\nramp_down = np.arange(50, -1, -1)\na = np.append(ramp_up, ramp_down)\n\nxs = np.linspace(0, 1, 101)\ntriangle = Pmf(a, xs)\ntriangle.normalize()\nbiased_triangle = triangle.copy()\nbiased_triangle[0.5] = 0\nbiased_triangle.normalize()\n\nlikelihood = binom.pmf(k, n, xs)\nlike_triangle = np.sum(biased_triangle * likelihood)\n```\n:::\n\n\n::: {#6ae52f08 .cell execution_count=3}\n``` {.python .cell-code}\nk = like_fair / like_triangle\nk, k / (k + 1)\n```\n\n::: {.cell-output .cell-output-display execution_count=3}\n```\n(np.float64(1.1970766535647133), np.float64(0.5448497446015277))\n```\n:::\n:::\n\n\n- 250번 중 140번이 앞면이 나왔는데도 여전히 공정할 확률이 높다.\n\n## 연습문제\n\n### 10-2\n\n",
+    "supporting": [
+      "09_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "hash": "4536fb628bf71c6b755757d9e74f31b7",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"MCMC\"\ndate: 2025-07-08\ncategories: [\"확률 통계\"]\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n::: {#df35e88c .cell execution_count=1}\n``` {.python .cell-code}\nfrom scipy.stats import gamma, poisson\nimport numpy as np\nfrom empiricaldist import Pmf\n\nalpha = 1.4\ndist = gamma(alpha)\n\nlams = np.linspace(0, 10, 101)\nprior_pmf = Pmf(dist.pdf(lams), lams)\nprior_pmf.normalize()\n\ndata = 4\nlikelihood = poisson.pmf(data, lams)\nposterior = prior_pmf * likelihood\nposterior.normalize()\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\nnp.float64(0.05015532557804499)\n```\n:::\n:::\n\n\n## 사전예측분포\n\n::: {#6bc68d8c .cell execution_count=2}\n``` {.python .cell-code}\nsample_prior = dist.rvs(1000)\nsample_prior_pred = poisson.rvs(sample_prior)\npmf_prior_pred = Pmf.from_seq(sample_prior_pred)\n```\n:::\n\n\n## MCMC\n\n",
+    "supporting": [
+      "18_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
