@@ -162,8 +162,25 @@
   <pubDate>Sat, 11 Oct 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>DMN</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/07.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>프로세스 경영</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/07.html</guid>
+  <pubDate>Wed, 01 Oct 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
   <title>프로세스 모델링 표준: WS-BPEL</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/05.html</link>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/06.html</link>
   <description><![CDATA[ 
 
 
@@ -173,14 +190,12 @@
 <section id="soaservice-oriented-architecture" class="level2">
 <h2 class="anchored" data-anchor-id="soaservice-oriented-architecture">SOA(Service-Oriented Architecture)</h2>
 <ul>
-<li>분산컴퓨팅 환경에서 느슨하게 결합된 서비스들의 집합으로 구성된 아키텍처</li>
+<li>분산컴퓨팅 환경에서 느슨하게 결합된 <code>서비스</code>들의 집합으로 구성된 아키텍처</li>
+<li><code>building block</code>으로 <code>loosely coupled</code> 된다.</li>
 </ul>
 <p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-02-22-53-57.png" class="img-fluid"></p>
 <ul>
-<li>서비스: <code>독립적</code>으로 반복사용 가능하고, 네트워크를 통해 접근 가능한 <code>비즈니스 기능</code> 단위
-<ul>
-<li><code>개방형 표준</code>을 통해 정의된 인터페이스로 접근</li>
-</ul></li>
+<li>서비스: <code>독립적</code>으로 반복사용 가능하고, 네트워크를 통해 접근 가능한 <code>비즈니스 기능</code> 단위</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -188,12 +203,205 @@
 <figcaption>SOA 구성요소</figcaption>
 </figure>
 </div>
+<ul>
+<li><code>개방형 표준</code>을 통해 정의된 인터페이스로 접근</li>
+</ul>
+<section id="soa-실현-인터페이스" class="level3">
+<h3 class="anchored" data-anchor-id="soa-실현-인터페이스">SOA 실현 인터페이스</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-02-23-03-27.png" class="img-fluid figure-img"></p>
-<figcaption>WSDL 포함내용</figcaption>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-21-07-11.png" class="img-fluid figure-img"></p>
+<figcaption>웹 서비스 개방형 표준 구성</figcaption>
 </figure>
 </div>
+<ul>
+<li><code>SOAP</code>: Request / Response 메시지 포맷</li>
+<li><code>BPEL</code>: 서비스들을 <code>순서를 정해서 연결</code>할 때 사용</li>
+<li><code>UDDI</code>: 표준 서비스 레지스트리</li>
+<li><code>WSDL</code>: 서비스의 <code>인터페이스</code>를 정의할 때 사용. 사용자에게 사용법을 XML로 알려줌
+<ul>
+<li><code>procedure 이름</code>: &lt;operation&gt;</li>
+<li><code>입력 인자 타입</code>, <code>반환 인자 타입</code> : &lt;message&gt;</li>
+<li><code>전송 프로토콜</code>: &lt;binding&gt;</li>
+<li><code>Endopoint URL</code>: &lt;port&gt;</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="ws-bpelweb-services-business-process-execution-language" class="level2">
+<h2 class="anchored" data-anchor-id="ws-bpelweb-services-business-process-execution-language">WS-BPEL(Web Services Business Process Execution Language)</h2>
+<ul>
+<li>WSDL로 표현된 서비스들 사이의 상호작용을 모델링하는 프로세스</li>
+<li>BPEL 프로세스와 외부 파트너 제공 서비스를 결합하여 WSDL을 가지는 서비스로 모델링</li>
+</ul>
+<section id="종류" class="level3">
+<h3 class="anchored" data-anchor-id="종류">종류</h3>
+<ul>
+<li><code>Abstract Processes View(Public Process)</code>: 서비스 간의 상호작용만 정의. 내부 프로세스 로직은 정의하지 않음</li>
+<li><code>Executable Processes View(Private Process)</code>: 서비스 간의 상호작용과 내부 프로세스 로직 모두 정의</li>
+</ul>
+</section>
+<section id="구성-요소" class="level3">
+<h3 class="anchored" data-anchor-id="구성-요소">구성 요소</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-21-27-46.png" class="img-fluid figure-img"></p>
+<figcaption>BPEL Language 구성 요소</figcaption>
+</figure>
+</div>
+<ul>
+<li>Basic Activities
+<ul>
+<li><code>invoke</code>: 외부 서비스 호출만 하는 1-way 또는 request-response 메시지 전송</li>
+<li><code>receive</code>: 외부 서비스로부터 메시지 수신</li>
+<li><code>reply</code>: 외부 서비스에 메시지 응답</li>
+</ul></li>
+<li>Structured Activities(<code>Nesting Structured Activities</code>)
+<ul>
+<li><code>flow</code>: 병렬적 활동</li>
+<li><code>sequence</code>: 순차적 활동</li>
+<li><code>if-elseif-else</code>: 조건 분기</li>
+<li><code>while</code>: 선행 조건이 만족되는 한 반복 활동</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>프로세스 경영</category>
+  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/06.html</guid>
+  <pubDate>Wed, 01 Oct 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>BPMN</title>
+  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/05.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-21-49-34.png" class="img-fluid figure-img"></p>
+<figcaption>BPMN vs BPEL</figcaption>
+</figure>
+</div>
+<ul>
+<li>BPEL은 구현 중심, BPMN은 <code>모델링 중심</code></li>
+<li>다양한 <code>Business users</code>도 편하게 사용할 수 있도록 설계된 표기법
+<ul>
+<li>전통적인 플로우 차트 표기법을 사용</li>
+</ul></li>
+</ul>
+<section id="모델링-유형" class="level2">
+<h2 class="anchored" data-anchor-id="모델링-유형">모델링 유형</h2>
+<ol type="1">
+<li><code>Process</code>
+<ul>
+<li><code>Private(internal) Business Process</code>
+<ul>
+<li>조직 내부에서 수행되는 비즈니스 프로세스를 하나의 pool에 작성</li>
+</ul></li>
+<li><code>Public Process / Abstract Process</code>
+<ul>
+<li>다른 프로세스와 의사소통하는 액티비티만 표현. 양자간 <code>메세지 교환</code>으로 표현됨</li>
+</ul></li>
+</ul></li>
+<li><code>Collaboration</code>: 2개 이상의 <code>Public Process</code>가 상호작용하는 것</li>
+<li><code>Choreography</code>: pool <code>사이</code>의 <code>메시지 교환</code>에 초점</li>
+</ol>
+</section>
+<section id="bpmn의-상충되는-목표" class="level2">
+<h2 class="anchored" data-anchor-id="bpmn의-상충되는-목표">BPMN의 상충되는 목표</h2>
+<ol type="1">
+<li>비즈니스 분석가가 쉽게 사용 가능해야 한다
+<ul>
+<li><code>Basic BPMN Modeling Elements</code></li>
+</ul></li>
+<li>복잡한 비즈니스 프로세스를 표현할 수 있어야 한다.
+<ul>
+<li><code>Extended BPMN Modeling Elements</code></li>
+</ul></li>
+</ol>
+</section>
+<section id="basic" class="level2">
+<h2 class="anchored" data-anchor-id="basic">Basic</h2>
+<ol type="1">
+<li><code>Flow Objects</code></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-22-06-45.png" class="img-fluid figure-img"></p>
+<figcaption>Events</figcaption>
+</figure>
+</div>
+<ul>
+<li>Start Event: 프로세스의 시작</li>
+<li><code>Intermediate Event</code>: 프로세스 도중 발생하는 이벤트</li>
+<li>End Event: 프로세스의 종료</li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-22-07-55.png" class="img-fluid" alt="Activities"> - Task: 단일 단위 작업 - Sub-Process: 여러 작업을 포함하는 복합 작업. <code>+</code> 아이콘 - <code>Collapsed</code>: 내부 상세 내용 숨김 - <code>Expanded</code>: + 누르면 나오는 거 - <code>Collapsed Sub-Choreography</code> - <code>Expanded Sub-Choreography</code></p>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-22-08-07.png" class="img-fluid" alt="Gateway"> - And, Or, Xor - Event-based: event가 연결된 여러 경로 가운데 하나만 배타적으로 활성화 - branching, <code>forking</code>, merging, <code>joining</code></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-18-19-31-18.png" class="img-fluid figure-img"></p>
+<figcaption>Gateway Type</figcaption>
+</figure>
+</div>
+<ol start="2" type="1">
+<li><code>Data</code>
+<ul>
+<li>Data Object: 프로세스에서 사용되는 데이터</li>
+<li>Message: 두 참여자가 의사소통 시 교환하는 내용을 표현</li>
+</ul></li>
+<li><code>Connecting Objects</code></li>
+</ol>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-22-11-11.png" class="img-fluid" alt="Sequence flow"> - 활동 간의 <code>순서</code></p>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-18-19-33-52.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-18-19-36-34.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-22-11-50.png" class="img-fluid" alt="Message flow"> - 다른 pool 간의 <code>메시지 교환</code></p>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-17-22-13-10.png" class="img-fluid" alt="Association"> - Artifacts와 Flow Objects 간의 연결 - 방향이 있는 경우 화살표 사용</p>
+<ol start="4" type="1">
+<li>Swimlanes
+<ul>
+<li>Pool: 조직 또는 참가자 그룹</li>
+<li>Lane: Pool 내의 역할 또는 부서</li>
+</ul></li>
+<li>Artifacts
+<ul>
+<li>Group: 관련 활동 그룹화</li>
+<li>Annotation: 추가 정보 제공</li>
+</ul></li>
+</ol>
+<section id="task" class="level3">
+<h3 class="anchored" data-anchor-id="task">Task</h3>
+<ol type="1">
+<li><code>Service task</code>: 자동화된 서비스 호출</li>
+<li><code>User task</code>: 사람이 시스템으로 수행하는 작업</li>
+<li><code>Manual task</code>: 자동화되지 않은 수동 작업</li>
+<li><code>Script task</code>: BPMN에서 스크립트로 정의된 작업</li>
+</ol>
+</section>
+</section>
+<section id="extended" class="level2">
+<h2 class="anchored" data-anchor-id="extended">Extended</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-18-19-21-04.png" class="img-fluid figure-img"></p>
+<figcaption>type demension</figcaption>
+</figure>
+</div>
+<ul>
+<li>Non-Interrupting: 서브 프로세스에서 계속 진행되는 것.</li>
+<li>Message, Timer, Error, <code>Escalation</code>, <code>Compensation</code>, Termination, Cancel</li>
+</ul>
+<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-18-19-25-53.png" class="img-fluid"></p>
+<ul>
+<li>이 이상은 그냥 pdf 보고 외우셈</li>
+</ul>
 
 
 </section>
@@ -254,7 +462,7 @@
   <pubDate>Tue, 30 Sep 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>BMP 표준 개요</title>
+  <title>BPM 표준</title>
   <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/04.html</link>
   <description><![CDATA[ 
 
@@ -281,10 +489,16 @@
 </ul>
 </section>
 </section>
-<section id="정보통신-산업의-특징과-표준" class="level2">
-<h2 class="anchored" data-anchor-id="정보통신-산업의-특징과-표준">정보통신 산업의 특징과 표준</h2>
+<section id="정보통신-표준" class="level2">
+<h2 class="anchored" data-anchor-id="정보통신-표준">정보통신 표준</h2>
 <ul>
-<li>네트워크적 특징: 유관 분야ㅐ가 밀접하게 서로 영향을 주면서 결합되어 있음</li>
+<li>IT 시스템의 상호 연동에 필요한 <code>합의된 규약(Protocol)</code>의 집합</li>
+<li>시스템 간 <code>상호운용성(interoperability)</code>과 <code>사용</code>의 편리성을 위한 것</li>
+</ul>
+<section id="정보통신-산업의-특징" class="level3">
+<h3 class="anchored" data-anchor-id="정보통신-산업의-특징">정보통신 산업의 특징</h3>
+<ul>
+<li><code>네트워크적 특징</code>: 유관 분야가 밀접하게 서로 경제적 영향을 주면서 결합되어 있음</li>
 <li>경제학적 특성
 <ul>
 <li><code>Network Externality</code>: 소비자군의 규모에 따라 가치가 달라짐
@@ -297,6 +511,7 @@
 <li><code>Tipping effect</code>: 비슷한 시장 점유율을 보이다가 어느 순간 급격히 한쪽으로 쏠림</li>
 </ul></li>
 </ul>
+</section>
 </section>
 <section id="bpm-표준의-필요성-및-유형" class="level2">
 <h2 class="anchored" data-anchor-id="bpm-표준의-필요성-및-유형">BPM 표준의 필요성 및 유형</h2>
@@ -314,6 +529,7 @@
 <li>프로세스 실행 및 BPM System Interations 관련 표준
 <ul>
 <li>자동화 실행 측면의 표준이 필요</li>
+<li><code>SOA</code>(Service-Oriented Architecture), <code>WS-BPEL</code>(Web Services Business Process Execution Language) 등이 있음</li>
 </ul></li>
 <li>Process Metrics 관련 표준
 <ul>
@@ -706,14 +922,14 @@
 <ul>
 <li><code>가치규율모델(value discipline model)</code>: 세 가지 전략 중 하나를 선택하여 집중
 <ul>
-<li>운영 우수성: 제조 프로세스 및 업무 절차를 자동화하여 운영 업무를 간소화하고 비용을 절감하는데 집중</li>
-<li>고객 친밀도: 서비스의 <code>개인화</code>와 <code>맞춤화</code>를 통해 각기 다른 고객의 요구를 충족하는데 집중</li>
-<li>제품 리더십: 프리미엄 전략</li>
+<li><code>운영 우수성</code>: 제조 프로세스 및 업무 절차를 자동화하여 운영 업무를 간소화하고 비용을 절감하는데 집중. <code>cost leadership</code> 달성</li>
+<li><code>고객 친밀도</code>: 서비스의 <code>개인화(personalization)</code>와 <code>맞춤화(customization)</code>를 통해 각기 다른 고객의 요구를 충족하는데 집중</li>
+<li><code>제품 리더십</code>: 프리미엄 전략</li>
 </ul></li>
 <li><code>BSC(Balanced Score Card)</code>
 <ul>
 <li>재무적인 지표에만 치중하지 않고, 균형된 성과 지표의 조합을 보는거</li>
-<li>4가지 영역
+<li>4가지 영역(핵심 성공요소(<code>CSF</code>))
 <ol type="1">
 <li><code>재무</code></li>
 <li><code>고객</code></li>
@@ -732,6 +948,9 @@
 </section>
 <section id="프로세스-아키텍처" class="level2">
 <h2 class="anchored" data-anchor-id="프로세스-아키텍처">프로세스 아키텍처</h2>
+<ul>
+<li>프로세스 <code>관리의 목표</code>, <code>원칙</code>, <code>프로세스 모델</code> 및 <code>계층 구조</code>를 총칭</li>
+</ul>
 <section id="프로세스-관리-목표-수립" class="level3">
 <h3 class="anchored" data-anchor-id="프로세스-관리-목표-수립">1. 프로세스 관리 목표 수립</h3>
 <ul>
@@ -744,9 +963,9 @@
 <section id="프로세스-모델-수립" class="level3">
 <h3 class="anchored" data-anchor-id="프로세스-모델-수립">3. 프로세스 모델 수립</h3>
 <ul>
-<li><code>분류 체계</code>: 프로세스 간 계층관계</li>
-<li><code>스키마</code></li>
-<li><code>콘텐츠</code></li>
+<li>프로세스 <code>분류 체계</code>: 프로세스 간 계층관계</li>
+<li>프로세스 <code>스키마</code></li>
+<li>프로세스 <code>콘텐츠</code></li>
 </ul>
 </section>
 <section id="프로세스-통합-및-검증" class="level3">
@@ -754,6 +973,9 @@
 </section>
 <section id="프로세스-아키텍처-운영" class="level3">
 <h3 class="anchored" data-anchor-id="프로세스-아키텍처-운영">5. 프로세스 아키텍처 운영</h3>
+<ul>
+<li>프로세스 아키텍처 위원회를 구성해서 지속적으로 관리</li>
+</ul>
 </section>
 </section>
 <section id="프로세스-모델링-분석" class="level2">
@@ -849,19 +1071,6 @@
 <section id="프로세스-맵-검증-및-워크숍-등을-통한-확정" class="level3">
 <h3 class="anchored" data-anchor-id="프로세스-맵-검증-및-워크숍-등을-통한-확정">5. 프로세스 맵 검증 및 워크숍 등을 통한 확정</h3>
 </section>
-<section id="단계" class="level3">
-<h3 class="anchored" data-anchor-id="단계">단계</h3>
-<ol type="1">
-<li>대상 프로세스의 <code>목표</code>와 <code>고객</code> 확인</li>
-<li>프로세스 정보 취합과 <code>태스크 정의</code></li>
-<li>프로세스 맵 작성</li>
-<li>프로세스 분석
-<ul>
-<li><code>품질 향상</code>, 리드타임 단축, 생산성 향상, 원가 절감</li>
-</ul></li>
-<li>프로세스 맵 검증 및 워크숍 등을 통한 확정</li>
-</ol>
-</section>
 </section>
 <section id="프로세스-자동화" class="level2">
 <h2 class="anchored" data-anchor-id="프로세스-자동화">프로세스 자동화</h2>
@@ -887,9 +1096,9 @@
 <li><code>실행 관점</code>에서 비즈니스 프로세스의 상세 분석 및 설계를 수행함</li>
 <li>분석 설계 대상
 <ul>
-<li>프로세스</li>
-<li>어플리케이션</li>
-<li>인터페이스</li>
+<li><code>프로세스</code>: BPM 엔진에 의해 직접 실행 가능하도록 설계해야 함</li>
+<li><code>어플리케이션</code>: 액티비티를 수행하는 작업자가 활용하는 IT 솔루션(form)</li>
+<li><code>인터페이스</code>: 액티비티 간 데이터 교환 프로토콜</li>
 </ul></li>
 </ul>
 </section>
@@ -900,7 +1109,7 @@
 <section id="프로세스-성과관리" class="level2">
 <h2 class="anchored" data-anchor-id="프로세스-성과관리">프로세스 성과관리</h2>
 <ul>
-<li>프로세스의 End-to-End 관점에서 진단/분석/대책 수립</li>
+<li>개별 기능 부서의 관점이 아닌 <code>프로세스의 End-to-End 관점</code>에서 진단/분석/대책 수립</li>
 <li><code>결과</code>뿐만 아니라 <code>과정</code>에 대한 지표를 포함</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
@@ -943,7 +1152,7 @@
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-09-28-11-19-31.png" class="img-fluid figure-img"></p>
-<figcaption>OMG의 BPMM(Business Process Maturity Model)</figcaption>
+<figcaption>OMG의 <code>BPMM(Business Process Maturity Model)</code></figcaption>
 </figure>
 </div>
 </section>
@@ -1624,8 +1833,8 @@
 <section id="bpm의-도입효과" class="level2">
 <h2 class="anchored" data-anchor-id="bpm의-도입효과">BPM의 도입효과</h2>
 <ol type="1">
-<li>프로세스 <code>가시화</code>를 통한 관리 능력의 향상</li>
-<li><code>자동화</code>를 통한 프로세스 운영 효율성 및 성능 향상</li>
+<li>프로세스 <code>가시화</code>를 통한 실시간 관리 및 모니터링 능력의 향상</li>
+<li><code>자동화</code>를 통한 프로세스 <code>운영 효율성</code> 및 <code>생산성 향상</code></li>
 <li>프로세스의 <code>병렬처리</code> 가능</li>
 <li><code>accountability</code> 향상
 <ul>
@@ -1807,7 +2016,7 @@
 <li><img src="https://latex.codecogs.com/png.latex?Cp_k">는 장기적 품질 이동 가능성을 고려하여 1.5σ인 0.5를 뺀 값으로 계산</li>
 <li>6σ 품질을 추구하려면 <strong>Cp = 2.0, Cpk = 1.5</strong>(1.5σ의 평균 이동 가정)가 되어야 함
 <ul>
-<li>100만개당 3.4개의 불량품을 목적으로 한다면 CPk=2.0이 되어야 함</li>
+<li>100만개당 3.4개 미만의 불량품을 목적으로 한다면 CPk=2.0이 되어야 함</li>
 </ul></li>
 <li>이론 공정능력지수가 1이 되면 기대불량률은 0.27%
 <ul>
@@ -1862,8 +2071,8 @@
 
 
 <p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="경영환경-변화와-무한-경쟁" class="level2">
-<h2 class="anchored" data-anchor-id="경영환경-변화와-무한-경쟁">경영환경 변화와 무한 경쟁</h2>
+<section id="경영환경-변화와-무한-경쟁-속-프로세스-경영" class="level2">
+<h2 class="anchored" data-anchor-id="경영환경-변화와-무한-경쟁-속-프로세스-경영">경영환경 변화와 무한 경쟁 속 프로세스 경영</h2>
 <ul>
 <li><code>기술 발전</code>과 <code>경쟁 격화</code>로 기업의 <code>평균 수명</code>은 지속적으로 단축되고 있음</li>
 <li>아래의 주요 변화 요소들에 적응하고 뛰어난 성과를 창출하기 위해 프로세스 경영이 필요</li>
@@ -1894,7 +2103,7 @@
 <section id="프로세스-경영이란" class="level2">
 <h2 class="anchored" data-anchor-id="프로세스-경영이란">프로세스 경영이란?</h2>
 <ul>
-<li><code>고객가치 창출</code>을 위해 내외부의 업무 <code>프로세스</code>를 <code>최적화</code>하는 경영체계</li>
+<li><code>고객가치 창출</code>을 위해 내외부의 업무 <code>프로세스를 최적화</code>하는 경영체계</li>
 <li>내부의 고객과 외부의 고객에게 가치를 전달하는 <code>시작점</code>과 <code>종료점</code>까지의 업무 처리 전 과정을 통합적으로 관리함으로써 기업의 성공을 도모</li>
 <li>기업의 모든 활동을 프로세스를 중심으로 <code>가시화</code>함으로써 경영환경 변화에 민첩하게 대응할 수 있도록 하고, 이를 통해 가치사슬 전반에 걸쳐 비효율을 개선</li>
 <li><code>IT의 전략적 활용</code></li>
@@ -1930,7 +2139,7 @@
 </figure>
 </div>
 <ul>
-<li><code>workflow</code>: <code>작업 중심</code>
+<li><code>Workflow</code>: <code>작업 중심</code>
 <ul>
 <li>business process를 <code>자동화</code>한 것</li>
 </ul></li>
@@ -1956,7 +2165,7 @@
 </div>
 <ol type="1">
 <li>비전수립</li>
-<li>프로세스 아키텍처 - <code>Michael Porter's Value Chain</code></li>
+<li>프로세스 아키텍처</li>
 <li>프로세스 모델링 / 분석</li>
 <li>프로세스 자동화</li>
 <li>프로세스 성과 관리</li>
@@ -1972,7 +2181,7 @@
 <li><code>공정</code>을 분석하여 <code>분업화</code>, <code>전문화</code> 하여 생산성 향상</li>
 </ul></li>
 <li>테일러 이론에 의한 <code>공정기술</code>의 발전</li>
-<li>구매, 회계, 배송, 고객 서비스 등 <code>조직 전체 업무 영역</code>으로 확대</li>
+<li>기존 제조/생산 분야의 공정 기술이 구매, 회계, 배송, 고객 서비스 등 <code>조직 전체 업무 영역</code>으로 확대</li>
 <li>제조업을 넘어 여러 <code>서비스 산업 전반</code>으로 확산</li>
 </ol>
 </section>
@@ -1981,14 +2190,12 @@
 <ol type="1">
 <li>SQM</li>
 <li>TQM</li>
-<li><code>6 시그마</code>, ‘lean`’</li>
-</ol>
-<ul>
+<li><code>6 시그마</code></li>
 <li><code>품질 경영</code>: 오늘날의 프로세스 경영
 <ul>
 <li>품질 뿐만 아니라 플세스를 활용하는 조직 전반의 <code>포괄적 경영 패러다임</code>으로 확장한 것</li>
 </ul></li>
-</ul>
+</ol>
 
 
 </section>
@@ -1998,285 +2205,6 @@
   <category>프로세스 경영</category>
   <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/01.html</guid>
   <pubDate>Wed, 03 Sep 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>품질관리의 기본개념</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/01.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="품질이란" class="level2">
-<h2 class="anchored" data-anchor-id="품질이란">품질이란</h2>
-<ul>
-<li>상대적으로 뛰어난 정도 / 구분되는 속성</li>
-<li>품질 관리자 입장에서 더 나은 품질을 만들기 위해 노력해야 함</li>
-<li>품질에 대한 다양한 관점이 존재한다.
-<ul>
-<li>사용자 기반: 나한테 오는 재품이 얼마나 좋은가</li>
-<li>제조(시스템 관리자) 기반: 제품이 설계된 대로 잘 만들어졌는가</li>
-<li>제품 기반: 품질을 정확하고 측정 가능한 변수로 보는 것</li>
-</ul></li>
-</ul>
-<section id="좋은-품질의-요건" class="level3">
-<h3 class="anchored" data-anchor-id="좋은-품질의-요건">좋은 품질의 요건</h3>
-<ul>
-<li><code>우수성</code>(성능, 기능, 외관)</li>
-<li><code>일관성</code> (단품별, 사용환경, 내구성 등)</li>
-<li>둘을 만족할 때 <code>고객 만족</code>이 증가하고 <code>조직의 이익</code>이 증가함</li>
-</ul>
-</section>
-</section>
-<section id="품질관리의-정의" class="level2">
-<h2 class="anchored" data-anchor-id="품질관리의-정의">품질<code>관리</code>의 정의</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-09-27-19-36-58.png" class="img-fluid figure-img"></p>
-<figcaption>전통적인 관점에서의 품질관리</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-09-27-19-37-52.png" class="img-fluid figure-img"></p>
-<figcaption>현대적인 관점에서의 품질관리</figcaption>
-</figure>
-</div>
-<ul>
-<li>시장성이 높은 제품 및 서비스를 경제적으로 생산하기 위한 일련의 체계적 관리</li>
-<li><code>전통적 관점(QC)</code>:
-<ul>
-<li>표준을 설정할 뿐 지키기 위한 <code>노력 경시</code></li>
-<li>불량품을 솎어내는 <code>검사에만 의존</code></li>
-<li>불량의 발생 원인제거 및 개선 <code>노력 부족</code></li>
-</ul></li>
-<li><code>현대적 관점 / 종합적 품질관리(TQC)</code>:
-<ul>
-<li>품질변동의 원인을 파악하여, 변동을 지속적으로 감소시키고 성과 수준을 높이는 과정</li>
-<li><code>PDSA cycle</code>: plan, do, study, act</li>
-</ul></li>
-</ul>
-</section>
-<section id="품질의-분류" class="level2">
-<h2 class="anchored" data-anchor-id="품질의-분류">품질의 분류</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-09-27-19-38-39.png" class="img-fluid figure-img"></p>
-<figcaption>품질의 분류</figcaption>
-</figure>
-</div>
-<ul>
-<li><code>요구품질</code>: 시장에서 요구되는 품질. <code>정성적(시장조사, 경쟁제품 분석)인 방법으로 파악</code></li>
-<li><code>설계품질</code>: 파악한 고객요구를 설계 언어로 잘 변환했는지</li>
-<li><code>제조품질</code>: 설계된 사양을 실제로 잘 구현했는지 <code>정량적인 방법으로 파악</code></li>
-<li><code>사용품질</code>: 고객이 실제로 느끼는 품질. 만족도</li>
-</ul>
-</section>
-<section id="품질-관리의-유명-지도자" class="level2">
-<h2 class="anchored" data-anchor-id="품질-관리의-유명-지도자">품질 관리의 유명 지도자</h2>
-<ul>
-<li>F. W. Taylor: 품질에 대한 과학적(정량적) 관리법 제시</li>
-<li>W. A. Shewhart: <code>통계적 품질관리(SQC)</code>의 시조. 품질 변동의 원인을 우연원인과 이상원인으로 구분</li>
-<li>W. E. Deming: PDMA 사이클</li>
-</ul>
-</section>
-<section id="품질관리의-역사" class="level2">
-<h2 class="anchored" data-anchor-id="품질관리의-역사">품질관리의 역사</h2>
-<ol type="1">
-<li>작업자에 의한 품질관리: 한 명이 장인정신으로 다 함.</li>
-<li>작업반장에 의한 품질관리: 산업혁명 이후 작업자를 그룹으로 묶고 이들을 통제하는 작업반장이 품질 책임. <code>공식적인 품질검사 도입</code></li>
-<li>검사에 의한 품질관리: 컨베이어 시스템 도입으로 작업자 수 증가. 작업이 전문화, 규격화 되면서 검사만 전문적으로 담당하는 <code>품질부서 등장</code>.</li>
-<li><code>통계적 품질관리</code>(SQC)</li>
-<li><code>TQC</code>(Total Quality Control): <code>품질 관리</code>. 품질 책임을 전사적으로 담당</li>
-<li><code>TQM</code>(Total Quality Management): <code>품질 경영</code>. 품질을 전체적으로 관리하는 전략</li>
-</ol>
-<section id="품질-관리와-품질-경영의-차이" class="level3">
-<h3 class="anchored" data-anchor-id="품질-관리와-품질-경영의-차이">품질 관리와 품질 경영의 차이</h3>
-<ul>
-<li>적용 범위에 차이가 있다:
-<ul>
-<li><code>PDSA</code>를 기존에는 단순히 계획을 수립 및 설계하고 시스템을 운영하고 그 결과를 계획과 비교하여 <code>통제</code>하는데 집중함.</li>
-<li>생산자중심 시대에서는 시스템 <code>운영상의 효율</code>이 강조됨</li>
-<li>고객 중심 시대로 넘어옴에 따라 운영효율 뿐만 아니라 <code>고객의 요구를 제대로 파악</code>하고 이를 <code>설계단계에 제대로 반영</code>하는 <code>계획 및 설계 단계의 중요성</code>이 강조</li>
-<li>즉 품질 경영(<code>선행형</code>)은 과거 품질관리(<code>대응형</code>) 영역을 기본적으로 포함하며 <code>계획 및 설계 단계로 확대</code>한 개념</li>
-</ul></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-16-19-17-08.png" class="img-fluid figure-img"></p>
-<figcaption>전통적 품질 관리 vs 현대적 품질 관리</figcaption>
-</figure>
-</div>
-</section>
-</section>
-<section id="품질-비용" class="level2">
-<h2 class="anchored" data-anchor-id="품질-비용">품질 비용</h2>
-<ul>
-<li><code>통제비용</code>: 물품, 서비스의 품질과 관련해서 발생.
-<ul>
-<li><code>예방비용</code>: 계획, 교육, 훈련, 프로세스 개선 등 불량을 예방하는데 드는 비용</li>
-<li><code>평가비용</code>: 불량을 검사하는데 드는 비용</li>
-</ul></li>
-<li><code>실패비용</code>
-<ul>
-<li><code>내적 실패비용</code>: 생산 과정에서 발생하는 불량에 대한 비용</li>
-<li><code>외적 실패비용</code>: 고객에게 전달된 후에 발생하는 불량에 대한 비용. <code>정량화가 매우 어려움</code></li>
-</ul></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-09-27-19-47-39.png" class="img-fluid figure-img"></p>
-<figcaption>품질 개선과 비용에 대한 견해</figcaption>
-</figure>
-</div>
-<ul>
-<li><code>전통적 견해</code>: 최적 수준을 위해 일정량의 불량은 허용해야 한다고 봄</li>
-<li><code>무결점 견해</code>: 통제비용이 올라가는 속도보다 실패비용이 감소하는 속도가 더 빠르기 때문에 품질 수준을 계속 높여야 한다고 봄</li>
-</ul>
-</section>
-<section id="품질과-전략" class="level2">
-<h2 class="anchored" data-anchor-id="품질과-전략">품질과 전략</h2>
-<ul>
-<li>품질의 향상은 <code>차별화</code>와 <code>비용 절감</code>, <code>대응의 성공적인 전략</code>을 구축하는데 도움이 됨</li>
-<li>좋은 품질 향상을 위해 전사적인 품질 경영(TQM)의 달성이 필요.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-09-27-19-53-49.png" class="img-fluid figure-img"></p>
-<figcaption>TQM을 달성하기 위한 흐름</figcaption>
-</figure>
-</div>
-<ul>
-<li>TQM의 3요소
-<ol type="1">
-<li>고객 중심: 고객과 시장의 요구에 민첩하게 대응(<code>TQM</code>)하고, 고객의 목소리(<code>VOC</code>)를 설계 규격에 반영</li>
-<li>전사적 참여</li>
-<li>지속적 개선</li>
-</ol></li>
-</ul>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>품질경영</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/01.html</guid>
-  <pubDate>Tue, 02 Sep 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>SCM 의사결정</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/01.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="의사결정-level" class="level2">
-<h2 class="anchored" data-anchor-id="의사결정-level">의사결정 level</h2>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-09-28-18-15-16.png" class="img-fluid"></p>
-<ol type="1">
-<li><code>supply chain (strategic) design</code>
-<ul>
-<li>한 번 결정하면 오래 가고, 영향을 많이 미치는 <code>장기적</code> 의사결정</li>
-<li>기업의 <code>우선경쟁역량</code><sup>1</sup>이나 <code>경영전략</code>을 <code>종합적</code>으로 고려</li>
-<li>설비의 수, 위치 선정, 제품설계 등</li>
-<li>수년 ~ 수십년 단위</li>
-<li>최고경영자 및 임원 수준에서 결정</li>
-</ul></li>
-<li><code>supply chain (Tactical) planning</code>
-<ul>
-<li>input: 공급사슬 설계, 예측 수요</li>
-<li>생산, 재고, 운송 등의 통합적 계획 수립</li>
-<li>수요-공급 계획, 생산 하청 계획, 판촉 규모와 시기 결정 등</li>
-<li>수주, 수개월 ~ 수년 단위 계획</li>
-</ul></li>
-<li><code>supply chain operation</code>
-<ul>
-<li>SCO</li>
-<li>SCE(execution)</li>
-<li>시간, 수일 ~ 수주 단위 계획</li>
-</ul></li>
-</ol>
-<ul>
-<li>아래로 갈수록 범위가 좁아지고, 디테일해짐</li>
-</ul>
-</section>
-<section id="공급사슬의-프로세스-구조" class="level2">
-<h2 class="anchored" data-anchor-id="공급사슬의-프로세스-구조">공급사슬의 프로세스 구조</h2>
-<section id="주기cycle-프로세스" class="level3">
-<h3 class="anchored" data-anchor-id="주기cycle-프로세스">주기(cycle) 프로세스</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-09-28-18-16-55.png" class="img-fluid figure-img"></p>
-<figcaption>주기</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-09-28-18-16-46.png" class="img-fluid figure-img"></p>
-<figcaption>주기 별 일반적인 프로세스</figcaption>
-</figure>
-</div>
-<ul>
-<li>인접한 단계간 활동이 주기적으로 반복된다고 보는 관점</li>
-<li>서로 다른 주기가 잘 synchornized 되어야 함</li>
-</ul>
-</section>
-<section id="push-pull-프로세스" class="level3">
-<h3 class="anchored" data-anchor-id="push-pull-프로세스">Push-Pull 프로세스</h3>
-<ul>
-<li><p>push: <code>예측</code> 수요에 의해 공급사슬 활동이 촉발</p></li>
-<li><p>pull: <code>실제</code> 수요에 의해 공급사슬 활동이 촉발</p></li>
-<li><p>고객 주문을 접수하는 접점이 push-pull 경계</p></li>
-<li><p>접점을 어느 위치에 두느냐에 따라 cost-quality trade-off가 달라짐</p></li>
-</ul>
-</section>
-</section>
-<section id="difficulties-in-scm" class="level2">
-<h2 class="anchored" data-anchor-id="difficulties-in-scm">Difficulties in SCM</h2>
-<section id="제품개발-프로세스와의-통합" class="level3">
-<h3 class="anchored" data-anchor-id="제품개발-프로세스와의-통합">제품개발 프로세스와의 통합</h3>
-<ul>
-<li>공급사슬 전략은 SCM뿐만 아니라 제품개발 프로세스에 의해서도 영향을 받음</li>
-<li>각 단계에서 서로 다른 사람들이 책임을 져서, misalignment이 발생할 수 있음</li>
-</ul>
-</section>
-<section id="전역최적화" class="level3">
-<h3 class="anchored" data-anchor-id="전역최적화">전역최적화</h3>
-<ul>
-<li>centralized decision making이 어려움
-<ul>
-<li><code>공급사슬의 조정</code>이 필요
-<ul>
-<li>buy back contract: 재고를 공급자가 다시 사들이는 계약</li>
-<li>quantity discount: 대량 구매시 할인</li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-<section id="불확실성" class="level3">
-<h3 class="anchored" data-anchor-id="불확실성">불확실성</h3>
-<ul>
-<li>위험과 불확실성에 노출되어 있음</li>
-<li><code>채찍효과</code>: 공급사슬의 상류로 갈수록 수요 변동 폭이 확대되는 현상</li>
-</ul>
-
-
-</section>
-</section>
-
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">각주</h2>
-
-<ol>
-<li id="fn1"><p><code>cost</code>, <code>quality</code>(성능, 일관성), <code>time</code>(time to market, lead-time, on time delivery), <code>flexibility</code>↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>공급사슬관리</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/01.html</guid>
-  <pubDate>Tue, 02 Sep 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
