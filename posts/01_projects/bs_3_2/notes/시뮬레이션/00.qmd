@@ -20,3 +20,29 @@ flowchart LR
 
 - Entity: attribute를 가짐.
 - process: 추상화된 개념. 여러 resource를 사용할 수 있음.
+
+
+## 리틀의 법칙
+
+- tally: 사람의 수로 나눈 통계값
+    - average waiting time, system 체류 시간 등
+- time persistant statistic: 시간으로 나눈 통계값
+    - average queue length 등
+- $λ_q = λ w_q$
+
+- NR: Busy or Idle
+- MR: Scheduled or not
+- N: in system or not
+- Q: wait or not
+
+- u(t): if M(t) > 0 ? $\frac{B(t)}{M(t)}$ else 0
+- B(t): busy?
+- M(t): scheduled?
+- Instantaneius utilization: $\int_{0}^{t} u(t) dt * \frac{1}{t}$
+- Scheduled utilization: $\frac{\int_{0}^{t} B(t) dt}{\int_{0}^{t} M(t) dt}$
+
+## Resource 
+
+- ignore: 하던거만 마무리 + 늦어도 제 때 복귀
+- wait: 하던거만 마무리 + 늦은 만큼 더 쉬기
+- preemt: 하던거 중단 + 제 때 복귀

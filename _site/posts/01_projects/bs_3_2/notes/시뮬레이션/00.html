@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../../../../../posts/01_projects/bs_3_2/notes/신재생에너지/00.html" rel="next">
+<link href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/01.pdf" rel="next">
 <link href="../../../../../posts/01_projects/bs_3_2/notes/기공수/01.html" rel="prev">
 <link href="../../../../../favicon" rel="icon">
 <script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
@@ -73,6 +73,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <script src="../../../../../site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="../../../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -291,6 +320,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/00.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/01.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">cheat seet</span></a>
   </div>
 </li>
       </ul>
@@ -2816,6 +2851,8 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#구조" id="toc-구조" class="nav-link active" data-scroll-target="#구조">구조</a></li>
+  <li><a href="#리틀의-법칙" id="toc-리틀의-법칙" class="nav-link" data-scroll-target="#리틀의-법칙">리틀의 법칙</a></li>
+  <li><a href="#resource" id="toc-resource" class="nav-link" data-scroll-target="#resource">Resource</a></li>
   </ul>
 </nav>
     </div>
@@ -2875,6 +2912,37 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <ul>
 <li>Entity: attribute를 가짐.</li>
 <li>process: 추상화된 개념. 여러 resource를 사용할 수 있음.</li>
+</ul>
+</section>
+<section id="리틀의-법칙" class="level2">
+<h2 class="anchored" data-anchor-id="리틀의-법칙">리틀의 법칙</h2>
+<ul>
+<li><p>tally: 사람의 수로 나눈 통계값</p>
+<ul>
+<li>average waiting time, system 체류 시간 등</li>
+</ul></li>
+<li><p>time persistant statistic: 시간으로 나눈 통계값</p>
+<ul>
+<li>average queue length 등</li>
+</ul></li>
+<li><p><span class="math inline">\(λ_q = λ w_q\)</span></p></li>
+<li><p>NR: Busy or Idle</p></li>
+<li><p>MR: Scheduled or not</p></li>
+<li><p>N: in system or not</p></li>
+<li><p>Q: wait or not</p></li>
+<li><p>u(t): if M(t) &gt; 0 ? <span class="math inline">\(\frac{B(t)}{M(t)}\)</span> else 0</p></li>
+<li><p>B(t): busy?</p></li>
+<li><p>M(t): scheduled?</p></li>
+<li><p>Instantaneius utilization: <span class="math inline">\(\int_{0}^{t} u(t) dt * \frac{1}{t}\)</span></p></li>
+<li><p>Scheduled utilization: <span class="math inline">\(\frac{\int_{0}^{t} B(t) dt}{\int_{0}^{t} M(t) dt}\)</span></p></li>
+</ul>
+</section>
+<section id="resource" class="level2">
+<h2 class="anchored" data-anchor-id="resource">Resource</h2>
+<ul>
+<li>ignore: 하던거만 마무리 + 늦어도 제 때 복귀</li>
+<li>wait: 하던거만 마무리 + 늦은 만큼 더 쉬기</li>
+<li>preemt: 하던거 중단 + 제 때 복귀</li>
 </ul>
 
 
@@ -3312,8 +3380,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/01_projects/bs_3_2/notes/신재생에너지/00.html" class="pagination-link" aria-label="개인 발표 - 공짜 탄소배출권 발급 사건">
-        <span class="nav-page-text">개인 발표 - 공짜 탄소배출권 발급 사건</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/01.pdf" class="pagination-link" aria-label="cheat seet">
+        <span class="nav-page-text">cheat seet</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
