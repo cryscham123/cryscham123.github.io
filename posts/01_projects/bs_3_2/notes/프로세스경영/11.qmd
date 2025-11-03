@@ -1,0 +1,163 @@
+---
+title: 주제 제안
+mainfont: "Noto Sans KR"
+sansfont: "Noto Sans KR"
+monofont: "Noto Sans KR"
+date: last-modified
+geometry:
+  - top=25mm
+  - left=25mm
+  - right=25mm
+  - bottom=25mm
+format:
+  titlepage-pdf:
+    documentclass: scrartcl
+    classoption: ["oneside", "open=any"]
+    number-sections: true
+    toc: false
+    titlepage: "none"
+    coverpage: "none"
+    fontsize: 12pt
+    include-in-header:
+      text: |
+        \usepackage[utf8]{inputenc}
+        \usepackage{graphicx}
+        \usepackage{amsmath}
+        \usepackage{amsfonts}
+        \usepackage{amssymb}
+        \usepackage{geometry}
+        \usepackage{fancyhdr}
+        \usepackage{hyperref}
+        \usepackage{lipsum}
+        \setlength{\columnsep}{5mm}
+        \usepackage{setspace}
+        \setstretch{1.2}
+        \usepackage{booktabs}
+        \usepackage{tabularx}
+        \usepackage{makecell}
+        \usepackage{caption}
+        \usepackage{multirow}
+        \usepackage{array}
+        \usepackage{graphicx}
+        \renewcommand{\arraystretch}{1.0}
+        \renewcommand{\tabularxcolumn}[1]{m{#1}}
+        \raggedbottom
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# 유니클로 물류 프로세스
+
+## 목적 및 범위
+
+### 목적
+
+매장 입고부터 진열, 판매까지의 물류-매장 운영 프로세스의 리드타임 단축과 변동성 축소, 그리고 인건비 및 재작업률 절감.
+
+### 범위
+
+유니클로 매장에 의류가 입고되기까지의 물류 프로세스를 분석하고 개선안을 제시
+
+## 필요성
+
+- 김형훈이 직접 경험한 바에 따르면 유니클로의 물류 프로세스는 매우 비효율적임.
+- 전체적인 프로세스를 경험한 것은 아니지만, 일부 프로세스에서는 비효율성이 극심함.
+- 아르바이트 생들이 하는 대부분의 업무는 충분히 자동화가 가능하다고 봄.
+- 특히 매장 백룸에서 사람이 옷에 보안 택을 하나씩 붙이는 작업은 극심한 bottleneck임.
+    - 보안 택이 미리 부착된 상태로 출고된다면 큰 개선이 되지 않을까?
+- 또한 재고 파악 및 진열 과정에서 human error 발생 가능성이 높음
+
+## 장점
+
+- 프로젝트를 진행하기에 적당한 규모의 프로세스로 예상됨.
+    - 너무 방대하지도, 그렇다고 골목 마켓 수준인것도 아님.
+- As-Is 모델링에 유리할 수 있음
+    - 김형훈의 머릿속에 어느정도 프로세스가 그려져 있음
+    - 직접 점장과의 인터뷰가 가능할 수 있음.
+        - 연락 안한지 3년이 넘었고, 딱히 친하지도 않았지만 이런 MZ해보이는걸 좋아하시는 점장님임
+        - 사실 점장보단 마케터나 물류 담당자와의 인터뷰를 시도해보는게 더 좋을 것 같음.
+
+## KPI
+
+- 리드타임, 작업시간, 인력 Utilization, 매출 등
+
+## 프로세스 마이닝 가능성
+
+- 물류 과정에서의 bottleneck을 분석해서 해결책을 제시할 수 있을 것을 기대됨.
+
+## Service Task 적용 가능성
+
+### RPA / AI Agent 적용 가능성
+
+- 매장 고객 수요 맞춤 자동 발주 처리
+- 매장 질의 Chat Agent (식상하지만 뭐..)
+
+## 예상 한계
+
+- 유니클로의 협조가 어려울 수도 있음.
+- 의외로 현재는 물류 프로세스가 잘 되어 있을 수도 있음.
+
+\clearpage
+
+# 팝업스토어 프로세스
+
+## 목적 및 범위
+
+### 목적
+
+- 팝업스토어 기획-오픈-운영-철수 전 과정의 리드타임 단축, 대기경험 개선, 인력·외주비 최적화, 매출/전환율 극대화.
+- 공간 대여 플랫폼을 의미하는건 아니고, 매번 정기적으로 팝업스토어를 여는 기업의 운영 프로세스를 의미.
+    - 더현대의 프로세스 같은걸 파악할 수 있으면 할텐데 그건 불가능할듯
+
+### 범위
+
+- 사전 수요예측·물량계획, 입지/동선 설계, 대기열·입장 관리, 재고 보충·진열, 결제/회계 정산, 피크 운영, 마감·철수 전 단계.
+
+## 필요성
+
+- 팝업스토어는 빠른 속도로 확대 및 보편화 되고 있는만큼 운영의 효율화가 필요함.
+- 특히 팝업스토어의 악랄한 대기줄 관리는 고객 경험에 큰 영향을 미침.
+- 프로젝트 수명이 짧고 변동성이 커 표준화·자동화 없이는 품질 편차와 비용 급증 위험이 큼.
+- 임시 인력 중심 운영으로 교육 비용과 휴먼에러·재작업률이 높음.
+- 현장/온라인 데이터 단절로 의사결정이 느리고 재고가용성-수요 대응이 어려움.
+
+## 장점
+
+- 매 해 팝업스토어를 여는 기업은 매우 많음.
+    - 대표적으로 무신사, 카카오, 뭐 찾아보면 엄청 더 많을듯
+    - 인터넷 자료로 프로세스 파악이 가능할 수도 있음(아직 안 찾아봄)
+
+## KPI
+
+- 고객경험: 대기시간, 대기 이탈률, 체류시간
+- 운영효율: 오픈 준비 리드타임, 인력 Utilization, 재고 정확도, 보충 리드타임, 결제 처리시간, 체크아웃 전환율
+- 비즈니스: 매출, 전환율, UPT, 객단가, 폐기/반품률, 운영비(인력·장비·수수료)
+
+## 프로세스 마이닝 가능성
+
+- 이벤트 로그 소스: 대기열(티켓 발급/호출/입장), POS(스캔/결제), 재고(입고/피킹/진열/보충), 이슈티켓(클레임/환불), 인력 스케줄(시작/종료)
+- 분석 과제:
+  - 병목 구간 식별: 입장 게이트/결제대/피킹·보충
+  - 리워크 탐지: 진열→정리 재작업, 결제 실패→재시도
+  - 피크타임 대비 인력 배치 적정성 검증
+  - 재고가용성-매출 상관 분석 및 OOS 영향 정량화
+  - 고객 동선 편차와 전환율의 관계
+
+## Service Task 적용 가능성
+
+### RPA / AI Agent 적용 가능성
+
+- 챗봇
+    - 대기열 상태 안내
+    - 매장 위치 및 상품 안내
+    - 자주 묻는 질문 대응
+- SNS 모니터링
+
+## 예상 한계
+
+- 팝업스토어에 대해 경험이 없으면 팝업스토어를 이해하는 시간이 필요할 수 있음
+    - 일단 김형훈은 경험해본 적 없음
+- 그 외 유니클로 예상 한계랑 동일

@@ -70,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -109,7 +138,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html">품질경영</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/03.html">관리도</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html">품질경영</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/03.html">관리도</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -145,12 +174,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  <span class="menu-text">인간 관계론 - 데일 카네기</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/00_inboxes/notes/04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">다중 공산성</span></a>
-  </div>
-</li>
       </ul>
   </li>
       </ul>
@@ -166,464 +189,31 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../../../posts/01_projects/toeic/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Toeic 준비</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <a href="../../../../../posts/01_projects/bs_3_2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">학부 3학년 2학기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth3 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/toeic/notes/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Toeic 문법</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-      </ul>
-  </li>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth3 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../../../posts/01_projects/adp_실기/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">ADP 실기 준비 - try 1</span></a>
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Cte</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
- <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/00.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">ADP 정리 노트</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">모델링, 평가 템플릿</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">EDA 템플릿</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">전처리 템플릿</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">회귀분석 템플릿</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">분산 분석 템플릿</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">비지도 학습 템플릿</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">시계열 분석</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/09.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">기타</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">확률과 통계</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
- <span class="menu-text">Bayse</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">확률</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">베이즈 정리</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">분포</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">비율 추정</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">수량 추정</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">공산과 가산</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">최솟값, 최댓값 그리고 혼합 분포</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">포아송 과정</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">의사결정분석</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/09.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">검정</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/13.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">비교</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/14.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">분류</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">로지스틱 회귀</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/16.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">회귀</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/17.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">켤레사전분포</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/bayse/18.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">MCMC</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
- <span class="menu-text">Core</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/core/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">EDA</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/core/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">전처리</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
- <span class="menu-text">Etc</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/etc/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">다차원 척도법 (Multidimensional Scaling)</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
- <span class="menu-text">Machine Learning</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Titanic</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">분류 - 결정 트리</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">분류 - 앙상블</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">분류 - 산탄데르 고객 만족 예측</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">분류 - 신용 카드 사기 검출</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">회귀</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">차원 축소</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">텍스트 분석</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">텍스트 분석 - 20 뉴스그룹 분류</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/machine_learning/09.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">텍스트 분석 - 감성 분석</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
- <span class="menu-text">Nonparametric</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/Nonparametric/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">intro</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/Nonparametric/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">순열검정과 전통적인 비모수통계</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/Nonparametric/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">두 변수의 연관성과 독립성</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
- <span class="menu-text">Statistics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/statistics/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">EDA</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
- <span class="menu-text">Time Series</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/time_series/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/time_series/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">단순 미래 예측</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/time_series/02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">확률보행</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/time_series/03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">이동평균과정 모델링</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/time_series/04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">자기귀모형</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/time_series/05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">복잡한 시계열 모델</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/time_series/06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">계절성 고려</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/adp_실기/notes/time_series/07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">외생 변수 추가하기</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-      </ul>
-  </li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../../../../../posts/01_projects/bs_3_2/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">학부 3학년 2학기</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 show">  
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true">
- <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth3 show">  
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
- <span class="menu-text">Cte</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/cte/00.html" class="sidebar-item-text sidebar-link">
@@ -632,33 +222,27 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/cte/01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Question</span></a>
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/cte/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">After</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/cte/02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">After</span></a>
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/cte/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03</span></a>
   </div>
 </li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">공급사슬관리</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth4 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/00.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intro</span></a>
-  </div>
-</li>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/01.html" class="sidebar-item-text sidebar-link">
@@ -680,12 +264,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">TFC 게임 개요</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">재고 관리</span></a>
   </div>
 </li>
@@ -701,17 +279,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  <span class="menu-text">채찍 효과</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">공급사슬 의사결정의 조정과 계약</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TFC 게임 개요</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/12.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">공급사슬관리의 디지털 혁신과 신기술 적용 사례 분석</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
  <span class="menu-text">기공수</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/기공수/00.html" class="sidebar-item-text sidebar-link">
@@ -728,30 +324,36 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
  <span class="menu-text">시뮬레이션</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/00.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Intro</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/01.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">cheat seet</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
  <span class="menu-text">신재생에너지</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/신재생에너지/00.html" class="sidebar-item-text sidebar-link">
@@ -762,13 +364,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
  <span class="menu-text">품질경영</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="true" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth4 show">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth4 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html" class="sidebar-item-text sidebar-link">
@@ -791,13 +393,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
  <span class="menu-text">프로세스경영</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/01.html" class="sidebar-item-text sidebar-link">
@@ -819,7 +421,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">BMP 표준 개요</span></a>
+ <span class="menu-text">BPM 표준</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -831,7 +433,19 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">06</span></a>
+ <span class="menu-text">BPMN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">DMN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BPM Suite</span></a>
   </div>
 </li>
       </ul>
@@ -844,29 +458,29 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/01_projects/진로준비/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">진로 준비</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
  <span class="menu-text">금융</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/진로준비/notes/금융/00.html" class="sidebar-item-text sidebar-link">
@@ -877,13 +491,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
  <span class="menu-text">대학원</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/진로준비/notes/대학원/00.html" class="sidebar-item-text sidebar-link">
@@ -918,31 +532,31 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
  <span class="menu-text">Areas</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/02_areas/deep_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Learning</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/deep_learning/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -999,20 +613,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/02_areas/42_seoul/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">42 Seoul</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-32" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/42_seoul/notes/01.html" class="sidebar-item-text sidebar-link">
@@ -1045,29 +659,29 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/02_areas/kaggle/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Kaggle</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-33" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-34" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false">
  <span class="menu-text">Titanic</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-35" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/kaggle/notes/titanic/00.html" class="sidebar-item-text sidebar-link">
@@ -1084,20 +698,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/02_areas/machine_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Machine Learning</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-36" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/machine_learning/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1220,20 +834,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/02_areas/ros/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ROS</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-38" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-39" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/02_areas/ros/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1248,13 +862,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false">
  <span class="menu-text">Resources</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-40" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/problem_solve/index.html" class="sidebar-item-text sidebar-link">
@@ -1265,20 +879,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/blog/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Blog</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-41" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-42" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/blog/notes/0.html" class="sidebar-item-text sidebar-link">
@@ -1299,20 +913,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/hadoop/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hadoop</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-43" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-32" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-44" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-44" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-44" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-33" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/hadoop/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1327,20 +941,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/선형대수/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">선형대수</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-45" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-45" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-34" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-46" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-46" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-46" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-35" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/선형대수/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1433,20 +1047,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/인생/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">인생</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-47" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-47" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-36" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-48" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-48" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-48" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/인생/notes/02.html" class="sidebar-item-text sidebar-link">
@@ -1461,20 +1075,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/helm/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Helm</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-49" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-49" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-38" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-50" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-50" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-50" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-39" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/helm/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1489,29 +1103,29 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/terraform/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Terraform</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-51" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-51" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-40" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-52" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-52" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-52" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-41" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-53" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false">
  <span class="menu-text">Tfc</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-53" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-53" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-42" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/terraform/notes/tfc/00.html" class="sidebar-item-text sidebar-link">
@@ -1528,20 +1142,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/air_flow/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">AirFlow</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-54" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-54" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-43" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-55" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-44" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-55" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-44" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-55" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-44" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/air_flow/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1562,29 +1176,29 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/smart_contract/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Smart Contract</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-56" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-45" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-56" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-45" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-57" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-46" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-57" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-46" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-57" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-46" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-58" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-47" role="navigation" aria-expanded="false">
  <span class="menu-text">Block Chain Basic</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-58" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-47" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-58" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-47" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/smart_contract/notes/block_chain_basic/00.html" class="sidebar-item-text sidebar-link">
@@ -1601,20 +1215,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/금융/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">금융</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-59" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-48" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-59" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-48" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-60" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-49" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-60" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-49" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-60" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-49" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/금융/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1629,20 +1243,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/03_resources/quantum_programming/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Quantum Programming</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-61" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-50" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-61" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-50" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-62" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-51" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-62" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-51" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-62" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-51" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/03_resources/quantum_programming/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1663,13 +1277,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-63" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-52" role="navigation" aria-expanded="false">
  <span class="menu-text">Archives</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-63" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-52" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-63" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-52" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/tofel_준비/index.html" class="sidebar-item-text sidebar-link">
@@ -1680,20 +1294,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/04_archives/sqld/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SQLD 준비</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-64" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-53" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-64" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-53" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-65" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-54" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-65" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-54" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-65" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-54" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/sqld/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1714,20 +1328,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/04_archives/adp_필기/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ADP 필기 준비</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-66" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-55" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-66" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-55" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-67" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-56" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-67" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-56" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-67" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-56" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/adp_필기/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1826,20 +1440,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/04_archives/vault/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">vault</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-68" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-57" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-68" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-57" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-69" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-58" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-69" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-58" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-69" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-58" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/vault/notes/0_overview.html" class="sidebar-item-text sidebar-link">
@@ -1854,20 +1468,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/04_archives/opic/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">OPIc 준비</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-70" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-59" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-70" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-59" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-71" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-60" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-71" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-60" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-71" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-60" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/opic/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1904,22 +1518,50 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../../../posts/04_archives/k8s/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">k8s</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-72" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <a href="../../../../../posts/04_archives/toeic/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Toeic 준비</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-61" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-72" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-61" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-73" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-62" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-73" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-62" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-73" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-62" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/toeic/notes/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Toeic 문법</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../../posts/04_archives/k8s/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">k8s</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-63" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-63" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-64" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-64" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-64" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/k8s/notes/0_core_concept.html" class="sidebar-item-text sidebar-link">
@@ -1976,20 +1618,20 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="../../../../../posts/04_archives/bs_3_1/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">학부 3학년 1학기</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-74" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-65" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-74" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-65" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-75" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-66" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-75" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-66" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-75" class="collapse list-unstyled sidebar-section depth3 ">  
+      <ul id="quarto-sidebar-section-66" class="collapse list-unstyled sidebar-section depth3 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/00.html" class="sidebar-item-text sidebar-link">
@@ -1998,13 +1640,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-76" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-67" role="navigation" aria-expanded="false">
  <span class="menu-text">Computer</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-76" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-67" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-76" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-67" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/computer/01.pdf" class="sidebar-item-text sidebar-link">
@@ -2021,13 +1663,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-77" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-68" role="navigation" aria-expanded="false">
  <span class="menu-text">Data Mining</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-77" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-68" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-77" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-68" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/data_mining/01.html" class="sidebar-item-text sidebar-link">
@@ -2116,13 +1758,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-78" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-69" role="navigation" aria-expanded="false">
  <span class="menu-text">Dsa</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-78" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-69" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-78" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-69" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/dsa/00.html" class="sidebar-item-text sidebar-link">
@@ -2139,13 +1781,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-79" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-70" role="navigation" aria-expanded="false">
  <span class="menu-text">OR</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-79" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-70" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-79" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-70" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/OR/01.html" class="sidebar-item-text sidebar-link">
@@ -2240,13 +1882,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-80" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-71" role="navigation" aria-expanded="false">
  <span class="menu-text">Others</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-80" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-71" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-80" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-71" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/others/1.html" class="sidebar-item-text sidebar-link">
@@ -2269,13 +1911,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-81" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-72" role="navigation" aria-expanded="false">
  <span class="menu-text">Product</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-81" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-72" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-81" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-72" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/product/00.html" class="sidebar-item-text sidebar-link">
@@ -2364,13 +2006,13 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-82" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-73" role="navigation" aria-expanded="false">
  <span class="menu-text">Statistics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-82" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-73" role="navigation" aria-expanded="false" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-82" class="collapse list-unstyled sidebar-section depth4 ">  
+      <ul id="quarto-sidebar-section-73" class="collapse list-unstyled sidebar-section depth4 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/statistics/00.html" class="sidebar-item-text sidebar-link">
@@ -2411,6 +2053,405 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/04_archives/bs_3_1/notes/statistics/06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">확률과 통계 R 실습 과제</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../../../posts/04_archives/adp_실기/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ADP 실기 준비 - try 1</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-74" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-74" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-75" role="navigation" aria-expanded="false">
+ <span class="menu-text">Notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-75" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-75" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">모델링, 평가 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EDA 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">전처리 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">회귀분석 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분산 분석 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">비지도 학습 템플릿</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">시계열 분석</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">기타</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률과 통계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">try 1 후기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-76" role="navigation" aria-expanded="false">
+ <span class="menu-text">Bayse</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-76" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-76" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">베이즈 정리</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">비율 추정</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">수량 추정</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">공산과 가산</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">최솟값, 최댓값 그리고 혼합 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">포아송 과정</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">의사결정분석</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">검정</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">비교</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">로지스틱 회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">켤레사전분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/bayse/18.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MCMC</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-77" role="navigation" aria-expanded="false">
+ <span class="menu-text">Core</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-77" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-77" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/core/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EDA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/core/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">전처리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-78" role="navigation" aria-expanded="false">
+ <span class="menu-text">Etc</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-78" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-78" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/etc/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">다차원 척도법 (Multidimensional Scaling)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-79" role="navigation" aria-expanded="false">
+ <span class="menu-text">Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-79" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-79" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분류 - 결정 트리</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분류 - 앙상블</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분류 - 산탄데르 고객 만족 예측</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">분류 - 신용 카드 사기 검출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">차원 축소</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">텍스트 분석</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">텍스트 분석 - 20 뉴스그룹 분류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/machine_learning/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">텍스트 분석 - 감성 분석</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-80" role="navigation" aria-expanded="false">
+ <span class="menu-text">Nonparametric</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-80" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-80" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/Nonparametric/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/Nonparametric/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">순열검정과 전통적인 비모수통계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/Nonparametric/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">두 변수의 연관성과 독립성</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-81" role="navigation" aria-expanded="false">
+ <span class="menu-text">Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-81" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-81" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/statistics/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EDA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-82" role="navigation" aria-expanded="false">
+ <span class="menu-text">Time Series</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-82" role="navigation" aria-expanded="false" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-82" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/time_series/00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/time_series/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">단순 미래 예측</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/time_series/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">확률보행</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/time_series/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">이동평균과정 모델링</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/time_series/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">자기귀모형</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/time_series/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">복잡한 시계열 모델</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/time_series/06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">계절성 고려</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/04_archives/adp_실기/notes/time_series/07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">외생 변수 추가하기</span></a>
   </div>
 </li>
       </ul>
@@ -2830,15 +2871,26 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#제조-변동의-원인" id="toc-제조-변동의-원인" class="nav-link active" data-scroll-target="#제조-변동의-원인">제조 변동의 원인</a></li>
-  <li><a href="#관리도" id="toc-관리도" class="nav-link" data-scroll-target="#관리도">관리도</a></li>
+  <li><a href="#프로세스-품질관리란" id="toc-프로세스-품질관리란" class="nav-link active" data-scroll-target="#프로세스-품질관리란">프로세스 품질관리란?</a></li>
+  <li><a href="#제조-변동의-원인" id="toc-제조-변동의-원인" class="nav-link" data-scroll-target="#제조-변동의-원인">제조 변동의 원인</a></li>
+  <li><a href="#관리도" id="toc-관리도" class="nav-link" data-scroll-target="#관리도">관리도</a>
+  <ul class="collapse">
+  <li><a href="#합리적-표본군" id="toc-합리적-표본군" class="nav-link" data-scroll-target="#합리적-표본군">합리적 표본군</a></li>
+  <li><a href="#패턴-이상" id="toc-패턴-이상" class="nav-link" data-scroll-target="#패턴-이상">패턴 이상</a></li>
+  </ul></li>
+  <li><a href="#관리도의-종류" id="toc-관리도의-종류" class="nav-link" data-scroll-target="#관리도의-종류">관리도의 종류</a>
+  <ul class="collapse">
+  <li><a href="#barx---r-관리도" id="toc-barx---r-관리도" class="nav-link" data-scroll-target="#barx---r-관리도"><span class="math inline">\(\bar{X} - R\)</span> 관리도</a></li>
+  <li><a href="#x---r_m-관리도" id="toc-x---r_m-관리도" class="nav-link" data-scroll-target="#x---r_m-관리도"><span class="math inline">\(x - R_m\)</span> 관리도</a></li>
+  <li><a href="#속성계수형-관리도이산형" id="toc-속성계수형-관리도이산형" class="nav-link" data-scroll-target="#속성계수형-관리도이산형">속성(계수형) 관리도(이산형)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/toeic/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html">품질경영</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/03.html">관리도</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html">품질경영</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/03.html">관리도</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">관리도</h1>
   <div class="quarto-categories">
@@ -2867,34 +2919,156 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 
 
 <p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="프로세스-품질관리란" class="level2">
+<h2 class="anchored" data-anchor-id="프로세스-품질관리란">프로세스 품질관리란?</h2>
+<ul>
+<li>시간에 따른 추이를 통해 사전에 불량을 방지하는 것</li>
+<li><code>목표: 제조변동의 감소</code></li>
+</ul>
+</section>
 <section id="제조-변동의-원인" class="level2">
 <h2 class="anchored" data-anchor-id="제조-변동의-원인">제조 변동의 원인</h2>
 <ul>
-<li><p>우연 변동</p></li>
-<li><p>이상 변동</p></li>
-<li><p>시간에 따른 분포의 변화가 안정상태에 있어야 한다</p></li>
+<li>우연 변동
+<ul>
+<li>일상적 변동</li>
+<li>작업환경 변화(지진같은 재해나 미세한 바람의 차이 등)</li>
+<li>작업자간 숙련도 차이</li>
+<li>설비 간의 기능 차이</li>
+<li>원자재간의 미세한 차이</li>
+<li><code>피할 수 없는 변동</code></li>
+</ul></li>
+<li>이상 변동: 품질에 확연한 차이를 가져오며, <code>제거 가능한 원인</code>
+<ul>
+<li><code>피할 수 있는 변동</code></li>
+</ul></li>
+<li><code>관리상태</code>: 분포가 지정된 한계 내로 유지되는 것.
+<ul>
+<li>우연 변동은 허용 된다.</li>
+<li>우연적 원인만 있는 경우, 변동은 안정적이고 예측 가능한 분포를 형성</li>
+<li>이상변동이 있는 경우 <code>중심 경향</code>, <code>표준편차</code>, <code>모양</code>에 따라 달라지는 <code>예상 불가능한 분포</code>를 생성</li>
+</ul></li>
 </ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-10-27-19-47-39.png" class="img-fluid figure-img"></p>
+<figcaption>우연 변동</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-10-27-19-47-25.png" class="img-fluid figure-img"></p>
+<figcaption>이상변동 포함</figcaption>
+</figure>
+</div>
 </section>
 <section id="관리도" class="level2">
 <h2 class="anchored" data-anchor-id="관리도">관리도</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-10-27-19-49-33.png" class="img-fluid figure-img"></p>
+<figcaption>관리도</figcaption>
+</figure>
+</div>
 <ul>
-<li><p>이상원인에 의한 품질변동의 발생 여부를 조사하기 위해 개발된 도구</p></li>
-<li><p>규격 상하한 != 관리 상하한</p></li>
-<li><p>불량을 탐지하는 것이 아니라, 공정이 안정상태에 있는지 없는지를 선행적으로 판단하여 불량 발생을 예방하는 것</p></li>
-<li><p>6~7문제</p></li>
-<li><p>1번 TF 문제, 틀리면 점수를 더 깎음.</p></li>
-<li><p>품질의 종류</p></li>
-<li><p>예시 알 필요 없다</p></li>
-<li><p>규격, 공차 정의</p></li>
-<li><p>도수분포표는 안낸다고 하신다</p></li>
-<li><p>공정능력</p></li>
-<li><p>5m 이런거 이해만 해라</p></li>
-<li><p>산포에 대한 통계량은 참고</p></li>
-<li><p>정규, t, f, 카이제곱의 확률밀도함수는 몰라도 되지만 다른건 알아야 할듯</p></li>
-<li><p>1, 2, precision, recal, f1score, TF, FN, FP, TN</p></li>
+<li>이상원인에 의한 품질변동의 발생 여부를 조사하기 위해 개발된 도구</li>
+<li><code>관리한계를 벗어날 확률: 0.0027</code>, <code>하나라도 밖으로 나가면 공정 이상</code></li>
+<li>규격 상하한 != 관리 상하한</li>
+<li>불량을 탐지하는 것이 아니라, 공정이 안정상태에 있는지 없는지를 선행적으로 판단하여 불량 발생을 예방하는 것</li>
 </ul>
+<section id="합리적-표본군" class="level3">
+<h3 class="anchored" data-anchor-id="합리적-표본군">합리적 표본군</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-10-27-19-56-41.png" class="img-fluid figure-img"></p>
+<figcaption>표본군</figcaption>
+</figure>
+</div>
+<ul>
+<li>n: 표본의 갯수, k: 단위 시간 당 표본 추출 횟수</li>
+<li>같은 표본군 안에는 우연변동만 존재(균일한 표본군)이 합리적임.</li>
+<li><code>표본의 크기가 커질수록</code>, <code>추출 빈도가 높을 수록</code> 관리 규격이 좁아지며 작은 변동에 더 <code>민감</code>해짐
+<ul>
+<li><code>비용과 trade-off</code></li>
+<li>또한 표본의 크기가 커질수록 균일하지 않은 표본군이 생성될 확률이 높아짐(그림 참조)</li>
+<li>적당히 작은 표본을 여러번 뽑는게 좋다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="패턴-이상" class="level3">
+<h3 class="anchored" data-anchor-id="패턴-이상">패턴 이상</h3>
+<ul>
+<li>공정이 관리상태에 있다:
+<ol type="1">
+<li>관리도의 점들이 관리한계선을 벗어나지 않는다.</li>
+<li>관리도의 점들에 특정한 패턴이 나타나지 않는다.
+<ul>
+<li>관리 한계를 벗어날 징조
+<ul>
+<li>한계선 가까이 여러 개가 나타난다.</li>
+<li>경향성이 나타난다.</li>
+</ul></li>
+<li>변동의 크기를 줄일 수 있는 단서
+<ul>
+<li>런의 길이가 너무 길거나 짧다.
+<ul>
+<li>긴 길이: 평균 이동 가능성</li>
+<li>짧은 길이: 표본군 간 변동 요인 존재(층화 현상)</li>
+</ul></li>
+<li>주기성이 나타난다: 주기적 변동 요인(환경 변화, 작업자 능률 변화 가능성)</li>
+<li>층화현상이 나타난다. -&gt; 관리한계선이 잘못 설정되었다.</li>
+</ul></li>
+</ul></li>
+</ol></li>
+</ul>
+<p><img src="img/2025-10-27-20-02-50.png" class="img-fluid"></p>
+<p><img src="img/2025-10-27-20-03-23.png" class="img-fluid"></p>
+<p><img src="img/2025-10-27-20-05-09.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="관리도의-종류" class="level2">
+<h2 class="anchored" data-anchor-id="관리도의-종류">관리도의 종류</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-10-27-20-09-37.png" class="img-fluid figure-img"></p>
+<figcaption>관리도 종류</figcaption>
+</figure>
+</div>
+<ul>
+<li><span class="math inline">\(R_m\)</span>은 시계열 moving average</li>
+<li>군 구분은 수업의 범위가 아니라고 함</li>
+<li>부적합품 수:</li>
+<li>부적합 수:</li>
+</ul>
+<section id="barx---r-관리도" class="level3">
+<h3 class="anchored" data-anchor-id="barx---r-관리도"><span class="math inline">\(\bar{X} - R\)</span> 관리도</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-10-27-20-34-37.png" class="img-fluid figure-img"></p>
+<figcaption>σ를 알 때</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-10-27-20-39-17.png" class="img-fluid figure-img"></p>
+<figcaption>σ를 모를 때</figcaption>
+</figure>
+</div>
+<ul>
+<li>OC 곡선: 추정치 이동에 따른 β 값의 변화
+<ul>
+<li><span class="math inline">\(θ ≠ θ_0\)</span>일 때, <span class="math inline">\(θ_0\)</span>와 가까울 수록 헷갈리고, 멀 수록 명확하다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="x---r_m-관리도" class="level3">
+<h3 class="anchored" data-anchor-id="x---r_m-관리도"><span class="math inline">\(x - R_m\)</span> 관리도</h3>
+</section>
+<section id="속성계수형-관리도이산형" class="level3">
+<h3 class="anchored" data-anchor-id="속성계수형-관리도이산형">속성(계수형) 관리도(이산형)</h3>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
