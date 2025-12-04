@@ -264,6 +264,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">운송 및 창고관리</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">TFC 게임 개요</span></a>
   </div>
@@ -318,6 +324,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/01.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">cheat seet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/02.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11.6, 11.7</span></a>
   </div>
 </li>
       </ul>
@@ -376,6 +388,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">샘플링 검사법</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">신뢰도 공학 - Part1</span></a>
   </div>
 </li>
       </ul>
@@ -3066,14 +3084,44 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <li><code>ESB</code>로 진화</li>
 </ol>
 <ul>
-<li>아이디어: 현장 직원과 안내 직원의 의사소통 자동화
+<li>To-Be 아이디어: 내부 인원 파악 자동화</li>
+<li>현재 문제점:
+<ol type="1">
+<li>내부 직원과 입장 안내 직원의 의사소통 과정에서 오류가 발생할 가능성이 있음</li>
+<li>현장 인원 수가 실제 파악한 인원이랑 다를 수 있음</li>
+<li>내부 직원에게 전달된 인원 수가 실제 인원과 다를 경우 내부가 혼란스러워질 수 있음</li>
+<li>실제로 김형훈이 올렸던 html 파일에는 비슷한 사례가 있음.</li>
+</ol></li>
+<li>해결 방안:
+<ol type="1">
+<li>입장 시 QR 코드를 스캔하여 DB에 자동으로 인원 수 기록
 <ul>
-<li>현장의 인원 수 파악이 실재와 다를 수도 있음</li>
-<li>데이터베이스로 자동 수집</li>
-<li>헌데 어차피 안전 관리 직원은 필요</li>
-<li>그리고 소규모 팝업스토어는 관리가 잘 됨</li>
-<li>하지만 일시적 인원이라는 특징에서 휴먼에러를 줄인다는 명분으로 도입 가능</li>
+<li>입장 가능한 인원 수가 나오면 자동으로 QR 코드가 생성되서(혹은 프린트 되어) 고객이 알아서 찍고 들어간다.</li>
 </ul></li>
+<li>퇴장 시 (출구랑 입구가 분리된 공간 가정)
+<ol type="1">
+<li>퇴장 시에도 QR 코드를 스캔하여 DB에서 인원 수 차감
+<ul>
+<li>제일 간단한 방법이지만, 나갈 때도 QR 코드를 찍는 거를 대체로 번거로워 함</li>
+</ul></li>
+<li>입장 가능 시간을 5분으로 정해놓고 내부에서 활동을 하면 다시 5분 갱신, 5분 동안 아무것도 안하면 퇴장 처리(access token 개념)
+<ul>
+<li>당연히 이 방법은 적절하지 않다고 본다.</li>
+</ul></li>
+<li>퇴장 시에는 출구의 스캐너가 자동으로 인식하는 방법
+<ul>
+<li>구현하는 방법이 간단한지 잘 모르겠지만, 이것보다는 더 좋은 방법이 있을 것 같다.</li>
+<li>입장 등록 인원이랑 실제 입장 인원이 다를 수 있음 (ex. 영유아는 입장 등록 인원으로 포함 안할 수 있다.). 이때 스캐너로 인식하면 더 많은 인원을 퇴장처리 할 수도 있다.</li>
+</ul></li>
+<li>출구에 직원 배치
+<ul>
+<li>이건 To-Be라고 할 수 없을 듯</li>
+</ul></li>
+</ol>
+<ul>
+<li>이 방안 중에서는 1번이 제일 현실성이 있어 보인다. 다만, 이 방법을 하려면 고객이 번거롭다고 느끼지 않게 해야 한다.</li>
+</ul></li>
+</ol></li>
 </ul>
 
 

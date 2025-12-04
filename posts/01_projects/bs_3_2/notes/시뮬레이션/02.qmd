@@ -1,0 +1,107 @@
+---
+title: '11.6, 11.7'
+mainfont: "Noto Sans KR"
+sansfont: "Noto Sans KR"
+monofont: "Noto Sans KR"
+date: last-modified
+geometry:
+  - top=10mm
+  - left=10mm
+  - right=10mm
+  - bottom=10mm
+format: 
+  titlepage-pdf:
+    documentclass: scrartcl
+    classoption: ["oneside", "open=any"]
+    number-sections: true
+    toc: false
+    titlepage: "none"
+    coverpage: "none"
+    fontsize: 12pt
+    include-in-header: 
+      text: |
+        \usepackage[utf8]{inputenc}
+        \usepackage{graphicx}
+        \usepackage{amsmath}
+        \usepackage{amsfonts}
+        \usepackage{amssymb}
+        \usepackage{geometry}
+        \usepackage{fancyhdr}
+        \usepackage{hyperref}
+        \usepackage{lipsum}
+        \setlength{\columnsep}{5mm}
+        \usepackage{setspace}
+        \setstretch{1.3}
+        \usepackage{booktabs}
+        \usepackage{tabularx}
+        \usepackage{makecell}
+        \usepackage{caption}
+        \usepackage{multirow}
+        \usepackage{array}
+        \usepackage{graphicx}
+        \renewcommand{\arraystretch}{1.3}
+        \renewcommand{\tabularxcolumn}[1]{m{#1}}
+        \raggedbottom
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+**11.6**
+
+- $\bar{X} = \frac{\sum X}{N}$ ($N=18$)
+- $\hat{p} = \bar{X} / n$ ($n=8$) = 0.618
+- $H_0$: B(8, 0.618)를 따른다.
+- $H_1$: B(8, 0.618)를 따르지 않는다.
+
+$P(X=k) = \binom{8}{k} (0.618)^k (1-0.618)^{8-k}$
+
+$\text{E}_k = N \times P(X=k) = 18 \times P(X=k)$
+
+| $k$ | 관측 빈도 | 기대 빈도 |
+| :---: | :---: | :---: |
+| 0 | 0 | 0.00 |
+| 1 | 1 | 0.04 |
+| 2 | 2 | 0.34 |
+| 3 | 4 | 1.47 |
+| 4 | 1 | 3.57 |
+| 5 | 1 | 5.19 |
+| 6 | 2 | 4.47 |
+| 7 | 5 | 2.17 |
+| 8 | 2 | 0.75 |
+
+- 기대 빈도가 5보다 작은 것들 그룹화
+
+| $k$ | 관측 빈도 | 기대 빈도 | $(\text{O}-\text{E})^2 / \text{E}$ |
+| :---: | :---: | :---: | :---: | :---: |
+| $k \le 4$ | 8 | 5.42 | $\frac{(8-5.42)^2}{5.42}$ |
+| $k=5$ | 1 | 5.19 | $\frac{(1-5.19)^2}{5.19}$ |
+| $k \ge 6$ | 9 | 7.39 | $\frac{(9-7.39)^2}{7.39}$ |
+
+- 총 합은 4.96
+- 모수 1개 추정해서 자유도는 3 - 1 - 1 = 1
+- $\alpha=0.05$ 유의수준에서 기각역은 3.841
+- 귀무가설 기각
+
+# 11.7
+
+- $\bar{X} = \frac{750}{6} = 125$
+- $\hat{\lambda} = \frac{1}{\bar{X}} = \frac{1}{125} = 0.008$
+- $H_0$: 데이터는 exp(0.008)를 따른다.
+- $H_1$: 데이터는 exp(0.008)를 따르지 않는다.
+- $F(x) = 1 - e^{-0.008x}$
+
+| $x_{(i)}$ | $S_i$ | $F(x_{(i)})$ | $D^+$ | $D^-$ |
+| :---: | :---: | :---: | :---: | :---: |
+| 106 | 0.1667 | 0.5727 | 0.4060 | 0.5727 |
+| 122 | 0.3333 | 0.6232 | 0.2899 | 0.4565 |
+| 126 | 0.5000 | 0.6358 | 0.1358 | 0.3025 |
+| 128 | 0.6667 | 0.6414 | 0.0253 | 0.1414 |
+| 133 | 0.8333 | 0.6558 | 0.1775 | 0.0091 |
+| 135 | 1.0000 | 0.6626 | 0.3374 | 0.1707 |
+
+- $\max(D^+, D^-) = 0.5727$
+- $\alpha=0.05$일 때 임계값 0.311
+- 귀무가설 기각

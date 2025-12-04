@@ -1,0 +1,251 @@
+---
+title: Automation 시연
+categories: ["프로세스 경영"]
+mainfont: "Noto Sans KR"
+sansfont: "Noto Sans KR"
+monofont: "Noto Sans KR"
+date: last-modified
+geometry:
+  - top=25mm
+  - left=25mm
+  - right=25mm
+  - bottom=25mm
+format:
+  titlepage-pdf:
+    documentclass: scrartcl
+    classoption: ["oneside", "open=any"]
+    number-sections: false
+    toc: false
+    titlepage: "none"
+    coverpage: "none"
+    fontsize: 12pt
+    include-in-header:
+      text: |
+        \usepackage[utf8]{inputenc}
+        \usepackage{graphicx}
+        \usepackage{amsmath}
+        \usepackage{amsfonts}
+        \usepackage{amssymb}
+        \usepackage{geometry}
+        \usepackage{fancyhdr}
+        \usepackage{hyperref}
+        \usepackage{lipsum}
+        \setlength{\columnsep}{5mm}
+        \usepackage{setspace}
+        \setstretch{1.2}
+        \usepackage{booktabs}
+        \usepackage{tabularx}
+        \usepackage{makecell}
+        \usepackage{caption}
+        \usepackage{multirow}
+        \usepackage{array}
+        \usepackage{graphicx}
+        \renewcommand{\arraystretch}{1.0}
+        \renewcommand{\tabularxcolumn}[1]{m{#1}}
+        \raggedbottom
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## 시나리오
+
+- pop up store 내부에 최대 동시 입장 가능 인원은 1명으로 제한됩니다. (시연을 위한 임시 설정)
+- 3명의 고객이 사전 예약 키오스크에 접근합니다.
+- 고객 1, 고객 2, 고객 3 순으로 도착하며, 각 고객은 휴대폰 번호와 픽업할 물품 및 수량을 입력할 수 있습니다.
+- 대기열에 등록된 고객은 등록 순으로 입장 가능 메시지를 수신합니다.
+- 고객은 입장 가능 메세지 수신 후 5분 내 QR 코드로 입장을 확정해야 하며, 미입장 시 자동 취소 및 환불 처리가 진행됩니다.
+- 재고와 대기열 정보는 외부 서버를 통해 관리됩니다.
+
+## 자동화
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[height=9cm]{img/2025-11-25-20-25-45.png}}
+\caption{세 명의 고객 도착}
+\end{center}
+\end{figure}
+
+(이미지들은 cntl +로 확대해서 선명하게 볼 수 있습니다.)
+
+세 명의 고객이 pop up store의 사전예약 키오스크에 정보를 입력합니다.
+고객은 휴대폰 번호와 픽업할 물품 및 수량을 입력합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-08-15-18.png}}
+\caption{고객 1 정보 입력 form}
+\end{center}
+\end{figure}
+
+고객 1이 제일 먼저 도착하여 정보를 입력합니다.
+첫 번째 고객은 재고를 초과한 폰케이스 수량을 입력해 서버가 재고 업데이트 과정에서 에러를 반환합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-30-38.png}}
+\caption{재고 초과 에러}
+\end{center}
+\end{figure}
+
+Camunda는 해당 에러를 Catch Event로 받아 Link Event를 통해 다시 입력 Task로 진입시킵니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-08-26-51.png}}
+\caption{form 재진입}
+\end{center}
+\end{figure}
+
+재진입한 form에서 구체적 에러 메시지를 확인해볼 수 있습니다.
+고객 1은 이번에는 재고 범위 내로 구매 수량을 수정하여 form을 제출합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-08-30-50.png}}
+\caption{할인율 적용}
+\end{center}
+\end{figure}
+
+DMN 테이블을 통해 구매 수량, 구매 가격에 따라 할인율이 자동 결정됩니다.
+현재는 5개 제품 구매하여 10% 할인이 적용된 모습.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-08-31-33.png}}
+\caption{가격표}
+\end{center}
+\end{figure}
+
+최종 결제 직전 고객은 상세 가격 내역을 확인합니다.
+81000원은 좀 많아보이긴 합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-33-53.png}}
+\caption{고객 1 process}
+\end{center}
+\end{figure}
+
+결제 완료 시 내부 직원이 구매 물품에 대한 포장 및 진열 작업을 수행하고, 고객 입장 가능 여부 판단 로직이 시스템에 의해 자동으로 처리됩니다.
+
+현재는 대기 중인 고객이 없고, 내부 입장 가능 인원은 1명 이므로 고객 1은 즉시 입장 가능 상태가 됩니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-08-49-44.png}}
+\caption{고객 2의 정보 입력}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-08-33-28.png}}
+\caption{고객 3 정보 입력}
+\end{center}
+\end{figure}
+
+고객 2, 고객 3도 정보를 입력합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-35-52.png}}
+\caption{대기 상태}
+\end{center}
+\end{figure}
+
+현재 내부 인원이 최대 인원인 상태이므로 message catch event에서 입장 대기 상태로 머무는 모습을 확인해볼 수 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-51-00.png}}
+\caption{고객 1 미도착}
+\end{center}
+\end{figure}
+
+고객 1이 5분 내 QR 코드를 스캔하지 못하면 인스턴스가 취소되며 자동으로 환불 및 퇴장 처리가 진행됩니다.
+
+취소 시점에 대기열의 다음 고객 인스턴스로 Message를 Throw 해줍니다.
+고객 2에 대한 인스턴스는 Message Catch Event를 통해 입장 가능 이벤트가 전달 받아 대기 상태에서 벗어나게 됩니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-39-11.png}}
+\caption{고객2 입장}
+\end{center}
+\end{figure}
+
+이제 대기를 마친 고객 2가 입장 가능한 상태가 되어있는 모습을 확인할 수 있습니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-08-39-48.png}}
+\caption{고객 2 QR 코드}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-08-40-13.png}}
+\caption{QR 코드 입력}
+\end{center}
+\end{figure}
+
+고객 2는 수신한 QR 코드를 form에 입력합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-41-01.png}}
+\caption{고객 2 내부 입장}
+\end{center}
+\end{figure}
+
+이후 pop up store 내부 입장 상태로 전환됩니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-41-52.png}}
+\caption{고객 2 퇴장}
+\end{center}
+\end{figure}
+
+고객 2가 내부 활동을 마치고 QR 코드를 다시 스캔하면 퇴장 처리가 되고, 현재 대기중인 고객 3의 인스턴스에게 message를 throw합니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-42-38.png}}
+\caption{고객 3 입장}
+\end{center}
+\end{figure}
+
+고객 3 역시 동일하게 입장–활동–퇴장 절차를 거칩니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-45-00.png}}
+\caption{고객 3 퇴장}
+\end{center}
+\end{figure}
+
+대기열이 더 이상 없으므로 추가 메시지 Throw 없이 인스턴스가 종료됩니다.
+
+\begin{figure}[H]
+\begin{center}
+\fbox{\includegraphics[]{img/2025-11-25-20-46-55.png}}
+\caption{최종 상태}
+\end{center}
+\end{figure}
+
+최종적으로 1명의 고객이 취소되고 2명의 고객이 정상 입장 및 퇴장한 상태를 확인할 수 있습니다.
+
+해당 시연을 통해
+
+1. 고객 입장, 퇴장
+1. 내부 입장 가능 인원 제한 및 대기열 관리
+1. 고객 입장 가능 메세지 자동 발송
+1. 사전 픽업 물품 재고 관리
+1. 할인 business rule 자동 적용
+
+...의 기능들에 대한 자동화가 구현된 모습을 확인할 수 있었습니다.
