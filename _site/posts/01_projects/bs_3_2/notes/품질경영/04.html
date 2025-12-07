@@ -70,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -201,6 +230,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/cte/03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CTE Homework</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/cte/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 presentation skills</span></a>
   </div>
 </li>
       </ul>
@@ -393,7 +428,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">신뢰도 공학 - Part1</span></a>
+ <span class="menu-text">신뢰도 공학</span></a>
   </div>
 </li>
       </ul>
@@ -457,6 +492,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Process mining 실습</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/11.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">주제 제안</span></a>
   </div>
@@ -465,6 +506,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/12.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">5조 기말과제 제안서</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/13.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automation 시연</span></a>
   </div>
 </li>
       </ul>
@@ -2897,7 +2944,19 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   </ul></li>
   <li><a href="#샘플링의-오차" id="toc-샘플링의-오차" class="nav-link" data-scroll-target="#샘플링의-오차">샘플링의 오차</a></li>
   <li><a href="#샘플링-방법의-종류" id="toc-샘플링-방법의-종류" class="nav-link" data-scroll-target="#샘플링-방법의-종류">샘플링 방법의 종류</a></li>
-  <li><a href="#계수형-계량형" id="toc-계수형-계량형" class="nav-link" data-scroll-target="#계수형-계량형">계수형 계량형</a></li>
+  <li><a href="#샘플링-검사법" id="toc-샘플링-검사법" class="nav-link" data-scroll-target="#샘플링-검사법">샘플링 검사법</a></li>
+  <li><a href="#계수-규준형-샘플링-검사" id="toc-계수-규준형-샘플링-검사" class="nav-link" data-scroll-target="#계수-규준형-샘플링-검사">계수 규준형 샘플링 검사</a>
+  <ul class="collapse">
+  <li><a href="#계수-규준형-1회" id="toc-계수-규준형-1회" class="nav-link" data-scroll-target="#계수-규준형-1회">계수 규준형 1회</a></li>
+  <li><a href="#계수-규준형-다회-샘플링-검사" id="toc-계수-규준형-다회-샘플링-검사" class="nav-link" data-scroll-target="#계수-규준형-다회-샘플링-검사">계수 규준형 다회 샘플링 검사</a></li>
+  <li><a href="#계수-조정형-샘플링-검사" id="toc-계수-조정형-샘플링-검사" class="nav-link" data-scroll-target="#계수-조정형-샘플링-검사">계수 조정형 샘플링 검사</a></li>
+  <li><a href="#계수값-축차-샘플링-검사" id="toc-계수값-축차-샘플링-검사" class="nav-link" data-scroll-target="#계수값-축차-샘플링-검사">계수값 축차 샘플링 검사</a></li>
+  </ul></li>
+  <li><a href="#계량-규준형-샘플링-검사" id="toc-계량-규준형-샘플링-검사" class="nav-link" data-scroll-target="#계량-규준형-샘플링-검사">계량 규준형 샘플링 검사</a>
+  <ul class="collapse">
+  <li><a href="#불량률-보증-로트가-단품의-묶음인-경우" id="toc-불량률-보증-로트가-단품의-묶음인-경우" class="nav-link" data-scroll-target="#불량률-보증-로트가-단품의-묶음인-경우">불량률 보증 (로트가 단품의 묶음인 경우)</a></li>
+  <li><a href="#평균-보증-로트가-연속체인-경우" id="toc-평균-보증-로트가-연속체인-경우" class="nav-link" data-scroll-target="#평균-보증-로트가-연속체인-경우">평균 보증 (로트가 연속체인 경우)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -2938,6 +2997,10 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <ul>
 <li>샘플링 검사법: lot 단위로 제품을 검사하여, 그 결과에 따라 lot 전체를 합격 또는 불합격으로 판정하는 방법</li>
 </ul>
+<ol type="1">
+<li>규준형 샘플링 검사법: 샘플링 검사 후 규격을 만족하지 못하면 로트 전체 불합격 판정</li>
+<li>선별형 샘플링 검사법: 샘플링 검사 후 규격을 만족하지 못한 제품만 선별하여 양품으로 교체</li>
+</ol>
 <section id="전제조건" class="level3">
 <h3 class="anchored" data-anchor-id="전제조건">전제조건</h3>
 <ol type="1">
@@ -2949,6 +3012,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </section>
 <section id="검사의-위험" class="level3">
 <h3 class="anchored" data-anchor-id="검사의-위험">검사의 위험</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-04-20-47-00.png" class="img-fluid figure-img"></p>
+<figcaption>검사의 위험</figcaption>
+</figure>
+</div>
 <ul>
 <li>일부를 가지고 판별하면 통계적 오류의 가능성이 존재함</li>
 </ul>
@@ -2957,36 +3026,217 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <section id="샘플링의-오차" class="level2">
 <h2 class="anchored" data-anchor-id="샘플링의-오차">샘플링의 오차</h2>
 <ul>
-<li><p>정밀도: 신뢰구간 좁히는거</p></li>
-<li><p>신뢰도: 신뢰구간(95% 등)</p></li>
-<li><p>n이 중요하다</p></li>
+<li>정밀도: 시료를 무한히 많이 측정할 대 측정값이 가지는 산포의 크기가 얼마나 좁은 가(측정 결과가 얼마나 일관성 있게 나오는가)
+<ul>
+<li><span class="math inline">\(z_{α/2} * \frac{σ}{\sqrt{n}}\)</span></li>
+</ul></li>
+<li>신뢰도: 신뢰구간(95% 등)</li>
+<li>목표 신뢰도와 정밀도를 위한 n 계산 가능</li>
 </ul>
 </section>
 <section id="샘플링-방법의-종류" class="level2">
 <h2 class="anchored" data-anchor-id="샘플링-방법의-종류">샘플링 방법의 종류</h2>
 <ol type="1">
 <li>랜덤 샘플링</li>
-<li>층별 샘플링</li>
-<li>집락 샘플링</li>
-<li>2 단계 샘플링</li>
+<li>층별 샘플링: stratified sampling</li>
+<li>집락 샘플링: 그룹을 랜덤으로 샘플링 해서 선택된 그룹 내에서 전수조사
+<ul>
+<li>시간과 비용을 절약할 수 있지만, 선택된 그룹이 전체를 대표하지 못할 위험 존재</li>
+</ul></li>
+<li>2 단계 샘플링
+<ol type="1">
+<li>집락 샘플링 처럼 그룹을 랜덤으로 선택(더 많이 선택)</li>
+<li>선택된 그룹 내에서 전수 조사가 아닌 랜덤 샘플링 수행</li>
+</ol>
+<ul>
+<li>기존 집락 샘플링에서 전수조사를 함으로써 균질된 진랍 내에서만 대표성을 가지는 문제 해결</li>
+</ul></li>
 </ol>
 </section>
-<section id="계수형-계량형" class="level2">
-<h2 class="anchored" data-anchor-id="계수형-계량형">계수형 계량형</h2>
+<section id="샘플링-검사법" class="level2">
+<h2 class="anchored" data-anchor-id="샘플링-검사법">샘플링 검사법</h2>
+<ol type="1">
+<li>계수형 샘플링 검사
 <ul>
-<li>계수형
-<ul>
-<li>계수 규준형: N, n, c
-<ul>
-<li>n이 늘어나면 예방 비용, 검사 비용 증가</li>
+<li>계수 규준형 샘플링 검사</li>
+<li>계수 조정형 샘플링 검사</li>
+<li>계수값 축차 샘플링 검사</li>
 </ul></li>
-<li>계수 조정형</li>
-<li>계수값 축차</li>
-</ul></li>
-<li>계량형</li>
+<li>계량형 샘플링 검사</li>
+</ol>
+</section>
+<section id="계수-규준형-샘플링-검사" class="level2">
+<h2 class="anchored" data-anchor-id="계수-규준형-샘플링-검사">계수 규준형 샘플링 검사</h2>
+<ul>
+<li>크기 N인 로트에서 n개를 샘플링하여 불량이 c개 이하면 로트 전체 합격</li>
+<li><span class="math inline">\(p_0\)</span>: 합격품질수준(AQL)</li>
+<li><span class="math inline">\(p_1\)</span>: 한계품질수준(LQL)</li>
+<li>생산자 위험: 불량률이 AQL 이하인 로트가 불합격할 확률</li>
+<li>소비자 위험: 불량률이 LQL 이상인 로트가 합격할 확률</li>
 </ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-04-21-03-46.png" class="img-fluid figure-img"></p>
+<figcaption>생산자와 소비자가 계약함</figcaption>
+</figure>
+</div>
+<ul>
+<li>OC 커브: 로트의 실제 불량률이 p라고 할 때, 로트의 합격 확률을 나타내는 곡선</li>
+<li>샘플에서 발견되는 불량의 개수 X는 초기하분포를 따름. <span class="math inline">\(L(p) = P(X ≤ c) = Σ (Np C x) * (N - Np C n - x) / (N C n)\)</span></li>
+<li>N이 크면 이항분포로 근사. <span class="math inline">\(L(p) = P(X ≤ c) = Σ (nCx) * p^x * (1-p)^(n-x)\)</span></li>
+<li>n이 충분히 크면 포아송 분포로 근사. <span class="math inline">\(L(p) = P(X ≤ c) = Σ (e^(-np) * (np)^x) / x!\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-04-21-10-35.png" class="img-fluid figure-img"></p>
+<figcaption>OC 곡선</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-04-21-16-46.png" class="img-fluid figure-img"></p>
+<figcaption>n과 c에 따른 OC곡선 변화</figcaption>
+</figure>
+</div>
+<ul>
+<li>n이 클수록 예방 비용, 검사 비용 증가, 외부 실패비용 감소</li>
+<li>c가 클수록 외부 실패비용 증가, 폐기 비용 감소</li>
+<li>n의 변화에 따른 기울기 변화가 더 가파르다.</li>
+<li>p가 줄어들면 당연히 합격 확률이 증가. 생산자 위험 감소</li>
+</ul>
+<section id="계수-규준형-1회" class="level3">
+<h3 class="anchored" data-anchor-id="계수-규준형-1회">계수 규준형 1회</h3>
+<ul>
+<li><span class="math inline">\(α, β\)</span>를 만족할 수 있는 n, c 조합 찾기. 하지만 매우 복잡함</li>
+<li>고로 표를 이용함</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-04-21-31-50.png" class="img-fluid figure-img"></p>
+<figcaption>계수 규준형 1회 샘플링 검사표</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-04-21-33-11.png" class="img-fluid figure-img"></p>
+<figcaption>보조 표</figcaption>
+</figure>
+</div>
+</section>
+<section id="계수-규준형-다회-샘플링-검사" class="level3">
+<h3 class="anchored" data-anchor-id="계수-규준형-다회-샘플링-검사">계수 규준형 다회 샘플링 검사</h3>
+<p><img src="img/2025-12-04-23-12-43.png" class="img-fluid"></p>
+<ul>
+<li>마지막 회차 r은 c + 1</li>
+<li>OC 곡선을 그릴 때는 r도 고려해야 함</li>
+</ul>
+</section>
+<section id="계수-조정형-샘플링-검사" class="level3">
+<h3 class="anchored" data-anchor-id="계수-조정형-샘플링-검사">계수 조정형 샘플링 검사</h3>
+<ul>
+<li>생산자의 품질 수준에 따라 차별적인 샘플링 검사 시행</li>
+<li>검사 절차(AQL 지표형 샘플링 검사표 참고)
+<ol type="1">
+<li>검사 로트의 구성 및 크기를 정한다.</li>
+<li>AQL을 설정한다.</li>
+<li>검사 수준을 결정한다.</li>
+<li>검사의 엄격도를 정한다. 일반적으로 보통 검사에서 시작.</li>
+<li>샘플링 형식을 정한다.</li>
+<li>정해진 샘플문자, AQL, 샘플링 형식, 엄격도로부터 샘플링 검사 방식을 정한다.</li>
+<li>검사로트로부터 샘플을 채취, 검사하고 합격 불합격을 판정한다.</li>
+</ol></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-04-23-17-47.png" class="img-fluid figure-img"></p>
+<figcaption>계수 조정형 샘플링 표. 알파벳이 뒤로 갈수록 빡빡한 검사</figcaption>
+</figure>
+</div>
+<ul>
+<li>로트의 크기가 커질 수록 검사가 빡빡해짐</li>
+<li>특별 검사: 한번 한번의 샘플링이 어려운 경우. 검사 수준이 일반 검사 수준에 비해 낮다.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-04-23-23-52.png" class="img-fluid figure-img"></p>
+<figcaption>엄격도 조정 절차</figcaption>
+</figure>
+</div>
+<ul>
+<li>전환 스코어 Ac: 2가 기준인건 좀 이상하긴 하지만 어쨌든 Ac가 높다는건 샘플링도 많이 했다는 뜻으로 생각해 가산점을 더 많이 주는 것</li>
+<li>계수 조정형에서는 명시적으로 LQL, β를 고려하지 않음. 검사 엄격도로 β가 간접적으로 조절된다고 봄.</li>
+</ul>
+</section>
+<section id="계수값-축차-샘플링-검사" class="level3">
+<h3 class="anchored" data-anchor-id="계수값-축차-샘플링-검사">계수값 축차 샘플링 검사</h3>
+<ul>
+<li>샘플링 개수를 정하지 않고, 로트에서 <code>1개씩 검사</code>(다회 샘플링과의 차이)하여
+<ul>
+<li>누적 부적합 / 불량 개수(D_t)가 합격판정 개수(A_t) 이하면 합격, 불합격 판정개수(R_t) 이상이면 불합격</li>
+<li>최대 샘플링 개수에 도달하면 마지막 회차 합격 판정개수에 따라 합불 판정</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="계량-규준형-샘플링-검사" class="level2">
+<h2 class="anchored" data-anchor-id="계량-규준형-샘플링-검사">계량 규준형 샘플링 검사</h2>
+<ul>
+<li>정보의 양이 많기 때문에 계수형에 비해 샘플링 개수가 적어도 정확한 판정 가능
+<ul>
+<li>파괴 검사 등 검사 비용이 높을 경우 유리</li>
+</ul></li>
+<li>하지만 계량형이 덜 직관적이다.(표본에 불량이 없어도 로트 불합격 가능)</li>
+</ul>
+<section id="불량률-보증-로트가-단품의-묶음인-경우" class="level3">
+<h3 class="anchored" data-anchor-id="불량률-보증-로트가-단품의-묶음인-경우">불량률 보증 (로트가 단품의 묶음인 경우)</h3>
+<p><img src="img/2025-12-04-23-41-48.png" class="img-fluid"></p>
+<ul>
+<li><span class="math inline">\(\bar{X}_U\)</span>: USL - kσ, 샘플링의 평균의 합불 여부를 USL이 아닌 안전마진이 있는 값과 비교. (샘플에 극단적인 값들이 포함될 수 있기 때문)</li>
+<li>σ는 <span class="math inline">\(\bar{R}/d_2\)</span>로 추정 혹은 알려져 있다고 가정.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-05-00-00-47.png" class="img-fluid figure-img"></p>
+<figcaption>n과 k 도출 식</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-05-00-09-51.png" class="img-fluid figure-img"></p>
+<figcaption>OC 곡선</figcaption>
+</figure>
+</div>
+<ul>
+<li>σ와 무관하게 m을 바꿔가며 p와 L(p) 조합을 찾을 수 있다.</li>
+</ul>
+</section>
+<section id="평균-보증-로트가-연속체인-경우" class="level3">
+<h3 class="anchored" data-anchor-id="평균-보증-로트가-연속체인-경우">평균 보증 (로트가 연속체인 경우)</h3>
+<p><img src="img/2025-12-05-00-20-50.png" class="img-fluid"></p>
+<ul>
+<li>n이 의미하는건 1000ml 단위 1병, 2병, …</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-05-00-22-21.png" class="img-fluid figure-img"></p>
+<figcaption>계산식</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-05-00-25-02.png" class="img-fluid figure-img"></p>
+<figcaption>G_0는 <span class="math inline">\(K_α / \sqrt{n\)</span>}</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-05-00-30-28.png" class="img-fluid figure-img"></p>
+<figcaption>OC 곡선</figcaption>
+</figure>
+</div>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
@@ -3421,8 +3671,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html" class="pagination-link" aria-label="신뢰도 공학 - Part1">
-        <span class="nav-page-text">신뢰도 공학 - Part1</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html" class="pagination-link" aria-label="신뢰도 공학">
+        <span class="nav-page-text">신뢰도 공학</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

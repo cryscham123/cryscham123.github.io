@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>신뢰도 공학 - Part1 – 김형훈의 학습 블로그</title>
+<title>신뢰도 공학 – 김형훈의 학습 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,6 +70,35 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdn.jsdelivr.net/npm/@mariusbongarts/previewbox/dist/link/index.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../../styles.css">
 </head>
@@ -109,7 +138,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html">품질경영</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html">신뢰도 공학 - Part1</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html">품질경영</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html">신뢰도 공학</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -203,6 +232,12 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  <span class="menu-text">CTE Homework</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/cte/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 presentation skills</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -268,18 +303,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
  <span class="menu-text">운송 및 창고관리</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">TFC 게임 개요</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/공급사슬관리/12.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">공급망 관리에서 블록체인 기술 적용 현황과 효과성 분석</span></a>
-  </div>
-</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -324,12 +347,6 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/01.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">cheat seet</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/시뮬레이션/02.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11.6, 11.7</span></a>
   </div>
 </li>
       </ul>
@@ -393,7 +410,7 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">신뢰도 공학 - Part1</span></a>
+ <span class="menu-text">신뢰도 공학</span></a>
   </div>
 </li>
       </ul>
@@ -457,8 +474,14 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Process mining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/11.pdf" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Automation 시연</span></a>
+ <span class="menu-text">주제 제안</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -469,8 +492,8 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/13.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">13</span></a>
+  <a href="../../../../../posts/01_projects/bs_3_2/notes/프로세스경영/13.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automation 시연</span></a>
   </div>
 </li>
       </ul>
@@ -2891,15 +2914,40 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#품질과-신뢰성" id="toc-품질과-신뢰성" class="nav-link active" data-scroll-target="#품질과-신뢰성">품질과 신뢰성</a></li>
+  <li><a href="#신뢰도-공학의-특징" id="toc-신뢰도-공학의-특징" class="nav-link" data-scroll-target="#신뢰도-공학의-특징">신뢰도 공학의 특징</a></li>
+  <li><a href="#신뢰성-척도" id="toc-신뢰성-척도" class="nav-link" data-scroll-target="#신뢰성-척도">신뢰성 척도</a></li>
+  <li><a href="#욕조-곡선" id="toc-욕조-곡선" class="nav-link" data-scroll-target="#욕조-곡선">욕조 곡선</a>
+  <ul class="collapse">
+  <li><a href="#초기고장기간" id="toc-초기고장기간" class="nav-link" data-scroll-target="#초기고장기간">초기고장기간</a></li>
+  <li><a href="#우발고장기간" id="toc-우발고장기간" class="nav-link" data-scroll-target="#우발고장기간">우발고장기간</a></li>
+  <li><a href="#마모고장기간" id="toc-마모고장기간" class="nav-link" data-scroll-target="#마모고장기간">마모고장기간</a></li>
+  </ul></li>
+  <li><a href="#경험적-신뢰성-척도" id="toc-경험적-신뢰성-척도" class="nav-link" data-scroll-target="#경험적-신뢰성-척도">경험적 신뢰성 척도</a></li>
+  <li><a href="#지수분포" id="toc-지수분포" class="nav-link" data-scroll-target="#지수분포">지수분포</a></li>
+  <li><a href="#정규분포" id="toc-정규분포" class="nav-link" data-scroll-target="#정규분포">정규분포</a></li>
+  <li><a href="#보전" id="toc-보전" class="nav-link" data-scroll-target="#보전">보전</a></li>
+  <li><a href="#보전도" id="toc-보전도" class="nav-link" data-scroll-target="#보전도">보전도</a></li>
+  <li><a href="#가용도" id="toc-가용도" class="nav-link" data-scroll-target="#가용도">가용도</a></li>
+  <li><a href="#신뢰도-입증-시험" id="toc-신뢰도-입증-시험" class="nav-link" data-scroll-target="#신뢰도-입증-시험">신뢰도 입증 시험</a>
+  <ul class="collapse">
+  <li><a href="#지수-분포의-신뢰도-함수-추정" id="toc-지수-분포의-신뢰도-함수-추정" class="nav-link" data-scroll-target="#지수-분포의-신뢰도-함수-추정">지수 분포의 신뢰도 함수 추정</a></li>
+  <li><a href="#최우추정치의-신뢰구간" id="toc-최우추정치의-신뢰구간" class="nav-link" data-scroll-target="#최우추정치의-신뢰구간">최우추정치의 신뢰구간</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html">품질경영</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html">신뢰도 공학 - Part1</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">Projects</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/index.html">학부 3학년 2학기</a></li><li class="breadcrumb-item">Notes</li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/01.html">품질경영</a></li><li class="breadcrumb-item"><a href="../../../../../posts/01_projects/bs_3_2/notes/품질경영/05.html">신뢰도 공학</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">신뢰도 공학 - Part1</h1>
+<h1 class="title">신뢰도 공학</h1>
   <div class="quarto-categories">
     <div class="quarto-category">품질경영</div>
   </div>
@@ -2926,8 +2974,237 @@ gtag('config', 'G-GRXCD70RKK', { 'anonymize_ip': true});
 
 
 <p><img src="../../../../../img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="품질과-신뢰성" class="level2">
+<h2 class="anchored" data-anchor-id="품질과-신뢰성">품질과 신뢰성</h2>
+<ul>
+<li>신뢰성: 시간적 측면에서 제품을 오랫동안 고장 없이 사용할 수 있는 것을 의미
+<ul>
+<li>관리도와의 차이점: 관리도는 특정 시점에서의 변동을 다룸(정적인 시간)</li>
+<li>정해진 사용 조건 하에서 요구되는 기능을 <code>주어진 기간</code>동안 수행하는 능력</li>
+</ul></li>
+<li>신뢰도: 시스템, 기기, 부품 등이 시간성 안정성을 나타내는 정도 (신뢰성의 정도)</li>
+<li>신뢰성과 품질경영: 과거 품질 관리는 공정중심의 관리와 사후 관리에 치중되었으나, 신뢰도 공학은 사전예방 시스템으로 고장 발생 확률을 미리 예방하기 위해, 사전 시스템 공학적 품질경영을 추구
+<ul>
+<li>소비자가 사용하다가 고장이 나는 경우도 고려</li>
+</ul></li>
+</ul>
+</section>
+<section id="신뢰도-공학의-특징" class="level2">
+<h2 class="anchored" data-anchor-id="신뢰도-공학의-특징">신뢰도 공학의 특징</h2>
+<ul>
+<li>시스템 전 수명 주기에 걸친 체계적인 신뢰성 활동 요구</li>
+<li>장기간 축적된 다양한 고유 기술들이 연관되어 있다.</li>
+<li>신뢰성 데이터는 매우 고가
+<ul>
+<li>10년 수명 보장 제품을 만들려면 원칙적으로 10년 동안 테스트 해야 한다.</li>
+<li>가속수명시험을 통계적으로 분석하여 10년 후를 예측. 하지만 과정이 복잡하고 비용이 크다.</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-05-00-57-47.png" class="img-fluid figure-img"></p>
+<figcaption>품질 경영 vs 신뢰성</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-05-01-00-35.png" class="img-fluid figure-img"></p>
+<figcaption>통계적 관점에서의 차이</figcaption>
+</figure>
+</div>
+</section>
+<section id="신뢰성-척도" class="level2">
+<h2 class="anchored" data-anchor-id="신뢰성-척도">신뢰성 척도</h2>
+<ul>
+<li>f(t): 특정 시점 t에서 시스템이 고장 날 확률의 밀도. 지수분포, 와이블 분포, 정규분포 등</li>
+<li>신뢰도 함수 R(t): 제품이 t 시점까지 고장이 나지 않을 확률
+<ul>
+<li><span class="math inline">\(R(t) = P(T &gt; t) = ∫[∞, t] f(x) dx\)</span></li>
+</ul></li>
+<li>불신뢰도 함수 F(t): 제품이 t 시점 안에 고장이 날 확률
+<ul>
+<li>F(t) = P(T ≤ t) = 1 - R(t)</li>
+<li>F′(t) = f(t)</li>
+</ul></li>
+<li>고장률 함수 λ(t): 시점 t까지 생존한 제품이 아주 짧은 다음 시간 내에 고장 날 순간적인 비율
+<ul>
+<li><span class="math inline">\(λ(t) = \frac{f(t)}{R(t)} = \frac{f(t)}{1 - F(t)}\)</span></li>
+<li><span class="math inline">\(R(t) = e^{-∫[0, t] λ(x) dx}\)</span></li>
+<li><span class="math inline">\(f(t) = λ(t) e^{-∫[0, t] λ(x) dx}\)</span></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-06-23-02-50.png" class="img-fluid figure-img"></p>
+<figcaption>f(t)와 λ(t)의 차이점</figcaption>
+</figure>
+</div>
+</section>
+<section id="욕조-곡선" class="level2">
+<h2 class="anchored" data-anchor-id="욕조-곡선">욕조 곡선</h2>
+<p><img src="img/2025-12-06-23-07-54.png" class="img-fluid"></p>
+<ul>
+<li>일반적으로 제조품의 고장률은 예방보전을 하지 않으면 욕조곡선을 그린다고 알려짐</li>
+<li>수명 T가 Weibull 분포를 따른다고 가정</li>
+</ul>
+<section id="초기고장기간" class="level3">
+<h3 class="anchored" data-anchor-id="초기고장기간">초기고장기간</h3>
+<ul>
+<li>사용 개시 후에 비교적 빠른 시간에 설계, 제조상의 결함 혹은 사용환경의 부적합으로 발생하는 고장</li>
+<li>와이블 분포(α &lt; 1)로 모델링</li>
+<li>불량품들이 초기에 빠르게 걸러지면서 고장률이 급격히 감소</li>
+</ul>
+</section>
+<section id="우발고장기간" class="level3">
+<h3 class="anchored" data-anchor-id="우발고장기간">우발고장기간</h3>
+<ul>
+<li>안전계수(<span class="math inline">\(\frac{파괴강도(최대로 견딜 수 있는 힘)}{허용응력(실제하중)}\)</span>) 여유있게 설정하면 고장률이 낮고 비교적 일정한 기간으로 유지된다.</li>
+<li>와이블 분포(α = 1)로 모델링</li>
+</ul>
+</section>
+<section id="마모고장기간" class="level3">
+<h3 class="anchored" data-anchor-id="마모고장기간">마모고장기간</h3>
+<ul>
+<li>피로, 마모, 노화현상 등으로 고장률이 높아지는 기간
+<ul>
+<li>파국고장: 갑자기 기능을 잃어버림</li>
+<li>열화고장: 점진적으로 부분적으로 기능을 상실함</li>
+</ul></li>
+<li>적절한 예방보전으로 수명을 연장할 수 있음</li>
+<li>정규분포 혹은 와이블 분포(α &gt; 1)로 모델링</li>
+</ul>
+</section>
+</section>
+<section id="경험적-신뢰성-척도" class="level2">
+<h2 class="anchored" data-anchor-id="경험적-신뢰성-척도">경험적 신뢰성 척도</h2>
+<ul>
+<li>실제 분포를 모를 때, 관측치만으로 신뢰성 척도를 추정하는 비모수적 방법</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-07-12-00-49.png" class="img-fluid figure-img"></p>
+<figcaption>시료가 많을 때</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-07-12-01-05.png" class="img-fluid figure-img"></p>
+<figcaption>시료가 적을 때</figcaption>
+</figure>
+</div>
+<ul>
+<li>평균 순위법의 분모가 n+1인 이유는 안전장치를 둬서 샘플이 다 고장나도 아직 수명이 다 끝나지 않았다는 것을 고려</li>
+<li>두 방식이 큰 차이는 없다</li>
+</ul>
+</section>
+<section id="지수분포" class="level2">
+<h2 class="anchored" data-anchor-id="지수분포">지수분포</h2>
+<ul>
+<li><span class="math inline">\(f(t) = λe^(-λt), t ≥ 0\)</span></li>
+<li><span class="math inline">\(R(t) = e^(-λt)\)</span></li>
+<li><span class="math inline">\(F(t) = 1 - e^(-λt)\)</span></li>
+<li><span class="math inline">\(λ(t) = λ\)</span> (t가 없다: 시간에 관계없이 고장률이 일정)</li>
+<li>평균수명(MTTF): <span class="math inline">\(E(t) = 1/λ\)</span></li>
+</ul>
+</section>
+<section id="정규분포" class="level2">
+<h2 class="anchored" data-anchor-id="정규분포">정규분포</h2>
+<ul>
+<li>기계부품의 수명 분포에 활용</li>
+<li><span class="math inline">\(f(t) = \frac{1}{σ\sqrt{2π}} e^{-\frac{(t - μ)^2}{2σ^2}}, -∞ &lt; t &lt; ∞\)</span></li>
+<li>$R(t) = 1 - Φ()</li>
+<li><span class="math inline">\(F(t) = Φ(\frac{t - μ}{σ})\)</span></li>
+<li><span class="math inline">\(λ(t) = \frac{f(t)}{R(t)} = \frac{\frac{1}{σ\sqrt{2π}} e^{-\frac{(t - μ)^2}{2σ^2}}}{1 - Φ(\frac{t - μ}{σ})}\)</span></li>
+<li>평균수명(MTTF): <span class="math inline">\(E(t) ~ μ\)</span>(0부터 계산하니까 근사값. 하지만 거의 비슷함)</li>
+</ul>
+</section>
+<section id="보전" class="level2">
+<h2 class="anchored" data-anchor-id="보전">보전</h2>
+<ul>
+<li>고장나거나 결함이 있는 시스템을 수리를 통해 사용 가능한 상태로 유지하기 위한 조치 및 활동</li>
+<li>사후 보전(BM): 고장날 때 까지 사용하고 고장나면 수리하는 것(고장보전, 대응보전)</li>
+<li>예방 보전(PM): 고장을 예방하기 위해 고장 여부와 관계없이 주기적으로 점검, 수리, 교체하는 것(계획보전, 정기보전)</li>
+<li>예측 보전(PdM): 실시간 데이터와 AI/통계 모델로 고장 징후를 미리 예측하고 고장이 임박했을 때 수리하는 방법</li>
+</ul>
+</section>
+<section id="보전도" class="level2">
+<h2 class="anchored" data-anchor-id="보전도">보전도</h2>
+<ul>
+<li>M(t): 시스템이 고장났을 때, t 시간안에 수리가 끝날 확률을 의미</li>
+<li>Mean Time To Repair (MTTR): 평균 수리 시간</li>
+<li>MTTR이 1/μ일 때, 수리 시간이 지수분포를 따른다면
+<ul>
+<li><span class="math inline">\(M(t) = 1 - e^{-μt}\)</span></li>
+<li>수리율: μ</li>
+</ul></li>
+</ul>
+</section>
+<section id="가용도" class="level2">
+<h2 class="anchored" data-anchor-id="가용도">가용도</h2>
+<ul>
+<li>MTBF(Mean Time Between Failures): 평균 고장 간격 시간(MTTF + MTTR)</li>
+<li>가용성 = MTTF / MTBF</li>
+<li>MTTR을 줄이는게 가용성 향상에 효율적</li>
+</ul>
+</section>
+<section id="신뢰도-입증-시험" class="level2">
+<h2 class="anchored" data-anchor-id="신뢰도-입증-시험">신뢰도 입증 시험</h2>
+<ul>
+<li>샘플이 목표 신뢰도 함수를 달성하는 지 검정</li>
+<li>전수시험: 모든 대상의 수명을 관찰하는 시험</li>
+<li>중단시험: 모두 수명을 다하기 전에 중단하는 시험
+<ul>
+<li>정시중단시험: 정해진 시간까지만 시험하고 중단(Type 1 censoring)</li>
+<li>정수중단시험: 정해진 개수까지 고장나면 중단(Type 2 censoring)</li>
+</ul></li>
+</ul>
+<section id="지수-분포의-신뢰도-함수-추정" class="level3">
+<h3 class="anchored" data-anchor-id="지수-분포의-신뢰도-함수-추정">지수 분포의 신뢰도 함수 추정</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-07-12-52-21.png" class="img-fluid figure-img"></p>
+<figcaption>전수 시험, 충분한 n</figcaption>
+</figure>
+</div>
+<ul>
+<li>모수는 최우추정법으로 추정</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-07-12-56-04.png" class="img-fluid figure-img"></p>
+<figcaption>중단 시험(선형계수 추정)</figcaption>
+</figure>
+</div>
+<ul>
+<li><span class="math inline">\(R(t) = e^{-λt} -&gt; \frac{1}{R(t)} = e^{λt} -&gt; ln(\frac{1}{R(t)}) = λt\)</span></li>
+<li>median 순위법으로 R(t) 추정. 최우추정법으로 λ 추정</li>
+</ul>
+</section>
+<section id="최우추정치의-신뢰구간" class="level3">
+<h3 class="anchored" data-anchor-id="최우추정치의-신뢰구간">최우추정치의 신뢰구간</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/2025-12-07-13-10-50.png" class="img-fluid figure-img"></p>
+<figcaption>r &gt; 0</figcaption>
+</figure>
+</div>
+<ul>
+<li>r = 고장난 샘플 수</li>
+<li>개수가 fix가 아니여서 정시중단 시험에 1개를 넣넣하게 넣어줌</li>
+<li>r = 0일 때: 정수중단시험은 계산 불가, 정시중단시험의 평균 추정치는 ∞, 신뢰구간은 <span class="math inline">\(-\frac{T}{lnα} ≤ θ ≤ ∞\)</span>
+<ul>
+<li>수명이 지수분포를 따를 때, r은 포아송 분포를 따름
+<ul>
+<li><span class="math inline">\(P(r &lt;= c) = ∑[0, c] e^{-m}m^r / r!\)</span></li>
+</ul></li>
+<li>평균수명이 θ일 때, 총 시험시간(T) = <span class="math inline">\(n t_0\)</span> 고장수의 평균 m = T / θ</li>
+<li>무고장 확률 <span class="math inline">\(α = P(r = 0) = e^{-T/θ}\)</span> (보통 0.05)로 설정</li>
+</ul></li>
+</ul>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
