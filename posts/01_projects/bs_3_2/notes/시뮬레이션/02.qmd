@@ -1,0 +1,355 @@
+---
+title: cheat seet
+mainfont: "Noto Sans KR"
+sansfont: "Noto Sans KR"
+monofont: "Noto Sans KR"
+date: last-modified
+geometry:
+  - top=0mm
+  - left=0mm
+  - right=0mm
+  - bottom=0mm
+format: 
+  titlepage-pdf:
+    documentclass: scrartcl
+    classoption: ["oneside", "open=any", "twocolumn"]
+    number-sections: true
+    toc: false
+    titlepage: "none"
+    coverpage: "none"
+    fontsize: 7pt
+    include-in-header: 
+      text: |
+        \usepackage[utf8]{inputenc}
+        \usepackage{graphicx}
+        \usepackage{amsmath}
+        \usepackage{amsfonts}
+        \usepackage{amssymb}
+        \usepackage{geometry}
+        \usepackage{fancyhdr}
+        \usepackage{hyperref}
+        \usepackage{lipsum}
+        \setlength{\columnsep}{5mm}
+        \usepackage{setspace}
+        \setstretch{1.0}
+        \usepackage{booktabs}
+        \usepackage{tabularx}
+        \usepackage{makecell}
+        \usepackage{caption}
+        \usepackage{multirow}
+        \usepackage{array}
+        \usepackage{graphicx}
+        \renewcommand{\arraystretch}{1.0}
+        \renewcommand{\tabularxcolumn}[1]{m{#1}}
+        \raggedbottom
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+- Pseudo Random Number Generator
+
+$$
+V_{i+1} = (aV_i + c) \mod (m) \quad i = 0, 1, \dots,
+$$
+
+where
+V_0: seed
+a: multiplier
+c: increment
+m: modulus
+
+**Theorem : LCG has full period if and only if**
+
+1. If q is a prime that divides m, then q divides (a - 1).
+2. The only positive integer that divides m and c is 1.
+3. If 4 divides m, then 4 divides a - 1.
+
+- exponential distribution inversion method: x = - $\frac{1}{λ}ln(1 - u)$
+- generate poissong distribution: 
+
+1. Generate a random number $U$
+2. $i = 0, p = e^{-\lambda}, F = p.$
+3. If $U < F$, set $X = i$ and **stop**.
+4. $p = \frac{\lambda}{(i+1)}p, F = F + p, i = i + 1.$
+5. Goto **Step 3**.
+
+- Rejection Method
+
+1. Discrete random variable
+    1. 도구 분포($q_j$), 목표 분포($p_j$) 설정. 도구분포는 목표 분포와 support set이 같아야 함.
+        - N(0, 1) support set: {-∞, x < ∞}
+        - 지수분포 support set: {x > 0}
+        - 포아송 분포 support set: {x = 0, 1, 2, ...}
+        - 기하 분포 support set: {x = 1, 2, ...}
+        - 그 외 균등분포 $⌊aμ⌋ + 1$로 1부터 a까지의 정수 균등분포 생성 가능.
+    2. 모든 $p_j$ > 0인 j에 대하여 $c = max(\frac{p_j}{q_j})$인 상수 c 찾는다.
+    3. 다음을 반복한다.
+        1. 도구 분포 $q_j$로부터 $Y$를 생성한다.
+        2. $U ~ Uniform(0, 1)$을 생성한다.
+        3. $U ≤ \frac{p_Y}{c q_Y}$이면 $X=Y$를 반환하고 종료한다. 그렇지 않으면 **Step 3.1**로 돌아간다.
+
+2. Continuous random variable
+
+**Example 1: Beta Distribution**
+
+**Target Distribution:** $f(x) = 20x(1-x)^3, \quad 0 < x < 1$ (Beta(2,4))
+
+- 베타분포: $\frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha - 1}(1 - x)^{\beta - 1}$
+- 평균: $\frac{\alpha}{\alpha + \beta}$
+
+**Instrument Distribution:** $g(x) = 1, \quad 0 < x < 1$ (Uniform $U(0,1)$)
+
+*Note that $g(x)$ has the same support as $f(x)$.*
+
+**Calculating constant $c$:**
+
+$$
+\frac{f(x)}{g(x)} = 20x(1-x)^3
+$$
+To maximize this ratio, we take the derivative:
+$$
+\frac{d}{dx} \left( \frac{f(x)}{g(x)} \right) = 20[(1-x)^3 - 3x(1-x)^2] = 0
+$$
+Solving for $x$:
+$$
+(1-x) - 3x = 0 \implies 1 - 4x = 0 \implies x = \frac{1}{4}
+$$
+Substitute $x = 1/4$ back into the ratio:
+$$
+c = \max \frac{f(x)}{g(x)} = 20\left(\frac{1}{4}\right)\left(\frac{3}{4}\right)^3 = \frac{135}{64} \approx 2.109
+$$
+The acceptance condition is:
+$$
+\frac{f(x)}{c g(x)} = \frac{256}{27}x(1-x)^3
+$$
+
+1. Generate $u_1 \sim U(0,1), u_2 \sim U(0,1)$.
+2. If $u_2 \le \frac{256}{27}u_1(1-u_1)^3$, set $X = u_1$.
+3. Otherwise, return to **Step 1**.
+
+**Numerical Example:**
+
+If $u_1 = 0.37, u_2 = 0.68$:
+$$
+0.68 < \frac{256}{27}(0.37)(1 - 0.37)^3 \approx 0.877202
+$$
+Condition is met. **Stop. $X = 0.37$.**
+
+**Example 2: Gamma Distribution**
+
+**Target Distribution:** Gamma(3/2, 1)
+
+$$
+f(x) = K x^{1/2}e^{-x}, \quad x > 0, \quad \text{where } K = \frac{1}{\Gamma(3/2)} = \frac{2}{\sqrt{\pi}}
+$$
+So, $f(x) = \frac{2}{\sqrt{\pi}}\sqrt{x}e^{-x}$.
+
+- 감마분포: $\frac{\beta^{\alpha}}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\beta x}$}
+- 감마분포의 평균: $\frac{\alpha}{\beta} = \frac{3/2}{1} = 3/2$}
+
+**Instrument Distribution:** Exponential with mean 3/2
+
+$$
+g(x) = \frac{2}{3}e^{-\frac{2}{3}x}, \quad x > 0
+$$
+
+**Calculating constant $c$:**
+
+Ratio:
+$$
+\frac{f(x)}{g(x)} = \frac{\frac{2}{\sqrt{\pi}} x^{1/2}e^{-x}}{\frac{2}{3}e^{-2x/3}} = \frac{3}{\sqrt{\pi}} x^{1/2}e^{-x/3}
+$$
+To find max, differentiate and set to 0:
+$$
+\frac{d}{dx} \left( \frac{f(x)}{g(x)} \right) = 0 \implies \frac{1}{2}x^{-1/2}e^{-x/3} - \frac{1}{3}x^{1/2}e^{-x/3} = 0
+$$
+$$
+\frac{1}{2} = \frac{1}{3}x \implies x = \frac{3}{2}
+$$
+Substitute $x = 3/2$:
+$$
+c = \max \frac{f(x)}{g(x)} = \frac{3}{\sqrt{\pi}} \left(\frac{3}{2}\right)^{1/2} e^{-1/2} = \frac{3\sqrt{3}}{\sqrt{2\pi e}} \approx 1.257
+$$
+The acceptance condition simplifies to:
+$$
+\frac{f(x)}{c g(x)} = \left( \frac{2e}{3} \right)^{1/2} x^{1/2} e^{-x/3}
+$$
+
+1. Generate $u_1 \sim U(0,1), u_2 \sim U(0,1)$. Set $Y = -\frac{3}{2}\ln(u_1)$
+2. If $u_2 \le \left( \frac{2eY}{3} \right)^{1/2} e^{-Y/3}$, set $X = Y$.
+3. Otherwise, return to **Step 1**.
+
+- Composition Method
+
+Suppose that we have efficient method to generate two discrete random variables with distribution as $\{p_j^1, j \ge 0\}$ and $\{p_j^2, j \ge 0\}$. And we want to simulate random variable $X$ having distribution
+
+$$
+Pr[X = j] = \alpha p_j^1 + (1 - \alpha)p_j^2, \quad j \ge 0
+$$
+
+where $0 < \alpha < 1$.
+
+To generate $X$, if random variables $X_1$ and $X_2$ have distributions
+$$
+Pr[X_1 = j] = p_j^1
+$$
+$$
+Pr[X_2 = j] = p_j^2
+$$
+
+Then, the random variable $X$ defined as
+$$
+X = \begin{cases} X_1 & \text{with probability } \alpha \\ X_2 & \text{with probability } 1 - \alpha \end{cases}
+$$
+
+has distribution
+$$
+Pr[X = j] = \alpha p_j^1 + (1 - \alpha)p_j^2
+$$
+
+Thus, $X$ can be generated by the following steps.
+
+1. Generate $u \sim U(0,1)$
+2. If $u < \alpha$, generate $X_1$, else generate $X_2$.
+
+**Example**
+
+$$
+p_j = Pr[X = j] = \begin{cases} 0.05 & \text{for } j = 1, 2, 3, 4, 5 \\ 0.15 & \text{for } j = 6, 7, 8, 9, 10 \end{cases}
+$$
+
+Note that $p_j = 0.5p_j^1 + 0.5p_j^2$
+where
+$$
+p_j^1 = 0.1 \quad j = 1, 2, \dots, 10
+$$
+$$
+p_j^2 = \begin{cases} 0 & j = 1, 2, 3, 4, 5 \\ 0.2 & j = 6, 7, 8, 9, 10 \end{cases}
+$$
+
+1. Generate $u_1 \sim U(0,1)$ and $u_2 \sim U(0,1)$
+2. if $u_1 < 0.5$, set $X = \lfloor 10u_2 \rfloor + 1$, otherwise $X = \lfloor 5u_2 \rfloor + 6$.
+
+- **Alias Method**
+
+n - 1개의 합으로
+
+1. 제일 작은 i, 제일 큰 j 찾기
+2. i row 1 col 제외 전부 0
+3. 1 col j, i row 제외 전부 0
+    - 전부 0인 row가 나오면 양변에 $\frac{n-1}{n-2}$ 곱함.
+
+- **Chi-square Test**
+
+$$
+X^2 = \sum_{j=1}^k \frac{(f_j - e_j)^2}{e_j} \sim \chi_{k-1-l}^2 \text{ distribution}
+$$
+
+- l: 추정한 모수의 개수
+- 기대 빈도가 5 이상이여야 함
+
+- **Kolmogorov-Smirnov Test**
+
+**Example**
+
+Observed samples are $0.1, 0.2, 0.3, 0.9$ with $n = 4$
+
+**Empirical CDF values:**
+
+$$
+F(0.1) = 0.25, \quad F(0.2) = 0.5, \quad F(0.3) = 0.75, \quad F(0.9) = 1.0
+$$
+
+**Theoretical CDF (Target Distribution):**
+
+$$
+\tilde{F}(x) = x
+$$
+
+**Test Statistics Calculation:**
+
+$$
+D^+ = \max\{0.15, 0.3, 0.45, 0.1\} = 0.45
+$$
+$$
+D^- = \max\{0.1, -0.05, -0.2, 0.15\} = 0.15
+$$
+
+![](img/2025-12-10-01-30-36.png)
+
+- **Monte Carlo Approach**
+
+Let $g(x)$ be a function of variable $x$.
+Computing
+$$
+\theta = \int_{0}^{1} g(x)dx
+$$
+
+If $U \sim U(0,1)$, then
+$$
+\theta = E[g(U)]
+$$
+
+**Monte Carlo Approach to compute $\theta$:**
+If $u_1, \dots, u_k$ iid $U(0,1)$, then
+$$
+\sum_{i=1}^{k} \frac{g(u_i)}{k} \rightarrow E[g(U)] = \theta \text{ as } k \rightarrow \infty
+$$
+
+- Example 1
+
+For $\theta = \int_{a}^{b} g(x)dx$
+
+**Use substitution technique**
+
+$$
+y = \frac{x-a}{b-a}, \quad x = a + (b-a)y, \quad dx = (b-a)dy
+$$
+$$
+\int_{a}^{b} g(x)dx = \int_{0}^{1} g(a + (b-a)y)(b-a)dy
+$$
+$$
+= \int_{0}^{1} h(y)dy
+$$
+
+1. Generate $u_1, u_2, \dots$, iid $U(0,1)$
+
+$$
+\theta = \text{average of } g(a + (b-a)u_i)(b-a) = h(u_i)
+$$
+
+**For $\theta = \int_{0}^{\infty} g(x)dx$**
+
+$$
+y = \frac{1}{x+1} \quad x = \frac{1}{y} - 1 \quad dx = -\frac{1}{y^2}dy
+$$
+$$
+\int_{0}^{\infty} g(x)dx = \int_{1}^{0} g(\frac{1}{y} - 1)(-\frac{1}{y^2})dy
+$$
+$$
+= \int_{0}^{1} g(\frac{1}{y} - 1)\frac{1}{y^2}dy
+$$
+
+
+- **Example: Estimation of $\pi$**
+
+$X, Y \sim U(-1, 1)$
+Define
+$$
+I = \begin{cases} 
+1 & \text{if } X^2 + Y^2 \le 1 \\ 
+0 & \text{otherwise} 
+\end{cases}
+$$
+
+Then
+$$
+E[I] = Pr[X^2 + Y^2 \le 1] = \frac{\pi}{4}
+$$
+
+![Sspolicy](img/2025-12-10-01-51-31.png)
+
+![newsboy](img/2025-12-10-01-51-41.png)
