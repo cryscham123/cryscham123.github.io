@@ -76,6 +76,42 @@ m: modulus
 4. $p = \frac{\lambda}{(i+1)}p, F = F + p, i = i + 1.$
 5. Goto **Step 3**.
 
+- **generate a random variable having density function**
+
+$$
+f(x) = \begin{cases} 
+\frac{x-2}{2} & \text{if } 2 \le x \le 3 \\ 
+\frac{2-x/3}{2} & \text{if } 3 \le x \le 6 
+\end{cases}
+$$
+
+**5.2**
+
+$$
+F(x) = \int_{2}^{x} \frac{x-2}{2} dx \quad (2 \le x \le 3), \quad \int_{3}^{x} \frac{2-\frac{x}{3}}{2} dx \quad (3 \le x \le 6)
+$$
+
+$$
+F(x) = \begin{cases} 
+\frac{(x-2)^2}{4} & (2 \le x \le 3) \Rightarrow 0 \sim 0.25 \\ 
+1 - \frac{(6-x)^2}{12} & (3 \le x \le 6) \Rightarrow 0.25 \sim 1 
+\end{cases}
+$$
+
+**1. Generate** $u_1 \sim U(0,1)$
+
+**2. if** $u_1 \le 0.25$,
+
+$$
+u_1 = \frac{(x-2)^2}{4}, \quad x = 2 + 2\sqrt{u_1}
+$$
+
+**else**
+
+$$
+u_1 = \left( 1 - \frac{(6-x)^2}{12} \right), \quad x = 6 - \sqrt{12(1-u_1)}
+$$
+
 - Rejection Method
 
 1. Discrete random variable
@@ -149,6 +185,8 @@ So, $f(x) = \frac{2}{\sqrt{\pi}}\sqrt{x}e^{-x}$.
 
 - 감마분포: $\frac{\beta^{\alpha}}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\beta x}$}
 - 감마분포의 평균: $\frac{\alpha}{\beta} = \frac{3/2}{1} = 3/2$}
+- 감마함수: $Γ(α) = ^∞ x^{α-1}e^{-x}dx = (α - 1)!$
+- 부분 적분: $∫₀^∞ f(x)g′(x)dx = [f(x)g(x)]₀^∞ - ∫₀^∞ f′(x)g(x)dx$
 
 **Instrument Distribution:** Exponential with mean 3/2
 
