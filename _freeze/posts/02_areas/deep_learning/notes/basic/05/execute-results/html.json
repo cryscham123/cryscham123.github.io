@@ -1,0 +1,12 @@
+{
+  "hash": "6a71b1a5f23a22c976fcfe6b9835b4e0",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"합성곱 신경망\"\ndate: 2025-08-01\ncategories: [\"deep learning\"]\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n## 합성곱 계층\n\n### 완전연결 계층의 문제점\n\n- 데이터의 형상이 무시된다: n차원으로 된 데이터도, 1차원 데이터로 평탄화해서 입력해야 한다.\n\n### 연산\n\n- 입력 데이터 * 필터(커널) + 편향\n    - 필터가 완전연결 신경망에서의 가중치 역할을 함.\n    - 단일 곱셈 누산: 이 연산을 윈도우를 일정 간격으로 이동해 가며 입력 데이터에 적용함.\n    - 3차원 이미지(R, G, B)의 경우, 입력과 필터의 채널 크기가 같아야 한다.\n- 패딩: 입력 데이터 주변을 특정 값으로 채움. 크기가 커지면 출력 크기가 커짐.\n- 스트라이드: 필터를 정용하는 위치의 간격. 크기가 커지면 출력 크기가 작아짐.\n- 출력 크기\n    - $OH = \\frac{H + 2P - FH}{S} + 1$\n    - $OW = \\frac{W + 2P - FW}{S} + 1$\n        - $(H, W)$: 입력 크기, $(FH, FW)$: 필터 크기, $(OH, OW)$: 출력 크기, $P$: 패딩, $S$: 스트라이드\n\n## 풀링 계층\n\n- 세로, 가로 방향의 공간을 줄이는 연산 (차원 축소 계층)\n- 풀링의 윈도우 크기와 스트라이드 값은 같게 설정하는 것이 일반적\n- 대상 영역에서 최대 / 평균 값을 산출\n\n### 특징\n\n- 학습해야할 매개변수가 없음\n- 채널 수가 변하지 않음\n- 입력의 변화에 영향을 적게 받는다\n\n## 전체 구조\n\n::: {#8952fa0d .cell execution_count=1}\n``` {.python .cell-code}\nfrom dl_common.util import im2col\nimport numpy as np\n\nx1 = np.random.rand(1, 3, 7, 7) # 1개 배치, 3 채널, 7 x 7 크기 이미지\ncol1 = im2col(x1, 5, 5, stride=1, pad=0)\n\nx2 = np.random.rand(10, 3, 7, 7)\ncol2 = im2col(x2, 5, 5, stride=1, pad=0)\n```\n:::\n\n\n::: {#4c743947 .cell execution_count=2}\n``` {.python .cell-code}\nclass Convolution:\n    def __init__(self, W, b, stride=1, pad=0):\n        self.W = W\n        self.b = b\n        self.stride = stride\n        self.pad = pad\n\n    def forward(self, x):\n        FN, C, FH, FW =  self.W.shape\n        N, C, H, W = x.shape\n        out_h = int(1 + (H + 2*self.pad - FH) / self.stride)\n        out_w = int(1 + (W + 2*self.pad - FW) / self.stride)\n        \n        col = im2col(x, FH, FW, self.stride, self.pad)\n        col_W = self.W.reshape(FN, -1).T\n        out = np.dot(col, col_W) + self.b\n\n        out = out.reshape(N, out_h, out_w, -1).transpose(0, 3, 1, 2)\n        return out\n```\n:::\n\n\n",
+    "supporting": [
+      "05_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

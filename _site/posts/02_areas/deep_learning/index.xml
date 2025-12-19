@@ -15,10 +15,990 @@
 <link>https://cryscham123.github.io/posts/02_areas/deep_learning/</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sat, 16 Aug 2025 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 17 Dec 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>overview</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/time_series/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="모델" class="level2">
+<h2 class="anchored" data-anchor-id="모델">모델</h2>
+<ul>
+<li>단일 단계 모델: 한 대상에 대한 한 시간 단계 예측</li>
+<li>다중 단계 모델: 한 대상에 대한 여러 시간 단계 예측을 생성</li>
+<li>다중 출력 모델: 여러 대상에 대한 여러 시간 단계 예측을 생성</li>
+</ul>
+<div id="0fc10ffa" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#df = pd.read_csv("https://github.com/jpub-dongdong9/TimeSeriesForecastingInPython/blob/master/data/metro_interstate_traffic_volume_preprocessed.csv")</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#df.head()</span></span></code></pre></div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/time_series/00.html</guid>
+  <pubDate>Wed, 17 Dec 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>pytorch 기초</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/pytorch/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="특징" class="level2">
+<h2 class="anchored" data-anchor-id="특징">특징</h2>
+<ol type="1">
+<li>동적 계산 그래프(Dynamic Computation Graph)
+<ul>
+<li>파이토치는 <code>동적 계산 그래프</code>를 사용하여 모델을 정의하고 수정할 수 있다. 모델의 구조를 실행 시점에 변경할 수 있다.</li>
+</ul></li>
+<li>GPU 가속 지원</li>
+<li>직관적 인터페이스
+<ul>
+<li><code>실행모드</code>를 지원하고, 계산 그래프를 빌드하지 않고 코드를 실행할 수 있다.</li>
+</ul></li>
+<li>제한된 프로덕션 지원
+<ul>
+<li>주로 연구 목적이다.</li>
+</ul></li>
+</ol>
+</section>
+<section id="텐서" class="level2">
+<h2 class="anchored" data-anchor-id="텐서">텐서</h2>
+<div id="c3652dbf" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">tensor <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.rand(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor)</span>
+<span id="cb1-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor.shape) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 크기</span></span>
+<span id="cb1-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor.dtype) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 자료형</span></span>
+<span id="cb1-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor.device) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># GPU 가속 여부</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([[0.4927, 0.4537]])
+torch.Size([1, 2])
+torch.float32
+cpu</code></pre>
+</div>
+</div>
+<section id="장치-설정" class="level3">
+<h3 class="anchored" data-anchor-id="장치-설정">장치 설정</h3>
+<div id="5aa2f082" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">device <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cuda"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> torch.cuda.is_available() <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cpu"</span></span>
+<span id="cb3-2">cpu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb3-3">gpu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.cuda.FloatTensor([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># GPU 가속 지정 방법 1. MAC에서는 지원이 안될 수도 있다.</span></span>
+<span id="cb3-4">tensor <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.rand((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), device<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>device) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># GPU 가속 지정 방법 2</span></span>
+<span id="cb3-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(device)</span>
+<span id="cb3-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cpu)</span>
+<span id="cb3-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(gpu)</span>
+<span id="cb3-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cuda
+tensor([1., 2., 3.])
+tensor([1., 2., 3.], device='cuda:0')
+tensor([[0.8609]], device='cuda:0')</code></pre>
+</div>
+</div>
+<ul>
+<li>cpu 텐서와 gpu 텐서는 상호 간 연산이 불가능하다.</li>
+<li>numpy 배열은 cpu 텐서와의 연산만 가능</li>
+</ul>
+</section>
+<section id="장치-변환" class="level3">
+<h3 class="anchored" data-anchor-id="장치-변환">장치 변환</h3>
+<div id="90ecbae4" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">cpu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb5-2">gpu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cpu.cuda() <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># cpu -&gt; gpu</span></span>
+<span id="cb5-3">cpu2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> gpu.cpu() <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># gpu -&gt; cpu</span></span>
+<span id="cb5-4">gpu2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cpu.to(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cuda"</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># cpu -&gt; gpu 2 MAC에서도 지원이 되니까 이 방법으로 사용하자</span></span>
+<span id="cb5-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cpu)</span>
+<span id="cb5-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cpu2)</span>
+<span id="cb5-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(gpu)</span>
+<span id="cb5-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(gpu2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([1., 2., 3.])
+tensor([1., 2., 3.])
+tensor([1., 2., 3.], device='cuda:0')
+tensor([1., 2., 3.], device='cuda:0')</code></pre>
+</div>
+</div>
+<div id="efc129a3" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">ndarray <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.uint8)</span>
+<span id="cb7-4">yo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.from_numpy(ndarray)</span>
+<span id="cb7-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(yo)</span>
+<span id="cb7-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(yo.to(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cuda"</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([1, 2, 3], dtype=torch.uint8)
+tensor([1, 2, 3], device='cuda:0', dtype=torch.uint8)</code></pre>
+</div>
+</div>
+<div id="472aa121" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">ndarray <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> yo.detach().cpu().numpy() <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># detach: graph에서 분리된 새로운 텐서 반환</span></span>
+<span id="cb9-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(ndarray)</span>
+<span id="cb9-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>(ndarray))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1 2 3]
+&lt;class 'numpy.ndarray'&gt;</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="단순-선형회귀" class="level2">
+<h2 class="anchored" data-anchor-id="단순-선형회귀">단순 선형회귀</h2>
+<div id="36734f8d" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> optim</span>
+<span id="cb11-2"></span>
+<span id="cb11-3">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([</span>
+<span id="cb11-4">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>],</span>
+<span id="cb11-5">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">19</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>],</span>
+<span id="cb11-6">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">23</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">27</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">29</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>]</span>
+<span id="cb11-7">])</span>
+<span id="cb11-8">y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([</span>
+<span id="cb11-9">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.94</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.05</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.87</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.10</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.01</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.15</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.95</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.12</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9.05</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10.11</span>],</span>
+<span id="cb11-10">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11.03</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.20</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.89</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14.15</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15.02</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16.18</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16.95</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18.22</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">19.10</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20.05</span>],</span>
+<span id="cb11-11">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21.01</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22.20</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22.89</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24.10</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25.05</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26.15</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26.95</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28.12</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">29.05</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30.10</span>]</span>
+<span id="cb11-12">])</span></code></pre></div>
+</div>
+<div id="3a04306d" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">weight <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.zeros(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, requires_grad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb12-2">bias <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.zeros(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, requires_grad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb12-3">learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.001</span></span></code></pre></div>
+</div>
+<div id="a0e5d150" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optim.SGD([weight, bias], lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>learning_rate)</span>
+<span id="cb13-2"></span>
+<span id="cb13-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> epoch <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>):</span>
+<span id="cb13-4">    hypothesis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> weight <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> bias</span>
+<span id="cb13-5">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.mean((hypothesis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb13-6"></span>
+<span id="cb13-7">    optimizer.zero_grad()</span>
+<span id="cb13-8">    cost.backward()</span>
+<span id="cb13-9">    optimizer.step()</span>
+<span id="cb13-10"></span>
+<span id="cb13-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (epoch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb13-12">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Epoch </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>epoch<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/1000 | Cost: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>item()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | Weight: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>weight<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>item()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | Bias: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>bias<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>item()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 100/1000 | Cost: 0.0089 | Weight: 1.0010 | Bias: 0.0482
+Epoch 200/1000 | Cost: 0.0089 | Weight: 1.0010 | Bias: 0.0473
+Epoch 300/1000 | Cost: 0.0089 | Weight: 1.0011 | Bias: 0.0463
+Epoch 400/1000 | Cost: 0.0088 | Weight: 1.0011 | Bias: 0.0455
+Epoch 500/1000 | Cost: 0.0088 | Weight: 1.0012 | Bias: 0.0446
+Epoch 600/1000 | Cost: 0.0088 | Weight: 1.0012 | Bias: 0.0438
+Epoch 700/1000 | Cost: 0.0088 | Weight: 1.0013 | Bias: 0.0430
+Epoch 800/1000 | Cost: 0.0088 | Weight: 1.0013 | Bias: 0.0423
+Epoch 900/1000 | Cost: 0.0088 | Weight: 1.0013 | Bias: 0.0416
+Epoch 1000/1000 | Cost: 0.0088 | Weight: 1.0014 | Bias: 0.0409</code></pre>
+</div>
+</div>
+<div id="d9a4df01" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> nn</span>
+<span id="cb15-2"></span>
+<span id="cb15-3">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.Linear(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, bias<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb15-4">criterion <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.MSELoss()</span>
+<span id="cb15-5">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optim.SGD(model.parameters(), lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.001</span>)</span>
+<span id="cb15-6"></span>
+<span id="cb15-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> epoch <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>):</span>
+<span id="cb15-8">    hypothesis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(x)</span>
+<span id="cb15-9">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> criterion(hypothesis, y)</span>
+<span id="cb15-10"></span>
+<span id="cb15-11">    optimizer.zero_grad()</span>
+<span id="cb15-12">    cost.backward()</span>
+<span id="cb15-13">    optimizer.step()</span>
+<span id="cb15-14"></span>
+<span id="cb15-15">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (epoch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb15-16">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Epoch </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>epoch<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/1000 | Cost: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | Model: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(model.parameters())<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 100/1000 | Cost: 0.0162 | Model: [Parameter containing:
+tensor([[1.0107]], requires_grad=True), Parameter containing:
+tensor([-0.1499], requires_grad=True)]
+Epoch 200/1000 | Cost: 0.0155 | Model: [Parameter containing:
+tensor([[1.0103]], requires_grad=True), Parameter containing:
+tensor([-0.1416], requires_grad=True)]
+Epoch 300/1000 | Cost: 0.0149 | Model: [Parameter containing:
+tensor([[1.0100]], requires_grad=True), Parameter containing:
+tensor([-0.1338], requires_grad=True)]
+Epoch 400/1000 | Cost: 0.0144 | Model: [Parameter containing:
+tensor([[1.0096]], requires_grad=True), Parameter containing:
+tensor([-0.1264], requires_grad=True)]
+Epoch 500/1000 | Cost: 0.0139 | Model: [Parameter containing:
+tensor([[1.0092]], requires_grad=True), Parameter containing:
+tensor([-0.1192], requires_grad=True)]
+Epoch 600/1000 | Cost: 0.0134 | Model: [Parameter containing:
+tensor([[1.0089]], requires_grad=True), Parameter containing:
+tensor([-0.1125], requires_grad=True)]
+Epoch 700/1000 | Cost: 0.0130 | Model: [Parameter containing:
+tensor([[1.0086]], requires_grad=True), Parameter containing:
+tensor([-0.1060], requires_grad=True)]
+Epoch 800/1000 | Cost: 0.0126 | Model: [Parameter containing:
+tensor([[1.0083]], requires_grad=True), Parameter containing:
+tensor([-0.0998], requires_grad=True)]
+Epoch 900/1000 | Cost: 0.0123 | Model: [Parameter containing:
+tensor([[1.0080]], requires_grad=True), Parameter containing:
+tensor([-0.0939], requires_grad=True)]
+Epoch 1000/1000 | Cost: 0.0119 | Model: [Parameter containing:
+tensor([[1.0077]], requires_grad=True), Parameter containing:
+tensor([-0.0883], requires_grad=True)]</code></pre>
+</div>
+</div>
+</section>
+<section id="데이터-로드" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-로드">데이터 로드</h2>
+<div id="fc313e59" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch.utils.data <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> TensorDataset, DataLoader</span>
+<span id="cb17-2"></span>
+<span id="cb17-3">train_x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([</span>
+<span id="cb17-4">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>]</span>
+<span id="cb17-5">])</span>
+<span id="cb17-6">train_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([</span>
+<span id="cb17-7">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.8</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.1</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.4</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.7</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>]</span>
+<span id="cb17-8">])</span>
+<span id="cb17-9">train_dataset <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> TensorDataset(train_x, train_y)</span>
+<span id="cb17-10">train_dataloader <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> DataLoader(train_dataset, batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, shuffle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, drop_last<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+</div>
+<div id="d40c5ee2" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.Linear(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, bias<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb18-2">criterion <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.MSELoss()</span>
+<span id="cb18-3">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optim.SGD(model.parameters(), lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.001</span>)</span>
+<span id="cb18-4"></span>
+<span id="cb18-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> epoch <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20000</span>):</span>
+<span id="cb18-6">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb18-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> batch <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> train_dataloader:</span>
+<span id="cb18-8">        x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> batch</span>
+<span id="cb18-9">        output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(x)</span>
+<span id="cb18-10">        loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> criterion(output, y)</span>
+<span id="cb18-11"></span>
+<span id="cb18-12">        optimizer.zero_grad()</span>
+<span id="cb18-13">        loss.backward()</span>
+<span id="cb18-14">        optimizer.step()</span>
+<span id="cb18-15"></span>
+<span id="cb18-16">        cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> loss</span>
+<span id="cb18-17"></span>
+<span id="cb18-18">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(train_dataloader)</span>
+<span id="cb18-19"></span>
+<span id="cb18-20">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (epoch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb18-21">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Epoch </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>epoch<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/1000 | Cost: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | Model: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(model.parameters())<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1000/1000 | Cost: 0.0147 | Model: [Parameter containing:
+tensor([[0.6787, 0.1290],
+        [0.9696, 0.3267]], requires_grad=True), Parameter containing:
+tensor([-0.5401, -0.1114], requires_grad=True)]
+Epoch 2000/1000 | Cost: 0.0038 | Model: [Parameter containing:
+tensor([[0.7724, 0.0804],
+        [0.9733, 0.3248]], requires_grad=True), Parameter containing:
+tensor([-0.6824, -0.1170], requires_grad=True)]
+Epoch 3000/1000 | Cost: 0.0010 | Model: [Parameter containing:
+tensor([[0.8202, 0.0558],
+        [0.9752, 0.3239]], requires_grad=True), Parameter containing:
+tensor([-0.7548, -0.1199], requires_grad=True)]
+Epoch 4000/1000 | Cost: 0.0003 | Model: [Parameter containing:
+tensor([[0.8446, 0.0432],
+        [0.9762, 0.3234]], requires_grad=True), Parameter containing:
+tensor([-0.7918, -0.1213], requires_grad=True)]
+Epoch 5000/1000 | Cost: 0.0001 | Model: [Parameter containing:
+tensor([[0.8570, 0.0368],
+        [0.9766, 0.3231]], requires_grad=True), Parameter containing:
+tensor([-0.8106, -0.1221], requires_grad=True)]
+Epoch 6000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8633, 0.0335],
+        [0.9769, 0.3230]], requires_grad=True), Parameter containing:
+tensor([-0.8202, -0.1225], requires_grad=True)]
+Epoch 7000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8665, 0.0319],
+        [0.9770, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8251, -0.1226], requires_grad=True)]
+Epoch 8000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8682, 0.0310],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8275, -0.1227], requires_grad=True)]
+Epoch 9000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8690, 0.0306],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8288, -0.1228], requires_grad=True)]
+Epoch 10000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8694, 0.0304],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8295, -0.1228], requires_grad=True)]
+Epoch 11000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8696, 0.0302],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8298, -0.1228], requires_grad=True)]
+Epoch 12000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8698, 0.0302],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8300, -0.1228], requires_grad=True)]
+Epoch 13000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8698, 0.0302],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8300, -0.1228], requires_grad=True)]
+Epoch 14000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8698, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 15000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8698, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 16000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 17000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 18000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 19000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 20000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]</code></pre>
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/pytorch/00.html</guid>
+  <pubDate>Tue, 16 Dec 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>word2vec</title>
-  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/07.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/07.html</link>
   <description><![CDATA[ 
 
 
@@ -31,7 +1011,7 @@
 <li>이전에 봤던 방법은 통계 기반 기법, 모든 학습 데이터를 한꺼번에 처리하는 방식</li>
 <li>word2vec은 신경망 기반 기법, 미니배치 학습</li>
 </ul>
-<div id="a638b139" class="cell" data-execution_count="1">
+<div id="042a40ed" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -67,7 +1047,7 @@ background-color: null;
 font-style: inherit;">=</span> np.dot(c, W)</span>
 <span id="cb1-6">h</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>array([[ 0.7871821 ,  0.94388187, -1.51434548]])</code></pre>
+<pre><code>array([[-0.93441723,  1.50044903, -2.55745462]])</code></pre>
 </div>
 </div>
 </section>
@@ -87,12 +1067,12 @@ font-style: inherit;">=</span> np.dot(c, W)</span>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/07.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/07.html</guid>
   <pubDate>Sat, 16 Aug 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>자연어와 단어의 분산 표현</title>
-  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/06.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/06.html</link>
   <description><![CDATA[ 
 
 
@@ -129,7 +1109,7 @@ font-style: inherit;">=</span> np.dot(c, W)</span>
 <li>말뭉치: 언어의 실제 사용 예시를 모은 텍스트 데이터</li>
 <li>위키백과, 뉴스 기사, 블로그 글 등</li>
 </ul>
-<div id="13993a04" class="cell" data-execution_count="1">
+<div id="a9792d20" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -205,7 +1185,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> corpus, word_to_id, id_to_word</span></code></pre></div>
 </div>
-<div id="556b4d68" class="cell" data-execution_count="2">
+<div id="c14677b2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">text <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
@@ -221,7 +1201,7 @@ font-style: inherit;">=</span> preprocess(text)</span></code></pre></div>
 <li>단어의 의미를 벡터로 표현하는 방법</li>
 <li>분포 가설: 단어의 의미는 그 단어의 주변 단어들(맥락)에 의해 결정된다.</li>
 </ul>
-<div id="6c9272e7" class="cell" data-execution_count="3">
+<div id="194d44ef" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -299,7 +1279,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> co_matrix</span></code></pre></div>
 </div>
-<div id="bc300a12" class="cell" data-execution_count="4">
+<div id="7f1fcd3f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -339,7 +1319,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> np.dot(nx, ny)</span></code></pre></div>
 </div>
-<div id="c3f5b88e" class="cell" data-execution_count="5">
+<div id="d88a60fb" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">vocab_size <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
@@ -368,13 +1348,13 @@ background-color: null;
 font-style: inherit;">=</span> cos_similarity(C0, C1)</span>
 <span id="cb5-7">similarity</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>0.4082482852200891</code></pre>
+<pre><code>np.float64(0.4082482852200891)</code></pre>
 </div>
 </div>
 </section>
 <section id="유사-단어-랭킹" class="level3">
 <h3 class="anchored" data-anchor-id="유사-단어-랭킹">유사 단어 랭킹</h3>
-<div id="0d05ecfe" class="cell" data-execution_count="6">
+<div id="a4d12f45" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -516,7 +1496,7 @@ font-style: inherit;">return</span></span></code></pre></div>
 <li>점별 상호정보량(PMI)</li>
 </ul></li>
 </ul>
-<div id="3ab18496" class="cell" data-execution_count="7">
+<div id="b82ba162" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -597,12 +1577,12 @@ font-style: inherit;">return</span> M</span></code></pre></div>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/06.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/06.html</guid>
   <pubDate>Sat, 09 Aug 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>학습 관련 기술들</title>
-  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/04.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/04.html</link>
   <description><![CDATA[ 
 
 
@@ -623,7 +1603,7 @@ font-style: inherit;">return</span> M</span></code></pre></div>
 <li><img src="https://latex.codecogs.com/png.latex?v%20=%20%CE%B1v%20-%20%CE%B7%20%5Cfrac%7BdL%7D%7BdW%7D"></li>
 <li><img src="https://latex.codecogs.com/png.latex?W%20=%20W%20+%20v"></li>
 </ul>
-<div id="81172277" class="cell" data-execution_count="1">
+<div id="6f568cb1" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -734,7 +1714,7 @@ font-style: inherit;">self</span>.v[key]</span></code></pre></div>
 <li><img src="https://latex.codecogs.com/png.latex?h%20=%20h%20+%20%5Cfrac%7BdL%7D%7BdW%7D%20%E2%8A%99%20%5Cfrac%7BdL%7D%7BdW%7D"></li>
 <li><img src="https://latex.codecogs.com/png.latex?W%20=%20W%20-%20%CE%B7%5Cfrac%7B1%7D%7B%5Csqrt%7Bh%7D%7D%5Cfrac%7BdL%7D%7BdW%7D"></li>
 </ul>
-<div id="1f8cd075" class="cell" data-execution_count="2">
+<div id="993065f3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -883,7 +1863,7 @@ font-style: inherit;">1e-7</span>)</span></code></pre></div>
 <li>훈련 때 은닉층의 뉴런을 무작위로 골라 삭제한다.</li>
 <li>시험 때 각 뉴련의 출력에 훈련 때 삭제 안 한 비율을 곱한다.</li>
 </ul>
-<div id="35abcdd3" class="cell" data-execution_count="3">
+<div id="7f7fc2a5" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -981,12 +1961,12 @@ font-style: inherit;">self</span>.mask</span></code></pre></div>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/04.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/04.html</guid>
   <pubDate>Tue, 05 Aug 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>합성곱 신경망</title>
-  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/05.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/05.html</link>
   <description><![CDATA[ 
 
 
@@ -1041,7 +2021,7 @@ font-style: inherit;">self</span>.mask</span></code></pre></div>
 </section>
 <section id="전체-구조" class="level2">
 <h2 class="anchored" data-anchor-id="전체-구조">전체 구조</h2>
-<div id="289dcfa8" class="cell" data-execution_count="1">
+<div id="8952fa0d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> dl_common.util <span class="im" style="color: #00769E;
@@ -1109,7 +2089,7 @@ font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span></code></pre></div>
 </div>
-<div id="4de70362" class="cell" data-execution_count="2">
+<div id="4c743947" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1262,12 +2242,12 @@ font-style: inherit;">return</span> out</span></code></pre></div>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/05.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/05.html</guid>
   <pubDate>Thu, 31 Jul 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>오차역전법</title>
-  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/03.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/03.html</link>
   <description><![CDATA[ 
 
 
@@ -1361,7 +2341,7 @@ font-style: inherit;">return</span> out</span></code></pre></div>
 </section>
 <section id="python-구현" class="level2">
 <h2 class="anchored" data-anchor-id="python-구현">python 구현</h2>
-<div id="67e13fd3" class="cell" data-execution_count="1">
+<div id="f5d5a910" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1443,7 +2423,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> dx, dy</span></code></pre></div>
 </div>
-<div id="6cc6663d" class="cell" data-execution_count="2">
+<div id="16beaaf6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1510,7 +2490,7 @@ font-style: inherit;">return</span> dx, dy</span></code></pre></div>
 <ul>
 <li>입력이 0보다 크면 그대로, 작으면 0</li>
 </ul>
-<div id="7bfea5fd" class="cell" data-execution_count="3">
+<div id="12f87bd2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1588,7 +2568,7 @@ font-style: inherit;">return</span> dx</span></code></pre></div>
 <ul>
 <li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BhL%7D%7Bhy%7Dy%5E2exp(-x)%20=%20%5Cfrac%7BhL%7D%7Bhy%7Dy(1-y)"> (계산 생략)</li>
 </ul>
-<div id="e061126d" class="cell" data-execution_count="4">
+<div id="05b94a8c" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -1680,7 +2660,7 @@ font-style: inherit;">return</span> dx</span></code></pre></div>
 <li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdL%7D%7BdW%7D%20=%20X%5ET%20%E2%8B%85%20%5Cfrac%7BdL%7D%7BdY%7D"></li>
 <li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdL%7D%7BdB%7D%20=%20%5Csum%20%5Cfrac%7BdL%7D%7BdY%7D"></li>
 </ul>
-<div id="8335a558" class="cell" data-execution_count="5">
+<div id="9279088e" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1788,7 +2768,7 @@ font-style: inherit;">return</span> dx</span></code></pre></div>
 </section>
 <section id="softmax" class="level3">
 <h3 class="anchored" data-anchor-id="softmax">Softmax</h3>
-<div id="027758a0" class="cell" data-execution_count="6">
+<div id="da024a91" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -1894,7 +2874,7 @@ font-style: inherit;">return</span> dx</span></code></pre></div>
 </section>
 <section id="오차역전법-신경망" class="level2">
 <h2 class="anchored" data-anchor-id="오차역전법-신경망">오차역전법 신경망</h2>
-<div id="51e6ba2b" class="cell" data-execution_count="7">
+<div id="82dbddd1" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> dl_common.layers <span class="im" style="color: #00769E;
@@ -2186,7 +3166,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> grads</span></code></pre></div>
 </div>
-<div id="8205c741" class="cell" data-execution_count="8">
+<div id="adecdf93" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> dl_dataset.mnist <span class="im" style="color: #00769E;
@@ -2331,12 +3311,12 @@ font-style: inherit;">=</span> network.accuracy(x_test, t_test)</span>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/03.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/03.html</guid>
   <pubDate>Thu, 31 Jul 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>신경망 학습</title>
-  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/02.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/02.html</link>
   <description><![CDATA[ 
 
 
@@ -2360,7 +3340,7 @@ font-style: inherit;">=</span> network.accuracy(x_test, t_test)</span>
 <li><img src="https://latex.codecogs.com/png.latex?t_i">: 정답값</li>
 <li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B2%7D">는 미분을 쉽게 하기 위해서 곱해주는 상수</li>
 </ul>
-<div id="b42aaa5b" class="cell" data-execution_count="1">
+<div id="4623cd4d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -2396,7 +3376,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 <li>일반적으로 정답값인 <img src="https://latex.codecogs.com/png.latex?t_i">는 0 또는 1이기 때문에(one hot encoding), <img src="https://latex.codecogs.com/png.latex?t_i%20=%201">인 경우에만 계산된다.</li>
 <li><img src="https://latex.codecogs.com/png.latex?y_i">가 1에 가까울수록 손실이 작아진다.</li>
 </ul>
-<div id="d33bcb30" class="cell" data-execution_count="2">
+<div id="5572d134" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -2428,7 +3408,7 @@ font-style: inherit;">+</span> delta))</span></code></pre></div>
 <ul>
 <li>모든 데이터를 한 번에 학습하는 것이 아니라, 일부 데이터만을 사용하여 학습하는 방법</li>
 </ul>
-<div id="10b409d4" class="cell" data-execution_count="3">
+<div id="7c4df0b9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -2452,7 +3432,7 @@ font-style: inherit;">=</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">True</span>)</span></code></pre></div>
 </div>
-<div id="750691df" class="cell" data-execution_count="4">
+<div id="e24941c3" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">train_size <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> x_train.shape[<span class="dv" style="color: #AD0000;
@@ -2473,7 +3453,7 @@ font-style: inherit;">=</span> x_train[batch_mask]</span>
 background-color: null;
 font-style: inherit;">=</span> t_train[batch_mask]</span></code></pre></div>
 </div>
-<div id="de3a722c" class="cell" data-execution_count="5">
+<div id="97043f4f" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -2516,7 +3496,7 @@ font-style: inherit;">1e-7</span>)) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span> batch_size</span></code></pre></div>
 </div>
-<div id="f758266e" class="cell" data-execution_count="6">
+<div id="ac7cac55" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -2568,7 +3548,7 @@ font-style: inherit;">/</span> batch_size</span></code></pre></div>
 <li>기울기가 가리키는 쪽은 각 장소에서 함수의 출력 값을 가장 크게 줄이는 방향</li>
 <li>기울어진 방향이 반드시 최솟값은 아니지만, 그 방향으로 가야 함수의 값을 줄일 수 있다.</li>
 </ul>
-<div id="98ef978b" class="cell" data-execution_count="7">
+<div id="9fdb9edb" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -2637,7 +3617,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> grad</span></code></pre></div>
 </div>
-<div id="eadf4a20" class="cell" data-execution_count="8">
+<div id="c705a889" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -2676,7 +3656,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> x</span></code></pre></div>
 </div>
-<div id="9c0c7fd7" class="cell" data-execution_count="9">
+<div id="927d8991" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> dl_common.functions <span class="im" style="color: #00769E;
@@ -2742,7 +3722,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> cross_entropy_error(y, t)</span></code></pre></div>
 </div>
-<div id="22940fbe" class="cell" data-execution_count="10">
+<div id="afc1e439" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">net <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> simpleNet()</span>
@@ -2758,10 +3738,10 @@ background-color: null;
 font-style: inherit;">=</span> net.predict(x)</span>
 <span id="cb10-4">np.argmax(p)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>0</code></pre>
+<pre><code>np.int64(2)</code></pre>
 </div>
 </div>
-<div id="d2870463" class="cell" data-execution_count="11">
+<div id="271ed8c2" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">t <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.array([<span class="dv" style="color: #AD0000;
@@ -2773,10 +3753,10 @@ background-color: null;
 font-style: inherit;">1</span>])</span>
 <span id="cb12-2">net.loss(x, t)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>1.5687375483483121</code></pre>
+<pre><code>np.float64(0.0715394314058475)</code></pre>
 </div>
 </div>
-<div id="30f49dd2" class="cell" data-execution_count="12">
+<div id="6ad3c3f4" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">f <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
@@ -2791,14 +3771,14 @@ font-style: inherit;">=</span> numerical_gradient(f, net.W)</span>
 background-color: null;
 font-style: inherit;">print</span>(dW)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[[ 0.39309067  0.08192436 -0.47501503]
- [ 0.58963601  0.12288654 -0.71252255]]</code></pre>
+<pre><code>[[ 0.01666548  0.02475883 -0.04142431]
+ [ 0.02499822  0.03713825 -0.06213647]]</code></pre>
 </div>
 </div>
 </section>
 <section id="학습-알고리즘-구현" class="level2">
 <h2 class="anchored" data-anchor-id="학습-알고리즘-구현">학습 알고리즘 구현</h2>
-<div id="84af8b10" class="cell" data-execution_count="13">
+<div id="fcea1125" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> dl_common.functions <span class="im" style="color: #00769E;
@@ -3034,7 +4014,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> grads</span></code></pre></div>
 </div>
-<div id="0af1d778" class="cell" data-execution_count="14">
+<div id="b72ef72e" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> dl_dataset.mnist <span class="im" style="color: #00769E;
@@ -3179,12 +4159,12 @@ font-style: inherit;">=</span> network.accuracy(x_test, t_test)</span>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/02.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/02.html</guid>
   <pubDate>Tue, 29 Jul 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>신경망</title>
-  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/01.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/01.html</link>
   <description><![CDATA[ 
 
 
@@ -3208,7 +4188,7 @@ font-style: inherit;">=</span> network.accuracy(x_test, t_test)</span>
 <ul>
 <li>계단 함수(step function): 앞서 살펴본 함수</li>
 </ul>
-<div id="42b77ac0" class="cell" data-execution_count="1">
+<div id="57c23857" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -3247,7 +4227,7 @@ font-style: inherit;">2.0</span>])))</span></code></pre></div>
 <pre><code>[0 1 1]</code></pre>
 </div>
 </div>
-<div id="4b9420fd" class="cell" data-execution_count="2">
+<div id="ae52b268" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
@@ -3280,7 +4260,7 @@ font-style: inherit;">1.1</span>)</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/02_areas/deep_learning/notes/01_files/figure-html/cell-3-output-1.png" width="571" height="411" class="figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/01_files/figure-html/cell-3-output-1.png" width="571" height="411" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3288,7 +4268,7 @@ font-style: inherit;">1.1</span>)</span>
 <ul>
 <li>시그모이드 함수: <img src="https://latex.codecogs.com/png.latex?h(x)%20=%20%5Cfrac%7B1%7D%7B1%20+%20%5Cexp(-x)%7D"></li>
 </ul>
-<div id="ab9e01b6" class="cell" data-execution_count="3">
+<div id="d1fc2daf" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3334,7 +4314,7 @@ font-style: inherit;">1.1</span>)</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/02_areas/deep_learning/notes/01_files/figure-html/cell-4-output-1.png" width="571" height="411" class="figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/01_files/figure-html/cell-4-output-1.png" width="571" height="411" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3352,7 +4332,7 @@ font-style: inherit;">1.1</span>)</span>
 </ul></li>
 <li>ReLU 함수: <img src="https://latex.codecogs.com/png.latex?h(x)%20=%20%5Cbegin%7Bcases%7D%20x%20&amp;%20(x%20%3E%200)%20%5C%5C%200%20&amp;%20(x%20%E2%89%A4%200)%20%5Cend%7Bcases%7D"></li>
 </ul>
-<div id="17f7f0d8" class="cell" data-execution_count="4">
+<div id="2460efa1" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3367,7 +4347,7 @@ font-style: inherit;">0</span>, x)</span></code></pre></div>
 <ul>
 <li>SoftMax 함수: <img src="https://latex.codecogs.com/png.latex?y_k%20=%20%5Cfrac%7B%5Cexp(a_k)%7D%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D%20%5Cexp(a_i)%7D"></li>
 </ul>
-<div id="8d319814" class="cell" data-execution_count="5">
+<div id="5a710603" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3392,7 +4372,7 @@ font-style: inherit;">return</span> y</span></code></pre></div>
 </div>
 <p>softmax 함수는 값이 기하급수적으로 증가하기 때문에 쉽게 overflow가 발생할 수 있음.</p>
 <p>따라서 다음과 같이 개선이 필요함</p>
-<div id="d62dd082" class="cell" data-execution_count="6">
+<div id="567eb79f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3429,7 +4409,7 @@ font-style: inherit;">return</span> y</span></code></pre></div>
 <section id="층-신경망-구성" class="level2">
 <h2 class="anchored" data-anchor-id="층-신경망-구성">3층 신경망 구성</h2>
 <p>입력층에서 1층으로 신호 전달</p>
-<div id="86592e66" class="cell" data-execution_count="7">
+<div id="368538a6" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">X <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.array([<span class="fl" style="color: #AD0000;
@@ -3483,7 +4463,7 @@ font-style: inherit;">print</span>(Z1)</span></code></pre></div>
 </div>
 </div>
 <p>1층에서 2층으로 신호 전달</p>
-<div id="e8d4a03a" class="cell" data-execution_count="8">
+<div id="a14a57d6" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">W2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
@@ -3528,7 +4508,7 @@ font-style: inherit;">print</span>(Z2)</span></code></pre></div>
 </div>
 </div>
 <p>2층에서 출력층으로 신호 전달</p>
-<div id="5e00b542" class="cell" data-execution_count="9">
+<div id="7c7e01e7" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3578,12 +4558,12 @@ font-style: inherit;">=</span> identity_function(A3)</span></code></pre></div>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/01.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/01.html</guid>
   <pubDate>Mon, 17 Mar 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>퍼셉트론</title>
-  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/00.html</link>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/00.html</link>
   <description><![CDATA[ 
 
 
@@ -3604,7 +4584,7 @@ font-style: inherit;">=</span> identity_function(A3)</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="퍼셉트론-구현">퍼셉트론 구현</h2>
 <section id="and-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="and-게이트">AND 게이트</h3>
-<div id="14b3846d" class="cell" data-execution_count="1">
+<div id="0928b353" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3633,7 +4613,7 @@ font-style: inherit;">*</span>w2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span> theta)</span></code></pre></div>
 </div>
-<div id="c8a47281" class="cell" data-execution_count="2">
+<div id="02bb6a1b" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(AND(<span class="dv" style="color: #AD0000;
@@ -3676,7 +4656,7 @@ True</code></pre>
 </section>
 <section id="nand-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="nand-게이트">NAND 게이트</h3>
-<div id="d9349019" class="cell" data-execution_count="3">
+<div id="a5b7eaa2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -3721,7 +4701,7 @@ font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span></code></pre></div>
 </div>
-<div id="ca8ebb2a" class="cell" data-execution_count="4">
+<div id="0038834d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3788,7 +4768,7 @@ font-style: inherit;">0</span>)</span></code></pre></div>
 <p>이와 같이 여러 퍼셉트론을 연결한 형태를 다층 퍼센트론이라고 한다.</p>
 <section id="xor-게이트" class="level3">
 <h3 class="anchored" data-anchor-id="xor-게이트">XOR 게이트</h3>
-<div id="5afc6fb8" class="cell" data-execution_count="5">
+<div id="8fa21add" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3804,7 +4784,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> AND(s1, s2)</span></code></pre></div>
 </div>
-<div id="211385bc" class="cell" data-execution_count="6">
+<div id="1b642f21" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(XOR(<span class="dv" style="color: #AD0000;
@@ -3847,7 +4827,7 @@ False</code></pre>
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>deep learning</category>
-  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/00.html</guid>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/basic/00.html</guid>
   <pubDate>Sun, 16 Mar 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>
