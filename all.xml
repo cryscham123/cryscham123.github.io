@@ -15,19 +15,999 @@
 <link>https://cryscham123.github.io/all.html</link>
 </image>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sat, 13 Dec 2025 12:49:27 GMT</lastBuildDate>
+<lastBuildDate>Wed, 17 Dec 2025 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>overview</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/time_series/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="모델" class="level2">
+<h2 class="anchored" data-anchor-id="모델">모델</h2>
+<ul>
+<li>단일 단계 모델: 한 대상에 대한 한 시간 단계 예측</li>
+<li>다중 단계 모델: 한 대상에 대한 여러 시간 단계 예측을 생성</li>
+<li>다중 출력 모델: 여러 대상에 대한 여러 시간 단계 예측을 생성</li>
+</ul>
+<div id="0fc10ffa" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#df = pd.read_csv("https://github.com/jpub-dongdong9/TimeSeriesForecastingInPython/blob/master/data/metro_interstate_traffic_volume_preprocessed.csv")</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#df.head()</span></span></code></pre></div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/time_series/00.html</guid>
+  <pubDate>Wed, 17 Dec 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>pytorch 기초</title>
+  <link>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/pytorch/00.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="특징" class="level2">
+<h2 class="anchored" data-anchor-id="특징">특징</h2>
+<ol type="1">
+<li>동적 계산 그래프(Dynamic Computation Graph)
+<ul>
+<li>파이토치는 <code>동적 계산 그래프</code>를 사용하여 모델을 정의하고 수정할 수 있다. 모델의 구조를 실행 시점에 변경할 수 있다.</li>
+</ul></li>
+<li>GPU 가속 지원</li>
+<li>직관적 인터페이스
+<ul>
+<li><code>실행모드</code>를 지원하고, 계산 그래프를 빌드하지 않고 코드를 실행할 수 있다.</li>
+</ul></li>
+<li>제한된 프로덕션 지원
+<ul>
+<li>주로 연구 목적이다.</li>
+</ul></li>
+</ol>
+</section>
+<section id="텐서" class="level2">
+<h2 class="anchored" data-anchor-id="텐서">텐서</h2>
+<div id="c3652dbf" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">tensor <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.rand(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor)</span>
+<span id="cb1-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor.shape) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 크기</span></span>
+<span id="cb1-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor.dtype) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 자료형</span></span>
+<span id="cb1-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor.device) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># GPU 가속 여부</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([[0.4927, 0.4537]])
+torch.Size([1, 2])
+torch.float32
+cpu</code></pre>
+</div>
+</div>
+<section id="장치-설정" class="level3">
+<h3 class="anchored" data-anchor-id="장치-설정">장치 설정</h3>
+<div id="5aa2f082" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">device <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cuda"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> torch.cuda.is_available() <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cpu"</span></span>
+<span id="cb3-2">cpu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb3-3">gpu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.cuda.FloatTensor([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># GPU 가속 지정 방법 1. MAC에서는 지원이 안될 수도 있다.</span></span>
+<span id="cb3-4">tensor <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.rand((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), device<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>device) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># GPU 가속 지정 방법 2</span></span>
+<span id="cb3-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(device)</span>
+<span id="cb3-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cpu)</span>
+<span id="cb3-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(gpu)</span>
+<span id="cb3-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tensor)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cuda
+tensor([1., 2., 3.])
+tensor([1., 2., 3.], device='cuda:0')
+tensor([[0.8609]], device='cuda:0')</code></pre>
+</div>
+</div>
+<ul>
+<li>cpu 텐서와 gpu 텐서는 상호 간 연산이 불가능하다.</li>
+<li>numpy 배열은 cpu 텐서와의 연산만 가능</li>
+</ul>
+</section>
+<section id="장치-변환" class="level3">
+<h3 class="anchored" data-anchor-id="장치-변환">장치 변환</h3>
+<div id="90ecbae4" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">cpu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb5-2">gpu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cpu.cuda() <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># cpu -&gt; gpu</span></span>
+<span id="cb5-3">cpu2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> gpu.cpu() <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># gpu -&gt; cpu</span></span>
+<span id="cb5-4">gpu2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cpu.to(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cuda"</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># cpu -&gt; gpu 2 MAC에서도 지원이 되니까 이 방법으로 사용하자</span></span>
+<span id="cb5-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cpu)</span>
+<span id="cb5-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cpu2)</span>
+<span id="cb5-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(gpu)</span>
+<span id="cb5-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(gpu2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([1., 2., 3.])
+tensor([1., 2., 3.])
+tensor([1., 2., 3.], device='cuda:0')
+tensor([1., 2., 3.], device='cuda:0')</code></pre>
+</div>
+</div>
+<div id="efc129a3" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">ndarray <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.uint8)</span>
+<span id="cb7-4">yo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.from_numpy(ndarray)</span>
+<span id="cb7-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(yo)</span>
+<span id="cb7-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(yo.to(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cuda"</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([1, 2, 3], dtype=torch.uint8)
+tensor([1, 2, 3], device='cuda:0', dtype=torch.uint8)</code></pre>
+</div>
+</div>
+<div id="472aa121" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">ndarray <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> yo.detach().cpu().numpy() <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># detach: graph에서 분리된 새로운 텐서 반환</span></span>
+<span id="cb9-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(ndarray)</span>
+<span id="cb9-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>(ndarray))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1 2 3]
+&lt;class 'numpy.ndarray'&gt;</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="단순-선형회귀" class="level2">
+<h2 class="anchored" data-anchor-id="단순-선형회귀">단순 선형회귀</h2>
+<div id="36734f8d" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> optim</span>
+<span id="cb11-2"></span>
+<span id="cb11-3">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([</span>
+<span id="cb11-4">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>],</span>
+<span id="cb11-5">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">19</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>],</span>
+<span id="cb11-6">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">23</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">27</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">29</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>]</span>
+<span id="cb11-7">])</span>
+<span id="cb11-8">y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([</span>
+<span id="cb11-9">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.94</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.05</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.87</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.10</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.01</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.15</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.95</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.12</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9.05</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10.11</span>],</span>
+<span id="cb11-10">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11.03</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.20</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.89</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14.15</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15.02</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16.18</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16.95</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18.22</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">19.10</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20.05</span>],</span>
+<span id="cb11-11">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21.01</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22.20</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22.89</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24.10</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25.05</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26.15</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26.95</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28.12</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">29.05</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30.10</span>]</span>
+<span id="cb11-12">])</span></code></pre></div>
+</div>
+<div id="3a04306d" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">weight <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.zeros(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, requires_grad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb12-2">bias <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.zeros(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, requires_grad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb12-3">learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.001</span></span></code></pre></div>
+</div>
+<div id="a0e5d150" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optim.SGD([weight, bias], lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>learning_rate)</span>
+<span id="cb13-2"></span>
+<span id="cb13-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> epoch <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>):</span>
+<span id="cb13-4">    hypothesis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> weight <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> bias</span>
+<span id="cb13-5">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.mean((hypothesis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb13-6"></span>
+<span id="cb13-7">    optimizer.zero_grad()</span>
+<span id="cb13-8">    cost.backward()</span>
+<span id="cb13-9">    optimizer.step()</span>
+<span id="cb13-10"></span>
+<span id="cb13-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (epoch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb13-12">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Epoch </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>epoch<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/1000 | Cost: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>item()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | Weight: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>weight<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>item()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | Bias: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>bias<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>item()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 100/1000 | Cost: 0.0089 | Weight: 1.0010 | Bias: 0.0482
+Epoch 200/1000 | Cost: 0.0089 | Weight: 1.0010 | Bias: 0.0473
+Epoch 300/1000 | Cost: 0.0089 | Weight: 1.0011 | Bias: 0.0463
+Epoch 400/1000 | Cost: 0.0088 | Weight: 1.0011 | Bias: 0.0455
+Epoch 500/1000 | Cost: 0.0088 | Weight: 1.0012 | Bias: 0.0446
+Epoch 600/1000 | Cost: 0.0088 | Weight: 1.0012 | Bias: 0.0438
+Epoch 700/1000 | Cost: 0.0088 | Weight: 1.0013 | Bias: 0.0430
+Epoch 800/1000 | Cost: 0.0088 | Weight: 1.0013 | Bias: 0.0423
+Epoch 900/1000 | Cost: 0.0088 | Weight: 1.0013 | Bias: 0.0416
+Epoch 1000/1000 | Cost: 0.0088 | Weight: 1.0014 | Bias: 0.0409</code></pre>
+</div>
+</div>
+<div id="d9a4df01" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> nn</span>
+<span id="cb15-2"></span>
+<span id="cb15-3">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.Linear(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, bias<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb15-4">criterion <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.MSELoss()</span>
+<span id="cb15-5">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optim.SGD(model.parameters(), lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.001</span>)</span>
+<span id="cb15-6"></span>
+<span id="cb15-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> epoch <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>):</span>
+<span id="cb15-8">    hypothesis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(x)</span>
+<span id="cb15-9">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> criterion(hypothesis, y)</span>
+<span id="cb15-10"></span>
+<span id="cb15-11">    optimizer.zero_grad()</span>
+<span id="cb15-12">    cost.backward()</span>
+<span id="cb15-13">    optimizer.step()</span>
+<span id="cb15-14"></span>
+<span id="cb15-15">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (epoch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb15-16">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Epoch </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>epoch<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/1000 | Cost: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | Model: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(model.parameters())<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 100/1000 | Cost: 0.0162 | Model: [Parameter containing:
+tensor([[1.0107]], requires_grad=True), Parameter containing:
+tensor([-0.1499], requires_grad=True)]
+Epoch 200/1000 | Cost: 0.0155 | Model: [Parameter containing:
+tensor([[1.0103]], requires_grad=True), Parameter containing:
+tensor([-0.1416], requires_grad=True)]
+Epoch 300/1000 | Cost: 0.0149 | Model: [Parameter containing:
+tensor([[1.0100]], requires_grad=True), Parameter containing:
+tensor([-0.1338], requires_grad=True)]
+Epoch 400/1000 | Cost: 0.0144 | Model: [Parameter containing:
+tensor([[1.0096]], requires_grad=True), Parameter containing:
+tensor([-0.1264], requires_grad=True)]
+Epoch 500/1000 | Cost: 0.0139 | Model: [Parameter containing:
+tensor([[1.0092]], requires_grad=True), Parameter containing:
+tensor([-0.1192], requires_grad=True)]
+Epoch 600/1000 | Cost: 0.0134 | Model: [Parameter containing:
+tensor([[1.0089]], requires_grad=True), Parameter containing:
+tensor([-0.1125], requires_grad=True)]
+Epoch 700/1000 | Cost: 0.0130 | Model: [Parameter containing:
+tensor([[1.0086]], requires_grad=True), Parameter containing:
+tensor([-0.1060], requires_grad=True)]
+Epoch 800/1000 | Cost: 0.0126 | Model: [Parameter containing:
+tensor([[1.0083]], requires_grad=True), Parameter containing:
+tensor([-0.0998], requires_grad=True)]
+Epoch 900/1000 | Cost: 0.0123 | Model: [Parameter containing:
+tensor([[1.0080]], requires_grad=True), Parameter containing:
+tensor([-0.0939], requires_grad=True)]
+Epoch 1000/1000 | Cost: 0.0119 | Model: [Parameter containing:
+tensor([[1.0077]], requires_grad=True), Parameter containing:
+tensor([-0.0883], requires_grad=True)]</code></pre>
+</div>
+</div>
+</section>
+<section id="데이터-로드" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-로드">데이터 로드</h2>
+<div id="fc313e59" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch.utils.data <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> TensorDataset, DataLoader</span>
+<span id="cb17-2"></span>
+<span id="cb17-3">train_x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([</span>
+<span id="cb17-4">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>]</span>
+<span id="cb17-5">])</span>
+<span id="cb17-6">train_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.FloatTensor([</span>
+<span id="cb17-7">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.8</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.1</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.4</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.7</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>]</span>
+<span id="cb17-8">])</span>
+<span id="cb17-9">train_dataset <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> TensorDataset(train_x, train_y)</span>
+<span id="cb17-10">train_dataloader <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> DataLoader(train_dataset, batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, shuffle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, drop_last<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+</div>
+<div id="d40c5ee2" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.Linear(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, bias<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb18-2">criterion <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.MSELoss()</span>
+<span id="cb18-3">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optim.SGD(model.parameters(), lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.001</span>)</span>
+<span id="cb18-4"></span>
+<span id="cb18-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> epoch <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20000</span>):</span>
+<span id="cb18-6">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb18-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> batch <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> train_dataloader:</span>
+<span id="cb18-8">        x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> batch</span>
+<span id="cb18-9">        output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(x)</span>
+<span id="cb18-10">        loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> criterion(output, y)</span>
+<span id="cb18-11"></span>
+<span id="cb18-12">        optimizer.zero_grad()</span>
+<span id="cb18-13">        loss.backward()</span>
+<span id="cb18-14">        optimizer.step()</span>
+<span id="cb18-15"></span>
+<span id="cb18-16">        cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> loss</span>
+<span id="cb18-17"></span>
+<span id="cb18-18">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(train_dataloader)</span>
+<span id="cb18-19"></span>
+<span id="cb18-20">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (epoch <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb18-21">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Epoch </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>epoch<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/1000 | Cost: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | Model: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(model.parameters())<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1000/1000 | Cost: 0.0147 | Model: [Parameter containing:
+tensor([[0.6787, 0.1290],
+        [0.9696, 0.3267]], requires_grad=True), Parameter containing:
+tensor([-0.5401, -0.1114], requires_grad=True)]
+Epoch 2000/1000 | Cost: 0.0038 | Model: [Parameter containing:
+tensor([[0.7724, 0.0804],
+        [0.9733, 0.3248]], requires_grad=True), Parameter containing:
+tensor([-0.6824, -0.1170], requires_grad=True)]
+Epoch 3000/1000 | Cost: 0.0010 | Model: [Parameter containing:
+tensor([[0.8202, 0.0558],
+        [0.9752, 0.3239]], requires_grad=True), Parameter containing:
+tensor([-0.7548, -0.1199], requires_grad=True)]
+Epoch 4000/1000 | Cost: 0.0003 | Model: [Parameter containing:
+tensor([[0.8446, 0.0432],
+        [0.9762, 0.3234]], requires_grad=True), Parameter containing:
+tensor([-0.7918, -0.1213], requires_grad=True)]
+Epoch 5000/1000 | Cost: 0.0001 | Model: [Parameter containing:
+tensor([[0.8570, 0.0368],
+        [0.9766, 0.3231]], requires_grad=True), Parameter containing:
+tensor([-0.8106, -0.1221], requires_grad=True)]
+Epoch 6000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8633, 0.0335],
+        [0.9769, 0.3230]], requires_grad=True), Parameter containing:
+tensor([-0.8202, -0.1225], requires_grad=True)]
+Epoch 7000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8665, 0.0319],
+        [0.9770, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8251, -0.1226], requires_grad=True)]
+Epoch 8000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8682, 0.0310],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8275, -0.1227], requires_grad=True)]
+Epoch 9000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8690, 0.0306],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8288, -0.1228], requires_grad=True)]
+Epoch 10000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8694, 0.0304],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8295, -0.1228], requires_grad=True)]
+Epoch 11000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8696, 0.0302],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8298, -0.1228], requires_grad=True)]
+Epoch 12000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8698, 0.0302],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8300, -0.1228], requires_grad=True)]
+Epoch 13000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8698, 0.0302],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8300, -0.1228], requires_grad=True)]
+Epoch 14000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8698, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 15000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8698, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 16000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 17000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 18000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 19000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]
+Epoch 20000/1000 | Cost: 0.0000 | Model: [Parameter containing:
+tensor([[0.8699, 0.0301],
+        [0.9771, 0.3229]], requires_grad=True), Parameter containing:
+tensor([-0.8301, -0.1229], requires_grad=True)]</code></pre>
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>deep learning</category>
+  <guid>https://cryscham123.github.io/posts/02_areas/deep_learning/notes/pytorch/00.html</guid>
+  <pubDate>Tue, 16 Dec 2025 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/13.pdf</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/13.pdf</link>
   <description><![CDATA[ undefined ]]></description>
   <category>프로세스 경영</category>
   <category>보고서</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/13.pdf</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/13.pdf</guid>
   <pubDate>Sat, 13 Dec 2025 12:49:27 GMT</pubDate>
 </item>
 <item>
   <title>반도체 공정 시뮬레이션</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/시뮬레이션/03.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/시뮬레이션/03.html</link>
   <description><![CDATA[ 
 
 
@@ -49,13 +1029,13 @@
 <p><a href="시뮬레이션_김형훈_20192208.doe" download="">Arena 파일</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/시뮬레이션/img/2025-12-13-21-06-47.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/시뮬레이션/img/2025-12-13-21-06-47.png" class="img-fluid figure-img"></p>
 <figcaption>전체 코드</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/시뮬레이션/example1.gif" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/시뮬레이션/example1.gif" class="img-fluid figure-img"></p>
 <figcaption>애니메이션</figcaption>
 </figure>
 </div>
@@ -83,12 +1063,12 @@
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>시뮬레이션</category>
   <category>보고서</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/시뮬레이션/03.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/시뮬레이션/03.html</guid>
   <pubDate>Fri, 12 Dec 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Could Quantum Computing be the Next Paradigm Shift Soon?</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/cte/00.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/cte/00.html</link>
   <description><![CDATA[ 
 
 
@@ -111,12 +1091,12 @@
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>English</category>
   <category>보고서</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/cte/00.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/cte/00.html</guid>
   <pubDate>Fri, 12 Dec 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>기말</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/기공수/02.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/기공수/02.html</link>
   <description><![CDATA[ 
 
 
@@ -260,19 +1240,19 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>기초공학수학</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/기공수/02.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/기공수/02.html</guid>
   <pubDate>Wed, 10 Dec 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/시뮬레이션/02.pdf</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/시뮬레이션/02.pdf</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/시뮬레이션/02.pdf</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/시뮬레이션/02.pdf</guid>
   <pubDate>Wed, 10 Dec 2025 02:34:07 GMT</pubDate>
 </item>
 <item>
   <title>블록체인기술의 SCM</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/10.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/10.html</link>
   <description><![CDATA[ 
 
 
@@ -290,12 +1270,12 @@
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>공급사슬관리</category>
   <category>보고서</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/10.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/10.html</guid>
   <pubDate>Sat, 29 Nov 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Process mining</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/09.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/09.html</link>
   <description><![CDATA[ 
 
 
@@ -307,10 +1287,10 @@
 <ul>
 <li><code>이벤트 로그</code>로부터 <code>프로세스 관련 정보(meaningful &amp; useful)</code>를 추출하는 것</li>
 </ul>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-00-22-51.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-00-22-51.png" class="img-fluid"></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-00-30-13.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-00-30-13.png" class="img-fluid figure-img"></p>
 <figcaption>이벤트 로그의 다양한 활용 방법</figcaption>
 </figure>
 </div>
@@ -322,7 +1302,7 @@
 <h2 class="anchored" data-anchor-id="bpm-life-cycle-완성을-위한-process-mining-역할">BPM Life-cycle 완성을 위한 process mining 역할</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-00-33-32.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-00-33-32.png" class="img-fluid figure-img"></p>
 <figcaption>BPM Life-cycle</figcaption>
 </figure>
 </div>
@@ -357,7 +1337,7 @@
 <h2 class="anchored" data-anchor-id="event-log">Event log</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-00-45-49.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-00-45-49.png" class="img-fluid figure-img"></p>
 <figcaption>Event log</figcaption>
 </figure>
 </div>
@@ -379,19 +1359,19 @@
 <h2 class="anchored" data-anchor-id="challenges-of-process-discovery-techniques">Challenges of Process Discovery Techniques</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-00-57-08.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-00-57-08.png" class="img-fluid figure-img"></p>
 <figcaption>옳은 모델</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-00-57-28.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-00-57-28.png" class="img-fluid figure-img"></p>
 <figcaption>안좋은 모델(overfitting: too specific)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-00-57-38.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-00-57-38.png" class="img-fluid figure-img"></p>
 <figcaption>안좋은 모델(underfitting: too general)</figcaption>
 </figure>
 </div>
@@ -440,7 +1420,7 @@
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-11-40-04.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-11-40-04.png" class="img-fluid figure-img"></p>
 <figcaption>예시</figcaption>
 </figure>
 </div>
@@ -469,7 +1449,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-11-52-15.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-11-52-15.png" class="img-fluid figure-img"></p>
 <figcaption>oval: entity. 크기가 중요도, arc: relationship. 두께가 중요도</figcaption>
 </figure>
 </div>
@@ -479,7 +1459,7 @@
 <ul>
 <li><code>절대적 혹은 상대적 시간</code>에 따른 특성을 점으로 찍은거</li>
 </ul>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-11-59-58.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-11-59-58.png" class="img-fluid"></p>
 <ul>
 <li><code>Desire lines</code> in process model</li>
 </ul>
@@ -593,13 +1573,13 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-11-30-21-34-45.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-11-30-21-34-45.png" class="img-fluid figure-img"></p>
 <figcaption>프로세스 마이닝 Phases</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-06-13-34-37.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-06-13-34-37.png" class="img-fluid figure-img"></p>
 <figcaption>case 탭에서 가능한 프로세스들의 세부적인 내용을 파악할 수 있다.</figcaption>
 </figure>
 </div>
@@ -612,12 +1592,12 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>프로세스 경영</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/09.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/09.html</guid>
   <pubDate>Sat, 29 Nov 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>운송 및 창고관리</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/09.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/09.html</link>
   <description><![CDATA[ 
 
 
@@ -642,7 +1622,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-19-43-20.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-19-43-20.png" class="img-fluid figure-img"></p>
 <figcaption>운송 체계</figcaption>
 </figure>
 </div>
@@ -652,7 +1632,7 @@
 </section>
 <section id="운송-활동-관련-주체" class="level2">
 <h2 class="anchored" data-anchor-id="운송-활동-관련-주체">운송 활동 관련 주체</h2>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-19-53-46.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-19-53-46.png" class="img-fluid"></p>
 <ul>
 <li>수송의 효율화를 위해 운송 주선인과 수송전문회사가 담당</li>
 <li>하나 또는 복수의 운송주선인이 통합 분배 과정을 거침</li>
@@ -771,7 +1751,7 @@
 <ul>
 <li>하나 또는 소수의 노드를 향하여 다수의 공급점이 서비스를 제공하는 형태(수렴형)</li>
 </ul>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-20-17.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-20-17.png" class="img-fluid"></p>
 <ul>
 <li>직접 배송: 지리적으로 가깝거나 공급 물량이 커서 직접 공급</li>
 <li>통합허브 배송: 배송 비용이나 수요처의 방문회수의 제한으로 중간 허브 통합</li>
@@ -780,7 +1760,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-43-35.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-43-35.png" class="img-fluid figure-img"></p>
 <figcaption>크로스 도킹</figcaption>
 </figure>
 </div>
@@ -790,7 +1770,7 @@
 <ul>
 <li>하나 또는 소수의 공급처에서 많은 수의 고객에게 제품을 공급하는 형태(확산형)</li>
 </ul>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-28-09.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-28-09.png" class="img-fluid"></p>
 <ul>
 <li>공급바 분배센터 배송: 제조에서 담당하여 제품의 품질 유지가 핵심</li>
 <li>수요자 분배센터 배송: 다양한 제품의 효율적인 분배가 핵심</li>
@@ -800,7 +1780,7 @@
 </section>
 <section id="hub-spoke-시스템" class="level3">
 <h3 class="anchored" data-anchor-id="hub-spoke-시스템">Hub &amp; Spoke 시스템</h3>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-32-10.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-32-10.png" class="img-fluid"></p>
 <ul>
 <li>허브끼리는 대량 운송, 최종 고객에게는 소량 운송</li>
 <li>점끼리 연결되지 않아 복잡성이 줄어듦</li>
@@ -833,7 +1813,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-45-06.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-20-45-06.png" class="img-fluid figure-img"></p>
 <figcaption>오더 피킹에는 다양한 방식이 있다</figcaption>
 </figure>
 </div>
@@ -843,7 +1823,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-21-05-57.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-21-05-57.png" class="img-fluid figure-img"></p>
 <figcaption>put walls</figcaption>
 </figure>
 </div>
@@ -876,12 +1856,12 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>공급사슬관리</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/09.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/09.html</guid>
   <pubDate>Tue, 18 Nov 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>신뢰도 공학</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/05.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/05.html</link>
   <description><![CDATA[ 
 
 
@@ -916,13 +1896,13 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-05-00-57-47.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-05-00-57-47.png" class="img-fluid figure-img"></p>
 <figcaption>품질 경영 vs 신뢰성</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-05-01-00-35.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-05-01-00-35.png" class="img-fluid figure-img"></p>
 <figcaption>통계적 관점에서의 차이</figcaption>
 </figure>
 </div>
@@ -949,14 +1929,14 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-06-23-02-50.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-06-23-02-50.png" class="img-fluid figure-img"></p>
 <figcaption>f(t)와 λ(t)의 차이점</figcaption>
 </figure>
 </div>
 </section>
 <section id="욕조-곡선" class="level2">
 <h2 class="anchored" data-anchor-id="욕조-곡선">욕조 곡선</h2>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-06-23-07-54.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-06-23-07-54.png" class="img-fluid"></p>
 <ul>
 <li>일반적으로 제조품의 고장률은 예방보전을 하지 않으면 욕조곡선을 그린다고 알려짐</li>
 <li>수명 T가 Weibull 분포를 따른다고 가정</li>
@@ -996,13 +1976,13 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-07-12-00-49.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-07-12-00-49.png" class="img-fluid figure-img"></p>
 <figcaption>시료가 많을 때</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-07-12-01-05.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-07-12-01-05.png" class="img-fluid figure-img"></p>
 <figcaption>시료가 적을 때</figcaption>
 </figure>
 </div>
@@ -1074,7 +2054,7 @@
 <h3 class="anchored" data-anchor-id="지수-분포의-신뢰도-함수-추정">지수 분포의 신뢰도 함수 추정</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-07-12-52-21.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-07-12-52-21.png" class="img-fluid figure-img"></p>
 <figcaption>전수 시험, 충분한 n</figcaption>
 </figure>
 </div>
@@ -1083,7 +2063,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-07-12-56-04.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-07-12-56-04.png" class="img-fluid figure-img"></p>
 <figcaption>중단 시험(선형계수 추정)</figcaption>
 </figure>
 </div>
@@ -1096,7 +2076,7 @@
 <h3 class="anchored" data-anchor-id="최우추정치의-신뢰구간">최우추정치의 신뢰구간</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-07-13-10-50.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-07-13-10-50.png" class="img-fluid figure-img"></p>
 <figcaption>r &gt; 0</figcaption>
 </figure>
 </div>
@@ -1120,12 +2100,12 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>품질경영</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/05.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/05.html</guid>
   <pubDate>Tue, 18 Nov 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>공급사슬 네트워크 설계</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/08.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/08.html</link>
   <description><![CDATA[ 
 
 
@@ -1161,10 +2141,10 @@
 <ul>
 <li>전략: Fast Fashion: Low price + Fast Production + Trendy Design</li>
 </ul>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-14-35-08.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-14-35-08.png" class="img-fluid"></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-14-36-07.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-14-36-07.png" class="img-fluid figure-img"></p>
 <figcaption>Vertical Integration</figcaption>
 </figure>
 </div>
@@ -1195,7 +2175,7 @@
 </section>
 <section id="공급사슬-설계-프레이워크" class="level2">
 <h2 class="anchored" data-anchor-id="공급사슬-설계-프레이워크">공급사슬 설계 프레이워크</h2>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-14-43-38.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-14-43-38.png" class="img-fluid"></p>
 <ol type="1">
 <li>Define SC strategy
 <ul>
@@ -1249,19 +2229,19 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-15-55-56.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-15-55-56.png" class="img-fluid figure-img"></p>
 <figcaption>반응 시간</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-15-56-17.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-15-56-17.png" class="img-fluid figure-img"></p>
 <figcaption>비용</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-15-56-27.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-15-56-27.png" class="img-fluid figure-img"></p>
 <figcaption>목표 반응시간에 맞춰서 물류 비용을 계산</figcaption>
 </figure>
 </div>
@@ -1275,7 +2255,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-15-59-07.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-15-59-07.png" class="img-fluid figure-img"></p>
 <figcaption>생산자 재고보유, 생산자 직송</figcaption>
 </figure>
 </div>
@@ -1284,7 +2264,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-01-56.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-01-56.png" class="img-fluid figure-img"></p>
 <figcaption>생산자 재고보유, 생산자 직송(배송병합)</figcaption>
 </figure>
 </div>
@@ -1293,25 +2273,25 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-04-05.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-04-05.png" class="img-fluid figure-img"></p>
 <figcaption>유통(소매)업체 재고보유, 소화물 수송업자 배송</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-04-42.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-04-42.png" class="img-fluid figure-img"></p>
 <figcaption>유통(소매)업체 재고보유, 유통업체 배송</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-05-42.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-05-42.png" class="img-fluid figure-img"></p>
 <figcaption>유통(소매)업체 재고보유, 소비자 방문수령</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-06-44.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/img/2025-12-06-16-06-44.png" class="img-fluid figure-img"></p>
 <figcaption>유통(소매)업체 재고보유, 소비자 방문구매</figcaption>
 </figure>
 </div>
@@ -1325,21 +2305,21 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>공급사슬관리</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/08.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/08.html</guid>
   <pubDate>Mon, 10 Nov 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/12.pdf</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/12.pdf</link>
   <description><![CDATA[ undefined ]]></description>
   <category>보고서</category>
   <category>프로세스 경영</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/12.pdf</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/12.pdf</guid>
   <pubDate>Sun, 09 Nov 2025 02:44:49 GMT</pubDate>
 </item>
 <item>
   <title>샘플링 검사법</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/04.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/04.html</link>
   <description><![CDATA[ 
 
 
@@ -1368,7 +2348,7 @@
 <h3 class="anchored" data-anchor-id="검사의-위험">검사의 위험</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-20-47-00.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-20-47-00.png" class="img-fluid figure-img"></p>
 <figcaption>검사의 위험</figcaption>
 </figure>
 </div>
@@ -1430,7 +2410,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-21-03-46.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-21-03-46.png" class="img-fluid figure-img"></p>
 <figcaption>생산자와 소비자가 계약함</figcaption>
 </figure>
 </div>
@@ -1442,13 +2422,13 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-21-10-35.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-21-10-35.png" class="img-fluid figure-img"></p>
 <figcaption>OC 곡선</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-21-16-46.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-21-16-46.png" class="img-fluid figure-img"></p>
 <figcaption>n과 c에 따른 OC곡선 변화</figcaption>
 </figure>
 </div>
@@ -1466,20 +2446,20 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-21-31-50.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-21-31-50.png" class="img-fluid figure-img"></p>
 <figcaption>계수 규준형 1회 샘플링 검사표</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-21-33-11.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-21-33-11.png" class="img-fluid figure-img"></p>
 <figcaption>보조 표</figcaption>
 </figure>
 </div>
 </section>
 <section id="계수-규준형-다회-샘플링-검사" class="level3">
 <h3 class="anchored" data-anchor-id="계수-규준형-다회-샘플링-검사">계수 규준형 다회 샘플링 검사</h3>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-23-12-43.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-23-12-43.png" class="img-fluid"></p>
 <ul>
 <li>마지막 회차 r은 c + 1</li>
 <li>OC 곡선을 그릴 때는 r도 고려해야 함</li>
@@ -1502,7 +2482,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-23-17-47.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-23-17-47.png" class="img-fluid figure-img"></p>
 <figcaption>계수 조정형 샘플링 표. 알파벳이 뒤로 갈수록 빡빡한 검사</figcaption>
 </figure>
 </div>
@@ -1512,7 +2492,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-23-23-52.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-23-23-52.png" class="img-fluid figure-img"></p>
 <figcaption>엄격도 조정 절차</figcaption>
 </figure>
 </div>
@@ -1543,20 +2523,20 @@
 </ul>
 <section id="불량률-보증-로트가-단품의-묶음인-경우" class="level3">
 <h3 class="anchored" data-anchor-id="불량률-보증-로트가-단품의-묶음인-경우">불량률 보증 (로트가 단품의 묶음인 경우)</h3>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-04-23-41-48.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-04-23-41-48.png" class="img-fluid"></p>
 <ul>
 <li><img src="https://latex.codecogs.com/png.latex?%5Cbar%7BX%7D_U">: USL - kσ, 샘플링의 평균의 합불 여부를 USL이 아닌 안전마진이 있는 값과 비교. (샘플에 극단적인 값들이 포함될 수 있기 때문)</li>
 <li>σ는 <img src="https://latex.codecogs.com/png.latex?%5Cbar%7BR%7D/d_2">로 추정 혹은 알려져 있다고 가정.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-05-00-00-47.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-05-00-00-47.png" class="img-fluid figure-img"></p>
 <figcaption>n과 k 도출 식</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-05-00-09-51.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-05-00-09-51.png" class="img-fluid figure-img"></p>
 <figcaption>OC 곡선</figcaption>
 </figure>
 </div>
@@ -1566,25 +2546,25 @@
 </section>
 <section id="평균-보증-로트가-연속체인-경우" class="level3">
 <h3 class="anchored" data-anchor-id="평균-보증-로트가-연속체인-경우">평균 보증 (로트가 연속체인 경우)</h3>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-05-00-20-50.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-05-00-20-50.png" class="img-fluid"></p>
 <ul>
 <li>n이 의미하는건 1000ml 단위 1병, 2병, …</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-05-00-22-21.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-05-00-22-21.png" class="img-fluid figure-img"></p>
 <figcaption>계산식</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-05-00-25-02.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-05-00-25-02.png" class="img-fluid figure-img"></p>
 <figcaption>G_0는 <img src="https://latex.codecogs.com/png.latex?K_%CE%B1%20/%20%5Csqrt%7Bn">}</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-05-00-30-28.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/img/2025-12-05-00-30-28.png" class="img-fluid figure-img"></p>
 <figcaption>OC 곡선</figcaption>
 </figure>
 </div>
@@ -1595,21 +2575,21 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>품질경영</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/04.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/품질경영/04.html</guid>
   <pubDate>Tue, 04 Nov 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/11.pdf</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/11.pdf</link>
   <description><![CDATA[ undefined ]]></description>
   <category>프로세스 경영</category>
   <category>보고서</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/11.pdf</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/11.pdf</guid>
   <pubDate>Thu, 30 Oct 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>공급사슬 의사결정의 조정과 계약</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/07.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/07.html</link>
   <description><![CDATA[ 
 
 
@@ -1710,12 +2690,12 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>공급사슬관리</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/07.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/07.html</guid>
   <pubDate>Tue, 28 Oct 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>BPM Suite</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/08.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/08.html</link>
   <description><![CDATA[ 
 
 
@@ -1730,7 +2710,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-27-20-54-28.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-10-27-20-54-28.png" class="img-fluid figure-img"></p>
 <figcaption>BPM 용어 확장 단계</figcaption>
 </figure>
 </div>
@@ -1739,7 +2719,7 @@
 <h2 class="anchored" data-anchor-id="bpm-suite-구성-요소">BPM Suite 구성 요소</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-27-20-56-13.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-10-27-20-56-13.png" class="img-fluid figure-img"></p>
 <figcaption>구성 요소</figcaption>
 </figure>
 </div>
@@ -1772,7 +2752,7 @@
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-10-27-21-02-40.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-10-27-21-02-40.png" class="img-fluid figure-img"></p>
 <figcaption>EAI &amp; ESB</figcaption>
 </figure>
 </div>
@@ -1884,7 +2864,7 @@
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-05-22-53-10.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-05-22-53-10.png" class="img-fluid figure-img"></p>
 <figcaption>EAI</figcaption>
 </figure>
 </div>
@@ -1901,7 +2881,7 @@
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-05-22-57-57.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-05-22-57-57.png" class="img-fluid figure-img"></p>
 <figcaption>ESB</figcaption>
 </figure>
 </div>
@@ -1912,7 +2892,7 @@
 </ul></li>
 <li>Micro service, legacy system 등을 ESB에 전부 통합</li>
 </ol>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-05-23-04-08.png" class="img-fluid"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-05-23-04-08.png" class="img-fluid"></p>
 </section>
 <section id="business-rules" class="level2">
 <h2 class="anchored" data-anchor-id="business-rules">Business Rules</h2>
@@ -1927,7 +2907,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-05-23-07-35.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-05-23-07-35.png" class="img-fluid figure-img"></p>
 <figcaption>business rule vs decision</figcaption>
 </figure>
 </div>
@@ -1957,7 +2937,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-05-23-27-26.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-05-23-27-26.png" class="img-fluid figure-img"></p>
 <figcaption>Declare</figcaption>
 </figure>
 </div>
@@ -1971,7 +2951,7 @@
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/img/2025-12-05-23-33-07.png" class="img-fluid figure-img"></p>
+<p><img src="https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/img/2025-12-05-23-33-07.png" class="img-fluid figure-img"></p>
 <figcaption>BAM 실시간 모니터링 개념도</figcaption>
 </figure>
 </div>
@@ -2003,14 +2983,14 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>프로세스 경영</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/프로세스경영/08.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/프로세스경영/08.html</guid>
   <pubDate>Sun, 26 Oct 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title></title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/시뮬레이션/01.pdf</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/시뮬레이션/01.pdf</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/시뮬레이션/01.pdf</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/시뮬레이션/01.pdf</guid>
   <pubDate>Wed, 22 Oct 2025 04:57:13 GMT</pubDate>
 </item>
 <item>
@@ -2055,7 +3035,7 @@
 </item>
 <item>
   <title>채찍 효과</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/06.html</link>
+  <link>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/06.html</link>
   <description><![CDATA[ 
 
 
@@ -2125,288 +3105,8 @@
 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
   <category>공급사슬관리</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/06.html</guid>
+  <guid>https://cryscham123.github.io/posts/04_archives/bs_3_2/notes/공급사슬관리/06.html</guid>
   <pubDate>Tue, 14 Oct 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>관리도</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/03.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="프로세스-품질관리란" class="level2">
-<h2 class="anchored" data-anchor-id="프로세스-품질관리란">프로세스 품질관리란?</h2>
-<ul>
-<li>시간에 따른 추이를 통해 사전에 불량을 방지하는 것</li>
-<li><code>목표: 제조변동의 감소</code></li>
-</ul>
-</section>
-<section id="제조-변동의-원인" class="level2">
-<h2 class="anchored" data-anchor-id="제조-변동의-원인">제조 변동의 원인</h2>
-<ul>
-<li>우연 변동
-<ul>
-<li>일상적 변동</li>
-<li>작업환경 변화(지진같은 재해나 미세한 바람의 차이 등)</li>
-<li>작업자간 숙련도 차이</li>
-<li>설비 간의 기능 차이</li>
-<li>원자재간의 미세한 차이</li>
-<li><code>피할 수 없는 변동</code>.</li>
-</ul></li>
-<li>이상 변동(assignable variable): 품질에 확연한 차이를 가져오며, <code>제거 가능한 원인</code>
-<ul>
-<li><code>피할 수 있는 변동</code></li>
-</ul></li>
-<li><code>관리상태</code>: 분포가 지정된 한계 내로 유지되는 것.
-<ul>
-<li>관리상태에서의 우연 변동은 허용 된다.</li>
-<li>우연적 원인만 있는 경우, 변동은 안정적이고 예측 가능한 분포를 형성</li>
-<li>이상변동이 있는 경우 <code>중심 경향</code>, <code>표준편차</code>, <code>모양</code>에 따라 달라지는 <code>예상 불가능한 분포</code>를 생성</li>
-</ul></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-19-47-39.png" class="img-fluid figure-img"></p>
-<figcaption>우연 변동</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-19-47-25.png" class="img-fluid figure-img"></p>
-<figcaption>이상변동 포함</figcaption>
-</figure>
-</div>
-</section>
-<section id="관리도" class="level2">
-<h2 class="anchored" data-anchor-id="관리도">관리도</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-19-49-33.png" class="img-fluid figure-img"></p>
-<figcaption>관리도</figcaption>
-</figure>
-</div>
-<ul>
-<li>이상원인에 의한 품질변동의 발생 여부를 조사하기 위해 개발된 도구</li>
-<li><code>관리한계를 벗어날 확률: 0.0027</code>, <code>하나라도 밖으로 나가면 공정 이상</code></li>
-<li>규격 상하한 != 관리 상하한</li>
-<li>불량을 탐지하는 것이 아니라, 공정이 안정상태에 있는지 없는지를 선행적으로 판단하여 불량 발생을 예방하는 것</li>
-<li><code>P(불량 | only 우연 변동) &lt; P(불량 | 우연 변동 + 이상 변동)</code>
-<ul>
-<li>관리한계를 벗어났을 때 다시 중심으로 되돌려 줘야함. 즉 예방 필요</li>
-</ul></li>
-</ul>
-<section id="합리적-표본군" class="level3">
-<h3 class="anchored" data-anchor-id="합리적-표본군">합리적 표본군</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-19-56-41.png" class="img-fluid figure-img"></p>
-<figcaption>표본군</figcaption>
-</figure>
-</div>
-<ul>
-<li>n: 표본의 갯수, k: 단위 시간 당 표본 추출 횟수</li>
-<li>같은 표본군 안에는 우연변동만 존재(균일한 표본군)이 합리적임.</li>
-<li><code>표본의 크기가 커질수록</code>, <code>추출 빈도가 높을 수록</code> 관리 규격이 좁아지며 작은 변동에 더 <code>민감</code>해짐
-<ul>
-<li><code>비용과 trade-off</code></li>
-<li>또한 표본의 크기가 커질수록 균일하지 않은 표본군이 생성될 확률이 높아짐(그림 참조)</li>
-<li>적당히 작은 표본을 여러번 뽑는게 좋다.</li>
-</ul></li>
-</ul>
-</section>
-<section id="패턴-이상" class="level3">
-<h3 class="anchored" data-anchor-id="패턴-이상">패턴 이상</h3>
-<ul>
-<li>공정이 관리상태에 있다:
-<ol type="1">
-<li>관리도의 점들이 관리한계선을 벗어나지 않는다.</li>
-<li>관리도의 점들에 특정한 패턴이 나타나지 않는다.
-<ul>
-<li>관리 한계를 벗어날 징조
-<ul>
-<li>한계선 가까이 여러 개가 나타난다.</li>
-<li>경향성이 나타난다.</li>
-</ul></li>
-<li>변동의 크기를 줄일 수 있는 단서
-<ul>
-<li>런의 길이가 너무 길거나 짧다.
-<ul>
-<li>긴 길이: 평균 이동 가능성</li>
-<li>짧은 길이: 표본군 간 변동 요인 존재(층화 현상)</li>
-</ul></li>
-<li>주기성이 나타난다: 주기적 변동 요인(환경 변화, 작업자 능률 변화 가능성)</li>
-<li>층화현상이 나타난다. -&gt; 관리한계선이 잘못 설정되었다.</li>
-</ul></li>
-</ul></li>
-</ol></li>
-</ul>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-20-02-50.png" class="img-fluid"></p>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-20-03-23.png" class="img-fluid"></p>
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-20-05-09.png" class="img-fluid"></p>
-</section>
-</section>
-<section id="관리도의-종류" class="level2">
-<h2 class="anchored" data-anchor-id="관리도의-종류">관리도의 종류</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-20-09-37.png" class="img-fluid figure-img"></p>
-<figcaption>관리도 종류</figcaption>
-</figure>
-</div>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?R_m">은 시계열 moving average</li>
-<li>부적합품 수: 불량품이 얼마나 있는지</li>
-<li>부적합 수: 하나의 제품(크기가 일정한)에서 몇개의 결함이 있는지</li>
-</ul>
-<section id="변량계량형-관리도연속형" class="level3">
-<h3 class="anchored" data-anchor-id="변량계량형-관리도연속형">변량(계량형) 관리도(연속형)</h3>
-<ol type="1">
-<li><img src="https://latex.codecogs.com/png.latex?%5Cbar%7BX%7D%20-%20R"> 관리도</li>
-</ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-20-34-37.png" class="img-fluid figure-img"></p>
-<figcaption>σ를 알 때</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-10-27-20-39-17.png" class="img-fluid figure-img"></p>
-<figcaption>σ를 모를 때</figcaption>
-</figure>
-</div>
-<ul>
-<li>정규성 가정 시 관리도용 계수표 사용 가능</li>
-<li>OC 곡선: 추정치 이동에 따른 β 값의 변화. n과 변화를 알면 B값을 바로 구할 수 있다.
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?%CE%B8%20%E2%89%A0%20%CE%B8_0">일 때, <img src="https://latex.codecogs.com/png.latex?%CE%B8_0">와 가까울 수록 헷갈리고, 멀 수록 명확하다.</li>
-</ul></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-03-21-26-07.png" class="img-fluid figure-img"></p>
-<figcaption><img src="https://latex.codecogs.com/png.latex?%5Cbar%7BX%7D"> 관리도 OC 곡선. n이 클수록 민감하다</figcaption>
-</figure>
-</div>
-<ul>
-<li>B 계산 시 분산은 <img src="https://latex.codecogs.com/png.latex?H_0">를 기준으로 계산.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-03-21-35-17.png" class="img-fluid figure-img"></p>
-<figcaption>R 관리도의 OC커브</figcaption>
-</figure>
-</div>
-<ol start="2" type="1">
-<li><img src="https://latex.codecogs.com/png.latex?x%20-%20R_m"> 관리도</li>
-</ol>
-<ul>
-<li>일반적으로 평균의 <code>변화를 탐지</code>하는데는 <img src="https://latex.codecogs.com/png.latex?%5Cbar%7Bx%7D"> 관리도가 효율적</li>
-<li>하지만 x 관리도는 매 관측값을 감시하므로 변화 발생시 <code>빠른 조치 가능</code>
-<ul>
-<li>둘의 장점을 섞은 <img src="https://latex.codecogs.com/png.latex?%5Cbar%7Bx%7D%20-%20x%20-%20R"> 관리도 사용 가능</li>
-</ul></li>
-</ul>
-</section>
-<section id="속성계수형-관리도이산형" class="level3">
-<h3 class="anchored" data-anchor-id="속성계수형-관리도이산형">속성(계수형) 관리도(이산형)</h3>
-<ul>
-<li>연속적인 양으로 측정 가능한(계량형) 품질 특성을 계수형으로 관리하는 것은 부적합 -&gt; 정보의 손실</li>
-</ul>
-<ol type="1">
-<li>np 관리도
-<ul>
-<li>불량개수 관리도</li>
-</ul></li>
-</ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/img/2025-12-03-21-54-36.png" class="img-fluid figure-img"></p>
-<figcaption>np 관리도</figcaption>
-</figure>
-</div>
-<ul>
-<li><p>OC 곡선</p></li>
-<li><p>분산은 <img src="https://latex.codecogs.com/png.latex?P_0"> 기준. LCL은 -무한으로 설정</p></li>
-</ul>
-</section>
-</section>
-<section id="군내변동-군간변동" class="level2">
-<h2 class="anchored" data-anchor-id="군내변동-군간변동">군내변동 군간변동</h2>
-<ul>
-<li>공정이 안정상태에 있다면 군간변동 = 0, 제조변동 = 군내 변동 이여야 한다.</li>
-<li>제조 변동과 군내 변동의 차이가 크면 공정이 불안정상태에 있다고 추정할 수 있음. 하지만 추정값이기 때문에 어느정도 차이는 존재할 수 있다.</li>
-</ul>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>품질경영</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/품질경영/03.html</guid>
-  <pubDate>Tue, 14 Oct 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>재고 관리 2</title>
-  <link>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/05.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
-<section id="신문판매원-모형" class="level2">
-<h2 class="anchored" data-anchor-id="신문판매원-모형">신문판매원 모형</h2>
-<ul>
-<li>구매비용</li>
-<li>판매가격</li>
-<li>잔존가치
-<ul>
-<li><code>0이거나 음수일 수 있음</code></li>
-</ul></li>
-<li><img src="https://latex.codecogs.com/png.latex?C_o">: 과다재고비용 = 구매비용 - 잔존가치
-<ul>
-<li>필요한 양보다 더 주문했을 때 발생하는 비용</li>
-</ul></li>
-<li><img src="https://latex.codecogs.com/png.latex?C_u">: 과소재고비용 = 판매가격 - 구매비용
-<ul>
-<li>필요한 양보다 덜 주문했을 때 발생하는 기회비용</li>
-</ul></li>
-<li>최적의 주문량 F(Q) = <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BC_u%7D%7BC_o%20+%20C_u%7D">
-<ul>
-<li>critical ratio가 두 값 사이일 경우 큰 값 선택</li>
-</ul></li>
-<li>기대 비용 함수: <img src="https://latex.codecogs.com/png.latex?TC(Q)%20=%20C_o%20E%5Bmax(Q%20-%20D,%200)%5D%20+%20C_u%20E%5Bmax(D%20-%20Q,%200)%5D"></li>
-<li><img src="https://latex.codecogs.com/png.latex?TC(Q%E2%9C%B6)%20=%20(C_o%20+%20C_u)%20%CF%95(Z_%CE%B1)%20%CF%83"> 정규분포일 경우</li>
-</ul>
-</section>
-<section id="통합-전략" class="level2">
-<h2 class="anchored" data-anchor-id="통합-전략">통합 전략</h2>
-<ul>
-<li>위치 또는 제품의 통합(pooling)으로 수요의 불확실성을 줄일 수 있다.
-<ul>
-<li>수요변동성이 클 수록 이점 증가</li>
-</ul></li>
-<li>pooling시 보통 재고 비용, 간접 비용, inbound는 감소하지만, 운송 비용(outbound, leadtime)은 증가
-<ul>
-<li>newsvendor 모형에서 주문량 절감 효과</li>
-<li>만약 수요 간 상관관계가 있다면
-<ul>
-<li>상관관계가 1이면 통합 안한거랑 같고, 작아질 수록 이점 증가</li>
-</ul></li>
-</ul></li>
-</ul>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
-  <category>공급사슬관리</category>
-  <guid>https://cryscham123.github.io/posts/01_projects/bs_3_2/notes/공급사슬관리/05.html</guid>
-  <pubDate>Sat, 11 Oct 2025 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
