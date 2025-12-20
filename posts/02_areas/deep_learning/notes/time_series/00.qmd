@@ -12,8 +12,106 @@ categories: ["deep learning"]
 - 다중 단계 모델: 한 대상에 대한 여러 시간 단계 예측을 생성
 - 다중 출력 모델: 여러 대상에 대한 여러 시간 단계 예측을 생성
 
+## Example
+
 ```{python}
 import pandas as pd
-#df = pd.read_csv("https://github.com/jpub-dongdong9/TimeSeriesForecastingInPython/blob/master/data/metro_interstate_traffic_volume_preprocessed.csv")
-#df.head()
+df = pd.read_csv("data/traffic.csv")
+df.head()
+```
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+
+ax.plot(df['traffic_volume'])
+ax.set_xlabel('Time')
+ax.set_ylabel('Traffic Volume')
+
+plt.xticks(np.arange(7, 400, 24), ['Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+plt.xlim(0, 400)
+fig.autofmt_xdate()
+plt.tight_layout()
+```
+
+- 일별 계절성: 하루의 시작과 긑에 교통량이 적음
+- 주간 계절성: 주말에 교통량이 적음
+- SARIMAX는 이러한 계절성이 여러개 있는 시계열 데이터를 모델링하는데 적합하지 않음
+
+```{python}
+fig, ax = plt.subplots()
+
+ax.plot(df['temp'])
+ax.set_xlabel('Time')
+ax.set_ylabel('Temperature (K)')
+
+plt.xticks([2239, 10999], [2017, 2018])
+
+fig.autofmt_xdate()
+plt.tight_layout()
+```
+
+- 기온 역시 연간 계절성을 가지고,
+
+```{python}
+fig, ax = plt.subplots()
+
+ax.plot(df['temp'])
+ax.set_xlabel('Time')
+ax.set_ylabel('Temperature (K)')
+
+plt.xticks(np.arange(7, 400, 24), ['Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+plt.xlim(0, 400)
+fig.autofmt_xdate()
+plt.tight_layout()
+```
+
+- 일별 계절성도 가지고 있다.
+
+
+```{python}
+df.describe().transpose()
+```
+
+- 정보가 없는 강수량, 강설량은 제거
+
+```{python}
+from datetime import datetime
+
+df = df.drop(['rain_1h', 'snow_1h'], axis=1)
+df['date_time'] = pd.to_datetime(df['date_time']).map(datetime.timestamp)
+df
+```
+
+- 시간을 초 단위로 변환.
+
+```{python}
+day = 24 * 60 * 60
+df['day_sin'] = np.sin(df['date_time'] * (2 * np.pi / day))
+df['day_cos'] = np.cos(df['date_time'] * (2 * np.pi / day))
+df = df.drop(['date_time'], axis=1)
+df
+```
+
+- 단순 초 단위 변환은 주기적 패턴을 포착하지 못하기 때문에 사인 및 코사인 변환을 사용하여 일별 주기를 인코딩
+
+```{python}
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+
+train, test = train_test_split(df, test_size=0.1, shuffle=False)
+train, val = train_test_split(train, test_size=0.2, shuffle=False)
+
+scaler = MinMaxScaler()
+train_scaled = scaler.fit_transform(train)
+val_scaled = scaler.transform(val)
+test_scaled = scaler.transform(test)
+```
+
+```{python}
+train.to_csv("data/traffic_train.csv", index=False)
+val.to_csv("data/traffic_val.csv", index=False)
+test.to_csv("data/traffic_test.csv", index=False)
 ```
