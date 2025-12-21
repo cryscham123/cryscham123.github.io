@@ -1,0 +1,205 @@
+---
+title: "pytorch 기초"
+date: 2025-12-17
+categories: ["deep learning"]
+---
+
+![](/img/stat-thumb.jpg){.post-thumbnail}
+
+## 특징
+
+1. 동적 계산 그래프(Dynamic Computation Graph)
+   - 파이토치는 `동적 계산 그래프`를 사용하여 모델을 정의하고 수정할 수 있다. 모델의 구조를 실행 시점에 변경할 수 있다.
+2. GPU 가속 지원
+3. 직관적 인터페이스
+    - `실행모드`를 지원하고, 계산 그래프를 빌드하지 않고 코드를 실행할 수 있다.
+4. 제한된 프로덕션 지원
+    - 주로 연구 목적이다.
+
+## 텐서
+
+```{python}
+import torch
+
+tensor = torch.rand(1, 2)
+
+print(tensor)
+print(tensor.shape) # 크기
+print(tensor.dtype) # 자료형
+print(tensor.device) # GPU 가속 여부
+```
+
+### 장치 설정
+
+```{python}
+device = "cuda" if torch.cuda.is_available() else "cpu"
+cpu = torch.FloatTensor([1, 2, 3])
+gpu = torch.cuda.FloatTensor([1, 2, 3]) # GPU 가속 지정 방법 1. MAC에서는 지원이 안될 수도 있다.
+tensor = torch.rand((1, 1), device=device) # GPU 가속 지정 방법 2
+print(device)
+print(cpu)
+print(gpu)
+print(tensor)
+```
+
+- cpu 텐서와 gpu 텐서는 상호 간 연산이 불가능하다.
+- numpy 배열은 cpu 텐서와의 연산만 가능
+
+### 장치 변환
+
+```{python}
+cpu = torch.FloatTensor([1, 2, 3])
+gpu = cpu.cuda() # cpu -> gpu
+cpu2 = gpu.cpu() # gpu -> cpu
+gpu2 = cpu.to("cuda") # cpu -> gpu 2 MAC에서도 지원이 되니까 이 방법으로 사용하자
+print(cpu)
+print(cpu2)
+print(gpu)
+print(gpu2)
+```
+
+```{python}
+import numpy as np
+
+ndarray = np.array([1, 2, 3], dtype=np.uint8)
+yo = torch.from_numpy(ndarray)
+print(yo)
+print(yo.to("cuda"))
+```
+
+```{python}
+ndarray = yo.detach().cpu().numpy() # detach: graph에서 분리된 새로운 텐서 반환
+print(ndarray)
+print(type(ndarray))
+```
+
+## 단순 선형회귀
+
+```{python}
+from torch import optim
+
+x = torch.FloatTensor([
+    [1], [2], [3], [4], [5], [6], [7], [8], [9], [10],
+    [11], [12], [13], [14], [15], [16], [17], [18], [19], [20],
+    [21], [22], [23], [24], [25], [26], [27], [28], [29], [30]
+])
+y = torch.FloatTensor([
+    [0.94], [2.05], [2.87], [4.10], [5.01], [6.15], [6.95], [8.12], [9.05], [10.11],
+    [11.03], [12.20], [12.89], [14.15], [15.02], [16.18], [16.95], [18.22], [19.10], [20.05],
+    [21.01], [22.20], [22.89], [24.10], [25.05], [26.15], [26.95], [28.12], [29.05], [30.10]
+])
+```
+
+```{python}
+weight = torch.zeros(1, requires_grad=True)
+bias = torch.zeros(1, requires_grad=True)
+learning_rate = 0.001
+```
+
+```{python}
+optimizer = optim.SGD([weight, bias], lr=learning_rate)
+
+for epoch in range(1000):
+    hypothesis = x * weight + bias
+    cost = torch.mean((hypothesis - y) ** 2)
+
+    optimizer.zero_grad()
+    cost.backward()
+    optimizer.step()
+
+    if (epoch + 1) % 100 == 0:
+        print(f"Epoch {epoch+1}/1000 | Cost: {cost.item():.4f} | Weight: {weight.item():.4f} | Bias: {bias.item():.4f}")
+```
+
+
+```{python}
+from torch import nn
+
+model = nn.Linear(1, 1, bias=True)
+criterion = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.001)
+
+for epoch in range(1000):
+    hypothesis = model(x)
+    cost = criterion(hypothesis, y)
+
+    optimizer.zero_grad()
+    cost.backward()
+    optimizer.step()
+
+    if (epoch + 1) % 100 == 0:
+        print(f"Epoch {epoch+1}/1000 | Cost: {cost:.4f} | Model: {list(model.parameters())}")
+```
+
+## 데이터 로드
+
+```{python}
+from torch.utils.data import TensorDataset, DataLoader
+
+train_x = torch.FloatTensor([
+    [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7]
+])
+train_y = torch.FloatTensor([
+    [0.1, 1.5], [1, 2.8], [1.9, 4.1], [2.8, 5.4], [3.7, 6.7], [4.6, 8]
+])
+train_dataset = TensorDataset(train_x, train_y)
+train_dataloader = DataLoader(train_dataset, batch_size=2, shuffle=True, drop_last=True)
+```
+
+```{python}
+model = nn.Linear(2, 2, bias=True)
+criterion = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.001)
+
+for epoch in range(1000):
+    cost = 0
+    for batch in train_dataloader:
+        x, y = batch
+        output = model(x)
+        loss = criterion(output, y)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        cost += loss
+
+    cost = cost / len(train_dataloader)
+
+    if (epoch + 1) % 100 == 0:
+        print(f"Epoch {epoch+1}/1000 | Cost: {cost:.4f} | Model: {list(model.parameters())}")
+```
+
+### 모듈 클래스
+
+```{python}
+from torch.utils.data import Dataset
+import pandas as pd
+
+class CustomDataset(Dataset):
+    def __init__(self, file_path):
+        df = pd.read_csv(file_path)
+        self.x = df.iloc[:, 0].values
+        self.y = df.iloc[:, 1].values
+        self.length = len(df)
+
+    def __getitem__(self, index):
+        x = torch.FloatTensor([self.x[index] ** 2, self.x[index]])
+        y = torch.FloatTensor([self.y[index]])
+        return x, y
+
+    def __len__(self):
+        return self.length
+
+class Model(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(1, 20, 5)
+        self.conv2 = nn.Conv2d(20, 20, 5)
+
+    def forward(self, x):
+        x = F.relu(self.conv1(x))
+        x = F.relu(self.conv2(x))
+        return x
+
+```

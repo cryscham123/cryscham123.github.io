@@ -1,0 +1,12 @@
+{
+  "hash": "b7ecd8c5bb5ac3ac7183f394dfdf6139",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"텍스트 분석 - 20 뉴스그룹 분류\"\ndate: 2025-07-30\ncategories: [\"머신 러닝\"]\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n## 전처리\n\n::: {#44a78fea .cell execution_count=1}\n``` {.python .cell-code}\nfrom sklearn.datasets import fetch_20newsgroups\n\ntrain_news = fetch_20newsgroups(subset='train', remove=('headers', 'footers', 'quates'))\nX_train = train_news.data\ny_train = train_news.target\n\ntest_news = fetch_20newsgroups(subset='test', remove=('headers', 'footers', 'quates'))\nX_test = test_news.data\ny_test = test_news.target\n```\n:::\n\n\n## 학습\n\n### Count Vector\n\n::: {#23c1f25b .cell execution_count=2}\n``` {.python .cell-code}\nfrom sklearn.feature_extraction.text import CountVectorizer\n\ncnt_vect = CountVectorizer()\nX_train_cnt_vect = cnt_vect.fit_transform(X_train)\nX_test_cnt_vect = cnt_vect.transform(X_test)\n```\n:::\n\n\n::: {#025ca4ae .cell execution_count=3}\n``` {.python .cell-code}\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score\nimport warnings\n\nwarnings.filterwarnings('ignore')\n\nlr_clf = LogisticRegression(solver='liblinear')\nlr_clf.fit(X_train_cnt_vect, y_train)\npred = lr_clf.predict(X_test_cnt_vect)\nprint(f'{accuracy_score(y_test, pred):.3f} ')\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n0.731 \n```\n:::\n:::\n\n\n### TF-IDF\n\n::: {#6f669acf .cell execution_count=4}\n``` {.python .cell-code}\nfrom sklearn.feature_extraction.text import TfidfVectorizer\n\ntfidf_vect = TfidfVectorizer()\nX_train_tfidf_vect = tfidf_vect.fit_transform(X_train)\nX_test_tfidf_vect = tfidf_vect.transform(X_test)\n\nlr_clf = LogisticRegression(solver='liblinear')\nlr_clf.fit(X_train_tfidf_vect, y_train)\npred = lr_clf.predict(X_test_tfidf_vect)\nprint(f'{accuracy_score(y_test, pred):.3f} ')\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n0.778 \n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "08_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

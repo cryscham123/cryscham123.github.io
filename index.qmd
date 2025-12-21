@@ -8,23 +8,6 @@ anchor-sections: false
 ---
 
 <details open>
-<summary><h2 class="section-title">0. Inboxes</h2></summary>
-
-<div class="content">
-
-```{python}
-#| echo: false
-
-message = "분류되지 않은 노트"
-target_dir = "posts/00_inboxes"
-
-{{< include _includes/_para_inbox.py >}}
-```
-</div>
-
-</details>
-
-<details open>
 <summary><h2 class="section-title">1. Projects</h2></summary>
 
 <div class="content">
@@ -44,51 +27,23 @@ def target_func(posts):
 </div>
 </details>
 
-<details>
-<summary><h2 class="section-title">2. Areas</h2></summary>
+<details open>
+<summary><h2 class="section-title">2. Categories</h2></summary>
 
 <div class="content">
-
-<h3 class="content-title">관리 / 책임 영역</h3>
-
-```{python}
-#| echo: false
-
-target_directory = "posts/02_areas"
-def target_func(posts):
-  return posts["status"] == "area"
-
-{{< include _includes/_para_card.py >}}
-{{< include _includes/_para_resource_area.py >}}
-
-```
-
-</div>
-</details>
-
-<details>
-<summary><h2 class="section-title">3. Resources</h2></summary>
-
-<div class="content">
-
-<h3 class="content-title">진행 전인 프로젝트</h3>
-
-```{python}
-#| echo: false
-
-target_directory = "posts/03_resources"
-def target_func(posts):
-  return posts["status"] == "before-start"
-
-{{< include _includes/_para_card.py >}}
-{{< include _includes/_para_projects.py >}}
-```
 
 <h3 class="content-title">관심 분야</h3>
 
 ```{python}
 #| echo: false
 
+target_directory = "posts/02_categories"
+def target_func(posts):
+  return posts["status"] == "before-start"
+
+{{< include _includes/_para_card.py >}}
+{{< include _includes/_para_projects.py >}}
+
 def target_func(posts):
   return posts["status"] == "area"
 
@@ -99,7 +54,7 @@ def target_func(posts):
 </details>
 
 <details>
-<summary><h2 class="section-title">4. Archives</h2></summary>
+<summary><h2 class="section-title">3. Archives</h2></summary>
 
 <div class="content">
 
@@ -108,7 +63,7 @@ def target_func(posts):
 ```{python}
 #| echo: false
 
-target_directory = "posts/04_archives"
+target_directory = "posts/03_archives"
 
 def target_func(posts):
   return posts["status"] == "completed" or posts["status"] == "failed"

@@ -1,0 +1,12 @@
+{
+  "hash": "7099ae019ab9859d71a6a8e612b05c82",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"분류\"\ndate: 2025-06-24\ncategories: [\"확률 통계\"]\n---\n\n\n\n\n![](/img/stat-thumb.jpg){.post-thumbnail}\n\n## 팽귄 데이터\n\n::: {#1a7ef5a6 .cell execution_count=1}\n``` {.python .cell-code}\nimport pandas as pd\n\ndf = pd.read_csv('https://github.com/allisonhorst/palmerpenguins/raw/main/inst/extdata/penguins_raw.csv')\ndf.shape\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n(344, 17)\n```\n:::\n:::\n\n\n::: {#388b7a3f .cell execution_count=2}\n``` {.python .cell-code}\ndef make_cdf_map(df, colname, by='Species2'):\n  cdf_map = {}\n  grouped = df.groupby(by)[colname]\n  for species, group in grouped:\n    cdf_map[species] = Cdf.from_seq(group, name=species)\n  return cdf_map\n```\n:::\n\n\n",
+    "supporting": [
+      "14_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
