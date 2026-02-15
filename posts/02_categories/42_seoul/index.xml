@@ -17,6 +17,1624 @@
 <generator>quarto-1.5.56</generator>
 <lastBuildDate>Sun, 16 Feb 2025 15:00:00 GMT</lastBuildDate>
 <item>
+  <title>inception-of-things part 3</title>
+  <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/06.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="part-3" class="level3">
+<h3 class="anchored" data-anchor-id="part-3">Part 3</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/02_categories/42_seoul/notes/img/2025-01-17-14-04-32.png" class="img-fluid figure-img"></p>
+<figcaption>Part 3 요구사항</figcaption>
+</figure>
+</div>
+<p>argoCD 설정과 gitlab helm chart 설치 과정을 요구하는 과제입니다. 자세한 설명은 생략하겠습니다.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#!/bin/bash</span></span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">! </span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span> kubectl <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> /dev/null<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb1-4">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">brew</span> install kubectl</span>
+<span id="cb1-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span>
+<span id="cb1-6"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">! </span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span> k3d <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> /dev/null<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb1-7">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">brew</span> install k3d</span>
+<span id="cb1-8"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">k3d</span> cluster create argocd <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"9999:9999@loadbalancer"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"8888:8888@loadbalancer"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"80:80@loadbalancer"</span></span>
+<span id="cb1-11"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> create ns argocd</span>
+<span id="cb1-12"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> create ns dev</span>
+<span id="cb1-13"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> create ns gitlab</span>
+<span id="cb1-14"></span>
+<span id="cb1-15"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> apply <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> argocd <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f</span> https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml</span>
+<span id="cb1-16"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> patch deploy argocd-server <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> argocd <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--type</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'json'</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--insecure"}]'</span></span>
+<span id="cb1-17"></span>
+<span id="cb1-18"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> get cm argocd-cm <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> argocd <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> yaml <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> tmp.yml</span>
+<span id="cb1-19"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">$'data:</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  timeout.reconciliation: 10s'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> tmp.yml</span>
+<span id="cb1-20"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> apply <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f</span> tmp.yml <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">&amp;&amp;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rm</span> tmp.yml</span>
+<span id="cb1-21"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> rollout restart deploy argocd-repo-server <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> argocd</span>
+<span id="cb1-22"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">until</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> get svc <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> kube-system <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-q</span> traefik<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb1-23">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sleep</span> 1</span>
+<span id="cb1-24"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span>
+<span id="cb1-25"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> patch svc traefik <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> kube-system <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{"spec":{"ports":[{"name":"wil","port":8888,"targetPort":"wil"},{"name":"glab","port":9999,"targetPort":"glab"}]}}'</span></span>
+<span id="cb1-26"></span>
+<span id="cb1-27"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> patch deploy traefik <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> kube-system <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--type</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'json'</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'[</span></span>
+<span id="cb1-28"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    {"op": "add", "path": "/spec/template/spec/containers/0/ports/-", "value": {"containerPort": 8888, "name": "wil", "protocol": "TCP"}},</span></span>
+<span id="cb1-29"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    {"op": "add", "path": "/spec/template/spec/containers/0/ports/-", "value": {"containerPort": 9999, "name": "glab", "protocol": "TCP"}},</span></span>
+<span id="cb1-30"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--entrypoints.wil.address=:8888/tcp"},</span></span>
+<span id="cb1-31"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--entrypoints.glab.address=:9999/tcp"}</span></span>
+<span id="cb1-32"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">]'</span></span>
+<span id="cb1-33"></span>
+<span id="cb1-34"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">until</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> get crd <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-q</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ingressroutes.traefik.containo.us'</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb1-35">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'waiting for CRD...'</span></span>
+<span id="cb1-36">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sleep</span> 1</span>
+<span id="cb1-37"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span>
+<span id="cb1-38"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> apply <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f</span> ../confs/mand</span>
+<span id="cb1-39"></span>
+<span id="cb1-40"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">until</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> get deploy <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> argocd argocd-server <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-ojsonpath</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{.status.availableReplicas}'</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-ne</span> 0 <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">]</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> /dev/null<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb1-41">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sleep</span> 1</span>
+<span id="cb1-42">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'waiting for argocd ready...'</span></span>
+<span id="cb1-43"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span>
+<span id="cb1-44"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">$'</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\e</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">[92mSetting done!</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\e</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">[0m</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">You can start with admin password:'</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> get secret argocd-initial-admin-secret <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> argocd <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> json <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> password <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{gsub(/"/, "", $2); print $2}'</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">base64</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--decode</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>application.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="application.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">apiVersion: argoproj.io<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1alpha1</span>
+<span id="cb2-2">kind: Application</span>
+<span id="cb2-3">metadata:</span>
+<span id="cb2-4">  name: myapp</span>
+<span id="cb2-5">  namespace: argocd</span>
+<span id="cb2-6">spec:</span>
+<span id="cb2-7">  destination:</span>
+<span id="cb2-8">    namespace: dev</span>
+<span id="cb2-9">    server: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://kubernetes.default.svc"</span></span>
+<span id="cb2-10">  project: development</span>
+<span id="cb2-11">  source:</span>
+<span id="cb2-12">    path: manifests</span>
+<span id="cb2-13">    repoURL: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://github.com/42-iot/hyunghki_source.git"</span></span>
+<span id="cb2-14">    targetRevision: HEAD</span>
+<span id="cb2-15">  syncPolicy:</span>
+<span id="cb2-16">    automated:</span>
+<span id="cb2-17">      prune: true</span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>dev_route.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="dev_route.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">apiVersion: argoproj.io<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1alpha1</span>
+<span id="cb3-2">kind: Application</span>
+<span id="cb3-3">metadata:</span>
+<span id="cb3-4">  name: myapp</span>
+<span id="cb3-5">  namespace: argocd</span>
+<span id="cb3-6">spec:</span>
+<span id="cb3-7">  destination:</span>
+<span id="cb3-8">    namespace: dev</span>
+<span id="cb3-9">    server: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://kubernetes.default.svc"</span></span>
+<span id="cb3-10">  project: development</span>
+<span id="cb3-11">  source:</span>
+<span id="cb3-12">    path: manifests</span>
+<span id="cb3-13">    repoURL: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://github.com/42-iot/hyunghki_source.git"</span></span>
+<span id="cb3-14">    targetRevision: HEAD</span>
+<span id="cb3-15">  syncPolicy:</span>
+<span id="cb3-16">    automated:</span>
+<span id="cb3-17">      prune: true</span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>ing.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="ing.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">apiVersion: traefik.containo.us<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1alpha1</span>
+<span id="cb4-2">kind: IngressRoute</span>
+<span id="cb4-3">metadata:</span>
+<span id="cb4-4">  name: route</span>
+<span id="cb4-5">  namespace: dev</span>
+<span id="cb4-6">spec:</span>
+<span id="cb4-7">  entryPoints:</span>
+<span id="cb4-8">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> wil</span>
+<span id="cb4-9">  routes:</span>
+<span id="cb4-10">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> match: PathPrefix(`<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>`)</span>
+<span id="cb4-11">      kind: Rule</span>
+<span id="cb4-12">      services:</span>
+<span id="cb4-13">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: wil<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>playground</span>
+<span id="cb4-14">          port: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8888</span></span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>project.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="project.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">apiVersion: networking.k8s.io<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1</span>
+<span id="cb5-2">kind: Ingress</span>
+<span id="cb5-3">metadata:</span>
+<span id="cb5-4">  name: argocd<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>server<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>http</span>
+<span id="cb5-5">  namespace: argocd</span>
+<span id="cb5-6">  annotations:</span>
+<span id="cb5-7">    traefik.ingress.kubernetes.io<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>router.entrypoints: web</span>
+<span id="cb5-8">spec:</span>
+<span id="cb5-9">  ingressClassName: traefik</span>
+<span id="cb5-10">  rules:</span>
+<span id="cb5-11">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> http:</span>
+<span id="cb5-12">      paths:</span>
+<span id="cb5-13">      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> path: <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span></span>
+<span id="cb5-14">        pathType: Prefix</span>
+<span id="cb5-15">        backend:</span>
+<span id="cb5-16">          service:</span>
+<span id="cb5-17">            name: argocd<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>server</span>
+<span id="cb5-18">            port:</span>
+<span id="cb5-19">              name: http</span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bonus_application.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="bonus_application.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">apiVersion: argoproj.io<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1alpha1</span>
+<span id="cb6-2">kind: Application</span>
+<span id="cb6-3">metadata:</span>
+<span id="cb6-4">  name: gitlab<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>app</span>
+<span id="cb6-5">  namespace: argocd</span>
+<span id="cb6-6">spec:</span>
+<span id="cb6-7">  destination:</span>
+<span id="cb6-8">    namespace: gitlab</span>
+<span id="cb6-9">    server: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://kubernetes.default.svc"</span></span>
+<span id="cb6-10">  project: default</span>
+<span id="cb6-11">  source:</span>
+<span id="cb6-12">    path: manifests</span>
+<span id="cb6-13">    repoURL: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"http://gitlab.192.168.56.110.nip.io/root/hyunghki.git"</span></span>
+<span id="cb6-14">    targetRevision: master</span>
+<span id="cb6-15">  syncPolicy:</span>
+<span id="cb6-16">    automated:</span>
+<span id="cb6-17">      prune: true</span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bonus_route.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb7" data-filename="bonus_route.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">apiVersion: argoproj.io<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1alpha1</span>
+<span id="cb7-2">kind: Application</span>
+<span id="cb7-3">metadata:</span>
+<span id="cb7-4">  name: gitlab<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>app</span>
+<span id="cb7-5">  namespace: argocd</span>
+<span id="cb7-6">spec:</span>
+<span id="cb7-7">  destination:</span>
+<span id="cb7-8">    namespace: gitlab</span>
+<span id="cb7-9">    server: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://kubernetes.default.svc"</span></span>
+<span id="cb7-10">  project: default</span>
+<span id="cb7-11">  source:</span>
+<span id="cb7-12">    path: manifests</span>
+<span id="cb7-13">    repoURL: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"http://gitlab.192.168.56.110.nip.io/root/hyunghki.git"</span></span>
+<span id="cb7-14">    targetRevision: master</span>
+<span id="cb7-15">  syncPolicy:</span>
+<span id="cb7-16">    automated:</span>
+<span id="cb7-17">      prune: true</span></code></pre></div>
+</div>
+</section>
+<section id="bonus-part" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-part">Bonus Part</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/02_categories/42_seoul/notes/img/2025-01-17-14-04-55.png" class="img-fluid figure-img"></p>
+<figcaption>Bonus Part 요구사항</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li>helm chart가 뭔지</li>
+<li>gitlab cluster가 왜 필요한지</li>
+<li>진행 과정</li>
+</ol>
+<pre class="hcl"><code>Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-24.04"
+  config.vm.box_version = "202404.26.0"
+
+  config.vm.define "hyunghkiS" do |control|
+    control.vm.hostname = "hyunghkiS"
+    control.vm.network "private_network", ip: "192.168.56.110"
+    control.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--name", "hyunghkiS"]
+      v.memory = "16384"
+      v.cpus = "5"
+    end
+    config.vm.synced_folder "confs", "/etc/vagrant/confs"
+    control.vm.provision "shell", path: "scripts/setting.sh"
+  end
+end</code></pre>
+<p>vagrant file</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'alias k=kubectl'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> /home/vagrant/.bashrc</span>
+<span id="cb9-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">source</span> /home/vagrant/.bashrc</span>
+<span id="cb9-3"></span>
+<span id="cb9-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install kubectl</span></span>
+<span id="cb9-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-sfL</span> https://get.k3s.io <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">K3S_KUBECONFIG_MODE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"644"</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sh</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-s</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-</span> server <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--disable</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>traefik</span>
+<span id="cb9-6"></span>
+<span id="cb9-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install helm</span></span>
+<span id="cb9-8"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> https://baltocdn.com/helm/signing.asc <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">gpg</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--dearmor</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> tee /usr/share/keyrings/helm.gpg <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> /dev/null</span>
+<span id="cb9-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt-get install <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-y</span> apt-transport-https</span>
+<span id="cb9-10"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"deb [arch=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">dpkg</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--print-architecture</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> tee /etc/apt/sources.list.d/helm-stable-debian.list</span>
+<span id="cb9-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt-get update</span>
+<span id="cb9-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt-get install <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-y</span> helm</span>
+<span id="cb9-13"></span>
+<span id="cb9-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># setting gitlab</span></span>
+<span id="cb9-15"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> create ns gitlab</span>
+<span id="cb9-16"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">export</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">KUBECONFIG</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>/etc/rancher/k3s/k3s.yaml</span>
+<span id="cb9-17"></span>
+<span id="cb9-18"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">helm</span> repo add gitlab https://charts.gitlab.io/</span>
+<span id="cb9-19"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">helm</span> repo update</span>
+<span id="cb9-20"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">helm</span> upgrade <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--namespace</span> gitlab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-21">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--install</span> gitlab gitlab/gitlab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-22">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--set</span> global.hosts.domain=192.168.56.110.nip.io <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-23">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--set</span> global.hosts.externalIP=192.168.56.110 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-24">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--set</span> global.ingress.tls.enabled=false <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-25">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--set</span> global.hosts.https=false <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-26">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--set</span> global.ingress.configureCertmanager=false <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-27">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--set</span> global.edition=ce <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-28">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--set</span> global.shell.port=4242</span>
+<span id="cb9-29"></span>
+<span id="cb9-30"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">until</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> get deploy <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> gitlab gitlab-webservice-default <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-ojsonpath</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{.status.availableReplicas}'</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-ne</span> 0 <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">]</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> /dev/null<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb9-31">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sleep</span> 1</span>
+<span id="cb9-32">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'waiting for gitlab ready...'</span></span>
+<span id="cb9-33"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span>
+<span id="cb9-34"></span>
+<span id="cb9-35"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">$'</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\e</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">[92mAll done!</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\e</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">[0m</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">You can start with root password:'</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">kubectl</span> get secret gitlab-gitlab-initial-root-password <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> gitlab <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-ojsonpath</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{.data.password}'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">base64</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--decode</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</section>
+<section id="결과" class="level2">
+<h2 class="anchored" data-anchor-id="결과">결과</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/img/printf-score.png" class="img-fluid figure-img"></p>
+<figcaption>최종 점수</figcaption>
+</figure>
+</div>
+<p><img src="https://cryscham123.github.io/posts/02_categories/42_seoul/notes/img/2025-01-13-20-14-45.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/02_categories/42_seoul/notes/img/2025-01-13-20-15-10.png" class="img-fluid figure-img"></p>
+<figcaption>최종 평가</figcaption>
+</figure>
+</div>
+</section>
+<section id="outro" class="level2">
+<h2 class="anchored" data-anchor-id="outro">outro</h2>
+<p>k8s의 개략적인 개념을 적용해보기 좋은 과제였던것 같습니다. 왠지 이 과제를 발판으로 삼아 더 응용할만한 과제가 있을법 한데, 의외로 후속 과제가 없는것이 조금 아쉬웠습니다. 개인적으로 조금 더 깊이 있는 infra 분야의 심화 과제가 많이 나왔으면 좋겠네요.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>vagrant</category>
+  <category>k8s</category>
+  <category>argoCD</category>
+  <category>gitlab</category>
+  <category>42 seoul</category>
+  <guid>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/06.html</guid>
+  <pubDate>Sun, 16 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>inception-of-things part 2</title>
+  <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/05.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://cryscham123.github.io/img/stat-thumb.jpg" class="post-thumbnail img-fluid"></p>
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+<p><a href="../../../../posts/02_categories/42_seoul/notes/04.html">Part 1</a>에 이어서 진행해보겠습니다.</p>
+</section>
+<section id="개념-설명" class="level2">
+<h2 class="anchored" data-anchor-id="개념-설명">개념 설명</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cryscham123.github.io/posts/02_categories/42_seoul/notes/img/2025-02-18-17-01-26.png" class="img-fluid figure-img"></p>
+<figcaption>Part 1 구조</figcaption>
+</figure>
+</div>
+<p>Part 1에서 클러스터가 여러 노드들을 논리적으로 묶어주는 기술임을 설명했습니다.</p>
+<p>그렇다면 구체적으로 각각의 노드들이 어떻게 협업을 한다는 것일까요?</p>
+</section>
+<section id="코드-설명" class="level2">
+<h2 class="anchored" data-anchor-id="코드-설명">코드 설명</h2>
+<section id="provision" class="level3">
+<h3 class="anchored" data-anchor-id="provision">Provision</h3>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Vagrantfile</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="Vagrantfile" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">Vagrant.configure(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2"</span>) do <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span>config<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span></span>
+<span id="cb1-2">  config.vm.box <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bento/ubuntu-24.04"</span></span>
+<span id="cb1-3">  config.vm.box_version <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"202404.26.0"</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5">  config.vm.define <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hyunghkiS"</span> do <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span>control<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span></span>
+<span id="cb1-6">    control.vm.hostname <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hyunghkiS"</span></span>
+<span id="cb1-7">    control.vm.network <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"private_network"</span>, ip: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"192.168.56.110"</span></span>
+<span id="cb1-8">    control.vm.provider <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"virtualbox"</span> do <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span></span>
+<span id="cb1-9">      v.customize [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"modifyvm"</span>, :<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--name"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hyunghkiS"</span>]</span>
+<span id="cb1-10">      v.memory <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"8192"</span></span>
+<span id="cb1-11">      v.cpus <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"5"</span></span>
+<span id="cb1-12">    end</span>
+<span id="cb1-13">    config.vm.synced_folder <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"confs"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/etc/vagrant/confs"</span></span>
+<span id="cb1-14">    control.vm.provision <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"shell"</span>, path: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"scripts/server.sh"</span></span>
+<span id="cb1-15">  end</span>
+<span id="cb1-16">end</span></code></pre></div>
+</div>
+<p>Vagrant 파일을 이용해서 가상머신을 생성해줍니다. 이번 파트에서는 k3s 클러스터 안에 하나의 노드만 provision하고 있는데, 이 경우 노드 하나가 master, worker 역할을 모두 수행합니다.</p>
+</section>
+<section id="k3s-config-file" class="level3">
+<h3 class="anchored" data-anchor-id="k3s-config-file">k3s config file</h3>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>deploy.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="deploy.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">apiVersion: apps<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1</span>
+<span id="cb2-2">kind: Deployment</span>
+<span id="cb2-3">metadata:</span>
+<span id="cb2-4">  name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>one</span>
+<span id="cb2-5">  labels:</span>
+<span id="cb2-6">    app: app1</span>
+<span id="cb2-7">spec:</span>
+<span id="cb2-8">  replicas: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-9">  selector:</span>
+<span id="cb2-10">    matchLabels:</span>
+<span id="cb2-11">      app: app1</span>
+<span id="cb2-12">  template:</span>
+<span id="cb2-13">    metadata:</span>
+<span id="cb2-14">      labels:</span>
+<span id="cb2-15">        app: app1</span>
+<span id="cb2-16">    spec:</span>
+<span id="cb2-17">      containers:</span>
+<span id="cb2-18">      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: nginx</span>
+<span id="cb2-19">        image: nginx</span>
+<span id="cb2-20">        ports:</span>
+<span id="cb2-21">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> containerPort: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb2-22"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb2-23">apiVersion: apps<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1</span>
+<span id="cb2-24">kind: Deployment</span>
+<span id="cb2-25">metadata:</span>
+<span id="cb2-26">  name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>two</span>
+<span id="cb2-27">  labels:</span>
+<span id="cb2-28">    app: app2</span>
+<span id="cb2-29">spec:</span>
+<span id="cb2-30">  replicas: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb2-31">  selector:</span>
+<span id="cb2-32">    matchLabels:</span>
+<span id="cb2-33">      app: app2</span>
+<span id="cb2-34">  template:</span>
+<span id="cb2-35">    metadata:</span>
+<span id="cb2-36">      labels:</span>
+<span id="cb2-37">        app: app2</span>
+<span id="cb2-38">    spec:</span>
+<span id="cb2-39">      containers:</span>
+<span id="cb2-40">      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: nginx</span>
+<span id="cb2-41">        image: nginx</span>
+<span id="cb2-42">        ports:</span>
+<span id="cb2-43">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> containerPort: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb2-44"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb2-45">apiVersion: apps<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1</span>
+<span id="cb2-46">kind: Deployment</span>
+<span id="cb2-47">metadata:</span>
+<span id="cb2-48">  name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>three</span>
+<span id="cb2-49">  labels:</span>
+<span id="cb2-50">    app: app3</span>
+<span id="cb2-51">spec:</span>
+<span id="cb2-52">  replicas: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-53">  selector:</span>
+<span id="cb2-54">    matchLabels:</span>
+<span id="cb2-55">      app: app3</span>
+<span id="cb2-56">  template:</span>
+<span id="cb2-57">    metadata:</span>
+<span id="cb2-58">      labels:</span>
+<span id="cb2-59">        app: app3</span>
+<span id="cb2-60">    spec:</span>
+<span id="cb2-61">      containers:</span>
+<span id="cb2-62">      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: nginx</span>
+<span id="cb2-63">        image: nginx</span>
+<span id="cb2-64">        ports:</span>
+<span id="cb2-65">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> containerPort: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>ing.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="ing.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">apiVersion: networking.k8s.io<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1</span>
+<span id="cb3-2">kind: Ingress</span>
+<span id="cb3-3">metadata:</span>
+<span id="cb3-4">  name: ingress</span>
+<span id="cb3-5">spec:</span>
+<span id="cb3-6">  ingressClassName: traefik</span>
+<span id="cb3-7">  rules:</span>
+<span id="cb3-8">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> host: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"app1.com"</span></span>
+<span id="cb3-9">    http:</span>
+<span id="cb3-10">      paths:</span>
+<span id="cb3-11">      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pathType: Prefix</span>
+<span id="cb3-12">        path: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/"</span></span>
+<span id="cb3-13">        backend:</span>
+<span id="cb3-14">          service:</span>
+<span id="cb3-15">            name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>one</span>
+<span id="cb3-16">            port:</span>
+<span id="cb3-17">              number: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb3-18">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> host: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"app2.com"</span></span>
+<span id="cb3-19">    http:</span>
+<span id="cb3-20">      paths:</span>
+<span id="cb3-21">      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pathType: Prefix</span>
+<span id="cb3-22">        path: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/"</span></span>
+<span id="cb3-23">        backend:</span>
+<span id="cb3-24">          service:</span>
+<span id="cb3-25">            name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>two</span>
+<span id="cb3-26">            port:</span>
+<span id="cb3-27">              number: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>route.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="route.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">apiVersion: traefik.containo.us<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v1alpha1</span>
+<span id="cb4-2">kind: IngressRoute</span>
+<span id="cb4-3">metadata:</span>
+<span id="cb4-4">  name: default<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>backend</span>
+<span id="cb4-5">spec:</span>
+<span id="cb4-6">  routes:</span>
+<span id="cb4-7">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> match: PathPrefix(`<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>`)</span>
+<span id="cb4-8">      kind: Rule</span>
+<span id="cb4-9">      services:</span>
+<span id="cb4-10">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>three</span>
+<span id="cb4-11">          port: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>svc.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="svc.yml" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">apiVersion: v1</span>
+<span id="cb5-2">kind: Service</span>
+<span id="cb5-3">metadata:</span>
+<span id="cb5-4">  name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>one</span>
+<span id="cb5-5">spec:</span>
+<span id="cb5-6">  selector:</span>
+<span id="cb5-7">    app: app1</span>
+<span id="cb5-8">  ports:</span>
+<span id="cb5-9">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> protocol: TCP</span>
+<span id="cb5-10">      port: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb5-11">      targetPort: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb5-12"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb5-13">apiVersion: v1</span>
+<span id="cb5-14">kind: Service</span>
+<span id="cb5-15">metadata:</span>
+<span id="cb5-16">  name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>two</span>
+<span id="cb5-17">spec:</span>
+<span id="cb5-18">  selector:</span>
+<span id="cb5-19">    app: app2</span>
+<span id="cb5-20">  ports:</span>
+<span id="cb5-21">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> protocol: TCP</span>
+<span id="cb5-22">      port: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb5-23">      targetPort: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb5-24"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb5-25">apiVersion: v1</span>
+<span id="cb5-26">kind: Service</span>
+<span id="cb5-27">metadata:</span>
+<span id="cb5-28">  name: app<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>three</span>
+<span id="cb5-29">spec:</span>
+<span id="cb5-30">  selector:</span>
+<span id="cb5-31">    app: app3</span>
+<span id="cb5-32">  ports:</span>
+<span id="cb5-33">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> protocol: TCP</span>
+<span id="cb5-34">      port: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span>
+<span id="cb5-35">      targetPort: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span></span></code></pre></div>
+</div>
+</section>
+<section id="실행-스크립트" class="level3">
+<h3 class="anchored" data-anchor-id="실행-스크립트">실행 스크립트</h3>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>scripts/server.sh</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="scripts/server.sh" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#!/bin/bash</span></span>
+<span id="cb6-2"></span>
+<span id="cb6-3">echo <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'alias k=kubectl'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>home<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>vagrant<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>.bashrc</span>
+<span id="cb6-4">source <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>home<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>vagrant<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>.bashrc</span>
+<span id="cb6-5">curl <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>sfL https:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span>get.k3s.io <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> K3S_KUBECONFIG_MODE<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"644"</span> sh <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> server</span>
+<span id="cb6-6">until kubectl get crd <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> grep <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>q <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ingressroutes.traefik.containo.us'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> do</span>
+<span id="cb6-7">    echo <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'waiting for CRD...'</span></span>
+<span id="cb6-8">    sleep <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb6-9">done</span>
+<span id="cb6-10"></span>
+<span id="cb6-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 작성한 설정 파일을 적용해줍니다.</span></span>
+<span id="cb6-12">kubectl <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">apply</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>f <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>etc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>vagrant<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>confs</span>
+<span id="cb6-13"></span>
+<span id="cb6-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># pod이 정상적으로 올라올 때 까지 기다려줍니다.</span></span>
+<span id="cb6-15">until [ <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>z <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$(kubectl get pods -o jsonpath='{.items[*].metadata.name}')"</span> ]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> do</span>
+<span id="cb6-16">    sleep <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb6-17">done</span>
+<span id="cb6-18"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> pod <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> $(kubectl get pods <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>o jsonpath<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{.items[*].metadata.name}'</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> do</span>
+<span id="cb6-19">    until kubectl get pods $pod <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> grep <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>q <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Running'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> do</span>
+<span id="cb6-20">        sleep <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb6-21">    done</span>
+<span id="cb6-22">    app_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(kubectl get pods $pod <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>o jsonpath<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{.metadata.labels.app}'</span>)</span>
+<span id="cb6-23"></span>
+<span id="cb6-24">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 과제에서 제시된 HTML 파일을 생성된 pod에 저장해줍니다.</span></span>
+<span id="cb6-25">    HTML<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>$(cat <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt;</span>EOF</span>
+<span id="cb6-26"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;!</span>DOCTYPE html<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-27"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>html<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-28"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>head<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-29">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>Hello Kubernetes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!&lt;/</span>title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-30"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>head<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-31"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>body<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-32"></span>
+<span id="cb6-33">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>div <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"main"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-34">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>div <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"content"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-35">            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>div <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"message"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-36">    Hello <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> ${app_name}.</span>
+<span id="cb6-37"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>div<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-38"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>div <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"info"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-39">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>table<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-40">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>tr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-41">            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>th<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>pod:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>th<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-42">            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>td<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>${pod}<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>td<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-43">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>tr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-44">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>tr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-45">            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>th<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>node:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>th<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-46">            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>td<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>$(uname <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>s) ($(uname <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>r))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>td<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-47">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>tr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-48">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>table<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-49"></span>
+<span id="cb6-50"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>div<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-51">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>div<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> </span>
+<span id="cb6-52"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>div<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-53"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>body<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-54"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;/</span>html<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span>
+<span id="cb6-55">EOF</span>
+<span id="cb6-56">)</span>
+<span id="cb6-57">    echo $<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{HTML}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>home<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>vagrant<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>index.html</span>
+<span id="cb6-58">    kubectl cp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>home<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>vagrant<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>index.html $pod:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>usr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>share<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>nginx<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>html<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>index.html <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>dev<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>null</span>
+<span id="cb6-59">done</span></code></pre></div>
+</div>
+<p>Provision이 완료되고 자동으로 실행되는 script를 작성해줍니다.</p>
+</section>
+</section>
+<section id="outro" class="level2">
+<h2 class="anchored" data-anchor-id="outro">Outro</h2>
+<p>Part 3와 Bonus는 다음 포스팅에서 작성하겠습니다.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 맨 위로</a> ]]></description>
+  <category>vagrant</category>
+  <category>k8s</category>
+  <category>argoCD</category>
+  <category>gitlab</category>
+  <category>42 seoul</category>
+  <guid>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/05.html</guid>
+  <pubDate>Sun, 16 Feb 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
   <title>inception-of-things part 1</title>
   <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/04.html</link>
   <description><![CDATA[ 
@@ -2240,25 +3858,6 @@ font-style: inherit;">@</span>example.com</span></code></pre></div>
   <pubDate>Mon, 27 Jan 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/03.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>solidity</category>
-  <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/03.html</guid>
-  <pubDate>Thu, 16 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/02.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>django</category>
-  <category>jwt</category>
-  <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/02.html</guid>
-  <pubDate>Thu, 16 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
   <title>ft_transcendence - github action</title>
   <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/01.html</link>
   <description><![CDATA[ 
@@ -3358,40 +4957,6 @@ font-style: inherit;">#       - ex) closes #&lt;issue 번호&gt; closes #&lt;iss
   <category>42 seoul</category>
   <guid>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/01.html</guid>
   <pubDate>Thu, 16 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/00.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>printf</category>
-  <category>c</category>
-  <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/00.html</guid>
-  <pubDate>Sat, 11 Jan 2025 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/06.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>vagrant</category>
-  <category>k8s</category>
-  <category>argoCD</category>
-  <category>gitlab</category>
-  <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/06.html</guid>
-  <pubDate>Fri, 30 Jan 2026 16:03:24 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <link>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/05.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>vagrant</category>
-  <category>k8s</category>
-  <category>argoCD</category>
-  <category>gitlab</category>
-  <category>42 seoul</category>
-  <guid>https://cryscham123.github.io/posts/02_categories/42_seoul/notes/05.html</guid>
-  <pubDate>Fri, 30 Jan 2026 16:03:24 GMT</pubDate>
 </item>
 </channel>
 </rss>
