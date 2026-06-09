@@ -1,0 +1,215 @@
+---
+title: "Lecture 19–20. 롤업 현황·Stage 등급 & PoS/The Merge"
+date: "2026-05-18"
+categories: [blockchain]
+---
+
+::: {.key-questions}
+- 롤업의 **Stage 0/1/2** 등급은 무엇을 나타내는가?
+- 실제 롤업들(Arbitrum, Base, Optimism, Unichain, World Chain)은 각각 어떤 특징이 있는가?
+- 이더리움의 **The Merge** 는 무엇이고 PoW에서 PoS로 왜 전환했는가?
+- **Validator** 는 어떻게 선정되며, 어떤 보상·페널티 구조를 갖는가?
+- PoS 전환이 이더리움 발행량(인플레이션)에 어떤 영향을 미쳤는가?
+:::
+
+## 1. 롤업 Stage 등급 — 얼마나 탈중화됐는가
+
+::: {.column-margin}
+**Stage 0/1/2**
+
+롤업의 탈중화 수준
+Stage 2가 이상적
+현재 대부분 Stage 0~1
+:::
+
+롤업 운영자(시퀀서)가 악의적인 행동을 해도 **아무도 막을 수 없는 롤업**이 많다. 이를 등급화한 것이 Stage 체계 (L2BEAT 기준):
+
+| Stage | 의미 |
+|---|---|
+| **Stage 0** | 오퍼레이터가 악의적 행동을 해도 제재 수단이 없음. 사실상 중앙화 |
+| **Stage 1** | 사기 증명(Fraud Proof) 등 제재 시스템이 부분 구현. 화이트리스트된 감시자만 신고 가능 |
+| **Stage 2** | 누구나 오퍼레이터의 이상 행동을 신고할 수 있고, 제재가 자동화됨. 완전한 탈중화 |
+
+비탈릭 부테린(Vitalik Buterin)이 공개적으로 *"Stage 0 롤업은 쓸모없다, Stage 1을 빨리 달성하라"* 고 촉구했다. 현재 주요 롤업들은 Stage 1 달성 중.
+
+**[L2BEAT](https://l2beat.com)** 에서 롤업별 Stage, TVL, TPS 등 현황 확인 가능.
+
+## 2. 주요 롤업 사례
+
+::: {.column-margin}
+**Unichain**
+
+Uniswap 자체 L2
+2024.10 출시
+거래 속도·비용 개선
+:::
+
+- **Arbitrum, Base (Coinbase), Optimism**: Optimistic Rollup 계열. Stage 1. 현재 가장 많이 사용되는 L2 체인들.
+- **Unichain (Uniswap)**: 이더리움 L1에서 스왑 1회에 1~2분, 수수료 부담 → Uniswap이 자체 롤업 "Unichain"을 2024년 10월 직접 구축. 목표: **즉각적인 트랜잭션 + 비용 절감** + 거래소에 특화된 인프라.
+- **World Chain (Sam Altman / Worldcoin)**: 홍채 인증을 통해 "진짜 인간"임을 증명하는 사용자에게 기본소득(Worldcoin 토큰)을 분배하는 플랫폼. 1,000만 명 이상 사용자. Optimism 롤업 위에 구축. *비판: 홍채 정보 개인정보 유출 위험, 토큰 유틸리티 부재.*
+
+### 롤업의 새 방향
+
+초기 롤업은 **이더리움 가스비 절감**과 **확장성**이 목적이었다. 
+그러나 EIP-4844 이후 이더리움 가스비가 충분히 낮아지자 단순 비용 절감의 가치가 감소, **L1 기반 scaling**이 활발히 진행됨. → 롤업의 새로운 가치 방향:
+
+- **프라이버시 보장**: ZK Rollup의 암호학적 특성 활용
+- **애플리케이션 특화**: Unichain(DEX), World Chain(신원)처럼 특정 유즈케이스에 최적화
+- **AI 연동**: AI 연산 결과를 롤업으로 검증
+
+## 3. The Merge — PoW에서 PoS로 (2022.9)
+
+::: {.column-margin}
+**The Merge**
+
+2022년 9월
+이더리움 역사상
+최대 업그레이드
+PoW → PoS 전환
+:::
+
+**배경 — 2018~2019년 이더리움의 3대 문제**: 당시 이더리움 체인은 세 가지 문제를 안고 있었고, 각각 다른 솔루션으로 이어졌다.
+
+| 문제 | 내용 | 솔루션 |
+|---|---|---|
+| **높은 트랜잭션 수수료** | 가스비가 부담될 만큼 비쌈 | **롤업** (→ 1~2장) |
+| **풀노드 비대화** | 노드 운영에 디스크 약 2TB 필요, 블록이 12초마다 누적 → 일반 노트북으론 불가 → 데이터센터만 운영 → **탈중화 약화**. (강의: "지금은 많이 극복됨") | 이후 점진적 개선 |
+| **PoW의 비효율** | 아래 참조 | **PoS — The Merge** |
+
+이 중 세 번째(PoW)가 The Merge로 이어졌다.
+
+**PoW의 문제점** (2018~2019년부터 논의):
+
+1. **에너지 낭비**: 채굴기를 무지성으로 돌려 전기를 소모 → 환경 문제.
+2. **신규 이더리움 과다 발행**: 채굴자에게 전기료보다 큰 인센티브를 줘야 하므로 블록당 2 ETH씩 새로 발행. 이더리움 홀더에게 사실상 세금.
+3. **채굴풀 집중화**: 소규모 채굴자는 솔로 채굴이 로또 수준 → 채굴풀에 모임 → 몇 개 풀이 51%+ 지배 → 탈중화 약화.
+
+**2022년 9월 15일 — The Merge**: 이더리움이 PoW 합의를 **PoS(Proof of Stake)** 로 전환. 블록체인 역사상 가장 큰 업그레이드.
+
+## 4. PoS 구조 — Validator, Slot, Epoch
+
+::: {.column-margin}
+**Validator 조건**
+
+32 ETH 스테이킹
+= validator 1개
+운영. 블록 생성
++ 투표 역할
+:::
+
+**PoS 선택 기준**: 어려운 문제를 빨리 푸는 사람(PoW) 대신, **많은 ETH를 스테이킹한 사람**에게 블록 생성 권한 비례 부여.
+
+**Validator (검증자)**: 이더리움 네트워크에서 블록을 만들고 검증하는 주체. **32 ETH를 이더리움 스테이킹 컨트랙트에 예치**하면 Validator 1개 운영 가능 (64 ETH → 2개).
+
+| 개념 | 설명 |
+|---|---|
+| **Slot** | 12초 단위. 슬롯마다 블록 하나가 생성됨 |
+| **Epoch** | 32개 슬롯 = 약 6.4분 |
+| **Proposer** | 해당 슬롯에서 블록을 만드는 Validator (슬롯당 1명) |
+| **Committee** | 같은 슬롯에 배정된 나머지 Validator들. 블록 검증·투표(Attestation) 담당 |
+
+**Epoch마다 Validator 배정**:
+
+1. 전체 Validator 집합을 32개 슬롯에 **랜덤하게 균등 배분**.
+2. 각 슬롯 내에서 **Proposer 1명 무작위 선정**, 나머지는 Committee.
+3. 약 90만 명의 Validator → 슬롯당 약 28,000명 배정.
+
+```{mermaid}
+graph TD
+    E["Epoch (32 슬롯 = 6.4분)"]
+    E --> S1["Slot 1\nProposer: Validator A\nCommittee: 나머지"]
+    E --> S2["Slot 2\nProposer: Validator B\n..."]
+    E --> S3["...\n(총 32 슬롯)"]
+    S1 --> A["블록 생성 + 브로드캐스트"]
+    A --> C["Committee가 Attestation(투표)"]
+    C --> R["Attestation 리워드 + 인클루션 리워드"]
+```
+
+**RANDAO 알고리즘**: Proposer를 공정하게 랜덤 선정하기 위한 알고리즘. 모든 Validator가 랜덤 값을 하나씩 제출 → 모두 합산·연산 → 결과값으로 배정. 단 한 명이라도 다른 값을 내면 결과가 바뀌어 조작이 어렵다. *(위는 강의에서의 단순화 설명.)*
+
+::: {.callout-note title="실제 RANDAO 메커니즘 (강의 단순화 보강)"}
+실제로는 전체 Validator가 동시에 값을 내는 것이 아니라:
+
+- 각 슬롯의 **Proposer**가 자신의 키로 **epoch 번호를 서명한 값**(RANDAO reveal)을 제출한다. BLS 서명이라 결과가 결정적 → Proposer가 원하는 값으로 **조작 불가**(선택지는 '제출 / 스킵' 뿐).
+- 이 값이 누적 시드에 XOR로 섞인다. 즉 한 Epoch(32슬롯) 동안 **32명의 Proposer가 순차적으로** 기여 (전체 동시 제출이 아님).
+- 누적된 시드로 **약 2 Epoch 뒤**의 Proposer·Committee 배정을 계산한다 → "Proposer가 값을 내고 이후 Epoch에서 배정"되는 구조.
+- **최초(제네시스) 배정**: 앞선 reveal이 없으므로 이더리움 PoW **제네시스 블록 해시(eth1 block hash)** 를 초기 시드로 사용. Validator 집합 자체는 머지 전 **deposit 컨트랙트 예치자**들로 구성된 상태에서 시작.
+
+출처: [eth2book — Randomness (RANDAO)](https://eth2book.info/latest/part2/building_blocks/randomness/)
+:::
+
+## 5. 보상 구조와 페널티
+
+::: {.column-margin}
+**APR ≈ 2.7~3%**
+
+솔로 Validator
+연간 수익률
+(슬래싱 없을 시)
+:::
+
+**보상 (Reward)**:
+
+- **Attestation Reward**: Committee로서 투표(Attestation)를 제때 제출하면 소액 보상. 매 Epoch 참여 가능 → **안정적·고정적 수익**.
+- **Proposer Reward**: Proposer로 선정돼 블록을 만들면 추가 보상 (Transaction Fee + Attestation 포함 보상).
+
+*PoW와 차이: PoW는 블록 생성 때만 보상 (확률적·불규칙). PoS는 매 Epoch 투표 보상이 있어 솔로 Validator도 안정적 수익 → 풀에 의존하지 않아도 됨.*
+
+현재 Validator APR ≈ **2.7~3%** (이더리움 기준).
+
+**페널티 — 슬래싱 (Slashing)**:
+
+- Proposer가 **같은 슬롯에 블록 2개** 제안 (의도적 포크 시도) → 1 ETH 슬래싱.
+- Committee가 **같은 슬롯에 2개 블록에 투표** → 슬래싱.
+- 스테이킹한 32 ETH에서 차감.
+
+## 6. The Merge의 효과
+
+### ① 에너지 소비 99.99% 감소
+
+채굴기를 돌릴 필요가 없어짐. 채굴에 들어가던 전기 비용(외부로 새어나가는 가치)이 이더리움 네트워크 내부에 머무르게 됨.
+
+### ② 신규 이더리움 발행량 대폭 감소 → 디플레이션 가능성
+
+::: {.column-margin}
+**Ultra Sound Money**
+
+발행량 < 소각량이면
+ETH 공급 감소
+디플레이션 자산
+:::
+
+- **PoW 시절**: 블록당 2 ETH 신규 발행 → 채굴자 보상. 연 인플레이션 ≈ 3.6%.
+- **PoS 이후**: 컨센서스 리워드만 (블록당 ≈ 0.04~0.05 ETH). 연 인플레이션 ≈ **0.27%**.
+- **EIP-1559 소각** (베이스피 소각) + 낮은 신규 발행 → 소각량 > 발행량이면 **ETH 총 공급량 감소** (디플레이션).
+- 비트코인 현재 인플레이션 ≈ 1.2% → 이더리움이 현재 더 낮은 발행률.
+
+### ③ 51% 공격 비용 급증
+
+- PoW: 전체 채굴기의 51%+ 장악.
+- PoS: 전체 **이더리움 시총의 51%+** (수백조 원 이상) 스테이킹 필요 → 사실상 불가능.
+
+### ④ Staking Pool 등장
+
+개인이 32 ETH를 감당하기 어려운 경우 → **Lido** (소액 참여자 모아 32 ETH 구성), **Binance, Coinbase** 등이 대리 스테이킹 서비스. 현재 이더리움 총 공급의 **36%가 스테이킹** 중, 약 90만 개의 Validator 활동 중.
+
+::: {.callout-note title="부연 설명 — 32 ETH 기준의 이유"}
+너무 낮추면(예: 16 ETH): Validator 수 2배 증가 → P2P 통신 부하 폭증 → 포크 위험.
+너무 높이면(예: 320 ETH): 기관만 운영 가능 → 탈중화 약화.
+현재 32 ETH는 "네트워크 안정성"과 "탈중화" 사이의 타협점. 출처: [Ethereum — Staking FAQ](https://ethereum.org/en/staking/solo/)
+:::
+
+## 개념 연결
+
+- 17~18강 **롤업 기초**: Optimistic/ZK 개념 → 19강 Stage 등급으로 "실제로 얼마나 안전한가" 평가 체계 추가.
+- **Black Thursday (13강)**: 가스비 폭등 → 청산 실패. 롤업이 해결하려는 확장성 문제의 직접적 피해 사례.
+- PoS의 **슬래싱**은 13강 **청산(Liquidation)** 의 롤업·합의 레이어 버전 — 악의적 행동 시 담보(32 ETH)를 몰수.
+- **EIP-1559 + PoS**: 소각(EIP-1559) + 낮은 발행(PoS) = ETH 공급 감소 → "Ultra Sound Money" 내러티브.
+
+::: {.lecture-summary}
+- **롤업 Stage**: 0(사실상 중앙화) → 1(부분 탈중화) → 2(완전 탈중화). Arbitrum·Base·Optimism은 Stage 1. Unichain(Uniswap 특화), World Chain(홍채 인증·기본소득)처럼 특화 롤업도 등장.
+- **The Merge (2022.9)**: PoW→PoS 전환. 에너지 소비 99.99% 감소, 신규 ETH 발행량 대폭 감소.
+- **Validator 구조**: 32 ETH 스테이킹 = Validator 1개. 12초 Slot + 32 Slot = Epoch. RANDAO로 Proposer 랜덤 선정.
+- **보상**: Attestation Reward (매 Epoch 안정적) + Proposer Reward. APR ≈ 2.7~3%. 슬래싱 페널티.
+- **PoS 효과**: 에너지 절감, 인플레이션 0.27%(BTC 1.2%보다 낮음), 51% 공격 비용 급증, ETH 디플레이션 가능성.
+:::

@@ -1,0 +1,97 @@
+---
+title: "Lecture 18. 앙상블 실습 — Random Forest & Boosting (R)"
+date: "2026-05-07"
+categories: [data_analytics]
+---
+
+::: {.key-questions}
+- R `randomForest` 로 배깅·랜덤 포레스트를 어떻게 적합하고 OOB로 평가하는가?
+- `mtry` 튜닝으로 성능이 어떻게 달라지는가?
+- 해석이 어려운 앙상블에서 **변수 중요도**를 어떻게 구하는가?
+- `gbm` 부스팅의 파라미터(`n.trees`, `shrinkage`, `interaction.depth`)는 무엇이며 어떤 순서로 튜닝하는가?
+:::
+
+> 실습 목적: Lecture 17의 배깅·랜덤 포레스트·부스팅을 `randomForest`/`gbm` 으로 실행. Hitters(회귀)·유방암 진단(분류)에 적용하고 트리 하나 대비 성능 향상을 확인.
+
+## 1. randomForest 패키지
+
+```r
+library(randomForest)
+set.seed(1)                          # mtry 무작위 선택 때문에 seed 필요
+rf <- randomForest(Salary ~ ., data=train,
+                   ntree=300,        # B: 트리 개수 (default 500)
+                   mtry=19,          # m: 분할 시 후보 피처 수 → p와 같으면 '배깅'
+                   nodesize=5)       # 리프 최소 원소 (T0 크기, 작게 둬도 됨)
+```
+
+- **`ntree`**($B$): 많아도 과적합 없음. 어느 수준 이상은 개선 미미.
+- **`mtry`**($m$): default 회귀 $p/3$, 분류 $\sqrt{p}$(내림). `mtry=p` 면 **배깅**.
+- 랜덤 포레스트는 $T_0$ 를 복잡하게 둬도 됨(앙상블이 variance를 낮추므로).
+
+## 2. OOB 예측·오차
+
+```r
+rf$predicted        # 각 데이터의 OOB 예측 (그를 안 쓴 ~B/3 트리 평균)
+plot(rf)            # ntree 증가에 따른 OOB MSE
+```
+
+- 어떤 선수 한 명은 300개 트리 중 약 100개가 그를 안 쓰고 만들어짐 → 그 ~100개 트리 예측 평균이 OOB 예측. 그 선수 입장에서는 미지의 데이터.
+- 모든 선수의 OOB 예측 ↔ 실제값 → **OOB RMSE**. ntree ≈ 150에서 거의 수렴.
+- test 평가: **RF RMSE ≈ 247.6 vs 트리 하나 ≈ 320** → 확실한 성능 향상.
+
+## 3. 변수 중요도 (Variable Importance)
+
+앙상블은 트리 300개 평균이라 직접 해석이 어렵다. 대신 각 변수가 **분할에 쓰일 때 줄인 MSE의 양을 모든 트리에 대해 평균**내어 중요도로 본다(한 트리에서 같은 변수가 여러 번 쓰이면 누적).
+
+```r
+library(vip); vip(rf)        # 변수 중요도 플롯 (예: CRBI 등이 상위)
+```
+
+## 4. mtry 튜닝
+
+```r
+# mtry를 19(=배깅), p/2, p/3 등으로 바꿔 OOB로 비교
+# ntree 고정 후 mtry=1..19 스윕 → best ≈ 9
+```
+
+- `mtry` ↓ → 트리 간 상관 ↓(variance 감소 ↑) 이지만, 너무 작으면 개별 트리 성능이 나빠짐.
+- `mtry=p` 일 때(배깅)보다 적당히 작은 값에서 OOB 오차가 더 낮음. **`mtry` 는 튜닝 대상**(모델 복잡도 조절).
+- 분류(유방암 진단): 타깃이 factor면 자동으로 분류 트리(지니 지수). default `mtry=`$\sqrt{p}$ ≈ 5. test에서 **하나 빼고 다 맞춤**(트리 하나는 3~4개 오분류).
+
+## 5. 부스팅 — gbm
+
+::: {.column-margin}
+**튜닝 순서**
+
+① `shrinkage`(λ) + `n.trees`(B)
+② `interaction.depth`(D), `n.minobsinnode`
+:::
+
+배깅/RF가 **복잡한 트리를 평균**내는 것과 반대로, 부스팅은 **단순한 트리를 순차적으로 더해** 직전 잔차(residual)를 학습.
+
+```r
+library(gbm)
+boost <- gbm(Salary ~ ., data=train,
+             distribution="gaussian",   # 회귀; 분류는 "bernoulli"
+             n.trees=170,               # B: 튜닝 대상 (과적합 발생 가능!)
+             shrinkage=0.1,             # λ: 학습률 (default 0.001)
+             interaction.depth=1,       # D: 각 트리 복잡도 (1=stump)
+             n.minobsinnode=10,         # 리프 최소 원소
+             cv.folds=5)
+```
+
+- **`n.trees`**($B$): 배깅과 달리 **너무 크면 과적합** → bias-variance trade-off의 튜닝 대상. training MSE는 계속 감소하지만 **CV 오차는 U자형**(다시 증가하는 지점이 과적합).
+- **`shrinkage`**($\lambda$, 학습률): 각 트리 결과를 얼마나 반영할지. 엄밀한 튜닝 파라미터는 아니나 중요. **$\lambda$ ↓ → 필요한 $B$ ↑**(예: $\lambda=0.3$ → B≈86, $\lambda=0.001$ → B≈4998). 학습이 느려지면 더 많은 트리 필요.
+- **`interaction.depth`**($D$): 트리 깊이(1=split 1회). **`n.minobsinnode`**: 리프 최소 원소.
+
+::: {.callout-note title="튜닝 전략"}
+파라미터가 많아 한 번에 조합하면 경우의 수가 폭발. **① `shrinkage`+`n.trees`(전체 학습 큰 틀)를 먼저** 정하고(시간 대비 성능까지 고려), **② 그 다음 `interaction.depth`·`n.minobsinnode`(개별 트리 복잡도)** 를 정한다. caret `train` 으로도 가능.
+:::
+
+::: {.lecture-summary}
+- `randomForest(ntree, mtry, nodesize)` — `mtry=p` 면 배깅. **OOB로 CV 없이 평가**.
+- 앙상블 해석은 **변수 중요도**(분할 시 MSE 감소량 평균)로.
+- RF test 성능(≈247)이 트리 하나(≈320)보다 확연히 우수, 분류도 오분류 급감.
+- **부스팅(gbm)**: 단순 트리를 순차로 더함. `n.trees`는 **과적합 주의**(CV U자형), **$\lambda$↓ → $B$↑**.
+- 튜닝 순서: **shrinkage·n.trees 먼저 → interaction.depth·n.minobsinnode 나중**.
+:::

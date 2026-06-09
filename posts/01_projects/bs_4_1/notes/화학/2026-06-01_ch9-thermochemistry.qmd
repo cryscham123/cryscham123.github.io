@@ -1,0 +1,439 @@
+---
+title: "Ch. 9 열화학과 화학 에너지"
+date: "2026-06-01"
+categories: [chemistry]
+---
+
+::: {.key-questions}
+- **엔탈피(enthalpy)** 는 무엇을 뜻하며, 왜 상태함수로 다루는가?
+- $\Delta H<0$ 과 $\Delta H>0$ 은 계와 주위의 온도 변화로 어떻게 구분되는가?
+- **열량계(calorimeter)** 자료에서 $q=c m \Delta T$ 와 한계반응물로 $\Delta H$ 를 어떻게 구하는가?
+- **헤스 법칙(Hess's law)**, **표준 생성 엔탈피(standard enthalpy of formation)**, **결합 해리 에너지(bond dissociation energy)** 로 반응 엔탈피를 어떻게 계산하는가?
+- 왜 발열 반응만으로 자발성을 판단할 수 없고, **엔트로피(entropy)** 와 **깁스 자유 에너지(Gibbs free energy)** 가 필요한가?
+:::
+
+> 이 강의는 9장 열화학의 계산 파트를 집중적으로 다뤘다. 교수님이 엔탈피 구하는 네 방법(열량계, 헤스 법칙, 생성열, 결합 해리 에너지)을 모두 시험에 낸다고 언급했다. 계산 문제에서는 **부호**, **단위**, **반응식 계수**, **한계반응물**을 반드시 같이 확인해야 한다.
+
+## 1. 계, 주위, 에너지 부호
+
+::: {.column-margin}
+**부호 기준**
+
+계가 에너지를 잃으면 $-$  
+계가 에너지를 얻으면 $+$
+:::
+
+열화학에서는 항상 **계(system)** 를 기준으로 부호를 정한다. 예를 들어 메테인 연소처럼 도시가스가 타면서 주위가 따뜻해지는 반응은 계가 열을 주위로 내놓는 **발열 반응(exothermic reaction)** 이다.
+
+$$
+\text{CH}_4(g)+2\text{O}_2(g)\rightarrow \text{CO}_2(g)+2\text{H}_2\text{O}(l)
+$$
+
+강의 첫 부분의 메테인 예에서 계는 $802\ \text{kJ}$ 만큼 에너지를 잃으므로 $\Delta E=-802\ \text{kJ}$ 로 해석한다. 핵심은 **주위가 따뜻해졌다**가 아니라, **계가 가진 에너지가 줄었다**는 관점이다.
+
+**상태함수(state function)** 는 어떤 경로를 거쳤는지가 아니라 처음과 나중 상태만으로 값이 정해지는 성질이다. 압력, 부피, 온도, 내부에너지, 엔탈피가 여기에 속한다.
+
+::: {.callout-note title="부연 설명 — 상태함수와 헤스 법칙"}
+상태함수 개념 때문에 엔탈피 변화는 반응 경로가 달라도 시작 상태와 끝 상태가 같으면 같다. 이 점이 뒤의 **헤스 법칙(Hess's law)** 계산 근거가 된다. 출처: [OpenStax Chemistry 2e, 5.3 Enthalpy](https://openstax.org/books/chemistry-2e/pages/5-3-enthalpy)
+:::
+
+## 2. 팽창일과 엔탈피
+
+화학 반응에서 내부에너지 변화는 열과 일의 합이다.
+
+$$
+\Delta E = q + w
+$$
+
+기체가 피스톤을 밀어내며 부피가 변할 때의 일은 **압력-부피 일(pressure-volume work, PV work)** 로 쓴다.
+
+$$
+w=-P\Delta V
+$$
+
+- $\Delta V>0$ 인 팽창: $w<0$ → 계가 주위에 일을 했다.
+- $\Delta V<0$ 인 수축: $w>0$ → 계가 주위로부터 일을 받았다.
+
+따라서 일정 압력에서 이동한 열은 다음처럼 정리된다.
+
+$$
+q_P=\Delta E+P\Delta V
+$$
+
+이 값이 바로 **엔탈피 변화(enthalpy change)** 이다.
+
+$$
+\Delta H=q_P,\qquad H=E+PV
+$$
+
+열량계와 실험 조건은 여기서 갈린다.
+
+- **일정 부피(constant volume)**, 밀폐된 통 열량계(bomb calorimeter): $\Delta V=0$ 이므로 $q_V=\Delta E$.
+- **일정 압력(constant pressure)**, 열린 용기/커피컵 열량계: $q_P=\Delta H$.
+
+```{mermaid}
+graph TD
+    A["화학 반응의 에너지 변화"] --> B["일정 부피"]
+    A --> C["일정 압력"]
+    B --> D["qV = Delta E"]
+    C --> E["qP = Delta H"]
+    E --> F["실험에서 주로 측정하는 반응열"]
+```
+
+::: {.callout-tip title="PDF 자료 연결"}
+보조 PDF 4페이지 이후의 흐름도 이 순서다. 메테인 연소의 $\Delta E=-802\ \text{kJ}$, 팽창일 $w=-P\Delta V$, 그리고 일정 압력에서 $\Delta H=q_P=\Delta E+P\Delta V$ 로 이어진다. PDF 한글 서술은 전사 기준으로 보정하고, 수식과 수치만 확인했다.
+:::
+
+## 3. 열화학 반응식과 엔탈피 부호
+
+**표준상태(thermodynamic standard state)** 는 보통 $25^\circ\text{C}$, $1\ \text{atm}$, 용액은 $1\ \text{M}$ 조건을 말한다. 표준 조건에서 측정한 반응 엔탈피는 $\Delta H^\circ$ 로 쓴다.
+
+열화학 반응식을 쓸 때는 반드시 물질의 상태를 같이 적는다. 같은 물이라도 $\text{H}_2\text{O}(l)$ 과 $\text{H}_2\text{O}(g)$ 는 엔탈피가 다르다.
+
+$$
+\Delta H = H_{\text{products}}-H_{\text{reactants}}
+$$
+
+- **발열 반응(exothermic reaction)**: $\Delta H<0$. 계에서 주위로 열이 흐르고 주위 온도는 올라간다.
+- **흡열 반응(endothermic reaction)**: $\Delta H>0$. 주위에서 계로 열이 흐르고 주위 온도는 내려간다.
+
+엔탈피는 **크기 성질(extensive property)** 이다. 반응식을 2배 하면 $\Delta H$ 도 2배가 되고, 반응식을 뒤집으면 $\Delta H$ 의 부호가 바뀐다. 이 점이 헤스 법칙과 생성열 계산에서 계속 쓰인다.
+
+::: {.callout-important title="냉찜질 팩 판단"}
+냉찜질 팩은 온도가 내려가야 하므로 **흡열 반응**을 찾아야 한다. 강의 중 예시의 염 용해에서 $\text{NH}_4\text{NO}_3$ 는 $\Delta H>0$ 이고 물에서 녹으면서 주위의 열을 흡수한다. 따라서 온도가 크게 내려가는 냉찜질 팩 물질로 해석한다.
+:::
+
+## 4. 열량계와 열용량
+
+열량 계산의 기본식은 중학교 때부터 쓰던 형태 그대로다.
+
+$$
+q=c m\Delta T
+$$
+
+- $q$: 열량(heat), 단위 $\text{J}$
+- $c$: **비열(specific heat)**, 단위 $\text{J}/(\text{g}\cdot^\circ\text{C})$
+- $m$: 질량, 단위 $\text{g}$
+- $\Delta T=T_{\text{final}}-T_{\text{initial}}$
+
+**비열(specific heat)** 은 어떤 물질 $1\ \text{g}$ 의 온도를 $1^\circ\text{C}$ 올리는 데 필요한 열량이다. 물의 비열은 보통 $4.18\ \text{J}/(\text{g}\cdot^\circ\text{C})$ 로 쓴다. 비열은 물질 고유값이므로 **세기 성질(intensive property)** 이다.
+
+**열용량(heat capacity)** 은 $C=cm$ 이고 단위는 $\text{J}/^\circ\text{C}$ 이다. 질량에 따라 달라지므로 **크기 성질(extensive property)** 이다.
+
+### 계와 주위의 열수지
+
+열량계 문제에서는 반응에서 나온 열이 어디로 갔는지를 먼저 써야 한다.
+
+$$
+q_{\text{rxn}}+q_{\text{solution}}+q_{\text{cal}}=0
+$$
+
+따라서
+
+$$
+q_{\text{rxn}}=-(q_{\text{solution}}+q_{\text{cal}})
+$$
+
+문제에서 "열량계 자체는 무시할 정도"라고 하면 $q_{\text{cal}}=0$ 으로 둔다. 실제 실험에서는 보온병/스테인리스 컵도 열을 흡수하거나 방출하므로 열량계 항을 포함해야 한다. 강의 중 교수님은 실험 오차 원인으로 온도계가 바닥에 닿는 경우, 뚜껑·단열이 완전하지 않은 경우를 언급했다.
+
+### 예: 염화 은 침전 열량계 (강의에서 다룬 절차)
+
+강의에서 설명한 유형은 은 이온과 염화 이온이 만나 염화 은이 침전되는 반응이다.
+
+$$
+\text{Ag}^+(aq)+\text{Cl}^-(aq)\rightarrow \text{AgCl}(s)
+$$
+
+$1.00\ \text{M}$ 용액 $10.0\ \text{mL}$ 와 $10.0\ \text{mL}$ 를 섞으면(총 약 $20\ \text{g}$ 용액) 두 반응물이 같은 몰수라 한계반응물 없이 모두 반응한다. 반응한 몰수는
+
+$$
+n=1.00\ \text{M}\times 0.0100\ \text{L}=0.0100\ \text{mol}
+$$
+
+이후 측정한 온도 변화 $\Delta T$ 로 용액이 받은 열을 구하고(열량계 흡수는 무시 가정), 부호를 뒤집어 반응열을 얻는다.
+
+$$
+q_{\text{solution}}=c\,m\,\Delta T,\qquad q_{\text{rxn}}=-q_{\text{solution}}
+$$
+
+마지막으로 **한계반응물 몰수로 나누어** 반응 엔탈피로 환산한다.
+
+$$
+\Delta H=\frac{q_{\text{rxn}}}{0.0100\ \text{mol}}
+$$
+
+::: {.callout-note title="수치 주의"}
+강의에서는 여기까지 **절차**만 설명하고, 실제 $\Delta T$·$\Delta H$ 값은 학생이 직접 실습에서 측정한다. 이 노트는 측정값을 임의로 채우지 않았다.
+:::
+
+핵심은 $q=c m\Delta T$ 만 계산하고 끝내지 않는 것이다. **반응한 몰수**, 즉 한계반응물 양으로 나누어야 반응 엔탈피가 된다.
+
+## 5. 엔탈피를 구하는 네 가지 방법
+
+강의에서 정리한 엔탈피 계산법은 네 가지다.
+
+```{mermaid}
+graph TD
+    A["반응 엔탈피 구하기"] --> B["1 열량계: q = c m Delta T"]
+    A --> C["2 헤스 법칙: Delta Htotal = sum Delta Hstep"]
+    A --> D["3 표준 생성 엔탈피: products - reactants"]
+    A --> E["4 결합 해리 에너지: broken - formed"]
+```
+
+## 6. 헤스 법칙
+
+**헤스 법칙(Hess's law)**: 반응이 한 단계로 일어나든 여러 단계로 일어나든, 처음과 끝 상태가 같으면 전체 엔탈피 변화는 같다.
+
+$$
+\Delta H_{\text{total}}=\sum \Delta H_{\text{step}}
+$$
+
+계산 규칙은 네 가지다.
+
+- 목표 반응식에서 반응물은 왼쪽, 생성물은 오른쪽에 오도록 주어진 식을 조합한다.
+- 반응식을 뒤집으면 $\Delta H$ 부호도 뒤집는다.
+- 반응식에 계수를 곱하면 $\Delta H$ 에도 같은 계수를 곱한다.
+- 반응식을 더하면 $\Delta H$ 값도 더한다.
+
+강의에서는 실험의 세 반응($H_1,H_2,H_3$)도 헤스 법칙으로 연결된다고 설명했다. 예를 들어 중화열과 용해열을 따로 구한 두 단계의 합이, 두 과정이 합쳐진 전체 반응열과 같아야 한다. 차이가 난다면 온도 측정, 단열 불완전, 열량계 열흡수 같은 실험 오차를 검토해야 한다.
+
+## 7. 표준 생성 엔탈피
+
+**표준 생성 엔탈피(standard enthalpy of formation, $\Delta H_f^\circ$)** 는 표준상태의 원소들로부터 물질 $1\ \text{mol}$ 이 생성될 때의 엔탈피 변화다.
+
+예를 들어 물의 생성 반응은 원소 상태의 수소와 산소로부터 써야 한다.
+
+$$
+\text{H}_2(g)+\frac{1}{2}\text{O}_2(g)\rightarrow \text{H}_2\text{O}(l)
+$$
+
+암모니아라면 원소 상태의 $\text{N}_2$ 와 $\text{H}_2$ 를 조합한다.
+
+$$
+\frac{1}{2}\text{N}_2(g)+\frac{3}{2}\text{H}_2(g)\rightarrow \text{NH}_3(g)
+$$
+
+표준상태 원소 자체의 $\Delta H_f^\circ$ 는 $0$ 이다. 예: $\text{H}_2(g)$, $\text{N}_2(g)$, $\text{O}_2(g)$, $\text{Cl}_2(g)$.
+
+일반 반응
+
+$$
+aA+bB\rightarrow cC+dD
+$$
+
+에 대해서는
+
+$$
+\Delta H^\circ
+=\left[c\Delta H_f^\circ(C)+d\Delta H_f^\circ(D)\right]
+-\left[a\Delta H_f^\circ(A)+b\Delta H_f^\circ(B)\right]
+$$
+
+즉 **생성물의 생성열 합 - 반응물의 생성열 합**이다. 모든 값은 $1\ \text{mol}$ 기준이므로 반응계수만큼 반드시 곱한다.
+
+## 8. 결합 해리 에너지
+
+**결합 해리 에너지(bond dissociation energy, $D$)** 는 기체 상태 분자의 공유 결합을 끊는 데 필요한 에너지다. 결합을 끊는 과정은 에너지를 넣어야 하므로 $D$ 는 양수로 다룬다.
+
+반응은 기존 결합이 끊어진 뒤 새 결합이 생기는 과정으로 볼 수 있다.
+
+$$
+\Delta H \approx \sum D_{\text{broken}}-\sum D_{\text{formed}}
+$$
+
+계산하려면 루이스 전자점 구조를 그려서 어떤 결합이 몇 개 끊어지고 몇 개 생기는지 세야 한다. 강의 마지막 예시는 메테인과 염소가 반응해 클로로폼을 만드는 반응이었다.
+
+$$
+\text{CH}_4(g)+3\text{Cl}_2(g)\rightarrow \text{CHCl}_3(g)+3\text{HCl}(g)
+$$
+
+결합 개수로 쓰면 다음과 같은 형태가 된다.
+
+$$
+\Delta H
+\approx \left[4D(\text{C-H})+3D(\text{Cl-Cl})\right]
+-\left[D(\text{C-H})+3D(\text{C-Cl})+3D(\text{H-Cl})\right]
+$$
+
+좌우에 공통으로 남는 $\text{C-H}$ 결합 1개를 약분해서 생각하면, 실제 변화는 $\text{C-H}$ 3개와 $\text{Cl-Cl}$ 3개가 끊어지고 $\text{C-Cl}$ 3개와 $\text{H-Cl}$ 3개가 생긴 것이다.
+
+## 9. 자발성: 엔탈피만으로는 부족하다
+
+왜 엔탈피를 열심히 구하는가? 반응을 계획할 때 에너지가 얼마나 필요한지, 또는 얼마나 방출되는지 미리 판단해야 하기 때문이다. 대체로 발열 반응은 진행에 유리하고, 흡열 반응은 외부 에너지를 더 요구한다.
+
+하지만 발열이면 항상 자발적이고 흡열이면 항상 비자발적인 것은 아니다. 강의에서는 얼음이 녹는 과정처럼 흡열이지만 자발적으로 일어나는 예를 들었다. 그래서 자발성 판단에는 **엔트로피(entropy, $S$)**, 즉 무질서도까지 같이 고려한다.
+
+$$
+\Delta G=\Delta H-T\Delta S
+$$
+
+**깁스 자유 에너지(Gibbs free energy, $G$)** 변화가 $0$ 보다 작으면 자발적인 방향으로 판단한다.
+
+$$
+\Delta G<0 \quad \Rightarrow \quad \text{spontaneous}
+$$
+
+이 강의에서는 다음 장으로 넘어가기 위한 연결 정도로 다뤘다. 본격 계산은 엔탈피 네 방법이 중심이다.
+
+## 10. 연습문제 풀이
+
+### 9.43 산화 철 환원 반응
+
+문제:
+
+$$
+\text{Fe}_2\text{O}_3(s)+3\text{CO}(g)\rightarrow 2\text{Fe}(s)+3\text{CO}_2(g)
+\qquad \Delta H^\circ=-24.8\ \text{kJ}
+$$
+
+$\text{Fe}_2\text{O}_3$ $2.50\ \text{g}$ 이 반응할 때의 열량을 구한다.
+
+$$
+M(\text{Fe}_2\text{O}_3)=2(55.845)+3(15.999)=159.687\ \text{g/mol}
+$$
+
+$$
+n=\frac{2.50\ \text{g}}{159.687\ \text{g/mol}}=0.0157\ \text{mol}
+$$
+
+반응식의 $\Delta H^\circ=-24.8\ \text{kJ}$ 는 $\text{Fe}_2\text{O}_3$ $1\ \text{mol}$ 반응 기준이다.
+
+$$
+q=0.0157\ \text{mol}\times (-24.8\ \text{kJ/mol})
+=-0.388\ \text{kJ}
+$$
+
+따라서 $0.388\ \text{kJ}$ 의 열이 **방출**되며, 이 과정은 **발열 반응(exothermic reaction)** 이다.
+
+### 9.47 질산 암모늄 냉찜질 팩
+
+문제의 반응:
+
+$$
+\text{NH}_4\text{NO}_3(s)\rightarrow \text{NH}_4\text{NO}_3(aq)
+\qquad \Delta H=+25.7\ \text{kJ}
+$$
+
+::: {.callout-warning title="지문 보정"}
+문제 지문에는 발열/핫팩 표현이 섞여 있지만, 주어진 $\Delta H=+25.7\ \text{kJ}$ 이므로 물리적으로는 **흡열 용해**다. 따라서 이 문제는 냉찜질 팩이고 온도는 내려가야 한다.
+:::
+
+$50.0\ \text{g}$ 의 $\text{NH}_4\text{NO}_3$ 가 물 $125\ \text{mL}$ 에 녹는다. 물의 밀도를 $1.00\ \text{g/mL}$ 로 보면 용액 질량은
+
+$$
+m_{\text{solution}}=50.0\ \text{g}+125\ \text{g}=175.0\ \text{g}
+$$
+
+몰질량:
+
+$$
+M(\text{NH}_4\text{NO}_3)=80.043\ \text{g/mol}
+$$
+
+$$
+n=\frac{50.0\ \text{g}}{80.043\ \text{g/mol}}=0.6247\ \text{mol}
+$$
+
+용해가 흡수하는 열:
+
+$$
+q_{\text{dissolution}}
+=0.6247\ \text{mol}\times 25.7\ \text{kJ/mol}
+=16.05\ \text{kJ}
+$$
+
+외부와 열교환이 없으므로 용액은 같은 양의 열을 잃는다.
+
+$$
+q_{\text{solution}}=-16.05\ \text{kJ}
+$$
+
+$$
+\Delta T
+=\frac{-16050\ \text{J}}{(175.0\ \text{g})(4.18\ \text{J}/(\text{g}\cdot^\circ\text{C}))}
+=-21.95^\circ\text{C}
+$$
+
+$$
+T_f=25.0^\circ\text{C}-21.95^\circ\text{C}=3.05^\circ\text{C}
+$$
+
+최종 온도는 **$3.05^\circ\text{C}$** 이다.
+
+### 9.49 마그네슘과 염산 반응
+
+반응식:
+
+$$
+\text{Mg}(s)+2\text{HCl}(aq)\rightarrow \text{MgCl}_2(aq)+\text{H}_2(g)
+$$
+
+한계반응물부터 확인한다.
+
+$$
+n(\text{Mg})=\frac{1.50\ \text{g}}{24.305\ \text{g/mol}}
+=0.0617\ \text{mol}
+$$
+
+$$
+n(\text{HCl})=6.00\ \text{mol/L}\times 0.200\ \text{L}=1.20\ \text{mol}
+$$
+
+$0.0617\ \text{mol}$ Mg가 필요로 하는 HCl은 $0.123\ \text{mol}$ 이므로 HCl은 과량이고 Mg가 한계반응물이다.
+
+온도 변화:
+
+$$
+\Delta T=42.9^\circ\text{C}-25.0^\circ\text{C}=17.9^\circ\text{C}
+$$
+
+용액과 열량계가 흡수한 열:
+
+$$
+q_{\text{solution}}
+=4.18\frac{\text{J}}{\text{g}\cdot^\circ\text{C}}\times 201.5\text{ g}\times 17.9^\circ\text{C}
+=1.51\times 10^4\ \text{J}
+$$
+
+$$
+q_{\text{cal}}
+=776\frac{\text{J}}{^\circ\text{C}}\times 17.9^\circ\text{C}
+=1.39\times 10^4\ \text{J}
+$$
+
+$$
+q_{\text{absorbed}}=q_{\text{solution}}+q_{\text{cal}}
+=2.90\times 10^4\ \text{J}=29.0\ \text{kJ}
+$$
+
+온도가 올라갔으므로 반응은 열을 방출했다.
+
+$$
+q_{\text{rxn}}=-29.0\ \text{kJ}
+$$
+
+반응식 계수 기준, 즉 Mg $1\ \text{mol}$ 반응 기준의 엔탈피는
+
+$$
+\Delta H=\frac{-28.97\ \text{kJ}}{0.0617\ \text{mol}}
+=-469\ \text{kJ/mol}
+$$
+
+문제의 답 형식으로는 **$\Delta H=-469\ \text{kJ}$** 로 적되, 실제 시료가 낸 총열은 $29.0\ \text{kJ}$ 이고 $-469\ \text{kJ}$ 는 반응식 $1\ \text{mol Mg}$ 기준 값임을 구분한다.
+
+## 개념 연결
+
+- **6장 Born-Haber 순환 ↔ 9장 헤스 법칙**: 여러 단계 에너지를 더해 전체 엔탈피를 구한다는 점이 같다. 6장에서는 이온 결합 형성, 9장에서는 일반 반응 엔탈피에 적용한다.
+- **7장 루이스 구조 ↔ 결합 해리 에너지**: 어떤 결합이 몇 개 끊어지고 생기는지 세려면 루이스 전자점 구조를 그릴 수 있어야 한다.
+- **열량계 실험 ↔ 엔탈피 계산**: 실험에서 측정한 온도 변화는 곧바로 답이 아니라, $q=c m\Delta T$ 와 한계반응물 몰수 계산을 거쳐 $\Delta H$ 로 바뀐다.
+- **엔탈피 ↔ 자발성**: $\Delta H$ 는 중요한 추진력 중 하나지만 충분조건은 아니다. 자발성은 $\Delta G=\Delta H-T\Delta S$ 로 엔트로피까지 함께 본다.
+
+::: {.lecture-summary}
+- 엔탈피는 일정 압력에서의 반응열이며, $\Delta H=H_{\text{products}}-H_{\text{reactants}}$ 인 **상태함수**다.
+- $\Delta H<0$ 은 발열, $\Delta H>0$ 은 흡열이다. 냉찜질 팩의 $\text{NH}_4\text{NO}_3$ 용해는 $\Delta H>0$ 이므로 온도가 내려간다.
+- 열량계 계산은 $q=c m\Delta T$ 후, 필요하면 $q_{\text{cal}}=C_{\text{cal}}\Delta T$ 를 더하고, 한계반응물 몰수로 나누어 $\Delta H$ 를 구한다.
+- 엔탈피 계산 네 방법: **열량계**, **헤스 법칙**, **표준 생성 엔탈피**, **결합 해리 에너지**.
+- 9.43 답: $q=-0.388\ \text{kJ}$ → $0.388\ \text{kJ}$ 방출, 발열.
+- 9.47 답: $T_f=3.05^\circ\text{C}$.
+- 9.49 답: 실제 반응열 $q_{\text{rxn}}=-29.0\ \text{kJ}$, 반응식 기준 $\Delta H=-469\ \text{kJ/mol}$.
+:::
